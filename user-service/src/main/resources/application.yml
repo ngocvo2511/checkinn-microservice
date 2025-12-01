@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/checkinn_user
+    username: postgres
+    password: 2731
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+grpc:
+  server:
+    port: 9090
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true

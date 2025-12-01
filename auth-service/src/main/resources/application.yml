@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: auth-service
+
+
+grpc:
+  server:
+    port: 9091
+
+  client:
+    user-service:
+      address: "discovery:///user-service"
+      negotiationType: plaintext
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
