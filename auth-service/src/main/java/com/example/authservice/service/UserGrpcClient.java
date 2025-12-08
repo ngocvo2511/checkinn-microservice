@@ -19,4 +19,16 @@ public class UserGrpcClient {
 
         return userStub.loginUser(request);
     }
+
+    public UserResponse register(String username, String email, String password, String fullName) {
+
+        RegisterRequest request = RegisterRequest.newBuilder()
+                .setUsername(username)
+                .setEmail(email)
+                .setPassword(password)
+                .setFullName(fullName)
+                .build();
+
+        return userStub.registerUser(request);
+    }
 }
