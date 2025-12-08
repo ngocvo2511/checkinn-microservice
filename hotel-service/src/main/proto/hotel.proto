@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package hotel;
+
+option java_multiple_files = true;
+option java_package = "com.example.hotelservice.grpc";
+option java_outer_classname = "HotelProto";
+
+// ================================
+// HOTEL READ SERVICE (ONLY)
+// ================================
+service HotelGrpcService {
+
+  // Lấy chi tiết khách sạn
+  rpc GetHotelById(GetHotelByIdRequest) returns (GetHotelByIdResponse);
+
+  // Lấy danh sách room type của hotel
+  rpc GetRoomTypesByHotel(GetRoomTypesByHotelRequest) returns (GetRoomTypesByHotelResponse);
+
+  // Lấy chi tiết room type
+  rpc GetRoomTypeById(GetRoomTypeByIdRequest) returns (GetRoomTypeByIdResponse);
+}
+
+
+// ================================
+// REQUEST MESSAGES
+// ================================
+message GetHotelByIdRequest {
+  string hotel_id = 1;
+}
+
+message GetRoomTypesByHotelRequest {
+  string hotel_id = 1;
+}
+
+message GetRoomTypeByIdRequest {
+  string room_type_id = 1;
+}
+
+
+
+// ================================
+// RESPONSE MESSAGES
+// ================================
+message GetHotelByIdResponse {
+  string id = 1;
+  string owner_id = 2;
+  string name = 3;
+  string description = 4;
+  int32 star_rating = 5;
+  HotelAddress address = 6;
+
+  bool is_active = 7;
+  string approved_status = 8;
+
+  repeated MediaAsset images = 9;
+  repeated RoomTypeBasic room_types = 10;
+}
+
+message GetRoomTypesByHotelResponse {
+  repeated RoomTypeDto room_types = 1;
+}
+
+message GetRoomTypeByIdResponse {
+  RoomTypeDto room_type = 1;
+}
+
+
+
+// ================================
+// SUPPORT DTO
+// ================================
+
+// RoomType info
+message RoomTypeDto {
+  string id = 1;
+  string hotel_id = 2;
+  string name = 3;
+  double base_price = 4;
+  Capacity capacity = 5;
+  repeated string amenities = 6;
+  bool is_active = 7;
+  repeated MediaAsset images = 8;
+}
+
+message RoomTypeBasic {
+  string id = 1;
+  string name = 2;
+  double base_price = 3;
+}
+
+message HotelAddress {
+  string street = 1;
+  string city = 2;
+  string country = 3;
+  double latitude = 4;
+  double longitude = 5;
+}
+
+message Capacity {
+  int32 adults = 1;
+  int32 children = 2;
+}
+
+message MediaAsset {
+  string id = 1;
+  string url = 2;
+  bool is_thumbnail = 3;
+  int32 sort_order = 4;
+}
