@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+grpc:
+  server:
+    port: 9095
+    max-inbound-message-size: 10485760 # 10 MB
+
+minio:
+  url: https://checkinn-minio.fly.dev
+  access-key: admin
+  secret-key: SuperStrongPassword123
+  bucket: hotel-media

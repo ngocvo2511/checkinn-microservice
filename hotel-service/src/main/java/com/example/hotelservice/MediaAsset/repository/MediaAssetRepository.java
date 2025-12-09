@@ -12,6 +12,9 @@ public interface MediaAssetRepository extends JpaRepository<MediaAsset, UUID> {
             UUID targetId,
             MediaTargetType targetType
     );
-
+    List<MediaAsset> findByTargetIdAndTargetType(
+            UUID targetId,
+            MediaTargetType targetType
+    );
     MediaAsset findFirstByTargetIdAndTargetTypeAndIsThumbnailTrue(UUID targetId, MediaTargetType targetType);
 }
