@@ -10,11 +10,17 @@ service UserService {
   rpc LoginUser (LoginRequest) returns (UserResponse);
 }
 
+enum UserRole {
+  USER = 0;
+  OWNER = 1;
+}
+
 message RegisterRequest {
   string username = 1;
   string email = 2;
   string password = 3;
   string fullName = 4;
+  UserRole role = 5;
 }
 
 message GetUserRequest {

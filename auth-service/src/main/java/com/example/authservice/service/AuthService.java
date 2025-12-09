@@ -17,14 +17,15 @@ public class AuthService {
     private final UserGrpcClient userGrpcClient;
     private final JwtService jwtService;
 
-    public AuthResponseDto register(RegisterRequestDto request) {
+    public AuthResponseDto register(RegisterRequestDto request, UserRole userRole) {
         try {
             // Gọi user-service để tạo user
             UserResponse user = userGrpcClient.register(
                     request.getUsername(),
                     request.getEmail(),
                     request.getPassword(),
-                    request.getFullName()
+                    request.getFullName(),
+                    userRole
             );
 
             // Sinh token

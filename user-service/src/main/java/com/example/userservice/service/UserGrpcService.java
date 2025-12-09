@@ -27,7 +27,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                             .password(request.getPassword())
                             .fullName(request.getFullName())
                             .build(),
-                    Role.CUSTOMER
+                    (request.getRole()==UserRole.OWNER) ? Role.OWNER : Role.CUSTOMER
             );
 
             UserResponse response = UserResponse.newBuilder()

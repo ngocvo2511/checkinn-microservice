@@ -20,13 +20,14 @@ public class UserGrpcClient {
         return userStub.loginUser(request);
     }
 
-    public UserResponse register(String username, String email, String password, String fullName) {
+    public UserResponse register(String username, String email, String password, String fullName, UserRole userRole) {
 
         RegisterRequest request = RegisterRequest.newBuilder()
                 .setUsername(username)
                 .setEmail(email)
                 .setPassword(password)
                 .setFullName(fullName)
+                .setRole(userRole)
                 .build();
 
         return userStub.registerUser(request);

@@ -1,5 +1,6 @@
 package com.example.authservice.controller;
 
+import com.checkinn.user.grpc.UserRole;
 import com.example.authservice.dto.LoginRequestDto;
 import com.example.authservice.dto.RegisterRequestDto;
 import com.example.authservice.dto.AuthResponseDto;
@@ -18,7 +19,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDto> register(@RequestBody RegisterRequestDto request) {
-        return ResponseEntity.ok(authService.register(request));
+        return ResponseEntity.ok(authService.register(request, UserRole.USER));
+    }
+
+    @PostMapping("/register-owner")
+    public ResponseEntity<?> registerOwner(@RequestBody RegisterRequestDto request) {
+        return ResponseEntity.ok(authService.register(request, UserRole.OWNER));
     }
 
     @PostMapping("/login")
