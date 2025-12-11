@@ -27,6 +27,7 @@ public class HotelServiceImpl implements HotelService {
     public Hotel createHotel(HotelCreateRequest request, UUID ownerId) {
         Hotel hotel = new Hotel();
         hotel.setOwnerId(ownerId);
+        hotel.setCityId(request.cityId());
         hotel.setName(request.name());
         hotel.setDescription(request.description());
         hotel.setStarRating(request.starRating());
@@ -49,6 +50,7 @@ public class HotelServiceImpl implements HotelService {
         if (request.name() != null) hotel.setName(request.name());
         if (request.description() != null) hotel.setDescription(request.description());
         if (request.starRating() != null) hotel.setStarRating(request.starRating());
+        if (request.cityId() != null) hotel.setCityId(request.cityId());
         if (request.address() != null) hotel.setAddress(writeJson(request.address()));
 
         return hotelRepository.save(hotel);
@@ -65,6 +67,18 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Hotel> getByOwner(UUID ownerId) {
         return hotelRepository.findByOwnerId(ownerId);
+    }
+
+    // ========== SEARCH: HOTELS BY CITY ==========
+    @Override
+    public List<Hotel> getByCity(UUID cityId) {
+        return hotelRepository.findByCityId(cityId);
+    }
+
+    // ========== SEARCH: HOTELS BY OWNER AND CITY ==========
+    @Override
+    public List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId) {
+        return hotelRepository.findByOwnerIdAndCityId(ownerId, cityId);
     }
 
     // ========== ADMIN: APPROVE ==========

@@ -6,9 +6,9 @@ import com.example.authservice.dto.LoginRequestDto;
 import com.example.authservice.dto.RegisterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import io.grpc.StatusRuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import io.grpc.StatusRuntimeException;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +40,12 @@ public class AuthService {
                     .role(user.getRole())
                     .build();
 
-        } catch (Exception e) {
+        } catch (StatusRuntimeException e) {
             String msg = extractGrpcMessage(e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Registration failed: " + msg, e);
+        } catch (Exception e) {
+            System.err.println("[AuthService] Error during registration: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
 
@@ -66,20 +69,23 @@ public class AuthService {
                     .role(user.getRole())
                     .build();
 
-        } catch (Exception e) {
+        } catch (StatusRuntimeException e) {
             String msg = extractGrpcMessage(e);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login failed: " + msg, e);
+            System.err.println("[AuthService] gRPC error: " + e.getStatus().getCode() + " - " + msg);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, msg, e);
+        } catch (Exception e) {
+            System.err.println("[AuthService] Error during login: " + e.getMessage());
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage(), e);
         }
     }
 
-    private String extractGrpcMessage(Exception e) {
-        if (e instanceof StatusRuntimeException sre) {
-            String desc = sre.getStatus().getDescription();
-            if (desc != null && !desc.isBlank()) {
-                return desc;
-            }
-            return sre.getStatus().getCode().name();
+    private String extractGrpcMessage(StatusRuntimeException e) {
+        String desc = e.getStatus().getDescription();
+        if (desc != null && !desc.isBlank()) {
+            return desc;
         }
-        return e.getMessage();
+        // Lấy root cause từ metadata nếu có
+        return e.getStatus().getCode().name();
     }
 }

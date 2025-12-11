@@ -2,17 +2,17 @@ package com.example.hotelservice.MediaAsset.service;
 
 import com.example.mediaservice.grpc.*;
 import com.google.protobuf.ByteString;
-import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 
 @Component
-@RequiredArgsConstructor
 public class MediaClient {
 
-    private final MediaGrpcServiceGrpc.MediaGrpcServiceBlockingStub mediaStub;
+    @GrpcClient("media-service")
+    private MediaGrpcServiceGrpc.MediaGrpcServiceBlockingStub mediaStub;
 
     public String upload(String fileName, String mimeType, byte[] data) {
 

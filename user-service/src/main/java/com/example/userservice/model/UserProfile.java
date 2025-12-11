@@ -23,7 +23,8 @@ public class UserProfile {
     private String gender;       // optional
     private LocalDate birthDate; // optional
     private String phone;        // optional
-    private String nationalId;   // optional (CCCD)
+    private String address;      // optional
+    private String country;      // optional
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

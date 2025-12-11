@@ -82,8 +82,35 @@ public class HotelController {
     }
 
     // -------------------------------------------------------
-    // 5. Admin: Duyệt khách sạn
+    // 5. Tìm khách sạn theo thành phố
     // -------------------------------------------------------
+    @GetMapping("/city/{cityId}")
+    public ResponseEntity<?> getHotelsByCity(@PathVariable UUID cityId) {
+        var hotels = hotelService.getByCity(cityId)
+                .stream()
+                .map(hotelMapper::toHotelResponse)
+                .toList();
+
+        return ResponseEntity.ok(hotels);
+    }
+
+    // -------------------------------------------------------
+    // 6. Tìm khách sạn của owner theo thành phố
+    // -------------------------------------------------------
+    @GetMapping("/owner/{cityId}")
+    public ResponseEntity<?> getHotelsByOwnerAndCity(
+            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @PathVariable UUID cityId
+    ) {
+        UUID ownerId = getOwnerId(ownerIdHeader);
+
+        var hotels = hotelService.getByOwnerAndCity(ownerId, cityId)
+                .stream()
+                .map(hotelMapper::toHotelResponse)
+                .toList();
+
+        return ResponseEntity.ok(hotels);
+    }
     @PutMapping("/{hotelId}/approve")
     public ResponseEntity<?> approveHotel(
             @RequestHeader("X-ADMIN") boolean isAdmin,

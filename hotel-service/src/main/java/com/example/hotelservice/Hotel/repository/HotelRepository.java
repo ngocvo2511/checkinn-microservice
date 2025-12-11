@@ -14,6 +14,12 @@ public interface HotelRepository extends JpaRepository<Hotel, UUID> {
     // Admin: lấy hotel theo trạng thái duyệt
     List<Hotel> findByApprovedStatus(HotelApprovalStatus status);
 
+    // Tìm hotel theo thành phố
+    List<Hotel> findByCityId(UUID cityId);
+
+    // Tìm hotel theo owner và thành phố
+    List<Hotel> findByOwnerIdAndCityId(UUID ownerId, UUID cityId);
+
     // Kiểm tra quyền sở hữu
-    boolean existsByIdAndOwnerId(UUID id, UUID ownerId);;
+    boolean existsByIdAndOwnerId(UUID id, UUID ownerId);
 }

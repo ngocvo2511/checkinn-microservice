@@ -1,5 +1,6 @@
 package com.example.hotelservice.Hotel.entity;
 
+import com.example.hotelservice.City.entity.City;
 import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
 import com.example.hotelservice.Room.entity.RoomType;
@@ -27,6 +28,13 @@ public class Hotel {
 
     @Column(name = "owner_id", nullable = false)
     private UUID ownerId;
+
+    @Column(name = "city_id", nullable = false)
+    private UUID cityId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private City city;
 
     @Column(nullable = false, length = 255)
     private String name;

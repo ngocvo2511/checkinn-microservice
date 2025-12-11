@@ -19,6 +19,10 @@ public interface HotelService {
 
     List<Hotel> getByOwner(UUID ownerId);
 
+    List<Hotel> getByCity(UUID cityId);
+
+    List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId);
+
     void activateHotel(UUID hotelId);
 
     void deactivateHotel(UUID hotelId);

@@ -4,6 +4,8 @@ import com.checkinn.user.grpc.*;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserProfile;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -16,7 +18,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     private final UserService userService;
 
     @Override
-    public void registerUser(RegisterRequest request,
+    public void registerUser(com.checkinn.user.grpc.RegisterRequest request,
                              StreamObserver<UserResponse> responseObserver) {
 
         try {
@@ -45,6 +47,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onError(e);
         }
     }
+
 
     @Override
     public void getUserById(GetUserRequest request,
@@ -98,8 +101,11 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            responseObserver.onError(e);
+            System.err.println("[UserGrpcService] Login error: " + e.getMessage());
+            e.printStackTrace();
+            responseObserver.onError(Status.UNAUTHENTICATED
+                    .withDescription(e.getMessage())
+                    .asException());
         }
     }
-
 }
