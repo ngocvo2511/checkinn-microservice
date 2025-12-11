@@ -28,6 +28,12 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/user/**
+        - id: hotel-service
+          uri: lb://hotel-service
+          predicates:
+            - Path=/api/hotel/**
+          filters:
+            - StripPrefix=2
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 

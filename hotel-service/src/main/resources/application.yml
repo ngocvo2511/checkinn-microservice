@@ -21,7 +21,7 @@ server:
 
 grpc:
   server:
-    port: 9091
+    port: 9092
   client:
     media-service:
       address: "discovery:///media-service"

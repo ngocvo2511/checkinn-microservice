@@ -1,0 +1,10 @@
+package com.example.hotelservice.City.dto.request;
+
+import java.util.UUID;
+
+public record ProvinceCreateRequest(
+        String name,
+        String code,
+        Double latitude,
+        Double longitude
+) {}

@@ -2,8 +2,10 @@ package com.example.hotelservice.City.controller;
 
 import com.example.hotelservice.City.dto.request.CityCreateRequest;
 import com.example.hotelservice.City.dto.response.CityResponse;
+import com.example.hotelservice.City.dto.response.LocationResponse;
 import com.example.hotelservice.City.mapper.CityMapper;
 import com.example.hotelservice.City.service.CityService;
+import com.example.hotelservice.City.service.LocationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ public class CityController {
 
     private final CityService cityService;
     private final CityMapper cityMapper;
+    private final LocationService locationService;
 
     /**
      * Tạo thành phố mới (Admin only)
@@ -27,7 +30,25 @@ public class CityController {
     @PostMapping
     public ResponseEntity<CityResponse> createCity(@Valid @RequestBody CityCreateRequest request) {
         var city = cityService.createCity(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cityMapper.toCityResponse(city));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(city));
+    }
+
+    /**
+     * Lấy danh sách tất cả locations (provinces + cities) cho search/dropdown
+     */
+    @GetMapping("/all-locations")
+    public ResponseEntity<List<LocationResponse>> getAllLocations() {
+        var locations = locationService.getAllLocations();
+        return ResponseEntity.ok(locations);
+    }
+
+    /**
+     * Tìm kiếm locations (provinces + cities) theo tên/code
+     */
+    @GetMapping("/search/locations")
+    public ResponseEntity<List<LocationResponse>> searchLocations(@RequestParam String query) {
+        var results = locationService.searchLocations(query);
+        return ResponseEntity.ok(results);
     }
 
     /**
@@ -35,11 +56,11 @@ public class CityController {
      */
     @GetMapping
     public ResponseEntity<List<CityResponse>> getAllCities() {
-        var cities = cityService.getAllCities()
-                .stream()
-                .map(cityMapper::toCityResponse)
+        var cities = cityService.getAllCities();
+        var responses = cities.stream()
+                .map(this::toResponse)
                 .toList();
-        return ResponseEntity.ok(cities);
+        return ResponseEntity.ok(responses);
     }
 
     /**
@@ -48,7 +69,7 @@ public class CityController {
     @GetMapping("/{cityId}")
     public ResponseEntity<CityResponse> getCityById(@PathVariable UUID cityId) {
         var city = cityService.getById(cityId);
-        return ResponseEntity.ok(cityMapper.toCityResponse(city));
+        return ResponseEntity.ok(toResponse(city));
     }
 
     /**
@@ -57,7 +78,7 @@ public class CityController {
     @GetMapping("/search/by-name")
     public ResponseEntity<CityResponse> getCityByName(@RequestParam String name) {
         var city = cityService.getByName(name);
-        return ResponseEntity.ok(cityMapper.toCityResponse(city));
+        return ResponseEntity.ok(toResponse(city));
     }
 
     /**
@@ -66,7 +87,7 @@ public class CityController {
     @GetMapping("/search/by-code")
     public ResponseEntity<CityResponse> getCityByCode(@RequestParam String code) {
         var city = cityService.getByCode(code);
-        return ResponseEntity.ok(cityMapper.toCityResponse(city));
+        return ResponseEntity.ok(toResponse(city));
     }
 
     /**
@@ -78,7 +99,7 @@ public class CityController {
             @Valid @RequestBody CityCreateRequest request
     ) {
         var city = cityService.updateCity(cityId, request);
-        return ResponseEntity.ok(cityMapper.toCityResponse(city));
+        return ResponseEntity.ok(toResponse(city));
     }
 
     /**
@@ -88,5 +109,21 @@ public class CityController {
     public ResponseEntity<Void> deleteCity(@PathVariable UUID cityId) {
         cityService.deleteCity(cityId);
         return ResponseEntity.noContent().build();
+    }
+
+    private CityResponse toResponse(com.example.hotelservice.City.entity.City city) {
+        var parent = city.getProvince();
+
+        return new CityResponse(
+                city.getId(),
+                city.getName(),
+                city.getCode(),
+                city.getLatitude(),
+                city.getLongitude(),
+                city.getHotelCount(),
+                city.getCreatedAt(),
+                parent != null ? parent.getName() : null,
+                parent != null ? parent.getCode() : null
+        );
     }
 }

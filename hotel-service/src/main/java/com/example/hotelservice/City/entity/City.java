@@ -32,6 +32,13 @@ public class City {
     @Column(name = "longitude")
     private Double longitude;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Province province;
+
+    @Column(name = "hotel_count", nullable = false)
+    private Integer hotelCount = 0;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

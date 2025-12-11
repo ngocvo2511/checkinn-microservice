@@ -9,5 +9,8 @@ public record CityResponse(
         String code,
         Double latitude,
         Double longitude,
-        Instant createdAt
+        Integer hotelCount,
+        Instant createdAt,
+        String parentName,
+        String parentCode
 ) {}

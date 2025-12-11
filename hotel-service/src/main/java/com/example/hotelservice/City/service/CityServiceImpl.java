@@ -4,6 +4,7 @@ import com.example.hotelservice.City.dto.request.CityCreateRequest;
 import com.example.hotelservice.City.entity.City;
 import com.example.hotelservice.City.mapper.CityMapper;
 import com.example.hotelservice.City.repository.CityRepository;
+import com.example.hotelservice.City.repository.ProvinceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class CityServiceImpl implements CityService {
 
     private final CityRepository cityRepository;
+    private final ProvinceRepository provinceRepository;
     private final CityMapper cityMapper;
 
     @Override
@@ -27,6 +29,14 @@ public class CityServiceImpl implements CityService {
         }
 
         City city = cityMapper.toCityEntity(request);
+        
+        // Load and set province if provinceId provided
+        if (request.provinceId() != null) {
+            var province = provinceRepository.findById(request.provinceId())
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy tỉnh/thành phố với ID: " + request.provinceId()));
+            city.setProvince(province);
+        }
+        
         return cityRepository.save(city);
     }
 
@@ -68,6 +78,16 @@ public class CityServiceImpl implements CityService {
         if (request.code() != null) city.setCode(request.code());
         if (request.latitude() != null) city.setLatitude(request.latitude());
         if (request.longitude() != null) city.setLongitude(request.longitude());
+        
+        if (request.provinceId() != null) {
+            var province = provinceRepository.findById(request.provinceId())
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy tỉnh/thành phố với ID: " + request.provinceId()));
+            city.setProvince(province);
+        } else {
+            city.setProvince(null);
+        }
+        
+        if (request.hotelCount() != null) city.setHotelCount(request.hotelCount());
 
         return cityRepository.save(city);
     }
