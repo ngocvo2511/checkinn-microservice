@@ -11,7 +11,7 @@ spring:
           enabled: true
           lower-case-service-id: true
       globalcors:
-        cors-configurations:
+        corsConfigurations:
           "[/**]":
             allowedOrigins:
               - "http://localhost:3000"
@@ -28,6 +28,10 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/user/**
+        - id: hotel-service
+          uri: lb://hotel-service
+          predicates:
+            - Path=/hotels/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 

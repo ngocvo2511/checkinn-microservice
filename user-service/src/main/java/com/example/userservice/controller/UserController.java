@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<UserProfileDto> getProfile(@RequestHeader("Authorization") String authHeader) {
         System.out.println("[UserController] GET /profile - Auth header: " + authHeader);
-        Long userId = extractUserIdFromToken(authHeader);
+        UUID userId = extractUserIdFromToken(authHeader);
         System.out.println("[UserController] Extracted userId: " + userId);
         UserProfileDto profile = userService.getUserProfile(userId);
         System.out.println("[UserController] Retrieved profile: " + profile);
@@ -31,11 +33,11 @@ public class UserController {
     public ResponseEntity<UserProfileDto> updateProfile(
             @RequestHeader("Authorization") String authHeader,
             @RequestBody UpdateProfileDto dto) {
-        Long userId = extractUserIdFromToken(authHeader);
+        UUID userId = extractUserIdFromToken(authHeader);
         return ResponseEntity.ok(userService.updateUserProfile(userId, dto));
     }
 
-    private Long extractUserIdFromToken(String authHeader) {
+    private UUID extractUserIdFromToken(String authHeader) {
         System.out.println("[UserController] extractUserIdFromToken - authHeader: " + authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             System.out.println("[UserController] Invalid auth header format");
@@ -44,7 +46,7 @@ public class UserController {
 
         String token = authHeader.substring(7);
         System.out.println("[UserController] Extracted token: " + token);
-        Long userId = jwtService.extractUserId(token);
+        UUID userId = jwtService.extractUserId(token);
         System.out.println("[UserController] Extracted userId: " + userId);
         return userId;
     }

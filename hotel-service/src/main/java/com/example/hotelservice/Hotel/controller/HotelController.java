@@ -8,7 +8,9 @@ import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,10 +33,10 @@ public class HotelController {
     // -------------------------------------------------------
     @PostMapping
     public ResponseEntity<HotelResponse> createHotel(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @RequestBody HotelCreateRequest request
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var saved = hotelService.createHotel(request, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(saved));
@@ -45,11 +47,11 @@ public class HotelController {
     // -------------------------------------------------------
     @PutMapping("/{hotelId}")
     public ResponseEntity<HotelResponse> updateHotel(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
             @RequestBody HotelUpdateRequest request
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var updated = hotelService.updateHotel(hotelId, request, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
@@ -69,9 +71,9 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/owner")
     public ResponseEntity<?> getHotelsByOwner(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var hotels = hotelService.getByOwner(ownerId)
                 .stream()
@@ -99,10 +101,10 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/owner/{cityId}")
     public ResponseEntity<?> getHotelsByOwnerAndCity(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID cityId
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var hotels = hotelService.getByOwnerAndCity(ownerId, cityId)
                 .stream()
@@ -113,11 +115,8 @@ public class HotelController {
     }
     @PutMapping("/{hotelId}/approve")
     public ResponseEntity<?> approveHotel(
-            @RequestHeader("X-ADMIN") boolean isAdmin,
             @PathVariable UUID hotelId
     ) {
-        if (!isAdmin) return ResponseEntity.status(403).build();
-
         hotelService.approveHotel(hotelId);
         return ResponseEntity.ok("Hotel approved");
     }
@@ -125,22 +124,16 @@ public class HotelController {
     // ADMIN: Từ chối
     @PostMapping("/{hotelId}/reject")
     public ResponseEntity<?> rejectHotel(
-            @RequestHeader("X-ADMIN") boolean isAdmin,
             @PathVariable UUID hotelId,
             @RequestBody HotelApproveRequest request
     ) {
-        if (!isAdmin) return ResponseEntity.status(403).build();
-
         hotelService.rejectHotel(hotelId);
         return ResponseEntity.ok("Hotel rejected: " + request.note());
     }
 
     // Admin activate
     @PatchMapping("/{hotelId}/activate")
-    public ResponseEntity<?> activateHotel(@RequestHeader("X-ADMIN") boolean isAdmin,
-                                           @PathVariable UUID hotelId) {
-        if (!isAdmin) return ResponseEntity.status(403).build();
-
+    public ResponseEntity<?> activateHotel(@PathVariable UUID hotelId) {
         hotelService.activateHotel(hotelId);
         return ResponseEntity.ok("Hotel activated");
     }
@@ -148,11 +141,8 @@ public class HotelController {
     // Admin deactivate
     @PutMapping("/{hotelId}/deactivate")
     public ResponseEntity<?> deactivateHotel(
-            @RequestHeader("X-ADMIN") boolean isAdmin,
             @PathVariable UUID hotelId
     ) {
-        if (!isAdmin) return ResponseEntity.status(403).build();
-
         hotelService.deactivateHotel(hotelId);
         return ResponseEntity.ok("Hotel deactivated");
     }

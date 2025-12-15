@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import io.grpc.StatusRuntimeException;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -29,12 +31,12 @@ public class AuthService {
             );
 
             // Sinh token
-            String token = jwtService.generateToken(user.getId(), user.getRole());
+            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
 
             // Trả về response
             return AuthResponseDto.builder()
                     .token(token)
-                    .userId(user.getId())
+                    .userId(UUID.fromString(user.getId()))
                     .email(user.getEmail())
                     .fullName(user.getFullName())
                     .role(user.getRole())
@@ -58,12 +60,12 @@ public class AuthService {
             );
 
             // Sinh token
-            String token = jwtService.generateToken(user.getId(), user.getRole());
+            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
 
             // Trả về response
             return AuthResponseDto.builder()
                     .token(token)
-                    .userId(user.getId())
+                    .userId(UUID.fromString(user.getId()))
                     .email(user.getEmail())
                     .fullName(user.getFullName())
                     .role(user.getRole())

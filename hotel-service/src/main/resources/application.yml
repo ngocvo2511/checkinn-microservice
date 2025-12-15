@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/checkinn_hotel
     username: postgres
-    password: 2731
+    password: password
     driver-class-name: org.postgresql.Driver
   config:
     import: "optional:configserver:"
@@ -41,3 +41,5 @@ management:
     web:
       exposure:
         include: health,info
+jwt:
+  secret: THIS_IS_SUPER_SECRET_KEY_12345678901234567890

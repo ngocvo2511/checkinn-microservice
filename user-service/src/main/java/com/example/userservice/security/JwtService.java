@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -17,7 +18,7 @@ public class JwtService {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String generateToken(Long userId, String role) {
+    public String generateToken(UUID userId, String role) {
         return Jwts.builder()
                 .setSubject(userId.toString())
                 .claim("role", role)
@@ -27,7 +28,7 @@ public class JwtService {
                 .compact();
     }
 
-    public String generateToken(Long userId) {
+    public String generateToken(UUID userId) {
         return generateToken(userId, "CUSTOMER");
     }
 
@@ -38,8 +39,8 @@ public class JwtService {
                 .parseClaimsJws(token);
     }
 
-    public Long extractUserId(String token) {
+    public UUID extractUserId(String token) {
         Jws<Claims> claims = parseToken(token);
-        return Long.parseLong(claims.getBody().getSubject());
+        return UUID.fromString(claims.getBody().getSubject());
     }
 }

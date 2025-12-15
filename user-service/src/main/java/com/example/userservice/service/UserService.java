@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -47,7 +49,7 @@ public class UserService {
         return userRepository.save(user); // cascade sẽ tự lưu profile
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -69,7 +71,7 @@ public class UserService {
         return new UserLoginResult(user, profile);
     }
 
-        public UserProfileDto getUserProfile(Long userId) {
+        public UserProfileDto getUserProfile(UUID userId) {
         System.out.println("[UserService] getUserProfile - userId: " + userId);
 
         User user = getUserById(userId);
@@ -103,7 +105,7 @@ public class UserService {
         return userProfileRepository.save(newProfile);
         }
 
-    public UserProfileDto updateUserProfile(Long userId, UpdateProfileDto dto) {
+    public UserProfileDto updateUserProfile(UUID userId, UpdateProfileDto dto) {
         User user = getUserById(userId);
         UserProfile profile = userProfileRepository.findByUserId(userId)
             .orElseGet(() -> createEmptyProfile(user));

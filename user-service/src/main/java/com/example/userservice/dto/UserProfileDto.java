@@ -2,13 +2,14 @@ package com.example.userservice.dto;
 
 import lombok.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserProfileDto {
-    private Long id;
+    private UUID id;
     private String fullName;
     private String email;
     private String phone;

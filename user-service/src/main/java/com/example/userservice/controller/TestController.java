@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/test")
@@ -15,7 +16,7 @@ public class TestController {
     private final JwtService jwtService;
 
     @GetMapping("/generate-token/{userId}")
-    public Map<String, String> generateToken(@PathVariable Long userId) {
+    public Map<String, String> generateToken(@PathVariable UUID userId) {
         String token = jwtService.generateToken(userId);
         Map<String, String> response = new HashMap<>();
         response.put("userId", userId.toString());

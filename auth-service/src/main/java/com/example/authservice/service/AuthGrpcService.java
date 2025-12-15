@@ -6,6 +6,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
+import java.util.UUID;
 
 
 @GrpcService
@@ -27,7 +28,7 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
             );
 
             // 2. Sinh token
-            String token = jwtService.generateToken(user.getId(), user.getRole());
+            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
 
             // 3. Trả về
             AuthLoginResponse response = AuthLoginResponse.newBuilder()
@@ -53,11 +54,11 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
         try {
             var claims = jwtService.parseToken(request.getToken());
 
-            long userId = Long.parseLong(claims.getBody().getSubject());
+            UUID userId = UUID.fromString(claims.getBody().getSubject());
             String role = claims.getBody().get("role", String.class);
 
             ValidateTokenResponse response = ValidateTokenResponse.newBuilder()
-                    .setUserId(userId)
+                    .setUserId(String.valueOf(userId))
                     .setRole(role)
                     .build();
 

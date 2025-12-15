@@ -4,6 +4,7 @@ import com.example.userservice.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user_profiles")
@@ -14,8 +15,8 @@ import java.time.LocalDate;
 public class UserProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @Column(nullable = false, length = 100)
     private String fullName;     // bắt buộc khi tạo account

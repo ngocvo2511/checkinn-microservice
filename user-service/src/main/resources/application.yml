@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/checkinn_user
     username: postgres
-    password: 2731
+    password: password
   jpa:
     hibernate:
       ddl-auto: update

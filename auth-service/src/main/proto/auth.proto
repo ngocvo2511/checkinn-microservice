@@ -16,7 +16,7 @@ message AuthLoginRequest {
 
 message AuthLoginResponse {
   string token = 1;
-  int64 userId = 2;
+  string userId = 2;
   string role = 3;
   string email = 4;
   string fullName = 5;
@@ -27,6 +27,6 @@ message ValidateTokenRequest {
 }
 
 message ValidateTokenResponse {
-  int64 userId = 1;
+  string userId = 1;
   string role = 2;
 }

@@ -6,7 +6,6 @@ server:
   port: 8081
 
 jwt:
-  secret: your-super-secret-jwt-key-change-this-in-production-min-256-bits
   expiration: 86400000
 
 grpc:

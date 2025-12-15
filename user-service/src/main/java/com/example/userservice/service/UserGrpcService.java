@@ -10,6 +10,8 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
+import java.util.UUID;
+
 
 @GrpcService
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             );
 
             UserResponse response = UserResponse.newBuilder()
-                    .setId(user.getId())
+                    .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
                     .setFullName(user.getProfile().getFullName())
@@ -54,10 +56,10 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                             StreamObserver<UserResponse> responseObserver) {
 
         try {
-            User user = userService.getUserById(request.getId());
+            User user = userService.getUserById(UUID.fromString(request.getId()));
 
             UserResponse response = UserResponse.newBuilder()
-                    .setId(user.getId())
+                    .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
                     .setFullName(user.getProfile().getFullName())
@@ -86,7 +88,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             UserProfile profile = result.getProfile();
 
             UserResponse.Builder res = UserResponse.newBuilder()
-                    .setId(user.getId())
+                    .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
                     .setRole(user.getRole().name());
