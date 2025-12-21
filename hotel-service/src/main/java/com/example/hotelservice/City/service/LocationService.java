@@ -30,13 +30,11 @@ public class LocationService {
             locations.add(new LocationResponse(
                     province.getId(),
                     province.getName(),
-                    province.getCode(),
                     province.getLatitude(),
                     province.getLongitude(),
                     province.getHotelCount(),
                     province.getCreatedAt(),
                     null,  // provinces không có parent
-                    null,
                     "PROVINCE"
             ));
         }
@@ -48,13 +46,11 @@ public class LocationService {
             locations.add(new LocationResponse(
                     city.getId(),
                     city.getName(),
-                    city.getCode(),
                     city.getLatitude(),
                     city.getLongitude(),
                     city.getHotelCount(),
                     city.getCreatedAt(),
                     parent != null ? parent.getName() : null,
-                    parent != null ? parent.getCode() : null,
                     "CITY"
             ));
         }
@@ -72,17 +68,14 @@ public class LocationService {
         // Search in provinces
         var provinces = provinceRepository.findAll();
         for (Province p : provinces) {
-            if (p.getName().toLowerCase().contains(q) || 
-                (p.getCode() != null && p.getCode().toLowerCase().contains(q))) {
+            if (p.getName().toLowerCase().contains(q)) {
                 results.add(new LocationResponse(
                         p.getId(),
                         p.getName(),
-                        p.getCode(),
                         p.getLatitude(),
                         p.getLongitude(),
                         p.getHotelCount(),
                         p.getCreatedAt(),
-                        null,
                         null,
                         "PROVINCE"
                 ));
@@ -92,19 +85,16 @@ public class LocationService {
         // Search in cities
         var cities = cityRepository.findAll();
         for (City c : cities) {
-            if (c.getName().toLowerCase().contains(q) || 
-                (c.getCode() != null && c.getCode().toLowerCase().contains(q))) {
+            if (c.getName().toLowerCase().contains(q)) {
                 var parent = c.getProvince();
                 results.add(new LocationResponse(
                         c.getId(),
                         c.getName(),
-                        c.getCode(),
                         c.getLatitude(),
                         c.getLongitude(),
                         c.getHotelCount(),
                         c.getCreatedAt(),
                         parent != null ? parent.getName() : null,
-                        parent != null ? parent.getCode() : null,
                         "CITY"
                 ));
             }

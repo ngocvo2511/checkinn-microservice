@@ -53,12 +53,6 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public City getByCode(String code) {
-        return cityRepository.findByCode(code)
-                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy thành phố với code: " + code));
-    }
-
-    @Override
     public List<City> getAllCities() {
         return cityRepository.findAll();
     }
@@ -75,7 +69,6 @@ public class CityServiceImpl implements CityService {
             city.setName(request.name());
         }
 
-        if (request.code() != null) city.setCode(request.code());
         if (request.latitude() != null) city.setLatitude(request.latitude());
         if (request.longitude() != null) city.setLongitude(request.longitude());
         

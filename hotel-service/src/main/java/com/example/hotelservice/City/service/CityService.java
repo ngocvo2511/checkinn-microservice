@@ -10,7 +10,6 @@ public interface CityService {
     City createCity(CityCreateRequest request);
     City getById(UUID cityId);
     City getByName(String name);
-    City getByCode(String code);
     List<City> getAllCities();
     City updateCity(UUID cityId, CityCreateRequest request);
     void deleteCity(UUID cityId);

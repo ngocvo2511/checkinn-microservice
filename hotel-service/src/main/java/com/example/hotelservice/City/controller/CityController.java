@@ -82,15 +82,6 @@ public class CityController {
     }
 
     /**
-     * Lấy thành phố theo code
-     */
-    @GetMapping("/search/by-code")
-    public ResponseEntity<CityResponse> getCityByCode(@RequestParam String code) {
-        var city = cityService.getByCode(code);
-        return ResponseEntity.ok(toResponse(city));
-    }
-
-    /**
      * Cập nhật thành phố (Admin only)
      */
     @PutMapping("/{cityId}")
@@ -117,13 +108,11 @@ public class CityController {
         return new CityResponse(
                 city.getId(),
                 city.getName(),
-                city.getCode(),
                 city.getLatitude(),
                 city.getLongitude(),
                 city.getHotelCount(),
                 city.getCreatedAt(),
-                parent != null ? parent.getName() : null,
-                parent != null ? parent.getCode() : null
+                parent != null ? parent.getName() : null
         );
     }
 }

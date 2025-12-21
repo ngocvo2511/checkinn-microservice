@@ -15,6 +15,9 @@ public abstract class RoomTypeMapper {
 
     @Autowired
     protected ObjectMapper objectMapper;
+    
+    @Autowired
+    protected com.example.hotelservice.MediaAsset.mapper.MediaAssetMapper mediaAssetMapper;
 
 
     // ---------------- CreateRoomTypeRequest -> RoomType ----------------
@@ -31,7 +34,7 @@ public abstract class RoomTypeMapper {
 
     @Mapping(target = "capacity", expression = "java(readCapacity(entity.getCapacity()))")
     @Mapping(target = "amenities", expression = "java(readAmenities(entity.getAmenities()))")
-    @Mapping(target = "mediaAssets", ignore = true)
+    @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(entity.getMediaAssets()))")
     public abstract RoomTypeResponse toRoomTypeResponse(RoomType entity);
 
 
@@ -50,5 +53,14 @@ public abstract class RoomTypeMapper {
     protected List<String> readAmenities(String json) {
         try { return objectMapper.readValue(json, List.class); }
         catch (Exception ex) { throw new RuntimeException(ex); }
+    }
+
+    protected java.util.List<com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse> toMediaAssetResponses(
+            java.util.List<com.example.hotelservice.MediaAsset.entity.MediaAsset> assets
+    ) {
+        if (assets == null) return java.util.List.of();
+        return assets.stream()
+                .map(mediaAssetMapper::toMediaAssetResponse)
+                .toList();
     }
 }

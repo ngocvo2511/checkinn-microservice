@@ -5,8 +5,10 @@ import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
 import com.example.hotelservice.Room.entity.RoomType;
 import jakarta.persistence.*;
+import jakarta.persistence.ConstraintMode;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Where;
 import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
@@ -78,17 +80,20 @@ public class Hotel {
     // ===================
     // HOTEL 1 - N ROOMTYPE
     // ===================
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private List<RoomType> roomTypes;
+        @OneToMany(fetch = FetchType.LAZY)
+        @JoinColumn(name = "hotel_id", referencedColumnName = "id", insertable = false, updatable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+        private List<RoomType> roomTypes;
 
 
     // ===================
     // HOTEL 1 - N MEDIA_ASSET (targetType = HOTEL)
     // ===================
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "target_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private List<MediaAsset> mediaAssets;
+        @OneToMany(fetch = FetchType.LAZY)
+        @JoinColumn(name = "target_id", referencedColumnName = "id", insertable = false, updatable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+        @Where(clause = "target_type = 'HOTEL'")
+        private List<MediaAsset> mediaAssets;
 
 
     @PrePersist

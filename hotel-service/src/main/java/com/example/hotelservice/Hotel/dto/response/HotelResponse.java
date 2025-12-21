@@ -2,8 +2,11 @@ package com.example.hotelservice.Hotel.dto.response;
 
 import com.example.hotelservice.City.dto.response.CityResponse;
 import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
+import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.Room.dto.response.RoomTypeResponse;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,10 +21,11 @@ public record HotelResponse(
         Short starRating,
         HotelAddressDto address,
         Boolean isActive,
-        String approvedStatus,
+        HotelApprovalStatus approvedStatus,
         CityResponse city,
         Instant createdAt,
         Instant updatedAt,
+        java.math.BigDecimal lowestPrice,
         List<RoomTypeResponse> roomTypes,
         List<MediaAssetResponse> mediaAssets
 ) {}

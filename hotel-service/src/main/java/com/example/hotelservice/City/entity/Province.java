@@ -23,9 +23,6 @@ public class Province {
     @Column(nullable = false, length = 255, unique = true)
     private String name;
 
-    @Column(length = 10, unique = true)
-    private String code;
-
     @Column(name = "latitude")
     private Double latitude;
 

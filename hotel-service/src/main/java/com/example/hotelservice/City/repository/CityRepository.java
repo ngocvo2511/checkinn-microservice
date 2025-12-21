@@ -10,6 +10,5 @@ import java.util.UUID;
 @Repository
 public interface CityRepository extends JpaRepository<City, UUID> {
     Optional<City> findByName(String name);
-    Optional<City> findByCode(String code);
     boolean existsByName(String name);
 }

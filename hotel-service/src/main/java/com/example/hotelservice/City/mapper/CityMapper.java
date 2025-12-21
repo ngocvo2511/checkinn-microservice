@@ -12,6 +12,5 @@ public interface CityMapper {
     City toCityEntity(CityCreateRequest request);
 
     @Mapping(target = "parentName", expression = "java(null)")
-    @Mapping(target = "parentCode", expression = "java(null)")
     CityResponse toCityResponse(City entity);
 }

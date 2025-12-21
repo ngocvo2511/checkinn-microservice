@@ -16,6 +16,7 @@ public record RoomTypeResponse(
         CapacityDto capacity,
         List<String> amenities,
         Boolean isActive,
+        Integer totalRooms,
         Instant createdAt,
         Instant updatedAt,
         List<MediaAssetResponse> mediaAssets

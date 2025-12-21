@@ -3,8 +3,10 @@ package com.example.hotelservice.Room.entity;
 import com.example.hotelservice.Hotel.entity.Hotel;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
 import jakarta.persistence.*;
+import jakarta.persistence.ConstraintMode;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Where;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
@@ -45,6 +47,9 @@ public class RoomType {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
 
+    @Column(name = "total_rooms")
+    private Integer totalRooms;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -56,7 +61,8 @@ public class RoomType {
     // ROOMTYPE N - 1 HOTEL (optional)
     // ===================
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", insertable = false, updatable = false)
+    @JoinColumn(name = "hotel_id", insertable = false, updatable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Hotel hotel;
 
 
@@ -64,7 +70,9 @@ public class RoomType {
     // ROOMTYPE 1 - N MEDIA_ASSET (targetType = ROOM_TYPE)
     // ===================
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "target_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "target_id", referencedColumnName = "id", insertable = false, updatable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Where(clause = "target_type = 'ROOM_TYPE'")
     private List<MediaAsset> mediaAssets;
 
 

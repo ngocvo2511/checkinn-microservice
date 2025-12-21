@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public record CityCreateRequest(
         @NotBlank String name,
-        String code,
         Double latitude,
         Double longitude,
         UUID provinceId,

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public record ProvinceCreateRequest(
         String name,
-        String code,
         Double latitude,
         Double longitude
 ) {}
