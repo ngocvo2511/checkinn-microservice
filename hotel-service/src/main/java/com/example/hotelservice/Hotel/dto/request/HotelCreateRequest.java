@@ -1,7 +1,11 @@
 package com.example.hotelservice.Hotel.dto.request;
 
+import com.example.hotelservice.Amenity.dto.request.AmenityRequest;
+import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
+import com.example.hotelservice.Policy.dto.request.PolicyRequest;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
 import java.util.UUID;
 
 public record HotelCreateRequest(
@@ -10,11 +14,17 @@ public record HotelCreateRequest(
         Short starRating,
         @NotNull UUID cityId,
         @NotNull HotelAddressDto address,
+        @Email String contactEmail,
+        @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number") String contactPhone,
 
         // ====== Tài liệu pháp lý ======
         @NotBlank String businessLicenseNumber,
-        String taxId,
+        @NotBlank String taxId,
         String operationLicenseNumber,
-        @NotBlank String ownerIdentityNumber
+        @NotBlank String ownerIdentityNumber,
+
+        // ====== Chính sách và tiện ích ======
+        List<PolicyRequest> policies,
+        List<AmenityRequest> amenityCategories
 ) {}
 

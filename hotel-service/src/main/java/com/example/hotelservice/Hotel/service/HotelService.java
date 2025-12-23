@@ -4,6 +4,7 @@ import com.example.hotelservice.Hotel.dto.request.HotelCreateRequest;
 import com.example.hotelservice.Hotel.dto.request.HotelUpdateRequest;
 import com.example.hotelservice.Hotel.dto.response.HotelResponse;
 import com.example.hotelservice.Hotel.dto.response.MyHotelShortResponse;
+import com.example.hotelservice.Hotel.dto.response.PendingHotelDetailResponse;
 import com.example.hotelservice.Hotel.entity.Hotel;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface HotelService {
     List<Hotel> getByCity(UUID cityId);
 
     List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId);
+
+    List<Hotel> getPendingHotels();
+
+    PendingHotelDetailResponse getPendingHotelDetail(UUID hotelId);
 
     void activateHotel(UUID hotelId);
 
