@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/checkinn_booking
+    username: postgres
+    password: 2731
+    driver-class-name: org.postgresql.Driver
+  config:
+    import: "optional:configserver:"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+server:
+  port: 8084
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+
+grpc:
+  server:
+    port: 9093
+
+hotel:
+  service:
+    url: http://hotel-service
+
+vnpay:
+  tmnCode: W0MI1ZMG
+  hashSecret: W5AF1T7ITXWOP1PC960RXCWYW0UWBBYZ
+  returnUrl: http://localhost:3000/booking/payment/return
+  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html

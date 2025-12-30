@@ -31,7 +31,8 @@ spring:
           predicates:
             - Path=/api/user/**
           filters:
-            - RewritePath=/api/user/(?<segment>.*), /$\{segment}
+            # Keep the original path because user-service already exposes /api/user/**
+            # Removing the RewritePath avoids stripping the prefix and causing 400/404 downstream
         - id: hotel-service
           uri: lb://hotel-service
           predicates:

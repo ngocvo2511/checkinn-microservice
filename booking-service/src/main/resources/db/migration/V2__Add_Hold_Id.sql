@@ -1,0 +1,1 @@
+ALTER TABLE bookings ADD COLUMN hold_id VARCHAR(255);

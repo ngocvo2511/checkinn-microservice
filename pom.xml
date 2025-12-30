@@ -12,5 +12,11 @@
     <modules>
         <module>user-service</module>
         <module>auth-service</module>
+        <module>hotel-service</module>
+        <module>media-service</module>
+        <module>booking-service</module>
+        <module>eureka-server</module>
+        <module>config-server</module>
+        <module>api-gateway</module>
     </modules>
 </project>

@@ -41,5 +41,10 @@ management:
     web:
       exposure:
         include: health,info
+
 jwt:
   secret: THIS_IS_SUPER_SECRET_KEY_12345678901234567890
+
+hold:
+  expiry:
+    minutes: 15

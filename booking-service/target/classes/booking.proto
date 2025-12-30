@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.bookingservice.grpc";
+option java_outer_classname = "BookingProto";
+
+package booking;
+
+service BookingGrpcService {
+  rpc CreateBooking (CreateBookingRequest) returns (BookingResponse);
+  rpc GetBooking (GetBookingRequest) returns (BookingResponse);
+}
+
+message CreateBookingRequest {
+  string userId = 1;
+  string hotelId = 2;
+  string hotelName = 3;
+  string checkInDate = 4; // ISO yyyy-MM-dd
+  string checkOutDate = 5;
+  int32 adults = 6;
+  int32 children = 7;
+  string contactName = 8;
+  string contactEmail = 9;
+  string contactPhone = 10;
+  string specialRequests = 11;
+  string voucherCode = 12;
+  repeated CreateBookingItemRequest items = 13;
+}
+
+message CreateBookingItemRequest {
+  string roomTypeId = 1;
+  string roomTypeName = 2;
+  string ratePlanId = 3;
+  string checkInDate = 4;
+  string checkOutDate = 5;
+  int32 quantity = 6;
+  double unitPrice = 7;
+  int32 nights = 8;
+  string guestName = 9;
+  string cancellationPolicy = 10;
+}
+
+message GetBookingRequest {
+  string id = 1;
+}
+
+message BookingResponse {
+  string id = 1;
+  string userId = 2;
+  string hotelId = 3;
+  string hotelName = 4;
+  string checkInDate = 5;
+  string checkOutDate = 6;
+  int32 adults = 7;
+  int32 children = 8;
+  string status = 9;
+  double totalAmount = 10;
+  double paidAmount = 11;
+  string voucherCode = 12;
+  double voucherDiscount = 13;
+  string contactName = 14;
+  string contactEmail = 15;
+  string contactPhone = 16;
+  string specialRequests = 17;
+  repeated BookingItemResponse items = 18;
+  string createdAt = 19; // ISO datetime
+  string updatedAt = 20;
+}
+
+message BookingItemResponse {
+  string id = 1;
+  string roomTypeId = 2;
+  string roomTypeName = 3;
+  string ratePlanId = 4;
+  string checkInDate = 5;
+  string checkOutDate = 6;
+  int32 quantity = 7;
+  double unitPrice = 8;
+  int32 nights = 9;
+  double subtotal = 10;
+  double taxFee = 11;
+  string cancellationPolicy = 12;
+  string guestName = 13;
+}
