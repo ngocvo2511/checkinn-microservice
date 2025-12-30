@@ -1,5 +1,6 @@
 package com.example.hotelservice.Hotel.entity;
 
+import com.example.hotelservice.Amenity.entity.HotelAmenityCategory;
 import com.example.hotelservice.City.entity.City;
 import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
@@ -51,6 +52,13 @@ public class Hotel {
     @Column(columnDefinition = "jsonb", nullable = false)
     private String address;
 
+    @Column(name = "contact_email", length = 100)
+    private String contactEmail;
+
+    @Column(name = "contact_phone", length = 20)
+    private String contactPhone;
+
+    //Giấy tờ chứng minh
     @Column(name = "business_license_number", length = 50, nullable = false)
     private String businessLicenseNumber;
 
@@ -62,6 +70,7 @@ public class Hotel {
 
     @Column(name = "owner_identity_number", length = 50)
     private String ownerIdentityNumber;
+
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;

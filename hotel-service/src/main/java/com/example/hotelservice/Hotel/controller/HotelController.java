@@ -4,9 +4,10 @@ import com.example.hotelservice.Hotel.dto.request.HotelApproveRequest;
 import com.example.hotelservice.Hotel.dto.request.HotelCreateRequest;
 import com.example.hotelservice.Hotel.dto.request.HotelUpdateRequest;
 import com.example.hotelservice.Hotel.dto.response.HotelResponse;
+import com.example.hotelservice.Hotel.dto.response.PendingHotelDetailResponse;
+import com.example.hotelservice.Hotel.dto.response.PendingHotelResponse;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,10 @@ public class HotelController {
 
     private UUID getOwnerId(String header) {
         return UUID.fromString(header);
+    }
+    private Boolean verifyAdmin(Jwt jwt) {
+        String role = jwt.getClaimAsString("role");
+        return role != null && role.equals("ADMIN");
     }
 
     // -------------------------------------------------------
@@ -65,6 +70,22 @@ public class HotelController {
         var hotel = hotelService.getById(hotelId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(hotel));
     }
+    //Lấy danh sách khách sạn chờ duyệt
+    @GetMapping("/pending")
+    public ResponseEntity<List<PendingHotelResponse>> getPendingHotels() {
+        List<PendingHotelResponse> pendingHotels = hotelService.getPendingHotels()
+                .stream()
+                .map(hotelMapper::toPendingHotelResponse)
+                .toList();
+        return ResponseEntity.ok(pendingHotels);
+    }
+
+    @GetMapping("/pending/{hotelId}")
+    public ResponseEntity<PendingHotelDetailResponse> getPendingHotelById(@PathVariable UUID hotelId){
+
+        return ResponseEntity.ok(hotelService.getPendingHotelDetail(hotelId));
+    }
+
 
     // -------------------------------------------------------
     // 4. Lấy danh sách khách sạn của owner
@@ -74,7 +95,6 @@ public class HotelController {
             @AuthenticationPrincipal Jwt jwt
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
-
         var hotels = hotelService.getByOwner(ownerId)
                 .stream()
                 .map(hotelMapper::toHotelResponse)
@@ -115,8 +135,12 @@ public class HotelController {
     }
     @PutMapping("/{hotelId}/approve")
     public ResponseEntity<?> approveHotel(
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId
     ) {
+        if(!verifyAdmin(jwt)){
+            return ResponseEntity.status(403).body("Access denied");
+        }
         hotelService.approveHotel(hotelId);
         return ResponseEntity.ok("Hotel approved");
     }
@@ -124,9 +148,13 @@ public class HotelController {
     // ADMIN: Từ chối
     @PostMapping("/{hotelId}/reject")
     public ResponseEntity<?> rejectHotel(
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
             @RequestBody HotelApproveRequest request
     ) {
+        if(!verifyAdmin(jwt)){
+            return ResponseEntity.status(403).body("Access denied");
+        }
         hotelService.rejectHotel(hotelId);
         return ResponseEntity.ok("Hotel rejected: " + request.note());
     }

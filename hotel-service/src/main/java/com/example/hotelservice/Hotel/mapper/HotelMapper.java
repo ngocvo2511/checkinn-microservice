@@ -1,12 +1,20 @@
 package com.example.hotelservice.Hotel.mapper;
 
+import com.checkinn.user.grpc.UserResponse;
+import com.example.hotelservice.Amenity.dto.response.AmenityResponse;
+import com.example.hotelservice.Hotel.dto.response.OwnerResponse;
+import com.example.hotelservice.Hotel.dto.response.PendingHotelDetailResponse;
+import com.example.hotelservice.Hotel.dto.response.PendingHotelResponse;
 import com.example.hotelservice.Hotel.entity.Hotel;
 import com.example.hotelservice.Hotel.dto.request.HotelCreateRequest;
 import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
 import com.example.hotelservice.Hotel.dto.response.HotelResponse;
+import com.example.hotelservice.Policy.dto.response.PolicyResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class HotelMapper {
@@ -41,6 +49,71 @@ public abstract class HotelMapper {
     @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(entity.getMediaAssets()))")
     @Mapping(target = "lowestPrice", expression = "java(calculateLowestPrice(entity.getRoomTypes()))")
     public abstract HotelResponse toHotelResponse(Hotel entity);
+
+    // ----------- Hotel -> PendingHotelResponse (record) -----------
+    public PendingHotelResponse toPendingHotelResponse(Hotel hotel) {
+
+        if (hotel == null) {
+            return null;
+        }
+
+        return PendingHotelResponse.builder()
+                .id(hotel.getId())
+                .name(hotel.getName())
+                .address(readAddress(hotel.getAddress())
+                )
+                .starRating(hotel.getStarRating())
+                .approvedStatus(hotel.getApprovedStatus())
+                .createdAt(hotel.getCreatedAt())
+                .build();
+    }
+
+    public PendingHotelDetailResponse toPendingHotelDetailResponse(Hotel hotel,
+                                                                   List<PolicyResponse> policies,
+                                                                   List<AmenityResponse> amenityCategories,
+                                                                   UserResponse ownerInfo) {
+
+        if (hotel == null) {
+            return null;
+        }
+
+        return PendingHotelDetailResponse.builder()
+                .id(hotel.getId())
+                .name(hotel.getName())
+                .description(hotel.getDescription())
+                .starRating(hotel.getStarRating())
+
+                .address(readAddress(hotel.getAddress()))
+
+                .contactEmail(hotel.getContactEmail())
+                .contactPhone(hotel.getContactPhone())
+
+                .createdAt(hotel.getCreatedAt())
+                .approvedStatus(hotel.getApprovedStatus())
+
+                .owner(mapOwner(ownerInfo))
+
+                .businessLicenseNumber(hotel.getBusinessLicenseNumber())
+                .taxId(hotel.getTaxId())
+                .operationLicenseNumber(hotel.getOperationLicenseNumber())
+                .ownerIdentityNumber(hotel.getOwnerIdentityNumber())
+
+                .policies(policies)
+                .amenityCategories(amenityCategories)
+
+                .mediaAssets(toMediaAssetResponses(hotel.getMediaAssets()))
+                .build();
+    }
+
+    private OwnerResponse mapOwner(UserResponse user) {
+        return OwnerResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .username(user.getUsername())
+                .build();
+    }
 
 
     // ---------- JSON Helpers ----------

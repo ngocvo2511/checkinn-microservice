@@ -1,8 +1,14 @@
 server:
-  port: 8082
+  port: 8084
+
+spring:
+  application:
+    name: media-service
 
 eureka:
   client:
+    webclient:
+      enabled: true
     register-with-eureka: true
     fetch-registry: true
     service-url:
