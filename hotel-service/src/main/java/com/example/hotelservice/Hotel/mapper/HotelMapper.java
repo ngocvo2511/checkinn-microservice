@@ -15,6 +15,8 @@ import com.example.hotelservice.Hotel.dto.response.HotelResponse;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
 import com.example.hotelservice.Policy.dto.response.PolicyResponse;
+import com.example.hotelservice.Question.dto.QuestionResponse;
+import com.example.hotelservice.Question.repository.QuestionRepository;
 import com.example.hotelservice.Room.dto.response.RoomTypeResponse;
 import com.example.hotelservice.Room.entity.RoomType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +45,9 @@ public abstract class HotelMapper {
     @Autowired
     protected com.example.hotelservice.Policy.repository.HotelPolicyRepository hotelPolicyRepository;
 
+        @Autowired
+        protected QuestionRepository questionRepository;
+
     @Autowired
     protected com.example.hotelservice.Amenity.repository.HotelAmenityCategoryRepository hotelAmenityCategoryRepository;
 
@@ -68,6 +73,7 @@ public abstract class HotelMapper {
     @Mapping(target = "lowestPrice", expression = "java(calculateLowestPrice(entity.getRoomTypes()))")
     @Mapping(target = "policies", expression = "java(getPolicies(entity.getId()))")
     @Mapping(target = "amenityCategories", expression = "java(getAmenities(entity.getId()))")
+        @Mapping(target = "faqs", expression = "java(getQuestions(entity.getId()))")
     public abstract HotelResponse toHotelResponse(Hotel entity);
 
     // ----------- Hotel -> PendingHotelResponse (record) -----------
@@ -91,7 +97,8 @@ public abstract class HotelMapper {
     public PendingHotelDetailResponse toPendingHotelDetailResponse(Hotel hotel,
                                                                    List<PolicyResponse> policies,
                                                                    List<AmenityResponse> amenityCategories,
-                                                                   UserResponse ownerInfo) {
+                                                                   UserResponse ownerInfo,
+                                                                   List<QuestionResponse> faqs) {
 
         if (hotel == null) {
             return null;
@@ -120,6 +127,7 @@ public abstract class HotelMapper {
 
                 .policies(policies)
                 .amenityCategories(amenityCategories)
+                .faqs(faqs)
 
                 .mediaAssets(toMediaAssetResponses(hotel.getMediaAssets()))
                 .build();
@@ -184,6 +192,17 @@ public abstract class HotelMapper {
                 .map(p -> PolicyResponse.builder()
                         .title(p.getTitle())
                         .content(p.getContent())
+                        .build())
+                .toList();
+    }
+
+    protected List<QuestionResponse> getQuestions(UUID hotelId) {
+        if (hotelId == null) return List.of();
+        return questionRepository.findAllByHotelId(hotelId)
+                .stream()
+                .map(q -> QuestionResponse.builder()
+                        .question(q.getQuestion())
+                        .answer(q.getAnswer())
                         .build())
                 .toList();
     }

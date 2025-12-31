@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface HotelAmenityRepository extends JpaRepository<HotelAmenity, UUID> {
     List<HotelAmenity> findAllByHotelId(UUID hotelId);
+    void deleteAllByHotelId(UUID hotelId);
+    void deleteAllByCategory(com.example.hotelservice.Amenity.entity.HotelAmenityCategory category);
 }

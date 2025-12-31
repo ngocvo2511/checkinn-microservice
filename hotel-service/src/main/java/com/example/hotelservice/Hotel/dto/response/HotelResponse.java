@@ -6,6 +6,7 @@ import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
 import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.Policy.dto.response.PolicyResponse;
+import com.example.hotelservice.Question.dto.QuestionResponse;
 import com.example.hotelservice.Room.dto.response.RoomTypeResponse;
 import com.example.hotelservice.Amenity.dto.response.AmenityResponse;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -26,6 +27,7 @@ public record HotelResponse(
         String contactEmail,
         String contactPhone,
         List<PolicyResponse> policies,
+        List<QuestionResponse> faqs,
         List<AmenityResponse> amenityCategories,
         Boolean isActive,
         HotelApprovalStatus approvedStatus,
