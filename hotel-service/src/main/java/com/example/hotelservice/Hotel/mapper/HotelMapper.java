@@ -48,7 +48,40 @@ public abstract class HotelMapper {
     @Mapping(target = "roomTypes", expression = "java(toRoomTypeResponses(entity.getRoomTypes()))")
     @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(entity.getMediaAssets()))")
     @Mapping(target = "lowestPrice", expression = "java(calculateLowestPrice(entity.getRoomTypes()))")
+    @Mapping(target = "amenityCategories", ignore = true)
     public abstract HotelResponse toHotelResponse(Hotel entity);
+
+    /**
+     * Attach policies/amenities/amenityCategories to a base HotelResponse produced by MapStruct.
+     */
+    public HotelResponse toHotelResponseWithExtras(Hotel entity,
+                                                   java.util.List<String> policies,
+                                                   java.util.List<String> amenities,
+                                                   java.util.List<AmenityResponse> amenityCategories) {
+        HotelResponse base = toHotelResponse(entity);
+        return new HotelResponse(
+                base.id(),
+                base.ownerId(),
+                base.cityId(),
+                base.name(),
+                base.description(),
+                base.starRating(),
+                base.address(),
+                base.contactEmail(),
+                base.contactPhone(),
+                policies,
+                amenities,
+                base.isActive(),
+                base.approvedStatus(),
+                base.city(),
+                base.createdAt(),
+                base.updatedAt(),
+                base.lowestPrice(),
+                base.roomTypes(),
+                base.mediaAssets(),
+                amenityCategories
+        );
+    }
 
     // ----------- Hotel -> PendingHotelResponse (record) -----------
     public PendingHotelResponse toPendingHotelResponse(Hotel hotel) {

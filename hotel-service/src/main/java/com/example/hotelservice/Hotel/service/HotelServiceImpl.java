@@ -19,7 +19,7 @@ import com.example.hotelservice.Policy.entity.HotelPolicy;
 import com.example.hotelservice.Policy.repository.HotelPolicyRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +129,53 @@ public class HotelServiceImpl implements HotelService {
         return hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
     }
+
+    @Transactional(readOnly = true)
+        @Override
+        public com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId) {
+        Hotel hotel = getById(hotelId);
+
+        List<String> policies = hotelPolicyRepository.findAllByHotelId(hotelId)
+            .stream()
+            .map(p -> {
+                if (p.getContent() != null && !p.getContent().isBlank()) return p.getContent();
+                return p.getTitle();
+            })
+            .toList();
+
+        List<HotelAmenityCategory> categories = hotelAmenityCategoryRepository.findAllByHotelId(hotelId);
+        List<HotelAmenity> amenities = hotelAmenityRepository.findAllByHotelId(hotelId);
+
+        Map<UUID, List<HotelAmenity>> amenityMap =
+            amenities.stream()
+                .collect(Collectors.groupingBy(a -> a.getCategory().getId()));
+
+        List<AmenityResponse> amenityResponses =
+            categories.stream()
+                .map(category -> AmenityResponse.builder()
+                    .id(category.getId().toString())
+                    .title(category.getTitle())
+                    .items(
+                        amenityMap
+                            .getOrDefault(category.getId(), List.of())
+                            .stream()
+                            .map(item -> AmenityItemResponse.builder()
+                                .id(item.getId().toString())
+                                .title(item.getTitle())
+                                .build())
+                            .toList()
+                    )
+                    .build()
+                )
+                .toList();
+
+        List<String> amenityFlat = amenityResponses.stream()
+            .flatMap(cat -> cat.getItems().stream().map(com.example.hotelservice.Amenity.dto.response.AmenityItemResponse::getTitle))
+            .distinct()
+            .toList();
+
+        return hotelMapper.toHotelResponseWithExtras(hotel, policies, amenityFlat, amenityResponses);
+        }
 
     // ========== OWNER: MY HOTELS ==========
     @Override

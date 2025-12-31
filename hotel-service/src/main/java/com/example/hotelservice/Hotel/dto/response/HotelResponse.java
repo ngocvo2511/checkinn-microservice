@@ -5,6 +5,7 @@ import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
 import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.Room.dto.response.RoomTypeResponse;
+import com.example.hotelservice.Amenity.dto.response.AmenityResponse;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -31,6 +32,7 @@ public record HotelResponse(
         Instant updatedAt,
         java.math.BigDecimal lowestPrice,
         List<RoomTypeResponse> roomTypes,
-        List<MediaAssetResponse> mediaAssets
+        List<MediaAssetResponse> mediaAssets,
+        List<AmenityResponse> amenityCategories
 ) {}
 

@@ -67,8 +67,8 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/{hotelId}")
     public ResponseEntity<HotelResponse> getHotel(@PathVariable UUID hotelId) {
-        var hotel = hotelService.getById(hotelId);
-        return ResponseEntity.ok(hotelMapper.toHotelResponse(hotel));
+        var hotel = hotelService.getDetail(hotelId);
+        return ResponseEntity.ok(hotel);
     }
     //Lấy danh sách khách sạn chờ duyệt
     @GetMapping("/pending")

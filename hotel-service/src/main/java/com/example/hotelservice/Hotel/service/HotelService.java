@@ -18,6 +18,8 @@ public interface HotelService {
 
     Hotel getById(UUID hotelId);
 
+    com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId);
+
     List<Hotel> getByOwner(UUID ownerId);
 
     List<Hotel> getByCity(UUID cityId);
