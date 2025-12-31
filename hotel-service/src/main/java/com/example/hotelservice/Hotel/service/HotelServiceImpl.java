@@ -120,6 +120,31 @@ public class HotelServiceImpl implements HotelService {
         if (request.cityId() != null) hotel.setCityId(request.cityId());
         if (request.address() != null) hotel.setAddress(writeJson(request.address()));
 
+        if (request.amenityCategories() != null) {
+            request.amenityCategories().forEach(catReq -> {
+                HotelAmenityCategory cat = HotelAmenityCategory.builder()
+                        .hotelId(hotel.getId())
+                        .title(catReq.getTitle())
+                        .createdAt(Instant.now())
+                        .updatedAt(Instant.now())
+                        .build();
+                cat = hotelAmenityCategoryRepository.save(cat);
+
+                if (catReq.getAmenities() != null) {
+                    HotelAmenityCategory finalCat = cat;
+                    catReq.getAmenities().forEach(itemReq -> {
+                        HotelAmenity amenity = HotelAmenity.builder()
+                                .hotelId(hotel.getId())
+                                .category(finalCat)
+                                .title(itemReq.getTitle())
+                                .createdAt(Instant.now())
+                                .build();
+                        hotelAmenityRepository.save(amenity);
+                    });
+                }
+            });
+        }
+
         return hotelRepository.save(hotel);
     }
 
@@ -131,51 +156,11 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Transactional(readOnly = true)
-        @Override
-        public com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId) {
+    @Override
+    public com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId) {
         Hotel hotel = getById(hotelId);
-
-        List<String> policies = hotelPolicyRepository.findAllByHotelId(hotelId)
-            .stream()
-            .map(p -> {
-                if (p.getContent() != null && !p.getContent().isBlank()) return p.getContent();
-                return p.getTitle();
-            })
-            .toList();
-
-        List<HotelAmenityCategory> categories = hotelAmenityCategoryRepository.findAllByHotelId(hotelId);
-        List<HotelAmenity> amenities = hotelAmenityRepository.findAllByHotelId(hotelId);
-
-        Map<UUID, List<HotelAmenity>> amenityMap =
-            amenities.stream()
-                .collect(Collectors.groupingBy(a -> a.getCategory().getId()));
-
-        List<AmenityResponse> amenityResponses =
-            categories.stream()
-                .map(category -> AmenityResponse.builder()
-                    .id(category.getId().toString())
-                    .title(category.getTitle())
-                    .items(
-                        amenityMap
-                            .getOrDefault(category.getId(), List.of())
-                            .stream()
-                            .map(item -> AmenityItemResponse.builder()
-                                .id(item.getId().toString())
-                                .title(item.getTitle())
-                                .build())
-                            .toList()
-                    )
-                    .build()
-                )
-                .toList();
-
-        List<String> amenityFlat = amenityResponses.stream()
-            .flatMap(cat -> cat.getItems().stream().map(com.example.hotelservice.Amenity.dto.response.AmenityItemResponse::getTitle))
-            .distinct()
-            .toList();
-
-        return hotelMapper.toHotelResponseWithExtras(hotel, policies, amenityFlat, amenityResponses);
-        }
+        return hotelMapper.toHotelResponse(hotel);
+    }
 
     // ========== OWNER: MY HOTELS ==========
     @Override
@@ -270,6 +255,9 @@ public class HotelServiceImpl implements HotelService {
     @Override @Transactional
     public void activateHotel(UUID hotelId) {
         Hotel hotel = getById(hotelId);
+        if(hotel.getApprovedStatus() != HotelApprovalStatus.APPROVED) {
+            throw new IllegalArgumentException("Chỉ có thể kích hoạt khách sạn đã được duyệt.");
+        }
         hotel.setIsActive(true);
     }
 
@@ -277,6 +265,9 @@ public class HotelServiceImpl implements HotelService {
     @Override @Transactional
     public void deactivateHotel(UUID hotelId) {
         Hotel hotel = getById(hotelId);
+        if(hotel.getApprovedStatus() != HotelApprovalStatus.APPROVED) {
+            throw new IllegalArgumentException("Chỉ có thể kích hoạt khách sạn đã được duyệt.");
+        }
         hotel.setIsActive(false);
     }
 
