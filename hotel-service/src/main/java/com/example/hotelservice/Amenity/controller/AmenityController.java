@@ -2,6 +2,8 @@ package com.example.hotelservice.Amenity.controller;
 
 import com.example.hotelservice.Amenity.dto.request.AmenityRequest;
 import com.example.hotelservice.Amenity.dto.request.AmenityUpdateRequest;
+import com.example.hotelservice.Amenity.dto.response.CategoryResponse;
+import com.example.hotelservice.Amenity.service.AmenityCategoryService;
 import com.example.hotelservice.Hotel.dto.response.HotelResponse;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
@@ -12,6 +14,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/hotels")
@@ -20,9 +23,18 @@ public class AmenityController {
 
     private final HotelService hotelService;
     private final HotelMapper hotelMapper;
+    private final AmenityCategoryService amenityCategoryService;
 
     private UUID getOwnerId(String header) {
         return UUID.fromString(header);
+    }
+
+    // -------------------------------------------------------
+    // 0. Danh sách danh mục tiện ích có sẵn
+    // -------------------------------------------------------
+    @GetMapping("/amenities/categories")
+    public ResponseEntity<List<CategoryResponse>> getAvailableAmenityCategories() {
+        return ResponseEntity.ok(amenityCategoryService.getAvailableCategories());
     }
 
     // -------------------------------------------------------
@@ -79,4 +91,6 @@ public class AmenityController {
         var updated = hotelService.removeAmenityCategory(hotelId, categoryTitle, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
+
+
 }

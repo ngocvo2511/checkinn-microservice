@@ -112,7 +112,6 @@ public class HotelServiceImpl implements HotelService {
                     HotelAmenityCategory finalCat = cat;
                     catReq.getAmenities().forEach(itemReq -> {
                         HotelAmenity amenity = HotelAmenity.builder()
-                                .hotelId(finalHotel.getId())
                                 .category(finalCat)
                                 .title(itemReq.getTitle())
                                 .createdAt(Instant.now())
@@ -207,10 +206,10 @@ public class HotelServiceImpl implements HotelService {
                 .build())
             .toList();
         List<HotelAmenityCategory> categories =
-                hotelAmenityCategoryRepository.findAllByHotelId(hotelId);
+            hotelAmenityCategoryRepository.findAllByHotelId(hotelId);
 
         List<HotelAmenity> amenities =
-                hotelAmenityRepository.findAllByHotelId(hotelId);
+            hotelAmenityRepository.findAllByCategoryHotelId(hotelId);
 
         Map<UUID, List<HotelAmenity>> amenityMap =
                 amenities.stream()
@@ -285,8 +284,7 @@ public class HotelServiceImpl implements HotelService {
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật tiện ích của khách sạn này.");
 
-        // Xóa tất cả amenities cũ
-        hotelAmenityRepository.deleteAllByHotelId(hotelId);
+        hotelAmenityRepository.deleteAllByCategoryHotelId(hotelId);
         hotelAmenityCategoryRepository.deleteAllByHotelId(hotelId);
 
         // Thêm amenities mới
@@ -304,7 +302,6 @@ public class HotelServiceImpl implements HotelService {
                     HotelAmenityCategory finalCat = cat;
                     catReq.getAmenities().forEach(itemReq -> {
                         HotelAmenity amenity = HotelAmenity.builder()
-                                .hotelId(hotel.getId())
                                 .category(finalCat)
                                 .title(itemReq.getTitle())
                                 .createdAt(Instant.now())
@@ -338,7 +335,6 @@ public class HotelServiceImpl implements HotelService {
             HotelAmenityCategory finalCat = cat;
             amenityRequest.getAmenities().forEach(itemReq -> {
                 HotelAmenity amenity = HotelAmenity.builder()
-                        .hotelId(hotel.getId())
                         .category(finalCat)
                         .title(itemReq.getTitle())
                         .createdAt(Instant.now())
@@ -358,7 +354,7 @@ public class HotelServiceImpl implements HotelService {
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa tiện ích của khách sạn này.");
 
-        hotelAmenityRepository.deleteAllByHotelId(hotelId);
+        hotelAmenityRepository.deleteAllByCategoryHotelId(hotelId);
         hotelAmenityCategoryRepository.deleteAllByHotelId(hotelId);
 
         return hotel;

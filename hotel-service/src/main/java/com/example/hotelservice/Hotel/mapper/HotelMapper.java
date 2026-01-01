@@ -214,7 +214,7 @@ public abstract class HotelMapper {
                 hotelAmenityCategoryRepository.findAllByHotelId(hotelId);
 
         List<HotelAmenity> amenities =
-                hotelAmenityRepository.findAllByHotelId(hotelId);
+                hotelAmenityRepository.findAllByCategoryHotelId(hotelId);
 
         Map<UUID, List<HotelAmenity>> amenityMap =
                 amenities.stream()
