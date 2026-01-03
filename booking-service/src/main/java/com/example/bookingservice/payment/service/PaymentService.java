@@ -10,11 +10,13 @@ import com.example.bookingservice.payment.entity.Payment;
 import com.example.bookingservice.payment.enums.PaymentMethod;
 import com.example.bookingservice.payment.enums.PaymentStatus;
 import com.example.bookingservice.payment.repository.PaymentRepository;
+import com.example.bookingservice.messaging.HotelEventPublisher;
+import com.example.bookingservice.messaging.event.BookingStatusEvent;
+import com.example.bookingservice.messaging.event.PaymentEvent;
 import lombok.RequiredArgsConstructor;
 import com.example.bookingservice.payment.vnpay.VnPayProperties;
 import com.example.bookingservice.payment.vnpay.VnPayUtil;
 import com.example.bookingservice.payment.dto.VnPayInitResponse;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,7 @@ public class PaymentService {
     private final BookingRepository bookingRepository;
     private final VnPayProperties vnPayProperties;
     private final BookingService bookingService;
+    private final HotelEventPublisher eventPublisher;
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
@@ -153,6 +157,11 @@ public class PaymentService {
             } catch (Exception e) {
                 System.err.println("Failed to confirm hold: " + e.getMessage());
             }
+
+            PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
+            eventPublisher.publishPaymentCompleted(event);
+            BookingStatusEvent statusEvent = buildBookingStatusEvent(booking, BookingStatus.CONFIRMED.name());
+            eventPublisher.publishBookingStatus(statusEvent);
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setVnpayResponseCode(responseCode);
@@ -206,8 +215,62 @@ public class PaymentService {
         bookingRepository.save(booking);
 
         payment = paymentRepository.save(payment);
+
+        PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.REFUNDED.name());
+        eventPublisher.publishPaymentRefunded(event);
         return toPaymentResponse(payment);
     }
+
+        private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
+        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
+            .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
+            .sum();
+        if (rooms <= 0) {
+            rooms = 1;
+        }
+        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
+            ? booking.getItems().get(0).getRoomTypeId()
+            : null;
+        int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
+        return PaymentEvent.builder()
+            .bookingId(booking.getId())
+            .hotelId(booking.getHotelId())
+            .roomTypeId(roomTypeId)
+            .checkInDate(booking.getCheckInDate())
+            .checkOutDate(booking.getCheckOutDate())
+            .nights(nights)
+            .rooms(rooms)
+            .amount(payment.getAmount())
+            .paymentStatus(statusLabel)
+            .paymentMethod(payment.getMethod().name())
+            .paidAt(payment.getPaidAt())
+            .eventAt(LocalDateTime.now())
+            .build();
+        }
+
+        private BookingStatusEvent buildBookingStatusEvent(Booking booking, String statusLabel) {
+        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
+            .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
+            .sum();
+        if (rooms <= 0) {
+            rooms = 1;
+        }
+        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
+            ? booking.getItems().get(0).getRoomTypeId()
+            : null;
+        int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
+        return BookingStatusEvent.builder()
+            .bookingId(booking.getId())
+            .hotelId(booking.getHotelId())
+            .roomTypeId(roomTypeId)
+            .checkInDate(booking.getCheckInDate())
+            .checkOutDate(booking.getCheckOutDate())
+            .nights(nights)
+            .rooms(rooms)
+            .bookingStatus(statusLabel)
+            .eventAt(LocalDateTime.now())
+            .build();
+        }
 
     private PaymentResponse toPaymentResponse(Payment payment) {
         return PaymentResponse.builder()

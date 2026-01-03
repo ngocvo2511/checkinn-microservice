@@ -39,6 +39,12 @@ spring:
             - Path=/api/hotel/**,/hotels/**, /cities/**
           filters:
             - RewritePath=/api/hotel/(?<segment>.*), /$\{segment}
+        - id: revenue-service
+          uri: lb://revenue-service
+          predicates:
+            - Path=/api/reports/**
+          filters:
+            - RewritePath=/api/revenue/(?<segment>.*), /$\{segment}
         - id: hotel-service-v1
           uri: lb://hotel-service
           predicates:

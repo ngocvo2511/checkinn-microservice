@@ -87,6 +87,7 @@ message RoomTypeBasic {
   string id = 1;
   string name = 2;
   double base_price = 3;
+  int32 total = 4;
 }
 
 message HotelAddress {

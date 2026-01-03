@@ -1,0 +1,25 @@
+package com.example.bookingservice.messaging.event;
+
+import lombok.Builder;
+import lombok.Value;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Value
+@Builder
+public class PaymentEvent {
+    String bookingId;
+    String hotelId;
+    String roomTypeId;
+    LocalDate checkInDate;
+    LocalDate checkOutDate;
+    int nights;
+    int rooms;
+    BigDecimal amount;
+    String paymentStatus;
+    String paymentMethod;
+    LocalDateTime paidAt;
+    LocalDateTime eventAt;
+}

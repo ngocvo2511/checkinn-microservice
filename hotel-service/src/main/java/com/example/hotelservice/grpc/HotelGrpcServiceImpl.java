@@ -147,6 +147,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
                 .setId(rt.getId().toString())
                 .setName(nvl(rt.getName()))
                 .setBasePrice(rt.getBasePrice().doubleValue())
+                .setTotal(rt.getTotalRooms())
                 .build();
     }
 
