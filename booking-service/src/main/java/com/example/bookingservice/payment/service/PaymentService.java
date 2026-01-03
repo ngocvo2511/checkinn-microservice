@@ -73,7 +73,19 @@ public class PaymentService {
             .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
         paymentRepository.findByBookingId(bookingId)
-            .ifPresent(p -> { throw new IllegalArgumentException("Payment already exists for this booking"); });
+            .ifPresent(p -> { 
+                // Allow retry if previous payment failed
+                if (p.getStatus() != PaymentStatus.FAILED && p.getStatus() != PaymentStatus.CANCELLED) {
+                    throw new IllegalArgumentException("Payment already exists for this booking"); 
+                }
+                // Delete old failed payment to create new one
+                paymentRepository.delete(p);
+            });
+
+        // Mark booking as waiting for VNPay payment and extend hold expiry
+        booking.setStatus(BookingStatus.PENDING_PAYMENT);
+        booking.setHoldExpiresAt(LocalDateTime.now().plusMinutes(15));
+        bookingRepository.save(booking);
 
         Payment payment = Payment.builder()
             .bookingId(bookingId)
@@ -145,6 +157,12 @@ public class PaymentService {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setVnpayResponseCode(responseCode);
             payment.setVnpayTransactionNo(transactionId);
+
+            // Update booking back to PENDING so user can retry payment or choose another method
+            Booking booking = bookingRepository.findById(payment.getBookingId())
+                    .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+            booking.setStatus(BookingStatus.PENDING);
+            bookingRepository.save(booking);
 
             // Release hold on payment failure
             try {

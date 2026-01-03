@@ -15,7 +15,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        jdbc:
+          time_zone: Asia/Ho_Chi_Minh
     show-sql: false
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
+    date-format: yyyy-MM-dd
+    serialization:
+      write-dates-as-timestamps: false
   cloud:
     config:
       uri: http://localhost:8888

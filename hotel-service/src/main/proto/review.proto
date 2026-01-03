@@ -1,0 +1,196 @@
+syntax = "proto3";
+
+package review;
+
+option java_multiple_files = true;
+option java_package = "com.example.hotelservice.grpc";
+option java_outer_classname = "ReviewProto";
+
+// ================================
+// REVIEW SERVICE (READ/WRITE)
+// ================================
+service ReviewGrpcService {
+
+  // Get reviews for a hotel
+  rpc GetHotelReviews(GetHotelReviewsRequest) returns (GetHotelReviewsResponse);
+
+  // Get review by ID
+  rpc GetReviewById(GetReviewByIdRequest) returns (ReviewResponse);
+
+  // Get review statistics for a hotel
+  rpc GetReviewStats(GetReviewStatsRequest) returns (ReviewStatsResponse);
+
+  // Create a new review
+  rpc CreateReview(CreateReviewRequest) returns (ReviewResponse);
+
+  // Update review
+  rpc UpdateReview(UpdateReviewRequest) returns (ReviewResponse);
+
+  // Delete review
+  rpc DeleteReview(DeleteReviewRequest) returns (google.protobuf.Empty);
+
+  // Add response to review (owner)
+  rpc AddReviewResponse(AddReviewResponseRequest) returns (ReviewResponseDto);
+
+  // Update response
+  rpc UpdateReviewResponse(UpdateReviewResponseRequest) returns (ReviewResponseDto);
+
+  // Delete response
+  rpc DeleteReviewResponse(DeleteReviewResponseRequest) returns (google.protobuf.Empty);
+
+  // Get response for a review
+  rpc GetReviewResponse(GetReviewResponseRequest) returns (ReviewResponseDto);
+
+  // Mark review helpful/unhelpful
+  rpc MarkReviewHelpful(MarkReviewHelpfulRequest) returns (google.protobuf.Empty);
+  rpc MarkReviewUnhelpful(MarkReviewUnhelpfulRequest) returns (google.protobuf.Empty);
+
+  // Check if user already reviewed (for booking service validation)
+  rpc CheckUserReviewExists(CheckUserReviewExistsRequest) returns (CheckUserReviewExistsResponse);
+}
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// ================================
+// REQUEST MESSAGES
+// ================================
+
+message GetHotelReviewsRequest {
+  string hotel_id = 1;
+  int32 page = 2;
+  int32 size = 3;
+}
+
+message GetReviewByIdRequest {
+  string review_id = 1;
+}
+
+message GetReviewStatsRequest {
+  string hotel_id = 1;
+}
+
+message CreateReviewRequest {
+  string hotel_id = 1;
+  string guest_id = 2;
+  string booking_id = 3;  // optional
+  double rating = 4;      // 1.0 - 5.0
+  string title = 5;
+  string content = 6;
+}
+
+message UpdateReviewRequest {
+  string review_id = 1;
+  string guest_id = 2;
+  double rating = 3;
+  string title = 4;
+  string content = 5;
+}
+
+message DeleteReviewRequest {
+  string review_id = 1;
+  string user_id = 2;
+  bool is_admin = 3;
+}
+
+message AddReviewResponseRequest {
+  string review_id = 1;
+  string owner_id = 2;
+  string content = 3;
+}
+
+message UpdateReviewResponseRequest {
+  string response_id = 1;
+  string owner_id = 2;
+  string content = 3;
+}
+
+message DeleteReviewResponseRequest {
+  string response_id = 1;
+  string owner_id = 2;
+}
+
+message GetReviewResponseRequest {
+  string review_id = 1;
+}
+
+message MarkReviewHelpfulRequest {
+  string review_id = 1;
+}
+
+message MarkReviewUnhelpfulRequest {
+  string review_id = 1;
+}
+
+message CheckUserReviewExistsRequest {
+  string hotel_id = 1;
+  string guest_id = 2;
+  string booking_id = 3;  // optional
+}
+
+// ================================
+// RESPONSE MESSAGES
+// ================================
+
+message GetHotelReviewsResponse {
+  repeated ReviewResponse reviews = 1;
+  int32 total_pages = 2;
+  int64 total_elements = 3;
+}
+
+message ReviewResponse {
+  string id = 1;
+  string hotel_id = 2;
+  string guest_id = 3;
+  string booking_id = 4;
+  double rating = 5;
+  string title = 6;
+  string content = 7;
+  int32 helpful_count = 8;
+  int32 unhelpful_count = 9;
+  ReviewStatus status = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  
+  // Optional guest info
+  string guest_name = 13;
+  string guest_avatar = 14;
+}
+
+message ReviewResponseDto {
+  string id = 1;
+  string review_id = 2;
+  string owner_id = 3;
+  string content = 4;
+  string owner_name = 5;
+  string owner_avatar = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message ReviewStatsResponse {
+  string hotel_id = 1;
+  double average_rating = 2;
+  int64 total_reviews = 3;
+  int64 rating_distribution_1_star = 4;
+  int64 rating_distribution_2_star = 5;
+  int64 rating_distribution_3_star = 6;
+  int64 rating_distribution_4_star = 7;
+  int64 rating_distribution_5_star = 8;
+  repeated ReviewResponse recent_reviews = 9;
+}
+
+message CheckUserReviewExistsResponse {
+  bool exists = 1;
+  string review_id = 2;  // if exists
+}
+
+// ================================
+// ENUMS
+// ================================
+
+enum ReviewStatus {
+  PENDING = 0;
+  PUBLISHED = 1;
+  REJECTED = 2;
+}

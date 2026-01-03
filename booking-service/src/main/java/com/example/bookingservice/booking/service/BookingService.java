@@ -88,7 +88,8 @@ public class BookingService {
             voucherDiscount = BigDecimal.ZERO;
         }
 
-        // Create booking entity with holdId
+        // Create booking entity with holdId and expiry (15 minutes from now)
+        LocalDateTime holdExpiry = LocalDateTime.now().plusMinutes(15);
         Booking booking = Booking.builder()
                 .userId(request.getUserId())
                 .hotelId(request.getHotelId())
@@ -107,6 +108,7 @@ public class BookingService {
                 .contactPhone(request.getContactPhone())
                 .specialRequests(request.getSpecialRequests())
                 .holdId(holdResponse.holdId())
+                .holdExpiresAt(holdExpiry)
                 .build();
 
         booking = bookingRepository.save(booking);
@@ -227,8 +229,10 @@ public class BookingService {
                 .collect(Collectors.toList());
 
         String holdId = booking.getHoldId();
-        LocalDateTime holdExpiresAt = null;
-        if (holdId != null) {
+        LocalDateTime holdExpiresAt = booking.getHoldExpiresAt();
+        
+        // If holdExpiresAt not set in DB, try fetching from availability service
+        if (holdId != null && holdExpiresAt == null) {
             try {
                 HoldResponse hr = availabilityClient.getHold(holdId);
                 if (hr != null && hr.expiresAt() != null && !hr.expiresAt().isBlank()) {
