@@ -11,6 +11,8 @@ import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.integration.hotel.HotelAvailabilityClient;
 import com.example.bookingservice.integration.hotel.dto.HoldRequest;
 import com.example.bookingservice.integration.hotel.dto.HoldResponse;
+import com.example.bookingservice.messaging.HotelEventPublisher;
+import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final BookingItemRepository bookingItemRepository;
     private final HotelAvailabilityClient availabilityClient;
+    private final HotelEventPublisher eventPublisher;
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
@@ -141,6 +144,8 @@ public class BookingService {
         bookingItemRepository.saveAll(items);
         booking.setItems(items);
 
+        publishStatusEvent(booking, BookingStatus.PENDING.name());
+
         return toBookingResponse(booking);
     }
 
@@ -162,6 +167,7 @@ public class BookingService {
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         booking.setStatus(status);
         booking = bookingRepository.save(booking);
+        publishStatusEvent(booking, status.name());
         return toBookingResponse(booking);
     }
 
@@ -187,6 +193,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
+        publishStatusEvent(booking, BookingStatus.CANCELLED.name());
     }
 
     public void confirmBookingHold(String bookingId) {
@@ -198,6 +205,31 @@ public class BookingService {
         }
     }
 
+        private void publishStatusEvent(Booking booking, String statusLabel) {
+        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
+            .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
+            .sum();
+        if (rooms <= 0) {
+            rooms = 1;
+        }
+        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
+            ? booking.getItems().get(0).getRoomTypeId()
+            : null;
+        int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
+
+        BookingStatusEvent event = BookingStatusEvent.builder()
+            .bookingId(booking.getId())
+            .hotelId(booking.getHotelId())
+            .roomTypeId(roomTypeId)
+            .checkInDate(booking.getCheckInDate())
+            .checkOutDate(booking.getCheckOutDate())
+            .nights(nights)
+            .rooms(rooms)
+            .bookingStatus(statusLabel)
+            .eventAt(LocalDateTime.now())
+            .build();
+        eventPublisher.publishBookingStatus(event);
+        }
     public void releaseBookingHold(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));

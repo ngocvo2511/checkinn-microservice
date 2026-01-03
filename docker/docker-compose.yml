@@ -1,0 +1,18 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: hotel-rabbitmq
+
+    ports:
+      - "5672:5672"     # cho app kết nối
+      - "15672:15672"   # giao diện web
+
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+      # tự động tạo exchange, queue
+      RABBITMQ_LOAD_DEFINITIONS: /etc/rabbitmq/definitions.json
+
+    volumes:
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json

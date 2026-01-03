@@ -1,0 +1,35 @@
+{
+  "exchanges": [
+    {
+      "name": "hotel.events",
+      "type": "topic",
+      "durable": true
+    }
+  ],
+
+  "queues": [
+    {
+      "name": "revenue.payment.queue",
+      "durable": true
+    },
+    {
+      "name": "notification.payment.queue",
+      "durable": true
+    }
+  ],
+
+  "bindings": [
+    {
+      "source": "hotel.events",
+      "destination": "revenue.payment.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.*"
+    },
+    {
+      "source": "hotel.events",
+      "destination": "notification.payment.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.completed"
+    }
+  ]
+}
