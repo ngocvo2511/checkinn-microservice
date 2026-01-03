@@ -13,6 +13,7 @@ public record RoomTypeCreateRequest(
         @NotBlank String name,
         @NotNull BigDecimal basePrice,
         @NotNull @Valid CapacityDto capacity,
+        @NotNull Integer roomAmount,
         List<String> amenities
 ) {}
 

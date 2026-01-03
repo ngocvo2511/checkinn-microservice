@@ -8,6 +8,7 @@ public record RoomTypeUpdateRequest(
         BigDecimal basePrice,
         CapacityDto capacity,
         List<String> amenities,
-        Boolean isActive
+        Boolean isActive,
+        Integer roomAmount
 ) {}
 

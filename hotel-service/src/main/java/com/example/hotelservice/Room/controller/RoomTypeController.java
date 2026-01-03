@@ -7,6 +7,8 @@ import com.example.hotelservice.Room.mapper.RoomTypeMapper;
 import com.example.hotelservice.Room.service.RoomTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -28,10 +30,10 @@ public class RoomTypeController {
     // -------------------------------------------------------
     @PostMapping
     public ResponseEntity<RoomTypeResponse> createRoomType(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @RequestBody RoomTypeCreateRequest request
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var saved = roomTypeService.createRoomType(request, ownerId);
         return ResponseEntity.ok(roomTypeMapper.toRoomTypeResponse(saved));
@@ -42,11 +44,11 @@ public class RoomTypeController {
     // -------------------------------------------------------
     @PutMapping("/{roomTypeId}")
     public ResponseEntity<RoomTypeResponse> updateRoomType(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID roomTypeId,
             @RequestBody RoomTypeUpdateRequest request
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
 
         var updated = roomTypeService.updateRoomType(roomTypeId, request, ownerId);
         return ResponseEntity.ok(roomTypeMapper.toRoomTypeResponse(updated));

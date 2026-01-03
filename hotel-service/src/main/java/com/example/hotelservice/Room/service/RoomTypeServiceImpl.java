@@ -40,6 +40,10 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         rt.setBasePrice(request.basePrice());
         rt.setCapacity(writeJson(request.capacity()));
         rt.setAmenities(writeJson(request.amenities()));
+        if(request.roomAmount() < 1) {
+            throw new IllegalArgumentException("Số lượng phòng phải lớn hơn hoặc bằng 1.");
+        }
+        rt.setTotalRooms(request.roomAmount());
         rt.setIsActive(true);
 
         return roomTypeRepository.save(rt);
@@ -73,6 +77,12 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         if (request.capacity() != null) rt.setCapacity(writeJson(request.capacity()));
         if (request.amenities() != null) rt.setAmenities(writeJson(request.amenities()));
         if (request.isActive() != null) rt.setIsActive(request.isActive());
+        if (request.roomAmount() != null){
+            if(request.roomAmount() < rt.getTotalRooms()) {
+                throw new IllegalArgumentException("Số lượng phòng phải lớn hơn hoặc bằng số lượng phòng trước đó.");
+            }
+            rt.setTotalRooms(request.roomAmount());
+        }
 
         return roomTypeRepository.save(rt);
     }

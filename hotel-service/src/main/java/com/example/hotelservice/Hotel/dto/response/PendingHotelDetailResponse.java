@@ -6,6 +6,7 @@ import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
 import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.Policy.dto.response.PolicyResponse;
+import com.example.hotelservice.Question.dto.QuestionResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -41,6 +42,7 @@ public class PendingHotelDetailResponse {
     // ==== Policies & Amenities ====
     List<PolicyResponse> policies;
     List<AmenityResponse> amenityCategories;
+    List<QuestionResponse> faqs;
 
     // ==== Media ====
     List<MediaAssetResponse> mediaAssets;

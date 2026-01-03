@@ -72,7 +72,12 @@ public class HotelController {
     }
     //Lấy danh sách khách sạn chờ duyệt
     @GetMapping("/pending")
-    public ResponseEntity<List<PendingHotelResponse>> getPendingHotels() {
+    public ResponseEntity<List<PendingHotelResponse>> getPendingHotels(
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+        if(!verifyAdmin(jwt)){
+            return ResponseEntity.status(403).body(null);
+        }
         List<PendingHotelResponse> pendingHotels = hotelService.getPendingHotels()
                 .stream()
                 .map(hotelMapper::toPendingHotelResponse)
@@ -81,8 +86,12 @@ public class HotelController {
     }
 
     @GetMapping("/pending/{hotelId}")
-    public ResponseEntity<PendingHotelDetailResponse> getPendingHotelById(@PathVariable UUID hotelId){
-
+    public ResponseEntity<PendingHotelDetailResponse> getPendingHotelById(
+            @PathVariable UUID hotelId,
+            @AuthenticationPrincipal Jwt jwt){
+        if(!verifyAdmin(jwt)){
+            return ResponseEntity.status(403).body(null);
+        }
         return ResponseEntity.ok(hotelService.getPendingHotelDetail(hotelId));
     }
 

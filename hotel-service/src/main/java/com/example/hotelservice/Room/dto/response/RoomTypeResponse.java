@@ -1,5 +1,6 @@
 package com.example.hotelservice.Room.dto.response;
 
+import com.example.hotelservice.Amenity.dto.response.AmenityResponse;
 import com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse;
 import com.example.hotelservice.Room.dto.request.CapacityDto;
 

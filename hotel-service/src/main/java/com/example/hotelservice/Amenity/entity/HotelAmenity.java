@@ -18,15 +18,12 @@ public class HotelAmenity {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "hotel_id", nullable = false)
-    private UUID hotelId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private HotelAmenityCategory category;
 
     @Column(nullable = false, length = 255)
-    private String title; // ví dụ: “Máy lạnh”, “Nhân viên xách hành lý”
+    private String title;
 
     @Builder.Default
     @Column(name = "is_active", nullable = false) private Boolean isActive = true;
