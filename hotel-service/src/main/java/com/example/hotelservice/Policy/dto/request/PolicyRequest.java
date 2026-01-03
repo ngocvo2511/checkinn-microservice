@@ -9,6 +9,6 @@ import java.time.Instant;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PolicyRequest {
-    String title;
+    String category;
     String content;
 }

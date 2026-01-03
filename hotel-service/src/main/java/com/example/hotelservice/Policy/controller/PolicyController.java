@@ -4,6 +4,8 @@ import com.example.hotelservice.Hotel.dto.response.HotelResponse;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
 import com.example.hotelservice.Policy.dto.request.PolicyRequest;
+import com.example.hotelservice.Policy.dto.response.PolicyCategoryResponse;
+import com.example.hotelservice.Policy.service.PolicyCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,9 +22,16 @@ public class PolicyController {
 
 	private final HotelService hotelService;
 	private final HotelMapper hotelMapper;
+	private final PolicyCategoryService policyCategoryService;
 
 	private UUID getOwnerId(String header) {
 		return UUID.fromString(header);
+	}
+
+	// 0) Danh sách danh mục policy có sẵn
+	@GetMapping("/policies/categories")
+	public ResponseEntity<List<PolicyCategoryResponse>> getAvailablePolicyCategories() {
+		return ResponseEntity.ok(policyCategoryService.getAvailableCategories());
 	}
 
 	// 1) Cập nhật toàn bộ policies

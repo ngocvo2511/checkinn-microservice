@@ -18,7 +18,9 @@ import com.example.hotelservice.Hotel.repository.HotelRepository;
 import com.example.hotelservice.Policy.dto.response.PolicyResponse;
 import com.example.hotelservice.Policy.dto.request.PolicyRequest;
 import com.example.hotelservice.Policy.entity.HotelPolicy;
+import com.example.hotelservice.Policy.entity.PolicyCategoryType;
 import com.example.hotelservice.Policy.repository.HotelPolicyRepository;
+import com.example.hotelservice.Policy.repository.PolicyCategoryTypeRepository;
 import com.example.hotelservice.Question.dto.QuestionRequest;
 import com.example.hotelservice.Question.dto.QuestionResponse;
 import com.example.hotelservice.Question.entity.Question;
@@ -42,6 +44,7 @@ public class HotelServiceImpl implements HotelService {
     private final UserGrpcClient userGrpcClient;
     private final HotelRepository hotelRepository;
     private final HotelPolicyRepository hotelPolicyRepository;
+    private final PolicyCategoryTypeRepository policyCategoryTypeRepository;
     private final QuestionRepository questionRepository;
     private final HotelAmenityCategoryRepository hotelAmenityCategoryRepository;
     private final HotelAmenityRepository hotelAmenityRepository;
@@ -74,9 +77,13 @@ public class HotelServiceImpl implements HotelService {
 
         if (request.policies() != null) {
             request.policies().forEach(p -> {
+                PolicyCategoryType categoryType = policyCategoryTypeRepository
+                        .findByName(p.getCategory())
+                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + p.getCategory()));
+                
                 HotelPolicy policy = HotelPolicy.builder()
                         .hotel(finalHotel)
-                        .title(p.getTitle())
+                        .category(categoryType)
                         .content(p.getContent())
                         .createdAt(Instant.now())
                         .updatedAt(Instant.now())
@@ -193,7 +200,7 @@ public class HotelServiceImpl implements HotelService {
                 hotelPolicyRepository.findAllByHotelId(hotelId)
                         .stream()
                         .map(p -> PolicyResponse.builder()
-                                .title(p.getTitle())
+                                .category(p.getCategory().getName())
                                 .content(p.getContent())
                                 .build())
                         .toList();
@@ -395,9 +402,13 @@ public class HotelServiceImpl implements HotelService {
 
         if (policies != null && !policies.isEmpty()) {
             policies.forEach(p -> {
+                PolicyCategoryType categoryType = policyCategoryTypeRepository
+                        .findByName(p.getCategory())
+                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + p.getCategory()));
+                
                 HotelPolicy policy = HotelPolicy.builder()
                         .hotel(hotel)
-                        .title(p.getTitle())
+                        .category(categoryType)
                         .content(p.getContent())
                         .createdAt(Instant.now())
                         .updatedAt(Instant.now())
@@ -417,9 +428,13 @@ public class HotelServiceImpl implements HotelService {
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền thêm chính sách cho khách sạn này.");
 
+        PolicyCategoryType categoryType = policyCategoryTypeRepository
+                .findByName(policyRequest.getCategory())
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + policyRequest.getCategory()));
+
         HotelPolicy policy = HotelPolicy.builder()
                 .hotel(hotel)
-                .title(policyRequest.getTitle())
+                .category(categoryType)
                 .content(policyRequest.getContent())
                 .createdAt(Instant.now())
                 .updatedAt(Instant.now())

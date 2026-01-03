@@ -190,7 +190,7 @@ public abstract class HotelMapper {
         return hotelPolicyRepository.findAllByHotelId(hotelId)
                 .stream()
                 .map(p -> PolicyResponse.builder()
-                        .title(p.getTitle())
+                        .category(p.getCategory().getName())
                         .content(p.getContent())
                         .build())
                 .toList();

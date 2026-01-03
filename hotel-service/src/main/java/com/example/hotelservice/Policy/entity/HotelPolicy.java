@@ -23,8 +23,9 @@ public class HotelPolicy {
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
-    @Column(nullable = false, length = 255)
-    private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private PolicyCategoryType category;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;

@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PolicyResponse {
-    String category;
-    String content;
+public class PolicyCategoryResponse {
+    String type;
 }
