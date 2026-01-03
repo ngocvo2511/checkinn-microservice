@@ -72,6 +72,9 @@ public class Booking {
     @Column(name = "hold_id")
     private String holdId;
 
+    @Column(name = "hold_expires_at")
+    private LocalDateTime holdExpiresAt;
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingItem> items;
 

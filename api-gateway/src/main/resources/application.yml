@@ -45,6 +45,10 @@ spring:
             - Path=/api/reports/**
           filters:
             - RewritePath=/api/revenue/(?<segment>.*), /$\{segment}
+        - id: hotel-service-v1
+          uri: lb://hotel-service
+          predicates:
+            - Path=/api/v1/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
