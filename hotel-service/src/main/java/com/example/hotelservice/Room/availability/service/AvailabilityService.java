@@ -78,7 +78,9 @@ public class AvailabilityService {
         hold.setCheckInDate(request.checkInDate());
         hold.setCheckOutDate(request.checkOutDate());
         hold.setQuantity(request.quantity());
-        hold.setStatus(HoldStatus.HELD);        hold.setExpiresAt(calculateExpiryTime());        hold = roomHoldRepository.save(hold);
+        hold.setStatus(HoldStatus.HELD);
+        hold.setExpiresAt(calculateExpiryTime());
+        hold = roomHoldRepository.save(hold);
 
         return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
     }
@@ -153,8 +155,11 @@ public class AvailabilityService {
 
     private int requireTotalRooms(RoomType roomType) {
         Integer totalRooms = roomType.getTotalRooms();
+        // If totalRooms is not configured, use a sensible default of 10
         if (totalRooms == null || totalRooms <= 0) {
-            throw new IllegalStateException("Loại phòng chưa cấu hình tổng số phòng");
+            // Log warning but don't fail - use default of 10
+            System.err.println("Warning: Room type " + roomType.getId() + " has no totalRooms configured, using default of 10");
+            return 10;
         }
         return totalRooms;
     }

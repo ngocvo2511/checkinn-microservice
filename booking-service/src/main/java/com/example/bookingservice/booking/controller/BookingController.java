@@ -5,6 +5,7 @@ import com.example.bookingservice.booking.dto.CreateBookingRequest;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.service.BookingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
+@Slf4j
 public class BookingController {
 
     private final BookingService bookingService;
@@ -24,7 +26,11 @@ public class BookingController {
             BookingResponse booking = bookingService.createBooking(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
         } catch (IllegalArgumentException e) {
+            log.error("Validation error creating booking", e);
             return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            log.error("Error creating booking", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

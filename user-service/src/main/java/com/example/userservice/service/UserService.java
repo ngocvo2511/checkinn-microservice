@@ -147,6 +147,24 @@ public class UserService {
                 .build();
     }
 
+    public void changePassword(UUID userId, String currentPassword, String newPassword) {
+        User user = getUserById(userId);
+        
+        // Verify current password
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("Mật khẩu hiện tại không đúng");
+        }
+        
+        // Validate new password
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự");
+        }
+        
+        // Update password
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
     public class UserLoginResult {
         private User user;
         private UserProfile profile;

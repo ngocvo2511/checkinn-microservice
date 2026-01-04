@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.dto.UserProfileDto;
 import com.example.userservice.dto.UpdateProfileDto;
+import com.example.userservice.dto.ChangePasswordRequest;
 import com.example.userservice.service.UserService;
 import com.example.userservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,15 @@ public class UserController {
             @RequestBody UpdateProfileDto dto) {
         UUID userId = extractUserIdFromToken(authHeader);
         return ResponseEntity.ok(userService.updateUserProfile(userId, dto));
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<Void> changePassword(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody ChangePasswordRequest request) {
+        UUID userId = extractUserIdFromToken(authHeader);
+        userService.changePassword(userId, request.getCurrentPassword(), request.getNewPassword());
+        return ResponseEntity.ok().build();
     }
 
     private UUID extractUserIdFromToken(String authHeader) {

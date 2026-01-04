@@ -14,6 +14,7 @@ import com.example.bookingservice.integration.hotel.dto.HoldResponse;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookingService {
 
     private final BookingRepository bookingRepository;
@@ -38,6 +40,9 @@ public class BookingService {
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
+        log.info("Creating booking for hotel: {}, checkIn: {}, checkOut: {}", 
+            request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
+        
         // Validate items
         if (request.getItems() == null || request.getItems().isEmpty()) {
             throw new IllegalArgumentException("Booking must have at least one item");
@@ -67,10 +72,14 @@ public class BookingService {
                 totalQuantity
         );
 
+        log.info("Attempting to hold rooms with request: roomTypeId={}, quantity={}", roomTypeId, totalQuantity);
+
         HoldResponse holdResponse;
         try {
             holdResponse = availabilityClient.holdRooms(holdRequest);
+            log.info("Successfully held rooms, holdId: {}", holdResponse.holdId());
         } catch (Exception e) {
+            log.error("Failed to hold rooms", e);
             throw new IllegalStateException("Failed to hold rooms: " + e.getMessage());
         }
 
