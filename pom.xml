@@ -19,5 +19,6 @@
         <module>config-server</module>
         <module>api-gateway</module>
         <module>revenue-service</module>
+        <module>notification-service</module>
     </modules>
 </project>

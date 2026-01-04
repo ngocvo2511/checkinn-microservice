@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: notification-service
+
+  config:
+    import: "optional:configserver:"
+
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASS:guest}
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+        retry:
+          enabled: true
+          initial-interval: 3000
+          max-attempts: 3
+          multiplier: 2
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        multiplier: 2
+
+  # Mail Configuration
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:hoangquangnghia123@gmail.com}
+    password: ${MAIL_PASSWORD:mueb qrrv wceo vkdu}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+        debug: false
+
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER:http://localhost:8888}
+
+# Eureka Configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+
+# Server Configuration
+server:
+  port: ${PORT:8086}
+
+# Application Specific Configuration
+notification:
+  from-email: ${MAIL_USERNAME:checkinn@service.com}
+  from-name: ${MAIL_FROM_NAME:CheckInn Hotel Booking}
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.example.notificationservice: DEBUG
+    org.springframework.amqp: DEBUG
+    org.springframework.mail: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

@@ -12,11 +12,17 @@ import java.time.LocalDateTime;
 public class PaymentEvent {
     String bookingId;
     String hotelId;
+    String hotelName;
     String roomTypeId;
+    String roomType;
+    String userId;
+    String userName;
+    String userEmail;
     LocalDate checkInDate;
     LocalDate checkOutDate;
     int nights;
     int rooms;
+    int numberOfGuests;
     BigDecimal amount;
     String paymentStatus;
     String paymentMethod;

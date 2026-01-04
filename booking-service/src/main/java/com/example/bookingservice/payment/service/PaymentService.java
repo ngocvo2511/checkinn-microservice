@@ -231,15 +231,30 @@ public class PaymentService {
         String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeId()
             : null;
+        
+        // Lấy room type name nếu có
+        String roomType = booking.getItems() != null && !booking.getItems().isEmpty()
+            ? booking.getItems().get(0).getRoomTypeName()
+            : "Standard Room";
+            
         int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
+        int numberOfGuests = (booking.getAdults() != null ? booking.getAdults() : 0) + 
+                             (booking.getChildren() != null ? booking.getChildren() : 0);
+        
         return PaymentEvent.builder()
             .bookingId(booking.getId())
             .hotelId(booking.getHotelId())
+            .hotelName(booking.getHotelName())
             .roomTypeId(roomTypeId)
+            .roomType(roomType)
+            .userId(booking.getUserId())
+            .userName(booking.getContactName())
+            .userEmail(booking.getContactEmail())
             .checkInDate(booking.getCheckInDate())
             .checkOutDate(booking.getCheckOutDate())
             .nights(nights)
             .rooms(rooms)
+            .numberOfGuests(numberOfGuests)
             .amount(payment.getAmount())
             .paymentStatus(statusLabel)
             .paymentMethod(payment.getMethod().name())
