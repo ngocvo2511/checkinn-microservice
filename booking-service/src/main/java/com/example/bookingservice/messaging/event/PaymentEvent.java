@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PaymentEvent {
     String bookingId;
+    String customerId;
     String hotelId;
     String hotelName;
     String roomTypeId;

@@ -1,5 +1,9 @@
 package com.example.mediaservice.grpc;
 
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import io.minio.*;
@@ -12,93 +16,67 @@ import java.io.ByteArrayInputStream;
 @GrpcService
 public class MediaGrpcServiceImpl extends MediaGrpcServiceGrpc.MediaGrpcServiceImplBase {
 
-    @Autowired
-    private MinioClient minioClient;
-
-    @Value("${minio.bucket}")
-    private String defaultBucketName;
-
-    @Value("${minio.url}")
-    private String minioUrl;
+    private static final String BUCKET = "checkinn_media_storage";
+    private final Storage storage = StorageOptions.getDefaultInstance().getService();
 
     @Override
-    public void uploadMedia(UploadMediaRequest request, StreamObserver<UploadMediaResponse> responseObserver) {
+    public void uploadMedia(
+            UploadMediaRequest request,
+            StreamObserver<UploadMediaResponse> responseObserver
+    ) {
         try {
-            // 1. Lấy dữ liệu từ request
-            byte[] data = request.getFileData().toByteArray();
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
-            String filename = request.getFileName();
-            String finalFilename = java.util.UUID.randomUUID() + "_" + filename;
+            String objectName = request.getFileName();
 
-            String contentType = request.getMimeType();
-
-            // 2. Kiểm tra bucket tồn tại chưa, nếu chưa thì tạo (Optional)
-            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(defaultBucketName).build());
-            if (!found) {
-                minioClient.makeBucket(MakeBucketArgs.builder().bucket(defaultBucketName).build());
-            }
-
-            // 3. Upload lên MinIO
-            minioClient.putObject(
-                    PutObjectArgs.builder()
-                            .bucket(defaultBucketName)
-                            .object(finalFilename)
-                            .stream(inputStream, data.length, -1)
-                            .contentType(contentType)
-                            .build()
-            );
-
-            // 4. Tạo URL trả về
-            String imageUrl = minioUrl + "/" + defaultBucketName + "/" + finalFilename;
-
-            // 5. Trả về response cho Hotel Service
-            UploadMediaResponse response = UploadMediaResponse.newBuilder()
-                    .setUrl(imageUrl)
+            BlobId blobId = BlobId.of(BUCKET, objectName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                    .setContentType(request.getMimeType())
                     .build();
 
-            responseObserver.onNext(response);
+            storage.create(blobInfo, request.getFileData().toByteArray());
+
+            String url = "https://storage.googleapis.com/" + BUCKET + "/" + objectName;
+
+            responseObserver.onNext(
+                    UploadMediaResponse.newBuilder()
+                            .setUrl(url)
+                            .build()
+            );
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            // Xử lý lỗi và trả về gRPC Error
             e.printStackTrace();
             responseObserver.onError(
                     Status.INTERNAL
-                            .withDescription("Upload failed: " + e.getMessage())
+                            .withDescription("Upload media failed")
+                            .withCause(e)
                             .asRuntimeException()
             );
         }
     }
 
     @Override
-    public void deleteMedia(DeleteMediaRequest request, StreamObserver<DeleteMediaResponse> responseObserver) {
+    public void deleteMedia(
+            DeleteMediaRequest request,
+            StreamObserver<DeleteMediaResponse> responseObserver
+    ) {
         try {
-            String objectName = request.getFileName();
+            boolean deleted = storage.delete(BUCKET, request.getFileName());
 
-            // Thực hiện xóa trên MinIO
-            minioClient.removeObject(
-                    RemoveObjectArgs.builder()
-                            .bucket(defaultBucketName)
-                            .object(objectName)
+            responseObserver.onNext(
+                    DeleteMediaResponse.newBuilder()
+                            .setSuccess(deleted)
                             .build()
             );
-
-            // Trả về kết quả thành công
-            DeleteMediaResponse response = DeleteMediaResponse.newBuilder()
-                    .setSuccess(true)
-                    .build();
-
-            responseObserver.onNext(response);
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            // Trả về lỗi nếu có sự cố kết nối hoặc permission
             responseObserver.onError(
                     Status.INTERNAL
-                            .withDescription("Delete failed: " + e.getMessage())
+                            .withDescription("Delete media failed")
+                            .withCause(e)
                             .asRuntimeException()
             );
         }
     }
 }
+

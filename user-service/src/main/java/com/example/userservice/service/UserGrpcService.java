@@ -1,6 +1,10 @@
 package com.example.userservice.service;
 
-import com.checkinn.user.grpc.*;
+import com.checkinn.user.grpc.LoginRequest;
+import com.checkinn.user.grpc.GetUserRequest;
+import com.checkinn.user.grpc.UserResponse;
+import com.checkinn.user.grpc.UserRole;
+import com.checkinn.user.grpc.UserServiceGrpc;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserProfile;
@@ -31,7 +35,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                             .password(request.getPassword())
                             .fullName(request.getFullName())
                             .build(),
-                    (request.getRole()==UserRole.OWNER) ? Role.OWNER : Role.CUSTOMER
+                    (request.getRole()== UserRole.OWNER) ? Role.OWNER : Role.CUSTOMER
             );
 
             UserResponse response = UserResponse.newBuilder()

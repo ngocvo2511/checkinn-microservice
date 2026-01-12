@@ -113,47 +113,6 @@ public class RevenueReportService {
         return new SummaryResponse(totalRevenue, averageRevenue, occupancy.occupancyRate(), cancellationRate);
     }
 
-//    @Transactional(readOnly = true)
-//    public OccupancyResponse occupancy(String hotelId, LocalDate from, LocalDate to) {
-//        LocalDateTime start = from.atStartOfDay();
-//        LocalDateTime end = to.plusDays(1).atStartOfDay();
-//        List<PaymentRecord> payments = hotelId == null
-//                ? paymentRecordRepository.findByEventAtBetween(start, end)
-//                : paymentRecordRepository.findByHotelIdAndEventAtBetween(hotelId, start, end);
-//
-//        long roomNights = 0;
-//        Set<String> roomTypeIds = new HashSet<>();
-//
-//        for (PaymentRecord record : payments) {
-//            int nights = record.getNights() == null ? 0 : record.getNights();
-//            int rooms = record.getRooms() == null ? 0 : record.getRooms();
-//            long delta = (long) nights * rooms;
-//            if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("REFUNDED")) {
-//                roomNights -= delta;
-//            } else if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-//                roomNights += delta;
-//            }
-//            if (record.getRoomTypeId() != null) {
-//                roomTypeIds.add(record.getRoomTypeId());
-//            }
-//        }
-//
-//        if (roomNights < 0) {
-//            roomNights = 0;
-//        }
-//
-//        long totalRooms = 0;
-//        for (String roomTypeId : roomTypeIds) {
-//            totalRooms += hotelCapacityClient.getTotalRooms(roomTypeId);
-//        }
-//
-//        long days = ChronoUnit.DAYS.between(from, to) + 1;
-//        long capacityNights = days > 0 ? totalRooms * days : 0;
-//        double occupancyRate = capacityNights > 0 ? Math.min(1.0, (double) roomNights / capacityNights) : 0.0;
-//
-//        return new OccupancyResponse(occupancyRate, roomNights, capacityNights);
-//    }
-
     @Transactional(readOnly = true)
     public OccupancyResponse occupancy(String hotelId, LocalDate from, LocalDate to) {
 
@@ -595,7 +554,7 @@ public class RevenueReportService {
         
         for (PaymentRecord p : payments) {
             if (p.getPaymentStatus() != null && p.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                uniqueCustomers.add(p.getBookingId());
+                uniqueCustomers.add(p.getCustomerId());
                 
                 // Get hotel owner info
                 HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(p.getHotelId());

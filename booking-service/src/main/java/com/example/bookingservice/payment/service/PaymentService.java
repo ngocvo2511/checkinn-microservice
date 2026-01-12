@@ -221,7 +221,7 @@ public class PaymentService {
         return toPaymentResponse(payment);
     }
 
-        private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
+    private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
         int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
@@ -243,6 +243,7 @@ public class PaymentService {
         
         return PaymentEvent.builder()
             .bookingId(booking.getId())
+            .customerId(booking.getUserId())
             .hotelId(booking.getHotelId())
             .hotelName(booking.getHotelName())
             .roomTypeId(roomTypeId)
@@ -261,9 +262,9 @@ public class PaymentService {
             .paidAt(payment.getPaidAt())
             .eventAt(LocalDateTime.now())
             .build();
-        }
+    }
 
-        private BookingStatusEvent buildBookingStatusEvent(Booking booking, String statusLabel) {
+    private BookingStatusEvent buildBookingStatusEvent(Booking booking, String statusLabel) {
         int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
@@ -285,7 +286,7 @@ public class PaymentService {
             .bookingStatus(statusLabel)
             .eventAt(LocalDateTime.now())
             .build();
-        }
+    }
 
     private PaymentResponse toPaymentResponse(Payment payment) {
         return PaymentResponse.builder()

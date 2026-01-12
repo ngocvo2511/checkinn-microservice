@@ -29,6 +29,10 @@ public class PaymentRecord {
 
     @Setter
     @Column(nullable = false)
+    private  String customerId;
+
+    @Setter
+    @Column(nullable = false)
     private String hotelId;
 
     @Setter
