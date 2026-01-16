@@ -29,6 +29,8 @@ public interface HotelService {
 
     List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId);
 
+    List<Hotel> searchByName(String name);
+
     List<Hotel> getPendingHotels();
 
     PendingHotelDetailResponse getPendingHotelDetail(UUID hotelId);

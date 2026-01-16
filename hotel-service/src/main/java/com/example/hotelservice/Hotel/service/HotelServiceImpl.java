@@ -177,6 +177,12 @@ public class HotelServiceImpl implements HotelService {
         return hotelRepository.findByCityId(cityId);
     }
 
+    // ========== SEARCH: HOTELS BY NAME ==========
+    @Override
+    public List<Hotel> searchByName(String name) {
+        return hotelRepository.findByNameContainingIgnoreCase(name);
+    }
+
     // ========== SEARCH: HOTELS BY OWNER AND CITY ==========
     @Override
     public List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId) {

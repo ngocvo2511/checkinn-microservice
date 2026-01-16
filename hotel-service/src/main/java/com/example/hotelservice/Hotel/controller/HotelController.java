@@ -113,7 +113,20 @@ public class HotelController {
     }
 
     // -------------------------------------------------------
-    // 5. Tìm khách sạn theo thành phố
+    // 5. Tìm khách sạn theo tên
+    // -------------------------------------------------------
+    @GetMapping("/search")
+    public ResponseEntity<?> searchHotelsByName(@RequestParam String name) {
+        var hotels = hotelService.searchByName(name)
+                .stream()
+                .map(hotelMapper::toHotelResponse)
+                .toList();
+
+        return ResponseEntity.ok(hotels);
+    }
+
+    // -------------------------------------------------------
+    // 6. Tìm khách sạn theo thành phố
     // -------------------------------------------------------
     @GetMapping("/city/{cityId}")
     public ResponseEntity<?> getHotelsByCity(@PathVariable UUID cityId) {
@@ -126,7 +139,7 @@ public class HotelController {
     }
 
     // -------------------------------------------------------
-    // 6. Tìm khách sạn của owner theo thành phố
+    // 7. Tìm khách sạn của owner theo thành phố
     // -------------------------------------------------------
     @GetMapping("/owner/{cityId}")
     public ResponseEntity<?> getHotelsByOwnerAndCity(

@@ -17,6 +17,9 @@ public interface HotelRepository extends JpaRepository<Hotel, UUID> {
     // Tìm hotel theo thành phố
     List<Hotel> findByCityId(UUID cityId);
 
+    // Tìm hotel theo tên (case-insensitive)
+    List<Hotel> findByNameContainingIgnoreCase(String name);
+
     // Tìm hotel theo owner và thành phố
     List<Hotel> findByOwnerIdAndCityId(UUID ownerId, UUID cityId);
 
