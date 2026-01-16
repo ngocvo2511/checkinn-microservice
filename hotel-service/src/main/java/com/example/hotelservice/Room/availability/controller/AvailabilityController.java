@@ -26,7 +26,8 @@ public class AvailabilityController {
             @RequestParam int quantity
     ) {
         boolean available = availabilityService.isAvailable(roomTypeId, checkIn, checkOut, quantity);
-        return ResponseEntity.ok(new AvailabilityCheckResponse(available));
+        int availableRooms = availabilityService.getAvailableRoomCount(roomTypeId, checkIn, checkOut);
+        return ResponseEntity.ok(new AvailabilityCheckResponse(available, availableRooms));
     }
 
     @PostMapping("/hold")

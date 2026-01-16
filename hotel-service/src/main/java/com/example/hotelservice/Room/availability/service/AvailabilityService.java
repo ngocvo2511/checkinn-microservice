@@ -38,7 +38,7 @@ public class AvailabilityService {
         int totalRooms = requireTotalRooms(roomType);
 
         for (LocalDate date : expandDates(checkIn, checkOut)) {
-            RoomAvailability availability = roomAvailabilityRepository.findByRoomTypeIdAndDate(roomTypeId, date)
+            RoomAvailability availability = roomAvailabilityRepository.findByRoomTypeIdAndDateReadOnly(roomTypeId, date)
                     .orElse(null);
             int held = availability != null ? availability.getHeld() : 0;
             int booked = availability != null ? availability.getBooked() : 0;
@@ -47,6 +47,26 @@ public class AvailabilityService {
             }
         }
         return true;
+    }
+
+    @Transactional(readOnly = true)
+    public int getAvailableRoomCount(UUID roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+        validateDates(checkIn, checkOut);
+        RoomType roomType = loadRoomType(roomTypeId);
+        int totalRooms = requireTotalRooms(roomType);
+
+        int minAvailable = totalRooms;
+        for (LocalDate date : expandDates(checkIn, checkOut)) {
+            RoomAvailability availability = roomAvailabilityRepository.findByRoomTypeIdAndDateReadOnly(roomTypeId, date)
+                    .orElse(null);
+            int held = availability != null ? availability.getHeld() : 0;
+            int booked = availability != null ? availability.getBooked() : 0;
+            int available = totalRooms - held - booked;
+            if (available < minAvailable) {
+                minAvailable = available;
+            }
+        }
+        return Math.max(0, minAvailable);
     }
 
     @Transactional
