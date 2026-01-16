@@ -70,6 +70,19 @@ public class HotelController {
         var hotel = hotelService.getDetail(hotelId);
         return ResponseEntity.ok(hotel);
     }
+
+    // -------------------------------------------------------
+    // Lấy tất cả khách sạn đã duyệt
+    // -------------------------------------------------------
+    @GetMapping
+    public ResponseEntity<List<HotelResponse>> getAllApprovedHotels() {
+        List<HotelResponse> hotels = hotelService.getAllApprovedHotels()
+                .stream()
+                .map(hotelMapper::toHotelResponse)
+                .toList();
+        return ResponseEntity.ok(hotels);
+    }
+
     //Lấy danh sách khách sạn chờ duyệt
     @GetMapping("/pending")
     public ResponseEntity<List<PendingHotelResponse>> getPendingHotels(

@@ -11,6 +11,7 @@ spring:
           enabled: true
           lower-case-service-id: true
       globalcors:
+        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           "[/**]":
             allowedOrigins:
@@ -29,7 +30,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/user/**
+            - Path=/api/user/**, /api/loyalty-points/**
           filters:
             # Keep the original path because user-service already exposes /api/user/**
             # Removing the RewritePath avoids stripping the prefix and causing 400/404 downstream
@@ -49,6 +50,10 @@ spring:
           uri: lb://hotel-service
           predicates:
             - Path=/api/v1/**
+        - id: booking-service
+          uri: lb://booking-service
+          predicates:
+            - Path=/api/bookings/**,/api/payments/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 

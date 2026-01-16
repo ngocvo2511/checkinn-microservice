@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -21,16 +23,24 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingResponse> createBooking(@RequestBody CreateBookingRequest request) {
+    public ResponseEntity<?> createBooking(@RequestBody CreateBookingRequest request) {
         try {
+            log.info("Creating booking with request: {}", request);
             BookingResponse booking = bookingService.createBooking(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
         } catch (IllegalArgumentException e) {
-            log.error("Validation error creating booking", e);
-            return ResponseEntity.badRequest().build();
+            log.error("Validation error creating booking: {}", e.getMessage(), e);
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Validation Error");
+            error.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(error);
         } catch (Exception e) {
-            log.error("Error creating booking", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            log.error("Error creating booking: {}", e.getMessage(), e);
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Internal Server Error");
+            error.put("message", e.getMessage());
+            error.put("type", e.getClass().getSimpleName());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
     }
 
@@ -70,5 +80,17 @@ public class BookingController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/count/total")
+    public ResponseEntity<Long> getTotalBookingsCount() {
+        long count = bookingService.getTotalBookingsCount();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/today")
+    public ResponseEntity<Long> getTodayBookingsCount() {
+        long count = bookingService.getTodayBookingsCount();
+        return ResponseEntity.ok(count);
     }
 }

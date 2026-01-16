@@ -47,6 +47,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getTotalUsersCount() {
+        long count = userService.getTotalUsersCount();
+        return ResponseEntity.ok(count);
+    }
+
     private UUID extractUserIdFromToken(String authHeader) {
         System.out.println("[UserController] extractUserIdFromToken - authHeader: " + authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

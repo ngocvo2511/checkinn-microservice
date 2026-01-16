@@ -11,6 +11,9 @@ import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.integration.hotel.HotelAvailabilityClient;
 import com.example.bookingservice.integration.hotel.dto.HoldRequest;
 import com.example.bookingservice.integration.hotel.dto.HoldResponse;
+import com.example.bookingservice.integration.loyalty.ApplyPointsRequestDTO;
+import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
+import com.example.bookingservice.integration.loyalty.LoyaltyPointsDTO;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +40,16 @@ public class BookingService {
     private final BookingItemRepository bookingItemRepository;
     private final HotelAvailabilityClient availabilityClient;
     private final HotelEventPublisher eventPublisher;
+    private final LoyaltyPointsClient loyaltyPointsClient;
+
+    // Giới hạn giảm giá tối đa khi sử dụng điểm: 50% tổng tiền
+    private static final BigDecimal MAX_DISCOUNT_PERCENTAGE = new BigDecimal("0.5");
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
-        log.info("Creating booking for hotel: {}, checkIn: {}, checkOut: {}", 
-            request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
-        
+        log.info("Creating booking for hotel: {}, checkIn: {}, checkOut: {}",
+                request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
+
         // Validate items
         if (request.getItems() == null || request.getItems().isEmpty()) {
             throw new IllegalArgumentException("Booking must have at least one item");
@@ -53,7 +60,7 @@ public class BookingService {
             String firstRoomTypeId = request.getItems().get(0).getRoomTypeId();
             boolean allSameRoomType = request.getItems().stream()
                     .allMatch(item -> item.getRoomTypeId().equals(firstRoomTypeId));
-            
+
             if (!allSameRoomType) {
                 throw new IllegalArgumentException("All items must have the same room type");
             }
@@ -100,6 +107,42 @@ public class BookingService {
             voucherDiscount = BigDecimal.ZERO;
         }
 
+        // Apply loyalty points discount if provided
+        BigDecimal pointsDiscount = BigDecimal.ZERO;
+        Long usedPoints = null;
+        if (request.getPointsToUse() != null && request.getPointsToUse() > 0) {
+            try {
+                // Validate user has enough points
+                LoyaltyPointsDTO userPoints = loyaltyPointsClient.getLoyaltyPoints(request.getUserId());
+                Long availablePoints = userPoints.getAvailablePoints();
+                
+                if (availablePoints < request.getPointsToUse()) {
+                    throw new IllegalArgumentException(
+                            String.format("Insufficient points. Available: %d, Requested: %d", 
+                                    availablePoints, request.getPointsToUse()));
+                }
+                
+                // Calculate discount: 1 point = 1000 VND
+                pointsDiscount = BigDecimal.valueOf(request.getPointsToUse() * 1000);
+                usedPoints = request.getPointsToUse();
+
+                // Validate: discount cannot exceed 50% of total amount
+                BigDecimal maxDiscount = totalAmount.multiply(MAX_DISCOUNT_PERCENTAGE);
+                if (pointsDiscount.compareTo(maxDiscount) > 0) {
+                    log.warn("Points discount {} exceeds {}% limit of {}. Capping to max discount.",
+                            pointsDiscount, MAX_DISCOUNT_PERCENTAGE.multiply(new BigDecimal("100")).intValue(), maxDiscount);
+                    pointsDiscount = maxDiscount;
+                }
+
+                log.info("Successfully calculated {} points discount: {} VND (max allowed: {} VND)",
+                        request.getPointsToUse(), pointsDiscount, maxDiscount);
+            } catch (Exception e) {
+                log.warn("Failed to calculate points discount: {}", e.getMessage());
+                pointsDiscount = BigDecimal.ZERO;
+                usedPoints = null; // Reset usedPoints on failure
+            }
+        }
+
         // Create booking entity with holdId and expiry (15 minutes from now)
         LocalDateTime holdExpiry = LocalDateTime.now().plusMinutes(15);
         Booking booking = Booking.builder()
@@ -111,10 +154,12 @@ public class BookingService {
                 .adults(request.getAdults())
                 .children(request.getChildren())
                 .status(BookingStatus.PENDING)
-                .totalAmount(totalAmount.subtract(voucherDiscount))
+                .totalAmount(totalAmount.subtract(voucherDiscount).subtract(pointsDiscount))
                 .paidAmount(BigDecimal.ZERO)
                 .voucherCode(request.getVoucherCode())
                 .voucherDiscount(voucherDiscount)
+                .usedPoints(usedPoints)
+                .pointsDiscountAmount(pointsDiscount)
                 .contactName(request.getContactName())
                 .contactEmail(request.getContactEmail())
                 .contactPhone(request.getContactPhone())
@@ -135,7 +180,7 @@ public class BookingService {
                             .multiply(BigDecimal.valueOf(nights));
 
                     return BookingItem.builder()
-                    .booking(bookingRef)
+                            .booking(bookingRef)
                             .roomTypeId(itemRequest.getRoomTypeId())
                             .roomTypeName(itemRequest.getRoomTypeName())
                             .ratePlanId(itemRequest.getRatePlanId())
@@ -186,9 +231,9 @@ public class BookingService {
     public void cancelBooking(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
-        
-        if (booking.getStatus() == BookingStatus.CANCELLED || 
-            booking.getStatus() == BookingStatus.CHECKED_OUT) {
+
+        if (booking.getStatus() == BookingStatus.CANCELLED ||
+                booking.getStatus() == BookingStatus.CHECKED_OUT) {
             throw new IllegalArgumentException("Cannot cancel booking with status: " + booking.getStatus());
         }
 
@@ -199,6 +244,16 @@ public class BookingService {
             } catch (Exception e) {
                 // Log but don't fail the cancellation
                 System.err.println("Failed to release hold: " + e.getMessage());
+            }
+        }
+
+        // Hoàn lại điểm khi hủy booking
+        if (booking.getEarnedPoints() != null && booking.getEarnedPoints() > 0) {
+            try {
+                loyaltyPointsClient.refundPoints(booking.getUserId(), bookingId);
+                log.info("Successfully refunded points for cancelled booking: {}", bookingId);
+            } catch (Exception e) {
+                log.warn("Failed to refund points for booking {}: {}", bookingId, e.getMessage());
             }
         }
 
@@ -214,33 +269,58 @@ public class BookingService {
         if (booking.getHoldId() != null) {
             availabilityClient.confirmHold(booking.getHoldId());
         }
+
+        // Tích điểm khi booking được confirm (hoàn thành thanh toán)
+        try {
+            Long earnedPoints = calculateEarnedPoints(booking.getTotalAmount().add(
+                    booking.getVoucherDiscount() != null ? booking.getVoucherDiscount() : BigDecimal.ZERO
+            ).add(
+                    booking.getPointsDiscountAmount() != null ? booking.getPointsDiscountAmount() : BigDecimal.ZERO
+            ));
+            booking.setEarnedPoints(earnedPoints);
+            bookingRepository.save(booking);
+
+            loyaltyPointsClient.earnPoints(
+                    booking.getUserId(),
+                    bookingId,
+                    booking.getTotalAmount().add(
+                            booking.getVoucherDiscount() != null ? booking.getVoucherDiscount() : BigDecimal.ZERO
+                    ).add(
+                            booking.getPointsDiscountAmount() != null ? booking.getPointsDiscountAmount() : BigDecimal.ZERO
+                    )
+            );
+            log.info("Successfully earned {} points for user: {}", earnedPoints, booking.getUserId());
+        } catch (Exception e) {
+            log.warn("Failed to earn points for booking {}: {}", bookingId, e.getMessage());
+        }
     }
 
-        private void publishStatusEvent(Booking booking, String statusLabel) {
+    private void publishStatusEvent(Booking booking, String statusLabel) {
         int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
-            .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
-            .sum();
+                .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
+                .sum();
         if (rooms <= 0) {
             rooms = 1;
         }
         String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
-            ? booking.getItems().get(0).getRoomTypeId()
-            : null;
+                ? booking.getItems().get(0).getRoomTypeId()
+                : null;
         int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
 
         BookingStatusEvent event = BookingStatusEvent.builder()
-            .bookingId(booking.getId())
-            .hotelId(booking.getHotelId())
-            .roomTypeId(roomTypeId)
-            .checkInDate(booking.getCheckInDate())
-            .checkOutDate(booking.getCheckOutDate())
-            .nights(nights)
-            .rooms(rooms)
-            .bookingStatus(statusLabel)
-            .eventAt(LocalDateTime.now())
-            .build();
+                .bookingId(booking.getId())
+                .hotelId(booking.getHotelId())
+                .roomTypeId(roomTypeId)
+                .checkInDate(booking.getCheckInDate())
+                .checkOutDate(booking.getCheckOutDate())
+                .nights(nights)
+                .rooms(rooms)
+                .bookingStatus(statusLabel)
+                .eventAt(LocalDateTime.now())
+                .build();
         eventPublisher.publishBookingStatus(event);
-        }
+    }
+
     public void releaseBookingHold(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -271,7 +351,7 @@ public class BookingService {
 
         String holdId = booking.getHoldId();
         LocalDateTime holdExpiresAt = booking.getHoldExpiresAt();
-        
+
         // If holdExpiresAt not set in DB, try fetching from availability service
         if (holdId != null && holdExpiresAt == null) {
             try {
@@ -299,6 +379,9 @@ public class BookingService {
                 .paidAmount(booking.getPaidAmount())
                 .voucherCode(booking.getVoucherCode())
                 .voucherDiscount(booking.getVoucherDiscount())
+                .earnedPoints(booking.getEarnedPoints())
+                .usedPoints(booking.getUsedPoints())
+                .pointsDiscountAmount(booking.getPointsDiscountAmount())
                 .contactName(booking.getContactName())
                 .contactEmail(booking.getContactEmail())
                 .contactPhone(booking.getContactPhone())
@@ -309,5 +392,33 @@ public class BookingService {
                 .createdAt(booking.getCreatedAt())
                 .updatedAt(booking.getUpdatedAt())
                 .build();
+    }
+
+    public long getTotalBookingsCount() {
+        return bookingRepository.count();
+    }
+
+    public long getTodayBookingsCount() {
+        return countToday();
+    }
+
+    private long countToday() {
+        LocalDate today = LocalDate.now();
+        return bookingRepository.countBookingsCreatedToday(
+                today.atStartOfDay(),
+                today.plusDays(1).atStartOfDay()
+        );
+    }
+
+    /**
+     * Tính điểm từ tổng tiền (1000 VND = 1 điểm)
+     */
+    private Long calculateEarnedPoints(BigDecimal totalAmount) {
+        if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return 0L;
+        }
+        // Tỷ lệ tích điểm: 1000 VND = 1 điểm (cần phải đặt phòng nhiều để tích)
+        BigDecimal earnConversionRate = new BigDecimal("1000");
+        return totalAmount.divide(earnConversionRate, 0, java.math.RoundingMode.DOWN).longValue();
     }
 }

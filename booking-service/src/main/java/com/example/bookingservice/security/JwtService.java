@@ -1,0 +1,59 @@
+package com.example.bookingservice.security;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Service;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.UUID;
+
+@Service
+public class JwtService {
+
+    private final String SECRET = "THIS_IS_SUPER_SECRET_KEY_12345678901234567890"; // 48+ chars
+
+    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    public String generateToken(UUID userId, String role) {
+        return Jwts.builder()
+                .setSubject(userId.toString())
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24h
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String generateToken(UUID userId) {
+        return generateToken(userId, "CUSTOMER");
+    }
+
+    public Jws<Claims> parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
+    }
+
+    public UUID extractUserId(String token) {
+        Jws<Claims> claims = parseToken(token);
+        return UUID.fromString(claims.getBody().getSubject());
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            parseToken(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public String extractRole(String token) {
+        Claims claims = parseToken(token).getBody();
+        return claims.get("role", String.class);
+    }
+}
