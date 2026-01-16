@@ -35,6 +35,8 @@ public interface HotelService {
 
     PendingHotelDetailResponse getPendingHotelDetail(UUID hotelId);
 
+    List<Hotel> getAllApprovedHotels();
+
     void activateHotel(UUID hotelId);
 
     void deactivateHotel(UUID hotelId);

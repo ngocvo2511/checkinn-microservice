@@ -39,6 +39,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+  instance:
+    prefer-ip-address: true
 
 server:
   port: ${PORT:8084}
@@ -47,6 +49,12 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.springframework.security: DEBUG
+
+# Feign Client configuration
+user-service:
+  url: ${USER_SERVICE_URL:http://localhost:8082}
 
 grpc:
   server:

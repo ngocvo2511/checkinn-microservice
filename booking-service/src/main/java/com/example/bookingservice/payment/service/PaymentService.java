@@ -13,7 +13,9 @@ import com.example.bookingservice.payment.repository.PaymentRepository;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import com.example.bookingservice.messaging.event.PaymentEvent;
+import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import com.example.bookingservice.payment.vnpay.VnPayProperties;
 import com.example.bookingservice.payment.vnpay.VnPayUtil;
 import com.example.bookingservice.payment.dto.VnPayInitResponse;
@@ -29,6 +31,7 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentService {
 
     private final PaymentRepository paymentRepository;
@@ -36,6 +39,7 @@ public class PaymentService {
     private final VnPayProperties vnPayProperties;
     private final BookingService bookingService;
     private final HotelEventPublisher eventPublisher;
+    private final LoyaltyPointsClient loyaltyPointsClient;
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
@@ -155,7 +159,41 @@ public class PaymentService {
             try {
                 bookingService.confirmBookingHold(payment.getBookingId());
             } catch (Exception e) {
-                System.err.println("Failed to confirm hold: " + e.getMessage());
+                log.error("Failed to confirm hold: {}", e.getMessage());
+            }
+
+            // Handle loyalty points: trừ điểm đã sử dụng và tích lũy điểm mới
+            if (booking.getUserId() != null) {
+                try {
+                    String userId = booking.getUserId().toString();
+                    
+                    // Trừ điểm đã sử dụng (nếu có) - chỉ trừ khi payment success
+                    if (booking.getUsedPoints() != null && booking.getUsedPoints() > 0) {
+                        log.info("Deducting {} points for user: {}", booking.getUsedPoints(), userId);
+                        loyaltyPointsClient.usePoints(
+                            new com.example.bookingservice.integration.loyalty.ApplyPointsRequestDTO(
+                                userId,
+                                booking.getUsedPoints(),
+                                booking.getId(),
+                                "Sử dụng điểm cho booking #" + booking.getId()
+                            )
+                        );
+                    }
+                    
+                    // Tích lũy điểm mới từ thanh toán
+                    // Pass totalAmount to the API - it will calculate points internally
+                    log.info("Earning points for user: {} from booking: {} with total amount: {}", 
+                            userId, booking.getId(), booking.getTotalAmount());
+                    loyaltyPointsClient.earnPoints(
+                            userId,
+                            booking.getId(),
+                            booking.getTotalAmount() // Pass total amount, not pre-calculated points
+                    );
+                    log.info("Successfully processed loyalty points");
+                } catch (Exception e) {
+                    log.error("Failed to process loyalty points: {}", e.getMessage());
+                    // Don't fail the payment if earning points fails
+                }
             }
 
             PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());

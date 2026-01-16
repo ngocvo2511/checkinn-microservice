@@ -196,6 +196,11 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    public List<Hotel> getAllApprovedHotels() {
+        return hotelRepository.findByApprovedStatus(HotelApprovalStatus.APPROVED);
+    }
+
+    @Override
     public PendingHotelDetailResponse getPendingHotelDetail(UUID hotelId) {
         Hotel hotel = getById(hotelId);
         if (hotel.getApprovedStatus() != HotelApprovalStatus.PENDING) {

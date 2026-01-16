@@ -29,6 +29,9 @@ public class BookingResponse {
     private BigDecimal paidAmount;
     private String voucherCode;
     private BigDecimal voucherDiscount;
+    private Long earnedPoints;  // Điểm tích lũy từ booking này
+    private Long usedPoints;    // Điểm đã sử dụng để giảm giá
+    private BigDecimal pointsDiscountAmount;  // Số tiền giảm từ điểm
     private String contactName;
     private String contactEmail;
     private String contactPhone;

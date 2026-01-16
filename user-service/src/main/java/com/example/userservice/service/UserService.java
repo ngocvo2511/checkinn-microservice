@@ -178,6 +178,10 @@ public class UserService {
         public UserProfile getProfile() { return profile; }
     }
 
+    public long getTotalUsersCount() {
+        return userRepository.count();
+    }
+
 }
 
 

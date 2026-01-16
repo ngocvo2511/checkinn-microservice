@@ -30,4 +30,8 @@ public class UserProfile {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "loyalty_points_id")
+    private LoyaltyPoints loyaltyPoints;
 }
