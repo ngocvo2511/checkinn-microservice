@@ -46,6 +46,15 @@ public interface HotelReviewRepository extends JpaRepository<HotelReview, UUID> 
     boolean existsByHotelIdAndGuestId(UUID hotelId, UUID guestId);
 
     /**
+     * Get reviews for multiple hotels (for owner view)
+     */
+    Page<HotelReview> findByHotelIdInAndStatusOrderByCreatedAtDesc(
+            List<UUID> hotelIds,
+            ReviewStatus status,
+            Pageable pageable
+    );
+
+    /**
      * Get reviews count for a hotel (published only)
      */
     long countByHotelIdAndStatus(UUID hotelId, ReviewStatus status);

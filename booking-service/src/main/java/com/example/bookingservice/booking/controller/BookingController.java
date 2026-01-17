@@ -60,6 +60,12 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
+    @GetMapping("/hotel/{hotelId}")
+    public ResponseEntity<List<BookingResponse>> getHotelBookings(@PathVariable String hotelId) {
+        List<BookingResponse> bookings = bookingService.getHotelBookings(hotelId);
+        return ResponseEntity.ok(bookings);
+    }
+
     @PutMapping("/{id}/status")
     public ResponseEntity<BookingResponse> updateBookingStatus(
             @PathVariable String id,

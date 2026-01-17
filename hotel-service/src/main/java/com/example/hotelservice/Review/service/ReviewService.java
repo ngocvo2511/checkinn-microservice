@@ -16,6 +16,7 @@ import com.example.hotelservice.Review.repository.ReviewFeedbackRepository;
 import com.example.hotelservice.Review.entity.ReviewFeedback;
 import com.example.hotelservice.Review.enums.FeedbackType;
 import com.example.hotelservice.Hotel.service.UserGrpcClient;
+import com.example.hotelservice.Hotel.repository.HotelRepository;
 import com.checkinn.user.grpc.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,7 @@ public class ReviewService {
     private final ReviewFeedbackRepository reviewFeedbackRepository;
     private final ReviewMapper reviewMapper;
     private final UserGrpcClient userGrpcClient;
+    private final HotelRepository hotelRepository;
 
     /**
      * Create a new review
@@ -465,6 +467,56 @@ public class ReviewService {
         return hotelReviewRepository.existsByHotelIdAndGuestId(hotelId, guestId);
     }
 
+    /**
+     * Get all reviews for hotels owned by a specific owner with pagination
+     */
+    @Transactional(readOnly = true)
+    public Page<HotelReviewResponse> getReviewsByOwner(UUID ownerId, Pageable pageable) {
+        // Get all hotel IDs owned by this owner
+        List<UUID> hotelIds = hotelRepository.findByOwnerId(ownerId)
+                .stream()
+                .map(hotel -> hotel.getId())
+                .collect(Collectors.toList());
+
+        if (hotelIds.isEmpty()) {
+            return Page.empty(pageable);
+        }
+
+        // Get all reviews for these hotels
+        Page<HotelReview> reviews = hotelReviewRepository
+                .findByHotelIdInAndStatusOrderByCreatedAtDesc(hotelIds, ReviewStatus.PUBLISHED, pageable);
+
+        return reviews.map(r -> {
+            HotelReviewResponse resp = reviewMapper.entityToResponse(r);
+            enrichGuestInfo(resp);
+            enrichOwnerResponse(resp);
+            enrichHotelName(resp);
+            return resp;
+        });
+    }
+
+    /**
+     * Get reviews for a specific hotel owned by owner with pagination
+     */
+    @Transactional(readOnly = true)
+    public Page<HotelReviewResponse> getReviewsByOwnerAndHotel(UUID ownerId, UUID hotelId, Pageable pageable) {
+        // Verify that the hotel belongs to this owner
+        if (!hotelRepository.existsByIdAndOwnerId(hotelId, ownerId)) {
+            throw new IllegalArgumentException("Bạn không có quyền xem reviews của khách sạn này");
+        }
+
+        // Get all reviews for this hotel
+        Page<HotelReview> reviews = hotelReviewRepository
+                .findByHotelIdAndStatusOrderByCreatedAtDesc(hotelId, ReviewStatus.PUBLISHED, pageable);
+
+        return reviews.map(r -> {
+            HotelReviewResponse resp = reviewMapper.entityToResponse(r);
+            enrichGuestInfo(resp);
+            enrichOwnerResponse(resp);
+            return resp;
+        });
+    }
+
     private ReviewResponseResponse mapResponseToDto(ReviewResponse entity) {
         return ReviewResponseResponse.builder()
                 .id(entity.getId())
@@ -505,6 +557,49 @@ public class ReviewService {
             if (feedback.isPresent()) {
                 response.setUserFeedback(feedback.get().getFeedbackType().name());
             }
+        } catch (Exception e) {
+            // swallow errors
+        }
+    }
+
+    /**
+     * Enrich response with owner's response to the review
+     */
+    private void enrichOwnerResponse(HotelReviewResponse response) {
+        if (response == null || response.getId() == null) {
+            return;
+        }
+        try {
+            Optional<ReviewResponse> ownerResponse = reviewResponseRepository.findByReviewId(response.getId());
+            if (ownerResponse.isPresent()) {
+                ReviewResponse resp = ownerResponse.get();
+                response.setOwnerResponse(mapResponseToDto(resp));
+                // Enrich owner info
+                try {
+                    UserResponse user = userGrpcClient.GetUserById(resp.getOwnerId());
+                    if (user != null) {
+                        response.getOwnerResponse().setOwnerName(user.getFullName() != null ? user.getFullName() : user.getUsername());
+                    }
+                } catch (Exception e) {
+                    // swallow errors
+                }
+            }
+        } catch (Exception e) {
+            // swallow errors
+        }
+    }
+
+    /**
+     * Enrich response with hotel name
+     */
+    private void enrichHotelName(HotelReviewResponse response) {
+        if (response == null || response.getHotelId() == null) {
+            return;
+        }
+        try {
+            hotelRepository.findById(response.getHotelId()).ifPresent(hotel -> {
+                response.setHotelName(hotel.getName());
+            });
         } catch (Exception e) {
             // swallow errors
         }

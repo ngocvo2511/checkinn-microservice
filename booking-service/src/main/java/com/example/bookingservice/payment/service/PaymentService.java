@@ -66,8 +66,8 @@ public class PaymentService {
         if (request.getMethod() == PaymentMethod.HOTEL) {
             payment.setStatus(PaymentStatus.ONSITE_PENDING);
 
-            // Update booking as confirmed/held but do NOT increase paid amount yet
-            booking.setStatus(BookingStatus.CONFIRMED);
+            // Update booking status to PENDING_PAYMENT (chờ thanh toán tại khách sạn)
+            booking.setStatus(BookingStatus.PENDING_PAYMENT);
             bookingRepository.save(booking);
         }
 
@@ -256,6 +256,44 @@ public class PaymentService {
 
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.REFUNDED.name());
         eventPublisher.publishPaymentRefunded(event);
+        return toPaymentResponse(payment);
+    }
+
+    @Transactional
+    public PaymentResponse confirmHotelPayment(String bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+
+        Payment payment = paymentRepository.findByBookingId(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
+
+        if (payment.getStatus() != PaymentStatus.ONSITE_PENDING) {
+            throw new IllegalArgumentException("Can only confirm onsite pending payments");
+        }
+
+        // Mark payment as completed
+        payment.setStatus(PaymentStatus.COMPLETED);
+        payment.setPaidAt(LocalDateTime.now());
+        payment = paymentRepository.save(payment);
+
+        // Update booking paid amount
+        booking.setPaidAmount(booking.getTotalAmount());
+        booking.setStatus(BookingStatus.CONFIRMED);
+        bookingRepository.save(booking);
+
+        // Confirm hold with hotel service
+        try {
+            bookingService.confirmBookingHold(bookingId);
+            log.info("Successfully confirmed hold for booking: {}", bookingId);
+        } catch (Exception e) {
+            log.error("Failed to confirm hold for booking {}: {}", bookingId, e.getMessage());
+        }
+
+        // Publish payment event
+        PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
+        eventPublisher.publishPaymentCompleted(event);
+
+        log.info("Hotel payment confirmed for booking: {}", bookingId);
         return toPaymentResponse(payment);
     }
 

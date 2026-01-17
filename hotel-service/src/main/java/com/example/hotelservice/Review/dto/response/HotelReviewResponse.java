@@ -44,4 +44,10 @@ public class HotelReviewResponse {
     
     // Current user's feedback on this review (if authenticated)
     private String userFeedback; // "HELPFUL", "UNHELPFUL", or null
+    
+    // Owner response to this review (if available)
+    private ReviewResponseResponse ownerResponse;
+    
+    // Hotel name (for owner's view of all their hotels' reviews)
+    private String hotelName;
 }

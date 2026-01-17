@@ -16,6 +16,8 @@ import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
 import com.example.bookingservice.integration.loyalty.LoyaltyPointsDTO;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
+import com.example.bookingservice.payment.repository.PaymentRepository;
+import com.example.bookingservice.payment.entity.Payment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,7 @@ public class BookingService {
 
     private final BookingRepository bookingRepository;
     private final BookingItemRepository bookingItemRepository;
+    private final PaymentRepository paymentRepository;
     private final HotelAvailabilityClient availabilityClient;
     private final HotelEventPublisher eventPublisher;
     private final LoyaltyPointsClient loyaltyPointsClient;
@@ -217,6 +220,12 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
+    public List<BookingResponse> getHotelBookings(String hotelId) {
+        return bookingRepository.findByHotelId(hotelId).stream()
+                .map(this::toBookingResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public BookingResponse updateBookingStatus(String bookingId, BookingStatus status) {
         Booking booking = bookingRepository.findById(bookingId)
@@ -263,11 +272,22 @@ public class BookingService {
     }
 
     public void confirmBookingHold(String bookingId) {
+        log.info("Confirming booking hold for booking: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
-        if (booking.getHoldId() != null) {
+        if (booking.getHoldId() == null) {
+            log.error("Booking {} has no holdId, cannot confirm hold", bookingId);
+            throw new IllegalStateException("Booking has no holdId");
+        }
+
+        log.info("Confirming hold {} for booking {}", booking.getHoldId(), bookingId);
+        try {
             availabilityClient.confirmHold(booking.getHoldId());
+            log.info("Successfully confirmed hold {} for booking {}", booking.getHoldId(), bookingId);
+        } catch (Exception e) {
+            log.error("Failed to confirm hold {} for booking {}: {}", booking.getHoldId(), bookingId, e.getMessage(), e);
+            throw new RuntimeException("Failed to confirm hold: " + e.getMessage(), e);
         }
 
         // Tích điểm khi booking được confirm (hoàn thành thanh toán)
@@ -365,6 +385,17 @@ public class BookingService {
             }
         }
 
+        // Get payment method from Payment entity
+        String paymentMethod = null;
+        try {
+            Payment payment = paymentRepository.findByBookingId(booking.getId()).orElse(null);
+            if (payment != null && payment.getMethod() != null) {
+                paymentMethod = payment.getMethod().name();
+            }
+        } catch (Exception e) {
+            log.debug("Could not fetch payment method for booking: {}", booking.getId());
+        }
+
         return BookingResponse.builder()
                 .id(booking.getId())
                 .userId(booking.getUserId())
@@ -386,6 +417,7 @@ public class BookingService {
                 .contactEmail(booking.getContactEmail())
                 .contactPhone(booking.getContactPhone())
                 .specialRequests(booking.getSpecialRequests())
+                .paymentMethod(paymentMethod)
                 .holdId(holdId)
                 .holdExpiresAt(holdExpiresAt)
                 .items(itemResponses)

@@ -95,5 +95,15 @@ public class PaymentController {
         }
     }
 
+    @PostMapping("/{bookingId}/confirm")
+    public ResponseEntity<PaymentResponse> confirmHotelPayment(@PathVariable String bookingId) {
+        try {
+            PaymentResponse payment = paymentService.confirmHotelPayment(bookingId);
+            return ResponseEntity.ok(payment);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     // Legacy internal callback kept via gRPC server
 }

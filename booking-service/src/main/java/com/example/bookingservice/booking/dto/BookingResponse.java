@@ -36,6 +36,7 @@ public class BookingResponse {
     private String contactEmail;
     private String contactPhone;
     private String specialRequests;
+    private String paymentMethod; // HOTEL, VNPAY - lấy từ Payment entity
     private String holdId;
     private LocalDateTime holdExpiresAt;
     private List<BookingItemResponse> items;

@@ -212,4 +212,37 @@ public class ReviewController {
         Optional<ReviewResponseResponse> response = reviewService.getReviewResponse(reviewId);
         return ResponseEntity.ok(response);
     }
+
+    // ============================================================
+    // HOTEL OWNER ENDPOINTS
+    // ============================================================
+
+    /**
+     * Get all reviews for hotels owned by the authenticated owner
+     * GET /api/v1/reviews/owner/all
+     * Header: X-User-Id (owner ID)
+     */
+    @GetMapping("/owner/all")
+    public ResponseEntity<Page<HotelReviewResponse>> getOwnerReviews(
+            @RequestHeader("X-User-Id") UUID ownerId,
+            Pageable pageable
+    ) {
+        Page<HotelReviewResponse> reviews = reviewService.getReviewsByOwner(ownerId, pageable);
+        return ResponseEntity.ok(reviews);
+    }
+
+    /**
+     * Get reviews for a specific hotel owned by the authenticated owner
+     * GET /api/v1/reviews/owner/hotel/{hotelId}
+     * Header: X-User-Id (owner ID)
+     */
+    @GetMapping("/owner/hotel/{hotelId}")
+    public ResponseEntity<Page<HotelReviewResponse>> getOwnerHotelReviews(
+            @PathVariable UUID hotelId,
+            @RequestHeader("X-User-Id") UUID ownerId,
+            Pageable pageable
+    ) {
+        Page<HotelReviewResponse> reviews = reviewService.getReviewsByOwnerAndHotel(ownerId, hotelId, pageable);
+        return ResponseEntity.ok(reviews);
+    }
 }

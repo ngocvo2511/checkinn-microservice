@@ -12,6 +12,7 @@ import com.example.hotelservice.Room.repository.RoomTypeRepository;
 import com.example.hotelservice.config.HoldExpiryProperties;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AvailabilityService {
 
     private final RoomTypeRepository roomTypeRepository;
@@ -107,6 +109,7 @@ public class AvailabilityService {
 
     @Transactional
     public HoldResponse confirmHold(UUID holdId) {
+        log.info("Confirming hold: {}", holdId);
         RoomHold hold = roomHoldRepository.findByIdAndStatus(holdId, HoldStatus.HELD)
                 .orElseThrow(() -> new EntityNotFoundException("Hold not found or already finalized"));
         RoomType roomType = loadRoomType(hold.getRoomTypeId());
@@ -118,13 +121,18 @@ public class AvailabilityService {
             if (availability.getHeld() < hold.getQuantity()) {
                 throw new IllegalStateException("Hold has insufficient held rooms for date: " + date);
             }
+            int oldHeld = availability.getHeld();
+            int oldBooked = availability.getBooked();
             availability.setHeld(availability.getHeld() - hold.getQuantity());
             availability.setBooked(availability.getBooked() + hold.getQuantity());
             roomAvailabilityRepository.save(availability);
+            log.info("Updated availability for date {}: held {} -> {}, booked {} -> {}", 
+                    date, oldHeld, availability.getHeld(), oldBooked, availability.getBooked());
         }
 
         hold.setStatus(HoldStatus.CONFIRMED);
         roomHoldRepository.save(hold);
+        log.info("Hold {} confirmed successfully", holdId);
         return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
     }
 
