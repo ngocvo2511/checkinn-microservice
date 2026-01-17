@@ -76,7 +76,7 @@ public class EmailNotificationService {
 
             helper.setFrom(fromEmail, fromName);
             helper.setTo(event.getUserEmail());
-            helper.setSubject("Thanh toán thành công - CheckInn Booking #" + event.getBookingId());
+            helper.setSubject("Thanh toán thành công - Tripto Booking #" + event.getBookingId());
 
             String content = String.format("""
                     <html>
@@ -142,14 +142,14 @@ public class EmailNotificationService {
 
             helper.setFrom(fromEmail, fromName);
             helper.setTo(email);
-            helper.setSubject("CheckInn - Mã xác thực email");
+            helper.setSubject("Tripto - Mã xác thực email");
 
             String content = String.format("""
                     <html>
                     <body style='font-family: Arial, sans-serif;'>
                         <div style='max-width: 600px; margin: 0 auto;'>
-                            <h2 style='color: #0057FF;'>Xác thực email CheckInn</h2>
-                            <p>Cảm ơn bạn đã đăng ký tài khoản CheckInn!</p>
+                            <h2 style='color: #0057FF;'>Xác thực email Tripto</h2>
+                            <p>Cảm ơn bạn đã đăng ký tài khoản Tripto!</p>
                             
                             <div style='background-color: #f0f4ff; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;'>
                                 <p style='color: #666; margin: 0 0 10px 0;'>Mã xác thực của bạn:</p>
@@ -166,7 +166,7 @@ public class EmailNotificationService {
                             </p>
                             
                             <hr style='margin: 30px 0; border: none; border-top: 1px solid #ddd;'>
-                            <p style='color: #999; font-size: 12px;'>Đây là email tự động từ hệ thống CheckInn. Vui lòng không trả lời email này.</p>
+                            <p style='color: #999; font-size: 12px;'>Đây là email tự động từ hệ thống Tripto. Vui lòng không trả lời email này.</p>
                         </div>
                     </body>
                     </html>
