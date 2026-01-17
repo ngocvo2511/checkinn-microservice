@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option java_multiple_files = true;
 option java_package = "com.checkinn.user.grpc";
 option java_outer_classname = "UserProto";
@@ -8,6 +10,7 @@ service UserService {
   rpc RegisterUser (RegisterRequest) returns (UserResponse);
   rpc GetUserById (GetUserRequest) returns (UserResponse);
   rpc LoginUser (LoginRequest) returns (UserResponse);
+  rpc ResetPassword (ResetPasswordRequest) returns (google.protobuf.Empty);
 }
 
 enum UserRole {
@@ -38,4 +41,9 @@ message UserResponse {
 message LoginRequest {
   string usernameOrEmail = 1;
   string password = 2;
+}
+
+message ResetPasswordRequest {
+  string email = 1;
+  string newPassword = 2;
 }

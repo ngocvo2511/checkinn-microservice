@@ -134,4 +134,52 @@ public class EmailNotificationService {
                     event.getBookingId(), e.getMessage(), e);
         }
     }
+
+    public void sendOtpVerificationEmail(String email, String otpCode) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(email);
+            helper.setSubject("CheckInn - Mã xác thực email");
+
+            String content = String.format("""
+                    <html>
+                    <body style='font-family: Arial, sans-serif;'>
+                        <div style='max-width: 600px; margin: 0 auto;'>
+                            <h2 style='color: #0057FF;'>Xác thực email CheckInn</h2>
+                            <p>Cảm ơn bạn đã đăng ký tài khoản CheckInn!</p>
+                            
+                            <div style='background-color: #f0f4ff; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;'>
+                                <p style='color: #666; margin: 0 0 10px 0;'>Mã xác thực của bạn:</p>
+                                <div style='font-size: 32px; font-weight: bold; color: #0057FF; letter-spacing: 4px;'>%s</div>
+                            </div>
+                            
+                            <p style='color: #666;'>
+                                Mã này sẽ hết hạn trong <strong>10 phút</strong>. 
+                                Vui lòng không chia sẻ mã này với bất kỳ ai.
+                            </p>
+                            
+                            <p style='color: #666;'>
+                                Nếu bạn không yêu cầu mã này, vui lòng bỏ qua email này.
+                            </p>
+                            
+                            <hr style='margin: 30px 0; border: none; border-top: 1px solid #ddd;'>
+                            <p style='color: #999; font-size: 12px;'>Đây là email tự động từ hệ thống CheckInn. Vui lòng không trả lời email này.</p>
+                        </div>
+                    </body>
+                    </html>
+                    """, otpCode);
+
+            helper.setText(content, true);
+            mailSender.send(message);
+
+            logger.info("OTP email sent successfully to: {}", email);
+
+        } catch (Exception e) {
+            logger.error("Failed to send OTP email to {}: {}", email, e.getMessage(), e);
+            throw new RuntimeException("Failed to send OTP verification email", e);
+        }
+    }
 }

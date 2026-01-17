@@ -1,9 +1,11 @@
 package com.example.notificationservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookingNotificationEvent {
     private String bookingId;
     private String userId;

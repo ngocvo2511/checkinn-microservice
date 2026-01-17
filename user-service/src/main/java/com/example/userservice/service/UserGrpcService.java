@@ -50,7 +50,14 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            responseObserver.onError(e);
+            System.err.println("[UserGrpcService] Registration error: " + e.getMessage());
+            e.printStackTrace();
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                    .withDescription(e.getMessage())
+                    .withCause(e)
+                    .asRuntimeException()
+            );
         }
     }
 
@@ -74,7 +81,13 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            responseObserver.onError(e);
+            System.err.println("[UserGrpcService] GetUserById error: " + e.getMessage());
+            responseObserver.onError(
+                Status.NOT_FOUND
+                    .withDescription(e.getMessage())
+                    .withCause(e)
+                    .asRuntimeException()
+            );
         }
     }
 
@@ -109,9 +122,33 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         } catch (Exception e) {
             System.err.println("[UserGrpcService] Login error: " + e.getMessage());
             e.printStackTrace();
-            responseObserver.onError(Status.UNAUTHENTICATED
+            responseObserver.onError(
+                Status.UNAUTHENTICATED
                     .withDescription(e.getMessage())
-                    .asException());
+                    .withCause(e)
+                    .asRuntimeException()
+            );
+        }
+    }
+
+    @Override
+    public void resetPassword(com.checkinn.user.grpc.ResetPasswordRequest request,
+                             StreamObserver<com.google.protobuf.Empty> responseObserver) {
+
+        try {
+            userService.resetPassword(request.getEmail(), request.getNewPassword());
+
+            responseObserver.onNext(com.google.protobuf.Empty.getDefaultInstance());
+            responseObserver.onCompleted();
+
+        } catch (Exception e) {
+            System.err.println("[UserGrpcService] Reset password error: " + e.getMessage());
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                    .withDescription(e.getMessage())
+                    .withCause(e)
+                    .asRuntimeException()
+            );
         }
     }
 }
