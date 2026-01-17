@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3-management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "guest"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "guest"
+            # Dòng này bảo RabbitMQ load file cấu hình tại đường dẫn này
+            - name: RABBITMQ_LOAD_DEFINITIONS
+              value: "/etc/rabbitmq/definitions.json"
+
+          # Cấu hình Mount (Gắn ổ đĩa)
+          volumeMounts:
+            - name: rabbitmq-config-volume
+              mountPath: /etc/rabbitmq/definitions.json
+              subPath: definitions.json # Chỉ lấy đúng file này từ ConfigMap
+
+      # Định nghĩa Volume lấy từ ConfigMap
+      volumes:
+        - name: rabbitmq-config-volume
+          configMap:
+            name: rabbitmq-definitions
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+    - name: http
+      port: 15672
+      targetPort: 15672
+  type: ClusterIP

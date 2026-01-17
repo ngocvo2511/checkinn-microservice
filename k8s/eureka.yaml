@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+        - name: eureka-server
+          # Đảm bảo đường dẫn ảnh khớp với lệnh build ở Bước 2
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/eureka-server:v1
+          ports:
+            - containerPort: 8761
+          resources:
+            limits:
+              memory: "600Mi" # Java 21 có thể tốn RAM hơn chút, cho dư ra
+              cpu: "500m"
+          env:
+            # Ghi đè cấu hình trong file yml của bạn (để chắc chắn)
+            - name: SERVER_PORT
+              value: "8761"
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "false"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server
+spec:
+  selector:
+    app: eureka-server
+  ports:
+    - port: 8761
+      targetPort: 8761
+  type: ClusterIP # Chỉ gọi nội bộ trong mạng K8s

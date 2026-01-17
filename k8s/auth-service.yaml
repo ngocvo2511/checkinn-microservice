@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/auth-service:v1
+          ports:
+            - containerPort: 8081 # Cổng HTTP (như trong yml của bạn)
+            - containerPort: 9091 # Cổng gRPC
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            # --- CẤU HÌNH KẾT NỐI ---
+
+            # 1. Kết nối Eureka
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+
+            # 2. Kết nối User Service (Fix lỗi trong OtpService.java)
+            # Thay vì gọi localhost:8082, nó sẽ gọi user-service trong cluster
+            - name: USER_SERVICE_URL
+              value: "http://user-service:8080"
+
+            # 3. Đảm bảo port chạy đúng 8081
+            - name: SERVER_PORT
+              value: "8081"
+            - name: GRPC_SERVER_PORT
+              value: "9091"
+
+          # 4. (Tùy chọn) Nếu bạn có JWT Secret, hãy thêm vào đây
+          # - name: JWT_SECRET
+          #   value: "chuoi_bi_mat_cua_ban_o_day"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+    - name: grpc
+      port: 9091
+      targetPort: 9091
+      appProtocol: grpc
+  type: ClusterIP

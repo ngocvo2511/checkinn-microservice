@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-service
+  template:
+    metadata:
+      labels:
+        app: booking-service
+    spec:
+      containers:
+        - name: booking-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/booking-service:v1
+          ports:
+            - containerPort: 8084 # HTTP
+            - containerPort: 9093 # gRPC
+          env:
+            # --- 1. DATABASE (Checkinn Booking) ---
+            # Kết nối vào database 'checkinn_booking' bạn đã tạo
+            - name: DB_URL
+              value: "jdbc:postgresql://postgres-db:5432/checkinn_booking"
+            - name: DB_USERNAME
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "password123"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+            # --- 2. RABBITMQ ---
+            - name: RABBIT_HOST
+              value: "rabbitmq"
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USER
+              value: "guest"
+            - name: RABBIT_PASS
+              value: "guest"
+
+            # --- 3. EUREKA & CONFIG ---
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+            - name: SPRING_CLOUD_CONFIG_ENABLED
+              value: "false"
+
+            # --- 4. KẾT NỐI SERVICE KHÁC (Quan trọng) ---
+            # Trỏ về User Service trong nội bộ K8s (cổng 8080)
+            - name: USER_SERVICE_URL
+              value: "http://user-service:8080"
+            # Trỏ về Hotel Service trong nội bộ K8s (cổng 8080)
+            - name: HOTEL_SERVICE_URL
+              value: "http://hotel-service:8080"
+
+            # --- 5. PORT ---
+            - name: PORT
+              value: "8084"
+            - name: GRPC_SERVER_PORT
+              value: "9093"
+
+          # --- 6. VNPAY (Optional) ---
+          # Bạn có thể ghi đè Return URL tại đây nếu sau này deploy Frontend lên host
+          # - name: VNPAY_RETURN_URL
+          #   value: "https://your-frontend-domain.com/booking/payment/return"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+spec:
+  selector:
+    app: booking-service
+  ports:
+    - name: http
+      port: 8080      # Gateway gọi vào cổng 8080
+      targetPort: 8084 # Chuyển vào cổng 8084 của App
+    - name: grpc
+      port: 9093
+      targetPort: 9093
+      appProtocol: grpc
+  type: ClusterIP

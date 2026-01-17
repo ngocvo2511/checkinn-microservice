@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/user-service:v1
+          ports:
+            - containerPort: 8082 # Port HTTP
+            - containerPort: 9090 # Port gRPC
+          env:
+            # --- 1. CẤU HÌNH DATABASE ---
+            # Trỏ về service 'postgres-db' ta vừa tạo ở Bước 1
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-db:5432/checkinn_user"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "password123"
+            # Tự động tạo bảng nếu chưa có
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+            # --- 2. CẤU HÌNH RABBITMQ ---
+            - name: RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USERNAME
+              value: "guest"
+            - name: RABBITMQ_PASSWORD
+              value: "guest"
+
+            # --- 3. CẤU HÌNH EUREKA ---
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+
+            # --- 4. PORT ---
+            - name: SERVER_PORT
+              value: "8082"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - name: http
+      port: 8080      # Chú ý: Service K8s mở cổng 8080 cho đẹp
+      targetPort: 8082 # Nhưng chuyển vào cổng 8082 của container
+    - name: grpc
+      port: 9090
+      targetPort: 9090
+      appProtocol: grpc
+  type: ClusterIP

@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotel-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotel-service
+  template:
+    metadata:
+      labels:
+        app: hotel-service
+    spec:
+      containers:
+        - name: hotel-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/hotel-service:v1
+          ports:
+            - containerPort: 8083 # Port HTTP
+            - containerPort: 9092 # Port gRPC
+          env:
+            # --- 1. CẤU HÌNH DATABASE ---
+            # Quan trọng: Trỏ đúng vào DB 'checkinn_hotel'
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-db:5432/checkinn_hotel"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "password123"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+            # --- 2. CẤU HÌNH EUREKA ---
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+            # Tắt Config Server để app khởi động nhanh hơn
+            - name: SPRING_CLOUD_CONFIG_ENABLED
+              value: "false"
+
+            # --- 3. CẤU HÌNH RABBITMQ (Quan trọng cho Hotel Events) ---
+            - name: SPRING_RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: "guest"
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: "guest"
+
+            # --- 4. CẤU HÌNH PORT & JWT ---
+            - name: SERVER_PORT
+              value: "8083"
+            - name: GRPC_SERVER_PORT
+              value: "9092"
+            # Ghi đè secret key nếu muốn (hoặc dùng mặc định trong code cũng được)
+            - name: JWT_SECRET
+              value: "THIS_IS_SUPER_SECRET_KEY_12345678901234567890"
+
+          # --- 5. CẤU HÌNH GRPC CLIENT (Kết nối Service khác) ---
+          # Do dùng "discovery:///" nên chỉ cần Eureka chạy là nó tự tìm ra
+          # Nhưng cần đảm bảo các service kia (media, user) đã đăng ký lên Eureka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotel-service
+spec:
+  selector:
+    app: hotel-service
+  ports:
+    - name: http
+      port: 8080      # Service K8s mở cổng 8080 chuẩn
+      targetPort: 8083 # Chuyển vào cổng 8083 của Hotel App
+    - name: grpc
+      port: 9092      # Port gRPC giữ nguyên
+      targetPort: 9092
+      appProtocol: grpc
+  type: ClusterIP

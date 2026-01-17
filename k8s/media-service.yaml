@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-service
+  template:
+    metadata:
+      labels:
+        app: media-service
+    spec:
+      containers:
+        - name: media-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/media-service:v1
+          ports:
+            - containerPort: 8085 # Port REST (nếu có)
+            - containerPort: 9095 # Port gRPC
+          env:
+            # --- 1. CẤU HÌNH EUREKA ---
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+
+            # --- 2. CẤU HÌNH GOOGLE CLOUD STORAGE ---
+            # Code Java sẽ tự tìm biến môi trường này để lấy đường dẫn file key
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/gcp/credentials.json"
+
+            # --- 3. CẤU HÌNH PORT ---
+            - name: SERVER_PORT
+              value: "8085"
+            - name: GRPC_SERVER_PORT
+              value: "9095"
+
+          # Cấu hình Mount (Gắn) Secret vào đường dẫn /etc/gcp
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /etc/gcp
+              readOnly: true
+
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: google-cloud-key # Tên secret tạo ở Bước 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-service
+spec:
+  selector:
+    app: media-service
+  ports:
+    - name: http
+      port: 8080       # Các service khác gọi cổng 8080
+      targetPort: 8085 # Chuyển vào 8085 của container
+    - name: grpc
+      port: 9095       # Cổng gRPC giữ nguyên
+      targetPort: 9095
+      appProtocol: grpc
+  type: ClusterIP

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: revenue-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: revenue-service
+  template:
+    metadata:
+      labels:
+        app: revenue-service
+    spec:
+      containers:
+        - name: revenue-service
+          image: asia-southeast1-docker.pkg.dev/checkinn-microservice/checkinn-repo/revenue-service:v1
+          ports:
+            - containerPort: 8086 # Port HTTP
+          env:
+            # --- 1. CẤU HÌNH DATABASE ---
+            # Kết nối vào DB 'checkinn_revenue' (Đã tạo ở bước Postgres chung)
+            - name: DB_URL
+              value: "jdbc:postgresql://postgres-db:5432/checkinn_revenue"
+            - name: DB_USERNAME
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "password123"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+            # --- 2. CẤU HÌNH RABBITMQ (Để nhận message thanh toán) ---
+            - name: RABBIT_HOST
+              value: "rabbitmq"
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USER
+              value: "guest"
+            - name: RABBIT_PASS
+              value: "guest"
+            # Các tên Queue/Exchange giữ nguyên mặc định hoặc ghi đè nếu muốn
+            - name: RABBIT_EXCHANGE
+              value: "hotel.events"
+
+            # --- 3. CẤU HÌNH EUREKA ---
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+            - name: SPRING_CLOUD_CONFIG_ENABLED
+              value: "false"
+
+            # --- 4. KẾT NỐI SERVICE KHÁC ---
+            # Gọi Hotel Service qua REST (dự phòng hoặc lấy data cơ bản)
+            - name: HOTEL_SERVICE_URL
+              value: "http://hotel-service:8080"
+
+            # --- 5. PORT ---
+            - name: SERVER_PORT
+              value: "8086"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: revenue-service
+spec:
+  selector:
+    app: revenue-service
+  ports:
+    - name: http
+      port: 8080       # Các service khác gọi cổng 8080
+      targetPort: 8086 # Chuyển vào cổng 8086 của App
+  type: ClusterIP
