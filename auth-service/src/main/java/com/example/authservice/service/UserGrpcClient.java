@@ -32,4 +32,13 @@ public class UserGrpcClient {
 
         return userStub.registerUser(request);
     }
+
+    public void resetPassword(String email, String newPassword) {
+        ResetPasswordRequest request = ResetPasswordRequest.newBuilder()
+                .setEmail(email)
+                .setNewPassword(newPassword)
+                .build();
+
+        userStub.resetPassword(request);
+    }
 }

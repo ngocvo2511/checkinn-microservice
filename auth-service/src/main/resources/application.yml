@@ -8,6 +8,10 @@ server:
 jwt:
   expiration: 86400000
 
+user:
+  service:
+    url: ${USER_SERVICE_URL:http://localhost:8082}
+
 grpc:
   server:
     port: 9091

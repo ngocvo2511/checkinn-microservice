@@ -30,6 +30,7 @@ public class EventIngestionService {
         
         // Set or update all fields
         record.setBookingId(event.bookingId());
+        record.setCustomerId(event.customerId());
         record.setHotelId(event.hotelId());
         record.setRoomTypeId(event.roomTypeId());
         record.setCheckInDate(event.checkInDate());

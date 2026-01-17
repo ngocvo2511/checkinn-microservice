@@ -19,31 +19,56 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "hotel.events";
-    public static final String QUEUE_NAME = "notification.payment.queue";
-    public static final String ROUTING_KEY = "payment.completed";
 
+    // PAYMENT
+    public static final String PAYMENT_QUEUE = "notification.payment.queue";
+    public static final String PAYMENT_ROUTING_KEY = "payment.completed";
+
+    // OTP
+    public static final String OTP_QUEUE = "notification.otp.queue";
+    public static final String OTP_ROUTING_KEY = "otp.send";
+
+    // ---------- QUEUES ----------
     @Bean
-    public Queue notificationQueue() {
-        return new Queue(QUEUE_NAME, true);
+    public Queue paymentQueue() {
+        return new Queue(PAYMENT_QUEUE, true);
     }
 
+    @Bean
+    public Queue otpQueue() {
+        return new Queue(OTP_QUEUE, true);
+    }
+
+    // ---------- EXCHANGE ----------
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE_NAME);
     }
 
+    // ---------- BINDINGS ----------
     @Bean
-    public Binding binding(Queue notificationQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(notificationQueue)
+    public Binding paymentBinding(Queue paymentQueue, TopicExchange exchange) {
+        return BindingBuilder
+                .bind(paymentQueue)
                 .to(exchange)
-                .with(ROUTING_KEY);
+                .with(PAYMENT_ROUTING_KEY);
     }
 
+    @Bean
+    public Binding otpBinding(Queue otpQueue, TopicExchange exchange) {
+        return BindingBuilder
+                .bind(otpQueue)
+                .to(exchange)
+                .with(OTP_ROUTING_KEY);
+    }
+
+    // ---------- MESSAGE CONVERTER ----------
     @Bean
     public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
         return new Jackson2JsonMessageConverter(objectMapper);
     }
 
+    // ---------- RABBIT TEMPLATE ----------
     @Bean
     public RabbitTemplate rabbitTemplate(
             ConnectionFactory connectionFactory,
@@ -54,3 +79,4 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 }
+

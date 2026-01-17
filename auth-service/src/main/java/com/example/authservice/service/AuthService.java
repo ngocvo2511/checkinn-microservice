@@ -40,6 +40,7 @@ public class AuthService {
                     .email(user.getEmail())
                     .fullName(user.getFullName())
                     .role(user.getRole())
+                    .emailVerified(false)
                     .build();
 
         } catch (StatusRuntimeException e) {
@@ -89,5 +90,23 @@ public class AuthService {
         }
         // Lấy root cause từ metadata nếu có
         return e.getStatus().getCode().name();
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        try {
+            if (newPassword == null || newPassword.length() < 6) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mật khẩu mới phải có ít nhất 6 ký tự");
+            }
+
+            // Gọi user-service để reset password
+            userGrpcClient.resetPassword(email, newPassword);
+
+        } catch (StatusRuntimeException e) {
+            String msg = extractGrpcMessage(e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password reset failed: " + msg, e);
+        } catch (Exception e) {
+            System.err.println("[AuthService] Error during password reset: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 }

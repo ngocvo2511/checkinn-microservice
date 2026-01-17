@@ -20,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
+    private final OtpService otpService;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -37,6 +38,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
+                .isEmailVerified(false)
                 .build();
 
         UserProfile profile = UserProfile.builder()
@@ -46,7 +48,12 @@ public class UserService {
 
         user.setProfile(profile);
 
-        return userRepository.save(user); // cascade sẽ tự lưu profile
+        User savedUser = userRepository.save(user); // cascade sẽ tự lưu profile
+
+        // Generate and send OTP
+        otpService.generateAndSendOtp(request.getEmail());
+
+        return savedUser;
     }
 
     public User getUserById(UUID id) {
@@ -59,6 +66,10 @@ public class UserService {
         User user = userRepository
                 .findByEmailOrUsername(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.isEmailVerified()) {
+            throw new RuntimeException("Email not verified. Please verify your email first");
+        }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
@@ -161,6 +172,26 @@ public class UserService {
         }
         
         // Update password
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    public void verifyUserEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        user.setEmailVerified(true);
+        userRepository.save(user);
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự");
+        }
+        
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
