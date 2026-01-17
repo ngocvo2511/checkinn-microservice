@@ -107,6 +107,7 @@ public class AvailabilityService {
         return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
     }
 
+
     @Transactional
     public HoldResponse confirmHold(UUID holdId) {
         log.info("Confirming hold: {}", holdId);
