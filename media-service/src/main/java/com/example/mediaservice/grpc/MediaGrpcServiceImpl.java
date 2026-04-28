@@ -1,43 +1,50 @@
 package com.example.mediaservice.grpc;
 
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import com.google.firebase.cloud.StorageClient;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import io.minio.*;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 @GrpcService
-public class MediaGrpcServiceImpl extends MediaGrpcServiceGrpc.MediaGrpcServiceImplBase {
+public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrpcServiceGrpc.MediaGrpcServiceImplBase {
 
-    private static final String BUCKET = "checkinn_media_storage";
-    private final Storage storage = StorageOptions.getDefaultInstance().getService();
+    private final StorageClient storageClient;
+
+    public MediaGrpcServiceImpl(StorageClient storageClient) {
+        this.storageClient = storageClient;
+    }
 
     @Override
     public void uploadMedia(
-            UploadMediaRequest request,
-            StreamObserver<UploadMediaResponse> responseObserver
+            com.example.mediaservice.grpc.UploadMediaRequest request,
+            StreamObserver<com.example.mediaservice.grpc.UploadMediaResponse> responseObserver
     ) {
         try {
-            String objectName = request.getFileName();
+            String objectName = UUID.randomUUID() + "_" + request.getFileName();
+            Bucket bucket = storageClient.bucket();
 
-            BlobId blobId = BlobId.of(BUCKET, objectName);
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                    .setContentType(request.getMimeType())
-                    .build();
+            Blob blob = bucket.create(
+                    objectName,
+                    request.getFileData().toByteArray(),
+                    request.getMimeType()
+            );
 
-            storage.create(blobInfo, request.getFileData().toByteArray());
-
-            String url = "https://storage.googleapis.com/" + BUCKET + "/" + objectName;
+            String encodedObjectName = URLEncoder.encode(blob.getName(), StandardCharsets.UTF_8)
+                    .replace("+", "%20");
+            String url = "https://firebasestorage.googleapis.com/v0/b/"
+                    + bucket.getName()
+                    + "/o/"
+                    + encodedObjectName
+                    + "?alt=media";
 
             responseObserver.onNext(
-                    UploadMediaResponse.newBuilder()
+                    com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
                             .setUrl(url)
                             .build()
             );
@@ -56,14 +63,16 @@ public class MediaGrpcServiceImpl extends MediaGrpcServiceGrpc.MediaGrpcServiceI
 
     @Override
     public void deleteMedia(
-            DeleteMediaRequest request,
-            StreamObserver<DeleteMediaResponse> responseObserver
+            com.example.mediaservice.grpc.DeleteMediaRequest request,
+            StreamObserver<com.example.mediaservice.grpc.DeleteMediaResponse> responseObserver
     ) {
         try {
-            boolean deleted = storage.delete(BUCKET, request.getFileName());
+            Bucket bucket = storageClient.bucket();
+            Blob blob = bucket.get(request.getFileName());
+            boolean deleted = blob != null && blob.delete();
 
             responseObserver.onNext(
-                    DeleteMediaResponse.newBuilder()
+                    com.example.mediaservice.grpc.DeleteMediaResponse.newBuilder()
                             .setSuccess(deleted)
                             .build()
             );

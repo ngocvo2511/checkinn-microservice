@@ -21,8 +21,6 @@ grpc:
     port: 9095
     max-inbound-message-size: 10485760 # 10 MB
 
-minio:
-  url: https://checkinn-minio.fly.dev
-  access-key: admin
-  secret-key: SuperStrongPassword123
-  bucket: hotel-media
+firebase:
+  credentials: classpath:key.json
+  storage-bucket: hotel-booking-f6cb8.firebasestorage.app
