@@ -1,23 +1,19 @@
 package com.example.mediaservice.grpc;
 
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import com.google.firebase.cloud.StorageClient;
+import com.example.mediaservice.SupabaseStorageService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @GrpcService
 public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrpcServiceGrpc.MediaGrpcServiceImplBase {
 
-    private final StorageClient storageClient;
+    private final SupabaseStorageService storageService;
 
-    public MediaGrpcServiceImpl(StorageClient storageClient) {
-        this.storageClient = storageClient;
+    public MediaGrpcServiceImpl(SupabaseStorageService storageService) {
+        this.storageService = storageService;
     }
 
     @Override
@@ -27,21 +23,11 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
     ) {
         try {
             String objectName = UUID.randomUUID() + "_" + request.getFileName();
-            Bucket bucket = storageClient.bucket();
-
-            Blob blob = bucket.create(
-                    objectName,
+            String url = storageService.uploadMedia(
                     request.getFileData().toByteArray(),
+                    objectName,
                     request.getMimeType()
             );
-
-            String encodedObjectName = URLEncoder.encode(blob.getName(), StandardCharsets.UTF_8)
-                    .replace("+", "%20");
-            String url = "https://firebasestorage.googleapis.com/v0/b/"
-                    + bucket.getName()
-                    + "/o/"
-                    + encodedObjectName
-                    + "?alt=media";
 
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
@@ -67,9 +53,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.DeleteMediaResponse> responseObserver
     ) {
         try {
-            Bucket bucket = storageClient.bucket();
-            Blob blob = bucket.get(request.getFileName());
-            boolean deleted = blob != null && blob.delete();
+            boolean deleted = storageService.deleteMedia(request.getFileName());
 
             responseObserver.onNext(
                     com.example.mediaservice.grpc.DeleteMediaResponse.newBuilder()
