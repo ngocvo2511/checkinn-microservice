@@ -43,4 +43,19 @@ public class JwtService {
         Jws<Claims> claims = parseToken(token);
         return UUID.fromString(claims.getBody().getSubject());
     }
+
+    public String extractRole(String token) {
+        Jws<Claims> claims = parseToken(token);
+        String role = claims.getBody().get("role", String.class);
+        return role != null ? role : "CUSTOMER";
+    }
+
+    public boolean isAdmin(String token) {
+        try {
+            String role = extractRole(token);
+            return "ADMIN".equalsIgnoreCase(role);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
