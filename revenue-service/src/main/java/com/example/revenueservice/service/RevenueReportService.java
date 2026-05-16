@@ -42,6 +42,7 @@ public class RevenueReportService {
     private final BookingStatusRecordRepository bookingStatusRecordRepository;
     private final HotelCapacityClient hotelCapacityClient;
     private final HotelGrpcClient hotelGrpcClient;
+    private final com.example.revenueservice.regulations.RegulationClient regulationClient;
     private static final Set<String> VALID_OCCUPANCY_STATUS =
             Set.of(
                     "CONFIRMED",
@@ -52,11 +53,13 @@ public class RevenueReportService {
     public RevenueReportService(PaymentRecordRepository paymentRecordRepository,
                                 BookingStatusRecordRepository bookingStatusRecordRepository,
                                 HotelCapacityClient hotelCapacityClient,
-                                HotelGrpcClient hotelGrpcClient) {
+                                HotelGrpcClient hotelGrpcClient,
+                                com.example.revenueservice.regulations.RegulationClient regulationClient) {
         this.paymentRecordRepository = paymentRecordRepository;
         this.bookingStatusRecordRepository = bookingStatusRecordRepository;
         this.hotelCapacityClient = hotelCapacityClient;
         this.hotelGrpcClient = hotelGrpcClient;
+        this.regulationClient = regulationClient;
     }
 
     @Transactional(readOnly = true)
@@ -273,9 +276,10 @@ public class RevenueReportService {
             List<BookingStatusRecord> hotelStatuses = statusByHotel.getOrDefault(hid, List.of());
             double cancelRate = calculateCancellationRateInternal(hotelStatuses);
 
-            // Calculate platform commission (10%) and net revenue (90%)
-            BigDecimal platformCommission = hotelRevenue.multiply(BigDecimal.valueOf(0.10));
-            BigDecimal netRevenue = hotelRevenue.multiply(BigDecimal.valueOf(0.90));
+            // Calculate platform commission (dynamic) and net revenue
+            BigDecimal commissionRate = regulationClient.getCommissionRate();
+            BigDecimal platformCommission = hotelRevenue.multiply(commissionRate);
+            BigDecimal netRevenue = hotelRevenue.multiply(BigDecimal.ONE.subtract(commissionRate));
 
             // Get occupancy rate with fallback to 0.0 if error occurs
             double occupancyRate = 0.0;
@@ -303,8 +307,9 @@ public class RevenueReportService {
         items.sort(Comparator.comparing(HotelSummaryItem::hotelName, Comparator.nullsLast(String::compareToIgnoreCase)));
         
         // Calculate totals for net revenue and commission
-        BigDecimal totalNetRevenue = totalRevenue != null ? totalRevenue.multiply(BigDecimal.valueOf(0.90)) : BigDecimal.ZERO;
-        BigDecimal totalCommission = totalRevenue != null ? totalRevenue.multiply(BigDecimal.valueOf(0.10)) : BigDecimal.ZERO;
+        BigDecimal commissionRate = regulationClient.getCommissionRate();
+        BigDecimal totalNetRevenue = totalRevenue != null ? totalRevenue.multiply(BigDecimal.ONE.subtract(commissionRate)) : BigDecimal.ZERO;
+        BigDecimal totalCommission = totalRevenue != null ? totalRevenue.multiply(commissionRate) : BigDecimal.ZERO;
         
         return new OwnerSummaryResponse(totalRevenue, totalNetRevenue, totalCommission, items);
     }
@@ -363,7 +368,7 @@ public class RevenueReportService {
                     : record.getAmount();
             totalRevenue = totalRevenue.add(signed);
             
-            BigDecimal commission = signed.multiply(BigDecimal.valueOf(0.10));
+            BigDecimal commission = signed.multiply(regulationClient.getCommissionRate());
             totalCommission = totalCommission.add(commission);
             
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
@@ -382,6 +387,7 @@ public class RevenueReportService {
                 totalRevenue,
                 totalCommission,
                 totalBookings,
+                regulationClient.getCommissionRate(),
                 systemCancellationRate,
                 topHotels,
                 regionalBreakdown,

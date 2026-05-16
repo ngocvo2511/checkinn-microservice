@@ -7,6 +7,7 @@ public record AdminSummaryResponse(
         BigDecimal totalRevenue,
         BigDecimal totalCommission,
         long totalBookings,
+        BigDecimal commissionRate,
         double systemCancellationRate,
         List<TopHotelItem> topHotels,
         List<RegionalRevenue> regionalBreakdown,

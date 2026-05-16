@@ -7,7 +7,6 @@ import com.example.userservice.model.LoyaltyPoints;
 import com.example.userservice.model.PointsTransaction;
 import com.example.userservice.repository.LoyaltyPointsRepository;
 import com.example.userservice.repository.PointsTransactionRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,18 +17,19 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class LoyaltyPointsService {
 
     private final LoyaltyPointsRepository loyaltyPointsRepository;
     private final PointsTransactionRepository pointsTransactionRepository;
 
-    // Tỷ lệ tích điểm: 1000 VND = 1 điểm (cần đặt phòng nhiều để tích)
-    private static final BigDecimal EARN_CONVERSION_RATE = new BigDecimal("10000");
-    
-    // Tỷ lệ sử dụng điểm: 500 VND = 1 điểm (1 điểm chỉ giảm 500 VND)
-    private static final BigDecimal REDEMPTION_CONVERSION_RATE = new BigDecimal("500");
+    private final com.example.userservice.regulations.RegulationClient regulationClient;
+
+    public LoyaltyPointsService(LoyaltyPointsRepository loyaltyPointsRepository, PointsTransactionRepository pointsTransactionRepository, com.example.userservice.regulations.RegulationClient regulationClient) {
+        this.loyaltyPointsRepository = loyaltyPointsRepository;
+        this.pointsTransactionRepository = pointsTransactionRepository;
+        this.regulationClient = regulationClient;
+    }
 
     /**
      * Tính điểm từ số tiền (tích điểm)
@@ -40,7 +40,8 @@ public class LoyaltyPointsService {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             return 0L;
         }
-        return amount.divide(EARN_CONVERSION_RATE, 0, java.math.RoundingMode.DOWN).longValue();
+        BigDecimal earnRate = regulationClient.getEarnConversionRate();
+        return amount.divide(earnRate, 0, java.math.RoundingMode.DOWN).longValue();
     }
 
     /**
@@ -52,7 +53,8 @@ public class LoyaltyPointsService {
         if (points == null || points <= 0) {
             return BigDecimal.ZERO;
         }
-        return new BigDecimal(points).multiply(REDEMPTION_CONVERSION_RATE);
+        BigDecimal redemptionRate = regulationClient.getRedemptionConversionRate();
+        return new BigDecimal(points).multiply(redemptionRate);
     }
 
     /**
