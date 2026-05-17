@@ -34,11 +34,11 @@ public class UserService {
 
     public User registerUser(RegisterRequest request, Role role) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new RuntimeException("Tên đăng nhập đã tồn tại");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Email đã tồn tại");
         }
 
         User user = User.builder()
@@ -66,24 +66,24 @@ public class UserService {
 
     public User getUserById(UUID id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
     }
 
     public UserLoginResult login(String usernameOrEmail, String password) {
 
         User user = userRepository
                 .findByEmailOrUsername(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Tài khoản hoặc mật khẩu không đúng"));
 
         if (!user.isEmailVerified()) {
-            throw new RuntimeException("Email not verified. Please verify your email first");
+            throw new RuntimeException("Email chưa được xác thực. Vui lòng xác thực email trước");
         }
         if(!user.getIsActive()) {
             throw new RuntimeException("Account is locked. Please contact support");
         }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
         }
 
         UserProfile profile = userProfileRepository
@@ -189,7 +189,7 @@ public class UserService {
 
     public void verifyUserEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         user.setEmailVerified(true);
         userRepository.save(user);
@@ -197,7 +197,7 @@ public class UserService {
 
     public void resetPassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         if (newPassword == null || newPassword.length() < 6) {
             throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự");

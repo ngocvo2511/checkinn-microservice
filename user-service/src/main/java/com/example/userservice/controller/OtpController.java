@@ -28,13 +28,13 @@ public class OtpController {
                 
                 return ResponseEntity.ok(OtpVerificationResponse.builder()
                         .verified(true)
-                        .message("Email verified successfully")
+                        .message("Xác thực email thành công")
                         .email(request.getEmail())
                         .build());
             } else {
                 return ResponseEntity.ok(OtpVerificationResponse.builder()
                         .verified(false)
-                        .message("Invalid or expired OTP")
+                        .message("Mã OTP không hợp lệ hoặc đã hết hạn")
                         .email(request.getEmail())
                         .build());
             }
@@ -53,7 +53,7 @@ public class OtpController {
             otpService.generateAndSendOtp(email);
             return ResponseEntity.ok(java.util.Map.of(
                     "success", true,
-                    "message", "OTP sent to your email"
+                    "message", "Mã OTP đã được gửi đến email của bạn"
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(java.util.Map.of(
@@ -69,7 +69,7 @@ public class OtpController {
             otpService.generateAndSendOtp(email);
             return ResponseEntity.ok(java.util.Map.of(
                     "success", true,
-                    "message", "OTP generated and sent to your email"
+                    "message", "Mã OTP đã được tạo và gửi đến email của bạn"
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(java.util.Map.of(

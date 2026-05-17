@@ -502,7 +502,7 @@ public class ReviewService {
     public Page<HotelReviewResponse> getReviewsByOwnerAndHotel(UUID ownerId, UUID hotelId, Pageable pageable) {
         // Verify that the hotel belongs to this owner
         if (!hotelRepository.existsByIdAndOwnerId(hotelId, ownerId)) {
-            throw new IllegalArgumentException("Bạn không có quyền xem reviews của khách sạn này");
+            throw new IllegalArgumentException("Bạn không có quyền xem đánh giá của khách sạn này");
         }
 
         // Get all reviews for this hotel

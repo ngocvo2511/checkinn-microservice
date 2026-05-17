@@ -76,7 +76,7 @@ public class AuthController {
             if (email == null || otpCode == null || newPassword == null) {
                 return ResponseEntity.ok(Map.of(
                     "success", false,
-                    "message", "Email, OTP code và mật khẩu mới là bắt buộc"
+                    "message", "Email, mã OTP và mật khẩu mới là bắt buộc"
                 ));
             }
 

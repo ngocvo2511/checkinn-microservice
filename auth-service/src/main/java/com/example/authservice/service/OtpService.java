@@ -48,7 +48,7 @@ public class OtpService {
             log.error("Error verifying OTP: {}", e.getMessage(), e);
             return OtpVerificationResponse.builder()
                     .verified(false)
-                    .message("OTP verification failed: " + e.getMessage())
+                    .message("Xác thực OTP thất bại: " + e.getMessage())
                     .email(email)
                     .build();
         }
@@ -63,13 +63,13 @@ public class OtpService {
             Map<String, Object> response = restTemplate.postForObject(url, null, Map.class);
             
             log.info("OTP resend result for {}: {}", email, response);
-            return response != null ? response : Map.of("success", false, "message", "Failed to resend OTP");
+            return response != null ? response : Map.of("success", false, "message", "Không thể gửi lại OTP");
             
         } catch (Exception e) {
             log.error("Error resending OTP: {}", e.getMessage(), e);
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "Failed to resend OTP: " + e.getMessage());
+            errorResponse.put("message", "Không thể gửi lại OTP: " + e.getMessage());
             return errorResponse;
         }
     }
@@ -83,13 +83,13 @@ public class OtpService {
             Map<String, Object> response = restTemplate.postForObject(url, null, Map.class);
             
             log.info("OTP generation result for {}: {}", email, response);
-            return response != null ? response : Map.of("success", false, "message", "Failed to generate OTP");
+            return response != null ? response : Map.of("success", false, "message", "Không thể tạo OTP");
             
         } catch (Exception e) {
             log.error("Error generating OTP: {}", e.getMessage(), e);
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "Failed to generate OTP: " + e.getMessage());
+            errorResponse.put("message", "Không thể tạo OTP: " + e.getMessage());
             return errorResponse;
         }
     }

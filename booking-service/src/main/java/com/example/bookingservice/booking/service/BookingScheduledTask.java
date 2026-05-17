@@ -62,9 +62,10 @@ public class BookingScheduledTask {
                 booking.setStatus(BookingStatus.CANCELLED);
                 bookingRepository.save(booking);
                 
-                // Clean up associated payment if exists
-                paymentRepository.findByBookingId(booking.getId()).ifPresent(payment -> {
-                    if (payment.getStatus() == PaymentStatus.PENDING) {
+                // Cancel the latest active payment attempt if the booking hold expires.
+                paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(booking.getId()).ifPresent(payment -> {
+                    if (payment.getStatus() == PaymentStatus.PENDING
+                            || payment.getStatus() == PaymentStatus.ONSITE_PENDING) {
                         payment.setStatus(PaymentStatus.CANCELLED);
                         paymentRepository.save(payment);
                         log.info("Cancelled payment {} for expired booking {}", payment.getId(), booking.getId());

@@ -45,7 +45,7 @@ public class AuthService {
 
         } catch (StatusRuntimeException e) {
             String msg = extractGrpcMessage(e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Registration failed: " + msg, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Đăng ký thất bại: " + msg, e);
         } catch (Exception e) {
             System.err.println("[AuthService] Error during registration: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
@@ -103,7 +103,7 @@ public class AuthService {
 
         } catch (StatusRuntimeException e) {
             String msg = extractGrpcMessage(e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password reset failed: " + msg, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Đặt lại mật khẩu thất bại: " + msg, e);
         } catch (Exception e) {
             System.err.println("[AuthService] Error during password reset: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);

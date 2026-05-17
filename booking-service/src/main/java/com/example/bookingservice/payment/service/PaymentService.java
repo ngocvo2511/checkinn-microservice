@@ -10,6 +10,8 @@ import com.example.bookingservice.payment.entity.Payment;
 import com.example.bookingservice.payment.enums.PaymentMethod;
 import com.example.bookingservice.payment.enums.PaymentStatus;
 import com.example.bookingservice.payment.repository.PaymentRepository;
+import com.example.bookingservice.payment.service.factory.PaymentCreationPolicy;
+import com.example.bookingservice.payment.service.factory.PaymentCreationPolicyFactory;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import com.example.bookingservice.messaging.event.PaymentEvent;
@@ -40,34 +42,25 @@ public class PaymentService {
     private final BookingService bookingService;
     private final HotelEventPublisher eventPublisher;
     private final LoyaltyPointsClient loyaltyPointsClient;
+    private final PaymentCreationPolicyFactory paymentCreationPolicyFactory;
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
         // Validate booking exists
         Booking booking = bookingRepository.findById(request.getBookingId())
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + request.getBookingId()));
+        validateBookingCanStartPayment(booking);
 
-        // Check if payment already exists
-        paymentRepository.findByBookingId(request.getBookingId())
-                .ifPresent(p -> {
-                    throw new IllegalArgumentException("Payment already exists for this booking");
-                });
+        // Keep previous failed/cancelled attempts as payment history, but prevent duplicate active payments.
+        paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(request.getBookingId())
+                .ifPresent(this::validateCanCreateNewPayment);
 
-        // Create payment
-        Payment payment = Payment.builder()
-                .bookingId(request.getBookingId())
-                .amount(request.getAmount())
-                .method(request.getMethod())
-                .status(PaymentStatus.PENDING)
-                .transactionId(UUID.randomUUID().toString())
-                .build();
+        booking = bookingService.ensureActiveHold(request.getBookingId());
 
-        // For hotel payment, mark as onsite pending (not paid yet)
-        if (request.getMethod() == PaymentMethod.HOTEL) {
-            payment.setStatus(PaymentStatus.ONSITE_PENDING);
-
-            // Update booking status to PENDING_PAYMENT (chờ thanh toán tại khách sạn)
-            booking.setStatus(BookingStatus.PENDING_PAYMENT);
+        PaymentCreationPolicy creationPolicy = paymentCreationPolicyFactory.getPolicy(request.getMethod());
+        Payment payment = creationPolicy.createPayment(request);
+        creationPolicy.updateBookingAfterPaymentCreated(booking);
+        if (creationPolicy.shouldPersistBooking()) {
             bookingRepository.save(booking);
         }
 
@@ -75,24 +68,19 @@ public class PaymentService {
         return toPaymentResponse(payment);
     }
 
-        @Transactional
-        public VnPayInitResponse initVnPayPayment(String bookingId, String clientIp) {
+    @Transactional
+    public VnPayInitResponse initVnPayPayment(String bookingId, String clientIp) {
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+        validateBookingCanStartPayment(booking);
 
-        paymentRepository.findByBookingId(bookingId)
-            .ifPresent(p -> { 
-                // Allow retry if previous payment failed
-                if (p.getStatus() != PaymentStatus.FAILED && p.getStatus() != PaymentStatus.CANCELLED) {
-                    throw new IllegalArgumentException("Payment already exists for this booking"); 
-                }
-                // Delete old failed payment to create new one
-                paymentRepository.delete(p);
-            });
+        paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId)
+            .ifPresent(this::validateCanCreateNewPayment);
+
+        booking = bookingService.ensureActiveHold(bookingId);
 
         // Mark booking as waiting for VNPay payment and extend hold expiry
         booking.setStatus(BookingStatus.PENDING_PAYMENT);
-        booking.setHoldExpiresAt(LocalDateTime.now().plusMinutes(15));
         bookingRepository.save(booking);
 
         Payment payment = Payment.builder()
@@ -211,13 +199,9 @@ public class PaymentService {
             booking.setStatus(BookingStatus.PENDING);
             bookingRepository.save(booking);
 
-            // Release hold on payment failure
-            try {
-                bookingService.releaseBookingHold(payment.getBookingId());
-            } catch (Exception e) {
-                System.err.println("Failed to release hold: " + e.getMessage());
-            }
-        }
+            // Keep the room hold until holdExpiresAt so the user can retry payment.
+            // If the customer does not retry in time, BookingScheduledTask cancels the booking.
+    }
 
         payment = paymentRepository.save(payment);
         return toPaymentResponse(payment);
@@ -230,7 +214,7 @@ public class PaymentService {
     }
 
     public PaymentResponse getPaymentByBookingId(String bookingId) {
-        Payment payment = paymentRepository.findByBookingId(bookingId)
+        Payment payment = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
         return toPaymentResponse(payment);
     }
@@ -264,12 +248,8 @@ public class PaymentService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
-        Payment payment = paymentRepository.findByBookingId(bookingId)
+        Payment payment = paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(bookingId, PaymentStatus.ONSITE_PENDING)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
-
-        if (payment.getStatus() != PaymentStatus.ONSITE_PENDING) {
-            throw new IllegalArgumentException("Can only confirm onsite pending payments");
-        }
 
         // Mark payment as completed
         payment.setStatus(PaymentStatus.COMPLETED);
@@ -362,6 +342,19 @@ public class PaymentService {
             .bookingStatus(statusLabel)
             .eventAt(LocalDateTime.now())
             .build();
+    }
+
+    private void validateCanCreateNewPayment(Payment payment) {
+        if (payment.getStatus() != PaymentStatus.FAILED && payment.getStatus() != PaymentStatus.CANCELLED) {
+            throw new IllegalArgumentException("Payment already exists for this booking");
+        }
+    }
+
+    private void validateBookingCanStartPayment(Booking booking) {
+        if (booking.getStatus() != BookingStatus.PENDING
+                && booking.getStatus() != BookingStatus.PENDING_PAYMENT) {
+            throw new IllegalArgumentException("Cannot start payment for booking with status: " + booking.getStatus());
+        }
     }
 
     private PaymentResponse toPaymentResponse(Payment payment) {
