@@ -60,6 +60,10 @@ spring:
             - Path=/api/bookings/**,/api/payments/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 eureka:
   client:
@@ -74,4 +78,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: api-gateway

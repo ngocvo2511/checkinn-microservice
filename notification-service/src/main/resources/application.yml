@@ -48,6 +48,10 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER:http://localhost:8888}
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 # Eureka Configuration
 eureka:
@@ -79,3 +83,16 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Management and Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: notification-service

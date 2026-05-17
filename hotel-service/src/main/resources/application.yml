@@ -15,6 +15,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 server:
   port: 8083
@@ -43,7 +47,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: hotel-service
 
 jwt:
   secret: THIS_IS_SUPER_SECRET_KEY_12345678901234567890

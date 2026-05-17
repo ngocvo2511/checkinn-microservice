@@ -21,6 +21,10 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:guest}
     password: ${RABBIT_PASS:guest}
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 app:
   rabbit:
@@ -38,7 +42,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: "health,info"
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: revenue-service
 
 grpc:
   client:

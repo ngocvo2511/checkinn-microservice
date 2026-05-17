@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: eureka-server
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 eureka:
   client:
@@ -11,3 +15,16 @@ eureka:
     fetch-registry: false
   server:
     wait-time-in-ms-when-sync-empty: 0
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: eureka-service
