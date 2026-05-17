@@ -162,7 +162,7 @@ public class UserController {
         System.out.println("[UserController] extractUserIdFromToken - authHeader: " + authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             System.out.println("[UserController] Invalid auth header format");
-            throw new RuntimeException("Invalid authorization header");
+            throw new RuntimeException("Header xác thực không hợp lệ");
         }
 
         String token = authHeader.substring(7);

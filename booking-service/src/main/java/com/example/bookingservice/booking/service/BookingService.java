@@ -146,8 +146,8 @@ public class BookingService {
             }
         }
 
-        // Create booking entity with holdId and expiry (15 minutes from now)
-        LocalDateTime holdExpiry = LocalDateTime.now().plusMinutes(15);
+        // Keep booking hold expiry aligned with hold-service response
+        LocalDateTime holdExpiry = parseHoldExpiry(holdResponse);
         Booking booking = Booking.builder()
                 .userId(request.getUserId())
                 .hotelId(request.getHotelId())
@@ -350,6 +350,81 @@ public class BookingService {
         }
     }
 
+    @Transactional
+    public Booking ensureActiveHold(String bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+
+        if (booking.getHoldExpiresAt() != null && !booking.getHoldExpiresAt().isAfter(LocalDateTime.now())) {
+            if (booking.getHoldId() != null) {
+                try {
+                    availabilityClient.releaseHold(booking.getHoldId());
+                } catch (Exception e) {
+                    log.warn("Failed to release expired hold {} for booking {}: {}",
+                            booking.getHoldId(), booking.getId(), e.getMessage());
+                }
+            }
+
+            booking.setStatus(BookingStatus.CANCELLED);
+            bookingRepository.save(booking);
+            publishStatusEvent(booking, BookingStatus.CANCELLED.name());
+            throw new IllegalStateException("Booking hold has expired");
+        }
+
+        if (hasUsableHold(booking)) {
+            return booking;
+        }
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
+        publishStatusEvent(booking, BookingStatus.CANCELLED.name());
+        throw new IllegalStateException("Booking hold is no longer valid");
+    }
+
+    private boolean hasUsableHold(Booking booking) {
+        if (booking.getHoldId() == null || booking.getHoldId().isBlank()) {
+            return false;
+        }
+
+        try {
+            HoldResponse hold = availabilityClient.getHold(booking.getHoldId());
+            if (hold == null || !"HELD".equalsIgnoreCase(hold.status())) {
+                return false;
+            }
+
+            LocalDateTime expiresAt = parseHoldExpiry(hold);
+            if (expiresAt == null || !expiresAt.isAfter(LocalDateTime.now())) {
+                availabilityClient.releaseHold(booking.getHoldId());
+                return false;
+            }
+
+            LocalDateTime currentExpiry = booking.getHoldExpiresAt();
+            if (currentExpiry == null || !currentExpiry.isEqual(expiresAt)) {
+                booking.setHoldExpiresAt(expiresAt);
+                bookingRepository.save(booking);
+            }
+            return true;
+        } catch (Exception e) {
+            log.warn("Existing hold {} is not usable for booking {}: {}",
+                    booking.getHoldId(), booking.getId(), e.getMessage());
+            return false;
+        }
+    }
+
+    private LocalDateTime parseHoldExpiry(HoldResponse holdResponse) {
+        if (holdResponse == null || holdResponse.expiresAt() == null || holdResponse.expiresAt().isBlank()) {
+            return LocalDateTime.now().plusMinutes(15);
+        }
+
+        try {
+            Instant expiresAt = Instant.parse(holdResponse.expiresAt());
+            return LocalDateTime.ofInstant(expiresAt, ZoneId.systemDefault());
+        } catch (Exception e) {
+            log.warn("Unable to parse hold expiry '{}', using default 15 minutes", holdResponse.expiresAt());
+            return LocalDateTime.now().plusMinutes(15);
+        }
+    }
+
     private BookingResponse toBookingResponse(Booking booking) {
         List<BookingItemResponse> itemResponses = booking.getItems().stream()
                 .map(item -> BookingItemResponse.builder()
@@ -388,7 +463,7 @@ public class BookingService {
         // Get payment method from Payment entity
         String paymentMethod = null;
         try {
-            Payment payment = paymentRepository.findByBookingId(booking.getId()).orElse(null);
+            Payment payment = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(booking.getId()).orElse(null);
             if (payment != null && payment.getMethod() != null) {
                 paymentMethod = payment.getMethod().name();
             }
