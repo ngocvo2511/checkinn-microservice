@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @GrpcService
 @RequiredArgsConstructor
+@Slf4j
 public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceImplBase {
 
     private final HotelService hotelService;
@@ -33,6 +35,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getHotelById(GetHotelByIdRequest request,
                              StreamObserver<GetHotelByIdResponse> responseObserver) {
 
+        log.info("[gRPC_GET_HOTEL_BY_ID] Request received - hotelId: {}", request.getHotelId());
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
 
@@ -66,9 +69,10 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
+            log.info("[gRPC_GET_HOTEL_BY_ID] Response sent successfully - hotelId: {}", request.getHotelId());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("[gRPC_GET_HOTEL_BY_ID] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
         }
     }
@@ -80,6 +84,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getRoomTypesByHotel(GetRoomTypesByHotelRequest request,
                                     StreamObserver<GetRoomTypesByHotelResponse> responseObserver) {
 
+        log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Request received - hotelId: {}", request.getHotelId());
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
             List<RoomType> roomTypes = roomTypeService.getByHotel(hotelId);
@@ -93,8 +98,10 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
+            log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Response sent successfully - hotelId: {}", request.getHotelId());
 
         } catch (Exception ex) {
+            log.error("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
         }
     }
@@ -106,6 +113,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getRoomTypeById(GetRoomTypeByIdRequest request,
                                 StreamObserver<GetRoomTypeByIdResponse> responseObserver) {
 
+        log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Request received - roomTypeId: {}", request.getRoomTypeId());
         try {
             UUID rtId = UUID.fromString(request.getRoomTypeId());
             RoomType roomType = roomTypeService.getById(rtId);
@@ -120,8 +128,10 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Response sent successfully - roomTypeId: {}", request.getRoomTypeId());
 
         } catch (Exception ex) {
+            log.error("[gRPC_GET_ROOM_TYPE_BY_ID] Failed - roomTypeId: {}, error: {}", request.getRoomTypeId(), ex.getMessage(), ex);
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
         }
     }

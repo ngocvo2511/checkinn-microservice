@@ -209,35 +209,46 @@ public class BookingService {
     }
 
     public BookingResponse getBooking(String bookingId) {
+        log.info("[GET_BOOKING] Fetching booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+        log.info("[GET_BOOKING] Booking fetched successfully - bookingId: {}, status: {}", bookingId, booking.getStatus());
         return toBookingResponse(booking);
     }
 
     public List<BookingResponse> getUserBookings(String userId) {
-        return bookingRepository.findByUserId(userId).stream()
+        log.info("[GET_USER_BOOKINGS] Fetching bookings for userId: {}", userId);
+        List<BookingResponse> responses = bookingRepository.findByUserId(userId).stream()
                 .map(this::toBookingResponse)
                 .collect(Collectors.toList());
+        log.info("[GET_USER_BOOKINGS] Found {} bookings for userId: {}", responses.size(), userId);
+        return responses;
     }
 
     public List<BookingResponse> getHotelBookings(String hotelId) {
-        return bookingRepository.findByHotelId(hotelId).stream()
+        log.info("[GET_HOTEL_BOOKINGS] Fetching bookings for hotelId: {}", hotelId);
+        List<BookingResponse> responses = bookingRepository.findByHotelId(hotelId).stream()
                 .map(this::toBookingResponse)
                 .collect(Collectors.toList());
+        log.info("[GET_HOTEL_BOOKINGS] Found {} bookings for hotelId: {}", responses.size(), hotelId);
+        return responses;
     }
 
     @Transactional
     public BookingResponse updateBookingStatus(String bookingId, BookingStatus status) {
+        log.info("[UPDATE_BOOKING_STATUS] Updating booking status - bookingId: {}, status: {}", bookingId, status);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         booking.setStatus(status);
         booking = bookingRepository.save(booking);
         publishStatusEvent(booking, status.name());
+        log.info("[UPDATE_BOOKING_STATUS] Booking status updated successfully - bookingId: {}, status: {}", bookingId, status);
         return toBookingResponse(booking);
     }
 
     @Transactional
     public void cancelBooking(String bookingId) {
+        log.info("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
@@ -249,10 +260,12 @@ public class BookingService {
         // Release hold if exists
         if (booking.getHoldId() != null) {
             try {
+                log.info("[CANCEL_BOOKING] Releasing hold - bookingId: {}, holdId: {}", bookingId, booking.getHoldId());
                 availabilityClient.releaseHold(booking.getHoldId());
             } catch (Exception e) {
                 // Log but don't fail the cancellation
-                System.err.println("Failed to release hold: " + e.getMessage());
+                log.warn("[CANCEL_BOOKING] Failed to release hold - bookingId: {}, holdId: {}, error: {}",
+                        bookingId, booking.getHoldId(), e.getMessage(), e);
             }
         }
 
@@ -269,6 +282,7 @@ public class BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
         publishStatusEvent(booking, BookingStatus.CANCELLED.name());
+        log.info("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
     }
 
     public void confirmBookingHold(String bookingId) {
@@ -342,10 +356,12 @@ public class BookingService {
     }
 
     public void releaseBookingHold(String bookingId) {
+        log.info("[RELEASE_BOOKING_HOLD] Releasing booking hold - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
         if (booking.getHoldId() != null) {
+            log.info("[RELEASE_BOOKING_HOLD] Releasing hold - bookingId: {}, holdId: {}", bookingId, booking.getHoldId());
             availabilityClient.releaseHold(booking.getHoldId());
         }
     }

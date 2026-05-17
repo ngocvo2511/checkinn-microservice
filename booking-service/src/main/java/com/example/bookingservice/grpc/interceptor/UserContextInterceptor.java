@@ -1,16 +1,18 @@
-package com.example.hotelservice.grpc.interceptor;
+package com.example.bookingservice.grpc.interceptor;
 
-import io.grpc.*;
+import io.grpc.Context;
+import io.grpc.Contexts;
+import io.grpc.ForwardingServerCallListener;
+import io.grpc.Metadata;
+import io.grpc.ServerCall;
+import io.grpc.ServerCallHandler;
+import io.grpc.ServerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
 import org.slf4j.MDC;
 
 import java.util.UUID;
 
-/**
- * gRPC Interceptor to extract user ID from metadata and store in Context
- * Supports both "x-user-id" header and future JWT token parsing
- */
 @Slf4j
 @GrpcGlobalServerInterceptor
 public class UserContextInterceptor implements ServerInterceptor {
@@ -26,7 +28,6 @@ public class UserContextInterceptor implements ServerInterceptor {
             ServerCallHandler<ReqT, RespT> next) {
 
         UUID userId = extractUserId(headers);
-
         if (userId != null) {
             log.debug("Extracted user ID from gRPC metadata: {}", userId);
             MDC.put("userId", userId.toString());
@@ -51,35 +52,21 @@ public class UserContextInterceptor implements ServerInterceptor {
                     }
                 }
             };
-        } else {
-            log.debug("No user ID found in gRPC metadata");
-            return next.startCall(call, headers);
         }
+
+        log.debug("No user ID found in gRPC metadata");
+        return next.startCall(call, headers);
     }
 
-    /**
-     * Extract user ID from gRPC metadata
-     * Priority: x-user-id header > JWT token (if implemented)
-     */
     private UUID extractUserId(Metadata headers) {
         try {
-            // Try to get user ID from x-user-id header
             String userIdStr = headers.get(USER_ID_METADATA_KEY);
             if (userIdStr != null && !userIdStr.isEmpty()) {
                 return UUID.fromString(userIdStr);
             }
-
-            // TODO: Add JWT token parsing here if needed
-            // String authHeader = headers.get(AUTHORIZATION_METADATA_KEY);
-            // if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            //     String token = authHeader.substring(7);
-            //     return parseUserIdFromJwt(token);
-            // }
-
         } catch (IllegalArgumentException e) {
             log.warn("Invalid user ID format in gRPC metadata: {}", e.getMessage());
         }
-
         return null;
     }
 }

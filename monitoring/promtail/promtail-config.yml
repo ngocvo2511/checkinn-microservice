@@ -17,4 +17,5 @@ scrape_configs:
 
         labels:
           job: spring
-          __path__: /var/lib/docker/containers/*/*.log
+          service: spring-boot
+          __path__: /logs/*.log

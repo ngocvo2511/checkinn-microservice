@@ -7,6 +7,9 @@ import com.example.bookingservice.booking.dto.CreateBookingRequest;
 import com.example.bookingservice.booking.service.BookingService;
 import com.example.bookingservice.grpc.BookingGrpcServiceGrpc;
 import io.grpc.stub.StreamObserver;
+
+import org.slf4j.MDC;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.math.BigDecimal;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @GrpcService
+@Slf4j
 public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcServiceImplBase {
 
     private final BookingService bookingService;
@@ -25,7 +29,10 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
 
     @Override
     public void createBooking(com.example.bookingservice.grpc.CreateBookingRequest request, StreamObserver<com.example.bookingservice.grpc.BookingResponse> responseObserver) {
+        log.info("[gRPC_CREATE_BOOKING] Request received - userId: {}, hotelId: {}, checkIn: {}, checkOut: {}",
+                request.getUserId(), request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
         try {
+            MDC.put("userId", request.getUserId());
             CreateBookingRequest create = CreateBookingRequest.builder()
                     .userId(request.getUserId())
                     .hotelId(request.getHotelId())
@@ -54,20 +61,29 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
                     .build();
 
             BookingResponse booking = bookingService.createBooking(create);
+            log.info("[gRPC_CREATE_BOOKING] Booking created successfully - bookingId: {}, userId: {}, hotelId: {}",
+                    booking.getId(), booking.getUserId(), booking.getHotelId());
             responseObserver.onNext(toProto(booking));
             responseObserver.onCompleted();
         } catch (Exception ex) {
+            log.error("[gRPC_CREATE_BOOKING] Failed to create booking - userId: {}, hotelId: {}, error: {}",
+                    request.getUserId(), request.getHotelId(), ex.getMessage(), ex);
             responseObserver.onError(ex);
+        } finally {
+            MDC.remove("userId");
         }
     }
 
     @Override
     public void getBooking(com.example.bookingservice.grpc.GetBookingRequest request, StreamObserver<com.example.bookingservice.grpc.BookingResponse> responseObserver) {
+        log.info("[gRPC_GET_BOOKING] Request received - bookingId: {}", request.getId());
         try {
             BookingResponse booking = bookingService.getBooking(request.getId());
+            log.info("[gRPC_GET_BOOKING] Booking found - bookingId: {}, status: {}", booking.getId(), booking.getStatus());
             responseObserver.onNext(toProto(booking));
             responseObserver.onCompleted();
         } catch (Exception ex) {
+            log.error("[gRPC_GET_BOOKING] Failed to get booking - bookingId: {}, error: {}", request.getId(), ex.getMessage(), ex);
             responseObserver.onError(ex);
         }
     }

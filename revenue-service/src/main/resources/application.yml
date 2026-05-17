@@ -68,3 +68,25 @@ eureka:
     lease-expiration-duration-in-seconds: 90
     metadata-map:
       management.port: ${MANAGEMENT_PORT:${server.port}}
+logging:
+  file:
+    name: logs/${spring.application.name}-${server.port}.log
+
+  pattern:
+    console: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
+      
+    file: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n

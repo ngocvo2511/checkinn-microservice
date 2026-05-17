@@ -1,5 +1,6 @@
 package com.example.hotelservice.config;
 
+import com.example.hotelservice.security.JwtMdcFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -18,10 +20,16 @@ import java.nio.charset.StandardCharsets;
 @EnableWebSecurity
 public class SecurityConfig {
 
+        @Bean
+        public JwtMdcFilter jwtMdcFilter(JwtDecoder jwtDecoder) {
+                return new JwtMdcFilter(jwtDecoder);
+        }
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtMdcFilter jwtMdcFilter) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                                .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/hotels/owner/**").authenticated()
                         .anyRequest().permitAll()

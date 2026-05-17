@@ -9,10 +9,11 @@ services:
       - "9090:9090"
 
     volumes:
+      - prometheus-storage:/prometheus
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   loki:
-    image: grafana/loki:3.0.0
+    image: grafana/loki:2.9.8
     container_name: loki
     ports:
       - "3100:3100"
@@ -20,15 +21,16 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
 
     volumes:
+      - loki-storage:/loki
       - ./loki/local-config.yaml:/etc/loki/local-config.yaml
 
   promtail:
-    image: grafana/promtail:3.0.0
+    image: grafana/promtail:2.9.8
     container_name: promtail
 
     volumes:
       - ./promtail/promtail-config.yml:/etc/promtail/config.yml
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ../../logs:/logs
 
     command: -config.file=/etc/promtail/config.yml
 
@@ -38,3 +40,9 @@ services:
 
     ports:
       - "3001:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+volumes:
+  grafana-storage:
+  loki-storage:
+  prometheus-storage:

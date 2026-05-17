@@ -50,11 +50,29 @@ server:
   port: ${PORT:8084}
 
 logging:
-  level:
-    org.springframework.web: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
-    org.springframework.security: DEBUG
+  file:
+    name: logs/${spring.application.name}-${server.port}.log
+
+  pattern:
+    console: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [userId=%X{userId:-anonymous}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
+      
+      file: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [userId=%X{userId:-anonymous}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
 
 management:
   endpoints:

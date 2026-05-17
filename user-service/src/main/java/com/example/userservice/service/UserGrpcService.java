@@ -13,6 +13,8 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -21,13 +23,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserGrpcService.class);
+
     private final UserService userService;
 
     @Override
     public void registerUser(com.checkinn.user.grpc.RegisterRequest request,
                              StreamObserver<UserResponse> responseObserver) {
 
+        logger.info("[gRPC_REGISTER] Register request received - username: {}, email: {}, role: {}",
+                request.getUsername(), request.getEmail(), request.getRole());
+
         try {
+            logger.debug("[gRPC_REGISTER] Processing registration for username: {}", request.getUsername());
             User user = userService.registerUser(
                     com.example.userservice.dto.RegisterRequest.builder()
                             .username(request.getUsername())
@@ -37,6 +45,9 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                             .build(),
                     (request.getRole()== UserRole.OWNER) ? Role.OWNER : Role.CUSTOMER
             );
+
+            logger.info("[gRPC_REGISTER] User registered successfully via gRPC - userId: {}, username: {}",
+                    user.getId(), user.getUsername());
 
             UserResponse response = UserResponse.newBuilder()
                     .setId(String.valueOf(user.getId()))
@@ -50,8 +61,8 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            System.err.println("[UserGrpcService] Registration error: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("[gRPC_REGISTER] Registration error - username: {}, email: {}, error: {}",
+                    request.getUsername(), request.getEmail(), e.getMessage(), e);
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.getMessage())
@@ -95,7 +106,11 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void loginUser(LoginRequest request,
                           StreamObserver<UserResponse> responseObserver) {
 
+        logger.info("[gRPC_LOGIN] Login request received - usernameOrEmail: {}",
+                request.getUsernameOrEmail());
+
         try {
+            logger.debug("[gRPC_LOGIN] Processing login for: {}", request.getUsernameOrEmail());
             var result = userService.login(
                     request.getUsernameOrEmail(),
                     request.getPassword()
@@ -103,6 +118,9 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
             User user = result.getUser();
             UserProfile profile = result.getProfile();
+
+            logger.info("[gRPC_LOGIN] User authenticated successfully via gRPC - userId: {}, username: {}, role: {}",
+                    user.getId(), user.getUsername(), user.getRole().name());
 
             UserResponse.Builder res = UserResponse.newBuilder()
                     .setId(String.valueOf(user.getId()))
@@ -120,8 +138,8 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            System.err.println("[UserGrpcService] Login error: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("[gRPC_LOGIN] Login error - usernameOrEmail: {}, error: {}",
+                    request.getUsernameOrEmail(), e.getMessage(), e);
             responseObserver.onError(
                 Status.UNAUTHENTICATED
                     .withDescription(e.getMessage())

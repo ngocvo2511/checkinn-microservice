@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,39 +40,44 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
         String path = request.getRequestURI();
-        
+
         log.debug("JWT Filter - Path: {}, Auth Header: {}", path, authHeader != null ? "Present" : "Missing");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            try {
-                String token = authHeader.substring(7);
-                log.debug("Attempting to validate token");
+        try {
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                try {
+                    String token = authHeader.substring(7);
+                    log.debug("Attempting to validate token");
 
-                if (jwtService.validateToken(token)) {
-                    UUID userId = jwtService.extractUserId(token);
-                    String role = jwtService.extractRole(token);
-                    
-                    log.debug("Token validated successfully. UserId: {}, Role: {}", userId, role);
+                    if (jwtService.validateToken(token)) {
+                        UUID userId = jwtService.extractUserId(token);
+                        String role = jwtService.extractRole(token);
 
-                    List<SimpleGrantedAuthority> authorities =
-                            List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                        MDC.put("userId", userId.toString());
+                        log.debug("Token validated successfully. UserId: {}, Role: {}", userId, role);
 
-                    UsernamePasswordAuthenticationToken auth =
-                            new UsernamePasswordAuthenticationToken(userId, null, authorities);
+                        List<SimpleGrantedAuthority> authorities =
+                                List.of(new SimpleGrantedAuthority("ROLE_" + role));
 
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                    log.debug("Authentication set in SecurityContext");
-                } else {
-                    log.warn("Token validation failed");
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(userId, null, authorities);
+
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                        log.debug("Authentication set in SecurityContext");
+                    } else {
+                        log.warn("Token validation failed");
+                    }
+                } catch (Exception e) {
+                    log.error("Error processing JWT token", e);
                 }
-            } catch (Exception e) {
-                log.error("Error processing JWT token", e);
+            } else {
+                log.debug("No Bearer token found in Authorization header");
             }
-        } else {
-            log.debug("No Bearer token found in Authorization header");
-        }
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        } finally {
+            MDC.remove("userId");
+        }
     }
 }
 

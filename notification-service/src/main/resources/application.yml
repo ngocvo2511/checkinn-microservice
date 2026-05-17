@@ -75,14 +75,27 @@ notification:
 
 # Logging Configuration
 logging:
-  level:
-    root: INFO
-    com.example.notificationservice: DEBUG
-    org.springframework.amqp: DEBUG
-    org.springframework.mail: DEBUG
+  file:
+    name: logs/${spring.application.name}-${server.port}.log
+
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    console: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
+      
+    file: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
 
 # Management and Actuator Configuration
 management:

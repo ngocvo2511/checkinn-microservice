@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final OtpService otpService;
@@ -33,15 +38,23 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User registerUser(RegisterRequest request, Role role) {
-        if (userRepository.existsByUsername(request.getUsername())) {
+        logger.info("[REGISTER] User registration attempt - username: {}, email: {}, role: {}", 
+                request.getUsername(), request.getEmail(), role);
+        try {
+            if (userRepository.existsByUsername(request.getUsername())) {
+            logger.warn("[REGISTER] Registration failed - username already exists: {}", request.getUsername());
             throw new RuntimeException("Tên đăng nhập đã tồn tại");
-        }
+            }
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+            if (userRepository.existsByEmail(request.getEmail())) {
+            logger.warn("[REGISTER] Registration failed - email already exists: {}", request.getEmail());
             throw new RuntimeException("Email đã tồn tại");
-        }
+            }
 
-        User user = User.builder()
+            logger.debug("[REGISTER] Creating user account - username: {}, email: {}", 
+                request.getUsername(), request.getEmail());
+
+            User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -49,19 +62,29 @@ public class UserService {
                 .isEmailVerified(false)
                 .build();
 
-        UserProfile profile = UserProfile.builder()
+            UserProfile profile = UserProfile.builder()
                 .fullName(request.getFullName())
                 .user(user)
                 .build();
 
-        user.setProfile(profile);
+            user.setProfile(profile);
 
-        User savedUser = userRepository.save(user); // cascade sẽ tự lưu profile
+            User savedUser = userRepository.save(user); // cascade sẽ tự lưu profile
+            MDC.put("userId", savedUser.getId().toString());
 
-        // Generate and send OTP
-        otpService.generateAndSendOtp(request.getEmail());
+            logger.info("[REGISTER] User account created successfully - userId: {}, username: {}, email: {}", 
+                savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
 
-        return savedUser;
+            // Generate and send OTP
+            logger.debug("[REGISTER] Generating and sending OTP to email: {}", request.getEmail());
+            otpService.generateAndSendOtp(request.getEmail());
+
+            logger.info("[REGISTER] Registration completed successfully - userId: {}", savedUser.getId());
+
+            return savedUser;
+        } finally {
+            MDC.remove("userId");
+        }
     }
 
     public User getUserById(UUID id) {
@@ -70,27 +93,45 @@ public class UserService {
     }
 
     public UserLoginResult login(String usernameOrEmail, String password) {
+        logger.info("[LOGIN] Login attempt - usernameOrEmail: {}", usernameOrEmail);
+        try {
+            User user = userRepository
+                    .findByEmailOrUsername(usernameOrEmail, usernameOrEmail)
+                    .orElseThrow(() -> {
+                        logger.warn("[LOGIN] User not found - usernameOrEmail: {}", usernameOrEmail);
+                        return new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+                    });
 
-        User user = userRepository
-                .findByEmailOrUsername(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new RuntimeException("Tài khoản hoặc mật khẩu không đúng"));
+            MDC.put("userId", user.getId().toString());
+            logger.debug("[LOGIN] User found - userId: {}, username: {}", user.getId(), user.getUsername());
 
-        if (!user.isEmailVerified()) {
-            throw new RuntimeException("Email chưa được xác thực. Vui lòng xác thực email trước");
+            if (!user.isEmailVerified()) {
+                logger.warn("[LOGIN] Email not verified - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                throw new RuntimeException("Email chưa được xác thực. Vui lòng xác thực email trước");
+            }
+            if(!user.getIsActive()) {
+                logger.warn("[LOGIN] Account locked - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                throw new RuntimeException("Account is locked. Please contact support");
+            }
+
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                logger.warn("[LOGIN] Password mismatch - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+            }
+
+            logger.info("[LOGIN] Password verified successfully - userId: {}, username: {}", 
+                    user.getId(), user.getUsername());
+
+            UserProfile profile = userProfileRepository
+                    .findByUserId(user.getId())
+                    .orElse(null); // profile có thể chưa tạo
+
+            logger.info("[LOGIN] Login successful - userId: {}, email: {}", user.getId(), user.getEmail());
+
+            return new UserLoginResult(user, profile);
+        } finally {
+            MDC.remove("userId");
         }
-        if(!user.getIsActive()) {
-            throw new RuntimeException("Account is locked. Please contact support");
-        }
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
-        }
-
-        UserProfile profile = userProfileRepository
-                .findByUserId(user.getId())
-                .orElse(null); // profile có thể chưa tạo
-
-        return new UserLoginResult(user, profile);
     }
 
     public UserProfileDto getUserProfile(UUID userId) {

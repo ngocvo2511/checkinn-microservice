@@ -9,6 +9,7 @@ import com.example.hotelservice.Hotel.dto.response.PendingHotelResponse;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/hotels")
 @RequiredArgsConstructor
+@Slf4j
 public class HotelController {
 
     private final HotelService hotelService;
@@ -42,8 +44,11 @@ public class HotelController {
             @RequestBody HotelCreateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_CREATE] Create hotel request received - ownerId: {}, cityId: {}, name: {}",
+            ownerId, request.cityId(), request.name());
 
         var saved = hotelService.createHotel(request, ownerId);
+        log.info("[HOTEL_CONTROLLER_CREATE] Hotel created successfully - ownerId: {}, hotelId: {}", ownerId, saved.getId());
         return ResponseEntity.ok(hotelMapper.toHotelResponse(saved));
     }
 
@@ -57,8 +62,10 @@ public class HotelController {
             @RequestBody HotelUpdateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_UPDATE] Update hotel request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
 
         var updated = hotelService.updateHotel(hotelId, request, ownerId);
+        log.info("[HOTEL_CONTROLLER_UPDATE] Hotel updated successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
 
@@ -67,6 +74,7 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/{hotelId}")
     public ResponseEntity<HotelResponse> getHotel(@PathVariable UUID hotelId) {
+        log.info("[HOTEL_CONTROLLER_GET] Get hotel request received - hotelId: {}", hotelId);
         var hotel = hotelService.getDetail(hotelId);
         return ResponseEntity.ok(hotel);
     }
@@ -76,6 +84,7 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping
     public ResponseEntity<List<HotelResponse>> getAllApprovedHotels() {
+        log.info("[HOTEL_CONTROLLER_GET_APPROVED] Fetch approved hotels request received");
         List<HotelResponse> hotels = hotelService.getAllApprovedHotels()
                 .stream()
                 .map(hotelMapper::toHotelResponse)
@@ -91,6 +100,7 @@ public class HotelController {
         if(!verifyAdmin(jwt)){
             return ResponseEntity.status(403).body(null);
         }
+        log.info("[HOTEL_CONTROLLER_PENDING] Fetch pending hotels request received");
         List<PendingHotelResponse> pendingHotels = hotelService.getPendingHotels()
                 .stream()
                 .map(hotelMapper::toPendingHotelResponse)
@@ -105,6 +115,7 @@ public class HotelController {
         if(!verifyAdmin(jwt)){
             return ResponseEntity.status(403).body(null);
         }
+        log.info("[HOTEL_CONTROLLER_PENDING_DETAIL] Fetch pending hotel detail request received - hotelId: {}", hotelId);
         return ResponseEntity.ok(hotelService.getPendingHotelDetail(hotelId));
     }
 
@@ -117,6 +128,7 @@ public class HotelController {
             @AuthenticationPrincipal Jwt jwt
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_OWNER] Fetch owner hotels request received - ownerId: {}", ownerId);
         var hotels = hotelService.getByOwner(ownerId)
                 .stream()
                 .map(hotelMapper::toHotelResponse)
@@ -130,6 +142,7 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/search")
     public ResponseEntity<?> searchHotelsByName(@RequestParam String name) {
+        log.info("[HOTEL_CONTROLLER_SEARCH] Search hotels by name request received - name: {}", name);
         var hotels = hotelService.searchByName(name)
                 .stream()
                 .map(hotelMapper::toHotelResponse)
@@ -143,6 +156,7 @@ public class HotelController {
     // -------------------------------------------------------
     @GetMapping("/city/{cityId}")
     public ResponseEntity<?> getHotelsByCity(@PathVariable UUID cityId) {
+        log.info("[HOTEL_CONTROLLER_CITY] Fetch hotels by city request received - cityId: {}", cityId);
         var hotels = hotelService.getByCity(cityId)
                 .stream()
                 .map(hotelMapper::toHotelResponse)
@@ -160,6 +174,8 @@ public class HotelController {
             @PathVariable UUID cityId
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_OWNER_CITY] Fetch owner hotels by city request received - ownerId: {}, cityId: {}",
+            ownerId, cityId);
 
         var hotels = hotelService.getByOwnerAndCity(ownerId, cityId)
                 .stream()
@@ -176,6 +192,7 @@ public class HotelController {
         if(!verifyAdmin(jwt)){
             return ResponseEntity.status(403).body("Access denied");
         }
+        log.info("[HOTEL_CONTROLLER_APPROVE] Approve hotel request received - hotelId: {}", hotelId);
         hotelService.approveHotel(hotelId);
         return ResponseEntity.ok("Hotel approved");
     }
@@ -190,6 +207,7 @@ public class HotelController {
         if(!verifyAdmin(jwt)){
             return ResponseEntity.status(403).body("Access denied");
         }
+        log.info("[HOTEL_CONTROLLER_REJECT] Reject hotel request received - hotelId: {}, note: {}", hotelId, request.note());
         hotelService.rejectHotel(hotelId);
         return ResponseEntity.ok("Hotel rejected: " + request.note());
     }
@@ -197,6 +215,7 @@ public class HotelController {
     // Admin activate
     @PatchMapping("/{hotelId}/activate")
     public ResponseEntity<?> activateHotel(@PathVariable UUID hotelId) {
+        log.info("[HOTEL_CONTROLLER_ACTIVATE] Activate hotel request received - hotelId: {}", hotelId);
         hotelService.activateHotel(hotelId);
         return ResponseEntity.ok("Hotel activated");
     }

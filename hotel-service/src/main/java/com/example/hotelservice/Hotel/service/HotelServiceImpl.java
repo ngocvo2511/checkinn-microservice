@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class HotelServiceImpl implements HotelService {
 
     private final UserGrpcClient userGrpcClient;
@@ -55,6 +57,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel createHotel(HotelCreateRequest request, UUID ownerId) {
+        log.info("[CREATE_HOTEL] Creating hotel - ownerId: {}, cityId: {}, name: {}", ownerId, request.cityId(), request.name());
         Hotel hotel = new Hotel();
         hotel.setOwnerId(ownerId);
         hotel.setCityId(request.cityId());
@@ -73,6 +76,7 @@ public class HotelServiceImpl implements HotelService {
         hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
 
         hotel = hotelRepository.save(hotel);
+    log.info("[CREATE_HOTEL] Hotel created successfully - hotelId: {}, ownerId: {}, name: {}", hotel.getId(), ownerId, hotel.getName());
         Hotel finalHotel = hotel;
 
         if (request.policies() != null) {
@@ -135,6 +139,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updateHotel(UUID hotelId, HotelUpdateRequest request, UUID ownerId) {
+        log.info("[UPDATE_HOTEL] Updating hotel - hotelId: {}, ownerId: {}", hotelId, ownerId);
         Hotel hotel = getById(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
@@ -147,13 +152,15 @@ public class HotelServiceImpl implements HotelService {
         if (request.address() != null) hotel.setAddress(writeJson(request.address()));
         if (request.contactEmail() != null) hotel.setContactEmail(request.contactEmail());
         if (request.contactPhone() != null) hotel.setContactPhone(request.contactPhone());
-
-        return hotelRepository.save(hotel);
+        Hotel saved = hotelRepository.save(hotel);
+        log.info("[UPDATE_HOTEL] Hotel updated successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        return saved;
     }
 
     // ========== GET HOTEL ==========
     @Override
     public Hotel getById(UUID hotelId) {
+        log.info("[GET_HOTEL] Fetching hotel - hotelId: {}", hotelId);
         return hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
     }
@@ -168,40 +175,47 @@ public class HotelServiceImpl implements HotelService {
     // ========== OWNER: MY HOTELS ==========
     @Override
     public List<Hotel> getByOwner(UUID ownerId) {
+        log.info("[GET_HOTELS_BY_OWNER] Fetching hotels for ownerId: {}", ownerId);
         return hotelRepository.findByOwnerId(ownerId);
     }
 
     // ========== SEARCH: HOTELS BY CITY ==========
     @Override
     public List<Hotel> getByCity(UUID cityId) {
+        log.info("[GET_HOTELS_BY_CITY] Fetching hotels for cityId: {}", cityId);
         return hotelRepository.findByCityId(cityId);
     }
 
     // ========== SEARCH: HOTELS BY NAME ==========
     @Override
     public List<Hotel> searchByName(String name) {
+        log.info("[SEARCH_HOTELS] Searching hotels by name: {}", name);
         return hotelRepository.findByNameContainingIgnoreCase(name);
     }
 
     // ========== SEARCH: HOTELS BY OWNER AND CITY ==========
     @Override
     public List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId) {
+        log.info("[GET_HOTELS_BY_OWNER_AND_CITY] Fetching hotels - ownerId: {}, cityId: {}", ownerId, cityId);
         return hotelRepository.findByOwnerIdAndCityId(ownerId, cityId);
     }
 
     // ========== ADMIN: PENDING HOTELS ==========
     @Override
     public List<Hotel> getPendingHotels() {
+        log.info("[GET_PENDING_HOTELS] Fetching pending hotels");
         return hotelRepository.findByApprovedStatus(HotelApprovalStatus.PENDING);
     }
 
     @Override
     public List<Hotel> getAllApprovedHotels() {
+        log.info("[GET_APPROVED_HOTELS] Fetching approved hotels");
         return hotelRepository.findByApprovedStatus(HotelApprovalStatus.APPROVED);
     }
 
     @Override
     public PendingHotelDetailResponse getPendingHotelDetail(UUID hotelId) {
+        log.info("[GET_PENDING_HOTEL_DETAIL] Fetching pending hotel detail - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         if (hotel.getApprovedStatus() != HotelApprovalStatus.PENDING) {
             throw new IllegalArgumentException("Khách sạn không ở trạng thái chờ duyệt.");
@@ -254,43 +268,51 @@ public class HotelServiceImpl implements HotelService {
                         )
                         .toList();
 
-
+        log.info("[GET_PENDING_HOTEL_DETAIL] Pending hotel detail loaded successfully - hotelId: {}", hotelId);
         return hotelMapper.toPendingHotelDetailResponse(hotel, policies, amenityResponses, owner, questions);
     }
     // ========== ADMIN: APPROVE ==========
     @Override @Transactional
     public void approveHotel(UUID hotelId) {
+        log.info("[APPROVE_HOTEL] Approving hotel - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         hotel.setApprovedStatus(HotelApprovalStatus.APPROVED);
         hotel.setIsActive(true);
+        log.info("[APPROVE_HOTEL] Hotel approved successfully - hotelId: {}", hotelId);
     }
 
     // ========== ADMIN: REJECT ==========
     @Override @Transactional
     public void rejectHotel(UUID hotelId) {
+        log.info("[REJECT_HOTEL] Rejecting hotel - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         hotel.setApprovedStatus(HotelApprovalStatus.REJECTED);
         hotel.setIsActive(false);
+        log.info("[REJECT_HOTEL] Hotel rejected successfully - hotelId: {}", hotelId);
     }
 
     // ========== ACTIVATE ==========
     @Override @Transactional
     public void activateHotel(UUID hotelId) {
+        log.info("[ACTIVATE_HOTEL] Activating hotel - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         if(hotel.getApprovedStatus() != HotelApprovalStatus.APPROVED) {
             throw new IllegalArgumentException("Chỉ có thể kích hoạt khách sạn đã được duyệt.");
         }
         hotel.setIsActive(true);
+        log.info("[ACTIVATE_HOTEL] Hotel activated successfully - hotelId: {}", hotelId);
     }
 
     // ========== ADMIN DISABLE ==========
     @Override @Transactional
     public void deactivateHotel(UUID hotelId) {
+        log.info("[DEACTIVATE_HOTEL] Deactivating hotel - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         if(hotel.getApprovedStatus() != HotelApprovalStatus.APPROVED) {
             throw new IllegalArgumentException("Chỉ có thể kích hoạt khách sạn đã được duyệt.");
         }
         hotel.setIsActive(false);
+        log.info("[DEACTIVATE_HOTEL] Hotel deactivated successfully - hotelId: {}", hotelId);
     }
 
     // ========== AMENITIES MANAGEMENT ==========
