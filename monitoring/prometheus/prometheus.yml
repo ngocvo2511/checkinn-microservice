@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+
+  - job_name: 'eureka-services'
+
+    metrics_path: '/actuator/prometheus'
+
+    eureka_sd_configs:
+      - server: 'http://host.docker.internal:8761/eureka'
+
+    relabel_configs:
+
+      # chỉ scrape service UP
+      - source_labels: [__meta_eureka_app_instance_status]
+        regex: UP
+        action: keep
+
+      # lấy app name
+      - source_labels: [__meta_eureka_app_name]
+        target_label: application
+
+      # lấy instance id
+      - source_labels: [__meta_eureka_app_instance_id]
+        target_label: instanceId

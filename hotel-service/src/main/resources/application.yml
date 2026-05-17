@@ -50,10 +50,10 @@ management:
         include: health,info,prometheus
   endpoint:
     health:
-      show-details: always
+      show-details: never
   metrics:
     tags:
-      application: hotel-service
+      application: ${spring.application.name}:${random.uuid}
 
 jwt:
   secret: THIS_IS_SUPER_SECRET_KEY_12345678901234567890

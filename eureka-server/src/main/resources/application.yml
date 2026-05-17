@@ -23,8 +23,8 @@ management:
 
   endpoint:
     health:
-      show-details: always
+      show-details: never
 
   metrics:
     tags:
-      application: eureka-service
+      application: ${spring.application.name}:${random.uuid}
