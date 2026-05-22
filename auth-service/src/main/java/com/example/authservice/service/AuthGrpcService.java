@@ -4,6 +4,7 @@ import com.checkinn.auth.grpc.*;
 import com.checkinn.user.grpc.UserResponse;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.UUID;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @GrpcService
 @RequiredArgsConstructor
+@Slf4j
 public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
     private final UserGrpcClient userGrpcClient;
@@ -21,6 +23,7 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
                       StreamObserver<AuthLoginResponse> responseObserver) {
 
         try {
+            log.info("[GRPC_LOGIN] Received login request - usernameOrEmail: {}", request.getUsernameOrEmail());
             // 1. Gọi user-service để verify password
             UserResponse user = userGrpcClient.login(
                     request.getUsernameOrEmail(),
@@ -29,6 +32,7 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
             // 2. Sinh token
             String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
+            log.info("[GRPC_LOGIN] User authenticated successfully - userId: {}, email: {}, role: {}", user.getId(), user.getEmail(), user.getRole());
 
             // 3. Trả về
             AuthLoginResponse response = AuthLoginResponse.newBuilder()
@@ -41,8 +45,10 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            log.info("[GRPC_LOGIN] Login response completed - userId: {}", user.getId());
 
         } catch (Exception e) {
+            log.error("[GRPC_LOGIN] Login failed - usernameOrEmail: {}, error: {}", request.getUsernameOrEmail(), e.getMessage(), e);
             responseObserver.onError(e);
         }
     }
@@ -52,6 +58,7 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
                               StreamObserver<ValidateTokenResponse> responseObserver) {
 
         try {
+            log.info("[GRPC_VALIDATE_TOKEN] Received token validation request");
             var claims = jwtService.parseToken(request.getToken());
 
             UUID userId = UUID.fromString(claims.getBody().getSubject());
@@ -64,8 +71,10 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            log.info("[GRPC_VALIDATE_TOKEN] Token validated successfully - userId: {}, role: {}", userId, role);
 
         } catch (Exception e) {
+            log.error("[GRPC_VALIDATE_TOKEN] Token validation failed - error: {}", e.getMessage(), e);
             responseObserver.onError(e);
         }
     }

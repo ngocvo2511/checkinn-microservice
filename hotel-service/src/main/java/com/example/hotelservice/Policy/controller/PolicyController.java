@@ -7,6 +7,7 @@ import com.example.hotelservice.Policy.dto.request.PolicyRequest;
 import com.example.hotelservice.Policy.dto.response.PolicyCategoryResponse;
 import com.example.hotelservice.Policy.service.PolicyCategoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/hotels")
 @RequiredArgsConstructor
+@Slf4j
 public class PolicyController {
 
 	private final HotelService hotelService;
@@ -31,7 +33,10 @@ public class PolicyController {
 	// 0) Danh sách danh mục policy có sẵn
 	@GetMapping("/policies/categories")
 	public ResponseEntity<List<PolicyCategoryResponse>> getAvailablePolicyCategories() {
-		return ResponseEntity.ok(policyCategoryService.getAvailableCategories());
+		log.info("[POLICY_CONTROLLER_GET_CATEGORIES] Fetch available policy categories request received");
+		var categories = policyCategoryService.getAvailableCategories();
+		log.info("[POLICY_CONTROLLER_GET_CATEGORIES] Fetch available policy categories success - count: {}", categories.size());
+		return ResponseEntity.ok(categories);
 	}
 
 	// 1) Cập nhật toàn bộ policies
@@ -42,7 +47,10 @@ public class PolicyController {
 			@RequestBody List<PolicyRequest> policies
 	) {
 		UUID ownerId = getOwnerId(jwt.getSubject());
+		log.info("[POLICY_CONTROLLER_UPDATE] Update policies request received - hotelId: {}, ownerId: {}, policiesCount: {}",
+				hotelId, ownerId, policies != null ? policies.size() : 0);
 		var updated = hotelService.updatePolicies(hotelId, policies, ownerId);
+		log.info("[POLICY_CONTROLLER_UPDATE] Update policies success - hotelId: {}, ownerId: {}", hotelId, ownerId);
 		return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
 	}
 
@@ -54,7 +62,9 @@ public class PolicyController {
 			@RequestBody PolicyRequest request
 	) {
 		UUID ownerId = getOwnerId(jwt.getSubject());
+		log.info("[POLICY_CONTROLLER_ADD] Add policy request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
 		var updated = hotelService.addPolicy(hotelId, request, ownerId);
+		log.info("[POLICY_CONTROLLER_ADD] Add policy success - hotelId: {}, ownerId: {}", hotelId, ownerId);
 		return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
 	}
 
@@ -65,7 +75,9 @@ public class PolicyController {
 			@PathVariable UUID hotelId
 	) {
 		UUID ownerId = getOwnerId(jwt.getSubject());
+		log.info("[POLICY_CONTROLLER_CLEAR] Clear policies request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
 		var updated = hotelService.clearPolicies(hotelId, ownerId);
+		log.info("[POLICY_CONTROLLER_CLEAR] Clear policies success - hotelId: {}, ownerId: {}", hotelId, ownerId);
 		return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
 	}
 
@@ -77,7 +89,11 @@ public class PolicyController {
 			@PathVariable UUID policyId
 	) {
 		UUID ownerId = getOwnerId(jwt.getSubject());
+		log.info("[POLICY_CONTROLLER_REMOVE] Remove policy request received - hotelId: {}, ownerId: {}, policyId: {}",
+				hotelId, ownerId, policyId);
 		var updated = hotelService.removePolicy(hotelId, policyId, ownerId);
+		log.info("[POLICY_CONTROLLER_REMOVE] Remove policy success - hotelId: {}, ownerId: {}, policyId: {}",
+				hotelId, ownerId, policyId);
 		return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
 	}
 }

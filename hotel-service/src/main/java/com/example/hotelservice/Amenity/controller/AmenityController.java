@@ -8,6 +8,7 @@ import com.example.hotelservice.Hotel.dto.response.HotelResponse;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.service.HotelService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/hotels")
 @RequiredArgsConstructor
+@Slf4j
 public class AmenityController {
 
     private final HotelService hotelService;
@@ -34,7 +36,10 @@ public class AmenityController {
     // -------------------------------------------------------
     @GetMapping("/amenities/categories")
     public ResponseEntity<List<CategoryResponse>> getAvailableAmenityCategories() {
-        return ResponseEntity.ok(amenityCategoryService.getAvailableCategories());
+        log.info("[AMENITY_CONTROLLER_GET_CATEGORIES] Fetch available amenity categories request received");
+        var categories = amenityCategoryService.getAvailableCategories();
+        log.info("[AMENITY_CONTROLLER_GET_CATEGORIES] Fetch available amenity categories success - count: {}", categories.size());
+        return ResponseEntity.ok(categories);
     }
 
     // -------------------------------------------------------
@@ -47,7 +52,10 @@ public class AmenityController {
             @RequestBody AmenityUpdateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[AMENITY_CONTROLLER_UPDATE] Update amenities request received - hotelId: {}, ownerId: {}, categoriesCount: {}",
+            hotelId, ownerId, request.amenityCategories() != null ? request.amenityCategories().size() : 0);
         var updated = hotelService.updateAmenities(hotelId, request.amenityCategories(), ownerId);
+        log.info("[AMENITY_CONTROLLER_UPDATE] Update amenities success - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
 
@@ -61,7 +69,9 @@ public class AmenityController {
             @RequestBody AmenityRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[AMENITY_CONTROLLER_ADD] Add amenity category request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
         var updated = hotelService.addAmenityCategory(hotelId, request, ownerId);
+        log.info("[AMENITY_CONTROLLER_ADD] Add amenity category success - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
 
@@ -74,7 +84,9 @@ public class AmenityController {
             @PathVariable UUID hotelId
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[AMENITY_CONTROLLER_CLEAR] Clear amenities request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
         var updated = hotelService.clearAmenities(hotelId, ownerId);
+        log.info("[AMENITY_CONTROLLER_CLEAR] Clear amenities success - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
 
@@ -88,7 +100,11 @@ public class AmenityController {
             @PathVariable String categoryTitle
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[AMENITY_CONTROLLER_REMOVE] Remove amenity category request received - hotelId: {}, ownerId: {}, categoryTitle: {}",
+            hotelId, ownerId, categoryTitle);
         var updated = hotelService.removeAmenityCategory(hotelId, categoryTitle, ownerId);
+        log.info("[AMENITY_CONTROLLER_REMOVE] Remove amenity category success - hotelId: {}, ownerId: {}, categoryTitle: {}",
+            hotelId, ownerId, categoryTitle);
         return ResponseEntity.ok(hotelMapper.toHotelResponse(updated));
     }
 

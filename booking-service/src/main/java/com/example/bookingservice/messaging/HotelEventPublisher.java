@@ -22,7 +22,9 @@ public class HotelEventPublisher {
 
     public void publishPaymentCompleted(PaymentEvent event) {
         try {
+            log.info("[RABBIT_PUBLISH] Publishing payment.completed - bookingId: {}, paymentId: {}", event.getBookingId(), event.getBookingId());
             rabbitTemplate.convertAndSend(exchange, "payment.completed", event);
+            log.info("[RABBIT_PUBLISH] Published payment.completed - bookingId: {}, paymentId: {}", event.getBookingId(), event.getBookingId());
         } catch (Exception e) {
             log.warn("Failed to publish payment.completed event - RabbitMQ may be unavailable: {}", e.getMessage());
         }
@@ -30,7 +32,9 @@ public class HotelEventPublisher {
 
     public void publishPaymentRefunded(PaymentEvent event) {
         try {
+            log.info("[RABBIT_PUBLISH] Publishing payment.refunded - bookingId: {}, paymentId: {}", event.getBookingId(), event.getBookingId());
             rabbitTemplate.convertAndSend(exchange, "payment.refunded", event);
+            log.info("[RABBIT_PUBLISH] Published payment.refunded - bookingId: {}, paymentId: {}", event.getBookingId(), event.getBookingId());
         } catch (Exception e) {
             log.warn("Failed to publish payment.refunded event - RabbitMQ may be unavailable: {}", e.getMessage());
         }
@@ -38,7 +42,9 @@ public class HotelEventPublisher {
 
     public void publishBookingStatus(BookingStatusEvent event) {
         try {
+            log.info("[RABBIT_PUBLISH] Publishing booking.status.changed - bookingId: {}, status: {}", event.getBookingId(), event.getBookingStatus());
             rabbitTemplate.convertAndSend(exchange, "booking.status.changed", event);
+            log.info("[RABBIT_PUBLISH] Published booking.status.changed - bookingId: {}, status: {}", event.getBookingId(), event.getBookingStatus());
         } catch (Exception e) {
             log.warn("Failed to publish booking.status.changed event - RabbitMQ may be unavailable: {}", e.getMessage());
         }

@@ -56,10 +56,12 @@ public class RegulationCacheProvider implements RegulationProvider {
     @Override
     @Transactional
     public Regulation saveRegulation(Regulation regulation, String changedBy) {
+        logger.info("[REGULATION_CACHE_SAVE] Saving regulation - key: {}, changedBy: {}, active: {}", regulation.getRegulationKey(), changedBy, regulation.isActive());
         Regulation saved = persist(regulation);
         cache.put(saved.getRegulationKey(), saved);
         createSnapshot(saved, changedBy);
         publishEvent(saved, changedBy);
+        logger.info("[REGULATION_CACHE_SAVE] Saved regulation - key: {}, version: {}, cacheSize: {}", saved.getRegulationKey(), saved.getVersion(), cache.size());
         return saved;
     }
 
@@ -72,7 +74,7 @@ public class RegulationCacheProvider implements RegulationProvider {
     public void refreshCache() {
         cache.clear();
         regulationRepository.findAll().forEach(regulation -> cache.put(regulation.getRegulationKey(), regulation));
-        logger.info("Loaded {} regulation entries into local provider cache", cache.size());
+        logger.info("[REGULATION_CACHE_REFRESH] Loaded {} regulation entries into local provider cache", cache.size());
     }
 
     private Regulation persist(Regulation regulation) {
@@ -80,6 +82,7 @@ public class RegulationCacheProvider implements RegulationProvider {
         Optional<Regulation> existing = regulationRepository.findByRegulationKey(key);
 
         if (existing.isPresent()) {
+            logger.info("[REGULATION_CACHE_PERSIST_UPDATE] Updating existing regulation - key: {}", key);
             Regulation saved = existing.get();
             saved.setName(regulation.getName());
             saved.setValue(regulation.getValue());
@@ -89,11 +92,13 @@ public class RegulationCacheProvider implements RegulationProvider {
             return regulationRepository.save(saved);
         }
 
+        logger.info("[REGULATION_CACHE_PERSIST_CREATE] Creating new regulation - key: {}", key);
         regulation.setVersion(1);
         return regulationRepository.save(regulation);
     }
 
     private void createSnapshot(Regulation regulation, String changedBy) {
+        logger.info("[REGULATION_CACHE_SNAPSHOT] Creating regulation snapshot - key: {}, version: {}, changedBy: {}", regulation.getRegulationKey(), regulation.getVersion(), changedBy);
         RegulationSnapshot snapshot = new RegulationSnapshot(
                 regulation.getRegulationKey(),
                 regulation.getName(),
@@ -118,6 +123,7 @@ public class RegulationCacheProvider implements RegulationProvider {
     }
 
     private void publishEvent(Regulation regulation, String changedBy) {
+        logger.info("[REGULATION_CACHE_EVENT_PUBLISH] Publishing regulation event - key: {}, version: {}, changedBy: {}", regulation.getRegulationKey(), regulation.getVersion(), changedBy);
         RegulationEvent event = new RegulationEvent(
                 regulation.getRegulationKey(),
                 regulation.getName(),
@@ -135,7 +141,7 @@ public class RegulationCacheProvider implements RegulationProvider {
             return;
         }
 
-        logger.info("Seeding default regulations into provider cache");
+        logger.info("[REGULATION_CACHE_SEED] Seeding default regulations into provider cache");
 
         saveRegulation(new Regulation("HOLD_EXPIRY_MINUTES", "Hold Expiry Minutes", "15", "Default hold expiry time in minutes.", true, 1), "system");
         saveRegulation(new Regulation("COMMISSION_RATE", "Commission Rate", "0.10", "Default commission rate used by revenue calculation.", true, 1), "system");

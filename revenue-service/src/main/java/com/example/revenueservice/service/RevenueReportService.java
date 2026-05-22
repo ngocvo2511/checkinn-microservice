@@ -27,6 +27,8 @@ import com.example.revenueservice.repository.BookingStatusRecordRepository;
 import com.example.revenueservice.repository.PaymentRecordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -50,6 +52,8 @@ public class RevenueReportService {
                     "CHECKED_OUT"
             );
 
+            private static final Logger logger = LoggerFactory.getLogger(RevenueReportService.class);
+
     public RevenueReportService(PaymentRecordRepository paymentRecordRepository,
                                 BookingStatusRecordRepository bookingStatusRecordRepository,
                                 HotelCapacityClient hotelCapacityClient,
@@ -64,6 +68,7 @@ public class RevenueReportService {
 
     @Transactional(readOnly = true)
     public RevenueResponse revenue(String hotelId, LocalDate from, LocalDate to, GroupBy groupBy) {
+        logger.info("Calculating revenue hotelId={} from={} to={} groupBy={}", hotelId, from, to, groupBy);
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
         List<PaymentRecord> payments = hotelId == null
@@ -88,6 +93,7 @@ public class RevenueReportService {
 
     @Transactional(readOnly = true)
     public SummaryResponse summary(String hotelId, LocalDate from, LocalDate to) {
+        logger.info("Calculating summary hotelId={} from={} to={}", hotelId, from, to);
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
 
@@ -118,6 +124,7 @@ public class RevenueReportService {
 
     @Transactional(readOnly = true)
     public OccupancyResponse occupancy(String hotelId, LocalDate from, LocalDate to) {
+        logger.info("Calculating occupancy hotelId={} from={} to={}", hotelId, from, to);
 
         List<BookingStatusRecord> records =
                 hotelId == null
@@ -151,8 +158,7 @@ public class RevenueReportService {
         }
         long days = ChronoUnit.DAYS.between(from, to) + 1;
         long capacityNights = totalRooms * days;
-        System.out.println("capacityNights: " + capacityNights);
-        System.out.println("roomNights: " + roomNights);
+        logger.debug("capacityNights={} roomNights={}", capacityNights, roomNights);
 
         double occupancyRate =
                 capacityNights > 0 ? (double) roomNights / capacityNights : 0;
@@ -236,7 +242,7 @@ public class RevenueReportService {
 
         for (PaymentRecord record : payments) {
             HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(record.getHotelId());
-            System.out.println("OwnerId: " + ownerId + ", Hotel OwnerId: " + info.ownerId());
+            logger.debug("OwnerId: {} , Hotel OwnerId: {}", ownerId, info.ownerId());
             if (info.ownerId() != null && info.ownerId().equalsIgnoreCase(ownerId)) {
                 paymentsByHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
             }
@@ -287,7 +293,7 @@ public class RevenueReportService {
                 OccupancyResponse occ = occupancy(hid, from, to);
                 occupancyRate = occ.occupancyRate();
             } catch (Exception e) {
-                System.err.println("Warning: Could not calculate occupancy for hotel " + hid + ": " + e.getMessage());
+                logger.warn("Could not calculate occupancy for hotel {}: {}", hid, e.getMessage());
             }
 
             items.add(new HotelSummaryItem(

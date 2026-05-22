@@ -46,9 +46,11 @@ public class PaymentService {
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
+        log.info("[CREATE_PAYMENT] Request received - bookingId: {}, method: {}", request.getBookingId(), request.getMethod());
         // Validate booking exists
         Booking booking = bookingRepository.findById(request.getBookingId())
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + request.getBookingId()));
+        log.info("[CREATE_PAYMENT] Booking loaded - bookingId: {}, userId: {}", booking.getId(), booking.getUserId());
         validateBookingCanStartPayment(booking);
 
         // Keep previous failed/cancelled attempts as payment history, but prevent duplicate active payments.
@@ -65,11 +67,13 @@ public class PaymentService {
         }
 
         payment = paymentRepository.save(payment);
+        log.info("[CREATE_PAYMENT] Payment created - paymentId: {}, bookingId: {}, method: {}", payment.getId(), payment.getBookingId(), payment.getMethod());
         return toPaymentResponse(payment);
     }
 
     @Transactional
     public VnPayInitResponse initVnPayPayment(String bookingId, String clientIp) {
+        log.info("[INIT_VNPAY] Request received - bookingId: {}, clientIp: {}", bookingId, clientIp);
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         validateBookingCanStartPayment(booking);
@@ -117,6 +121,7 @@ public class PaymentService {
         String redirectUrl = vnPayProperties.getPayUrl() + "?" + query + "&vnp_SecureHash=" + secureHash;
 
         paymentRepository.save(payment);
+        log.info("[INIT_VNPAY] VNPay init completed - bookingId: {}, orderId: {}", bookingId, txnRef);
 
         return VnPayInitResponse.builder()
             .redirectUrl(redirectUrl)
@@ -126,8 +131,9 @@ public class PaymentService {
 
     @Transactional
     public PaymentResponse processVNPayCallback(String orderId, String responseCode, String transactionId) {
+        log.info("[VNPAY_CALLBACK] Received callback - orderId: {}, responseCode: {}, transactionId: {}", orderId, responseCode, transactionId);
         Payment payment = paymentRepository.findByVnpayOrderId(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
+            .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
 
         // VNPay response codes: 00 = success
         if ("00".equals(responseCode)) {
@@ -179,15 +185,27 @@ public class PaymentService {
                     );
                     log.info("Successfully processed loyalty points");
                 } catch (Exception e) {
-                    log.error("Failed to process loyalty points: {}", e.getMessage());
+                    log.error("Failed to process loyalty points: {}", e.getMessage(), e);
                     // Don't fail the payment if earning points fails
                 }
             }
-
             PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
-            eventPublisher.publishPaymentCompleted(event);
+            try {
+                log.info("[PUBLISH_EVENT] Publishing payment.completed for paymentId: {}, bookingId: {}", payment.getId(), booking.getId());
+                eventPublisher.publishPaymentCompleted(event);
+                log.info("[PUBLISH_EVENT] Published payment.completed for paymentId: {}", payment.getId());
+            } catch (Exception e) {
+                log.error("[PUBLISH_EVENT] Failed to publish payment.completed for paymentId: {}: {}", payment.getId(), e.getMessage(), e);
+            }
+
             BookingStatusEvent statusEvent = buildBookingStatusEvent(booking, BookingStatus.CONFIRMED.name());
-            eventPublisher.publishBookingStatus(statusEvent);
+            try {
+                log.info("[PUBLISH_EVENT] Publishing booking.status.changed for bookingId: {}, status: {}", booking.getId(), BookingStatus.CONFIRMED.name());
+                eventPublisher.publishBookingStatus(statusEvent);
+                log.info("[PUBLISH_EVENT] Published booking.status.changed for bookingId: {}", booking.getId());
+            } catch (Exception e) {
+                log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
+            }
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setVnpayResponseCode(responseCode);
@@ -199,6 +217,7 @@ public class PaymentService {
             booking.setStatus(BookingStatus.PENDING);
             bookingRepository.save(booking);
 
+            log.info("[VNPAY_CALLBACK] Payment failed for orderId: {}, bookingId: {}, responseCode: {}", orderId, booking.getId(), responseCode);
             // Keep the room hold until holdExpiresAt so the user can retry payment.
             // If the customer does not retry in time, BookingScheduledTask cancels the booking.
     }
@@ -221,6 +240,7 @@ public class PaymentService {
 
     @Transactional
     public PaymentResponse refundPayment(String paymentId) {
+        log.info("[REFUND_PAYMENT] Request received - paymentId: {}", paymentId);
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found: " + paymentId));
 
@@ -239,12 +259,19 @@ public class PaymentService {
         payment = paymentRepository.save(payment);
 
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.REFUNDED.name());
-        eventPublisher.publishPaymentRefunded(event);
+        try {
+            log.info("[PUBLISH_EVENT] Publishing payment.refunded for paymentId: {}", payment.getId());
+            eventPublisher.publishPaymentRefunded(event);
+            log.info("[PUBLISH_EVENT] Published payment.refunded for paymentId: {}", payment.getId());
+        } catch (Exception e) {
+            log.error("[PUBLISH_EVENT] Failed to publish payment.refunded for paymentId: {}: {}", payment.getId(), e.getMessage(), e);
+        }
         return toPaymentResponse(payment);
     }
 
     @Transactional
     public PaymentResponse confirmHotelPayment(String bookingId) {
+        log.info("[CONFIRM_HOTEL_PAYMENT] Request received - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
@@ -266,12 +293,18 @@ public class PaymentService {
             bookingService.confirmBookingHold(bookingId);
             log.info("Successfully confirmed hold for booking: {}", bookingId);
         } catch (Exception e) {
-            log.error("Failed to confirm hold for booking {}: {}", bookingId, e.getMessage());
+            log.error("Failed to confirm hold for booking {}: {}", bookingId, e.getMessage(), e);
         }
 
         // Publish payment event
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
-        eventPublisher.publishPaymentCompleted(event);
+        try {
+            log.info("[PUBLISH_EVENT] Publishing payment.completed for hotel-confirmed payment - bookingId: {}", bookingId);
+            eventPublisher.publishPaymentCompleted(event);
+            log.info("[PUBLISH_EVENT] Published payment.completed for bookingId: {}", bookingId);
+        } catch (Exception e) {
+            log.error("[PUBLISH_EVENT] Failed to publish payment.completed for bookingId: {}: {}", bookingId, e.getMessage(), e);
+        }
 
         log.info("Hotel payment confirmed for booking: {}", bookingId);
         return toPaymentResponse(payment);

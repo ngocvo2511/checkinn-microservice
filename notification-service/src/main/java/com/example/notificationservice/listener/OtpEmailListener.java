@@ -22,14 +22,16 @@ public class OtpEmailListener {
             String otpCode = (String) event.get("otp_code");
             String eventType = (String) event.get("event_type");
 
-            log.info("Received OTP event for email: {} (type: {})", email, eventType);
+            log.info("[NOTIFICATION_OTP_EVENT_RECEIVED] Received OTP event for email: {} (type: {})", email, eventType);
 
             if ("otp_verification".equals(eventType)) {
                 sendOtpEmail(email, otpCode);
+            } else {
+                log.info("[NOTIFICATION_OTP_EVENT_SKIPPED] Skipping unsupported OTP event type: {} for email: {}", eventType, email);
             }
 
         } catch (Exception e) {
-            log.error("Error processing OTP email event: {}", e.getMessage(), e);
+            log.error("[NOTIFICATION_OTP_EVENT_ERROR] Error processing OTP email event: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to process OTP email event", e);
         }
     }
@@ -37,9 +39,9 @@ public class OtpEmailListener {
     private void sendOtpEmail(String email, String otpCode) {
         try {
             emailNotificationService.sendOtpVerificationEmail(email, otpCode);
-            log.info("OTP email sent successfully to: {}", email);
+            log.info("[NOTIFICATION_OTP_EMAIL_SENT] OTP email sent successfully to: {}", email);
         } catch (Exception e) {
-            log.error("Failed to send OTP email to {}: {}", email, e.getMessage(), e);
+            log.error("[NOTIFICATION_OTP_EMAIL_ERROR] Failed to send OTP email to {}: {}", email, e.getMessage(), e);
             throw new RuntimeException("Failed to send OTP email", e);
         }
     }

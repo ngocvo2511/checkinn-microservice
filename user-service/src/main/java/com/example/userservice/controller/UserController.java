@@ -8,6 +8,7 @@ import com.example.userservice.dto.UserResponse;
 import com.example.userservice.dto.UserDetailResponse;
 import com.example.userservice.service.UserService;
 import com.example.userservice.security.JwtService;
+import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -26,11 +28,11 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<UserProfileDto> getProfile(@RequestHeader("Authorization") String authHeader) {
-        System.out.println("[UserController] GET /profile - Auth header: " + authHeader);
+        log.info("[USER_PROFILE_GET] GET /profile request received");
         UUID userId = extractUserIdFromToken(authHeader);
-        System.out.println("[UserController] Extracted userId: " + userId);
+        log.info("[USER_PROFILE_GET] Extracted userId: {}", userId);
         UserProfileDto profile = userService.getUserProfile(userId);
-        System.out.println("[UserController] Retrieved profile: " + profile);
+        log.info("[USER_PROFILE_GET] Retrieved profile for userId: {}", userId);
         return ResponseEntity.ok(profile);
     }
 
@@ -77,7 +79,7 @@ public class UserController {
             PagedResponse<UserResponse> users = userService.getUsersPage(page, size);
             return ResponseEntity.ok(users);
         } catch (Exception e) {
-            System.err.println("[UserController] Error in getAllUsers: " + e.getMessage());
+            log.error("[USER_ADMIN_LIST_ERROR] Error in getAllUsers: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Unauthorized", e.getMessage()));
         }
@@ -102,7 +104,7 @@ public class UserController {
             UserDetailResponse userDetail = userService.getUserDetail(userId);
             return ResponseEntity.ok(userDetail);
         } catch (Exception e) {
-            System.err.println("[UserController] Error in getUserDetail: " + e.getMessage());
+            log.error("[USER_ADMIN_DETAIL_ERROR] Error in getUserDetail: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ErrorResponse("Not found", "User not found"));
         }
@@ -127,7 +129,7 @@ public class UserController {
             userService.lockAccount(userId);
             return ResponseEntity.ok(new SuccessResponse("Tài khoản đã được khóa thành công"));
         } catch (Exception e) {
-            System.err.println("[UserController] Error in lockAccount: " + e.getMessage());
+            log.error("[USER_ACCOUNT_LOCK_ERROR] Error in lockAccount: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("Error", e.getMessage()));
         }
@@ -152,23 +154,23 @@ public class UserController {
             userService.unlockAccount(userId);
             return ResponseEntity.ok(new SuccessResponse("Tài khoản đã được mở khóa thành công"));
         } catch (Exception e) {
-            System.err.println("[UserController] Error in unlockAccount: " + e.getMessage());
+            log.error("[USER_ACCOUNT_UNLOCK_ERROR] Error in unlockAccount: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("Error", e.getMessage()));
         }
     }
 
     private UUID extractUserIdFromToken(String authHeader) {
-        System.out.println("[UserController] extractUserIdFromToken - authHeader: " + authHeader);
+        log.debug("[USER_TOKEN_EXTRACT] Extracting userId from authorization header");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("[UserController] Invalid auth header format");
+            log.warn("[USER_TOKEN_INVALID] Invalid authorization header format");
             throw new RuntimeException("Header xác thực không hợp lệ");
         }
 
         String token = authHeader.substring(7);
-        System.out.println("[UserController] Extracted token: " + token);
+        log.debug("[USER_TOKEN_EXTRACT] Token extracted successfully");
         UUID userId = jwtService.extractUserId(token);
-        System.out.println("[UserController] Extracted userId: " + userId);
+        log.debug("[USER_TOKEN_EXTRACT] userId extracted successfully: {}", userId);
         return userId;
     }
 

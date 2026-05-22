@@ -24,9 +24,9 @@ public class AuthService {
     private final UserGrpcClient userGrpcClient;
     private final JwtService jwtService;
 
-    public AuthResponseDto register(RegisterRequestDto request, UserRole userRole) {
-        logger.info("[REGISTER] User registration attempt - username: {}, email: {}, role: {}", 
-                request.getUsername(), request.getEmail(), userRole);
+        public AuthResponseDto register(RegisterRequestDto request, UserRole userRole) {
+        logger.debug("[REGISTER] User registration attempt - username: {}, email: {}, role: {}", 
+            request.getUsername(), request.getEmail(), userRole);
         try {
             // Gọi user-service để tạo user
             logger.debug("[REGISTER] Calling user-service to create user account");
@@ -38,15 +38,15 @@ public class AuthService {
                     userRole
             );
 
-            logger.info("[REGISTER] User account created successfully - userId: {}, email: {}", 
-                    user.getId(), user.getEmail());
+            logger.debug("[REGISTER] User account created successfully - userId: {}, email: {}", 
+                user.getId(), user.getEmail());
                 MDC.put("userId", user.getId());
 
             // Sinh token
-            logger.debug("[REGISTER] Generating JWT token for userId: {}", user.getId());
-            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
+                logger.debug("[REGISTER] Generating JWT token for userId: {}", user.getId());
+                String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
 
-            logger.info("[REGISTER] Registration successful - userId: {}, email: {}", 
+                logger.debug("[REGISTER] Registration successful - userId: {}, email: {}", 
                     user.getId(), user.getEmail());
 
             // Trả về response
@@ -74,7 +74,7 @@ public class AuthService {
     }
 
     public AuthResponseDto login(LoginRequestDto request) {
-        logger.info("[LOGIN] Login attempt - usernameOrEmail: {}", request.getUsernameOrEmail());
+        logger.debug("[LOGIN] Login attempt - usernameOrEmail: {}", request.getUsernameOrEmail());
         try {
             // Gọi user-service để verify password
             logger.debug("[LOGIN] Calling user-service to verify credentials for: {}", request.getUsernameOrEmail());
@@ -83,7 +83,7 @@ public class AuthService {
                     request.getPassword()
             );
 
-            logger.info("[LOGIN] User authenticated successfully - userId: {}, username: {}, role: {}", 
+            logger.debug("[LOGIN] User authenticated successfully - userId: {}, username: {}, role: {}", 
                     user.getId(), user.getUsername(), user.getRole());
                 MDC.put("userId", user.getId());
 
@@ -91,7 +91,7 @@ public class AuthService {
             logger.debug("[LOGIN] Generating JWT token for userId: {}", user.getId());
             String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
 
-            logger.info("[LOGIN] Login successful - userId: {}, email: {}", user.getId(), user.getEmail());
+            logger.debug("[LOGIN] Login successful - userId: {}, email: {}", user.getId(), user.getEmail());
 
             // Trả về response
             return AuthResponseDto.builder()
@@ -126,7 +126,7 @@ public class AuthService {
     }
 
     public void resetPassword(String email, String newPassword) {
-        logger.info("[RESET_PASSWORD] Password reset attempt - email: {}", email);
+        logger.debug("[RESET_PASSWORD] Password reset attempt - email: {}", email);
         try {
             if (newPassword == null || newPassword.length() < 6) {
                 logger.warn("[RESET_PASSWORD] Invalid password format - email: {}, passwordLength: {}", 
@@ -138,7 +138,7 @@ public class AuthService {
             // Gọi user-service để reset password
             userGrpcClient.resetPassword(email, newPassword);
 
-            logger.info("[RESET_PASSWORD] Password reset successful - email: {}", email);
+            logger.debug("[RESET_PASSWORD] Password reset successful - email: {}", email);
 
         } catch (StatusRuntimeException e) {
             String msg = extractGrpcMessage(e);

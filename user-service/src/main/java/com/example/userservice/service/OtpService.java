@@ -47,7 +47,7 @@ public class OtpService {
         // Send via RabbitMQ to notification service
         sendOtpViaRabbitMQ(email, otpCode);
 
-        log.info("OTP generated and sent to notification service for email: {}", email);
+        log.info("[OTP_GENERATE_AND_SEND] OTP generated and sent to notification service - email: {}", email);
         return otpCode;
     }
 
@@ -72,9 +72,9 @@ public class OtpService {
                     event
             );
 
-            log.info("OTP email event published to RabbitMQ for: {}", email);
+            log.info("[OTP_RABBITMQ_PUBLISH] OTP email event published to RabbitMQ - email: {}", email);
         } catch (Exception e) {
-            log.error("Failed to send OTP event to RabbitMQ: {}", e.getMessage(), e);
+            log.error("[OTP_RABBITMQ_PUBLISH_ERROR] Failed to send OTP event to RabbitMQ - email: {}, error: {}", email, e.getMessage(), e);
             throw new RuntimeException("Failed to send OTP notification", e);
         }
     }
@@ -94,16 +94,16 @@ public class OtpService {
                 Otp otp = otpOptional.get();
                 // Check if already verified OTP is still valid (not expired)
                 if (LocalDateTime.now().isBefore(otp.getExpiryTime())) {
-                    log.info("Using already verified OTP for email: {}", email);
+                    log.info("[OTP_VERIFY_REUSE] Using already verified OTP - email: {}", email);
                     return true;
                 } else {
-                    log.warn("Verified OTP expired for email: {}", email);
+                    log.warn("[OTP_VERIFY_EXPIRED] Verified OTP expired - email: {}", email);
                     otpRepository.delete(otp);
                     return false;
                 }
             }
             
-            log.warn("OTP not found for email: {}", email);
+            log.warn("[OTP_VERIFY_NOT_FOUND] OTP not found - email: {}", email);
             return false;
         }
 
@@ -111,14 +111,14 @@ public class OtpService {
 
         // Check if OTP has expired
         if (LocalDateTime.now().isAfter(otp.getExpiryTime())) {
-            log.warn("OTP expired for email: {}", email);
+            log.warn("[OTP_VERIFY_EXPIRED] OTP expired - email: {}", email);
             otpRepository.delete(otp);
             return false;
         }
 
         // Check attempt count
         if (otp.getAttemptCount() >= MAX_ATTEMPTS) {
-            log.warn("Max OTP attempts exceeded for email: {}", email);
+            log.warn("[OTP_VERIFY_MAX_ATTEMPTS] Max OTP attempts exceeded - email: {}", email);
             otpRepository.delete(otp);
             return false;
         }
@@ -127,14 +127,14 @@ public class OtpService {
         if (!otp.getOtpCode().equals(otpCode)) {
             otp.setAttemptCount(otp.getAttemptCount() + 1);
             otpRepository.save(otp);
-            log.warn("Invalid OTP attempt for email: {}, attempt: {}", email, otp.getAttemptCount());
+            log.warn("[OTP_VERIFY_INVALID] Invalid OTP attempt - email: {}, attempt: {}", email, otp.getAttemptCount());
             return false;
         }
 
         // Mark as verified
         otp.setVerified(true);
         otpRepository.save(otp);
-        log.info("OTP verified successfully for email: {}", email);
+        log.info("[OTP_VERIFY_SUCCESS] OTP verified successfully - email: {}", email);
         return true;
     }
 

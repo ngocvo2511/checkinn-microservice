@@ -6,6 +6,7 @@ import com.example.regulationsservice.dto.RegulationDto;
 import com.example.regulationsservice.dto.RegulationSnapshotDto;
 import com.example.regulationsservice.service.RegulationService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/regulations")
+@Slf4j
 public class RegulationController {
 
     private final RegulationService regulationService;
@@ -32,29 +34,49 @@ public class RegulationController {
 
     @GetMapping
     public ResponseEntity<List<RegulationDto>> getRegulations() {
-        return ResponseEntity.ok(regulationService.listRegulations());
+        log.info("[REGULATION_CONTROLLER_LIST] Fetch regulations request received");
+        List<RegulationDto> regulations = regulationService.listRegulations();
+        log.info("[REGULATION_CONTROLLER_LIST] Fetch regulations success - count: {}", regulations.size());
+        return ResponseEntity.ok(regulations);
     }
 
     @GetMapping("/{key}")
     public ResponseEntity<RegulationDto> getRegulation(@PathVariable("key") String key) {
+        log.info("[REGULATION_CONTROLLER_GET] Fetch regulation request received - key: {}", key);
         return regulationService.findRegulation(key)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(regulation -> {
+                    log.info("[REGULATION_CONTROLLER_GET] Fetch regulation success - key: {}", key);
+                    return ResponseEntity.ok(regulation);
+                })
+                .orElseGet(() -> {
+                    log.info("[REGULATION_CONTROLLER_GET] Regulation not found - key: {}", key);
+                    return ResponseEntity.notFound().build();
+                });
     }
 
     @GetMapping("/typed/commission")
     public ResponseEntity<CommissionRateDto> getTypedCommissionRate() {
-        return ResponseEntity.ok(regulationService.getCommissionRateDto());
+        log.info("[REGULATION_CONTROLLER_GET_COMMISSION] Fetch commission rate request received");
+        CommissionRateDto dto = regulationService.getCommissionRateDto();
+        log.info("[REGULATION_CONTROLLER_GET_COMMISSION] Fetch commission rate success - rate: {}", dto.getCommissionRate());
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/typed/points")
     public ResponseEntity<PointsConversionDto> getTypedPointsConversionRates() {
-        return ResponseEntity.ok(regulationService.getPointsConversionRatesDto());
+        log.info("[REGULATION_CONTROLLER_GET_POINTS] Fetch points conversion rates request received");
+        PointsConversionDto dto = regulationService.getPointsConversionRatesDto();
+        log.info("[REGULATION_CONTROLLER_GET_POINTS] Fetch points conversion rates success - earnRate: {}, redemptionRate: {}",
+                dto.getEarnConversionRate(), dto.getRedemptionConversionRate());
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/snapshots")
     public ResponseEntity<List<RegulationSnapshotDto>> getSnapshots() {
-        return ResponseEntity.ok(regulationService.listSnapshots());
+        log.info("[REGULATION_CONTROLLER_SNAPSHOTS] Fetch snapshots request received");
+        List<RegulationSnapshotDto> snapshots = regulationService.listSnapshots();
+        log.info("[REGULATION_CONTROLLER_SNAPSHOTS] Fetch snapshots success - count: {}", snapshots.size());
+        return ResponseEntity.ok(snapshots);
     }
 
     @PutMapping("/{key}")
@@ -64,7 +86,11 @@ public class RegulationController {
             Authentication authentication) {
         verifyAdminRole(authentication);
         String changedBy = authentication != null ? authentication.getName() : "anonymous";
+        log.info("[REGULATION_CONTROLLER_UPDATE] Update regulation request received - key: {}, changedBy: {}, version: {}",
+            key, changedBy, request.getVersion());
         RegulationDto saved = regulationService.upsertRegulation(key, request, changedBy);
+        log.info("[REGULATION_CONTROLLER_UPDATE] Update regulation success - key: {}, changedBy: {}, version: {}",
+            key, changedBy, saved.getVersion());
         return ResponseEntity.ok(saved);
     }
 
@@ -80,7 +106,9 @@ public class RegulationController {
 
     @PostMapping("/refresh")
     public ResponseEntity<Void> refreshCache() {
+        log.info("[REGULATION_CONTROLLER_REFRESH] Refresh cache request received");
         regulationService.refreshCache();
+        log.info("[REGULATION_CONTROLLER_REFRESH] Refresh cache success");
         return ResponseEntity.ok().build();
     }
 }

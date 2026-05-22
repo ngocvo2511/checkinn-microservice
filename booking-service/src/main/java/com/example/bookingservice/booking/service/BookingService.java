@@ -50,7 +50,7 @@ public class BookingService {
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
-        log.info("Creating booking for hotel: {}, checkIn: {}, checkOut: {}",
+        log.debug("[CREATE_BOOKING] Creating booking for hotel: {}, checkIn: {}, checkOut: {}",
                 request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
 
         // Validate items
@@ -82,12 +82,12 @@ public class BookingService {
                 totalQuantity
         );
 
-        log.info("Attempting to hold rooms with request: roomTypeId={}, quantity={}", roomTypeId, totalQuantity);
+        log.debug("[CREATE_BOOKING] Attempting to hold rooms with request: roomTypeId={}, quantity={}", roomTypeId, totalQuantity);
 
         HoldResponse holdResponse;
         try {
             holdResponse = availabilityClient.holdRooms(holdRequest);
-            log.info("Successfully held rooms, holdId: {}", holdResponse.holdId());
+            log.debug("[CREATE_BOOKING] Successfully held rooms, holdId: {}", holdResponse.holdId());
         } catch (Exception e) {
             log.error("Failed to hold rooms", e);
             throw new IllegalStateException("Failed to hold rooms: " + e.getMessage());
@@ -137,8 +137,8 @@ public class BookingService {
                     pointsDiscount = maxDiscount;
                 }
 
-                log.info("Successfully calculated {} points discount: {} VND (max allowed: {} VND)",
-                        request.getPointsToUse(), pointsDiscount, maxDiscount);
+                log.debug("[CREATE_BOOKING] Successfully calculated {} points discount: {} VND (max allowed: {} VND)",
+                    request.getPointsToUse(), pointsDiscount, maxDiscount);
             } catch (Exception e) {
                 log.warn("Failed to calculate points discount: {}", e.getMessage());
                 pointsDiscount = BigDecimal.ZERO;
@@ -209,46 +209,46 @@ public class BookingService {
     }
 
     public BookingResponse getBooking(String bookingId) {
-        log.info("[GET_BOOKING] Fetching booking - bookingId: {}", bookingId);
+        log.debug("[GET_BOOKING] Fetching booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
-        log.info("[GET_BOOKING] Booking fetched successfully - bookingId: {}, status: {}", bookingId, booking.getStatus());
+        log.debug("[GET_BOOKING] Booking fetched successfully - bookingId: {}, status: {}", bookingId, booking.getStatus());
         return toBookingResponse(booking);
     }
 
     public List<BookingResponse> getUserBookings(String userId) {
-        log.info("[GET_USER_BOOKINGS] Fetching bookings for userId: {}", userId);
+        log.debug("[GET_USER_BOOKINGS] Fetching bookings for userId: {}", userId);
         List<BookingResponse> responses = bookingRepository.findByUserId(userId).stream()
                 .map(this::toBookingResponse)
                 .collect(Collectors.toList());
-        log.info("[GET_USER_BOOKINGS] Found {} bookings for userId: {}", responses.size(), userId);
+        log.debug("[GET_USER_BOOKINGS] Found {} bookings for userId: {}", responses.size(), userId);
         return responses;
     }
 
     public List<BookingResponse> getHotelBookings(String hotelId) {
-        log.info("[GET_HOTEL_BOOKINGS] Fetching bookings for hotelId: {}", hotelId);
+        log.debug("[GET_HOTEL_BOOKINGS] Fetching bookings for hotelId: {}", hotelId);
         List<BookingResponse> responses = bookingRepository.findByHotelId(hotelId).stream()
                 .map(this::toBookingResponse)
                 .collect(Collectors.toList());
-        log.info("[GET_HOTEL_BOOKINGS] Found {} bookings for hotelId: {}", responses.size(), hotelId);
+        log.debug("[GET_HOTEL_BOOKINGS] Found {} bookings for hotelId: {}", responses.size(), hotelId);
         return responses;
     }
 
     @Transactional
     public BookingResponse updateBookingStatus(String bookingId, BookingStatus status) {
-        log.info("[UPDATE_BOOKING_STATUS] Updating booking status - bookingId: {}, status: {}", bookingId, status);
+        log.debug("[UPDATE_BOOKING_STATUS] Updating booking status - bookingId: {}, status: {}", bookingId, status);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         booking.setStatus(status);
         booking = bookingRepository.save(booking);
         publishStatusEvent(booking, status.name());
-        log.info("[UPDATE_BOOKING_STATUS] Booking status updated successfully - bookingId: {}, status: {}", bookingId, status);
+        log.debug("[UPDATE_BOOKING_STATUS] Booking status updated successfully - bookingId: {}, status: {}", bookingId, status);
         return toBookingResponse(booking);
     }
 
     @Transactional
     public void cancelBooking(String bookingId) {
-        log.info("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
+        log.debug("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
@@ -260,7 +260,7 @@ public class BookingService {
         // Release hold if exists
         if (booking.getHoldId() != null) {
             try {
-                log.info("[CANCEL_BOOKING] Releasing hold - bookingId: {}, holdId: {}", bookingId, booking.getHoldId());
+                log.debug("[CANCEL_BOOKING] Releasing hold - bookingId: {}, holdId: {}", bookingId, booking.getHoldId());
                 availabilityClient.releaseHold(booking.getHoldId());
             } catch (Exception e) {
                 // Log but don't fail the cancellation
@@ -273,7 +273,7 @@ public class BookingService {
         if (booking.getEarnedPoints() != null && booking.getEarnedPoints() > 0) {
             try {
                 loyaltyPointsClient.refundPoints(booking.getUserId(), bookingId);
-                log.info("Successfully refunded points for cancelled booking: {}", bookingId);
+                log.debug("Successfully refunded points for cancelled booking: {}", bookingId);
             } catch (Exception e) {
                 log.warn("Failed to refund points for booking {}: {}", bookingId, e.getMessage());
             }
@@ -282,11 +282,11 @@ public class BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
         publishStatusEvent(booking, BookingStatus.CANCELLED.name());
-        log.info("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
+        log.debug("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
     }
 
     public void confirmBookingHold(String bookingId) {
-        log.info("Confirming booking hold for booking: {}", bookingId);
+        log.debug("[CONFIRM_BOOKING_HOLD] Confirming booking hold for booking: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
@@ -295,10 +295,10 @@ public class BookingService {
             throw new IllegalStateException("Booking has no holdId");
         }
 
-        log.info("Confirming hold {} for booking {}", booking.getHoldId(), bookingId);
+        log.debug("[CONFIRM_BOOKING_HOLD] Confirming hold {} for booking {}", booking.getHoldId(), bookingId);
         try {
             availabilityClient.confirmHold(booking.getHoldId());
-            log.info("Successfully confirmed hold {} for booking {}", booking.getHoldId(), bookingId);
+            log.debug("Successfully confirmed hold {} for booking {}", booking.getHoldId(), bookingId);
         } catch (Exception e) {
             log.error("Failed to confirm hold {} for booking {}: {}", booking.getHoldId(), bookingId, e.getMessage(), e);
             throw new RuntimeException("Failed to confirm hold: " + e.getMessage(), e);
@@ -323,7 +323,7 @@ public class BookingService {
                             booking.getPointsDiscountAmount() != null ? booking.getPointsDiscountAmount() : BigDecimal.ZERO
                     )
             );
-            log.info("Successfully earned {} points for user: {}", earnedPoints, booking.getUserId());
+            log.debug("Successfully earned {} points for user: {}", earnedPoints, booking.getUserId());
         } catch (Exception e) {
             log.warn("Failed to earn points for booking {}: {}", bookingId, e.getMessage());
         }
@@ -352,7 +352,13 @@ public class BookingService {
                 .bookingStatus(statusLabel)
                 .eventAt(LocalDateTime.now())
                 .build();
-        eventPublisher.publishBookingStatus(event);
+        try {
+            log.debug("[PUBLISH_EVENT] Publishing booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
+            eventPublisher.publishBookingStatus(event);
+            log.debug("[PUBLISH_EVENT] Published booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
+        } catch (Exception e) {
+            log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
+        }
     }
 
     public void releaseBookingHold(String bookingId) {

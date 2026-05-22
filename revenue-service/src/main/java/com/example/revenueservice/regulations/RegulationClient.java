@@ -29,7 +29,7 @@ public class RegulationClient {
             try {
                 return new BigDecimal(cached);
             } catch (NumberFormatException ex) {
-                logger.warn("Invalid cached commission rate: {}", cached);
+                logger.warn("[REVENUE_REGULATION_CLIENT_INVALID_CACHE] Invalid cached commission rate: {}", cached);
             }
         }
 
@@ -42,7 +42,7 @@ public class RegulationClient {
                 return resp.getBody().commissionRate;
             }
         } catch (Exception ex) {
-            logger.warn("Failed to fetch commission rate from regulations-service", ex);
+            logger.warn("[REVENUE_REGULATION_CLIENT_FALLBACK] Failed to fetch commission rate from regulations-service", ex);
         }
 
         // final fallback: 0.10

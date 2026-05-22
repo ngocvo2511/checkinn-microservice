@@ -6,6 +6,8 @@ import com.example.revenueservice.grpc.HotelGrpcServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class HotelGrpcClient {
+    private static final Logger logger = LoggerFactory.getLogger(HotelGrpcClient.class);
+
     @GrpcClient("hotel-service")
     private HotelGrpcServiceGrpc.HotelGrpcServiceBlockingStub stub;
 
@@ -41,7 +45,7 @@ public class HotelGrpcClient {
             return new HotelOwnerInfo(response.getName(), response.getOwnerId(), city);
         } catch (Exception e) {
             // Log error but don't throw - return null to allow processing to continue
-            System.err.println("Error fetching hotel info for " + hotelId + ": " + e.getMessage());
+            logger.warn("[REVENUE_HOTEL_CLIENT_ERROR] Error fetching hotel info for hotelId: {}, error: {}", hotelId, e.getMessage(), e);
             return new HotelOwnerInfo(null, null, null);
         }
     }

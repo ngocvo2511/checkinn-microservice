@@ -92,7 +92,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            System.err.println("[UserGrpcService] GetUserById error: " + e.getMessage());
+            logger.error("[gRPC_GET_USER_BY_ID_ERROR] GetUserById error - id: {}, error: {}", request.getId(), e.getMessage(), e);
             responseObserver.onError(
                 Status.NOT_FOUND
                     .withDescription(e.getMessage())
@@ -160,7 +160,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            System.err.println("[UserGrpcService] Reset password error: " + e.getMessage());
+            logger.error("[gRPC_RESET_PASSWORD_ERROR] Reset password error - email: {}, error: {}", request.getEmail(), e.getMessage(), e);
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.getMessage())

@@ -135,16 +135,16 @@ public class UserService {
     }
 
     public UserProfileDto getUserProfile(UUID userId) {
-        System.out.println("[UserService] getUserProfile - userId: " + userId);
+        logger.info("[PROFILE_GET] Fetch user profile request received - userId: {}", userId);
 
         User user = getUserById(userId);
-        System.out.println("[UserService] Found user: " + user.getUsername());
+        logger.info("[PROFILE_GET] User loaded - userId: {}, username: {}", userId, user.getUsername());
 
         // If profile missing (older accounts), create an empty one to avoid 401
         UserProfile profile = userProfileRepository.findByUserId(userId)
                 .orElseGet(() -> createEmptyProfile(user));
 
-        System.out.println("[UserService] Using profile - fullName: " + profile.getFullName());
+        logger.info("[PROFILE_GET] Using profile - userId: {}, fullName: {}", userId, profile.getFullName());
 
         return UserProfileDto.builder()
                 .id(user.getId())
@@ -159,7 +159,7 @@ public class UserService {
     }
 
     private UserProfile createEmptyProfile(User user) {
-        System.out.println("[UserService] Profile missing, creating empty profile for userId=" + user.getId());
+        logger.info("[PROFILE_CREATE_EMPTY] Profile missing, creating empty profile - userId: {}", user.getId());
         UserProfile newProfile = UserProfile.builder()
                 .fullName(user.getUsername())
                 .user(user)
@@ -169,6 +169,7 @@ public class UserService {
     }
 
     public UserProfileDto updateUserProfile(UUID userId, UpdateProfileDto dto) {
+        logger.info("[PROFILE_UPDATE] Update profile request received - userId: {}", userId);
         User user = getUserById(userId);
         UserProfile profile = userProfileRepository.findByUserId(userId)
                 .orElseGet(() -> createEmptyProfile(user));
@@ -197,6 +198,7 @@ public class UserService {
         }
 
         userProfileRepository.save(profile);
+        logger.info("[PROFILE_UPDATE] Update profile success - userId: {}", userId);
 
         return UserProfileDto.builder()
                 .id(user.getId())
@@ -211,6 +213,7 @@ public class UserService {
     }
 
     public void changePassword(UUID userId, String currentPassword, String newPassword) {
+        logger.info("[PASSWORD_CHANGE] Change password request received - userId: {}", userId);
         User user = getUserById(userId);
 
         // Verify current password
@@ -226,17 +229,21 @@ public class UserService {
         // Update password
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+        logger.info("[PASSWORD_CHANGE] Change password success - userId: {}", userId);
     }
 
     public void verifyUserEmail(String email) {
+        logger.info("[EMAIL_VERIFY] Verify user email request received - email: {}", email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         user.setEmailVerified(true);
         userRepository.save(user);
+        logger.info("[EMAIL_VERIFY] Verify user email success - email: {}", email);
     }
 
     public void resetPassword(String email, String newPassword) {
+        logger.info("[PASSWORD_RESET] Reset password request received - email: {}", email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
@@ -246,6 +253,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+        logger.info("[PASSWORD_RESET] Reset password success - email: {}", email);
     }
 
     public class UserLoginResult {

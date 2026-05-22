@@ -8,6 +8,7 @@ import com.example.hotelservice.City.service.CityService;
 import com.example.hotelservice.City.service.LocationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/cities")
 @RequiredArgsConstructor
+@Slf4j
 public class CityController {
 
     private final CityService cityService;
@@ -29,7 +31,9 @@ public class CityController {
      */
     @PostMapping
     public ResponseEntity<CityResponse> createCity(@Valid @RequestBody CityCreateRequest request) {
+        log.info("[CITY_CONTROLLER_CREATE] Create city request received - name: {}, provinceId: {}", request.name(), request.provinceId());
         var city = cityService.createCity(request);
+        log.info("[CITY_CONTROLLER_CREATE] Create city success - cityId: {}, name: {}", city.getId(), city.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(city));
     }
 
@@ -38,7 +42,9 @@ public class CityController {
      */
     @GetMapping("/all-locations")
     public ResponseEntity<List<LocationResponse>> getAllLocations() {
+        log.info("[CITY_CONTROLLER_ALL_LOCATIONS] Fetch all locations request received");
         var locations = locationService.getAllLocations();
+        log.info("[CITY_CONTROLLER_ALL_LOCATIONS] Fetch all locations success - count: {}", locations.size());
         return ResponseEntity.ok(locations);
     }
 
@@ -47,7 +53,9 @@ public class CityController {
      */
     @GetMapping("/search/locations")
     public ResponseEntity<List<LocationResponse>> searchLocations(@RequestParam String query) {
+        log.info("[CITY_CONTROLLER_SEARCH_LOCATIONS] Search locations request received - query: {}", query);
         var results = locationService.searchLocations(query);
+        log.info("[CITY_CONTROLLER_SEARCH_LOCATIONS] Search locations success - query: {}, count: {}", query, results.size());
         return ResponseEntity.ok(results);
     }
 
@@ -56,10 +64,12 @@ public class CityController {
      */
     @GetMapping
     public ResponseEntity<List<CityResponse>> getAllCities() {
+        log.info("[CITY_CONTROLLER_GET_ALL] Fetch all cities request received");
         var cities = cityService.getAllCities();
         var responses = cities.stream()
                 .map(this::toResponse)
                 .toList();
+        log.info("[CITY_CONTROLLER_GET_ALL] Fetch all cities success - count: {}", responses.size());
         return ResponseEntity.ok(responses);
     }
 
@@ -68,7 +78,9 @@ public class CityController {
      */
     @GetMapping("/{cityId}")
     public ResponseEntity<CityResponse> getCityById(@PathVariable UUID cityId) {
+        log.info("[CITY_CONTROLLER_GET_BY_ID] Fetch city request received - cityId: {}", cityId);
         var city = cityService.getById(cityId);
+        log.info("[CITY_CONTROLLER_GET_BY_ID] Fetch city success - cityId: {}, name: {}", cityId, city.getName());
         return ResponseEntity.ok(toResponse(city));
     }
 
@@ -77,7 +89,9 @@ public class CityController {
      */
     @GetMapping("/search/by-name")
     public ResponseEntity<CityResponse> getCityByName(@RequestParam String name) {
+        log.info("[CITY_CONTROLLER_GET_BY_NAME] Fetch city by name request received - name: {}", name);
         var city = cityService.getByName(name);
+        log.info("[CITY_CONTROLLER_GET_BY_NAME] Fetch city by name success - cityId: {}, name: {}", city.getId(), city.getName());
         return ResponseEntity.ok(toResponse(city));
     }
 
@@ -89,7 +103,9 @@ public class CityController {
             @PathVariable UUID cityId,
             @Valid @RequestBody CityCreateRequest request
     ) {
+        log.info("[CITY_CONTROLLER_UPDATE] Update city request received - cityId: {}, name: {}", cityId, request.name());
         var city = cityService.updateCity(cityId, request);
+        log.info("[CITY_CONTROLLER_UPDATE] Update city success - cityId: {}, name: {}", cityId, city.getName());
         return ResponseEntity.ok(toResponse(city));
     }
 
@@ -98,7 +114,9 @@ public class CityController {
      */
     @DeleteMapping("/{cityId}")
     public ResponseEntity<Void> deleteCity(@PathVariable UUID cityId) {
+        log.info("[CITY_CONTROLLER_DELETE] Delete city request received - cityId: {}", cityId);
         cityService.deleteCity(cityId);
+        log.info("[CITY_CONTROLLER_DELETE] Delete city success - cityId: {}", cityId);
         return ResponseEntity.noContent().build();
     }
 

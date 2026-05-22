@@ -29,7 +29,7 @@ public class RegulationClient {
             try {
                 return new BigDecimal(cached);
             } catch (NumberFormatException ex) {
-                logger.warn("Invalid cached earn conversion rate: {}", cached);
+                logger.warn("[USER_REGULATION_CLIENT_INVALID_CACHE] Invalid cached earn conversion rate: {}", cached);
             }
         }
         try {
@@ -40,7 +40,7 @@ public class RegulationClient {
                 return earn;
             }
         } catch (Exception ex) {
-            logger.warn("Failed to fetch points conversion rates", ex);
+            logger.warn("[USER_REGULATION_CLIENT_FALLBACK] Failed to fetch points conversion rates", ex);
         }
         return new BigDecimal("10000");
     }
@@ -51,7 +51,7 @@ public class RegulationClient {
             try {
                 return new BigDecimal(cached);
             } catch (NumberFormatException ex) {
-                logger.warn("Invalid cached redemption conversion rate: {}", cached);
+                logger.warn("[USER_REGULATION_CLIENT_INVALID_CACHE] Invalid cached redemption conversion rate: {}", cached);
             }
         }
         try {
@@ -62,7 +62,7 @@ public class RegulationClient {
                 return red;
             }
         } catch (Exception ex) {
-            logger.warn("Failed to fetch points conversion rates", ex);
+            logger.warn("[USER_REGULATION_CLIENT_FALLBACK] Failed to fetch points conversion rates", ex);
         }
         return new BigDecimal("500");
     }

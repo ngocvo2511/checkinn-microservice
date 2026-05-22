@@ -22,10 +22,13 @@ public class RegulationEventPublisher {
 
     public void publish(RegulationEvent event) {
         try {
+            logger.info("[REGULATION_EVENT_PUBLISH] Publishing regulation.updated event - key: {}, version: {}, changedBy: {}",
+                    event.getRegulationKey(), event.getVersion(), event.getChangedBy());
             rabbitTemplate.convertAndSend(exchangeName, "regulation.updated", event);
-            logger.info("Published regulation.updated event for key={} version={}", event.getRegulationKey(), event.getVersion());
+            logger.info("[REGULATION_EVENT_PUBLISHED] Published regulation.updated event successfully - key: {}, version: {}", event.getRegulationKey(), event.getVersion());
         } catch (Exception error) {
-            logger.warn("Unable to publish regulation event: {}", error.getMessage(), error);
+            logger.warn("[REGULATION_EVENT_PUBLISH_ERROR] Unable to publish regulation event - key: {}, version: {}, error: {}",
+                    event.getRegulationKey(), event.getVersion(), error.getMessage(), error);
         }
     }
 }

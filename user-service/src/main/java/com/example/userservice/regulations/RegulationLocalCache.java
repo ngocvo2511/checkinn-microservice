@@ -20,7 +20,7 @@ public class RegulationLocalCache {
 
     public void put(String key, String value) {
         cache.put(key, value);
-        logger.info("Regulation cache updated: {}={}", key, value);
+        logger.info("[USER_REGULATION_CACHE_UPDATED] Regulation cache updated - key: {}, value: {}", key, value);
     }
 
     public String get(String key) {
@@ -39,9 +39,9 @@ public class RegulationLocalCache {
             if (key != null && value != null) {
                 put(key.toString(), value.toString());
             }
-            logger.info("Processed regulation.updated event: {}={}", key, value);
+            logger.info("[USER_REGULATION_EVENT_PROCESSED] Processed regulation.updated event - key: {}, value: {}", key, value);
         } catch (Exception ex) {
-            logger.warn("Failed to process regulation.updated event", ex);
+            logger.warn("[USER_REGULATION_EVENT_ERROR] Failed to process regulation.updated event", ex);
         }
     }
 }

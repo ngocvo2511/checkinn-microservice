@@ -65,11 +65,11 @@ public class LoyaltyPointsService {
      */
     @Transactional
     public LoyaltyPointsResponse earnPoints(UUID userId, String bookingId, BigDecimal totalAmount) {
-        log.info("Earning points for user: {}, booking: {}, amount: {}", userId, bookingId, totalAmount);
+        log.info("[LOYALTY_POINTS_EARN_START] Earning points - userId: {}, bookingId: {}, amount: {}", userId, bookingId, totalAmount);
 
         Long pointsToEarn = calculatePoints(totalAmount);
         if (pointsToEarn == 0) {
-            log.warn("No points to earn for amount: {}", totalAmount);
+            log.warn("[LOYALTY_POINTS_EARN_SKIP] No points to earn for amount: {}", totalAmount);
             return getLoyaltyPoints(userId);
         }
 
@@ -95,7 +95,7 @@ public class LoyaltyPointsService {
                 .build();
         pointsTransactionRepository.save(transaction);
 
-        log.info("Successfully earned {} points for user: {}", pointsToEarn, userId);
+        log.info("[LOYALTY_POINTS_EARN_SUCCESS] Successfully earned {} points for user: {}", pointsToEarn, userId);
         return mapToResponse(savedPoints);
     }
 
@@ -106,7 +106,7 @@ public class LoyaltyPointsService {
      */
     @Transactional
     public BigDecimal usePoints(ApplyPointsRequest request) {
-        log.info("Using points for user: {}, points: {}, booking: {}", 
+        log.info("[LOYALTY_POINTS_USE_START] Using points - userId: {}, points: {}, bookingId: {}", 
                 request.getUserId(), request.getPointsToUse(), request.getBookingId());
 
         UUID userId = request.getUserId();
@@ -141,7 +141,7 @@ public class LoyaltyPointsService {
         pointsTransactionRepository.save(transaction);
 
         BigDecimal discountAmount = convertPointsToAmount(pointsToUse);
-        log.info("Successfully used {} points for user: {}, discount amount: {}", pointsToUse, userId, discountAmount);
+        log.info("[LOYALTY_POINTS_USE_SUCCESS] Successfully used {} points for user: {}, discount amount: {}", pointsToUse, userId, discountAmount);
         return discountAmount;
     }
 
@@ -198,7 +198,7 @@ public class LoyaltyPointsService {
      */
     @Transactional
     public void refundPoints(UUID userId, String bookingId) {
-        log.info("Refunding points for user: {}, booking: {}", userId, bookingId);
+        log.info("[LOYALTY_POINTS_REFUND_START] Refunding points - userId: {}, bookingId: {}", userId, bookingId);
 
         // Tìm tất cả transaction liên quan đến booking này
         List<PointsTransaction> transactions = pointsTransactionRepository.findByBookingId(bookingId);
@@ -238,7 +238,7 @@ public class LoyaltyPointsService {
 
         loyaltyPoints.setAvailablePoints(loyaltyPoints.getTotalPoints() - loyaltyPoints.getUsedPoints());
         loyaltyPointsRepository.save(loyaltyPoints);
-        log.info("Successfully refunded points for user: {}", userId);
+        log.info("[LOYALTY_POINTS_REFUND_SUCCESS] Successfully refunded points for user: {}", userId);
     }
 
     private LoyaltyPointsResponse mapToResponse(LoyaltyPoints loyaltyPoints) {

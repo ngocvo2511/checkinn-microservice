@@ -36,7 +36,8 @@ public class SupabaseStorageService {
     public String uploadMedia(byte[] fileData, String objectName, String mimeType) throws IOException, InterruptedException {
         String encodedObjectName = encodePath(objectName);
         String uploadUrl = String.format("%s/storage/v1/object/%s/%s", storageBaseUrl, bucket, encodedObjectName);
-        log.info("uploadURL: {}", uploadUrl);
+        log.info("[SUPABASE_STORAGE_UPLOAD] Upload request prepared - bucket: {}, objectName: {}, mimeType: {}, bytes: {}, url: {}",
+                bucket, objectName, mimeType, fileData != null ? fileData.length : 0, uploadUrl);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uploadUrl))
                 .header("Authorization", "Bearer " + key)
@@ -47,8 +48,12 @@ public class SupabaseStorageService {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            log.error("[SUPABASE_STORAGE_UPLOAD] Upload failed - bucket: {}, objectName: {}, status: {}, body: {}",
+                    bucket, objectName, response.statusCode(), response.body());
             throw new IOException("Supabase upload failed: " + response.statusCode() + " - " + response.body());
         }
+
+        log.info("[SUPABASE_STORAGE_UPLOAD] Upload success - bucket: {}, objectName: {}", bucket, objectName);
 
         return String.format("%s/storage/v1/object/public/%s/%s", storageBaseUrl, bucket, encodedObjectName);
     }
@@ -56,6 +61,8 @@ public class SupabaseStorageService {
     public boolean deleteMedia(String objectName) throws IOException, InterruptedException {
         String encodedObjectName = encodePath(objectName);
         String deleteUrl = String.format("%s/storage/v1/object/%s/%s", storageBaseUrl, bucket, encodedObjectName);
+
+        log.info("[SUPABASE_STORAGE_DELETE] Delete request prepared - bucket: {}, objectName: {}, url: {}", bucket, objectName, deleteUrl);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(deleteUrl))
@@ -65,7 +72,14 @@ public class SupabaseStorageService {
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode() == 200 || response.statusCode() == 204;
+        boolean deleted = response.statusCode() == 200 || response.statusCode() == 204;
+        if (deleted) {
+            log.info("[SUPABASE_STORAGE_DELETE] Delete success - bucket: {}, objectName: {}, status: {}", bucket, objectName, response.statusCode());
+        } else {
+            log.warn("[SUPABASE_STORAGE_DELETE] Delete returned non-success status - bucket: {}, objectName: {}, status: {}, body: {}",
+                    bucket, objectName, response.statusCode(), response.body());
+        }
+        return deleted;
     }
 
     private String encodePath(String path) {

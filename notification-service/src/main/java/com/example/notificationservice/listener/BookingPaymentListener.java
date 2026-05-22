@@ -21,18 +21,19 @@ public class BookingPaymentListener {
     @RabbitListener(queues = "notification.payment.queue")
     public void handlePaymentCompletedEvent(BookingNotificationEvent event) {
         try {
-            logger.info("📨 Nhận được event thanh toán thành công từ RabbitMQ: {}", event);
-            logger.info("   - Booking ID: {}", event.getBookingId());
-            logger.info("   - User Email: {}", event.getUserEmail());
-            logger.info("   - Hotel: {}", event.getHotelName());
-            logger.info("   - Total Amount: {}", event.getAmount());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Received payment event from RabbitMQ: {}", event);
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Booking ID: {}", event.getBookingId());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] User Email: {}", event.getUserEmail());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Hotel: {}", event.getHotelName());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Total Amount: {}", event.getAmount());
 
+            logger.info("[NOTIFICATION_PAYMENT_EMAIL_SEND] Start sending payment notification email for booking #{}", event.getBookingId());
             emailNotificationService.sendPaymentSuccessNotification(event);
 
-            logger.info("✓ Đã xử lý thành công event thanh toán cho booking #{}", event.getBookingId());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_PROCESSED] Successfully processed payment event for booking #{}", event.getBookingId());
 
         } catch (Exception e) {
-            logger.error("✗ Lỗi khi xử lý event thanh toán cho booking #{}: {}", 
+            logger.error("[NOTIFICATION_PAYMENT_EVENT_ERROR] Error processing payment event for booking #{}: {}", 
                     event.getBookingId(), e.getMessage(), e);
             // Có thể implement retry logic hoặc dead letter queue ở đây
         }

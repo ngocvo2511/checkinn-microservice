@@ -4,10 +4,12 @@ import com.example.mediaservice.SupabaseStorageService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
 @GrpcService
+@Slf4j
 public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrpcServiceGrpc.MediaGrpcServiceImplBase {
 
     private final SupabaseStorageService storageService;
@@ -22,6 +24,8 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.UploadMediaResponse> responseObserver
     ) {
         try {
+            log.info("[MEDIA_GRPC_UPLOAD] Upload request received - fileName: {}, mimeType: {}, bytes: {}",
+                request.getFileName(), request.getMimeType(), request.getFileData().size());
             String objectName = UUID.randomUUID() + "_" + request.getFileName();
             String url = storageService.uploadMedia(
                     request.getFileData().toByteArray(),
@@ -29,6 +33,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
                     request.getMimeType()
             );
 
+            log.info("[MEDIA_GRPC_UPLOAD] Upload success - fileName: {}, objectName: {}", request.getFileName(), objectName);
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
                             .setUrl(url)
@@ -37,7 +42,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("[MEDIA_GRPC_UPLOAD] Upload failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
             responseObserver.onError(
                     Status.INTERNAL
                             .withDescription("Upload media failed")
@@ -53,8 +58,10 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.DeleteMediaResponse> responseObserver
     ) {
         try {
+            log.info("[MEDIA_GRPC_DELETE] Delete request received - fileName: {}", request.getFileName());
             boolean deleted = storageService.deleteMedia(request.getFileName());
 
+            log.info("[MEDIA_GRPC_DELETE] Delete completed - fileName: {}, success: {}", request.getFileName(), deleted);
             responseObserver.onNext(
                     com.example.mediaservice.grpc.DeleteMediaResponse.newBuilder()
                             .setSuccess(deleted)
@@ -63,6 +70,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             responseObserver.onCompleted();
 
         } catch (Exception e) {
+            log.error("[MEDIA_GRPC_DELETE] Delete failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
             responseObserver.onError(
                     Status.INTERNAL
                             .withDescription("Delete media failed")

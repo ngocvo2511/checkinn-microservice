@@ -6,6 +6,7 @@ import com.example.regulationsservice.dto.RegulationDto;
 import com.example.regulationsservice.dto.RegulationSnapshotDto;
 import com.example.regulationsservice.model.Regulation;
 import com.example.regulationsservice.model.RegulationSnapshot;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class RegulationService {
 
     private static final String COMMISSION_RATE_KEY = "COMMISSION_RATE";
@@ -27,16 +29,26 @@ public class RegulationService {
     }
 
     public List<RegulationDto> listRegulations() {
-        return regulationProvider.getAllRegulations().stream()
+        List<RegulationDto> regulations = regulationProvider.getAllRegulations().stream()
                 .map(RegulationService::toDto)
                 .collect(Collectors.toList());
+        log.info("[REGULATION_SERVICE_LIST] Loaded regulations from provider - count: {}", regulations.size());
+        return regulations;
     }
 
     public Optional<RegulationDto> findRegulation(String regulationKey) {
-        return regulationProvider.getRegulation(regulationKey).map(RegulationService::toDto);
+        log.info("[REGULATION_SERVICE_GET] Looking up regulation - key: {}", regulationKey);
+        return regulationProvider.getRegulation(regulationKey)
+                .map(RegulationService::toDto)
+                .map(dto -> {
+                    log.info("[REGULATION_SERVICE_GET] Regulation found - key: {}", regulationKey);
+                    return dto;
+                });
     }
 
     public RegulationDto upsertRegulation(String regulationKey, RegulationDto request, String changedBy) {
+        log.info("[REGULATION_SERVICE_UPSERT] Upserting regulation - key: {}, changedBy: {}, active: {}, version: {}",
+                regulationKey, changedBy, request.isActive(), request.getVersion());
         Regulation regulation = new Regulation(
                 regulationKey,
                 request.getName(),
@@ -47,31 +59,40 @@ public class RegulationService {
         );
 
         Regulation saved = regulationProvider.saveRegulation(regulation, changedBy);
+        log.info("[REGULATION_SERVICE_UPSERT] Regulation upserted - key: {}, version: {}", regulationKey, saved.getVersion());
         return toDto(saved);
     }
 
     public List<RegulationSnapshotDto> listSnapshots() {
-        return regulationProvider.getSnapshots().stream()
+        List<RegulationSnapshotDto> snapshots = regulationProvider.getSnapshots().stream()
                 .map(RegulationService::toSnapshotDto)
                 .collect(Collectors.toList());
+        log.info("[REGULATION_SERVICE_SNAPSHOTS] Loaded snapshots - count: {}", snapshots.size());
+        return snapshots;
     }
 
     public CommissionRateDto getCommissionRateDto() {
         BigDecimal commissionRate = getRegulationValueAsDecimal(COMMISSION_RATE_KEY);
+        log.info("[REGULATION_SERVICE_TYPED_COMMISSION] Commission rate resolved - value: {}", commissionRate);
         return new CommissionRateDto(commissionRate);
     }
 
     public PointsConversionDto getPointsConversionRatesDto() {
         BigDecimal earnRate = getRegulationValueAsDecimal(POINTS_EARN_CONVERSION_RATE_KEY);
         BigDecimal redemptionRate = getRegulationValueAsDecimal(POINTS_REDEMPTION_CONVERSION_RATE_KEY);
+        log.info("[REGULATION_SERVICE_TYPED_POINTS] Points conversion rates resolved - earnRate: {}, redemptionRate: {}",
+                earnRate, redemptionRate);
         return new PointsConversionDto(earnRate, redemptionRate);
     }
 
     public void refreshCache() {
+        log.info("[REGULATION_SERVICE_REFRESH] Refreshing regulation cache");
         regulationProvider.refreshCache();
+        log.info("[REGULATION_SERVICE_REFRESH] Regulation cache refreshed");
     }
 
     private BigDecimal getRegulationValueAsDecimal(String regulationKey) {
+        log.info("[REGULATION_SERVICE_PARSE] Resolving regulation value as decimal - key: {}", regulationKey);
         return regulationProvider.getRegulation(regulationKey)
                 .filter(Regulation::isActive)
                 .map(Regulation::getValue)

@@ -27,7 +27,7 @@ public class LoyaltyPointsController {
      */
     @GetMapping("/{userId}")
     public ResponseEntity<LoyaltyPointsResponse> getPoints(@PathVariable UUID userId) {
-        log.info("Getting loyalty points for user: {}", userId);
+        log.info("[LOYALTY_POINTS_GET] Getting loyalty points for user: {}", userId);
         LoyaltyPointsResponse response = loyaltyPointsService.getLoyaltyPoints(userId);
         return ResponseEntity.ok(response);
     }
@@ -38,7 +38,7 @@ public class LoyaltyPointsController {
      */
     @GetMapping("/{userId}/transactions")
     public ResponseEntity<List<PointsTransactionResponse>> getTransactionHistory(@PathVariable UUID userId) {
-        log.info("Getting transaction history for user: {}", userId);
+        log.info("[LOYALTY_POINTS_HISTORY_USER] Getting transaction history for user: {}", userId);
         List<PointsTransactionResponse> transactions = loyaltyPointsService.getTransactionHistory(userId);
         return ResponseEntity.ok(transactions);
     }
@@ -49,7 +49,7 @@ public class LoyaltyPointsController {
      */
     @GetMapping("/booking/{bookingId}/transactions")
     public ResponseEntity<List<PointsTransactionResponse>> getBookingTransactions(@PathVariable String bookingId) {
-        log.info("Getting transaction history for booking: {}", bookingId);
+        log.info("[LOYALTY_POINTS_HISTORY_BOOKING] Getting transaction history for booking: {}", bookingId);
         List<PointsTransactionResponse> transactions = loyaltyPointsService.getBookingTransactionHistory(bookingId);
         return ResponseEntity.ok(transactions);
     }
@@ -63,7 +63,7 @@ public class LoyaltyPointsController {
             @RequestParam String userId,
             @RequestParam String bookingId,
             @RequestParam BigDecimal totalAmount) {
-        log.info("Earning points for user: {}, booking: {}, amount: {}", userId, bookingId, totalAmount);
+        log.info("[LOYALTY_POINTS_EARN] Earning points for user: {}, booking: {}, amount: {}", userId, bookingId, totalAmount);
         LoyaltyPointsResponse response = loyaltyPointsService.earnPoints(UUID.fromString(userId), bookingId, totalAmount);
         return ResponseEntity.ok(response);
     }
@@ -74,7 +74,7 @@ public class LoyaltyPointsController {
      */
     @PostMapping("/use")
     public ResponseEntity<BigDecimal> usePoints(@RequestBody ApplyPointsRequest request) {
-        log.info("Using points for user: {}, points: {}", request.getUserId(), request.getPointsToUse());
+        log.info("[LOYALTY_POINTS_USE] Using points for user: {}, points: {}", request.getUserId(), request.getPointsToUse());
         BigDecimal discountAmount = loyaltyPointsService.usePoints(request);
         return ResponseEntity.ok(discountAmount);
     }
@@ -87,7 +87,7 @@ public class LoyaltyPointsController {
     public ResponseEntity<Void> refundPoints(
             @RequestParam String userId,
             @RequestParam String bookingId) {
-        log.info("Refunding points for user: {}, booking: {}", userId, bookingId);
+        log.info("[LOYALTY_POINTS_REFUND] Refunding points for user: {}, booking: {}", userId, bookingId);
         loyaltyPointsService.refundPoints(UUID.fromString(userId), bookingId);
         return ResponseEntity.ok().build();
     }
