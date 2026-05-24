@@ -6,11 +6,14 @@ import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.booking.service.BookingService;
 import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
 import com.example.bookingservice.messaging.HotelEventPublisher;
+import com.example.bookingservice.payment.dto.CreatePaymentRequest;
 import com.example.bookingservice.payment.entity.Payment;
 import com.example.bookingservice.payment.enums.PaymentMethod;
 import com.example.bookingservice.payment.enums.PaymentStatus;
 import com.example.bookingservice.payment.repository.PaymentRepository;
+import com.example.bookingservice.payment.service.factory.HotelPaymentCreationPolicy;
 import com.example.bookingservice.payment.service.factory.PaymentCreationPolicyFactory;
+import com.example.bookingservice.payment.service.factory.VnPayPaymentCreationPolicy;
 import com.example.bookingservice.payment.vnpay.VnPayProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +23,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -35,6 +39,8 @@ class PaymentServiceTest {
     private BookingService bookingService;
     private HotelEventPublisher eventPublisher;
     private LoyaltyPointsClient loyaltyPointsClient;
+    private VnPayProperties vnPayProperties;
+    private PaymentCreationPolicyFactory paymentCreationPolicyFactory;
     private PaymentService paymentService;
 
     @BeforeEach
@@ -44,16 +50,99 @@ class PaymentServiceTest {
         bookingService = mock(BookingService.class);
         eventPublisher = mock(HotelEventPublisher.class);
         loyaltyPointsClient = mock(LoyaltyPointsClient.class);
+        vnPayProperties = mock(VnPayProperties.class);
+        paymentCreationPolicyFactory = mock(PaymentCreationPolicyFactory.class);
 
         paymentService = new PaymentService(
                 paymentRepository,
                 bookingRepository,
-                mock(VnPayProperties.class),
+                vnPayProperties,
                 bookingService,
                 eventPublisher,
                 loyaltyPointsClient,
-                mock(PaymentCreationPolicyFactory.class)
+                paymentCreationPolicyFactory
         );
+    }
+
+    @Test
+    void createPaymentCreatesHotelPaymentOnly() {
+        Booking booking = Booking.builder()
+                .id("booking-1")
+                .status(BookingStatus.PENDING)
+                .totalAmount(BigDecimal.valueOf(1_000_000))
+                .build();
+        CreatePaymentRequest request = CreatePaymentRequest.builder()
+                .bookingId("booking-1")
+                .amount(BigDecimal.valueOf(1_000_000))
+                .method(PaymentMethod.HOTEL)
+                .build();
+
+        when(bookingRepository.findById("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.empty());
+        when(bookingService.ensureActiveHold("booking-1")).thenReturn(booking);
+        when(paymentCreationPolicyFactory.getPolicy(PaymentMethod.HOTEL)).thenReturn(new HotelPaymentCreationPolicy());
+        when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> {
+            Payment payment = invocation.getArgument(0);
+            payment.setId("payment-1");
+            return payment;
+        });
+
+        var response = paymentService.createPayment(request);
+
+        assertThat(response.getMethod()).isEqualTo(PaymentMethod.HOTEL);
+        assertThat(response.getStatus()).isEqualTo(PaymentStatus.ONSITE_PENDING);
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+    }
+
+    @Test
+    void createPaymentRejectsVnPayBecauseVnPayUsesInitFlow() {
+        CreatePaymentRequest request = CreatePaymentRequest.builder()
+                .bookingId("booking-1")
+                .amount(BigDecimal.valueOf(1_000_000))
+                .method(PaymentMethod.VNPAY)
+                .build();
+
+        assertThatThrownBy(() -> paymentService.createPayment(request))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("initVnPayPayment");
+
+        verify(bookingRepository, never()).findById(any());
+        verify(paymentRepository, never()).save(any());
+    }
+
+    @Test
+    void initVnPayPaymentCreatesPaymentThroughPolicyFactory() {
+        Booking booking = Booking.builder()
+                .id("booking-1")
+                .status(BookingStatus.PENDING)
+                .totalAmount(BigDecimal.valueOf(1_000_000))
+                .build();
+
+        when(bookingRepository.findById("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.empty());
+        when(bookingService.ensureActiveHold("booking-1")).thenReturn(booking);
+        when(paymentCreationPolicyFactory.getPolicy(PaymentMethod.VNPAY)).thenReturn(new VnPayPaymentCreationPolicy());
+        when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> {
+            Payment payment = invocation.getArgument(0);
+            if (payment.getId() == null) {
+                payment.setId("payment-1");
+            }
+            return payment;
+        });
+        when(vnPayProperties.getVersion()).thenReturn("2.1.0");
+        when(vnPayProperties.getTmnCode()).thenReturn("TEST");
+        when(vnPayProperties.getReturnUrl()).thenReturn("http://localhost/vnpay/return");
+        when(vnPayProperties.getPayUrl()).thenReturn("http://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
+        when(vnPayProperties.getHashSecret()).thenReturn("secret");
+
+        var response = paymentService.initVnPayPayment("booking-1", "127.0.0.1");
+
+        assertThat(response.getOrderId()).isEqualTo("payment-1");
+        assertThat(response.getRedirectUrl()).contains("vnp_TxnRef=payment-1");
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(paymentCreationPolicyFactory).getPolicy(PaymentMethod.VNPAY);
     }
 
     @Test
