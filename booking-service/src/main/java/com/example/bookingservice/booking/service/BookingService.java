@@ -106,8 +106,7 @@ public class BookingService {
         // Apply voucher discount if provided
         BigDecimal voucherDiscount = BigDecimal.ZERO;
         if (request.getVoucherCode() != null && !request.getVoucherCode().isEmpty()) {
-            // TODO: Call voucher service to validate and get discount
-            voucherDiscount = BigDecimal.ZERO;
+            throw new IllegalArgumentException("Dịch vụ mã giảm giá hiện chưa khả dụng");
         }
 
         // Apply loyalty points discount if provided

@@ -46,6 +46,10 @@ spring:
             - Path=/api/reports/**
           filters:
             - RewritePath=/api/revenue/(?<segment>.*), /$\{segment}
+        - id: regulations-service
+          uri: lb://regulations-service
+          predicates:
+            - Path=/api/regulations/**
         - id: hotel-service-v1
           uri: lb://hotel-service
           predicates:
@@ -56,6 +60,10 @@ spring:
             - Path=/api/bookings/**,/api/payments/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 eureka:
   client:
@@ -70,4 +78,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never
+  metrics:
+    tags:
+      application: ${spring.application.name}:${random.uuid}

@@ -8,6 +8,7 @@ import com.example.regulationsservice.model.Regulation;
 import com.example.regulationsservice.model.RegulationSnapshot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -63,12 +64,18 @@ public class RegulationService {
         return toDto(saved);
     }
 
+    @Transactional(readOnly = true)
     public List<RegulationSnapshotDto> listSnapshots() {
-        List<RegulationSnapshotDto> snapshots = regulationProvider.getSnapshots().stream()
-                .map(RegulationService::toSnapshotDto)
-                .collect(Collectors.toList());
-        log.info("[REGULATION_SERVICE_SNAPSHOTS] Loaded snapshots - count: {}", snapshots.size());
-        return snapshots;
+        try {
+            List<RegulationSnapshotDto> snapshots = regulationProvider.getSnapshots().stream()
+                    .map(RegulationService::toSnapshotDto)
+                    .collect(Collectors.toList());
+            log.info("[REGULATION_SERVICE_SNAPSHOTS] Loaded snapshots - count: {}", snapshots.size());
+            return snapshots;
+        } catch (Exception ex) {
+            log.warn("[REGULATION_SERVICE_SNAPSHOTS_ERROR] Unable to load regulation snapshots: {}", ex.getMessage(), ex);
+            return List.of();
+        }
     }
 
     public CommissionRateDto getCommissionRateDto() {

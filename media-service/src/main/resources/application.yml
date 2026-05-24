@@ -18,7 +18,7 @@ eureka:
 
 grpc:
   server:
-    port: 9095
+    port: 9096
     max-inbound-message-size: 10485760 # 10 MB
 
 supabase:

@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final int MIN_PASSWORD_LENGTH = 12;
 
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
@@ -50,6 +51,8 @@ public class UserService {
             logger.warn("[REGISTER] Registration failed - email already exists: {}", request.getEmail());
             throw new RuntimeException("Email đã tồn tại");
             }
+
+            validatePassword(request.getPassword());
 
             logger.debug("[REGISTER] Creating user account - username: {}, email: {}", 
                 request.getUsername(), request.getEmail());
@@ -221,10 +224,7 @@ public class UserService {
             throw new RuntimeException("Mật khẩu hiện tại không đúng");
         }
 
-        // Validate new password
-        if (newPassword == null || newPassword.length() < 6) {
-            throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự");
-        }
+        validatePassword(newPassword);
 
         // Update password
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -247,9 +247,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
-        if (newPassword == null || newPassword.length() < 6) {
-            throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự");
-        }
+        validatePassword(newPassword);
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
@@ -271,6 +269,12 @@ public class UserService {
 
         public UserProfile getProfile() {
             return profile;
+        }
+    }
+
+    private void validatePassword(String password) {
+        if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
+            throw new RuntimeException("Mật khẩu phải có ít nhất " + MIN_PASSWORD_LENGTH + " ký tự");
         }
     }
 

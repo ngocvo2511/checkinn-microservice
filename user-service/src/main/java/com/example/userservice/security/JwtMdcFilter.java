@@ -34,8 +34,12 @@ public class JwtMdcFilter extends OncePerRequestFilter {
         try {
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
-                UUID userId = jwtService.extractUserId(token);
-                MDC.put("userId", userId.toString());
+                try {
+                    UUID userId = jwtService.extractUserId(token);
+                    MDC.put("userId", userId.toString());
+                } catch (Exception ignored) {
+                    // Controllers perform the request-level authentication response.
+                }
             }
 
             filterChain.doFilter(request, response);

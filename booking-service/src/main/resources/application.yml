@@ -32,6 +32,12 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:guest}
     password: ${RABBIT_PASS:guest}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: ${REDIS_TIMEOUT:2s}
   boot:
     admin:
       client:
@@ -48,6 +54,9 @@ eureka:
 
 server:
   port: ${PORT:8084}
+
+jwt:
+  secret: ${SECRET_KEY}
 
 logging:
   file:
@@ -101,6 +110,9 @@ hotel:
 app:
   rabbit:
     exchange: ${RABBIT_EXCHANGE:hotel.events}
+  token-revocation:
+    key-prefix: ${TOKEN_REVOCATION_KEY_PREFIX:auth:revoked-token:}
+    fail-open: ${TOKEN_REVOCATION_FAIL_OPEN:false}
 
 vnpay:
   tmnCode: W0MI1ZMG

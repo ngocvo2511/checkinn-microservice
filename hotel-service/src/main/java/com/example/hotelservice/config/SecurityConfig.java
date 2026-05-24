@@ -1,6 +1,7 @@
 package com.example.hotelservice.config;
 
 import com.example.hotelservice.security.JwtMdcFilter;
+import com.example.hotelservice.security.TokenRevocationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,8 @@ import java.nio.charset.StandardCharsets;
 public class SecurityConfig {
 
         @Bean
-        public JwtMdcFilter jwtMdcFilter(JwtDecoder jwtDecoder) {
-                return new JwtMdcFilter(jwtDecoder);
+        public JwtMdcFilter jwtMdcFilter(JwtDecoder jwtDecoder, TokenRevocationService tokenRevocationService) {
+                return new JwtMdcFilter(jwtDecoder, tokenRevocationService);
         }
 
     @Bean
@@ -42,6 +43,9 @@ public class SecurityConfig {
     }
     @Bean
     public JwtDecoder jwtDecoder(@Value("${jwt.secret}") String secret) {
+                if (secret == null || secret.isBlank()) {
+                        throw new IllegalStateException("jwt.secret is missing or blank");
+                }
         SecretKey key = new SecretKeySpec(
                 secret.getBytes(StandardCharsets.UTF_8),
                 "HmacSHA256"

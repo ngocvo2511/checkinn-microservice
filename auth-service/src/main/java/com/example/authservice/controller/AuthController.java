@@ -64,6 +64,16 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, Object>> logout(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+        log.info("[LOGOUT] Received logout request");
+        authService.logout(authHeader);
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "Logged out successfully"
+        ));
+    }
+
     @PostMapping("/otp/verify")
     public ResponseEntity<OtpVerificationResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
         log.info("[OTP_VERIFY] Received OTP verification request - email: {}", request.getEmail());

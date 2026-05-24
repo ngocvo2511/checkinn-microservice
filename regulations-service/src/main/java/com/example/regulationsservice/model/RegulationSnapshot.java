@@ -20,8 +20,7 @@ public class RegulationSnapshot {
     @Column(nullable = false)
     private int version;
 
-    @Lob
-    @Column(name = "snapshot_data", nullable = false)
+    @Column(name = "snapshot_data", nullable = false, columnDefinition = "TEXT")
     private String snapshotData;
 
     @Column(nullable = false)

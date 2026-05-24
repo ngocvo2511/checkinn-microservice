@@ -1,4 +1,10 @@
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: checkinn-redis
+    ports:
+      - "6379:6379"
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: hotel-rabbitmq

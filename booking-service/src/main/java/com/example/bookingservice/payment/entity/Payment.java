@@ -11,7 +11,13 @@ import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "payments")
+@Table(
+    name = "payments",
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_payments_vnpay_order_id", columnNames = "vnpay_order_id"),
+        @UniqueConstraint(name = "uk_payments_vnpay_transaction_no", columnNames = "vnpay_transaction_no")
+    }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,10 +44,13 @@ public class Payment {
 
     private String transactionId;
 
+    @Column(name = "vnpay_order_id")
     private String vnpayOrderId;
 
+    @Column(name = "vnpay_response_code")
     private String vnpayResponseCode;
 
+    @Column(name = "vnpay_transaction_no")
     private String vnpayTransactionNo;
 
     private LocalDateTime paidAt;

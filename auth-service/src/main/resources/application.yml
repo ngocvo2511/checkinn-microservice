@@ -1,6 +1,12 @@
 spring:
   application:
     name: auth-service
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: ${REDIS_TIMEOUT:2s}
   boot:
     admin:
       client:
@@ -10,7 +16,12 @@ server:
   port: 8081
 
 jwt:
+  secret: ${SECRET_KEY}
   expiration: 86400000
+
+app:
+  token-revocation:
+    key-prefix: ${TOKEN_REVOCATION_KEY_PREFIX:auth:revoked-token:}
 
 user:
   service:

@@ -4,6 +4,16 @@
       "name": "hotel.events",
       "type": "topic",
       "durable": true
+    },
+    {
+      "name": "user.events",
+      "type": "topic",
+      "durable": true
+    },
+    {
+      "name": "notification.dlx",
+      "type": "topic",
+      "durable": true
     }
   ],
 
@@ -14,6 +24,26 @@
     },
     {
       "name": "notification.payment.queue",
+      "durable": true,
+      "arguments": {
+        "x-dead-letter-exchange": "notification.dlx",
+        "x-dead-letter-routing-key": "notification.payment.dead"
+      }
+    },
+    {
+      "name": "notification.otp.queue",
+      "durable": true,
+      "arguments": {
+        "x-dead-letter-exchange": "notification.dlx",
+        "x-dead-letter-routing-key": "notification.otp.dead"
+      }
+    },
+    {
+      "name": "notification.payment.dlq",
+      "durable": true
+    },
+    {
+      "name": "notification.otp.dlq",
       "durable": true
     }
   ],
@@ -30,6 +60,24 @@
       "destination": "notification.payment.queue",
       "destination_type": "queue",
       "routing_key": "payment.completed"
+    },
+    {
+      "source": "user.events",
+      "destination": "notification.otp.queue",
+      "destination_type": "queue",
+      "routing_key": "otp.verification"
+    },
+    {
+      "source": "notification.dlx",
+      "destination": "notification.payment.dlq",
+      "destination_type": "queue",
+      "routing_key": "notification.payment.dead"
+    },
+    {
+      "source": "notification.dlx",
+      "destination": "notification.otp.dlq",
+      "destination_type": "queue",
+      "routing_key": "notification.otp.dead"
     }
   ]
 }

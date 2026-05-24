@@ -15,6 +15,7 @@ spring:
       simple:
         acknowledge-mode: auto
         prefetch: 1
+        default-requeue-rejected: false
         retry:
           enabled: true
           initial-interval: 3000

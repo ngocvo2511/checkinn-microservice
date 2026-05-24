@@ -66,6 +66,7 @@ public class RegulationCacheProvider implements RegulationProvider {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RegulationSnapshot> getSnapshots() {
         return snapshotRepository.findTop50ByOrderByAppliedAtDesc();
     }

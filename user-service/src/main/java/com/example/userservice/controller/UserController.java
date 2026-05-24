@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -169,9 +170,13 @@ public class UserController {
 
         String token = authHeader.substring(7);
         log.debug("[USER_TOKEN_EXTRACT] Token extracted successfully");
-        UUID userId = jwtService.extractUserId(token);
-        log.debug("[USER_TOKEN_EXTRACT] userId extracted successfully: {}", userId);
-        return userId;
+        try {
+            UUID userId = jwtService.extractUserId(token);
+            log.debug("[USER_TOKEN_EXTRACT] userId extracted successfully: {}", userId);
+            return userId;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token không hợp lệ hoặc đã đăng xuất", e);
+        }
     }
 
     private String extractRoleFromToken(String authHeader) {
@@ -180,7 +185,11 @@ public class UserController {
         }
 
         String token = authHeader.substring(7);
-        return jwtService.extractRole(token);
+        try {
+            return jwtService.extractRole(token);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is invalid or revoked", e);
+        }
     }
 
     // Helper response DTOs

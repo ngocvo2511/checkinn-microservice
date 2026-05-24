@@ -33,9 +33,10 @@ public class BookingPaymentListener {
             logger.info("[NOTIFICATION_PAYMENT_EVENT_PROCESSED] Successfully processed payment event for booking #{}", event.getBookingId());
 
         } catch (Exception e) {
-            logger.error("[NOTIFICATION_PAYMENT_EVENT_ERROR] Error processing payment event for booking #{}: {}", 
-                    event.getBookingId(), e.getMessage(), e);
-            // Có thể implement retry logic hoặc dead letter queue ở đây
+            String bookingId = event != null ? event.getBookingId() : "unknown";
+            logger.error("[NOTIFICATION_PAYMENT_EVENT_ERROR] Error processing payment event for booking #{}: {}",
+                    bookingId, e.getMessage(), e);
+            throw new RuntimeException("Failed to process payment notification event", e);
         }
     }
 }

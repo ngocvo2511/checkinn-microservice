@@ -16,9 +16,15 @@ import java.util.UUID;
 public class JwtService {
 
     private final Key key;
+    private final TokenRevocationService tokenRevocationService;
 
-    public JwtService(@Value("${app.jwt.secret:THIS_IS_SUPER_SECRET_KEY_12345678901234567890}") String secret) {
+    public JwtService(@Value("${app.jwt.secret}") String secret,
+                      TokenRevocationService tokenRevocationService) {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("app.jwt.secret is missing or blank");
+        }
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.tokenRevocationService = tokenRevocationService;
     }
 
     public Jws<Claims> parseToken(String token) {
@@ -41,6 +47,9 @@ public class JwtService {
     public boolean validateToken(String token) {
         try {
             parseToken(token);
+            if (tokenRevocationService.isRevoked(token)) {
+                return false;
+            }
             return true;
         } catch (Exception e) {
             return false;

@@ -19,6 +19,12 @@ spring:
     admin:
       client:
         url: http://localhost:9095
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: ${REDIS_TIMEOUT:2s}
 
 server:
   port: 8083
@@ -56,7 +62,12 @@ management:
       application: ${spring.application.name}:${random.uuid}
 
 jwt:
-  secret: THIS_IS_SUPER_SECRET_KEY_12345678901234567890
+  secret: ${SECRET_KEY}
+
+app:
+  token-revocation:
+    key-prefix: ${TOKEN_REVOCATION_KEY_PREFIX:auth:revoked-token:}
+    fail-open: ${TOKEN_REVOCATION_FAIL_OPEN:false}
 
 hold:
   expiry:

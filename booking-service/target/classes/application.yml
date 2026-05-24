@@ -32,6 +32,16 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:guest}
     password: ${RABBIT_PASS:guest}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: ${REDIS_TIMEOUT:2s}
+  boot:
+    admin:
+      client:
+        url: http://localhost:9095
 
 eureka:
   client:
@@ -45,12 +55,45 @@ eureka:
 server:
   port: ${PORT:8084}
 
+jwt:
+  secret: ${SECRET_KEY}
+
 logging:
-  level:
-    org.springframework.web: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
-    org.springframework.security: DEBUG
+  file:
+    name: logs/${spring.application.name}-${server.port}.log
+
+  pattern:
+    console: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [userId=%X{userId:-anonymous}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
+      
+      file: >
+      %d{yyyy-MM-dd HH:mm:ss}
+      %5p
+      [${spring.application.name}]
+      [traceId=%X{traceId:-}]
+      [userId=%X{userId:-anonymous}]
+      [user=%X{username:-anonymous}]
+      %logger
+      - %msg%n
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never
+  metrics:
+    tags:
+      application: ${spring.application.name}:${random.uuid}
 
 # Feign Client configuration
 user-service:
@@ -67,6 +110,9 @@ hotel:
 app:
   rabbit:
     exchange: ${RABBIT_EXCHANGE:hotel.events}
+  token-revocation:
+    key-prefix: ${TOKEN_REVOCATION_KEY_PREFIX:auth:revoked-token:}
+    fail-open: ${TOKEN_REVOCATION_FAIL_OPEN:false}
 
 vnpay:
   tmnCode: W0MI1ZMG

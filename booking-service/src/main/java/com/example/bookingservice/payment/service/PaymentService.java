@@ -135,6 +135,19 @@ public class PaymentService {
         Payment payment = paymentRepository.findByVnpayOrderId(orderId)
             .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
 
+        if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
+            validateVnPayReplay(payment, responseCode, transactionId);
+            log.info("[VNPAY_CALLBACK_REPLAY] Returning existing result - orderId: {}, paymentStatus: {}",
+                    orderId, payment.getStatus());
+            return toPaymentResponse(payment);
+        }
+
+        if (payment.getStatus() != PaymentStatus.PENDING) {
+            throw new IllegalArgumentException("Không thể xử lý callback VNPay cho thanh toán có trạng thái: " + payment.getStatus());
+        }
+
+        validateVnPayTransactionNotUsedByAnotherPayment(payment, transactionId);
+
         // VNPay response codes: 00 = success
         if ("00".equals(responseCode)) {
             payment.setStatus(PaymentStatus.COMPLETED);
@@ -176,14 +189,20 @@ public class PaymentService {
                     
                     // Tích lũy điểm mới từ thanh toán
                     // Pass totalAmount to the API - it will calculate points internally
-                    log.info("Earning points for user: {} from booking: {} with total amount: {}", 
+                    if (booking.getEarnedPoints() == null) {
+                        log.info("Earning points for user: {} from booking: {} with total amount: {}", 
                             userId, booking.getId(), booking.getTotalAmount());
-                    loyaltyPointsClient.earnPoints(
-                            userId,
-                            booking.getId(),
-                            booking.getTotalAmount() // Pass total amount, not pre-calculated points
-                    );
-                    log.info("Successfully processed loyalty points");
+                        loyaltyPointsClient.earnPoints(
+                                userId,
+                                booking.getId(),
+                                booking.getTotalAmount() // Pass total amount, not pre-calculated points
+                        );
+                        booking.setEarnedPoints(calculateEarnedPoints(booking.getTotalAmount()));
+                        bookingRepository.save(booking);
+                        log.info("Successfully processed loyalty points");
+                    } else {
+                        log.info("Skipping loyalty point earning for booking {} because it was already awarded", booking.getId());
+                    }
                 } catch (Exception e) {
                     log.error("Failed to process loyalty points: {}", e.getMessage(), e);
                     // Don't fail the payment if earning points fails
@@ -377,10 +396,41 @@ public class PaymentService {
             .build();
     }
 
+    private Long calculateEarnedPoints(BigDecimal totalAmount) {
+        if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return 0L;
+        }
+        return totalAmount.divide(BigDecimal.valueOf(1000), 0, java.math.RoundingMode.DOWN).longValue();
+    }
+
     private void validateCanCreateNewPayment(Payment payment) {
         if (payment.getStatus() != PaymentStatus.FAILED && payment.getStatus() != PaymentStatus.CANCELLED) {
             throw new IllegalArgumentException("Payment already exists for this booking");
         }
+    }
+
+    private void validateVnPayReplay(Payment payment, String responseCode, String transactionId) {
+        if (payment.getVnpayResponseCode() != null && !payment.getVnpayResponseCode().equals(responseCode)) {
+            throw new IllegalArgumentException("Mã phản hồi VNPay lặp lại không khớp với callback ban đầu");
+        }
+
+        if (transactionId != null
+                && payment.getVnpayTransactionNo() != null
+                && !payment.getVnpayTransactionNo().equals(transactionId)) {
+            throw new IllegalArgumentException("Mã giao dịch VNPay lặp lại không khớp với callback ban đầu");
+        }
+    }
+
+    private void validateVnPayTransactionNotUsedByAnotherPayment(Payment payment, String transactionId) {
+        if (transactionId == null || transactionId.isBlank()) {
+            return;
+        }
+
+        paymentRepository.findByVnpayTransactionNo(transactionId)
+                .filter(existing -> !existing.getId().equals(payment.getId()))
+                .ifPresent(existing -> {
+                    throw new IllegalArgumentException("Mã giao dịch VNPay đã được sử dụng cho thanh toán khác");
+                });
     }
 
     private void validateBookingCanStartPayment(Booking booking) {

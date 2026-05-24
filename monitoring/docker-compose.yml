@@ -30,7 +30,7 @@ services:
 
     volumes:
       - ./promtail/promtail-config.yml:/etc/promtail/config.yml
-      - ../../logs:/logs
+      - ../logs:/logs
 
     command: -config.file=/etc/promtail/config.yml
 

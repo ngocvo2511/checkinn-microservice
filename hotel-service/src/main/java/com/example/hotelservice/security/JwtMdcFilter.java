@@ -14,9 +14,11 @@ import java.io.IOException;
 public class JwtMdcFilter extends OncePerRequestFilter {
 
     private final JwtDecoder jwtDecoder;
+    private final TokenRevocationService tokenRevocationService;
 
-    public JwtMdcFilter(JwtDecoder jwtDecoder) {
+    public JwtMdcFilter(JwtDecoder jwtDecoder, TokenRevocationService tokenRevocationService) {
         this.jwtDecoder = jwtDecoder;
+        this.tokenRevocationService = tokenRevocationService;
     }
 
     @Override
@@ -33,6 +35,10 @@ public class JwtMdcFilter extends OncePerRequestFilter {
         try {
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
+                if (tokenRevocationService.isRevoked(token)) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token has been revoked");
+                    return;
+                }
                 Jwt jwt = jwtDecoder.decode(token);
                 if (jwt.getSubject() != null && !jwt.getSubject().isBlank()) {
                     MDC.put("userId", jwt.getSubject());
