@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.time.temporal.ChronoUnit;
 
 @Service
@@ -47,6 +46,8 @@ public class PaymentService {
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
         log.info("[CREATE_PAYMENT] Request received - bookingId: {}, method: {}", request.getBookingId(), request.getMethod());
+        validateHotelPaymentRequest(request);
+
         // Validate booking exists
         Booking booking = bookingRepository.findById(request.getBookingId())
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + request.getBookingId()));
@@ -83,17 +84,18 @@ public class PaymentService {
 
         booking = bookingService.ensureActiveHold(bookingId);
 
-        // Mark booking as waiting for VNPay payment and extend hold expiry
-        booking.setStatus(BookingStatus.PENDING_PAYMENT);
-        bookingRepository.save(booking);
-
-        Payment payment = Payment.builder()
+        CreatePaymentRequest paymentRequest = CreatePaymentRequest.builder()
             .bookingId(bookingId)
             .amount(booking.getTotalAmount())
             .method(PaymentMethod.VNPAY)
-            .status(PaymentStatus.PENDING)
-            .transactionId(UUID.randomUUID().toString())
             .build();
+
+        PaymentCreationPolicy creationPolicy = paymentCreationPolicyFactory.getPolicy(PaymentMethod.VNPAY);
+        Payment payment = creationPolicy.createPayment(paymentRequest);
+        creationPolicy.updateBookingAfterPaymentCreated(booking);
+        if (creationPolicy.shouldPersistBooking()) {
+            bookingRepository.save(booking);
+        }
         payment = paymentRepository.save(payment);
 
         // Build VNPay params
@@ -437,6 +439,12 @@ public class PaymentService {
         if (booking.getStatus() != BookingStatus.PENDING
                 && booking.getStatus() != BookingStatus.PENDING_PAYMENT) {
             throw new IllegalArgumentException("Cannot start payment for booking with status: " + booking.getStatus());
+        }
+    }
+
+    private void validateHotelPaymentRequest(CreatePaymentRequest request) {
+        if (request.getMethod() != PaymentMethod.HOTEL) {
+            throw new IllegalArgumentException("Use initVnPayPayment to create VNPay payments");
         }
     }
 

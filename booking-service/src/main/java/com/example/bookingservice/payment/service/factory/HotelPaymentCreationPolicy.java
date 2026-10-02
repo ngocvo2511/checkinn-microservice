@@ -23,7 +23,7 @@ public class HotelPaymentCreationPolicy implements PaymentCreationPolicy {
         return Payment.builder()
             .bookingId(request.getBookingId())
             .amount(request.getAmount())
-            .method(request.getMethod())
+            .method(PaymentMethod.HOTEL)
             .status(PaymentStatus.ONSITE_PENDING)
             .transactionId(UUID.randomUUID().toString())
             .build();
