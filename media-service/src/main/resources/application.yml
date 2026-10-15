@@ -19,12 +19,13 @@ eureka:
 grpc:
   server:
     port: 9096
-    max-inbound-message-size: 10485760 # 10 MB
+    max-inbound-message-size: 20971520 # 20 MB
 
 supabase:
   url: ${SUPABASE_URL}
   service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
   bucket: ${SUPABASE_BUCKET:hotel_storage}
+  private-bucket: ${SUPABASE_PRIVATE_BUCKET:hotel-documents}
 
 management:
   endpoints:

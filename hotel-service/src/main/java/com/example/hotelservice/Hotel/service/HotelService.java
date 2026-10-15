@@ -17,6 +17,15 @@ public interface HotelService {
 
     Hotel createHotel(HotelCreateRequest request, UUID ownerId);
 
+    Hotel uploadHotelDocuments(
+            UUID hotelId,
+            UUID ownerId,
+            org.springframework.web.multipart.MultipartFile businessLicense,
+            org.springframework.web.multipart.MultipartFile operationLicense,
+            org.springframework.web.multipart.MultipartFile ownerIdentityFront,
+            org.springframework.web.multipart.MultipartFile ownerIdentityBack
+    );
+
     Hotel updateHotel(UUID hotelId, HotelUpdateRequest request, UUID ownerId);
 
     Hotel getById(UUID hotelId);
@@ -43,7 +52,9 @@ public interface HotelService {
 
     void approveHotel(UUID hotelId);
 
-    void rejectHotel(UUID hotelId);
+    void rejectHotel(UUID hotelId, String note);
+
+    com.example.hotelservice.Hotel.dto.response.HotelVerificationDocumentsResponse getVerificationDocuments(UUID hotelId, UUID requesterId, boolean isAdmin);
 
     Hotel updateAmenities(UUID hotelId, List<AmenityRequest> amenityCategories, UUID ownerId);
 

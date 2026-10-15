@@ -25,6 +25,11 @@ spring:
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
       timeout: ${REDIS_TIMEOUT:2s}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
 
 server:
   port: 8083
@@ -36,6 +41,7 @@ grpc:
     media-service:
       address: "discovery:///media-service"
       negotiation-type: plaintext
+      max-inbound-message-size: 20971520 # 20 MB
     user-service:
       address: "discovery:///user-service"
       negotiation-type: plaintext

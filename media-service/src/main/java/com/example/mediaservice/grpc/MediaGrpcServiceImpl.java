@@ -26,14 +26,15 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
         try {
             log.info("[MEDIA_GRPC_UPLOAD] Upload request received - fileName: {}, mimeType: {}, bytes: {}",
                 request.getFileName(), request.getMimeType(), request.getFileData().size());
-            String objectName = UUID.randomUUID() + "_" + request.getFileName();
+            String sanitizedFileName = sanitizeFileName(request.getFileName());
+            String objectName = UUID.randomUUID() + "_" + sanitizedFileName;
             String url = storageService.uploadMedia(
                     request.getFileData().toByteArray(),
                     objectName,
                     request.getMimeType()
             );
 
-            log.info("[MEDIA_GRPC_UPLOAD] Upload success - fileName: {}, objectName: {}", request.getFileName(), objectName);
+            log.info("[MEDIA_GRPC_UPLOAD] Upload success - originalFileName: {}, objectName: {}", request.getFileName(), objectName);
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
                             .setUrl(url)
@@ -78,6 +79,109 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
                             .asRuntimeException()
             );
         }
+    }
+
+    @Override
+    public void uploadPrivateDocument(
+            com.example.mediaservice.grpc.UploadDocumentRequest request,
+            StreamObserver<com.example.mediaservice.grpc.UploadDocumentResponse> responseObserver
+    ) {
+        try {
+            log.info("[MEDIA_GRPC_DOC_UPLOAD] Private document upload received - fileName: {}, mimeType: {}, bytes: {}",
+                    request.getFileName(), request.getMimeType(), request.getFileData().size());
+            String sanitizedFileName = sanitizeFileName(request.getFileName());
+            String objectName = UUID.randomUUID() + "_" + sanitizedFileName;
+            String filePath = storageService.uploadPrivateDocument(
+                    request.getFileData().toByteArray(),
+                    objectName,
+                    request.getMimeType()
+            );
+
+            log.info("[MEDIA_GRPC_DOC_UPLOAD] Private document uploaded - originalFileName: {}, filePath: {}", request.getFileName(), filePath);
+            responseObserver.onNext(
+                    com.example.mediaservice.grpc.UploadDocumentResponse.newBuilder()
+                            .setFilePath(filePath)
+                            .build()
+            );
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("[MEDIA_GRPC_DOC_UPLOAD] Document upload failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
+            responseObserver.onError(
+                    Status.INTERNAL
+                            .withDescription("Upload private document failed: " + e.getMessage())
+                            .withCause(e)
+                            .asRuntimeException()
+            );
+        }
+    }
+
+    @Override
+    public void getSignedUrl(
+            com.example.mediaservice.grpc.GetSignedUrlRequest request,
+            StreamObserver<com.example.mediaservice.grpc.GetSignedUrlResponse> responseObserver
+    ) {
+        try {
+            log.info("[MEDIA_GRPC_SIGN] Get signed url request received - filePath: {}, expiresIn: {}",
+                    request.getFilePath(), request.getExpiresInSeconds());
+            String signedUrl = storageService.createSignedUrl(
+                    request.getFilePath(),
+                    request.getExpiresInSeconds()
+            );
+
+            log.info("[MEDIA_GRPC_SIGN] Signed url generated for filePath: {}", request.getFilePath());
+            responseObserver.onNext(
+                    com.example.mediaservice.grpc.GetSignedUrlResponse.newBuilder()
+                            .setSignedUrl(signedUrl)
+                            .build()
+            );
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("[MEDIA_GRPC_SIGN] Get signed url failed - filePath: {}, error: {}", request.getFilePath(), e.getMessage(), e);
+            responseObserver.onError(
+                    Status.INTERNAL
+                            .withDescription("Get signed url failed: " + e.getMessage())
+                            .withCause(e)
+                            .asRuntimeException()
+            );
+        }
+    }
+
+    /**
+     * Chuẩn hoá tên file:
+     * - Bỏ dấu tiếng Việt
+     * - Thay khoảng trắng và các ký tự đặc biệt bằng dấu gạch dưới '_'
+     * - Giữ nguyên extension an toàn
+     */
+    private String sanitizeFileName(String fileName) {
+        if (fileName == null || fileName.isBlank()) {
+            return "file";
+        }
+
+        // Bỏ dấu tiếng Việt (NFD + regex)
+        String normalized = java.text.Normalizer.normalize(fileName, java.text.Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("\\p{M}", "");
+        normalized = normalized.replace('đ', 'd').replace('Đ', 'D');
+
+        int lastDotIndex = normalized.lastIndexOf('.');
+        String baseName;
+        String extension = "";
+        if (lastDotIndex > 0 && lastDotIndex < normalized.length() - 1) {
+            baseName = normalized.substring(0, lastDotIndex);
+            extension = normalized.substring(lastDotIndex).toLowerCase().replaceAll("[^a-z0-9.]", "");
+        } else {
+            baseName = normalized;
+        }
+
+        // Chỉ giữ lại chữ cái, số, gạch dưới, gạch ngang
+        baseName = baseName.replaceAll("[^a-zA-Z0-9_-]", "_");
+        baseName = baseName.replaceAll("_+", "_");
+        baseName = baseName.replaceAll("^_|_$", "");
+
+        if (baseName.isBlank()) {
+            baseName = "file";
+        }
+
+        return baseName + extension;
     }
 }
 
