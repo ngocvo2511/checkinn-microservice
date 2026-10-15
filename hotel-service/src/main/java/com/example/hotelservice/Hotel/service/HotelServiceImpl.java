@@ -32,10 +32,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.example.hotelservice.MediaAsset.service.MediaClient;
@@ -46,6 +48,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class HotelServiceImpl implements HotelService {
 
+    private static final int SIGNED_URL_EXPIRY_SECONDS = 300;
     private final UserGrpcClient userGrpcClient;
     private final MediaClient mediaClient;
     private final HotelRepository hotelRepository;
@@ -280,34 +283,11 @@ public class HotelServiceImpl implements HotelService {
         var response = hotelMapper.toPendingHotelDetailResponse(hotel, policies, amenityResponses, owner, questions);
         response.setRejectionReason(hotel.getRejectionReason());
 
-        if (hotel.getBusinessLicenseFilePath() != null && !hotel.getBusinessLicenseFilePath().isBlank()) {
-            try {
-                response.setBusinessLicenseUrl(mediaClient.getSignedUrl(hotel.getBusinessLicenseFilePath(), 300));
-            } catch (Exception e) {
-                log.warn("[GET_PENDING_HOTEL_DETAIL] Failed to generate signed url for businessLicense: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOperationLicenseFilePath() != null && !hotel.getOperationLicenseFilePath().isBlank()) {
-            try {
-                response.setOperationLicenseUrl(mediaClient.getSignedUrl(hotel.getOperationLicenseFilePath(), 300));
-            } catch (Exception e) {
-                log.warn("[GET_PENDING_HOTEL_DETAIL] Failed to generate signed url for operationLicense: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOwnerIdentityFrontPath() != null && !hotel.getOwnerIdentityFrontPath().isBlank()) {
-            try {
-                response.setOwnerIdentityFrontUrl(mediaClient.getSignedUrl(hotel.getOwnerIdentityFrontPath(), 300));
-            } catch (Exception e) {
-                log.warn("[GET_PENDING_HOTEL_DETAIL] Failed to generate signed url for ownerIdentityFront: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOwnerIdentityBackPath() != null && !hotel.getOwnerIdentityBackPath().isBlank()) {
-            try {
-                response.setOwnerIdentityBackUrl(mediaClient.getSignedUrl(hotel.getOwnerIdentityBackPath(), 300));
-            } catch (Exception e) {
-                log.warn("[GET_PENDING_HOTEL_DETAIL] Failed to generate signed url for ownerIdentityBack: {}", e.getMessage());
-            }
-        }
+        String logPrefix = "GET_PENDING_HOTEL_DETAIL";
+        response.setBusinessLicenseUrl(resolveSignedUrl(hotel.getBusinessLicenseFilePath(), "businessLicense", logPrefix));
+        response.setOperationLicenseUrl(resolveSignedUrl(hotel.getOperationLicenseFilePath(), "operationLicense", logPrefix));
+        response.setOwnerIdentityFrontUrl(resolveSignedUrl(hotel.getOwnerIdentityFrontPath(), "ownerIdentityFront", logPrefix));
+        response.setOwnerIdentityBackUrl(resolveSignedUrl(hotel.getOwnerIdentityBackPath(), "ownerIdentityBack", logPrefix));
 
         return response;
     }
@@ -330,37 +310,10 @@ public class HotelServiceImpl implements HotelService {
         }
 
         try {
-            if (businessLicense != null && !businessLicense.isEmpty()) {
-                String ext = getFileExtension(businessLicense.getOriginalFilename());
-                String fileName = "license_" + hotelId + ext;
-                String mimeType = businessLicense.getContentType() != null ? businessLicense.getContentType() : "image/jpeg";
-                String path = mediaClient.uploadPrivateDocument(fileName, mimeType, businessLicense.getBytes());
-                hotel.setBusinessLicenseFilePath(path);
-            }
-
-            if (operationLicense != null && !operationLicense.isEmpty()) {
-                String ext = getFileExtension(operationLicense.getOriginalFilename());
-                String fileName = "operation_" + hotelId + ext;
-                String mimeType = operationLicense.getContentType() != null ? operationLicense.getContentType() : "image/jpeg";
-                String path = mediaClient.uploadPrivateDocument(fileName, mimeType, operationLicense.getBytes());
-                hotel.setOperationLicenseFilePath(path);
-            }
-
-            if (ownerIdentityFront != null && !ownerIdentityFront.isEmpty()) {
-                String ext = getFileExtension(ownerIdentityFront.getOriginalFilename());
-                String fileName = "id_front_" + hotelId + ext;
-                String mimeType = ownerIdentityFront.getContentType() != null ? ownerIdentityFront.getContentType() : "image/jpeg";
-                String path = mediaClient.uploadPrivateDocument(fileName, mimeType, ownerIdentityFront.getBytes());
-                hotel.setOwnerIdentityFrontPath(path);
-            }
-
-            if (ownerIdentityBack != null && !ownerIdentityBack.isEmpty()) {
-                String ext = getFileExtension(ownerIdentityBack.getOriginalFilename());
-                String fileName = "id_back_" + hotelId + ext;
-                String mimeType = ownerIdentityBack.getContentType() != null ? ownerIdentityBack.getContentType() : "image/jpeg";
-                String path = mediaClient.uploadPrivateDocument(fileName, mimeType, ownerIdentityBack.getBytes());
-                hotel.setOwnerIdentityBackPath(path);
-            }
+            uploadDocumentIfPresent(businessLicense, "license", hotelId, hotel::setBusinessLicenseFilePath);
+            uploadDocumentIfPresent(operationLicense, "operation", hotelId, hotel::setOperationLicenseFilePath);
+            uploadDocumentIfPresent(ownerIdentityFront, "id_front", hotelId, hotel::setOwnerIdentityFrontPath);
+            uploadDocumentIfPresent(ownerIdentityBack, "id_back", hotelId, hotel::setOwnerIdentityBackPath);
 
             if (hotel.getApprovedStatus() == HotelApprovalStatus.REJECTED) {
                 hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
@@ -766,5 +719,39 @@ public class HotelServiceImpl implements HotelService {
             }
         }
         return ".jpg";
+    }
+
+    private String uploadDocument(MultipartFile file, String docPrefix, UUID hotelId) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
+        String ext = getFileExtension(file.getOriginalFilename());
+        String fileName = docPrefix + "_" + hotelId + ext;
+        String mimeType = file.getContentType() != null ? file.getContentType() : "image/jpeg";
+        return mediaClient.uploadPrivateDocument(fileName, mimeType, file.getBytes());
+    }
+
+    private void uploadDocumentIfPresent(
+            MultipartFile file,
+            String docPrefix,
+            UUID hotelId,
+            Consumer<String> pathSetter
+    ) throws IOException {
+        String path = uploadDocument(file, docPrefix, hotelId);
+        if (path != null) {
+            pathSetter.accept(path);
+        }
+    }
+
+    private String resolveSignedUrl(String filePath, String docType, String logPrefix) {
+        if (filePath == null || filePath.isBlank()) {
+            return null;
+        }
+        try {
+            return mediaClient.getSignedUrl(filePath, SIGNED_URL_EXPIRY_SECONDS);
+        } catch (Exception e) {
+            log.warn("[{}] Failed to generate signed url for {}: {}", logPrefix, docType, e.getMessage());
+            return null;
+        }
     }
 }
