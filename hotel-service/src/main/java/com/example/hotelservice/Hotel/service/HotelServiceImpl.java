@@ -34,11 +34,15 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.example.hotelservice.MediaAsset.service.MediaClient;
 import org.springframework.web.multipart.MultipartFile;
@@ -283,11 +287,11 @@ public class HotelServiceImpl implements HotelService {
         var response = hotelMapper.toPendingHotelDetailResponse(hotel, policies, amenityResponses, owner, questions);
         response.setRejectionReason(hotel.getRejectionReason());
 
-        String logPrefix = "GET_PENDING_HOTEL_DETAIL";
-        response.setBusinessLicenseUrl(resolveSignedUrl(hotel.getBusinessLicenseFilePath(), "businessLicense", logPrefix));
-        response.setOperationLicenseUrl(resolveSignedUrl(hotel.getOperationLicenseFilePath(), "operationLicense", logPrefix));
-        response.setOwnerIdentityFrontUrl(resolveSignedUrl(hotel.getOwnerIdentityFrontPath(), "ownerIdentityFront", logPrefix));
-        response.setOwnerIdentityBackUrl(resolveSignedUrl(hotel.getOwnerIdentityBackPath(), "ownerIdentityBack", logPrefix));
+        Map<String, String> signedUrls = resolveSignedUrlsBatch(hotel, "GET_PENDING_HOTEL_DETAIL");
+        response.setBusinessLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getBusinessLicenseFilePath()));
+        response.setOperationLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getOperationLicenseFilePath()));
+        response.setOwnerIdentityFrontUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityFrontPath()));
+        response.setOwnerIdentityBackUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityBackPath()));
 
         return response;
     }
@@ -310,10 +314,36 @@ public class HotelServiceImpl implements HotelService {
         }
 
         try {
-            uploadDocumentIfPresent(businessLicense, "license", hotelId, hotel::setBusinessLicenseFilePath);
-            uploadDocumentIfPresent(operationLicense, "operation", hotelId, hotel::setOperationLicenseFilePath);
-            uploadDocumentIfPresent(ownerIdentityFront, "id_front", hotelId, hotel::setOwnerIdentityFrontPath);
-            uploadDocumentIfPresent(ownerIdentityBack, "id_back", hotelId, hotel::setOwnerIdentityBackPath);
+            CompletableFuture<String> licenseFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(businessLicense, "license", hotelId));
+            CompletableFuture<String> operationFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(operationLicense, "operation", hotelId));
+            CompletableFuture<String> frontFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(ownerIdentityFront, "id_front", hotelId));
+            CompletableFuture<String> backFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(ownerIdentityBack, "id_back", hotelId));
+
+            CompletableFuture.allOf(licenseFuture, operationFuture, frontFuture, backFuture).join();
+
+            String licensePath = licenseFuture.join();
+            if (licensePath != null) {
+                hotel.setBusinessLicenseFilePath(licensePath);
+            }
+
+            String operationPath = operationFuture.join();
+            if (operationPath != null) {
+                hotel.setOperationLicenseFilePath(operationPath);
+            }
+
+            String frontPath = frontFuture.join();
+            if (frontPath != null) {
+                hotel.setOwnerIdentityFrontPath(frontPath);
+            }
+
+            String backPath = backFuture.join();
+            if (backPath != null) {
+                hotel.setOwnerIdentityBackPath(backPath);
+            }
 
             if (hotel.getApprovedStatus() == HotelApprovalStatus.REJECTED) {
                 hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
@@ -323,6 +353,10 @@ public class HotelServiceImpl implements HotelService {
             hotel = hotelRepository.save(hotel);
             log.info("[UPLOAD_HOTEL_DOCUMENTS] Documents uploaded successfully - hotelId: {}", hotelId);
             return hotel;
+        } catch (CompletionException ce) {
+            Throwable cause = ce.getCause() != null ? ce.getCause() : ce;
+            log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents concurrently - hotelId: {}, error: {}", hotelId, cause.getMessage(), cause);
+            throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + cause.getMessage(), cause);
         } catch (Exception e) {
             log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents - hotelId: {}, error: {}", hotelId, e.getMessage(), e);
             throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + e.getMessage(), e);
@@ -338,39 +372,7 @@ public class HotelServiceImpl implements HotelService {
             throw new org.springframework.security.access.AccessDeniedException("Bạn không có quyền xem tài liệu của khách sạn này.");
         }
 
-        String businessLicenseUrl = null;
-        String operationLicenseUrl = null;
-        String ownerIdentityFrontUrl = null;
-        String ownerIdentityBackUrl = null;
-
-        if (hotel.getBusinessLicenseFilePath() != null && !hotel.getBusinessLicenseFilePath().isBlank()) {
-            try {
-                businessLicenseUrl = mediaClient.getSignedUrl(hotel.getBusinessLicenseFilePath(), 300);
-            } catch (Exception e) {
-                log.warn("[GET_VERIFICATION_DOCS] Failed to generate signed url for businessLicense: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOperationLicenseFilePath() != null && !hotel.getOperationLicenseFilePath().isBlank()) {
-            try {
-                operationLicenseUrl = mediaClient.getSignedUrl(hotel.getOperationLicenseFilePath(), 300);
-            } catch (Exception e) {
-                log.warn("[GET_VERIFICATION_DOCS] Failed to generate signed url for operationLicense: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOwnerIdentityFrontPath() != null && !hotel.getOwnerIdentityFrontPath().isBlank()) {
-            try {
-                ownerIdentityFrontUrl = mediaClient.getSignedUrl(hotel.getOwnerIdentityFrontPath(), 300);
-            } catch (Exception e) {
-                log.warn("[GET_VERIFICATION_DOCS] Failed to generate signed url for ownerIdentityFront: {}", e.getMessage());
-            }
-        }
-        if (hotel.getOwnerIdentityBackPath() != null && !hotel.getOwnerIdentityBackPath().isBlank()) {
-            try {
-                ownerIdentityBackUrl = mediaClient.getSignedUrl(hotel.getOwnerIdentityBackPath(), 300);
-            } catch (Exception e) {
-                log.warn("[GET_VERIFICATION_DOCS] Failed to generate signed url for ownerIdentityBack: {}", e.getMessage());
-            }
-        }
+        Map<String, String> signedUrls = resolveSignedUrlsBatch(hotel, "GET_VERIFICATION_DOCS");
 
         return com.example.hotelservice.Hotel.dto.response.HotelVerificationDocumentsResponse.builder()
                 .hotelId(hotel.getId())
@@ -380,10 +382,10 @@ public class HotelServiceImpl implements HotelService {
                 .taxId(hotel.getTaxId())
                 .operationLicenseNumber(hotel.getOperationLicenseNumber())
                 .ownerIdentityNumber(hotel.getOwnerIdentityNumber())
-                .businessLicenseUrl(businessLicenseUrl)
-                .operationLicenseUrl(operationLicenseUrl)
-                .ownerIdentityFrontUrl(ownerIdentityFrontUrl)
-                .ownerIdentityBackUrl(ownerIdentityBackUrl)
+                .businessLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getBusinessLicenseFilePath()))
+                .operationLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getOperationLicenseFilePath()))
+                .ownerIdentityFrontUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityFrontPath()))
+                .ownerIdentityBackUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityBackPath()))
                 .build();
     }
 
@@ -731,27 +733,38 @@ public class HotelServiceImpl implements HotelService {
         return mediaClient.uploadPrivateDocument(fileName, mimeType, file.getBytes());
     }
 
-    private void uploadDocumentIfPresent(
-            MultipartFile file,
-            String docPrefix,
-            UUID hotelId,
-            Consumer<String> pathSetter
-    ) throws IOException {
-        String path = uploadDocument(file, docPrefix, hotelId);
-        if (path != null) {
-            pathSetter.accept(path);
+    private String uploadDocumentSafe(MultipartFile file, String docPrefix, UUID hotelId) {
+        try {
+            return uploadDocument(file, docPrefix, hotelId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private String resolveSignedUrl(String filePath, String docType, String logPrefix) {
-        if (filePath == null || filePath.isBlank()) {
-            return null;
+    private Map<String, String> resolveSignedUrlsBatch(Hotel hotel, String logPrefix) {
+        List<String> paths = Stream.of(
+                hotel.getBusinessLicenseFilePath(),
+                hotel.getOperationLicenseFilePath(),
+                hotel.getOwnerIdentityFrontPath(),
+                hotel.getOwnerIdentityBackPath()
+        ).filter(p -> p != null && !p.isBlank()).toList();
+
+        if (paths.isEmpty()) {
+            return Collections.emptyMap();
         }
+
         try {
-            return mediaClient.getSignedUrl(filePath, SIGNED_URL_EXPIRY_SECONDS);
+            return mediaClient.getSignedUrls(paths, SIGNED_URL_EXPIRY_SECONDS);
         } catch (Exception e) {
-            log.warn("[{}] Failed to generate signed url for {}: {}", logPrefix, docType, e.getMessage());
+            log.warn("[{}] Failed to generate batch signed urls: {}", logPrefix, e.getMessage());
+            return Collections.emptyMap();
+        }
+    }
+
+    private String getSignedUrlSafe(Map<String, String> signedUrls, String filePath) {
+        if (filePath == null || filePath.isBlank() || signedUrls == null) {
             return null;
         }
+        return signedUrls.get(filePath);
     }
 }

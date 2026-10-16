@@ -10,6 +10,7 @@ service MediaGrpcService {
   rpc DeleteMedia(DeleteMediaRequest) returns (DeleteMediaResponse);
   rpc UploadPrivateDocument(UploadDocumentRequest) returns (UploadDocumentResponse);
   rpc GetSignedUrl(GetSignedUrlRequest) returns (GetSignedUrlResponse);
+  rpc GetSignedUrls(GetSignedUrlsRequest) returns (GetSignedUrlsResponse);
 }
 
 message UploadMediaRequest {
@@ -49,3 +50,18 @@ message GetSignedUrlResponse {
   string signed_url = 1;
 }
 
+message GetSignedUrlsRequest {
+  repeated string file_paths = 1;
+  int32 expires_in_seconds = 2;
+}
+
+message SignedUrlItem {
+  string file_path = 1;
+  string signed_url = 2;
+  string error = 3;
+}
+
+message GetSignedUrlsResponse {
+  repeated SignedUrlItem items = 1;
+  map<string, string> signed_urls = 2;
+}

@@ -11,6 +11,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -143,6 +147,88 @@ public class SupabaseStorageService {
 
         if (signedUrlPart == null || signedUrlPart.isBlank()) {
             throw new IOException("Supabase returned empty signedURL: " + response.body());
+        }
+
+        return formatSignedUrl(signedUrlPart);
+    }
+
+    public Map<String, String> createSignedUrls(List<String> objectNames, int expiresInSeconds) throws IOException, InterruptedException {
+        if (objectNames == null || objectNames.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        List<String> validNames = objectNames.stream()
+                .filter(name -> name != null && !name.isBlank())
+                .distinct()
+                .toList();
+
+        if (validNames.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        String signBatchUrl = String.format("%s/storage/v1/object/sign/%s", storageBaseUrl, privateBucket);
+        int expiry = expiresInSeconds > 0 ? expiresInSeconds : 300;
+
+        Map<String, Object> reqBodyMap = new HashMap<>();
+        reqBodyMap.put("expiresIn", expiry);
+        reqBodyMap.put("paths", validNames);
+        String requestBody = objectMapper.writeValueAsString(reqBodyMap);
+
+        log.info("[SUPABASE_STORAGE_SIGN_BATCH] Sign batch request prepared - bucket: {}, fileCount: {}, expiresIn: {}, url: {}",
+                privateBucket, validNames.size(), expiry, signBatchUrl);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(signBatchUrl))
+                .header("Authorization", "Bearer " + key)
+                .header("apikey", key)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            JsonNode root = objectMapper.readTree(response.body());
+            if (root.isArray()) {
+                Map<String, String> resultMap = new HashMap<>();
+                for (JsonNode item : root) {
+                    String path = item.hasNonNull("path") ? item.get("path").asText() : null;
+                    String error = item.hasNonNull("error") ? item.get("error").asText() : null;
+                    String signedUrlPart = item.hasNonNull("signedURL") ? item.get("signedURL").asText() :
+                            item.hasNonNull("signedUrl") ? item.get("signedUrl").asText() : null;
+
+                    if (path != null) {
+                        if (error != null && !error.isBlank()) {
+                            log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Error for path {}: {}", path, error);
+                        } else if (signedUrlPart != null && !signedUrlPart.isBlank()) {
+                            resultMap.put(path, formatSignedUrl(signedUrlPart));
+                        }
+                    }
+                }
+                log.info("[SUPABASE_STORAGE_SIGN_BATCH] Sign batch success - requested: {}, signed: {}", validNames.size(), resultMap.size());
+                return resultMap;
+            }
+        }
+
+        log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Batch sign returned status {}, falling back to individual calls: {}",
+                response.statusCode(), response.body());
+
+        Map<String, String> fallbackMap = new HashMap<>();
+        for (String name : validNames) {
+            try {
+                String signed = createSignedUrl(name, expiry);
+                if (signed != null) {
+                    fallbackMap.put(name, signed);
+                }
+            } catch (Exception e) {
+                log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Fallback sign failed for {}: {}", name, e.getMessage());
+            }
+        }
+        return fallbackMap;
+    }
+
+    private String formatSignedUrl(String signedUrlPart) {
+        if (signedUrlPart == null || signedUrlPart.isBlank()) {
+            return null;
         }
 
         if (signedUrlPart.startsWith("http://") || signedUrlPart.startsWith("https://")) {

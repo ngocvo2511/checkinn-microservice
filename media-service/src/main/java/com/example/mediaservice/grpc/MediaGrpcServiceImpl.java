@@ -146,6 +146,53 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
         }
     }
 
+    @Override
+    public void getSignedUrls(
+            com.example.mediaservice.grpc.GetSignedUrlsRequest request,
+            StreamObserver<com.example.mediaservice.grpc.GetSignedUrlsResponse> responseObserver
+    ) {
+        try {
+            log.info("[MEDIA_GRPC_SIGN_BATCH] Get signed urls request received - pathsCount: {}, expiresIn: {}",
+                    request.getFilePathsCount(), request.getExpiresInSeconds());
+
+            java.util.List<String> paths = request.getFilePathsList().stream()
+                    .filter(p -> p != null && !p.isBlank())
+                    .toList();
+
+            java.util.Map<String, String> signedUrlsMap = storageService.createSignedUrls(
+                    paths,
+                    request.getExpiresInSeconds()
+            );
+
+            com.example.mediaservice.grpc.GetSignedUrlsResponse.Builder responseBuilder =
+                    com.example.mediaservice.grpc.GetSignedUrlsResponse.newBuilder();
+
+            responseBuilder.putAllSignedUrls(signedUrlsMap);
+
+            for (java.util.Map.Entry<String, String> entry : signedUrlsMap.entrySet()) {
+                responseBuilder.addItems(
+                        com.example.mediaservice.grpc.SignedUrlItem.newBuilder()
+                                .setFilePath(entry.getKey())
+                                .setSignedUrl(entry.getValue())
+                                .build()
+                );
+            }
+
+            log.info("[MEDIA_GRPC_SIGN_BATCH] Signed urls generated - total: {}", signedUrlsMap.size());
+            responseObserver.onNext(responseBuilder.build());
+            responseObserver.onCompleted();
+
+        } catch (Exception e) {
+            log.error("[MEDIA_GRPC_SIGN_BATCH] Get signed urls batch failed - error: {}", e.getMessage(), e);
+            responseObserver.onError(
+                    Status.INTERNAL
+                            .withDescription("Get signed urls batch failed: " + e.getMessage())
+                            .withCause(e)
+                            .asRuntimeException()
+            );
+        }
+    }
+
     /**
      * Chuẩn hoá tên file:
      * - Bỏ dấu tiếng Việt

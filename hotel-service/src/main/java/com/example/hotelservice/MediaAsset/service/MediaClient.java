@@ -79,5 +79,33 @@ public class MediaClient {
             throw new RuntimeException("Get signed url from media-service failed", e);
         }
     }
+
+    public java.util.Map<String, String> getSignedUrls(java.util.List<String> filePaths, int expiresInSeconds) {
+        if (filePaths == null || filePaths.isEmpty()) {
+            return java.util.Collections.emptyMap();
+        }
+
+        java.util.List<String> validPaths = filePaths.stream()
+                .filter(p -> p != null && !p.isBlank())
+                .toList();
+
+        if (validPaths.isEmpty()) {
+            return java.util.Collections.emptyMap();
+        }
+
+        try {
+            GetSignedUrlsRequest request = GetSignedUrlsRequest.newBuilder()
+                    .addAllFilePaths(validPaths)
+                    .setExpiresInSeconds(expiresInSeconds)
+                    .build();
+
+            GetSignedUrlsResponse response = mediaStub.getSignedUrls(request);
+            return response.getSignedUrlsMap() != null
+                    ? new java.util.HashMap<>(response.getSignedUrlsMap())
+                    : java.util.Collections.emptyMap();
+        } catch (Exception e) {
+            throw new RuntimeException("Get signed urls batch from media-service failed", e);
+        }
+    }
 }
 
