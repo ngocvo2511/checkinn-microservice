@@ -16,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -50,6 +51,36 @@ public class HotelController {
         var saved = hotelService.createHotel(request, ownerId);
         log.info("[HOTEL_CONTROLLER_CREATE] Hotel created successfully - ownerId: {}, hotelId: {}", ownerId, saved.getId());
         return ResponseEntity.ok(hotelMapper.toHotelResponse(saved));
+    }
+
+    // -------------------------------------------------------
+    // Upload tài liệu xác thực kinh doanh (Private Storage)
+    // -------------------------------------------------------
+    @PostMapping(value = "/{hotelId}/documents", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadHotelDocuments(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID hotelId,
+            @RequestParam(value = "businessLicense", required = false) org.springframework.web.multipart.MultipartFile businessLicense,
+            @RequestParam(value = "operationLicense", required = false) org.springframework.web.multipart.MultipartFile operationLicense,
+            @RequestParam(value = "ownerIdentityFront", required = false) org.springframework.web.multipart.MultipartFile ownerIdentityFront,
+            @RequestParam(value = "ownerIdentityBack", required = false) org.springframework.web.multipart.MultipartFile ownerIdentityBack
+    ) {
+        UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_UPLOAD_DOCS] Upload documents request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        hotelService.uploadHotelDocuments(hotelId, ownerId, businessLicense, operationLicense, ownerIdentityFront, ownerIdentityBack);
+        return ResponseEntity.ok(Map.of("message", "Tải tài liệu xác thực thành công"));
+    }
+
+    @GetMapping("/{hotelId}/documents")
+    public ResponseEntity<com.example.hotelservice.Hotel.dto.response.HotelVerificationDocumentsResponse> getHotelDocuments(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID hotelId
+    ) {
+        UUID ownerId = getOwnerId(jwt.getSubject());
+        boolean isAdmin = verifyAdmin(jwt);
+        log.info("[HOTEL_CONTROLLER_GET_DOCS] Get documents request received - hotelId: {}, ownerId: {}, isAdmin: {}", hotelId, ownerId, isAdmin);
+        var docs = hotelService.getVerificationDocuments(hotelId, ownerId, isAdmin);
+        return ResponseEntity.ok(docs);
     }
 
     // -------------------------------------------------------
@@ -208,7 +239,7 @@ public class HotelController {
             return ResponseEntity.status(403).body("Access denied");
         }
         log.info("[HOTEL_CONTROLLER_REJECT] Reject hotel request received - hotelId: {}, note: {}", hotelId, request.note());
-        hotelService.rejectHotel(hotelId);
+        hotelService.rejectHotel(hotelId, request.note());
         return ResponseEntity.ok("Hotel rejected: " + request.note());
     }
 

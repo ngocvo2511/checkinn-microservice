@@ -29,6 +29,7 @@ public class PendingHotelDetailResponse {
 
     Instant createdAt;
     HotelApprovalStatus approvedStatus;
+    String rejectionReason;
 
     // ==== Owner info ====
     OwnerResponse owner;
@@ -38,6 +39,12 @@ public class PendingHotelDetailResponse {
     String taxId;
     String operationLicenseNumber;
     String ownerIdentityNumber;
+
+    // ==== Legal Document Signed URLs (Private, Expiring) ====
+    String businessLicenseUrl;
+    String operationLicenseUrl;
+    String ownerIdentityFrontUrl;
+    String ownerIdentityBackUrl;
 
     // ==== Policies & Amenities ====
     List<PolicyResponse> policies;

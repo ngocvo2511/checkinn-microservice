@@ -32,18 +32,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.example.hotelservice.MediaAsset.service.MediaClient;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class HotelServiceImpl implements HotelService {
 
+    private static final int SIGNED_URL_EXPIRY_SECONDS = 300;
     private final UserGrpcClient userGrpcClient;
+    private final MediaClient mediaClient;
     private final HotelRepository hotelRepository;
     private final HotelPolicyRepository hotelPolicyRepository;
     private final PolicyCategoryTypeRepository policyCategoryTypeRepository;
@@ -152,6 +163,10 @@ public class HotelServiceImpl implements HotelService {
         if (request.address() != null) hotel.setAddress(writeJson(request.address()));
         if (request.contactEmail() != null) hotel.setContactEmail(request.contactEmail());
         if (request.contactPhone() != null) hotel.setContactPhone(request.contactPhone());
+        if (request.businessLicenseNumber() != null) hotel.setBusinessLicenseNumber(request.businessLicenseNumber());
+        if (request.taxId() != null) hotel.setTaxId(request.taxId());
+        if (request.operationLicenseNumber() != null) hotel.setOperationLicenseNumber(request.operationLicenseNumber());
+        if (request.ownerIdentityNumber() != null) hotel.setOwnerIdentityNumber(request.ownerIdentityNumber());
         Hotel saved = hotelRepository.save(hotel);
         log.info("[UPDATE_HOTEL] Hotel updated successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return saved;
@@ -269,24 +284,129 @@ public class HotelServiceImpl implements HotelService {
                         .toList();
 
         log.info("[GET_PENDING_HOTEL_DETAIL] Pending hotel detail loaded successfully - hotelId: {}", hotelId);
-        return hotelMapper.toPendingHotelDetailResponse(hotel, policies, amenityResponses, owner, questions);
+        var response = hotelMapper.toPendingHotelDetailResponse(hotel, policies, amenityResponses, owner, questions);
+        response.setRejectionReason(hotel.getRejectionReason());
+
+        Map<String, String> signedUrls = resolveSignedUrlsBatch(hotel, "GET_PENDING_HOTEL_DETAIL");
+        response.setBusinessLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getBusinessLicenseFilePath()));
+        response.setOperationLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getOperationLicenseFilePath()));
+        response.setOwnerIdentityFrontUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityFrontPath()));
+        response.setOwnerIdentityBackUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityBackPath()));
+
+        return response;
     }
+
+    // ========== UPLOAD DOCUMENTS ==========
+    @Override
+    @Transactional
+    public Hotel uploadHotelDocuments(
+            UUID hotelId,
+            UUID ownerId,
+            MultipartFile businessLicense,
+            MultipartFile operationLicense,
+            MultipartFile ownerIdentityFront,
+            MultipartFile ownerIdentityBack
+    ) {
+        log.info("[UPLOAD_HOTEL_DOCUMENTS] Uploading documents - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        Hotel hotel = getById(hotelId);
+        if (!hotel.getOwnerId().equals(ownerId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Bạn không có quyền cập nhật giấy tờ của khách sạn này.");
+        }
+
+        try {
+            CompletableFuture<String> licenseFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(businessLicense, "license", hotelId));
+            CompletableFuture<String> operationFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(operationLicense, "operation", hotelId));
+            CompletableFuture<String> frontFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(ownerIdentityFront, "id_front", hotelId));
+            CompletableFuture<String> backFuture = CompletableFuture.supplyAsync(
+                    () -> uploadDocumentSafe(ownerIdentityBack, "id_back", hotelId));
+
+            CompletableFuture.allOf(licenseFuture, operationFuture, frontFuture, backFuture).join();
+
+            String licensePath = licenseFuture.join();
+            if (licensePath != null) {
+                hotel.setBusinessLicenseFilePath(licensePath);
+            }
+
+            String operationPath = operationFuture.join();
+            if (operationPath != null) {
+                hotel.setOperationLicenseFilePath(operationPath);
+            }
+
+            String frontPath = frontFuture.join();
+            if (frontPath != null) {
+                hotel.setOwnerIdentityFrontPath(frontPath);
+            }
+
+            String backPath = backFuture.join();
+            if (backPath != null) {
+                hotel.setOwnerIdentityBackPath(backPath);
+            }
+
+            if (hotel.getApprovedStatus() == HotelApprovalStatus.REJECTED) {
+                hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
+                log.info("[UPLOAD_HOTEL_DOCUMENTS] Hotel was REJECTED, reset status to PENDING for re-review - hotelId: {}", hotelId);
+            }
+
+            hotel = hotelRepository.save(hotel);
+            log.info("[UPLOAD_HOTEL_DOCUMENTS] Documents uploaded successfully - hotelId: {}", hotelId);
+            return hotel;
+        } catch (CompletionException ce) {
+            Throwable cause = ce.getCause() != null ? ce.getCause() : ce;
+            log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents concurrently - hotelId: {}, error: {}", hotelId, cause.getMessage(), cause);
+            throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + cause.getMessage(), cause);
+        } catch (Exception e) {
+            log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents - hotelId: {}, error: {}", hotelId, e.getMessage(), e);
+            throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public com.example.hotelservice.Hotel.dto.response.HotelVerificationDocumentsResponse getVerificationDocuments(
+            UUID hotelId, UUID requesterId, boolean isAdmin
+    ) {
+        Hotel hotel = getById(hotelId);
+        if (!isAdmin && !hotel.getOwnerId().equals(requesterId)) {
+            throw new org.springframework.security.access.AccessDeniedException("Bạn không có quyền xem tài liệu của khách sạn này.");
+        }
+
+        Map<String, String> signedUrls = resolveSignedUrlsBatch(hotel, "GET_VERIFICATION_DOCS");
+
+        return com.example.hotelservice.Hotel.dto.response.HotelVerificationDocumentsResponse.builder()
+                .hotelId(hotel.getId())
+                .approvedStatus(hotel.getApprovedStatus())
+                .rejectionReason(hotel.getRejectionReason())
+                .businessLicenseNumber(hotel.getBusinessLicenseNumber())
+                .taxId(hotel.getTaxId())
+                .operationLicenseNumber(hotel.getOperationLicenseNumber())
+                .ownerIdentityNumber(hotel.getOwnerIdentityNumber())
+                .businessLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getBusinessLicenseFilePath()))
+                .operationLicenseUrl(getSignedUrlSafe(signedUrls, hotel.getOperationLicenseFilePath()))
+                .ownerIdentityFrontUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityFrontPath()))
+                .ownerIdentityBackUrl(getSignedUrlSafe(signedUrls, hotel.getOwnerIdentityBackPath()))
+                .build();
+    }
+
     // ========== ADMIN: APPROVE ==========
     @Override @Transactional
     public void approveHotel(UUID hotelId) {
         log.info("[APPROVE_HOTEL] Approving hotel - hotelId: {}", hotelId);
         Hotel hotel = getById(hotelId);
         hotel.setApprovedStatus(HotelApprovalStatus.APPROVED);
+        hotel.setRejectionReason(null);
         hotel.setIsActive(true);
         log.info("[APPROVE_HOTEL] Hotel approved successfully - hotelId: {}", hotelId);
     }
 
     // ========== ADMIN: REJECT ==========
     @Override @Transactional
-    public void rejectHotel(UUID hotelId) {
-        log.info("[REJECT_HOTEL] Rejecting hotel - hotelId: {}", hotelId);
+    public void rejectHotel(UUID hotelId, String note) {
+        log.info("[REJECT_HOTEL] Rejecting hotel - hotelId: {}, note: {}", hotelId, note);
         Hotel hotel = getById(hotelId);
         hotel.setApprovedStatus(HotelApprovalStatus.REJECTED);
+        hotel.setRejectionReason(note);
         hotel.setIsActive(false);
         log.info("[REJECT_HOTEL] Hotel rejected successfully - hotelId: {}", hotelId);
     }
@@ -590,5 +710,61 @@ public class HotelServiceImpl implements HotelService {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private String getFileExtension(String originalFilename) {
+        if (originalFilename != null && originalFilename.contains(".")) {
+            String ext = originalFilename.substring(originalFilename.lastIndexOf(".")).toLowerCase();
+            ext = ext.replaceAll("[^a-z0-9.]", "");
+            if (!ext.isBlank()) {
+                return ext;
+            }
+        }
+        return ".jpg";
+    }
+
+    private String uploadDocument(MultipartFile file, String docPrefix, UUID hotelId) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
+        String ext = getFileExtension(file.getOriginalFilename());
+        String fileName = docPrefix + "_" + hotelId + ext;
+        String mimeType = file.getContentType() != null ? file.getContentType() : "image/jpeg";
+        return mediaClient.uploadPrivateDocument(fileName, mimeType, file.getBytes());
+    }
+
+    private String uploadDocumentSafe(MultipartFile file, String docPrefix, UUID hotelId) {
+        try {
+            return uploadDocument(file, docPrefix, hotelId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Map<String, String> resolveSignedUrlsBatch(Hotel hotel, String logPrefix) {
+        List<String> paths = Stream.of(
+                hotel.getBusinessLicenseFilePath(),
+                hotel.getOperationLicenseFilePath(),
+                hotel.getOwnerIdentityFrontPath(),
+                hotel.getOwnerIdentityBackPath()
+        ).filter(p -> p != null && !p.isBlank()).toList();
+
+        if (paths.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        try {
+            return mediaClient.getSignedUrls(paths, SIGNED_URL_EXPIRY_SECONDS);
+        } catch (Exception e) {
+            log.warn("[{}] Failed to generate batch signed urls: {}", logPrefix, e.getMessage());
+            return Collections.emptyMap();
+        }
+    }
+
+    private String getSignedUrlSafe(Map<String, String> signedUrls, String filePath) {
+        if (filePath == null || filePath.isBlank() || signedUrls == null) {
+            return null;
+        }
+        return signedUrls.get(filePath);
     }
 }

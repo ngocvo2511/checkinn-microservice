@@ -20,6 +20,10 @@ public record HotelUpdateRequest(
         Boolean isActive,
         List <PolicyRequest> policies,
         List<QuestionRequest> questions,
-        List <AmenityRequest> amenityCategories
+        List <AmenityRequest> amenityCategories,
+        String businessLicenseNumber,
+        String taxId,
+        String operationLicenseNumber,
+        String ownerIdentityNumber
 ) {}
 

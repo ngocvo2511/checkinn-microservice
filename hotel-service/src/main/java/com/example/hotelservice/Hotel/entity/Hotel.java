@@ -58,7 +58,6 @@ public class Hotel {
     @Column(name = "contact_phone", length = 20)
     private String contactPhone;
 
-    //Giấy tờ chứng minh
     @Column(name = "business_license_number", length = 50, nullable = false)
     private String businessLicenseNumber;
 
@@ -71,6 +70,18 @@ public class Hotel {
     @Column(name = "owner_identity_number", length = 50)
     private String ownerIdentityNumber;
 
+    @Column(name = "business_license_file_path", length = 255)
+    private String businessLicenseFilePath;
+
+    @Column(name = "operation_license_file_path", length = 255)
+    private String operationLicenseFilePath;
+
+    @Column(name = "owner_identity_front_path", length = 255)
+    private String ownerIdentityFrontPath;
+
+    @Column(name = "owner_identity_back_path", length = 255)
+    private String ownerIdentityBackPath;
+
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
@@ -78,6 +89,9 @@ public class Hotel {
     @Enumerated(EnumType.STRING)
     @Column(name = "approved_status", nullable = false, length = 20)
     private HotelApprovalStatus approvedStatus;
+
+    @Column(name = "rejection_reason", columnDefinition = "TEXT")
+    private String rejectionReason;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

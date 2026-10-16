@@ -50,5 +50,62 @@ public class MediaClient {
         String fileName = url.substring(url.lastIndexOf('/') + 1);
         return deleteByFileName(fileName);
     }
+
+    public String uploadPrivateDocument(String fileName, String mimeType, byte[] data) {
+        try {
+            UploadDocumentRequest request = UploadDocumentRequest.newBuilder()
+                    .setFileName(fileName)
+                    .setMimeType(mimeType)
+                    .setFileData(ByteString.copyFrom(data))
+                    .build();
+
+            UploadDocumentResponse response = mediaStub.uploadPrivateDocument(request);
+            return response.getFilePath();
+        } catch (Exception e) {
+            throw new RuntimeException("Upload private document to media-service failed", e);
+        }
+    }
+
+    public String getSignedUrl(String filePath, int expiresInSeconds) {
+        try {
+            GetSignedUrlRequest request = GetSignedUrlRequest.newBuilder()
+                    .setFilePath(filePath)
+                    .setExpiresInSeconds(expiresInSeconds)
+                    .build();
+
+            GetSignedUrlResponse response = mediaStub.getSignedUrl(request);
+            return response.getSignedUrl();
+        } catch (Exception e) {
+            throw new RuntimeException("Get signed url from media-service failed", e);
+        }
+    }
+
+    public java.util.Map<String, String> getSignedUrls(java.util.List<String> filePaths, int expiresInSeconds) {
+        if (filePaths == null || filePaths.isEmpty()) {
+            return java.util.Collections.emptyMap();
+        }
+
+        java.util.List<String> validPaths = filePaths.stream()
+                .filter(p -> p != null && !p.isBlank())
+                .toList();
+
+        if (validPaths.isEmpty()) {
+            return java.util.Collections.emptyMap();
+        }
+
+        try {
+            GetSignedUrlsRequest request = GetSignedUrlsRequest.newBuilder()
+                    .addAllFilePaths(validPaths)
+                    .setExpiresInSeconds(expiresInSeconds)
+                    .build();
+
+            GetSignedUrlsResponse response = mediaStub.getSignedUrls(request);
+            return response.getSignedUrlsMap() != null
+                    ? new java.util.HashMap<>(response.getSignedUrlsMap())
+                    : java.util.Collections.emptyMap();
+        } catch (Exception e) {
+            throw new RuntimeException("Get signed urls batch from media-service failed", e);
+        }
+    }
 }
 
