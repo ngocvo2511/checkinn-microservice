@@ -8,6 +8,8 @@ import com.example.hotelservice.Amenity.entity.HotelAmenityCategory;
 import com.example.hotelservice.Amenity.repository.HotelAmenityCategoryRepository;
 import com.example.hotelservice.Amenity.repository.HotelAmenityRepository;
 import com.example.hotelservice.Amenity.dto.request.AmenityRequest;
+import com.example.hotelservice.City.repository.CityRepository;
+import com.example.hotelservice.Hotel.dto.request.HotelAddressDto;
 import com.example.hotelservice.Hotel.dto.request.HotelCreateRequest;
 import com.example.hotelservice.Hotel.dto.request.HotelUpdateRequest;
 import com.example.hotelservice.Hotel.dto.response.PendingHotelDetailResponse;
@@ -61,6 +63,7 @@ public class HotelServiceImpl implements HotelService {
     private final QuestionRepository questionRepository;
     private final HotelAmenityCategoryRepository hotelAmenityCategoryRepository;
     private final HotelAmenityRepository hotelAmenityRepository;
+    private final CityRepository cityRepository;
     private final ObjectMapper objectMapper;
     private final HotelMapper hotelMapper;
 
@@ -75,7 +78,8 @@ public class HotelServiceImpl implements HotelService {
         hotel.setName(request.name());
         hotel.setDescription(request.description());
         hotel.setStarRating(request.starRating());
-        hotel.setAddress(writeJson(request.address()));
+        HotelAddressDto resolvedAddress = resolveAddressWithFallback(request.address(), request.cityId());
+        hotel.setAddress(writeJson(resolvedAddress));
         hotel.setContactEmail(request.contactEmail());
         hotel.setContactPhone(request.contactPhone());
         hotel.setBusinessLicenseNumber(request.businessLicenseNumber());
@@ -160,7 +164,11 @@ public class HotelServiceImpl implements HotelService {
         if (request.description() != null) hotel.setDescription(request.description());
         if (request.starRating() != null) hotel.setStarRating(request.starRating());
         if (request.cityId() != null) hotel.setCityId(request.cityId());
-        if (request.address() != null) hotel.setAddress(writeJson(request.address()));
+        if (request.address() != null) {
+            UUID targetCityId = request.cityId() != null ? request.cityId() : hotel.getCityId();
+            HotelAddressDto resolvedAddress = resolveAddressWithFallback(request.address(), targetCityId);
+            hotel.setAddress(writeJson(resolvedAddress));
+        }
         if (request.contactEmail() != null) hotel.setContactEmail(request.contactEmail());
         if (request.contactPhone() != null) hotel.setContactPhone(request.contactPhone());
         if (request.businessLicenseNumber() != null) hotel.setBusinessLicenseNumber(request.businessLicenseNumber());
@@ -702,6 +710,38 @@ public class HotelServiceImpl implements HotelService {
         questionRepository.delete(question);
 
         return hotel;
+    }
+
+    private HotelAddressDto resolveAddressWithFallback(HotelAddressDto address, UUID cityId) {
+        if (address == null) {
+            return null;
+        }
+
+        Double lat = address.latitude();
+        Double lng = address.longitude();
+
+        if (lat == null || lng == null || (lat == 0.0 && lng == 0.0)) {
+            if (cityId != null) {
+                var cityOpt = cityRepository.findById(cityId);
+                if (cityOpt.isPresent()) {
+                    var city = cityOpt.get();
+                    if (city.getLatitude() != null && city.getLongitude() != null) {
+                        lat = city.getLatitude();
+                        lng = city.getLongitude();
+                        log.info("[COORDINATE_FALLBACK] Missing coordinates, fell back to city {} ({}, {})",
+                                city.getName(), lat, lng);
+                    }
+                }
+            }
+        }
+
+        return new HotelAddressDto(
+                address.street(),
+                address.city(),
+                address.country(),
+                lat,
+                lng
+        );
     }
 
     private String writeJson(Object obj) {
