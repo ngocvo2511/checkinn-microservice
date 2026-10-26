@@ -17,6 +17,10 @@ public interface HotelService {
 
     Hotel createHotel(HotelCreateRequest request, UUID ownerId);
 
+    Hotel submitForApproval(UUID hotelId, UUID ownerId);
+
+    void deleteDraftHotel(UUID hotelId, UUID ownerId);
+
     Hotel uploadHotelDocuments(
             UUID hotelId,
             UUID ownerId,

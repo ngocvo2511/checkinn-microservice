@@ -47,6 +47,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.example.hotelservice.MediaAsset.service.MediaClient;
+import com.example.hotelservice.MediaAsset.repository.MediaAssetRepository;
+import com.example.hotelservice.MediaAsset.enums.MediaTargetType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -66,6 +69,7 @@ public class HotelServiceImpl implements HotelService {
     private final CityRepository cityRepository;
     private final ObjectMapper objectMapper;
     private final HotelMapper hotelMapper;
+    private final MediaAssetRepository mediaAssetRepository;
 
     // ========== CREATE HOTEL ==========
     @Override
@@ -88,7 +92,7 @@ public class HotelServiceImpl implements HotelService {
         hotel.setOwnerIdentityNumber(request.ownerIdentityNumber());
 
         hotel.setIsActive(false);
-        hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
+        hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
 
         hotel = hotelRepository.save(hotel);
     log.info("[CREATE_HOTEL] Hotel created successfully - hotelId: {}, ownerId: {}, name: {}", hotel.getId(), ownerId, hotel.getName());
@@ -354,7 +358,7 @@ public class HotelServiceImpl implements HotelService {
             }
 
             if (hotel.getApprovedStatus() == HotelApprovalStatus.REJECTED) {
-                hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
+                hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
                 log.info("[UPLOAD_HOTEL_DOCUMENTS] Hotel was REJECTED, reset status to PENDING for re-review - hotelId: {}", hotelId);
             }
 
@@ -369,6 +373,65 @@ public class HotelServiceImpl implements HotelService {
             log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents - hotelId: {}, error: {}", hotelId, e.getMessage(), e);
             throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Hotel submitForApproval(UUID hotelId, UUID ownerId) {
+        log.info("[SUBMIT_FOR_APPROVAL] Request to submit hotel for approval - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        Hotel hotel = getById(hotelId);
+
+        if (!hotel.getOwnerId().equals(ownerId)) {
+            throw new AccessDeniedException("Bạn không có quyền gửi duyệt khách sạn này.");
+        }
+
+        if (hotel.getApprovedStatus() != HotelApprovalStatus.DRAFT && hotel.getApprovedStatus() != HotelApprovalStatus.REJECTED) {
+            throw new IllegalStateException("Chỉ có thể gửi duyệt khách sạn ở trạng thái bản nháp (DRAFT) hoặc bị từ chối (REJECTED).");
+        }
+
+        if (hotel.getBusinessLicenseFilePath() == null || hotel.getBusinessLicenseFilePath().isBlank()
+                || hotel.getOwnerIdentityFrontPath() == null || hotel.getOwnerIdentityFrontPath().isBlank()
+                || hotel.getOwnerIdentityBackPath() == null || hotel.getOwnerIdentityBackPath().isBlank()) {
+            throw new IllegalArgumentException("Vui lòng tải lên đầy đủ giấy tờ xác thực (Giấy phép kinh doanh, CCCD 2 mặt) trước khi gửi duyệt.");
+        }
+
+        var thumbnail = mediaAssetRepository.findFirstByTargetIdAndTargetTypeAndIsThumbnailTrue(hotelId, MediaTargetType.HOTEL);
+        if (thumbnail == null) {
+            throw new IllegalArgumentException("Vui lòng tải lên ảnh thumbnail trước khi gửi duyệt.");
+        }
+
+        hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
+        hotel.setRejectionReason(null);
+        hotel = hotelRepository.save(hotel);
+        log.info("[SUBMIT_FOR_APPROVAL] Hotel submitted for approval successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        return hotel;
+    }
+
+    @Override
+    @Transactional
+    public void deleteDraftHotel(UUID hotelId, UUID ownerId) {
+        log.info("[DELETE_DRAFT_HOTEL] Request to delete draft hotel - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        Hotel hotel = getById(hotelId);
+
+        if (!hotel.getOwnerId().equals(ownerId)) {
+            throw new AccessDeniedException("Bạn không có quyền xóa khách sạn này.");
+        }
+
+        if (hotel.getApprovedStatus() != HotelApprovalStatus.DRAFT) {
+            throw new IllegalStateException("Chỉ có thể xóa khách sạn ở trạng thái bản nháp (DRAFT).");
+        }
+
+        hotelAmenityRepository.deleteAllByCategoryHotelId(hotelId);
+        hotelAmenityCategoryRepository.deleteAllByHotelId(hotelId);
+        hotelPolicyRepository.deleteAllByHotelId(hotelId);
+        questionRepository.deleteAllByHotelId(hotelId);
+
+        var mediaList = mediaAssetRepository.findByTargetIdAndTargetType(hotelId, MediaTargetType.HOTEL);
+        if (mediaList != null && !mediaList.isEmpty()) {
+            mediaAssetRepository.deleteAll(mediaList);
+        }
+
+        hotelRepository.delete(hotel);
+        log.info("[DELETE_DRAFT_HOTEL] Draft hotel deleted successfully - hotelId: {}", hotelId);
     }
 
     @Override
