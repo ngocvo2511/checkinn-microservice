@@ -84,6 +84,32 @@ public class HotelController {
     }
 
     // -------------------------------------------------------
+    // Gửi duyệt khách sạn (DRAFT -> PENDING)
+    @PostMapping("/{hotelId}/submit-approval")
+    public ResponseEntity<HotelResponse> submitForApproval(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID hotelId
+    ) {
+        UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_SUBMIT_APPROVAL] Submit hotel for approval request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        var submitted = hotelService.submitForApproval(hotelId, ownerId);
+        log.info("[HOTEL_CONTROLLER_SUBMIT_APPROVAL] Hotel submitted for approval successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        return ResponseEntity.ok(hotelMapper.toHotelResponse(submitted));
+    }
+
+    // Xóa khách sạn bản nháp (DRAFT)
+    @DeleteMapping("/{hotelId}/draft")
+    public ResponseEntity<?> deleteDraftHotel(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID hotelId
+    ) {
+        UUID ownerId = getOwnerId(jwt.getSubject());
+        log.info("[HOTEL_CONTROLLER_DELETE_DRAFT] Delete draft hotel request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        hotelService.deleteDraftHotel(hotelId, ownerId);
+        log.info("[HOTEL_CONTROLLER_DELETE_DRAFT] Draft hotel deleted successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        return ResponseEntity.ok(Map.of("message", "Xóa khách sạn bản nháp thành công"));
+    }
+
     // 2. Update khách sạn
     // -------------------------------------------------------
     @PutMapping("/{hotelId}")

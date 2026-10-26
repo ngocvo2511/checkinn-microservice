@@ -15,6 +15,11 @@ import com.example.hotelservice.Hotel.enums.HotelApprovalStatus;
 import com.example.hotelservice.Hotel.mapper.HotelMapper;
 import com.example.hotelservice.Hotel.repository.HotelRepository;
 import com.example.hotelservice.MediaAsset.service.MediaClient;
+import com.example.hotelservice.MediaAsset.repository.MediaAssetRepository;
+import com.example.hotelservice.MediaAsset.entity.MediaAsset;
+import com.example.hotelservice.MediaAsset.enums.MediaTargetType;
+import org.springframework.security.access.AccessDeniedException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.example.hotelservice.Policy.repository.HotelPolicyRepository;
 import com.example.hotelservice.Policy.repository.PolicyCategoryTypeRepository;
 import com.example.hotelservice.Question.repository.QuestionRepository;
@@ -50,6 +55,7 @@ class HotelServiceImplTest {
     private CityRepository cityRepository;
     private ObjectMapper objectMapper;
     private HotelMapper hotelMapper;
+    private MediaAssetRepository mediaAssetRepository;
 
     private HotelServiceImpl hotelService;
 
@@ -66,6 +72,7 @@ class HotelServiceImplTest {
         cityRepository = mock(CityRepository.class);
         objectMapper = mock(ObjectMapper.class);
         hotelMapper = mock(HotelMapper.class);
+        mediaAssetRepository = mock(MediaAssetRepository.class);
 
         hotelService = new HotelServiceImpl(
                 userGrpcClient,
@@ -78,7 +85,8 @@ class HotelServiceImplTest {
                 hotelAmenityRepository,
                 cityRepository,
                 objectMapper,
-                hotelMapper
+                hotelMapper,
+                mediaAssetRepository
         );
     }
 
@@ -209,6 +217,7 @@ class HotelServiceImplTest {
         Hotel created = hotelService.createHotel(request, ownerId);
 
         assertThat(created).isNotNull();
+        assertThat(created.getApprovedStatus()).isEqualTo(HotelApprovalStatus.DRAFT);
         verify(cityRepository).findById(cityId);
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(obj -> {
             if (obj instanceof HotelAddressDto addr) {
@@ -300,6 +309,7 @@ class HotelServiceImplTest {
         Hotel created = hotelService.createHotel(request, ownerId);
 
         assertThat(created).isNotNull();
+        assertThat(created.getApprovedStatus()).isEqualTo(HotelApprovalStatus.DRAFT);
         verify(cityRepository).findById(cityId);
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(obj -> {
             if (obj instanceof HotelAddressDto addr) {
@@ -338,6 +348,7 @@ class HotelServiceImplTest {
         Hotel created = hotelService.createHotel(request, ownerId);
 
         assertThat(created).isNotNull();
+        assertThat(created.getApprovedStatus()).isEqualTo(HotelApprovalStatus.DRAFT);
         verify(cityRepository, never()).findById(any());
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(obj -> {
             if (obj instanceof HotelAddressDto addr) {
@@ -345,5 +356,119 @@ class HotelServiceImplTest {
             }
             return false;
         }));
+    }
+
+    @Test
+    void submitForApproval_Success() {
+        UUID ownerId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+        hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
+        hotel.setBusinessLicenseFilePath("docs/biz.pdf");
+        hotel.setOwnerIdentityFrontPath("docs/front.jpg");
+        hotel.setOwnerIdentityBackPath("docs/back.jpg");
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        when(mediaAssetRepository.findFirstByTargetIdAndTargetTypeAndIsThumbnailTrue(hotelId, MediaTargetType.HOTEL))
+                .thenReturn(new MediaAsset());
+        when(hotelRepository.save(any(Hotel.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        Hotel result = hotelService.submitForApproval(hotelId, ownerId);
+
+        assertThat(result.getApprovedStatus()).isEqualTo(HotelApprovalStatus.PENDING);
+        verify(hotelRepository).save(hotel);
+    }
+
+    @Test
+    void submitForApproval_WhenNotOwner_ShouldThrowAccessDenied() {
+        UUID ownerId = UUID.randomUUID();
+        UUID otherId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+
+        assertThatThrownBy(() -> hotelService.submitForApproval(hotelId, otherId))
+                .isInstanceOf(AccessDeniedException.class);
+    }
+
+    @Test
+    void submitForApproval_WhenMissingDocuments_ShouldThrowIllegalArgument() {
+        UUID ownerId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+        hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
+        hotel.setBusinessLicenseFilePath(null);
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+
+        assertThatThrownBy(() -> hotelService.submitForApproval(hotelId, ownerId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Vui lòng tải lên đầy đủ giấy tờ xác thực");
+    }
+
+    @Test
+    void submitForApproval_WhenMissingThumbnail_ShouldThrowIllegalArgument() {
+        UUID ownerId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+        hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
+        hotel.setBusinessLicenseFilePath("docs/biz.pdf");
+        hotel.setOwnerIdentityFrontPath("docs/front.jpg");
+        hotel.setOwnerIdentityBackPath("docs/back.jpg");
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        when(mediaAssetRepository.findFirstByTargetIdAndTargetTypeAndIsThumbnailTrue(hotelId, MediaTargetType.HOTEL))
+                .thenReturn(null);
+
+        assertThatThrownBy(() -> hotelService.submitForApproval(hotelId, ownerId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Vui lòng tải lên ảnh thumbnail");
+    }
+
+    @Test
+    void deleteDraftHotel_Success() {
+        UUID ownerId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+        hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        when(mediaAssetRepository.findByTargetIdAndTargetType(hotelId, MediaTargetType.HOTEL)).thenReturn(Collections.emptyList());
+
+        hotelService.deleteDraftHotel(hotelId, ownerId);
+
+        verify(hotelRepository).delete(hotel);
+    }
+
+    @Test
+    void deleteDraftHotel_WhenNotDraft_ShouldThrowIllegalState() {
+        UUID ownerId = UUID.randomUUID();
+        UUID hotelId = UUID.randomUUID();
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setOwnerId(ownerId);
+        hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
+
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+
+        assertThatThrownBy(() -> hotelService.deleteDraftHotel(hotelId, ownerId))
+                .isInstanceOf(IllegalStateException.class);
     }
 }
