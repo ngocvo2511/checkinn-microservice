@@ -1,0 +1,119 @@
+@startuml SAD_C4_Container
+title Tripto - C4 Level 2: Container Diagram
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+skinparam rectangle {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+}
+skinparam database {
+  BorderColor #334155
+  BackgroundColor #FEF3C7
+}
+skinparam queue {
+  BorderColor #334155
+  BackgroundColor #DCFCE7
+}
+
+legend right
+  C4 Level 2 - Containers
+  Solid = current or directly represented in code.
+  Dashed = planned/future architecture extension.
+endlegend
+
+actor "Guest / Customer" as Customer
+actor "Hotel Owner" as Owner
+actor "Administrator" as Admin
+
+rectangle "Next.js Frontend\nReact 19, Next.js 16, Tailwind CSS\ncheckinn-frontend" as Frontend
+rectangle "API Gateway\nSpring Cloud Gateway\napi-gateway" as Gateway
+rectangle "Eureka Server\nService discovery\neureka-server" as Eureka
+rectangle "Config Server\nCentralized config\nconfig-server" as Config
+rectangle "Admin Server\nSpring Boot Admin\nadmin-server" as AdminServer
+
+rectangle "Auth Service\nLogin, register orchestration,\nJWT issuance, gRPC auth\nauth-service" as Auth
+rectangle "User Service\nUsers, profiles, OTP,\nloyalty points\nuser-service" as User
+rectangle "Hotel Service\nHotels, rooms, availability,\nreviews, policies, media metadata\nhotel-service" as Hotel
+rectangle "Booking Service\nBookings, room holds,\npayment module, schedulers\nbooking-service" as Booking
+rectangle "Media Service\nUpload/delete objects via gRPC\nmedia-service" as Media
+rectangle "Revenue Service\nOwner/admin reporting,\nevent ingestion\nrevenue-service" as Revenue
+rectangle "Regulations Service\nCommission, points, hold expiry,\ndynamic regulations\nregulations-service" as Regulations
+rectangle "Notification Service\nOTP and booking/payment emails\nnotification-service" as Notification
+
+queue "RabbitMQ\nhotel.events and notification queues" as RabbitMQ
+database "PostgreSQL Databases\nservice-owned schemas/data" as Postgres
+rectangle "Supabase Storage\nObject storage" as Supabase
+rectangle "VNPay\nExternal payment gateway" as VNPay
+rectangle "Email Provider\nSMTP/transactional email" as Email
+
+database "Redis Cluster\nToken blacklist, OTP/session cache,\ndelayed jobs (planned)" as Redis #F5F5F5
+database "Elasticsearch\nSearch optimization (planned)" as Elastic #F5F5F5
+database "Read Replica / CQRS Store\nReporting scale-out (planned)" as ReadReplica #F5F5F5
+
+Customer --> Frontend : Uses web UI
+Owner --> Frontend : Uses host portal
+Admin --> Frontend : Uses admin portal
+
+Frontend --> Gateway : HTTPS/REST API
+Gateway --> Auth : /api/auth/**
+Gateway --> User : /api/user/**, /api/loyalty-points/**
+Gateway --> Hotel : /api/hotel/**, /api/v1/**, /hotels/**, /cities/**
+Gateway --> Booking : /api/bookings/**, /api/payments/**
+Gateway --> Revenue : /api/reports/**
+Gateway --> Regulations : /api/regulations/**
+
+Gateway --> Eureka : Service lookup
+Auth --> Eureka
+User --> Eureka
+Hotel --> Eureka
+Booking --> Eureka
+Media --> Eureka
+Revenue --> Eureka
+Regulations --> Eureka
+Notification --> Eureka
+
+Auth --> User : gRPC user lookup/create
+Hotel --> User : gRPC owner/user lookup
+Hotel --> Media : gRPC upload/delete
+Booking --> Hotel : REST availability hold/confirm/release
+Booking --> User : REST loyalty points
+Revenue --> Hotel : gRPC/REST hotel and capacity data
+Revenue --> Regulations : REST regulation values
+User --> Regulations : REST/cache regulation values
+
+User --> RabbitMQ : Publish OTP email events
+Booking --> RabbitMQ : Publish payment and booking status events
+Regulations --> RabbitMQ : Publish regulation update events
+RabbitMQ --> Notification : Consume OTP/payment notification events
+RabbitMQ --> Revenue : Consume payment/booking events
+RabbitMQ --> User : Consume regulation update events
+RabbitMQ --> Revenue : Consume regulation update events
+
+Auth --> Postgres : Auth/user-related data via services
+User --> Postgres : User, profile, OTP,\nloyalty data
+Hotel --> Postgres : Hotel, room, availability,\nreview, policy, media metadata
+Booking --> Postgres : Booking and payment data
+Revenue --> Postgres : Payment and booking status records
+Regulations --> Postgres : Regulation snapshots and values
+
+Booking --> VNPay : Create payment URL,\nprocess return/callback
+Notification --> Email : Send OTP and notifications
+Media --> Supabase : Store/retrieve objects
+
+Gateway ..> Redis : Token blacklist/rate limit (future)
+User ..> Redis : OTP/session cache (future)
+Booking ..> Redis : Delayed hold expiration jobs (future)
+Hotel ..> Elastic : Hotel search index (future)
+Revenue ..> ReadReplica : Reporting read model (future)
+
+AdminServer --> Gateway : Monitor actuator endpoints
+AdminServer --> Auth
+AdminServer --> User
+AdminServer --> Hotel
+AdminServer --> Booking
+AdminServer --> Revenue
+AdminServer --> Regulations
+
+@enduml

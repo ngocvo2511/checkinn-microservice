@@ -1,0 +1,99 @@
+@startuml SAD_C4_Component_HotelAvailability
+title Tripto - C4 Level 3: Hotel Service, Availability, Reviews, Media Metadata
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+skinparam rectangle {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+}
+skinparam database {
+  BorderColor #334155
+  BackgroundColor #FEF3C7
+}
+
+actor "Customer" as Customer
+actor "Hotel Owner" as Owner
+actor "Administrator" as Admin
+
+rectangle "API Gateway / Frontend" as Client
+rectangle "Booking Service" as BookingService
+rectangle "Revenue Service" as RevenueService
+rectangle "User Service" as UserService
+rectangle "Media Service" as MediaService
+
+rectangle "Hotel Service\nhotel-service" as HotelBoundary {
+  rectangle "HotelController\nHotel lifecycle and approval APIs" as HotelController
+  rectangle "RoomTypeController\nRoom type management" as RoomController
+  rectangle "AvailabilityController\nAvailability check, hold,\nconfirm, release" as AvailabilityController
+  rectangle "ReviewController\nCustomer reviews and owner responses" as ReviewController
+  rectangle "MediaAssetController\nMedia metadata API" as MediaController
+  rectangle "CityController\nCity/province search" as CityController
+  rectangle "PolicyController\nHotel policies" as PolicyController
+  rectangle "HotelGrpcServiceImpl\nHotel info gRPC" as HotelGrpc
+  rectangle "ReviewGrpcServiceImpl\nReview info gRPC" as ReviewGrpc
+
+  rectangle "HotelServiceImpl" as HotelService
+  rectangle "RoomTypeServiceImpl" as RoomService
+  rectangle "AvailabilityService\nTransactional hold and release logic" as AvailabilityService
+  rectangle "ReviewService\nReview stats, duplicate prevention,\nowner responses" as ReviewService
+  rectangle "MediaServiceImpl\nMedia metadata plus gRPC upload" as MediaServiceImpl
+  rectangle "LocationService / CityService" as LocationService
+
+  rectangle "HotelRepository / RoomTypeRepository" as HotelRepos
+  rectangle "RoomAvailabilityRepository / RoomHoldRepository" as AvailabilityRepos
+  rectangle "HotelReviewRepository / ReviewResponseRepository" as ReviewRepos
+  rectangle "MediaAssetRepository" as MediaRepo
+  rectangle "CityRepository / ProvinceRepository" as LocationRepos
+  rectangle "Policy Repositories" as PolicyRepos
+}
+
+database "Hotel DB\nhotels, room_types,\navailability, holds,\nreviews, policies, media metadata" as HotelDB
+rectangle "Supabase Storage\nvia Media Service" as Supabase
+
+Customer --> Client : Search, view hotels,\nsubmit reviews
+Owner --> Client : Manage hotels, rooms,\nmedia, reviews
+Admin --> Client : Approve/reject hotels,\nmanage platform content
+
+Client --> HotelController : /hotels/**, /api/hotel/**
+Client --> RoomController : /api/v1/room-types/**
+Client --> AvailabilityController : /api/v1/availability/**
+Client --> ReviewController : /api/v1/reviews/**
+Client --> MediaController : /api/v1/media-assets/**
+Client --> CityController : /cities/**
+Client --> PolicyController : /api/v1/policies/**
+
+BookingService --> AvailabilityController : hold, confirm,\nrelease, check hold
+RevenueService --> HotelGrpc : hotel/capacity data
+RevenueService --> ReviewGrpc : review data
+HotelService --> UserService : owner/user lookup
+MediaServiceImpl --> MediaService : gRPC upload/delete
+MediaService --> Supabase : object operations
+
+HotelController --> HotelService
+RoomController --> RoomService
+AvailabilityController --> AvailabilityService
+ReviewController --> ReviewService
+MediaController --> MediaServiceImpl
+CityController --> LocationService
+PolicyController --> PolicyRepos
+HotelGrpc --> HotelService
+ReviewGrpc --> ReviewService
+
+HotelService --> HotelRepos
+RoomService --> HotelRepos
+AvailabilityService --> AvailabilityRepos
+AvailabilityService --> HotelRepos
+ReviewService --> ReviewRepos
+MediaServiceImpl --> MediaRepo
+LocationService --> LocationRepos
+PolicyRepos --> HotelDB
+
+HotelRepos --> HotelDB
+AvailabilityRepos --> HotelDB
+ReviewRepos --> HotelDB
+MediaRepo --> HotelDB
+LocationRepos --> HotelDB
+
+@enduml

@@ -1,0 +1,111 @@
+@startuml SAD_C4_Deployment
+title Tripto - C4 Deployment View
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+skinparam node {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+}
+skinparam database {
+  BorderColor #334155
+  BackgroundColor #FEF3C7
+}
+skinparam queue {
+  BorderColor #334155
+  BackgroundColor #DCFCE7
+}
+
+legend right
+  Deployment view
+  Current local/dev topology plus target production scaling notes.
+  Dashed nodes are future production extensions.
+endlegend
+
+node "User Device\nBrowser" as Browser {
+  artifact "Tripto Web UI" as WebUI
+}
+
+node "Frontend Runtime\nNode.js / Next.js" as FrontendNode {
+  artifact "checkinn-frontend" as Frontend
+}
+
+node "Backend Runtime\nSpring Boot services" as Backend {
+  artifact "api-gateway :8080" as Gateway
+  artifact "auth-service" as Auth
+  artifact "user-service" as User
+  artifact "hotel-service" as Hotel
+  artifact "booking-service" as Booking
+  artifact "media-service" as Media
+  artifact "revenue-service" as Revenue
+  artifact "regulations-service" as Regulations
+  artifact "notification-service" as Notification
+  artifact "config-server" as Config
+  artifact "eureka-server :8761" as Eureka
+  artifact "admin-server :9095" as AdminServer
+}
+
+queue "RabbitMQ\nDocker container\n5672 / 15672" as RabbitMQ
+database "PostgreSQL\nService-owned databases" as Postgres
+node "Supabase Cloud\nObject Storage" as Supabase
+node "VNPay Sandbox/Production" as VNPay
+node "Email Provider" as Email
+
+node "Production Load Balancer\nNginx / Cloud LB\n(planned)" as LoadBalancer #F5F5F5
+node "Kubernetes / Container Platform\nReplicated services\n(planned)" as K8s #F5F5F5
+database "Redis Cluster\n(planned)" as Redis #F5F5F5
+database "Elasticsearch\n(planned)" as Elastic #F5F5F5
+database "Read Replica / CQRS Store\n(planned)" as ReadReplica #F5F5F5
+
+Browser --> FrontendNode : HTTPS
+FrontendNode --> Gateway : REST over HTTP
+Gateway --> Eureka : service discovery
+Gateway --> Auth
+Gateway --> User
+Gateway --> Hotel
+Gateway --> Booking
+Gateway --> Revenue
+Gateway --> Regulations
+
+Auth --> User : gRPC
+Hotel --> User : gRPC
+Hotel --> Media : gRPC
+Booking --> Hotel : REST
+Booking --> User : REST
+Revenue --> Hotel : gRPC/REST
+Revenue --> Regulations : REST
+
+User --> RabbitMQ : OTP events
+Booking --> RabbitMQ : payment/booking events
+Regulations --> RabbitMQ : regulation events
+RabbitMQ --> Notification
+RabbitMQ --> Revenue
+RabbitMQ --> User
+
+Auth --> Postgres
+User --> Postgres
+Hotel --> Postgres
+Booking --> Postgres
+Revenue --> Postgres
+Regulations --> Postgres
+
+Media --> Supabase : HTTPS object API
+Booking --> VNPay : HTTPS payment flow
+Notification --> Email : SMTP/API
+
+LoadBalancer ..> K8s : route traffic
+K8s ..> Gateway
+K8s ..> Auth
+K8s ..> User
+K8s ..> Hotel
+K8s ..> Booking
+K8s ..> Revenue
+K8s ..> Regulations
+Gateway ..> Redis
+User ..> Redis
+Booking ..> Redis
+Hotel ..> Elastic
+Revenue ..> ReadReplica
+
+@enduml

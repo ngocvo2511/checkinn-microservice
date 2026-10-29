@@ -1,0 +1,3164 @@
+﻿________________
+
+
+Revision and Sign Off Sheet
+Change Record
+Author
+	Version
+	Change reference
+	Date
+	Vo Xuan Ngoc
+	1.0
+	Initialize
+	22/3/2026
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	Reviewers
+Name
+	Version 
+	Position
+	Date
+	Vo Xuan Ngoc
+	1.0
+	Application Owner
+	22/3/2026
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table of Contents
+
+
+1.        Introduction        3
+1.1.        Purpose        3
+1.2.        Scope        3
+1.3.        Intended Audiences and Document Organization        3
+2.        Functional Requirements        5
+2.1.        Use Case Description        5
+2.2.        List Description        115
+2.3.        View Description        115
+3.        Non-functional Requirements        116
+3.1. User Access and Security        116
+3.2. Performance Requirements        117
+3.3. Implementation Requirements        117
+4.        Appendixes        118
+Glossary        118
+Messages        118
+Issues List        123
+
+
+
+
+
+
+________________
+
+
+1. Introduction
+   1. Purpose
+This document serves as the comprehensive Software Requirements Specification (SRS) and Design Document for the Tripto project. Tripto is a hotel booking system that allows customers to search for hotels, view hotel details, book rooms, make payments, manage booking history, submit hotel reviews, and manage personal account information. The system also supports hotel owners in managing hotels, bookings, revenue, and customer reviews, while administrators can manage users, pending hotels, and system reports.
+The primary purpose of this document is to define the software requirements and establish a clear design framework for the Tripto project. It provides a shared reference for developers, project managers, testers, documentation members, and other stakeholders involved in the software development lifecycle.
+By describing the system requirements, use cases, business rules, user flows, and design considerations, this document helps ensure that the project is developed consistently with the expected functionality, technical constraints, and user needs. It also supports task planning, implementation, testing, deployment, and future maintenance of the Tripto
+   2. Scope
+The scope of this document covers both the functional and non-functional requirements of the Tripto project. It defines how the system operates from the perspective of customers, hotel owners, and administrators.
+The functional scope includes major features such as user registration, login, forgot password, hotel search, room booking, payment processing, booking history, hotel reviews, personal information management, hotel owner review management, and administrative management functions.
+The non-functional scope includes system performance, security, role-based access control, user interface behavior, system reliability, data validation, integration with external services, and deployment considerations.
+Tripto is designed as a web-based hotel booking platform with separate workflows for different user roles. Customers interact with the system to search, book, pay, and review hotels. Hotel owners manage their hotel-related operations, including bookings, reviews, and revenue. Administrators manage system-level data and monitor platform operations.
+   3. Intended Audiences and Document Organization
+This document is intended for the teams and stakeholders involved in the development, documentation, testing, and evaluation of the Tripto project. Each audience uses this document for a different purpose, but all share the same goal: ensuring that the system is implemented according to the agreed requirements and design.
+
+
+This document is intended for:
+❖ Development Team: The development team uses this document as the main reference for implementing the Tripto system. It guides the design, coding, integration, and unit testing of customer, hotel owner, and administrator features.
+❖ Documentation Team: The documentation team uses this document to understand system behavior, user flows, business rules, and feature scope. This helps them create clear and accurate user guides, technical documentation, and supporting materials for Tripto.
+❖ UAT Team: The User Acceptance Testing team uses this document to validate the system from the end-user perspective. Their responsibility is to ensure that Tripto meets the expected business requirements, supports the defined use cases, and behaves correctly in real usage scenarios.
+
+
+
+
+
+
+Below are the main sections of the document:
+❖ 1. Introduction: This section provides the general introduction, purpose, scope, intended audiences, and document organization.
+❖ 2. Functional Requirements: This section describes the system’s functional requirements in detail, including use cases and business flows.
+❖ 3. Non-functional Requirements: This section describes non-functional requirements such as access control, security, interfaces, user experience, system performance, and reliability.
+❖ 4. Other Requirements: This section describes additional requirements such as data management, audit considerations, backup, logging, and system constraints.
+❖ 5. Appendixes: This section includes supporting information, diagrams, message codes, business rules, references, and other materials related to the Tripto project.
+
+
+________________
+
+
+2. Functional Requirements
+   1. Use Case Description
+* UC01 – Login
+Use Case ID
+	UC01
+	Use Case Name
+	Login
+	Description
+	The user logs in to the system using a valid username/email and password.
+	Actors
+	Admin, Hotel Owner, Customer
+	Trigger
+	The user selects the login function in the system.
+	Preconditions
+	The user already has a valid account. The account email has been verified.
+	Postconditions
+	The user is authenticated successfully. The system stores the authentication token/session and redirects the user to the appropriate page based on their role.
+	
+
+  
+
+  
+
+Business Rules
+Activity
+	BR Code
+	Description
+	5
+	BR1
+	Validate Rules:
+❖ The system checks the items [email] and [password] (View: `app/page.tsx`, Component: `LoginModal`).
+❖ If [email] or [password] is null or blank, the system shows MSG01. 
+	7
+	BR2
+	Validate Rules:
+❖ The system checks the items [usernameOrEmail] and [password] (UserService.login([usernameOrEmail], [password])).
+❖ If [usernameOrEmail] does not exist, the system shows MSG02.
+❖ If the account matching [usernameOrEmail] has not verified email, the system shows MSG02.
+❖ If hash([password]) does not match the stored password, the system shows MSG02.
+	9
+	BR3
+	Message Rules:
+❖ ❖ The system shows MSG01 or MSG02
+	10
+	BR4
+	Token Rules:
+❖ If login information is valid, the system generates [token] from [userId] and [role] (JwtService.generateToken([userId], [role])).
+	11
+	BR5
+	Response Rules:
+❖ The system returns [token], [userId], [email], [fullName], and [role].
+	12
+	BR6
+	Session Rules:
+❖ The system stores [token] in localStorage.
+❖ The system stores the authenticated [user] session in localStorage.
+	13
+	BR7
+	Redirect Rules:
+❖ If [role] is ADMIN, the system redirects to /admin/dashboard.
+❖ If [role] is OWNER or HOST, the system redirects to /host/dashboard.
+❖ Otherwise, the system reloads the current page to update the customer login state.
+	
+
+* UC02 – Register
+Use Case ID
+	UC02
+	Use Case Name
+	Register
+	Description
+	The customer registers a new account and verifies the account email using OTP.
+	Actors
+	Customer
+	Trigger
+	The customer selects the account registration function.
+	Preconditions
+	The customer does not already have an account using the same username or email.
+	Postconditions
+	The customer account is created, the email is verified successfully, and the account can be used to log in to the system.
+	
+
+
+
+  
+
+  
+
+Business Rules
+Activity
+	BR Code
+	Description
+	5
+	BR8
+	Validate Rules:
+❖ The system checks the items [fullName], [username], [email], [password], and [confirmPassword] (View: `app/page.tsx`, Component: `SignupModal`).
+❖ If any of them is null or blank, the system shows MSG01.
+❖ If [password] does not equal [confirmPassword], the system shows MSG07.
+❖ Otherwise, the system creates [registerData] from [fullName], [username], [email], and [password].
+	7
+	BR9
+	Validate Rules:
+❖ The system checks the items [username], [email] (UserService.registerUser()).
+❖ If [username] already exists, the system shows MSG08 (function: userRepository.existsByUsername([username])).
+❖ If [email] already exists, the system shows MSG09 (function: userRepository.existsByEmail([email])).
+	9
+	BR10
+	Message Rules:
+❖ The system shows the corresponding registration validation error message.
+	10
+	BR11
+	Account Rules:
+(Service: `AuthService.register()`, External client: `UserGrpcClient`).
+❖ The system creates a new [user] account with [isEmailVerified] = false.
+❖ The system creates the user profile from [fullName].
+	11
+	BR12
+	OTP Rules:
+(OtpService.generateAndSendOtp())
+❖ The system generates a 6-digit [otpCode].
+❖ The system sets [expiryTime] to 10 minutes after OTP creation.
+❖ The system sets [attemptCount] = 0 and [isVerified] = false for the OTP record.
+	16
+	BR13
+	Validate Rules:
+❖ The system checks [otpValue].
+❖ If [otpValue] is null, blank, or not 6 digits, the system shows MSG10 (View: `app/page.tsx`, function: handleVerifyOtp()).
+	18
+	BR14
+	Validate Rules:
+❖ The system checks [otpValue].
+❖ If [otpValue] does not match the saved [otpCode], the system shows MSG11.
+❖ If [otpCode] is expired, the system shows MSG11.
+❖ If [attemptCount] reaches the maximum allowed attempts, the system shows MSG11.
+❖ Otherwise, the system marks the OTP as verified (function: OtpService.verifyOtp()).
+Account Rules:
+❖ The system updates [isEmailVerified] = true for the account matching [email] (Controller: `OtpController.verifyOtp()`, Service: `UserService.verifyUserEmail()`).
+	20
+	BR15
+	Message Rules:
+❖ The system shows MSG10, MSG11, or MSG15.
+	
+
+* UC03 – Forgot Password
+Use Case ID
+	UC03
+	Use Case Name
+	Forgot Password
+	Description
+	The user requests to reset their password, verifies their identity using an OTP sent to their registered email, and sets a new password.
+	Actors
+	Admin, Hotel Owner, Customer
+	Trigger
+	The user selects the forgot password function.
+	Preconditions
+	The user has a valid account with an email address registered in the system.
+	Postconditions
+	After successful OTP verification and valid password submission, the user’s password is updated successfully.
+	
+
+  
+
+  
+
+
+
+Business Rules
+Activity
+	BR Code
+	Description
+	5
+	BR16
+	Validate Rules:
+❖ The system checks the item [email] (View: `app/page.tsx`).
+❖ If [email] is null or blank, the system shows MSG16.
+❖ Otherwise, the system sends the password reset request with [email].
+	7
+	BR17
+	OTP Rules:
+❖ The system generates a 6-digit [otpCode].
+❖ The system sets [expiryTime] to 10 minutes after OTP creation.
+❖ The system sets [attemptCount] = 0 and [isVerified] = false for the OTP record.
+(OtpService.generateAndSendOtp())
+
+
+Notification Rules:
+❖ The system sends [otpCode] to [email].
+(sendOtpViaRabbitMQ([email], [otpCode]))
+	9
+	BR18
+	Message Rules:
+❖ The system shows MSG16 or MSG17
+	13
+	BR19
+	Validate Rules:
+❖ The system checks [otpValue].
+❖ If [otpValue] is null, blank, or not 6 digits, the system shows MSG10.
+(View: `app/page.tsx`, handleVerifyOtp())
+❖ Otherwise, the system delegates OTP verification to `OtpService.verifyOtp()` (Component: `OtpService` in `auth-service`).
+	15
+	BR20
+	OTP Verification & Email Verification Rules:
+❖ If [otpValue] does not match the saved [otpCode], the system shows MSG11.
+❖ If [otpCode] is expired, the system shows MSG11.
+❖ If [attemptCount] reaches the maximum allowed attempts, the system shows MSG11.
+❖ Otherwise, the system marks the OTP as verified.
+(OtpService.verifyOtp())
+	17
+	BR21
+	Message Rules:
+❖ The system shows MSG10, MSG11, or MSG15. 
+	21
+	BR22
+	Validate Rules:
+❖ The system checks the items [newPassword] and [confirmPassword].
+❖ If [newPassword] or [confirmPassword] is null or blank, the system shows MSG18.
+❖ If [newPassword] does not equal [confirmPassword], the system shows MSG07.
+❖ Otherwise, the system sends password reset request to backend with [email] and [newPassword].
+(View: `app/page.tsx`, handleResetPassword())
+	23
+	BR23
+	Reset Rules:
+❖ The system checks the items [newPassword].
+❖ If [newPassword] has fewer than 6 characters, the system shows MSG19.
+❖ The system finds the account by [email].
+❖ The system hashes [newPassword].
+❖ The system updates the account password with hash([newPassword]). 
+(UserService.resetPassword())
+	25
+	BR24
+	Message Rules:
+❖ The system shows MSG07, MSG18, MSG19, MSG20, or MSG21.
+	
+
+* UC04 – Search Hotels
+Use Case ID
+	UC04
+	Use Case Name
+	Search Hotels
+	Description
+	The user searches for hotels by destination or hotel name, stay dates, number of guests, and number of rooms.
+	Actors
+	Customer, Guest User
+	Trigger
+	The user performs a hotel search from the home page or search page.
+	Preconditions
+	The system has hotel, room type, and availability data for searching.
+	Postconditions
+	The user receives a list of hotels that match the search criteria and can view hotel details. If no hotel matches the criteria, the system displays an appropriate no-result message.
+	
+
+  
+
+  
+
+
+
+Business Rules
+Activity
+	BR Code
+	Description
+	5
+	BR25
+	Validate Rules:
+❖ The system checks the search information from [selectedCity], [selectedHotel], [hotelName], [checkInDate], [checkOutDate], [adults], [children], and [rooms].
+❖ If neither [selectedCity] nor [selectedHotel] nor [hotelName] is provided, the system shows MSG23.
+❖ If [checkInDate] or [checkOutDate] is null, the system shows MSG24.
+❖ If [checkOutDate] is not after [checkInDate], the system shows MSG24.
+❖ If [adults] is less than 1, the system sets [adults] = 1.
+❖ If [children] is less than 0, the system sets [children] = 0.
+❖ If [rooms] is less than 1, the system sets [rooms] = 1. 
+(View: app/page.tsx, handleSearch())
+	5b
+	BR26
+	Message Rules:
+❖ The system shows MSG23 or MSG24.
+	7
+	BR27
+	Search Rules:
+❖ If [hotelName] is provided, the system searches hotels by [hotelName].
+	8
+	BR28
+	Validate Rules:
+❖ The system checks whether the hotel name search result contains at least one eligible hotel.
+❖ If no eligible hotel is found, the system shows MSG25.
+(View: app/search/page.tsx)
+	9
+	BR29
+	Redirect Rules:
+❖ The system redirects to the hotel detail page using [hotelId].
+❖ The system keeps [checkIn], [checkOut], [rooms], [adults], and [children] in the URL search parameters.
+	10
+	BR30
+	Message Rules:
+❖ The system shows MSG25 or MSG29.
+	12
+	BR31
+	Search Rules:
+❖ If [cityName] is provided, the system searches matching locations by [cityName].
+❖ Matching locations may be city or province records.
+(LocationService.searchLocations(query))
+	12
+	BR32
+	Location Rules:
+❖ If the matched destination is a city, the system adds its [cityId] to [cityIds].
+❖ If the matched destination is a province, the system finds all cities in that province and adds their IDs to [cityIds].
+(lib/api/hotels.ts, searchHotels(params))
+	16
+	BR33
+	Message Rules:
+❖ The system shows MSG30 if matching hotels are found.
+	17
+	BR34
+	Message Rules:
+❖ The system shows MSG27 if no matching hotel is found.
+❖ The system shows MSG28 if the hotel list cannot be loaded.
+	
+
+* UC05 – Book a Room
+Use Case ID
+	UC05
+	Use Case Name
+	Book a Room
+	Description
+	The customer books a hotel room through the system after selecting a hotel and room, entering contact information, and choosing a payment method.
+	Actors
+	Customer
+	Trigger
+	The customer selects a room and clicks the booking button.
+	Preconditions
+	The customer is logged in. The selected hotel and room data are available, and the selected room type has enough available rooms for the requested stay dates.
+	Postconditions
+	A booking record is created with an active room hold before payment. If VNPay payment succeeds, the booking status becomes CONFIRMED. If the customer chooses pay-at-hotel, the booking status becomes PENDING_PAYMENT and the system shows the pay-at-hotel confirmation6
+	
+
+  
+
+
+
+Sequence Diagram: 
+Booking_1
+Booking_2
+Booking_3
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+Business Rules
+Activity
+	BR Code
+	Description
+	4
+	BR47
+	Authentication Rules:
+❖ The system checks [authUser] (View: `app/hotel/[id]/page.tsx`, `app/booking/page.tsx`, `app/booking/payment/page.tsx`, Hook: `useAuth()`, Route guard: `CustomerOnlyRoute`).
+❖ If [authUser] is null, the system displays the login form.
+❖ Else the customer can continue booking.
+	7
+	BR48
+	Room Selection Rules:
+❖ The system checks [roomId], [rooms], [quantity], and the selected room type (View: `app/hotel/[id]/page.tsx`, Function: `handleBookRoom()`).
+❖ If [quantity] > 1, all selected rooms must belong to the same [roomTypeId].
+❖ If the customer selects different room types for a multi-room booking, the system shows MSG31.
+❖ Else the system redirects to the booking form with [hotelId], [hotelName], [roomId], [roomName], [roomPrice], [checkIn], [checkOut], [adults], [children], and [quantity].
+	8
+	BR49
+	Message Rules:
+❖ The system shows MSG31.
+	13
+	BR50
+	Validate Rules:
+❖ The system checks [guestName], [guestEmail], and [guestPhone] (View: `app/booking/page.tsx`, Function: `runValidation()`).
+❖ If [guestName] is null or blank, the system shows MSG32 .
+❖ If trim([guestName]).length < 2, the system shows MSG33.
+❖ If [guestName] contains characters outside a-z, A-Z, or spaces, the system shows MSG34 (Function: `validateName()`).
+❖ If [guestEmail] is null or blank, the system shows MSG35.
+❖ If [guestEmail] does not match email format, the system shows MSG36 (Function: `validateEmail()`).
+❖ If [guestPhone] is null or blank, the system shows MSG37 (Function: `validatePhone()`).
+❖ The system removes non-digit characters from [guestPhone]. If it has 10 digits and starts with 0, the leading 0 is removed.
+❖ If [guestPhone] does not contain exactly 9 digits after normalization, the system shows MSG38.
+❖ Else the booking information is valid.
+	14
+	BR51
+	Message Rules:
+❖ The system shows the corresponding validation message from MSG32 to MSG38.
+	15
+	BR52
+	Create Booking Request Rules:
+❖ The system creates [payload] from [userId], [hotelId], [hotelName], [checkInDate], [checkOutDate], [adults], [children], [contactName], [contactEmail], [contactPhone], [specialRequests], [pointsToUse], and [items] (View: `app/booking/page.tsx`, Function: `handleProceed()`).
+❖ [items] contains one item with [roomTypeId], [roomTypeName], [ratePlanId], [checkInDate], [checkOutDate], [quantity], [unitPrice], [nights], [guestName], and [cancellationPolicy] (Frontend API: `bookingApi.createBooking(payload)`)
+	16
+	BR53
+	Room Hold Rules:
+❖ The system checks [items].
+❖ If [items] is null or empty, booking creation fails.
+❖ If [items] has more than one item, all items must have the same [roomTypeId].
+❖ The system calculates [totalQuantity] from sum([items.quantity]) (Service: `BookingService.createBooking()`).
+❖ The system creates [holdRequest] from [roomTypeId], [checkInDate], [checkOutDate], and [totalQuantity].
+❖ The system calls availability service to create [holdId] (External client: `HotelAvailabilityClient.holdRooms()`, Endpoint: `POST /api/v1/availability/hold`, Hotel service: `AvailabilityService.holdRooms()`, DTO: `HoldRequest`, `HoldResponse`).
+	17
+	BR54
+	Availability Rules:
+❖ If the availability service cannot hold enough rooms, the system does not create the booking.
+❖ Else [holdId] is saved for the booking and [holdExpiresAt] is set.
+	18
+	BR55
+	Message Rules:
+❖ The system shows MSG39.
+	19
+	BR56
+	Amount Calculation Rules:
+❖ For each booking item, [subtotal] = [unitPrice] * [quantity] * [nights].
+❖ [totalAmount] is the sum of all item subtotals before discounts.
+(Service: `BookingService.createBooking()`)
+	20
+	BR57
+	Loyalty Point Rules:
+❖ If [pointsToUse] is provided and greater than 0, the system gets available loyalty points by [userId] (LoyaltyPointsClient.getLoyaltyPoints())..
+❖ If available points < [pointsToUse], the point discount is ignored.
+❖ [pointsDiscount] = [pointsToUse] * 1000 
+❖ [pointsDiscount] cannot exceed 50% of [totalAmount].
+❖ If loyalty validation fails, [pointsDiscount] is set to 0 and booking creation continues.
+	21
+	BR58
+	Booking Creation Rules:
+❖ The system creates [booking] with [status] = PENDING, [paidAmount] = 0, [totalAmount] = [totalAmount] - [voucherDiscount] - [pointsDiscount], [holdId], and [holdExpiresAt] (Service: `BookingService.createBooking()`, Repository: `BookingRepository.save()`, Entity: `Booking`). The service stores `holdExpiresAt` using `holdResponse.expiresAt` returned from the availability service (fallback to `now + 15 minutes` only when `expiresAt` is missing)
+❖ The system publishes a booking status event with [bookingStatus] = PENDING (Event: `HotelEventPublisher.publishBookingStatus()`).
+	22
+	BR59
+	Booking Item Rules:
+❖ The system creates booking items from [items].
+❖ Each booking item stores [roomTypeId], [roomTypeName], [ratePlanId], [checkInDate], [checkOutDate], [quantity], [unitPrice], [nights], [subtotal], [taxFee], [cancellationPolicy], and [guestName].
+(Service: `BookingService.createBooking()`, Repository: `BookingItemRepository.saveAll()`, Entity: `BookingItem`).
+	27
+	BR60
+	Payment Validation Rules:
+❖ The system checks [bookingId], [paymentMethod], [booking.status], and [timeRemaining] (View: `app/booking/payment/page.tsx`, Functions: `handleConfirm()`, `formatTime()`).
+❖ If [bookingId] is null or blank, the system shows MSG40.
+❖ If [booking.status] is CONFIRMED, CHECKED_IN, or CHECKED_OUT, the system shows MSG49.
+❖ If [booking.status] is CANCELLED or NO_SHOW, the system shows MSG50.
+❖ If [booking.status] is not PENDING or PENDING_PAYMENT and does not match the cases above, the system shows MSG51.
+❖ If [timeRemaining] <= 0, the system shows MSG42.
+❖ Else the payment confirmation is valid.
+	28
+	BR61
+	Message Rules:
+❖ The system shows MSG40, MSG42, MSG43, MSG49, MSG50, or MSG51.
+	30
+	BR62
+	VNPay Payment Creation Rules (PaymentService.initVnPayPayment()):
+❖ The system checks [booking.status]. If it is not PENDING or PENDING_PAYMENT, payment creation fails (function: validateBookingCanStartPayment()).
+❖ The system checks the latest payment attempt of [bookingId].
+❖ If the latest payment status is not FAILED or CANCELLED, the system does not create another payment (function:  validateCanCreateNewPayment()).
+❖ The system verifies [holdExpiresAt]. If [holdExpiresAt] has expired, the system cancels the booking and payment creation fails Function: `BookingService.ensureActiveHold()`.
+❖ The system checks [holdId] in hotel-service. If the hold status is HELD and not expired, it continues (function: hasUsableHold()).
+❖ The system updates [booking.status] to PENDING_PAYMENT
+❖ The system creates a new payment with [method] = VNPAY, [status] = PENDING, [amount] = [booking.totalAmount], [transactionId], and [vnpayOrderId].
+❖ The system returns [redirectUrl].
+	34
+	BR63
+	VNPay Callback Rules:
+❖ The system receives [orderId], [responseCode], and [transactionId] from VNPay (View: `app/booking/payment/return/page.tsx`, Frontend API: `bookingApi.processVnPayReturn(queryString)`).
+❖ The system finds [payment] by [orderId] (Endpoint: `GET /api/payments/vnpay/return`, Controller: `PaymentController.vnpayReturn()`, Service: `PaymentService.processVNPayCallback()`).
+❖ If [responseCode] = "00", the payment is successful.
+❖ Else the payment is failed.
+	35
+	BR64
+	Payment Failure Rules:
+❖ The system sets [payment.status] = FAILED (Service: `PaymentService.processVNPayCallback()`).
+❖ The system stores [vnpayResponseCode] and [vnpayTransactionNo].
+❖ The system sets [booking.status] = PENDING so the customer can retry before [holdExpiresAt].
+❖ The system does not delete the failed payment.
+	36
+	BR65
+	Message Rules:
+❖ The system shows MSG45, MSG46, MSG47, or MSG48 according to [responseCode] and callback result.
+	38
+	BR66
+	Retry Hold Verification Rules:
+❖ The system checks [bookingId], [booking.status], [holdId], and [holdExpiresAt] (View: `app/booking/payment/return/page.tsx`, `app/booking/payment/page.tsx`, Frontend API: `bookingApi.initVnPay(bookingId)`, Service: `PaymentService.initVnPayPayment()`).
+❖ If [booking.status] is not PENDING or PENDING_PAYMENT, retry payment is rejected (function: validateBookingCanStartPayment()).
+❖ If [holdExpiresAt] has expired, the system cancels [booking] (Function: `BookingService.ensureActiveHold()`).
+❖ If [holdId] exists, the system checks the hold status from hotel-service (Function: `BookingService.hasUsableHold()`, External client: `HotelAvailabilityClient.getHold()`).
+❖ Retry can continue only when the hold status is HELD and the hold is not expired.
+	39
+	BR67
+	Hold Validity Rules:
+❖ If the hold is still valid, the customer can create a new payment attempt.
+❖ If the hold is expired or not HELD, retry payment is not allowed (function: hasUsableHold()).
+	40
+	BR68
+	Booking Cancellation Rules:
+❖ If [holdExpiresAt] has expired during retry, the system sets [booking.status] = CANCELLED.
+❖ The system publishes a booking status event with [bookingStatus] = CANCELLED (function: ensureActiveHold(), Event: `HotelEventPublisher.publishBookingStatus()`).
+	41
+	BR69
+	Message Rules:
+❖ The system shows MSG41.
+	42
+	BR70
+	Retry Payment Creation Rules:
+❖ The system creates a new VNPay payment attempt only if the latest payment is FAILED or CANCELLED and the booking hold is still valid (Service: `PaymentService.initVnPayPayment()`).
+❖ The new payment has a new [id], [transactionId], and [vnpayOrderId].
+	46
+	BR71
+	Retry Callback Rules:
+❖ The system applies the same VNPay callback rules as BR63.
+❖ If retry payment fails, BR64 is applied.
+❖ If retry payment succeeds, BR74 is applied.
+	47
+	BR72
+	Retry Failure Rules:
+❖ The system sets the retry [payment.status] = FAILED.
+	48
+	BR73
+	Message Rules:
+❖ The system shows MSG45, MSG46, MSG47, or MSG48 according to [responseCode] and callback result.
+	49
+	BR74
+	VNPay Success Payment Rules:
+(Service: `PaymentService.processVNPayCallback()`)
+❖ The system sets [payment.status] = COMPLETED.
+❖ The system sets [paidAt] = current time.
+❖ The system stores [vnpayResponseCode] and [vnpayTransactionNo].
+	50
+	BR75
+	Booking Confirmation Rules:
+(Service: `PaymentService.processVNPayCallback()`)
+❖ The system sets [booking.status] = CONFIRMED.
+❖ The system sets [paidAmount] = [payment.amount].
+	51
+	BR76
+	Confirm Hold Rules:
+❖ The system calls hotel-service to confirm [holdId] (Service: `BookingService.confirmBookingHold()`, External client: `HotelAvailabilityClient.confirmHold()`, External endpoint: `POST /api/v1/availability/hold/{holdId}/confirm`, Hotel service: `AvailabilityService.confirmHold()`).
+❖ If confirming hold fails, the error is logged.
+	52
+	BR77
+	Event Rules:
+❖ The system publishes payment completed event (Service: `PaymentService.processVNPayCallback()`, Event publisher: `HotelEventPublisher.publishPaymentCompleted()`).
+❖ The system publishes booking status event with [bookingStatus] = CONFIRMED (Event publisher: `HotelEventPublisher.publishBookingStatus()`).
+❖ If [usedPoints] > 0, the system deducts loyalty points (External client: `LoyaltyPointsClient.usePoints()`).
+❖ The system earns loyalty points for the confirmed booking (External client: `LoyaltyPointsClient.earnPoints()`).
+	53
+	BR78
+	Message Rules:
+❖ The system shows MSG44.
+	56
+	BR79
+	Direct VNPay Success Rules:
+❖ If the first VNPay payment succeeds, the system applies BR74.
+	57
+	BR80
+	Direct Booking Confirmation Rules:
+❖ The system applies BR75.
+	58
+	BR81
+	Direct Confirm Hold Rules:
+❖ The system applies BR76.
+	59
+	BR82
+	Direct Event Rules:
+❖ The system applies BR77.
+	60
+	BR83
+	Message Rules:
+❖ The system shows MSG44.
+	61
+	BR84
+	Hotel Payment Creation Rules:
+(PaymentService.createPayment()):
+❖ The system checks [booking.status]. If it is not PENDING or PENDING_PAYMENT, payment creation fails (function: validateBookingCanStartPayment()).
+❖ The system checks the latest payment attempt of [bookingId].
+❖ If the latest payment status is not FAILED or CANCELLED, the system does not create another payment (function:  validateCanCreateNewPayment()).
+❖ The system verifies [holdExpiresAt]. If [holdExpiresAt] has expired, the system cancels the booking and payment creation fails Function: `BookingService.ensureActiveHold()`.
+❖ The system checks [holdId] in hotel-service. If the hold status is HELD and not expired, it continues (function: hasUsableHold()).
+❖ The system creates a payment with [method] = HOTEL, [status] = ONSITE_PENDING, [amount], and [transactionId].
+	62
+	BR85
+	Hotel Payment Status Rules:
+❖ The system updates [booking.status] to PENDING_PAYMENT.
+❖ [paidAmount] remains 0 until hotel staff confirms payment.
+	63
+	BR86
+	Message Rules:
+❖ The system shows MSG55.
+	
+
+
+
+* UC06 – Booking History
+Use Case ID
+	UC06
+	Use Case Name
+	Booking History
+	Description
+	The customer views the list of hotel bookings they have made in the system.
+	Actors
+	Customer
+	Trigger
+	The customer selects the booking history function.
+	Preconditions
+	The customer is logged in to the system.
+	Postconditions
+	The customer can view their booking history and open booking details. If no booking exists, the system displays an empty booking history message.
+	
+
+  
+
+  
+
+
+
+Business Rule
+Activity
+	BR Code
+	Description
+	1
+	BR87
+	Navigation Rules:
+❖ Customer opens booking history from navigation/sidebar. Frontend routes to `/booking/history` (Components: `Header.tsx`, `UserSidebar.tsx`, Route: `app/booking/history/page.tsx`)
+	2
+	BR88
+	Login State Rules:
+❖ The booking history page reads `localStorage.getItem("user")` on mount (View: `app/booking/history/page.tsx`). It parses the stored user into `AuthResponse`.
+	3
+	BR89
+	Authentication Check Rules:
+❖ If stored user data is missing, the customer is treated as not logged in. If stored user exists and has [userId], booking history loading can continue.
+	4
+	BR90
+	Message Rules:
+❖ If the customer is not logged in, the system shows MSG57 (View: `app/booking/history/page.tsx`).
+	6
+	BR91
+	Booking Retrieval Rules:
+❖ `BookingController.getUserBookings(userId)` calls `BookingService.getUserBookings(userId)`. The service reads bookings using `BookingRepository.findByUserId(userId)`.
+	7
+	BR92
+	Booking Response Mapping Rules:
+❖ Each `Booking` is converted by `BookingService.toBookingResponse(booking)`. The response includes booking status, hotel info, dates, guest counts, total amount, paid amount, contact fields, hold info, items, and latest payment method when available.
+	8
+	BR93
+	Load Result Rules:
+❖ If `bookingApi.getUserBookings()` resolves, booking history is considered loaded. If it throws, loading fails and the list is not displayed.
+	9
+	BR94
+	Message Rules:
+❖ If booking history loading fails, the page shows MSG58.
+	10
+	BR95
+	Sorting Rules:
+❖ The frontend sorts bookings by [createdAt] descending before display (View: `app/booking/history/page.tsx`, Memo: `sorted`).
+	11
+	BR96
+	Hotel Image Rules:
+❖ When bookings exist, the frontend extracts unique [hotelId] values without cached images and calls `hotelApi.getHotelById(hotelId)`. If the hotel has [mediaAssets], the first asset URL is stored in [hotelImages]. Image load errors are logged and do not block booking history display. 
+	12
+	BR97
+	❖ Review State Rules:
+If a token exists, the frontend filters bookings with status `CHECKED_OUT` and calls `reviewApi.hasBookingBeenReviewed(bookingId, token)`. That method calls `reviewApi.getReviewByBookingId(bookingId, token)`, which sends `GET /api/v1/reviews/check-booking/{bookingId}?userId=...`. A 200 response marks the booking as reviewed; a 404 or request error is treated as not reviewed.
+	13
+	BR98
+	Empty List Check Rules:
+❖ After loading and sorting, the system checks `sorted.length`. If it is `0`, the booking history is empty. Otherwise, the booking cards are rendered.
+	14
+	BR99
+	Message Rules: 
+❖ If there are no bookings, the page shows MSG59 (View: `app/booking/history/page.tsx`).
+	15
+	BR100
+	Display Booking List Rules:
+❖ For each booking, the page displays status, booking ID, hotel name, first room type, check-in/check-out dates, guest counts, created date, total amount, and paid amount. If status is `PENDING` or `PENDING_PAYMENT`, the page shows a payment action. If status is `CHECKED_OUT` and not reviewed, it shows a write-review action. If status is `CHECKED_OUT` and reviewed, it shows a view-review action. All bookings show a view-detail action.
+	18
+	BR101
+	Booking Detail Retrieval Rules:
+❖ `BookingController.getBooking(id)` calls `BookingService.getBooking(id)`, which retrieves data using `BookingRepository.findById(id)`.
+	20
+	BR102
+	Message Rules:
+❖ If booking detail loading fails, the detail page shows MSG54 (View: `app/booking/[id]/page.tsx`).
+	21
+	BR103
+	Display Detail Rules:
+❖ When detail loading succeeds, the detail page displays booking status, hotel name, dates, first booking item, total amount, paid amount, and booking metadata (View: `app/booking/[id]/page.tsx`).
+	
+
+* UC07 – Review Hotel
+Use Case ID
+	UC07
+	Use Case Name
+	Review Hotel
+	Description
+	The customer submits a rating and written review for a hotel after completing their stay.
+	Actors
+	Customer
+	Trigger
+	The customer selects the “Write Review” action for a booking in Booking History (UC06) with status CHECKED_OUT.
+	Preconditions
+	The customer is logged in. The booking has status CHECKED_OUT. The booking has not been reviewed by the customer before.
+	Postconditions
+	The review is saved successfully with status PUBLISHED and becomes publicly visible on the hotel detail page.
+	
+
+  
+
+  
+
+
+
+Business Rule
+Activity
+	BR Code
+	Description
+	2
+	BR104
+	Review Eligibility Rules:
+❖ A booking is reviewable only when [booking.status] is `CHECKED_OUT` and [reviewedBookings] does not contain [booking.id]. This rule matches the UI condition that renders the write-review button (View: `app/booking/history/page.tsx`).
+	3
+	BR105
+	Unavailable Action Rules:
+❖ If a booking is not completed or has already been reviewed, the write-review action is not available to the customer. The system prevents the use case from starting by hiding that action (View: `app/booking/history/page.tsx`).
+	4
+	BR106
+	Review Navigation Rules:
+❖ When the customer starts the review, the system carries [bookingId] and [hotelId] to the review page so the review is tied to the correct stay and hotel (Route: `/reviews/new?bookingId=...&hotelId=...`).
+	5
+	BR107
+	Review Context Rules:
+❖ The review page must have both review context and login context before displaying the form. It reads [bookingId] and [hotelId] from URL search params and reads [userToken] from local storage (View: `app/reviews/new/page.tsx`).
+	6
+	BR108
+	Required Context Rules:
+❖ The review context is valid only when [bookingId], [hotelId], and [userToken] are present. Missing [bookingId] or [hotelId] means the page cannot identify the stay to review; missing [userToken] means the customer cannot submit a review.
+	7
+	BR109
+	Context Error Rules:
+❖ If [bookingId] or [hotelId] is missing, the customer is sent back to booking history. 
+❖ If [userToken] is missing, the system asks the customer to log in using MSG60 
+(View: `app/reviews/new/page.tsx`).
+	8
+	BR110
+	Booking Context Display Rules:
+❖ The review page loads the booking to show the stay being reviewed. The booking data provides [hotelName], [checkInDate], [checkOutDate], [roomType], and the confirmed [bookingId] for display (Frontend API: `bookingApi.getBooking()`, Backend: `BookingController.getBooking()`, `BookingService.getBooking()`).
+	9
+	BR111
+	Hotel Context Display Rules:
+❖ The review page loads hotel details to show the hotel image and context. If hotel image loading fails, the page keeps a default image and continues; this does not block review submission (Frontend API: `hotelApi.getHotelById()`, Backend: `HotelController.getHotel()`, `HotelService.getDetail()`).
+	10
+	BR112
+	Review Form Display Rules:
+❖ The review form is displayed only after valid booking context and login token are available. The form receives [hotelId], [bookingId], [userToken], and callback handlers (Component: `ReviewForm`).
+	12
+	BR113
+	Overall Rating Calculation Rules:
+❖ The overall [rating] is calculated automatically from the six detailed rating criteria. The form averages the values and rounds to one decimal place (Component: `ReviewForm`, State: `averageRating`).
+	14
+	BR114
+	Client Validation Rules:
+❖ The form validates review text and login state before calling the API. [title] and [content] must not be blank; [title] must have at least 5 characters; [content] must have at least 10 characters; [userToken] must exist (Function: `handleSubmit()`).
+	16
+	BR115
+	Validation Message Rules:
+❖ Validation failures are shown directly in the form. Blank title/content uses MSG61, short title uses MSG62, short content uses MSG63, and missing login token uses MSG60 (Component: `ReviewForm`).
+	17
+	BR116
+	Create Review Request Rules:
+❖ A valid review is sent as a create-review request. The request body includes [hotelId], [rating], detailed ratings, [title], [content], and [bookingId] (Frontend API: `reviewApi.createReview()`, Endpoint: `POST /api/v1/reviews`).
+	18
+	BR117
+	Customer Identity Rules:
+❖ The customer identity is taken from the login token. The frontend decodes [userToken] to get [userId] and sends it in the `X-User-Id` header; the backend receives it as [guestId] (Frontend API: `reviewApi.createReview()`, Backend: `ReviewController.createReview()`).
+	19
+	BR118
+	Server Validation Rules:
+❖ The backend validates the submitted review payload before creating a record. [hotelId] and [rating] are required; [rating] must be from 1 to 10; [title] must be 5 to 255 characters; [content] must be 10 to 5000 characters; detailed ratings must be from 1 to 10 when provided (DTO: `CreateReviewRequest`).
+	20
+	BR119
+	Duplicate Review Check Rules:
+❖ A customer cannot review the same hotel for the same booking more than once. When [bookingId] is present, the system checks for an existing review with the same [hotelId], [guestId], and [bookingId] (Service: `ReviewService.createReview()`, Repository: `HotelReviewRepository.findByHotelIdAndGuestIdAndBookingId()`).
+	21
+	BR120
+	Duplicate Result Rules:
+❖ A duplicate review exists when the duplicate check returns a review record. In that case, the new review must not be created.
+	22
+	BR121
+	Duplicate Message Rules:
+❖ If a duplicate review is detected, the system returns an error and the form displays MSG65 or the backend error message (Service: `ReviewService.createReview()`, Component: `ReviewForm`)
+	23
+	BR122
+	Review Publication Rules:
+❖ A non-duplicate review is saved as public immediately. The system maps the request into a review entity, assigns [guestId], sets [status] to `PUBLISHED`, and stores it 
+(Service: `ReviewService.createReview()`, Mapper: `ReviewMapper.createRequestToEntity()`, Repository: `HotelReviewRepository.save()`).
+	24
+	BR123
+	Created Review Response Rules:
+❖ After saving, the system returns the created review with identifiers, ratings, [title], [content], [bookingId], [status], and timestamps. Guest display information may be enriched when user-service is available (Mapper: `ReviewMapper.entityToResponse()`, Service: `ReviewService.enrichGuestInfo()`).
+	25
+	BR124
+	Success Message Rules:
+❖ Successful creation is shown to the customer with MSG66. The success modal thanks the customer and lets them return to booking history (Component: `ReviewForm`).
+	26
+	BR125
+	Success Redirect Rules:
+❖ After success, the customer is redirected back to booking history through the review page success callback (Function: `handleSuccess()`, Route: `/booking/history`).
+	27
+	BR126
+	Public Visibility Rules:
+❖ Because the review [status] is `PUBLISHED`, it is included in public hotel review data. The hotel detail page loads review stats and recent reviews, and the created review can appear publicly in that review section (Frontend API: `reviewApi.getReviewStats()`, Backend: `ReviewController.getHotelReviewStats()`, `ReviewService.getHotelReviewStats()`).
+	
+
+* UC08 – Manage Personal Information
+Use Case ID
+	UC08
+	Use Case Name
+	Manage Personal Information
+	Description
+	The customer views and updates their personal account information, including full name, phone number, birthday, gender, country, address, loyalty point summary, and password. The email address is displayed but cannot be edited.
+	Actors
+	Customer
+	Trigger
+	The customer selects the “Manage Personal Information” function in the system.
+	Preconditions
+	The customer is logged in to the system.
+	Postconditions
+	The customer’s editable profile information is updated successfully, or the password is changed successfully.
+	
+
+  
+
+  
+
+Business Rule:
+Activity
+	BR Code
+	Description
+	2
+	BR127
+	Login Token Rules:
+❖ The personal data page must find [token] in local storage before rendering the page. Without [token], the user is treated as unauthenticated (View: `app/personal-data/page.tsx`).
+	3
+	BR128
+	Unauthenticated Redirect Rules:
+❖ If [token] is missing, the page redirects the user to the home page and does not render personal information (View: `app/personal-data/page.tsx`).
+	4
+	BR129
+	Role Guard Rules:
+❖ The customer-only route decodes [token] and checks [role] before allowing the page content to remain visible. This rule protects the customer profile route from admin and owner dashboards (Component: `CustomerOnlyRoute`).
+	5
+	BR130
+	Dashboard Redirect Rules:
+❖ If [role] is `ADMIN`, the user is redirected to `/admin/dashboard`; if [role] is `OWNER`, the user is redirected to `/host/dashboard`. This means the current frontend route does not provide the admin/owner personal data flow (Component: `CustomerOnlyRoute`).
+	6
+	BR131
+	Personal Data Display Rules:
+❖ The system displays the personal data screen with header, sidebar, profile area, account tab, and security tab (View: `app/personal-data/page.tsx`, Component: `PersonalDataForm`).
+	7
+	BR132
+	Profile Loading Rules:
+❖ The screen loads the logged-in user's profile before showing editable account data. The request uses [token] as a Bearer authorization header (Function: `fetchUserData()`, Endpoint: `GET /api/user/profile`).
+	8
+	BR133
+	User Identity Rules:
+❖ The backend identifies the profile owner from [token], not from a user-selected id. The authorization header must start with `Bearer ` and is parsed into [userId] (Controller: `UserController.extractUserIdFromToken()`, Service: `JwtService.extractUserId()`).
+	9
+	BR134
+	Profile Retrieval Rules:
+❖ The system retrieves the account and profile that belong to [userId]. Returned profile data includes [id], [fullName], [email], [phone], [gender], [birthday], [country], and [address] 
+(Service: `UserService.getUserProfile()`).
+	10
+	BR135
+	Missing Profile Rules:
+❖ If no profile exists for [userId], the system creates a default profile using the account username as [fullName] so the page can still load (Service: `UserService.createEmptyProfile()`).
+	11
+	BR136
+	Profile Response Rules:
+❖ The backend returns profile data to the frontend. [email] comes from the user account and profile fields come from the user profile record (DTO: `UserProfileDto`).
+	12
+	BR137
+	Loyalty Point Loading Rules:
+❖ After profile data is loaded, the screen loads point information using [data.id]. Loyalty loading is additional account information and does not block profile display if it fails 
+(Frontend API: `loyaltyApi.getUserPoints()`, Endpoint: `GET /api/loyalty-points/{userId}`).
+	13
+	BR138
+	Loyalty Point Response Rules:
+❖ The loyalty point summary contains [totalPoints], [usedPoints], and [availablePoints]. If no loyalty record exists, the backend creates a zero-point account before returning the summary 
+(Service: `LoyaltyPointsService.getLoyaltyPoints()`).
+	14
+	BR139
+	Profile Screen Rules:
+❖ The screen displays editable profile fields, disabled [email], loyalty point summary, and the password/security area. [email] is view-only in this use case because the frontend disables it and the update DTO does not include email (Component: `PersonalDataForm`, DTO: `UpdateProfileDto`).
+	15
+	BR140
+	Action Selection Rules:
+❖ The user can either update account profile data or switch to the password/security tab to change password. These actions share the same page but use different backend endpoints (Component: `PersonalDataForm`).
+	16
+	BR141
+	Editable Profile Field Rules:
+❖ The editable profile fields are [fullName], [phone], [birthday], [gender], [country], and [address]. [email] is not editable on this screen (Component: `PersonalDataForm`).
+	17
+	BR142
+	Profile Submit Rules:
+❖ When saving profile changes, the frontend sends only editable profile fields. The request body excludes [email] and [loyaltyPoints] (Function: `handleSave()`).
+	18
+	BR143
+	Save Token Rules:
+❖ The frontend checks [token] again before sending the save request. If [token] is absent, no profile update request is sent (Function: `handleSave()`).
+	19
+	BR144
+	Save Authentication Message Rules:
+❖ If [token] is missing during save, the form displays MSG67 and stops the save action (Component: `PersonalDataForm`).
+	20
+	BR145
+	Profile Update Request Rules:
+❖ A profile update request carries [fullName], [phone], [birthday], [address], [gender], and [country] for the logged-in user (Endpoint: `PUT /api/user/profile`).
+	21
+	BR146
+	Update Identity Rules:
+❖ The backend again extracts [userId] from [token] before updating profile data. This prevents the frontend from choosing another user's profile to update (Controller: `UserController.updateProfile()`).
+	22
+	BR147
+	Profile Update Field Rules:
+❖ Only non-null fields from the request are applied to the profile. [birthday] is parsed as a date when present; invalid date format is ignored by the current service logic 
+(Service: `UserService.updateUserProfile()`).
+	23
+	BR148
+	Profile Persistence Rules:
+After applying allowed fields, the profile is saved to the user profile table. This persists the changed personal information for later reads (Repository call: `userProfileRepository.save(profile)`).
+	24
+	BR149
+	Updated Profile Response Rules:
+❖ When saving succeeds, the backend returns the updated profile with [email] still coming from the user account and editable fields coming from the saved profile (Service: `UserService.updateUserProfile()`).
+	25
+	BR150
+	Profile Success Message Rules:
+❖ After a successful profile update, the form displays MSG69 so the user knows the profile changes were saved 
+(Component: `PersonalDataForm`).
+	26
+	BR151
+	Profile Error Message Rules:
+❖ If profile loading or saving fails, the form shows an error message such as MSG68 or MSG70. The frontend uses the backend [message] when available and otherwise falls back to its default message (Component: `PersonalDataForm`).
+	28
+	BR152
+	Password Input Rules:
+❖ The user must provide [currentPassword], [newPassword], and [confirmPassword] before changing password (State: `passwordData`).
+	29
+	BR153
+	Password Client Validation Rules:
+❖ The frontend validates password fields before calling the backend. [currentPassword] is required, [newPassword] is required and must be at least 6 characters, and [confirmPassword] must match [newPassword] (Function: `handlePasswordChange()`).
+	30
+	BR154
+	Password Validation Message Rules:
+❖ If client-side password validation fails, the form displays MSG71, MSG72, MSG19, MSG74, or MSG75 according to the invalid field and no backend request is sent (Component: `PersonalDataForm`).
+	31
+	BR155
+	Password Token Rules:
+❖ After password fields pass client validation, the frontend checks [token] again before calling the change-password API. If [token] is absent, no backend request is sent (Function: `handlePasswordChange()`).
+	32
+	BR156
+	Password Authentication Message Rules:
+❖ If [token] is missing during password change, the form displays MSG67 and stops the password change action (Component: `PersonalDataForm`).
+	33
+	BR157
+	Change Password Request Rules:
+❖ A valid password change sends [currentPassword] and [newPassword] with [token] in the authorization header (Frontend API: `authApi.changePassword()`, Endpoint: `PUT /api/user/change-password`).
+	34
+	BR158
+	Password Identity Rules:
+❖ The backend identifies the password owner from [token] before changing the password. The request does not accept a user id from the frontend (Controller: `UserController.changePassword()`).
+	35
+	BR159
+	Password Server Validation Rules:
+❖ The backend checks that [currentPassword] matches the stored password and that [newPassword] is at least 6 characters. These checks protect the account even if client validation is bypassed 
+(Service: `UserService.changePassword()`).
+	36
+	BR160
+	Password Error Message Rules:
+❖ If [currentPassword] is wrong or [newPassword] is invalid, the password is not changed and the form displays MSG78, MSG19, or MSG77 depending on the backend response (Service: `UserService.changePassword()`, Component: `PersonalDataForm`).
+	37
+	BR161
+	Password Persistence Rules:
+❖ When validation succeeds, [newPassword] is encoded before being saved. The system never saves the raw password value (Service: `UserService.changePassword()`, Repository call: `userRepository.save(user)`).
+	38
+	BR162
+	Password Success Message Rules:
+❖ After the password is saved, the form clears password fields and displays MSG76 to confirm the password change (Component: `PersonalDataForm`).
+	
+
+* UC09 – Manage hotel reviews
+Use Case ID
+	UC09
+	Use Case Name
+	Manage hotel reviews
+	Description
+	The hotel owner views the list and content of customer reviews submitted for hotels they own.
+	Actors
+	Hotel Owner
+	Trigger
+	The hotel owner selects the “Review Management” function.
+	Preconditions
+	The hotel owner is logged in with the OWNER role. The system has hotel data belonging to that owner.
+	Postconditions
+	The hotel owner can view the review list, review details, detailed ratings, response status, and review analytics for the hotels they manage. If no reviews exist, the system displays an empty review message.
+	
+
+  
+
+  
+
+
+
+Business Rule
+Activity
+	BR Code
+	Description
+	2
+	BR163
+	Owner Access Rules:
+❖ The host layout checks that the current user is authenticated and has [role] `OWNER` before allowing the review management page to remain visible (Hook: `useProtectedRoute("OWNER")`, View: `app/host/layout.tsx`).
+	3
+	BR164
+	Access Redirect Rules:
+❖ If the user is not authenticated, the system redirects to the host login page; if the user is authenticated but does not have the owner role, the system redirects to the home page (View: `app/host/layout.tsx`).
+	4
+	BR165
+	Review Page Display Rules:
+❖ After owner access is confirmed, the system displays the host reviews page with review statistics, hotel filter, response filter, list tab, and analytics tab (View: `app/host/reviews/page.tsx`).
+	5
+	BR166
+	Owner Hotel Loading Rules:
+❖ The page loads the owner's hotel list before loading reviews because review display and filtering depend on [hotels] and [hotel.id] 
+(Function: `loadHostHotels()`, Frontend API: `hotelApi.getHotelsByOwner()`).
+	6
+	BR167
+	Owner Identity Rules:
+❖ The hotel list request identifies the owner from the authenticated JWT subject, not from a user-entered id (Controller: `HotelController.getHotelsByOwner()`).
+	7
+	BR168
+	Owned Hotel Rules:
+❖ Only hotels whose [ownerId] matches the authenticated owner are returned for the filter and review scope (Service: `HotelService.getByOwner()`, Repository: `hotelRepository.findByOwnerId()`).
+	8
+	BR169
+	Hotel Loading Result Rules:
+❖ The hotel list must be loaded successfully before review loading begins. If loading succeeds, the page stores [hotels]; if it fails, the review page cannot determine owner scope.
+	9
+	BR170
+	Hotel Loading Message Rules:
+❖ If owner hotels cannot be loaded, the page displays MSG79 and stops the review list flow (View: `app/host/reviews/page.tsx`).
+	10
+	BR171
+	Filter Display Rules:
+❖ After [hotels] are available, the page displays the hotel filter. The owner can choose all hotels or one hotel from [hotels] (View: `app/host/reviews/page.tsx`).
+	11
+	BR172
+	Hotel Filter Selection Rules:
+❖ The selected filter is stored as [selectedHotelId]. The value `all` means reviews across all owned hotels; a hotel id means reviews for that specific owned hotel (State: `selectedHotelId`).
+	12
+	BR173
+	Review Token Rules:
+❖ Before loading reviews, the page checks [token] in local storage again. If [token] is missing, the review request is not sent (Function: `loadReviews()`).
+	13
+	BR174
+	Review Login Redirect Rules:
+❖ If [token] is missing while loading reviews, the owner is redirected to `/host/login` (Function: `loadReviews()`).
+	14
+	BR175
+	Review Owner Header Rules:
+❖ The review API decodes [token] to get [ownerId] and sends it in the `X-User-Id` header. This value scopes the owner review endpoints (Frontend API: `reviewApi.getOwnerReviews()`, `reviewApi.getOwnerHotelReviews()`).
+	15
+	BR176
+	Review List Request Rules:
+❖ If [selectedHotelId] is `all`, the page calls `GET /api/v1/reviews/owner/all`; 
+Otherwise it calls `GET /api/v1/reviews/owner/hotel/{hotelId}` with pagination 
+(Frontend API: `reviewApi`).
+	16
+	BR177
+	Owner Review Scope Rules:
+❖ For all-hotel review loading, the backend first finds all hotel ids owned by [ownerId]. 
+❖ For one-hotel review loading, the backend receives both [ownerId] and [hotelId] 
+(Service: `ReviewService.getReviewsByOwner()`, `ReviewService.getReviewsByOwnerAndHotel()`).
+	17
+	BR178
+	Hotel Ownership Check Rules:
+❖ When a specific [hotelId] is selected, the backend verifies that the hotel belongs to [ownerId] before returning reviews 
+(Repository: `hotelRepository.existsByIdAndOwnerId()`).
+	18
+	BR179
+	Unauthorized Hotel Message Rules:
+❖ If the selected hotel does not belong to the owner, no reviews are returned and the system reports MSG83 
+(Service: `ReviewService.getReviewsByOwnerAndHotel()`).
+	19
+	BR180
+	Published Review Retrieval Rules:
+❖ The owner view returns only reviews with [status] `PUBLISHED`, ordered by newest first. All-hotel mode uses [hotelIds]; one-hotel mode uses [hotelId] 
+(Repository: `HotelReviewRepository.findByHotelIdInAndStatusOrderByCreatedAtDesc()`, `findByHotelIdAndStatusOrderByCreatedAtDesc()`).
+	20
+	BR181
+	Review Enrichment Rules:
+❖ Each review is mapped and enriched with guest display data, owner response data, and hotel name when available. This makes the card show [guestName], [ownerResponse], and [hotelName] in addition to review content (Service: `ReviewService`, Mapper: `ReviewMapper.entityToResponse()`, enrichGuestInfo(), enrichOwnerResponse(), enrichHotelName()).
+	21
+	BR182
+	Paged Review Response Rules:
+❖ The backend returns a paged result containing [content], [totalPages], and [totalElements]. The frontend normalizes detailed rating fields into [ratings] for display. 
+❖ If review loading fails, the page displays the backend message when available or MSG80 as the fallback 
+(Frontend API: `normalizeReviewRatings()`, View: `app/host/reviews/page.tsx`).
+	22
+	BR183
+	Hotel Name Matching Rules:
+❖ The frontend also matches each review's [hotelId] against the loaded [hotels] list to display the hotel name. If no matching hotel is found, it displays `Khách sạn không xác định` 
+(View: `app/host/reviews/page.tsx`).
+	23
+	BR184
+	Review Availability Rules:
+❖ Reviews are considered available when [reviews.length] is greater than zero. Empty review data is a valid outcome, not an error.
+	24
+	BR185
+	Empty Review Message Rules:
+❖ If no reviews are available for the selected scope, the page displays MSG81 and MSG82.
+(View: `app/host/reviews/page.tsx`)
+	25
+	BR186
+	Review List Display Rules:
+❖ When reviews are available, the page displays total review count, average rating, response counts, filters, and the review list.
+(View: `app/host/reviews/page.tsx`).
+	26
+	BR187
+	Review Detail Display Rules:
+❖ Each review card displays customer name, hotel name, creation time, overall rating, title, content, detailed criteria ratings, and existing owner response when present.
+(Component: `HostReviewCard`)
+	27
+	BR188
+	Local Filter And Analytics Rules:
+❖ The owner can filter loaded reviews by [responseFilter], switch between [activeTab] `list` and `analytics`, or change [currentPage]. Response filtering and analytics are computed from the loaded [reviews] list
+(View: `app/host/reviews/page.tsx`).
+	28
+	BR189
+	Updated View Rules:
+❖ After a filter, tab, or page change, the system updates the displayed list or analytics. Page changes reload reviews from the backend; response-status filtering and analytics are computed on the current loaded page (View: `app/host/reviews/page.tsx`).
+	
+
+* UC10 – Register hotel
+Use Case ID
+	UC10
+	Use Case Name
+	Register hotel
+	Description
+	Hotel owners register their hotels on the system.
+	Actor
+	Hotel owner
+	Trigger
+	The hotel owner selects the "Add hotel" function.
+	Preconditions
+	The hotel owner has logged in.
+	Postconditions
+	The hotel has been created, is awaiting approval
+	  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	7
+	BR185
+	Form Validation Rules:
+❖ The system validates required input from [form.name], [form.cityId], [form.addressCity], [form.addressStreet], [form.addressCountry], [form.businessLicenseNumber], [form.taxId], and [form.ownerIdentityNumber].
+❖ If [form.name] is empty, add "Ten khach san" to [missing].
+❖ If both [form.cityId] is empty and [form.addressCity] is empty, add "Thanh pho" to [missing].
+❖ If [form.addressStreet] is empty, add "Dia chi duong" to [missing].
+❖ If [form.addressCountry] is empty, add "Quoc gia" to [missing].
+❖ If [form.businessLicenseNumber] is empty, add "So dang ky kinh doanh" to [missing].
+❖ If [form.taxId] is empty, add "Ma so thue" to [missing].
+❖ If [form.ownerIdentityNumber] is empty, add "So CCCD/ho chieu chu khach san" to [missing].
+❖ If [missing.length] > 0, the system sets [setSubmitError] = (`Vui long dien: ${missing.join(', ')}`) and stops submit.
+	8
+	BR186
+	Create Hotel API Rules:
+❖ The system sends POST /hotels with [Authorization: Bearer ${token}] and JSON [payload].
+❖Backend handles the request in HotelController.createHotel([jwt], [HotelCreateRequest request]).
+❖ The controller extracts [ownerId] = UUID.fromString([jwt.getSubject()]) and calls hotelService.createHotel([request], [ownerId]).
+❖ The service processes the request in HotelServiceImpl.createHotel([HotelCreateRequest request], [UUID ownerId]).
+❖ If [response.ok] is false, the system reads [text] = await response.text() and throws MSG97
+	9
+	BR187
+	Hotel Creation Persistence Rules:
+❖ The system extracts [ownerId] from [jwt.getSubject()] in backend.
+❖ The system maps [HotelCreateRequest] into Hotel entity fields: [name], [description], [starRating], [cityId], [address], [contactEmail], [contactPhone], [businessLicenseNumber], [taxId], [operationLicenseNumber], [ownerIdentityNumber].
+❖ The system sets hotel.setIsActive(false) and hotel.setApprovedStatus(HotelApprovalStatus.PENDING) for new hotel.
+❖ The system saves the entity using hotelRepository.save([hotel]).
+	10
+	BR188
+	Related Data Save Rules:
+❖ If ([request.policies] != null), each policy category must exist via policyCategoryTypeRepository.findByName(p.getCategory()).
+❖ If category is not found, the system throws [EntityNotFoundException].
+❖ If (request.questions() != null), the system creates and saves [Question] records.
+❖ If (request.amenityCategories() != null), the system creates [HotelAmenityCategory] and nested [HotelAmenity] records.
+	11
+	BR189
+	Media Upload Trigger Rules:
+❖ The system uploads media only if [thumbnail] exists or [gallery.length] > 0.
+❖ The system calls uploadMediaAssets([data.id], [token]) after successful hotel creation response.
+	11
+	BR190
+	Thumbnail Upload Rules:
+❖ If [thumbnail] exists, call uploadSingle([thumbnail.file], true, 0).
+❖ Upload request uses multipart fields [targetId], [targetType], [isThumbnail], [sortOrder], and [file].
+❖ If upload response is not OK, throw MSG98
+	11
+	BR191
+	Gallery Upload Rules:
+❖ If [gallery.length] > 0, the system loops for (let i = 0; i < [gallery.length]; i += 1).
+❖ Each file is uploaded by uploadSingle([gallery[i].file], false, i + 1).
+❖ Gallery [sortOrder] starts from 1; thumbnail uses 0.
+	13
+	BR192
+	Success Response Rules:
+❖ After all processing, the system sets MSG99
+❖ The system redirects using [setTimeout(() => router.push('/host/hotels'), 800)].
+	
+
+* UC11 – Update hotel
+Use Case ID
+	UC11
+	Use Case Name
+	Update hotel
+	Description
+	Hotel owners update overall information for the hotels they own.
+	Actor
+	Hotel owner
+	Trigger
+	The hotel owner selects the "Update Hotel" function.
+	Preconditions
+	The hotel owner has logged in.
+	Postconditions
+	The hotel information is accurately updated in the system.
+	  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	2
+	BR193
+	Hotel Detail Loading Rules:
+❖ The system calls hotelApi.getHotelById([hotelId]) to load hotel data.
+❖ After loading successfully, the system displays hotel detail data.
+	5
+	BR194
+	Edit Form Initialization Rules:
+❖ When user clicks Edit, the system opens edit modal by setShowEditModal(true).
+❖ The system preloads formData from hotel([name], [description], [starRating], [cityId], [contactEmail], [contactPhone], [address]).
+	8
+	BR195
+	Update Validation Rules:
+❖ The system validates [formData.name], [formData.description], [formData.starRating], [formData.cityId], [formData.address.street], [formData.address.city], [formData.address.country].
+❖ If [formData.contactEmail] exists, it must pass email regex check.
+❖ If [formData.contactPhone] exists, it must pass phone regex check.
+❖ If any validation fails, the system shows MSG100 or MSG101 or MSG102 or MSG103 or MSG104 or MSG105 or MSG106 or MSG107 or MSG108 or MSG109 and stops submit.
+	9
+	BR196
+	Update Hotel Request Rules:
+❖ If validation passes, the system calls hotelApi.updateHotel([hotelId], [data]).
+❖ API request method is PUT to /api/hotel/hotels/{hotelId} with payload from formData.
+Backend Update Handling Rules:
+❖ Backend controller method: HotelController.updateHotel([jwt], [hotelId], [request]).
+❖ Backend extracts [ownerId] = UUID.fromString(jwt.getSubject()).
+❖ Backend service method: HotelService.updateHotel([hotelId], [request], [ownerId]).
+❖ Backend loads the hotel by hotelRepository.findById([hotelId]) and checks ownership with hotel.getOwnerId().equals([ownerId]).
+❖ Backend updates mutable fields from [request] and persists the result with hotelRepository.save([hotel]).
+❖ On success, system updates state by setHotel(updated), closes modal setShowEditModal(false), and shows MSG110
+❖ If (request.questions() != null), the system creates and saves [Question] records.
+	12
+	BR197
+	Extra Information Update Rules:
+❖ For amenities: system sanitizes amenityForm into sanitizedAmenities (trim category/items, remove empty).
+❖ If [sanitizedAmenities.length] === 0, system shows alert and does not call update API.
+❖ Else system calls hotelApi.updateAmenities(hotelId, sanitizedAmenities) and replaces old amenities data.
+❖ For policies: system sanitizes policyForm into sanitizedPolicies then calls hotelApi.updatePolicies([hotelId], [sanitizedPolicies]); old policy data is replaced.
+❖ For FAQs: system sanitizes questionForm into sanitizedQuestions then calls hotelApi.updateQuestions([hotelId], [sanitizedQuestions]); old FAQ data is replaced.
+	14
+	BR198
+	Image Validation Rules:
+❖ System checks file.type.startsWith('image/').
+❖ System checks file.size <= 5 * 1024 * 1024.
+❖ If either check fails, system shows MSG111 or MSG112 and stops upload.
+	15
+	BR199
+	Image Upload Rules:
+❖ If image is valid, system calls hotelApi.uploadMedia([hotelId], 'HOTEL', [file], [isFirstImage], [nextSortOrder]).
+❖ isFirstImage is true when [hotel.mediaAssets] is not null.
+	17
+	BR200
+	Active State Update Rules:
+❖ When user toggles status, system shows MSG113 or MSG114 before changing state.
+❖ If current hotel.isActive is true, call hotelApi.deactivateHotel([hotelId]); else call hotelApi.activateHotel([hotelId]).
+❖ On success, system updates local state setHotel({ ...hotel, isActive: !hotel.isActive }) and shows MSG115 or MSG116
+	
+
+* UC12 – Add room
+Use Case ID
+	UC12
+	Use Case Name
+	Add room
+	Description
+	The hotel owner added more rooms to the hotel.
+	Actor
+	Hotel Owner
+	Trigger
+	The hotel owner selects "Add room" for a specific hotel.
+	Preconditions
+	The hotel owner has logged in and the hotel has been approved.
+	Postconditions
+	The room list is updated to reflect any changes.
+	  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	2
+	BR201
+	Room Creation Form Loading Rules:
+❖ The system displays room form when user opens /host/hotels/{id}/rooms/new.
+❖ The system initializes [formData], [selectedAmenities], [roomImages], [createdRoomId].
+❖ Initial values include [formData.name], [formData.basePrice], [formData.roomAmount], [formData.capacity.adults].
+	4
+	BR202
+	Amenity Input Rules:
+❖ The system reads amenity text from [newAmenityInput] and trims by newAmenityInput.trim().
+❖ Only non-empty and non-duplicated values are appended to [selectedAmenities]
+❖ Remove action updates list by selectedAmenities.filter((_, i) => i !== index).
+	6
+	BR203
+	Update Validation Rules:
+❖ The system validates formData.name.trim() is not empty.
+❖ The system validates [formData.basePrice > 0].
+❖ The system validates [formData.roomAmount > 0].
+❖ The system validates [formData.capacity.adults > 0].
+❖ If any validation fails, system shows [alert(...)] and stops submit in handleSave().
+	6
+	BR204
+	Create RoomType Request Rules:
+❖ If validation passes, the system calls hotelApi.createRoomType([hotelId], [formData.name],[formData.basePrice]).
+❖ Request payload uses [hotelId], [name: formData.name], [basePrice: formData.basePrice], [capacity: formData.capacity], [roomAmount: formData.roomAmount], [description: formData.description], [amenities: selectedAmenities].
+❖ During request, state setSaving(true) is set; on finish, setSaving(false).
+	7
+	BR205
+	Hotel Authorization Rules: (Controller: RoomTypeController, service: roomTypeService, function: createRoomType([request], [ownerId]))
+❖ Backend loads hotel by hotelRepository.findById(request.hotelId()).
+❖ If not found, backend throws MSG117.
+❖ Backend checks ownership by hotel.getOwnerId().equals([ownerId]).
+❖ If unauthorized, backend throws MSG118
+	8
+	BR206
+	RoomType Creation Rules:
+❖ The system creates new [RoomType rt].
+❖ The system sets rt.setHotelId(request.hotelId()), rt.setName(request.name()), rt.setBasePrice(request.basePrice()).
+❖ The system sets rt.setTotalRooms(request.roomAmount()) and rt.setIsActive(true).
+	9
+	BR207
+	Capacity Serialization Rules:
+❖ The system serializes request.capacity() through writeJson(request.capacity()).
+❖ writeJson(request.capacity()) uses objectMapper.writeValueAsString(obj).
+❖ The serialized value is persisted by rt.setCapacity(writeJson(request.capacity())).
+	10
+	BR208
+	Amenities Serialization Rules:
+❖ The system serializes request.amenities() through writeJson(request.amenities()).
+❖ The serialized value is persisted by rt.setAmenities(request.amenities()).
+❖ request.amenities() comes from frontend [selectedAmenities].
+	11
+	BR209
+	Room Persistence Rules:
+❖ Backend validates request.roomAmount() >= 1 before save.
+❖ If invalid, backend throws MSG119
+❖ If valid, backend saves by roomTypeRepository.save(rt) in @Transactional method.
+	12
+	BR210
+	Success Response Rules:
+❖ Backend maps entity by roomTypeMapper.toRoomTypeResponse([saved]) and returns success response.
+❖ Frontend receives [newRoom.id] and stores by setCreatedRoomId([newRoom.id]).
+❖ Frontend sets MSG120 and shows image upload section when [createdRoomId] exists.
+	16
+	BR211
+	Image Validation Rules:
+❖ The system checks file.type.startsWith('image/').
+❖ The system checks [file.size] <= 5 * 1024 * 1024.
+❖ If either check fails, system shows MSG121 and stops upload in handleUploadImage.
+	17
+	BR212
+	Image Upload Rules:
+❖ If image is valid, system computes [nextSortOrder] = [roomImages.length] and [isFirstImage] = ([roomImages.length] === 0).
+❖ The system calls hotelApi.uploadMedia([createdRoomId], 'ROOM_TYPE', [file], [isFirstImage], [nextSortOrder]).
+❖ After success, system appends media by setRoomImages([...roomImages], [newMedia]).
+	19
+	BR213
+	Media Management Rules:
+❖ User can set cover image by handleSetThumbnail([mediaId]) which calls hotelApi.setThumbnail([mediaId]).
+❖ User can delete image by handleDeleteImage([mediaId], [isThumbnail]) which calls hotelApi.deleteMedia([mediaId]).
+❖ If deleted image is thumbnail and remaining images exist, system tries to assign new thumbnail from [updatedImages[0]].
+	21
+	BR213
+	Navigation Rules:
+❖ When user clicks “Hoàn tất và quay lại”, frontend calls router.push(`/host/hotels/${hotelId}`).
+❖ System redirects user to hotel detail page /host/hotels/{id}.
+	
+
+
+
+* UC13 - Update room
+Use Case ID
+	UC13
+	Use Case Name
+	Update room
+	Description
+	The hotel owner updates the hotel room listings.
+	Actor
+	Hotel owner
+	Trigger
+	The hotel owner selects "Update rooms" for a specific hotel.
+	Preconditions
+	The hotel owner has logged in and the hotel has been approved.
+	Postconditions
+	The room list is updated to reflect any changes.
+	  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	2
+	BR214
+	Edit Form Loading Rules:
+❖ The system loads existing room type when user opens /host/hotels/{hotelId}/rooms/{roomTypeId}/edit.
+❖ The UI pre-populates [formData] and [roomImages] from the response of hotelApi.getRoomTypeById([roomTypeId]).
+❖ The UI shows current [formData.name], [formData.basePrice], [formData.roomAmount], [formData.capacity.adults], and [selectedAmenities].
+	3
+	BR215
+	Inline Edit Rules:
+❖ Edits update local state [formData] and [selectedAmenities] using setters such as setFormData(...) and setSelectedAmenities(...).
+❖ Removing an amenity updates [selectedAmenities] via selectedAmenities.filter((_, i) => i !== index).
+	6
+	BR216
+	Update Validation Rules:
+❖ The system validates [formData.name.trim()] is not empty.
+❖ The system validates [formData.basePrice > 0].
+❖ The system validates [formData.roomAmount > 0].
+❖ The system validates [formData.capacity.adults > 0].
+❖ If any validation fails, system shows alert and stops submit in handleSave().
+	7
+	BR217
+	Update Request Rules:
+❖ If validation passes, the UI calls hotelApi.updateRoomType([roomTypeId], {...}).
+❖ Request payload contains [name: formData.name], [basePrice: formData.basePrice], [capacity: formData.capacity], [roomAmount: formData.roomAmount], [description: formData.description], [amenities: selectedAmenities].
+❖ The UI sets setSaving(true) while awaiting response and resets it after promise resolution.
+	7
+	BR218
+	Hotel & Owner Authorization Rules: (Controller: RoomTypeController, Service: RoomTypeService, Function: updateRoomType([roomTypeId], [request], [ownerId]))
+❖ Backend loads hotel via hotelRepository.findById(request.hotelId()).
+❖ If hotel not found, backend throws MSG117.
+❖ Backend verifies ownership via hotel.getOwnerId().equals([ownerId]) and throws MSG122 if unauthorized.
+	8
+	BR219
+	RoomType Update Rules:
+❖ The service locates existing [RoomType rt] by roomTypeRepository.findById([roomTypeId]).
+❖ The service applies changes with rt.setName(request.name()), rt.setBasePrice(request.basePrice()), rt.setTotalRooms(request.roomAmount()), and rt.setIsActive(request.isActive()) where applicable.
+❖ Fields not provided remain unchanged unless explicitly set in request.
+	9
+	BR220
+	Capacity & Amenities Serialization Rules:
+❖ The service serializes request.capacity() with writeJson(request.capacity()) and persists via rt.setCapacity(writeJson(request.capacity())).
+❖ The service serializes request.amenities() with writeJson(request.amenities()) and persists via rt.setAmenities(writeJson(request.amenities())).
+	11
+	BR221
+	Persist Updated RoomType Rules:
+❖ The service validates request.roomAmount() >= 1 before persisting.
+❖ If invalid, throw MSG119.
+❖ The service saves changes via roomTypeRepository.save([rt]) in a transactional context.
+	12
+	BR222
+	Update Response Rules:
+❖ Backend maps updated entity using roomTypeMapper.toRoomTypeResponse([updated]) and returns it to the client.
+❖ UI receives [updatedRoom.id] and updates local state accordingly.
+	16
+	BR223
+	Image Update Validation Rules:
+❖ When uploading new images, the UI validates file.type.startsWith('image/') and [file.size] <= 5 * 1024 * 1024.
+❖ Invalid files cause alert and abort upload.
+	17
+	BR224
+	Image Attachment Rules:
+❖ For valid images, the UI computes [nextSortOrder] = [roomImages.length] and [isFirstImage] = ([roomImages.length] === 0).
+❖ The UI calls hotelApi.uploadMedia([roomTypeId], 'ROOM_TYPE', [file], [isFirstImage], [nextSortOrder]).
+❖ On success, UI appends returned media objects to [roomImages] via setRoomImages([...roomImages], [...newMedia]).
+	19
+	BR225
+	Media Management Rules:
+❖ User can set cover image using handleSetThumbnail([mediaId]) which calls hotelApi.setThumbnail([mediaId]).
+❖ User can delete images with handleDeleteImage([mediaId], [isThumbnail]) which calls hotelApi.deleteMedia([mediaId]).
+❖ If thumbnail is deleted and other images exist, UI attempts to set [roomImages[0]] as new thumbnail.
+	21
+	BR226
+	Navigation Rules:
+❖ When user finishes, frontend calls router.push(`/host/hotels/${hotelId}`).
+❖ System redirects user to hotel detail page /host/hotels/{hotelId}.
+	
+
+* UC14 - Deactivate/Activate room
+Use Case ID
+	UC14
+	Use Case Name
+	Deactivate/Activate room
+	Description
+	The hotel owner can deactivate/activate the hotel rooms.
+	Actor
+	Hotel owner
+	Trigger
+	The hotel owner selects "Deactivate/Activate Room" for a specific hotel.
+	Preconditions
+	The hotel owner has logged in and the hotel has been approved.
+	Postconditions
+	The room list is updated to reflect any changes.
+	
+
+  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	1
+	BR227
+	Room Detail Loading Rules:
+❖ The system opens /host/hotels/{hotelId}/rooms/{roomId} and loads current room information.
+❖ The UI displays current active state using [room.isActive] and renders the correct action button label, either “Kích hoạt” or “Vô hiệu hóa”.
+	3
+	BR228
+	Toggle Action Rules:
+❖ When user clicks the toggle button, the UI shows a confirm dialog with an action-specific message.
+❖ If user cancels, the system aborts the toggle and keeps the current state unchanged.
+	5
+	BR229
+	Toggle Request Rules:
+❖ If user confirms, the UI calls hotelApi.deactivateRoomType([roomId]) when [room.isActive] === true.
+❖ If user confirms, the UI calls hotelApi.activateRoomType([roomId]) when [room.isActive] === false.
+❖ During the request, the UI sets setToggling(true) and clears it after the promise settles.
+	6
+	BR230
+	Room Lookup Rules: (Controller: RoomTypeController, Service: RoomTypeService, function: activateRoomType([roomTypeId], [ownerId])/deactivateRoomType([roomTypeId], [ownerId]) 
+❖ Backend resolves the current room by roomTypeRepository.findById([roomTypeId]) through roomTypeService.getById([roomTypeId]).
+❖ If the room does not exist, backend throws MSG135.
+	7
+	BR231
+	Owner Authorization Rules:
+❖ Backend loads the parent hotel via hotelRepository.findById(room.getHotelId()).
+❖ If hotel not found, backend throws MSG117.
+❖ Backend verifies ownership with hotel.getOwnerId().equals([ownerId]) and throws MSG123 if unauthorized.
+	7
+	BR232
+	Active State Update Rules:
+❖ The service sets room.setIsActive(false) for deactivate flow and room.setIsActive(true) for activate flow.
+❖ The change is performed inside a transactional service method.
+	7
+	BR233
+	Persist Toggle Rules:
+❖ After updating [isActive], the service relies on transaction commit to persist the new state.
+❖ The controller returns a success response such as “Activated” or “Deactivated”.
+	8
+	BR234
+	UI State Refresh Rules:
+❖ On success, the UI updates local state via setRoom({ ...room, isActive: !room.isActive }).
+❖ The UI shows a success message and keeps the user on the current room page.
+	9
+	BR235
+	Error Handling Rules:
+❖ If the API returns an error, the UI shows the error message and preserves the previous room state.
+❖ The UI clears the temporary toggling state even when the request fails.
+	13
+	BR236
+	Navigation Rules:
+❖ The user can continue managing the room or click back to return to /host/hotels/{hotelId}.
+❖ The system keeps the updated active state visible after navigation back to the hotel detail page.
+	
+
+* UC15 – Manage Booking
+Use Case ID
+	UC15
+	Use Case Name
+	Manage Booking
+	Description
+	The hotel owner monitors customer bookings for hotels they own, views booking details, confirms onsite hotel payments, and updates stay progress when allowed by the booking status.
+	Actors
+	Hotel Owner
+	Trigger
+	The hotel owner selects Booking Management in the host management menu.
+	Preconditions
+	The hotel owner is logged in with the OWNER role and has at least one hotel associated with their account.
+	Postconditions
+	The owner can view, search, and filter bookings for the selected hotel. If the owner confirms onsite payment or updates stay status, booking/payment data is updated accordingly.
+	
+
+  
+
+  
+
+
+
+Business Rule
+Activity
+	BR Code
+	Description
+	1
+	BR237
+	Booking Management Entry Rules:
+❖ The hotel owner starts from the host menu and opens the booking management page for host users (View: `HostMenu`, Route: `/host/bookings`).
+	2
+	BR238
+	Owner Access Rules:
+❖ The booking management page is only available when the current user passes the `OWNER` protected route check (Hook: `useProtectedRoute("OWNER")`).
+	3
+	BR329
+	Access Redirect Rules:
+❖ If the user is not authenticated, the system redirects to `/host`; if the user is authenticated but does not have owner access, the system redirects to `/` (View: `app/host/bookings/page.tsx`).
+	4
+	BR240
+	Booking Page Display Rules:
+❖ After owner access is confirmed, the system displays the booking management page with the hotel selector area, statistics area, and booking list area (View: `HostBookingsPage`).
+	5
+	BR241
+	Owner Hotel Token Rules:
+❖ The page checks [token] in local storage before loading hotels. Hotel loading does not continue when [token] is missing (View: `HostBookingsPage`).
+	6
+	BR242
+	Login Required Message Rules:
+❖ If [token] is missing, the page displays MSG84 and stops the booking management flow (View: `HostBookingsPage`).
+	7
+	BR243
+	Owner Hotel Loading Rules:
+❖ The system loads the list of hotels associated with the current owner before loading bookings, because booking retrieval depends on [selectedHotelId] (Frontend API: `hotelApi.getHotelsByOwner(token)`).
+	8
+	BR244
+	Owner Identity Rules:
+❖ The backend identifies [ownerId] from the authenticated JWT subject rather than from a manually entered owner id (Controller: `HotelController.getHotelsByOwner()`).
+	9
+	BR245
+	Owned Hotel Retrieval Rules:
+❖ The hotel list contains hotels whose [ownerId] matches the authenticated owner. The implemented query does not filter by hotel approval status (Service: `HotelService.getByOwner()`, Repository: `hotelRepository.findByOwnerId()`).
+	10
+	BR246
+	Owner Hotel Response Rules:
+❖ The returned hotels are stored in [hotels]. If at least one hotel exists, the first hotel id becomes the initial [selectedHotelId] (View: `HostBookingsPage`).
+	11
+	BR247
+	Hotel Availability Rules:
+❖ The booking list can be loaded only when [hotels.length] is greater than zero and [selectedHotelId] is available.
+	12
+	BR248
+	No Hotel Message Rules:
+❖ If the owner has no hotels, the page displays MSG87 and MSG88 with an action to create a hotel (View: `HostBookingsPage`).
+	13
+	BR249
+	Hotel Selection Rules:
+❖ The owner can use the hotel selector to change [selectedHotelId]. The booking list is scoped to that selected hotel (View: `HostBookingsPage`).
+	14
+	BR250
+	Hotel Booking Request Rules:
+❖ When [selectedHotelId] is set or changed, the frontend requests bookings for that hotel only 
+(Frontend API: `bookingApi.getHotelBookings(selectedHotelId)`).
+	15
+	BR251
+	Hotel Booking Retrieval Rules:
+❖ The backend retrieves bookings by [hotelId] using the booking service. The current booking endpoint does not perform an additional owner check; the frontend scopes [hotelId] from the owner hotel list (Controller: `BookingController.getHotelBookings()`, Service: `BookingService.getHotelBookings()`).
+	16
+	BR252
+	Booking List Response Rules:
+❖ The backend returns [BookingResponse] items for the selected hotel, including contact information, dates, amounts, status, payment method, and room items 
+(Service: `BookingService.toBookingResponse()`).
+	17
+	BR253
+	Booking Loading Result Rules:
+❖ The booking list is considered loaded when `bookingApi.getHotelBookings()` returns successfully. Errors are handled as a separate user-visible outcome.
+	18
+	BR254
+	Booking Loading Error Rules:
+❖ If bookings cannot be loaded, the page displays MSG86 or the backend error message when available (View: `HostBookingsPage`).
+	19
+	BR255
+	Booking Overview Display Rules:
+❖ When bookings are loaded, the system displays total bookings, confirmed count, pending count, total revenue, search input, status filter, and booking table (View: `HostBookingsPage`, Component: `BookingsList`).
+	20
+	BR256
+	Search And Filter Input Rules:
+❖ The owner may search by [booking.id], [contactEmail], [contactName], or [contactPhone], and may filter by normalized status (Component: `BookingsList`).
+	21
+	BR257
+	Local Filtering Rules:
+❖ The frontend filters [bookings] locally into [filteredBookings]. Statuses `PENDING` and `PENDING_PAYMENT` are normalized to `AWAITING_PAYMENT` for display filtering (Component: `BookingsList`).
+	22
+	BR258
+	Visible Booking Availability Rules:
+❖ Visible bookings are available when [filteredBookings.length] is greater than zero. Empty filtered results are not backend errors.
+	23
+	BR259
+	Empty Booking Message Rules:
+❖ If there are no visible bookings, the page displays MSG90 and then either MSG91 for unmatched search/filter criteria or MSG92 for an empty booking list (Component: `BookingsList`).
+	24
+	BR260
+	Booking Selection Rules:
+❖ Selecting a booking row stores that row as [selectedBooking] and opens the booking detail modal (Component: `BookingsList`). |
+	25
+	BR261
+	Booking Detail Display Rules:
+❖ The booking detail modal displays booking id, status, dates, guest contact data, booked room items, payment method, paid amount, debt amount, and special requests when present (Component: `BookingDetailModal`).
+	26
+	BR262
+	Processing Action Rules:
+❖ From booking detail, the owner may confirm onsite payment, update stay status, or close the modal without modifying records. Available actions depend on [booking.status], [paymentMethod], and [checkInDate] (Component: `BookingDetailModal`).
+	27
+	BR263
+	Hotel Payment Eligibility Rules:
+❖ Hotel payment confirmation is available only when [paymentMethod] is `HOTEL` and [booking.status] is `PENDING` or `PENDING_PAYMENT` (Function: `canConfirmPayment()`).
+	28
+	BR264
+	Hotel Payment Confirmation Request Rules:
+❖ When the owner confirms payment, the frontend sends the booking id to the payment confirmation endpoint (Frontend API: `bookingApi.confirmPayment()`, Controller: `PaymentController.confirmHotelPayment()`).
+	29
+	BR265
+	Hotel Payment Completion Rules:
+❖ The system marks the latest onsite pending payment as `COMPLETED`, sets the booking [paidAmount] to [totalAmount], changes [booking.status] to `CONFIRMED`, confirms the held room, and publishes the payment completion event (Service: `PaymentService.confirmHotelPayment()`, `BookingService.confirmBookingHold()`).
+	30
+	BR266
+	Payment Success Refresh Rules:
+❖ After hotel payment confirmation succeeds, the modal displays MSG93, closes after a short delay, and reloads the booking list for the selected hotel (Component: `BookingDetailModal`).
+	31
+	BR267
+	Stay Status Eligibility Rules:
+❖ Status update is available only for `CONFIRMED` and `CHECKED_IN` bookings. A `CONFIRMED` booking can move to `CHECKED_IN` only on or after [checkInDate]; a `CHECKED_IN` booking can move to `CHECKED_OUT` (Functions: `canChangeStatus()`, `getNextStatus()`).
+	32
+	BR268
+	Booking Status Update Request Rules:
+❖ When status update is allowed, the frontend sends the next status to the booking status endpoint (Frontend API: `bookingApi.updateBookingStatus()`, Controller: `BookingController.updateBookingStatus()`).
+	33
+	BR269
+	Booking Status Persistence Rules:
+❖ The system saves the new [booking.status] and publishes a booking status event so downstream services can consume the status change (Service: `BookingService.updateBookingStatus()`, `HotelEventPublisher.publishBookingStatus()`).
+	34
+	BR270
+	Status Success Refresh Rules:
+❖ After status update succeeds, the modal displays MSG94, closes after a short delay, and reloads the booking list for the selected hotel (Component: `BookingDetailModal`).
+	35
+	BR271
+	View Only Close Rules:
+❖ If no processing action is selected or no action is available, closing the booking detail modal does not update booking or payment data (Component: `BookingDetailModal`).
+	
+
+* UC16 – Generate hotel reports
+Use Case ID
+	UC16
+	Use Case Name
+	Generate hotel reports
+	Description
+	The hotel owner compiles and reports on revenue and bookings over time.
+	Actor
+	Hotel owner
+	Trigger
+	The hotel owner selected "Generate hotel report".
+	Preconditions
+	The hotel owner has logged in.
+	Postconditions
+	The report was successfully generated, displayed, or exported.
+	
+
+  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	1
+	BR272
+	Host Revenue Page Loading Rules:
+❖ The system opens [/host/revenue] and initializes [HostRevenuePage].
+❖ The UI shows the owner revenue dashboard shell with [HostMenu], loading state, and error state handling.
+	2
+	BR273
+	Owner Context Rules:
+❖ The UI reads [localStorage.getItem('user')] and parses it into [AuthResponse].
+❖ The UI derives [ownerId] = String(user.userId) and stops loading if [storedUser] is missing, invalid, or [user.userId] is not available.
+	3
+	BR274
+	Date Range Initialization Rules:
+❖ The UI initializes [dateRange] and [appliedDateRange] with the current month.
+❖ [dateRange] is used as the editable filter state, while [appliedDateRange] controls the actual API request range.
+	4
+	BR275
+	Initial Fetch Rules:
+❖ The UI triggers [useEffect] when [appliedDateRange.from] or [appliedDateRange.to] changes.
+❖ The UI calls revenueApi.getOwnerSummary([ownerId], [appliedDateRange.from], [appliedDateRange.to]) and revenueApi.getOwnerRevenue([ownerId], [chartFrom], [chartTo], ['month' as GroupBy]) in Promise.all(...).
+❖ The UI stores the results in [ownerSummary] and [ownerRevenue].
+	5
+	BR276
+	Default Hotel Selection Rules:
+❖ If [summaryData.hotels.length] > 0, the UI checks summaryData.hotels.some(h => h.hotelId === [selectedHotelId]).
+❖ If the current selection is missing or empty, the UI calls setSelectedHotelId([summaryData.hotels[0].hotelId]).
+❖ If no hotels exist, the UI calls setSelectedHotelId(null).
+	6
+	BR277
+	Date Input Rules:
+❖ The UI updates [dateRange] through setDateRange(prev => ({ ...prev, from/to: e.target.value })).
+❖ The editable inputs do not trigger the report refresh until the user clicks “Áp dụng”.
+	7
+	BR278
+	Apply Filter Validation Rules:
+❖ When the user clicks “Áp dụng”, the UI validates [dateRange.from] >= [dateRange.to].
+❖ If invalid, the UI shows MSG124 and does not update [appliedDateRange].
+	8
+	BR279
+	Apply Filter Request Rules:
+❖ When validation passes, the UI calls setAppliedDateRange([dateRange]).
+❖ Updating [appliedDateRange] triggers the report reload through the existing [useEffect].
+	9
+	BR280
+	Backend Owner Summary Rules:
+❖ The controller RevenueReportController resolves [ownerSummary] by calling revenueReportService.ownerSummary([ownerId], [from], [to])].
+❖ The service uses [paymentRecordRepository], [bookingStatusRecordRepository], and [hotelGrpcClient] to build [OwnerSummaryResponse].
+❖ The service calculates occupancy and cancellation metrics before returning the response.
+	10
+	BR281
+	Hotel Selection Rules:
+❖ Clicking a hotel card calls setSelectedHotelId([hotel.hotelId]).
+❖ The UI derives [selectedHotel] using ownerSummary.hotels.find((h) => h.hotelId === [selectedHotelId]) and derives [selectedHotelRevenue] using ownerRevenue.hotels.find((h) => h.hotelId === [selectedHotelId]).
+	11
+	BR282
+	Selected Hotel Report Rules:
+❖ The UI builds [summary] from [selectedHotel].
+❖ The UI renders [selectedHotel.totalRevenue], [selectedHotel.netRevenue], [selectedHotel.platformCommission], [selectedHotel.occupancyRate], [selectedHotel.cancellationRate], and [selectedHotel.averageRevenue].
+	12
+	BR283
+	Chart Projection Rules:
+❖ The UI computes [monthlyRevenue] from [selectedHotelRevenue.revenue.data].
+❖ Each data point maps [point.periodStart] to [monthKey] and stores [point.amount / 1000] for chart rendering.
+	13
+	BR284
+	Rendering and State Rules:
+❖ [loading] displays the loading state, and [error || !ownerSummary] displays the error state.
+❖ If the fetch fails, the UI calls MSG125
+❖ On success, the UI renders report cards, booking status breakdown, room type revenue table, and the monthly revenue chart.
+	
+
+* UC17 – Generate website reports
+Use Case ID
+	UC17
+	Use Case Name
+	Generate website reports
+	Description
+	The administrator compiles system-wide reports including the number of users, hotels, transactions, etc.
+	Actor
+	Admin
+	Trigger
+	Admin selects "Generate website report".
+	Preconditions
+	Admin is logged in.
+	Postconditions
+	The website summary report has been successfully displayed or exported.
+	
+
+  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	1
+	BR285
+	Admin Page Loading Rules:
+❖ The system opens `/admin/reports` and loads `AdminReportsPage` shell.
+❖ UI shows date filters (`dateRange`), export buttons, and a loading placeholder while fetching data.
+	2
+	BR286
+	Render Shell Rules:
+❖ `AdminReportsPage` renders summary cards area, revenue chart area, growth metric cards, and top hotels table placeholders before data arrives.
+	3
+	BR287
+	Date Input Rules:
+❖ Admin updates `dateRange` via input controls (`setDateRange(...)`).
+❖ Changes to `dateRange` do not trigger API calls until the admin clicks `Áp dụng`.
+	4
+	BR288
+	Apply Filter Validation Rules:
+❖ On `Áp dụng`, UI validates [dateRange.from] < [dateRange.to].
+❖ If invalid, UI calls MSG124 and aborts; `appliedDateRange` remains unchanged.
+	5
+	BR289
+	Admin Fetch Rules:
+❖ When valid, UI calls `revenueApi.getAdminSummary([from],[to])`, `revenueApi.getAdminRevenue([from],[to],[groupBy])`, and `revenueApi.getTopHotels([from],[to],[limit])` (parallel via `Promise.all`).
+❖ UI sets `setLoading(true)` before the call and clears it after response or error.
+	6
+	BR290
+	Backend Admin Summary Rules:
+❖ Controller RevenueReportController delegates to service `revenueReportService.adminSummary([from],[to])`.
+❖ Service uses `paymentRecordRepository.findByEventAtBetween([from],[to])`, `bookingStatusRecordRepository`, and `hotelGrpcClient` to compute totals, cancellation rate, occupancy, and growth metrics.
+	7
+	BR291
+	Admin Revenue Series Rules:
+❖ `revenueReportService.adminRevenue([from],[to],[groupBy])` builds time-bucketed `RevenueResponse` for charting using payment records and groupBy periods (day/week/month/year).
+	8
+	BR292
+	Top Hotels Rules:
+❖ `revenueReportService.getTopHotels([from],[to],[limit])` aggregates payments by `hotelId` and returns `TopHotelItem[]` sorted by revenue desc.
+	9
+	BR293
+	UI Render Rules:
+❖ On success, UI sets `setAdminSummary`, `setAdminRevenue`, and `setAdminTopHotels` (or similar) and renders cards, charts, and tables accordingly.
+❖ Numeric values should be formatted using `toLocaleString('vi-VN')` where applicable.
+	10
+	BR294
+	Export Rules:
+❖ When admin clicks Export, UI requests export endpoint (server may accept `from,to,format,filters`).
+❖ Service generates CSV/PDF using fetched records and returns a download URL or streams file
+	11
+	BR295
+	Export Error Handling Rules:
+❖ If export fails, UI shows MSG126 and logs the error.
+	12
+	BR296
+	Loading & Error Rules:
+❖ `loading` state displays a spinner/placeholder; `error || !adminSummary` shows an error
+❖ On API failure, UI must clear loading and preserve previous displayed data if present.
+	13
+	BR297
+	Navigation & Refresh Rules:
+❖ Admin can change filters to refresh data or navigate away; the app must preserve current `dateRange` in local component state until reloaded.
+❖ After navigation back to `/admin/reports`, the page may reload data using default or preserved `appliedDateRange`.
+	
+
+* UC18 – Approve hotel
+Use Case ID
+	UC18
+	Use Case Name
+	Approve hotel
+	Description
+	Admins review and approve new hotel registration requests from hotel owners.
+	Actor
+	Admin
+	Trigger
+	Admin selects "Approve hotels".
+	Preconditions
+	Admin is logged in.
+	Postconditions
+	The hotel's status is updated and the hotel owner receives a notification.
+	
+
+  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	2
+	BR298
+	Pending Hotel List Loading Rules:
+❖ The system displays the admin pending list when user opens [/admin/pending].
+❖ The frontend calls hotelApi.getPendingHotels().
+❖ Backend (controller: HotelController, service: HotelService, function: getPendingHotels()) returns hotels whose [approvedStatus] is [PENDING] via hotelRepository.findByApprovedStatus(HotelApprovalStatus.PENDING).
+	4
+	BR299
+	Pending Hotel Detail Loading Rules:
+❖ When admin opens [/admin/pending/{hotelId}], the frontend calls [hotelApi.getPendingHotelDetail(hotelId)].
+❖ Backend validates the hotel is still pending before returning detail.
+❖ If [hotel.getApprovedStatus() != HotelApprovalStatus.PENDING], backend throws MSG127
+	5
+	BR300
+	Pending Hotel Detail Mapping Rules:
+❖ Backend builds [PendingHotelDetailResponse] from hotel entity, owner info, policies, FAQ, amenity categories and media assets.
+❖ Owner data is loaded by userGrpcClient.GetUserById(hotel.getOwnerId()).
+❖ Policies are loaded by hotelPolicyRepository.findAllByHotelId([hotelId]).
+❖ FAQs are loaded by questionRepository.findAllByHotelId([hotelId]).
+❖ Amenity categories are loaded by hotelAmenityCategoryRepository.findAllByHotelId([hotelId]) and hotelAmenityRepository.findAllByCategoryHotelId([hotelId]).
+	6
+	BR301
+	Reject Note Validation Rules:
+❖ The admin UI reads rejection reason from [rejectNote].
+❖ Before calling reject, the UI trims input by rejectNote.trim().
+❖ If the trimmed note is empty, the UI shows MSG128 and stops.
+	7
+	BR302
+	Action Confirmation Rules:
+❖ Both approve and reject actions require user confirmation via confirm.
+❖ If the admin cancels the confirmation dialog, the request is not sent.
+❖ UI state [actionLoading] is set only after the confirmation is accepted.
+	10
+	BR303
+	Approve Hotel Request Rules:
+❖ Approve action calls hotelApi.approveHotel([hotelId]).
+❖ The request uses HTTP [PUT] to [/api/hotel/hotels/{hotelId}/approve].
+❖ Backend (controller: HotelController, service: HotelService, function: approveHotel([hotelId]))  checks admin permission using verifyAdmin([jwt]) before processing.
+	10
+	BR304
+	Reject Hotel Request Rules:
+❖ Reject action calls [hotelApi.rejectHotel(hotelId, note)].
+❖ The request uses HTTP [POST] to [/api/hotel/hotels/{hotelId}/reject].
+❖ Backend (controller: HotelController, service: HotelService, function: rejectHotel([hotelId])) receives [HotelApproveRequest] with [approve] and [note], but the service currently uses only [hotelId] to change status.
+❖ The rejection note is validated on the frontend and returned in the response message, but it is not persisted by HotelServiceImpl.rejectHotel([hotelId]).
+	11
+	BR305
+	Admin Authorization Rules:
+❖ Controller blocks non-admin access by returning [403] when verifyAdmin([jwt]) is false.
+❖ This rule applies to [/pending], [/pending/{hotelId}], [/approve], and [/reject] endpoints.
+❖ The UI should expect an access-denied response when the JWT is missing or invalid.
+	12
+	BR306
+	Approval Status Transition Rules:
+❖ approveHotel([hotelId]) sets [approvedStatus = APPROVED] and [isActive = true].
+❖ rejectHotel([hotelId]) sets [approvedStatus = REJECTED] and [isActive = false].
+❖ Both methods are annotated with @Transactional and update the loaded hotel entity directly.
+	13
+	BR307
+	Success Navigation Rules:
+❖ On success, the frontend shows a confirmation alert.
+❖ The frontend navigates back to [/admin/pending] using [router.push('/admin/pending')].
+❖ If the request fails, the UI shows a failure alert and keeps the admin on the detail page.
+	
+
+* UC19 – Deactivate/Activate accounts 
+Use Case ID
+	UC19
+	Use Case Name
+	Deactivate/Activate accounts
+	Description
+	Admin can deactivate/activate user and hotel owner accounts.
+	Actor
+	Admin
+	Trigger
+	Admin selects "Manage accounts".
+	Preconditions
+	Admin is logged in.
+	Postconditions
+	Account information has been updated in the system.
+	  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	2
+	BR308
+	User List Loading Rules:
+❖ The system displays the admin users list when admin opens [/admin/users].
+❖ The frontend calls [userApi.getUsers(token, page, size)] to fetch a paged list of users.
+❖ Backend (controller: UserController, service: userService, function: getUsersPage([page], [size])) returns users via userRepository.findAll(PageRequest.of([page], [size])) wrapped in [PagedResponse<UserResponse>].
+	4
+	BR309
+	User Detail Loading Rules:
+❖ When admin opens [/admin/users/{userId}], the frontend calls [userApi.getUserDetail(userId)].
+❖ Backend loads the user by [userRepository.findById(userId)] via userService.getUserDetail([userId]).
+❖ If user is not found, backend throws MSG129.
+	5
+	BR310
+	User Detail Mapping Rules:
+❖ Backend builds [UserDetailResponse] from user entity including [id], [fullName], [email], [phone], [role], [isActive], [createdAt].
+❖ The [isActive] field indicates the current account lock status: [true] = account active, [false] = account locked.
+❖ Backend uses userMapper.toUserDetailResponse([user]) to construct the response.
+	7
+	BR311
+	Lock/Unlock Action Display Rules:
+❖ Frontend displays "Khóa tài khoản" button if [user.isActive === true].
+❖ Frontend displays "Mở khóa tài khoản" button if [user.isActive === false].
+❖ Only one button is shown depending on current [isActive] status.
+	8
+	BR312
+	Action Confirmation Rules:
+❖ Both lock and unlock actions require user confirmation via 
+MSG130
+❖ If admin cancels the confirmation dialog, the request is not sent.
+❖ UI state [actionLoading] is set only after the confirmation is accepted.
+	8
+	BR313
+	State Validation Rules:
+❖ Before sending the request, frontend checks if [user.isActive] already matches the target state.
+❖ If attempting to lock an already-locked account, frontend shows MSG131 and stops.
+❖ If attempting to unlock an already-unlocked account, frontend shows MSG132 and stops.
+	8
+	BR314
+	Action Rules:
+❖ The “Unlock” action is available only when [account.status] = LOCKED.
+	9
+	BR315
+	Lock Account Request Rules:
+❖ Lock action calls userApi.lockAccount([userId]).
+❖ The request uses HTTP [POST] to [/api/user/admin/users/{userId}/lock].
+❖ Request body is optional or empty; action is determined by endpoint.
+❖ During request, state setActionLoading(true) is set; on finish, setActionLoading(false).
+	9
+	BR316
+	Unlock Account Request Rules:
+❖ Unlock action calls [userApi.unlockAccount(userId)].
+❖ The request uses HTTP [POST] to [/api/user/admin/users/{userId}/unlock].
+❖ Request body is optional or empty; action is determined by endpoint.
+❖ During request, state setActionLoading(true) is set; on finish, setActionLoading(false).
+	10
+	BR316
+	Admin Authorization Rules:
+❖ Backend controller checks admin permission before processing lock/unlock via verifyAdmin([jwt]).
+❖ If not authorized, backend returns [403 Forbidden] response with message "Access denied".
+❖ This rule applies to both [/lock] and [/unlock] endpoints.
+	11
+	BR317
+	Account Status Update Rules:
+❖ lockAccount([userId]) sets user.setIsActive([false]).
+❖ unlockAccount([userId]) sets user.setIsActive([true]).
+❖ Both methods are annotated with [@Transactional] for database consistency.
+❖ Only the [isActive] field is modified; other user fields remain unchanged.
+	12
+	BR318
+	Account Status Persistence Rules:
+❖ Backend persists the updated user by calling userRepository.save([user]).
+❖ The database transaction is committed after save(...) completes.
+❖ If save fails (e.g., database error), backend throws an exception and the UI shows an error alert.
+	13
+	BR319
+	Success Navigation Rules:
+❖ On success, the frontend shows MSG133
+❖ The frontend navigates back to [/admin/users] using [router.push('/admin/users')].
+❖ If the request fails, the UI shows MSG134 and keeps the admin on the detail page.
+	
+
+* UC20 – Change regulations
+Use Case ID
+	UC20
+	Use Case Name
+	Change regulations
+	Description
+	Admins update system regulations such as service fees, hotel listing rules, or price limits.
+	Actor
+	Admin
+	Trigger
+	The hotel owner selected the "Regulations Management" function.
+	Preconditions
+	Admin logged in.
+	Postconditions
+	The system regulations were changed and successfully implemented.
+	
+
+  
+
+  
+
+Business rule
+Activity
+	BR Code
+	Description
+	1
+	BR320
+	Navigate and Load Regulations:
+❖ Admin opens [/admin/settings].
+❖ Frontend requests current regulation entries via [regulationsApi.getRegulations()].
+❖ System displays the regulation list returned from backend.
+	2
+	BR321
+	Regulation Edit Rules:
+❖ Admin edits one regulation row at a time.
+❖ Changes are kept locally until the admin clicks the ‘Lưu thay đổi’ button for that regulation.
+	3
+	BR322
+	Frontend Validation Rules:
+❖ Before saving, frontend validates the regulation row using validateRegulation(...).
+❖ It checks [name] is not blank.
+❖ It checks [value] is a valid decimal number between [0] and [999999.99].
+❖ If validation fails, the UI shows an error message and does not send the request.
+	4
+	BR323
+	Update Request Rules:
+❖ When a regulation row is saved, frontend calls regulationsApi.saveRegulation([regulation.regulationKey], [regulation]).
+❖ The request uses HTTP [PUT] to [/api/regulations/{key}] and sends the full [Regulation] payload.
+❖ The frontend disables the save button while the request is pending.
+	5
+	BR324
+	Authorization Rules:
+❖ Backend requires [ROLE_ADMIN] for PUT /api/regulations/{key}(controller: RegulationController, service: RegulationService, function: listRegulations()).
+❖ If the authenticated user is not an admin, backend returns [403 Forbidden].
+❖ GET /api/regulations is publicly accessible.
+	6
+	BR325
+	Server-side Validation Rules:
+❖ Backend validates [name] is not blank and [value] is a valid decimal number.
+❖ Backend enforces [value] >= 0 and [value] <= 999999.99.
+❖ Validation failures return HTTP constraint errors.
+	7
+	BR326
+	Regulation Persistence Rules:
+❖ Backend persists the regulation through regulationService.upsertRegulation([key], [request], [changedBy])
+❖ Existing regulations are updated with new [name], [value], [description], [active] values and version is incremented.
+❖ New regulation records are created with [version = 1].
+	8
+	BR327
+	Snapshot Rules:
+❖ Backend creates a [RegulationSnapshot] record after each successful save.
+❖ The snapshot stores [regulationKey], [name], [value], [description], [active], [version] and [changedBy].
+❖ Snapshot persistence occurs in the same transaction as the regulation update.
+	9
+	BR328
+	Cache and Event Rules:
+❖ Backend updates the local regulations cache after save.
+❖ Backend publishes a [RegulationEvent] for dependent services to reload updated regulation data.
+❖ The [POST /api/regulations/refresh] endpoint exists for explicit refresh but is not needed during normal save flow.
+	10
+	BR329
+	Response Rules:
+❖ Backend returns the saved [RegulationDto] to the frontend.
+❖ Frontend updates the regulation row from the response.
+❖ If the request fails, the frontend displays the error message and keeps the edited data available.
+	11
+	BR330
+	Success Feedback Rules:
+❖ On success, the save button returns to normal state and the updated row is refreshed.
+❖ The current UI does not show a separate global success toast after save.
+❖ If an error occurs, the UI shows the failure message in the top panel.
+	
+
+
+
+
+
+
+
+   2. List Description
+TechMarket List Description.xlsx
+   3. View Description
+TechMarket List View.xlsx
+
+
+3. Non-functional Requirements
+3.1. User Access and Security 
+                    Actor
+Function
+	Admin
+	Hotel Owner
+	Customer
+	Login
+	x
+	x
+	x
+	Register
+	
+
+	x
+	x
+	Forgot password
+	x
+	x
+	x
+	Search hotels
+	
+
+	
+
+	x
+	Book a room
+	
+
+	
+
+	x
+	Booking history
+	
+
+	
+
+	x
+	Review hotel
+	
+
+	
+
+	x
+	Manage personal information
+	
+
+	
+
+	x
+	Manage hotel reviews
+	
+
+	x
+	
+
+	Manage booking
+	
+
+	x
+	
+
+	Register Hotel Owner
+	
+
+	x
+	
+
+	Update Hotel
+	
+
+	x
+	
+
+	Add room
+	
+
+	x
+	
+
+	Update room
+	
+
+	x
+	
+
+	Deactivate/Activate room
+	
+
+	x
+	
+
+	Generate hotel reports
+	
+
+	x
+	
+
+	Generate website reports
+	x
+	
+
+	
+
+	Approve hotel
+	x
+	
+
+	
+
+	Deactivate/Activate accounts
+	x
+	
+
+	
+
+	Change regulations
+	x
+	
+
+	
+
+	
+
+X: User has full permission to do the action.
+
+
+3.2. Performance Requirements
+Number of user
+* Number of concurrent user: 150
+* Number of business user: 600 - 700
+
+
+Data volume
+* Number of records: approximately 500,000 - 1,000,000 records in the first operating stage, including users, hotels, room types, bookings, payments, reviews, loyalty point transactions, and reports.
+* Number of media files: approximately 50,000 - 100,000 files, mainly hotel images, room images, and support/policy documents.
+* Average file size: approximately 1MB - 3MB per media file after compression.
+* Data growth rate: approximately 50MB - 200MB per day, mainly from uploaded hotel/room images, booking transactions, payment records, reviews, and report data.
+
+
+Level of availability
+* The system is expected to achieve 95% availability.
+* Tripto should remain available for customers to search hotels, view hotel details, create bookings, and make payments during normal operating periods.
+* Temporary downtime may occur during scheduled maintenance, deployment, or infrastructure issues.
+
+
+Usage frequency
+* Tripto is used regularly by customers, hotel owners, and administrators.
+* Customers may access the system at any time to search for hotels, make bookings, complete payment, view booking history, and submit reviews.
+* Hotel owners use the system frequently to manage hotel information, check bookings, confirm onsite payments, update booking statuses, and view reviews.
+* Administrators use the system to approve hotels, monitor platform data, and manage reports.
+* The system should be deployed on a server capable of operating continuously, especially during peak booking periods. Maintenance and upgrades should be performed outside high-traffic hours.
+
+
+3.3. Implementation Requirements
+Location
+Ho Chi Minh city
+Read-only Duration        
+1 day
+Read-only Timeframe        
+0:00
+Maintenance Window        
+Every week on Sunday evening at 11 p.m., lasting 1 to 2 hours. During this time, programmers can take advantage of it to edit and update new code
+Overall conversion timeline
+1st, 15th and 25th of every month        
+4. Appendixes
+Glossary
+The list below contains all the necessary terms to interpret the document, including acronyms and abbreviations.
+Term
+	Description
+	BR
+	Business Rule
+	DB
+	Notes Database
+	MSG
+	Message
+	UC
+	Use Case
+	SRS
+	Software Requirements Specification
+	
+
+Messages
+This section describes the details of messages used in business rules e.g. error messages, confirmation messages, etc.
+
+
+Message Code
+	Message Content
+	Button
+	MSG01
+	Vui lòng điền đầy đủ thông tin
+	
+
+	MSG02
+	Đăng nhập thất bại
+	
+
+	MSG03
+	Tài khoản này không có quyền truy cập.
+	
+
+	MSG04
+	Tài khoản này không có quyền truy cập Host Panel.
+	
+
+	MSG05
+	Đăng nhập thành công. Đang chuyển hướng đến bảng điều khiển quản trị...
+	
+
+	MSG06
+	Đăng nhập thành công. Đang chuyển hướng...
+	
+
+	MSG07
+	Mật khẩu không khớp
+	
+
+	MSG08
+	Tên đăng nhập đã tồn tại
+	
+
+	MSG09
+	Email đã tồn tại
+	
+
+	MSG10
+	Vui lòng nhập đầy đủ 6 số mã OTP
+	
+
+	MSG11
+	Mã OTP không hợp lệ hoặc đã hết hạn
+	
+
+	MSG12
+	Đăng ký thất bại
+	
+
+	MSG13
+	Mã OTP đã được gửi lại! Vui lòng kiểm tra email của bạn.
+	
+
+	MSG14
+	Không thể gửi lại OTP
+	
+
+	MSG15
+	Xác thực OTP thất bại
+	
+
+	MSG16
+	Vui lòng nhập email
+	
+
+	MSG17
+	Không thể gửi yêu cầu đặt lại mật khẩu 
+	
+
+	MSG18
+	Vui lòng nhập đầy đủ mật khẩu
+	
+
+	MSG19
+	Mật khẩu phải có ít nhất 12 ký tự
+	
+
+	MSG20
+	Email, mã OTP và mật khẩu mới là bắt buộc
+	
+
+	MSG21
+	Không thể đặt lại mật khẩu
+	
+
+	MSG22
+	Đặt lại mật khẩu thành công!
+	
+
+	MSG23
+	Vui lòng chọn điểm đến hoặc khách sạn
+	
+
+	MSG24
+	Vui lòng chọn ngày nhận và trả phòng
+	
+
+	MSG25
+	Không tìm thấy khách sạn
+	
+
+	MSG26
+	Không tìm thấy kết quả
+	
+
+	MSG27
+	Không tìm thấy khách sạn phù hợp
+	
+
+	MSG28
+	Không thể tải danh sách khách sạn
+	
+
+	MSG29
+	Lỗi khi tìm khách sạn
+	
+
+	MSG30
+	Tìm thấy [totalResults] khách sạn
+	
+
+	MSG31
+	Khi đặt nhiều hơn 1 phòng, bạn phải chọn cùng loại phòng
+	
+
+	MSG32
+	Họ tên là phần bắt buộc
+	
+
+	MSG33
+	Họ tên tối thiểu là 2
+	
+
+	MSG34
+	Rất tiếc, vui lòng chỉ nhập chữ (a-z)
+	
+
+	MSG35
+	Email là phần bắt buộc
+	
+
+	MSG36
+	Email không hợp lệ
+	
+
+	MSG37
+	Điện thoại là phần bắt buộc
+	
+
+	MSG38
+	Điện thoại phải là 9 ký tự số
+	
+
+	MSG39
+	Không thể tạo đơn đặt phòng
+	
+
+	MSG40
+	Thiếu mã đơn đặt phòng
+	
+
+	MSG41
+	Hết thời gian giữ chỗ. Vui lòng đặt lại.
+	
+
+	MSG42
+	Hết thời gian giữ chỗ. Vui lòng tạo lại đơn hoặc chọn phương thức khác.
+	
+
+	MSG43
+	Thanh toán thất bại
+	
+
+	MSG44
+	Thanh toán VNPay thành công. Đơn đặt phòng đã được xác nhận.
+	
+
+	MSG45
+	Giao dịch bị hủy bởi người dùng.
+	
+
+	MSG46
+	Đã hết hạn thanh toán. Vui lòng thử lại.
+	
+
+	MSG47
+	Thanh toán thất bại (Mã lỗi: [code]). Vui lòng thử lại.
+	
+
+	MSG48
+	Thanh toán VNPay thất bại hoặc bị từ chối.
+	
+
+	MSG49
+	Đơn đã được xác nhận/thanh toán, trang thanh toán này không còn hiệu lực.
+	
+
+	MSG50
+	Đơn đã bị hủy hoặc hết hiệu lực. Vui lòng đặt lại. 
+	
+
+	MSG51
+	Trang thanh toán không khả dụng cho trạng thái đơn hiện tại.
+	
+
+	MSG52
+	Vui lòng nhập mã giảm giá
+	
+
+	MSG53
+	Dịch vụ mã giảm giá hiện chưa khả dụng
+	
+
+	MSG54
+	Không lấy được thông tin đặt phòng
+	
+
+	MSG55
+	Đơn đặt phòng của bạn đã được xác nhận. Bạn sẽ thanh toán trực tiếp tại khách sạn khi nhận phòng.
+	
+
+	MSG56
+	Vui lòng mang theo giấy tờ tùy thân và phương thức thanh toán phù hợp khi nhận phòng.
+	
+
+	MSG57
+	Bạn cần đăng nhập để xem lịch sử đặt phòng.
+	
+
+	MSG58
+	Không lấy được lịch sử đặt phòng
+	
+
+	MSG59
+	Bạn chưa có đặt phòng nào.
+	
+
+	MSG60
+	Vui lòng đăng nhập để đánh giá
+	
+
+	MSG61
+	Tiêu đề và nội dung không được để trống
+	
+
+	MSG62
+	Tiêu đề phải ít nhất 5 ký tự
+	
+
+	MSG63
+	Nội dung phải ít nhất 10 ký tự
+	
+
+	MSG64
+	Có lỗi xảy ra khi gửi đánh giá
+	
+
+	MSG65
+	Bạn đã đánh giá khách sạn này cho booking này rồi
+	
+
+	MSG66
+	Đánh giá thành công!
+	
+
+	MSG67
+	Không tìm thấy token xác thực
+	
+
+	MSG68
+	Không thể tải thông tin người dùng
+	
+
+	MSG69
+	Cập nhật hồ sơ thành công!
+	
+
+	MSG70
+	Không thể lưu thay đổi
+	
+
+	MSG71
+	Vui lòng nhập mật khẩu hiện tại
+	
+
+	MSG72
+	Vui lòng nhập mật khẩu mới
+	
+
+	MSG73
+	Mật khẩu phải có ít nhất 12 ký tự
+	
+
+	MSG74
+	Vui lòng xác nhận mật khẩu mới
+	
+
+	MSG75
+	Mật khẩu xác nhận không khớp
+	
+
+	MSG76
+	Đổi mật khẩu thành công!
+	
+
+	MSG77
+	Không thể đổi mật khẩu
+	
+
+	MSG78
+	Mật khẩu hiện tại không đúng
+	
+
+	MSG79
+	Không thể tải danh sách khách sạn
+	
+
+	MSG80
+	Không thể tải đánh giá
+	
+
+	MSG81
+	Chưa có đánh giá nào
+	
+
+	MSG82
+	Các đánh giá từ khách hàng sẽ hiển thị ở đây
+	
+
+	MSG83
+	Bạn không có quyền xem đánh giá của khách sạn này
+	
+
+	MSG84
+	Vui lòng đăng nhập để xem danh sách đặt phòng.
+	
+
+	MSG85
+	Không thể tải danh sách khách sạn.
+	
+
+	MSG86
+	Không thể tải danh sách đơn đặt phòng.
+	
+
+	MSG87
+	Chưa có khách sạn nào
+	
+
+	MSG88
+	Hãy tạo khách sạn trước để quản lý đơn đặt phòng.
+	
+
+	MSG89
+	Đang tải danh sách đơn đặt phòng...
+	
+
+	MSG90
+	Không có đơn đặt phòng nào
+	
+
+	MSG91
+	Không tìm thấy đơn đặt phòng phù hợp với tiêu chí tìm kiếm
+	
+
+	MSG92
+	Hiện tại chưa có đơn đặt phòng nào
+	
+
+	MSG93
+	Xác nhận thanh toán thành công!
+	
+
+	MSG94
+	Cập nhật trạng thái thành công!
+	
+
+	MSG95
+	Lỗi khi xác nhận thanh toán
+	
+
+	MSG96
+	Lỗi khi cập nhật trạng thái
+	
+
+	MSG97
+	Không tạo được khách sạn.
+	
+
+	MSG98
+	Không tải được ảnh lên server
+	
+
+	MSG99
+	Tạo khách sạn thành công. Đang chuyển tới danh sách...
+	
+
+	MSG100
+	Tên khách sạn không được để trống
+	
+
+	MSG101
+	Mô tả không được để trống
+	
+
+	MSG102
+	Mô tả phải ít nhất 10 ký tự
+	
+
+	MSG103
+	Xếp hạng sao phải từ 1-5
+	
+
+	MSG104
+	Vui lòng chọn thành phố 
+	
+
+	MSG105
+	Địa chỉ đường không được để trống
+	
+
+	MSG106
+	Thành phố không được để trống 
+	
+
+	MSG107
+	Quốc gia không được để trống 
+	
+
+	MSG108
+	Email không hợp lệ
+	
+
+	MSG109
+	Số điện thoại phải có 7-15 chữ số
+	
+
+	MSG110
+	Đã cập nhật thông tin khách sạn thành công!
+	
+
+	MSG111
+	Vui lòng chọn tập tin hình ảnh 
+	
+
+	MSG112
+	Kích thước file không được vượt quá 5MB
+	
+
+	MSG113
+	Bạn có chắc chắn muốn tắt hoạt động khách sạn này? Khách sạn sẽ không hiển thị trên hệ thống. 
+	
+
+	MSG114
+	Bạn có chắc chắn muốn kích hoạt lại khách sạn này?
+	
+
+	MSG115
+	Đã tắt hoạt động khách sạn thành công!.
+	
+
+	MSG116
+	Đã kích hoạt khách sạn thành công!
+	
+
+	MSG117
+	Không tìm thấy khách sạn
+	
+
+	MSG118
+	Bạn không có quyền tạo loại phòng cho khách sạn này.
+	
+
+	MSG119
+	Số lượng phòng phải lớn hơn hoặc bằng 1.
+	
+
+	MSG120
+	Đã thêm phòng mới thành công! Bạn có thể thêm hình ảnh hoặc quay lại.
+	
+
+	MSG121
+	Vui lòng chọn tập tin hình ảnh' or 'Kích thước file không được vượt quá 5MB
+	
+
+	MSG122
+	Không có quyền cập nhật loại phòng
+	
+
+	MSG123
+	Không có quyền thực hiện thao tác này.
+	
+
+	MSG124
+	Ngày bắt đầu phải nhỏ hơn ngày kết thúc.
+	
+
+	MSG125
+	Không thể tải dữ liệu doanh thu
+	
+
+	MSG126
+	Xuất file không thành công
+	
+
+	MSG127
+	Khách sạn không ở trạng thái chờ duyệt.
+	
+
+	MSG128
+	Vui lòng nhập lý do từ chối.
+	
+
+	MSG129
+	Người dùng không tồn tại
+	
+
+	MSG130
+	Bạn có chắc chắn muốn khóa/mở khóa tài khoản này?
+	
+
+	MSG131
+	Tài khoản này đã ở trạng thái khóa
+	
+
+	MSG132
+	Tài khoản này đã ở trạng thái mở khóa
+	
+
+	MSG133
+	Tài khoản đã được khóa/mở khóa thành công.
+	
+
+	MSG134
+	Có lỗi xảy ra. Vui lòng thử lại.
+	
+
+	MSG135
+	Không tìm thấy loại phòng.
+	
+
+	Issues List
+N/A
+
+
+
+
+
+Software Requirements Specification, Version 1.0
+Prepared by Mr.  Ngoc, Mr. Nghia 
+Last modified on 17/05/26 1:00:00 PM

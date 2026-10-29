@@ -1,0 +1,63 @@
+@startuml SAD_C4_Dynamic_BookingVNPay
+title Tripto - C4 Dynamic View: Booking with VNPay Payment
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+
+actor Customer
+participant "Next.js Frontend" as Frontend
+participant "API Gateway" as Gateway
+participant "BookingController" as BookingController
+participant "BookingService" as BookingService
+participant "Hotel Availability API" as Availability
+database "Booking DB" as BookingDB
+participant "PaymentController" as PaymentController
+participant "PaymentService" as PaymentService
+participant "VNPay Gateway" as VNPay
+queue "RabbitMQ" as RabbitMQ
+participant "Revenue Service" as Revenue
+participant "Notification Service" as Notification
+participant "User Service\nLoyalty Points" as User
+
+Customer -> Frontend : Select room and submit booking
+Frontend -> Gateway : POST /api/bookings
+Gateway -> BookingController : Route request
+BookingController -> BookingService : createBooking(request)
+BookingService -> Availability : POST /api/v1/availability/hold
+Availability --> BookingService : holdId, expiresAt
+BookingService -> BookingDB : Save PENDING booking\nwith holdId and holdExpiresAt
+BookingService -> RabbitMQ : Publish booking.status.changed=PENDING
+BookingService --> Frontend : Booking response
+
+Customer -> Frontend : Choose VNPay
+Frontend -> Gateway : POST /api/payments/vnpay/create?bookingId
+Gateway -> PaymentController : Route request
+PaymentController -> PaymentService : initVnPayPayment(bookingId, clientIp)
+PaymentService -> BookingService : ensureActiveHold(bookingId)
+BookingService -> Availability : GET /hold/{holdId}
+Availability --> BookingService : HELD and not expired
+PaymentService -> BookingDB : Save PENDING payment,\nset booking=PENDING_PAYMENT
+PaymentService -> VNPay : Build signed payment URL
+PaymentService --> Frontend : redirectUrl
+Frontend -> VNPay : Redirect customer
+
+VNPay -> Frontend : Return with responseCode
+Frontend -> Gateway : GET /api/payments/vnpay/return
+Gateway -> PaymentController : Route return
+PaymentController -> PaymentService : processVNPayCallback(orderId, responseCode, transactionNo)
+
+alt responseCode == "00"
+  PaymentService -> BookingDB : Mark payment COMPLETED,\nbooking CONFIRMED
+  PaymentService -> Availability : POST /hold/{holdId}/confirm
+  PaymentService -> User : Deduct used points,\nearn loyalty points
+  PaymentService -> RabbitMQ : Publish payment.completed\nand booking.status.changed
+  RabbitMQ -> Revenue : Ingest payment/booking event
+  RabbitMQ -> Notification : Send booking/payment notification
+  PaymentService --> Frontend : Payment success
+else payment failed or cancelled
+  PaymentService -> BookingDB : Mark payment FAILED,\nbooking back to PENDING
+  PaymentService --> Frontend : Payment failed,\nallow retry before hold expiry
+end
+
+@enduml

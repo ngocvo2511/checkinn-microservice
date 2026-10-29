@@ -37,8 +37,8 @@ Prepare a test room type with only one available room for the selected date rang
 $env:BASE_URL="http://localhost:8080"
 $env:HOTEL_ID="c1d2e3f4-a5b6-7890-cdef-111111111111"
 $env:ROOM_TYPE_ID="d1e2f3a4-b5c6-7890-defa-111111111111"
-$env:CHECK_IN_DATE="2026-06-01"
-$env:CHECK_OUT_DATE="2026-06-02"
+$env:CHECK_IN_DATE="2026-06-07"
+$env:CHECK_OUT_DATE="2026-06-08"
 $env:ATTEMPTS="10"
 $env:EXPECTED_SUCCESSES="1"
 k6 run .\performance\booking-hold-concurrency.k6.js

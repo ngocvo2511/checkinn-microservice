@@ -1,0 +1,44 @@
+@startuml SAD_C4_Context
+title Tripto - C4 Level 1: System Context
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+skinparam rectangle {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+}
+skinparam actor {
+  BorderColor #334155
+  BackgroundColor #E0F2FE
+}
+
+legend right
+  C4 Level 1 - System Context
+  Dashed elements are planned extension points.
+endlegend
+
+actor "Guest / Customer" as Customer
+actor "Hotel Owner" as Owner
+actor "Administrator" as Admin
+actor "DevOps / Maintainer" as DevOps
+
+rectangle "Tripto Hotel Booking System\nWeb hotel booking platform" as Tripto {
+}
+
+rectangle "VNPay\nExternal payment gateway" as VNPay
+rectangle "Email Provider\nSMTP / transactional email" as Email
+rectangle "Supabase Storage\nObject storage for media" as Supabase
+rectangle "Search Index\nElasticsearch or equivalent\n(planned)" as SearchIndex #F5F5F5
+
+Customer --> Tripto : Search hotels, book rooms,\npay, manage profile,\nreview completed stays
+Owner --> Tripto : Manage hotels, room types,\nmedia, bookings, reviews,\nrevenue reports
+Admin --> Tripto : Approve hotels, manage users,\nview reports, update regulations
+DevOps --> Tripto : Deploy, monitor,\nmaintain services
+
+Tripto --> VNPay : Create payment URL,\nreceive payment return/callback
+Tripto --> Email : Send OTP and booking/payment notifications
+Tripto --> Supabase : Upload and retrieve hotel media/documents
+Tripto ..> SearchIndex : Index and query hotel data\nfor advanced search (future)
+
+@enduml

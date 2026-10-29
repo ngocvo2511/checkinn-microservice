@@ -1,0 +1,88 @@
+@startuml SAD_C4_Component_BookingPayment
+title Tripto - C4 Level 3: Booking Service and Payment Module
+
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam maxMessageSize 220
+skinparam rectangle {
+  BorderColor #334155
+  BackgroundColor #F8FAFC
+}
+skinparam database {
+  BorderColor #334155
+  BackgroundColor #FEF3C7
+}
+skinparam queue {
+  BorderColor #334155
+  BackgroundColor #DCFCE7
+}
+
+actor "Customer" as Customer
+actor "Hotel Owner" as Owner
+
+rectangle "API Gateway / Frontend" as Client
+rectangle "Booking Service\nbooking-service" as BookingBoundary {
+  rectangle "BookingController\nREST booking API" as BookingController
+  rectangle "PaymentController\nREST payment API" as PaymentController
+  rectangle "BookingGrpcServer\nInternal booking gRPC" as BookingGrpc
+  rectangle "PaymentGrpcServer\nInternal payment gRPC" as PaymentGrpc
+  rectangle "BookingService\nBooking creation, status,\nhold validation" as BookingService
+  rectangle "PaymentService\nVNPay and pay-at-hotel\npayment lifecycle" as PaymentService
+  rectangle "PaymentCreationPolicyFactory\nPayment method extension point" as PaymentFactory
+  rectangle "VnPayPaymentCreationPolicy\nVNPay-specific rules" as VnPayPolicy
+  rectangle "HotelPaymentCreationPolicy\nPay-at-hotel rules" as HotelPolicy
+  rectangle "BookingScheduledTask\nExpire pending bookings,\ncleanup holds, status jobs" as Scheduler
+  rectangle "HotelAvailabilityClient\nREST client to hotel-service" as AvailabilityClient
+  rectangle "LoyaltyPointsClient\nREST client to user-service" as LoyaltyClient
+  rectangle "HotelEventPublisher\nRabbitMQ event publisher" as EventPublisher
+  rectangle "BookingRepository" as BookingRepo
+  rectangle "BookingItemRepository" as BookingItemRepo
+  rectangle "PaymentRepository" as PaymentRepo
+  rectangle "VnPayUtil / VnPayProperties\nSigning and URL generation" as VnPayUtil
+}
+
+database "Booking DB\nbookings, booking_items,\npayments" as BookingDB
+rectangle "Hotel Service\nAvailability API" as HotelService
+rectangle "User Service\nLoyalty points API" as UserService
+rectangle "VNPay Gateway" as VNPay
+queue "RabbitMQ\nhotel.events" as RabbitMQ
+
+Customer --> Client : Create booking,\nchoose payment
+Owner --> Client : Confirm onsite payment,\nupdate stay status
+Client --> BookingController : /api/bookings/**
+Client --> PaymentController : /api/payments/**
+
+BookingController --> BookingService
+PaymentController --> PaymentService
+BookingGrpc --> BookingService
+PaymentGrpc --> PaymentService
+
+BookingService --> AvailabilityClient : hold/confirm/release/check hold
+BookingService --> BookingRepo
+BookingService --> BookingItemRepo
+BookingService --> EventPublisher : booking.status.changed
+
+PaymentService --> BookingService : ensure active hold,\nconfirm hold
+PaymentService --> PaymentFactory : select policy by method
+PaymentFactory --> VnPayPolicy
+PaymentFactory --> HotelPolicy
+PaymentService --> PaymentRepo
+PaymentService --> BookingRepo
+PaymentService --> VnPayUtil
+PaymentService --> LoyaltyClient : deduct/earn points\nafter successful payment
+PaymentService --> EventPublisher : payment.completed,\nbooking.status.changed
+
+Scheduler --> BookingRepo
+Scheduler --> PaymentRepo
+
+AvailabilityClient --> HotelService
+LoyaltyClient --> UserService
+EventPublisher --> RabbitMQ
+VnPayUtil --> VNPay : signed payment URL
+PaymentController --> VNPay : receive return/callback params
+
+BookingRepo --> BookingDB
+BookingItemRepo --> BookingDB
+PaymentRepo --> BookingDB
+
+@enduml
