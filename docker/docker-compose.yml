@@ -1,24 +1,323 @@
+name: checkinn-local
+
+x-java: &java
+  init: true
+  restart: unless-stopped
+  networks: [checkinn]
+  extra_hosts: ["host.docker.internal:host-gateway"]
+  environment: &java-env
+    SPRING_PROFILES_ACTIVE: docker
+    SPRING_CLOUD_CONFIG_ENABLED: "false"
+    SPRING_CONFIG_IMPORT: ""
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    SPRING_BOOT_ADMIN_CLIENT_URL: http://admin-server:9095
+    SPRING_DATA_REDIS_HOST: redis
+    SPRING_DATA_REDIS_PORT: "6379"
+    SPRING_RABBITMQ_HOST: rabbitmq
+    SPRING_RABBITMQ_PORT: "5672"
+    SPRING_RABBITMQ_VIRTUALHOST: checkinn
+    SPRING_RABBITMQ_USERNAME: ${RABBIT_USER:-checkinn}
+    SPRING_RABBITMQ_PASSWORD: ${RABBIT_PASS:-local-development-only}
+    SECRET_KEY: ${SECRET_KEY:-}
+    USER_SERVICE_URL: http://user-service:8082
+    HOTEL_SERVICE_URL: http://hotel-service:8083
+    REGULATIONS_SERVICE_URL: http://regulations-service:8091
+    SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+  healthcheck: &health
+    test: [CMD-SHELL, 'curl -fsS http://localhost:$${SERVER_PORT}/actuator/health || exit 1']
+    interval: 15s
+    timeout: 5s
+    retries: 12
+    start_period: 60s
+
 services:
   redis:
     image: redis:7-alpine
-    container_name: checkinn-redis
-    ports:
-      - "6379:6379"
+    restart: unless-stopped
+    command: [redis-server, --appendonly, "yes"]
+    networks: [checkinn]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 5s
+      retries: 6
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: hotel-rabbitmq
-
-    ports:
-      - "5672:5672"     # cho app kết nối
-      - "15672:15672"   # giao diện web
-
+    entrypoint: [bash, /usr/local/bin/checkinn-rabbitmq-start.sh]
+    hostname: rabbitmq
+    restart: unless-stopped
+    networks: [checkinn]
+    ports: ["127.0.0.1:${RABBIT_MANAGEMENT_PORT:-15672}:15672"]
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-
-      # tự động tạo exchange, queue
-      RABBITMQ_LOAD_DEFINITIONS: /etc/rabbitmq/definitions.json
-
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER:-checkinn}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS:-local-development-only}
+      RABBITMQ_DEFAULT_VHOST: checkinn
     volumes:
-      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/start.sh:/usr/local/bin/checkinn-rabbitmq-start.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, 'test -f /tmp/checkinn-rabbitmq-ready && rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_port_connectivity && rabbitmqctl -q authenticate_user "$${RABBITMQ_DEFAULT_USER}" "$${RABBITMQ_DEFAULT_PASS}"']
+      interval: 10s
+      timeout: 20s
+      retries: 12
+      start_period: 30s
+
+  eureka-server:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: eureka-server}
+    image: checkinn/eureka-server:local
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8761"
+    ports: ["127.0.0.1:${EUREKA_PORT:-8761}:8761"]
+
+  admin-server:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: admin-server}
+    image: checkinn/admin-server:local
+    environment:
+      <<: *java-env
+      SERVER_PORT: "9095"
+    ports: ["127.0.0.1:${ADMIN_PORT:-9095}:9095"]
+    healthcheck:
+      <<: *health
+      test: [CMD-SHELL, 'curl -fsS http://localhost:9095/ || exit 1']
+
+  api-gateway:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: api-gateway}
+    image: checkinn/api-gateway:local
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8080"
+    ports: ["127.0.0.1:${GATEWAY_PORT:-8080}:8080"]
+    depends_on:
+      eureka-server: {condition: service_healthy}
+
+  config-server:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: config-server}
+    image: checkinn/config-server:local
+    profiles: [config]
+    volumes: [./config:/config:ro]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8888"
+      SPRING_PROFILES_ACTIVE: native
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS: file:/config
+      SPRING_CLOUD_CONFIG_SERVER_GIT_CLONEONSTART: "false"
+    ports: ["127.0.0.1:${CONFIG_PORT:-8888}:8888"]
+
+  user-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: user-service}
+    image: checkinn/user-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8082"
+      SPRING_DATASOURCE_URL: ${USER_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_user}
+      SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  auth-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: auth-service}
+    image: checkinn/auth-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8081"
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  hotel-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: hotel-service}
+    image: checkinn/hotel-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8083"
+      SPRING_DATASOURCE_URL: ${HOTEL_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_hotel}
+      SPRING_DATASOURCE_USERNAME: ${HOTEL_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${HOTEL_DB_PASSWORD:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  media-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: media-service}
+    image: checkinn/media-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8085"
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+      SUPABASE_BUCKET: ${SUPABASE_BUCKET:-hotel_storage}
+      SUPABASE_PRIVATE_BUCKET: ${SUPABASE_PRIVATE_BUCKET:-hotel-documents}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  booking-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: booking-service}
+    image: checkinn/booking-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8084"
+      SPRING_DATASOURCE_URL: ${BOOKING_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_booking}
+      SPRING_DATASOURCE_USERNAME: ${BOOKING_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${BOOKING_DB_PASSWORD:-}
+      VNPAY_TMN_CODE: ${VNPAY_TMN_CODE:-}
+      VNPAY_HASH_SECRET: ${VNPAY_HASH_SECRET:-}
+      VNPAY_RETURN_URL: ${VNPAY_RETURN_URL:-http://localhost:3000/booking/payment/return}
+      VNPAY_PAY_URL: ${VNPAY_PAY_URL:-https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  revenue-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: revenue-service}
+    image: checkinn/revenue-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8088"
+      SPRING_DATASOURCE_URL: ${REVENUE_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_revenue}
+      SPRING_DATASOURCE_USERNAME: ${REVENUE_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${REVENUE_DB_PASSWORD:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  regulations-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: regulations-service}
+    image: checkinn/regulations-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8091"
+      SPRING_DATASOURCE_URL: ${REGULATIONS_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_regulations}
+      SPRING_DATASOURCE_USERNAME: ${REGULATIONS_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${REGULATIONS_DB_PASSWORD:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  notification-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: notification-service}
+    image: checkinn/notification-service:local
+    profiles: [app]
+    volumes:
+      - ./notification-health.sh:/usr/local/bin/checkinn-notification-health.sh:ro
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /usr/local/bin/checkinn-notification-health.sh]
+      timeout: 15s
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8086"
+      SPRING_MAIL_HOST: ${MAIL_HOST:-}
+      SPRING_MAIL_PORT: ${MAIL_PORT:-587}
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+
+  frontend:
+    profiles: [web]
+    build:
+      context: ../../checkinn-frontend
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+    image: checkinn/frontend:local
+    init: true
+    restart: unless-stopped
+    networks: [checkinn]
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      API_INTERNAL_URL: http://api-gateway:8080
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    depends_on:
+      api-gateway: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/api/auth/providers').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+networks:
+  checkinn:
+volumes:
+  redis-data:
+  rabbitmq-data:

@@ -1,0 +1,88 @@
+# Explicit opt-in overlay: isolated copies of live local databases, never schema.sql.
+services:
+  postgres-test:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    networks: [checkinn]
+    environment:
+      POSTGRES_USER: checkinn_test
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    volumes: [postgres-test-data:/var/lib/postgresql]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U checkinn_test -d postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  mailpit:
+    image: axllent/mailpit:v1.20
+    restart: unless-stopped
+    networks: [checkinn]
+    ports: ["127.0.0.1:8025:8025"]
+    environment:
+      MP_DATABASE: /data/mailpit.db
+    volumes: [mailpit-test-data:/data]
+    healthcheck:
+      test: [CMD, /mailpit, readyz]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  user-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_user
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  hotel-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_hotel
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  booking-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_booking
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  revenue-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_revenue
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  regulations-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_regulations
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  notification-service:
+    environment:
+      SPRING_MAIL_HOST: mailpit
+      SPRING_MAIL_PORT: "1025"
+      SPRING_MAIL_USERNAME: ""
+      SPRING_MAIL_PASSWORD: ""
+      MAIL_USERNAME: checkinn-test@example.invalid
+      NOTIFICATION_FROMEMAIL: checkinn-test@example.invalid
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "false"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "false"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: "false"
+    depends_on:
+      mailpit: {condition: service_healthy}
+
+volumes:
+  postgres-test-data:
+  mailpit-test-data:

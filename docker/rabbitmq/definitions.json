@@ -3,24 +3,38 @@
     {
       "name": "hotel.events",
       "type": "topic",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false,
+      "internal": false
     },
     {
       "name": "user.events",
       "type": "topic",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false,
+      "internal": false
     },
     {
       "name": "notification.dlx",
       "type": "topic",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false,
+      "internal": false
     }
   ],
-
   "queues": [
     {
       "name": "revenue.payment.queue",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false
     },
     {
       "name": "notification.payment.queue",
@@ -28,7 +42,9 @@
       "arguments": {
         "x-dead-letter-exchange": "notification.dlx",
         "x-dead-letter-routing-key": "notification.payment.dead"
-      }
+      },
+      "vhost": "checkinn",
+      "auto_delete": false
     },
     {
       "name": "notification.otp.queue",
@@ -36,48 +52,70 @@
       "arguments": {
         "x-dead-letter-exchange": "notification.dlx",
         "x-dead-letter-routing-key": "notification.otp.dead"
-      }
+      },
+      "vhost": "checkinn",
+      "auto_delete": false
     },
     {
       "name": "notification.payment.dlq",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false
     },
     {
       "name": "notification.otp.dlq",
-      "durable": true
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false
     }
   ],
-
   "bindings": [
     {
       "source": "hotel.events",
       "destination": "revenue.payment.queue",
       "destination_type": "queue",
-      "routing_key": "payment.*"
+      "routing_key": "payment.*",
+      "vhost": "checkinn",
+      "arguments": {}
     },
     {
       "source": "hotel.events",
       "destination": "notification.payment.queue",
       "destination_type": "queue",
-      "routing_key": "payment.completed"
+      "routing_key": "payment.completed",
+      "vhost": "checkinn",
+      "arguments": {}
     },
     {
       "source": "user.events",
       "destination": "notification.otp.queue",
       "destination_type": "queue",
-      "routing_key": "otp.verification"
+      "routing_key": "otp.verification",
+      "vhost": "checkinn",
+      "arguments": {}
     },
     {
       "source": "notification.dlx",
       "destination": "notification.payment.dlq",
       "destination_type": "queue",
-      "routing_key": "notification.payment.dead"
+      "routing_key": "notification.payment.dead",
+      "vhost": "checkinn",
+      "arguments": {}
     },
     {
       "source": "notification.dlx",
       "destination": "notification.otp.dlq",
       "destination_type": "queue",
-      "routing_key": "notification.otp.dead"
+      "routing_key": "notification.otp.dead",
+      "vhost": "checkinn",
+      "arguments": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "checkinn"
     }
   ]
 }

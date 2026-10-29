@@ -1,0 +1,12 @@
+**
+!*/
+!*/pom.xml
+!*/src/
+!*/src/**
+**/.env*
+**/target
+**/logs
+**/*.log
+**/*.pem
+**/*.key
+**/key.json

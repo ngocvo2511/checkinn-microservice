@@ -115,7 +115,7 @@ app:
     fail-open: ${TOKEN_REVOCATION_FAIL_OPEN:false}
 
 vnpay:
-  tmnCode: W0MI1ZMG
-  hashSecret: W5AF1T7ITXWOP1PC960RXCWYW0UWBBYZ
-  returnUrl: http://localhost:3000/booking/payment/return
-  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  tmnCode: ${VNPAY_TMN_CODE:}
+  hashSecret: ${VNPAY_HASH_SECRET:}
+  returnUrl: ${VNPAY_RETURN_URL:http://localhost:3000/booking/payment/return}
+  payUrl: ${VNPAY_PAY_URL:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}

@@ -2,6 +2,8 @@
 
 A distributed hotel booking system using Microservices architecture with gRPC communication.
 
+Docker local setup, actual service inventory, configuration, smoke checks and validation results: [docker/README.md](docker/README.md).
+
 ## Services Included
 - **API Gateway** – Single entry point for all clients
 - **Auth Service** – JWT authentication & login/register
