@@ -4,5 +4,6 @@ public enum HotelApprovalStatus {
     DRAFT,
     PENDING,
     APPROVED,
-    REJECTED
+    REJECTED,
+    DRAFT
 }
