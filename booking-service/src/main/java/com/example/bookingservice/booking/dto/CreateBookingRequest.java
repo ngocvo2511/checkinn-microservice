@@ -28,4 +28,5 @@ public class CreateBookingRequest {
     private String voucherCode;
     private Long pointsToUse;  // Số điểm muốn sử dụng để giảm giá (optional)
     private List<CreateBookingItemRequest> items;
+    private String acceptedCancellationPolicyVersion;
 }

@@ -39,6 +39,9 @@ public class BookingResponse {
     private String paymentMethod; // HOTEL, VNPAY - lấy từ Payment entity
     private String holdId;
     private LocalDateTime holdExpiresAt;
+    private String cancellationPolicyVersion;
+    private java.time.Instant checkInAt;
+    private java.time.Instant freeCancellationUntil;
     private List<BookingItemResponse> items;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -93,10 +93,10 @@ public class RoomTypeController {
     // Activate / deactivate
     @PutMapping("/{roomTypeId}/activate")
     public ResponseEntity<?> activate(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID roomTypeId
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[ROOM_TYPE_CONTROLLER_ACTIVATE] Activate room type request received - roomTypeId: {}, ownerId: {}", roomTypeId, ownerId);
         roomTypeService.activateRoomType(roomTypeId, ownerId);
         log.info("[ROOM_TYPE_CONTROLLER_ACTIVATE] Activate room type success - roomTypeId: {}, ownerId: {}", roomTypeId, ownerId);
@@ -105,10 +105,10 @@ public class RoomTypeController {
 
     @PutMapping("/{roomTypeId}/deactivate")
     public ResponseEntity<?> deactivate(
-            @RequestHeader("X-OWNER-ID") String ownerIdHeader,
+            @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID roomTypeId
     ) {
-        UUID ownerId = getOwnerId(ownerIdHeader);
+        UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[ROOM_TYPE_CONTROLLER_DEACTIVATE] Deactivate room type request received - roomTypeId: {}, ownerId: {}", roomTypeId, ownerId);
         roomTypeService.deactivateRoomType(roomTypeId, ownerId);
         log.info("[ROOM_TYPE_CONTROLLER_DEACTIVATE] Deactivate room type success - roomTypeId: {}, ownerId: {}", roomTypeId, ownerId);

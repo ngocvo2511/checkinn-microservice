@@ -81,6 +81,13 @@ public class Booking {
     @Column(name = "hold_expires_at")
     private LocalDateTime holdExpiresAt;
 
+    @Column(name = "cancellation_policy_version", length = 64)
+    private String cancellationPolicyVersion;
+    @Column(name = "check_in_at")
+    private java.time.Instant checkInAt;
+    @Column(name = "free_cancellation_until")
+    private java.time.Instant freeCancellationUntil;
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingItem> items;
 

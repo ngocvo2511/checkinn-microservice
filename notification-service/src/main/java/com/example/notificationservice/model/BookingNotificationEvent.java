@@ -22,6 +22,9 @@ public class BookingNotificationEvent {
     private int numberOfGuests;
     private BigDecimal amount;
     private String paymentStatus;
+    private String bookingStatus;
+    public String getBookingStatus() { return bookingStatus; }
+    public void setBookingStatus(String bookingStatus) { this.bookingStatus = bookingStatus; }
     private String paymentMethod;
     private LocalDateTime paidAt;
     private LocalDateTime eventAt;

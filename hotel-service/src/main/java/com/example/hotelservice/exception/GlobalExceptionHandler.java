@@ -21,6 +21,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException.class)
+    public ResponseEntity<Map<String, Object>> handleInventoryNotConfigured(
+            com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException ex,
+            HttpServletRequest req) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), req.getRequestURI());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest req) {
         log.warn("[GLOBAL_EXCEPTION] IllegalArgumentException - path: {}, message: {}", req.getRequestURI(), ex.getMessage());
@@ -33,8 +40,8 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), req.getRequestURI());
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex, HttpServletRequest req) {
+    @ExceptionHandler({AccessDeniedException.class, SecurityException.class})
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(RuntimeException ex, HttpServletRequest req) {
         log.warn("[GLOBAL_EXCEPTION] AccessDeniedException - path: {}, message: {}", req.getRequestURI(), ex.getMessage());
         return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage(), req.getRequestURI());
     }

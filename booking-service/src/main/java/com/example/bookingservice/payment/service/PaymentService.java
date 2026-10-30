@@ -49,10 +49,15 @@ public class PaymentService {
         validateHotelPaymentRequest(request);
 
         // Validate booking exists
-        Booking booking = bookingRepository.findById(request.getBookingId())
+        Booking booking = bookingRepository.findByIdForUpdate(request.getBookingId())
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + request.getBookingId()));
         log.info("[CREATE_PAYMENT] Booking loaded - bookingId: {}, userId: {}", booking.getId(), booking.getUserId());
         validateBookingCanStartPayment(booking);
+
+        if (request.getAmount() == null || request.getAmount().signum() <= 0
+                || request.getAmount().compareTo(booking.getTotalAmount()) != 0) {
+            throw new IllegalArgumentException("Payment amount must equal the server booking total");
+        }
 
         // Keep previous failed/cancelled attempts as payment history, but prevent duplicate active payments.
         paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(request.getBookingId())
@@ -61,7 +66,9 @@ public class PaymentService {
         booking = bookingService.ensureActiveHold(request.getBookingId());
 
         PaymentCreationPolicy creationPolicy = paymentCreationPolicyFactory.getPolicy(request.getMethod());
-        Payment payment = creationPolicy.createPayment(request);
+        CreatePaymentRequest pricedRequest = CreatePaymentRequest.builder().bookingId(booking.getId())
+                .amount(booking.getTotalAmount()).method(request.getMethod()).build();
+        Payment payment = creationPolicy.createPayment(pricedRequest);
         creationPolicy.updateBookingAfterPaymentCreated(booking);
         if (creationPolicy.shouldPersistBooking()) {
             bookingRepository.save(booking);
@@ -75,9 +82,10 @@ public class PaymentService {
     @Transactional
     public VnPayInitResponse initVnPayPayment(String bookingId, String clientIp) {
         log.info("[INIT_VNPAY] Request received - bookingId: {}, clientIp: {}", bookingId, clientIp);
-        Booking booking = bookingRepository.findById(bookingId)
+        Booking booking = bookingRepository.findByIdForUpdate(bookingId)
             .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         validateBookingCanStartPayment(booking);
+        String providerAmount = providerAmount(booking.getTotalAmount());
 
         paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId)
             .ifPresent(this::validateCanCreateNewPayment);
@@ -107,7 +115,7 @@ public class PaymentService {
         params.put("vnp_Version", vnPayProperties.getVersion());
         params.put("vnp_Command", "pay");
         params.put("vnp_TmnCode", vnPayProperties.getTmnCode());
-        params.put("vnp_Amount", String.valueOf(booking.getTotalAmount().multiply(BigDecimal.valueOf(100)).longValue()));
+        params.put("vnp_Amount", providerAmount);
         params.put("vnp_CurrCode", "VND");
         params.put("vnp_TxnRef", txnRef);
         params.put("vnp_OrderInfo", "Thanh toan don dat phong " + booking.getId());
@@ -134,8 +142,13 @@ public class PaymentService {
     @Transactional
     public PaymentResponse processVNPayCallback(String orderId, String responseCode, String transactionId) {
         log.info("[VNPAY_CALLBACK] Received callback - orderId: {}, responseCode: {}, transactionId: {}", orderId, responseCode, transactionId);
-        Payment payment = paymentRepository.findByVnpayOrderId(orderId)
+        String bookingId = paymentRepository.findBookingIdByVnpayOrderId(orderId)
             .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
+        // All mutations acquire booking before payment to avoid lock-order inversions with cancellation/refund.
+        Booking lockedBooking = bookingRepository.findByIdForUpdate(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+        Payment payment = paymentRepository.findByVnpayOrderIdForUpdate(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
 
         if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
             validateVnPayReplay(payment, responseCode, transactionId);
@@ -144,7 +157,8 @@ public class PaymentService {
             return toPaymentResponse(payment);
         }
 
-        if (payment.getStatus() != PaymentStatus.PENDING) {
+        if (payment.getStatus() != PaymentStatus.PENDING
+                && !(payment.getStatus() == PaymentStatus.CANCELLED && payment.getMethod() == PaymentMethod.VNPAY)) {
             throw new IllegalArgumentException("Không thể xử lý callback VNPay cho thanh toán có trạng thái: " + payment.getStatus());
         }
 
@@ -158,21 +172,16 @@ public class PaymentService {
             payment.setVnpayTransactionNo(transactionId);
 
             // Update booking
-            Booking booking = bookingRepository.findById(payment.getBookingId())
-                    .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
-            booking.setStatus(BookingStatus.CONFIRMED);
-            booking.setPaidAmount(payment.getAmount());
+            Booking booking = lockedBooking;
+            BigDecimal previouslyPaid = booking.getPaidAmount() == null ? BigDecimal.ZERO : booking.getPaidAmount();
+            booking.setPaidAmount(previouslyPaid.add(payment.getAmount()));
+            boolean reservationConfirmed = previouslyPaid.signum() == 0
+                    && payment.getAmount().compareTo(booking.getTotalAmount()) == 0
+                    && confirmReservation(booking);
             bookingRepository.save(booking);
 
-            // Confirm hold with hotel service
-            try {
-                bookingService.confirmBookingHold(payment.getBookingId());
-            } catch (Exception e) {
-                log.error("Failed to confirm hold: {}", e.getMessage());
-            }
-
             // Handle loyalty points: trừ điểm đã sử dụng và tích lũy điểm mới
-            if (booking.getUserId() != null) {
+            if (reservationConfirmed && booking.getUserId() != null) {
                 try {
                     String userId = booking.getUserId().toString();
                     
@@ -219,6 +228,7 @@ public class PaymentService {
                 log.error("[PUBLISH_EVENT] Failed to publish payment.completed for paymentId: {}: {}", payment.getId(), e.getMessage(), e);
             }
 
+            if (reservationConfirmed) {
             BookingStatusEvent statusEvent = buildBookingStatusEvent(booking, BookingStatus.CONFIRMED.name());
             try {
                 log.info("[PUBLISH_EVENT] Publishing booking.status.changed for bookingId: {}, status: {}", booking.getId(), BookingStatus.CONFIRMED.name());
@@ -227,16 +237,19 @@ public class PaymentService {
             } catch (Exception e) {
                 log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
             }
+            }
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setVnpayResponseCode(responseCode);
             payment.setVnpayTransactionNo(transactionId);
 
             // Update booking back to PENDING so user can retry payment or choose another method
-            Booking booking = bookingRepository.findById(payment.getBookingId())
-                    .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
-            booking.setStatus(BookingStatus.PENDING);
-            bookingRepository.save(booking);
+            Booking booking = lockedBooking;
+            if ((booking.getStatus() == BookingStatus.PENDING || booking.getStatus() == BookingStatus.PENDING_PAYMENT)
+                    && (booking.getPaidAmount() == null || booking.getPaidAmount().signum() == 0)) {
+                booking.setStatus(BookingStatus.PENDING);
+                bookingRepository.save(booking);
+            }
 
             log.info("[VNPAY_CALLBACK] Payment failed for orderId: {}, bookingId: {}, responseCode: {}", orderId, booking.getId(), responseCode);
             // Keep the room hold until holdExpiresAt so the user can retry payment.
@@ -269,35 +282,25 @@ public class PaymentService {
             throw new IllegalArgumentException("Can only refund completed payments");
         }
 
-        payment.setStatus(PaymentStatus.REFUNDED);
-        
-        // Update booking
-        Booking booking = bookingRepository.findById(payment.getBookingId())
-                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
-        booking.setPaidAmount(BigDecimal.ZERO);
-        bookingRepository.save(booking);
-
-        payment = paymentRepository.save(payment);
-
-        PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.REFUNDED.name());
-        try {
-            log.info("[PUBLISH_EVENT] Publishing payment.refunded for paymentId: {}", payment.getId());
-            eventPublisher.publishPaymentRefunded(event);
-            log.info("[PUBLISH_EVENT] Published payment.refunded for paymentId: {}", payment.getId());
-        } catch (Exception e) {
-            log.error("[PUBLISH_EVENT] Failed to publish payment.refunded for paymentId: {}: {}", payment.getId(), e.getMessage(), e);
-        }
-        return toPaymentResponse(payment);
+        // Financial success requires a verified provider refund result. A database update is not a refund.
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                "Refund execution is unavailable until the provider integration is verified; payment is unchanged");
     }
 
     @Transactional
     public PaymentResponse confirmHotelPayment(String bookingId) {
         log.info("[CONFIRM_HOTEL_PAYMENT] Request received - bookingId: {}", bookingId);
-        Booking booking = bookingRepository.findById(bookingId)
+        Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
         Payment payment = paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(bookingId, PaymentStatus.ONSITE_PENDING)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
+        if (payment.getAmount() == null || booking.getTotalAmount() == null || payment.getAmount().signum() <= 0
+                || payment.getAmount().compareTo(booking.getTotalAmount()) != 0) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Stored onsite payment amount requires reconciliation");
+        }
 
         // Mark payment as completed
         payment.setStatus(PaymentStatus.COMPLETED);
@@ -306,16 +309,8 @@ public class PaymentService {
 
         // Update booking paid amount
         booking.setPaidAmount(booking.getTotalAmount());
-        booking.setStatus(BookingStatus.CONFIRMED);
+        confirmReservation(booking);
         bookingRepository.save(booking);
-
-        // Confirm hold with hotel service
-        try {
-            bookingService.confirmBookingHold(bookingId);
-            log.info("Successfully confirmed hold for booking: {}", bookingId);
-        } catch (Exception e) {
-            log.error("Failed to confirm hold for booking {}: {}", bookingId, e.getMessage(), e);
-        }
 
         // Publish payment event
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
@@ -329,6 +324,18 @@ public class PaymentService {
 
         log.info("Hotel payment confirmed for booking: {}", bookingId);
         return toPaymentResponse(payment);
+    }
+
+    private boolean confirmReservation(Booking booking) {
+        if (booking.getStatus() != BookingStatus.PENDING && booking.getStatus() != BookingStatus.PENDING_PAYMENT) return false;
+        try {
+            bookingService.confirmBookingHold(booking.getId());
+            booking.setStatus(BookingStatus.CONFIRMED);
+            return true;
+        } catch (RuntimeException ex) {
+            log.warn("Payment received but reservation needs reconciliation (type={})", ex.getClass().getSimpleName());
+            return false;
+        }
     }
 
     private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
@@ -368,6 +375,7 @@ public class PaymentService {
             .numberOfGuests(numberOfGuests)
             .amount(payment.getAmount())
             .paymentStatus(statusLabel)
+            .bookingStatus(booking.getStatus().name())
             .paymentMethod(payment.getMethod().name())
             .paidAt(payment.getPaidAt())
             .eventAt(LocalDateTime.now())
@@ -436,6 +444,12 @@ public class PaymentService {
     }
 
     private void validateBookingCanStartPayment(Booking booking) {
+        if (booking.getTotalAmount() == null || booking.getTotalAmount().signum() <= 0) {
+            throw new IllegalArgumentException("Booking total must be positive");
+        }
+        if (booking.getPaidAmount() != null && booking.getPaidAmount().signum() != 0) {
+            throw new IllegalArgumentException("Booking already has a received payment; reconciliation is required");
+        }
         if (booking.getStatus() != BookingStatus.PENDING
                 && booking.getStatus() != BookingStatus.PENDING_PAYMENT) {
             throw new IllegalArgumentException("Cannot start payment for booking with status: " + booking.getStatus());
@@ -445,6 +459,16 @@ public class PaymentService {
     private void validateHotelPaymentRequest(CreatePaymentRequest request) {
         if (request.getMethod() != PaymentMethod.HOTEL) {
             throw new IllegalArgumentException("Use initVnPayPayment to create VNPay payments");
+        }
+    }
+
+    private String providerAmount(BigDecimal amount) {
+        try {
+            String encoded = amount.multiply(BigDecimal.valueOf(100)).toBigIntegerExact().toString();
+            if (encoded.length() > 12) throw new IllegalArgumentException("Amount exceeds VNPay supported range");
+            return encoded;
+        } catch (ArithmeticException ex) {
+            throw new IllegalArgumentException("Amount cannot be represented exactly by VNPay");
         }
     }
 
@@ -458,6 +482,7 @@ public class PaymentService {
                 .transactionId(payment.getTransactionId())
                 .vnpayOrderId(payment.getVnpayOrderId())
                 .vnpayResponseCode(payment.getVnpayResponseCode())
+                .vnpayTransactionNo(payment.getVnpayTransactionNo())
                 .paidAt(payment.getPaidAt())
                 .createdAt(payment.getCreatedAt())
                 .updatedAt(payment.getUpdatedAt())

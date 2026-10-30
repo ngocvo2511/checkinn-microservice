@@ -13,6 +13,11 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, String> {
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT b FROM Booking b WHERE b.id = ?1")
+    java.util.Optional<Booking> findByIdForUpdate(String id);
+    @Query("SELECT b.id FROM Booking b WHERE b.status = ?1")
+    List<String> findIdsByStatus(BookingStatus status);
     List<Booking> findByUserId(String userId);
     List<Booking> findByHotelId(String hotelId);
     List<Booking> findByStatus(BookingStatus status);

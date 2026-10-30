@@ -23,6 +23,7 @@ public class PaymentResponse {
     private String transactionId;
     private String vnpayOrderId;
     private String vnpayResponseCode;
+    private String vnpayTransactionNo;
     private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
