@@ -60,6 +60,12 @@ spring:
           uri: lb://booking-service
           predicates:
             - Path=/api/bookings/**,/api/payments/**
+        - id: place-service
+          uri: lb://place-service
+          predicates:
+            - Path=/places/**, /api/places/**
+          filters:
+            - RewritePath=/api/places/(?<segment>.*), /places/$\{segment}
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   boot:
