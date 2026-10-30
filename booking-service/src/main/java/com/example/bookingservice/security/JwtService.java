@@ -45,6 +45,12 @@ public class JwtService {
         return generateToken(userId, "CUSTOMER");
     }
 
+    public String generateInventoryServiceToken() {
+        return Jwts.builder().setSubject("booking-service").claim("role", "BOOKING_SERVICE")
+                .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 300_000))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+    }
+
     public Jws<Claims> parseToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)

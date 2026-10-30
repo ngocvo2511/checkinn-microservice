@@ -5,6 +5,8 @@ import com.example.bookingservice.booking.dto.BookingResponse;
 import com.example.bookingservice.booking.dto.CreateBookingItemRequest;
 import com.example.bookingservice.booking.dto.CreateBookingRequest;
 import com.example.bookingservice.booking.service.BookingService;
+import com.example.bookingservice.security.BookingAccess;
+import com.example.bookingservice.grpc.interceptor.GrpcAccess;
 import com.example.bookingservice.grpc.BookingGrpcServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
@@ -22,9 +24,11 @@ import java.util.stream.Collectors;
 public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcServiceImplBase {
 
     private final BookingService bookingService;
+    private final BookingAccess access;
 
-    public BookingGrpcServer(BookingService bookingService) {
+    public BookingGrpcServer(BookingService bookingService, BookingAccess access) {
         this.bookingService = bookingService;
+        this.access = access;
     }
 
     @Override
@@ -32,9 +36,10 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
         log.info("[gRPC_CREATE_BOOKING] Request received - userId: {}, hotelId: {}, checkIn: {}, checkOut: {}",
                 request.getUserId(), request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
         try {
-            MDC.put("userId", request.getUserId());
+            var actor = GrpcAccess.actor();
+            GrpcAccess.require(access.canCreate(actor, request.getUserId()));
             CreateBookingRequest create = CreateBookingRequest.builder()
-                    .userId(request.getUserId())
+                    .userId(actor.getName())
                     .hotelId(request.getHotelId())
                     .hotelName(request.getHotelName())
                     .checkInDate(LocalDate.parse(request.getCheckInDate()))
@@ -68,7 +73,7 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
         } catch (Exception ex) {
             log.error("[gRPC_CREATE_BOOKING] Failed to create booking - userId: {}, hotelId: {}, error: {}",
                     request.getUserId(), request.getHotelId(), ex.getMessage(), ex);
-            responseObserver.onError(ex);
+            responseObserver.onError(GrpcAccess.error(ex));
         } finally {
             MDC.remove("userId");
         }
@@ -78,13 +83,14 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
     public void getBooking(com.example.bookingservice.grpc.GetBookingRequest request, StreamObserver<com.example.bookingservice.grpc.BookingResponse> responseObserver) {
         log.info("[gRPC_GET_BOOKING] Request received - bookingId: {}", request.getId());
         try {
+            GrpcAccess.require(access.canRead(GrpcAccess.actor(), request.getId()));
             BookingResponse booking = bookingService.getBooking(request.getId());
             log.info("[gRPC_GET_BOOKING] Booking found - bookingId: {}, status: {}", booking.getId(), booking.getStatus());
             responseObserver.onNext(toProto(booking));
             responseObserver.onCompleted();
         } catch (Exception ex) {
             log.error("[gRPC_GET_BOOKING] Failed to get booking - bookingId: {}, error: {}", request.getId(), ex.getMessage(), ex);
-            responseObserver.onError(ex);
+            responseObserver.onError(GrpcAccess.error(ex));
         }
     }
 

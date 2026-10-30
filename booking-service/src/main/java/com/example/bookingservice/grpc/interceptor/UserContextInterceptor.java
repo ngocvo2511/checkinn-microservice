@@ -1,72 +1,52 @@
 package com.example.bookingservice.grpc.interceptor;
 
-import io.grpc.Context;
-import io.grpc.Contexts;
-import io.grpc.ForwardingServerCallListener;
-import io.grpc.Metadata;
-import io.grpc.ServerCall;
-import io.grpc.ServerCallHandler;
-import io.grpc.ServerInterceptor;
-import lombok.extern.slf4j.Slf4j;
+import com.example.bookingservice.security.JwtService;
+import io.grpc.*;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
-import org.slf4j.MDC;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.UUID;
+import java.util.List;
 
-@Slf4j
+/** gRPC has its own context; HTTP SecurityContext and x-user-id are not credentials. */
 @GrpcGlobalServerInterceptor
 public class UserContextInterceptor implements ServerInterceptor {
+    public static final Context.Key<Authentication> ACTOR = Context.key("verifiedActor");
+    private static final Metadata.Key<String> AUTHORIZATION =
+            Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER);
+    private final JwtService jwtService;
 
-    public static final Context.Key<UUID> USER_ID_CONTEXT_KEY = Context.key("userId");
-    private static final Metadata.Key<String> USER_ID_METADATA_KEY =
-            Metadata.Key.of("x-user-id", Metadata.ASCII_STRING_MARSHALLER);
+    public UserContextInterceptor(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
-            ServerCall<ReqT, RespT> call,
-            Metadata headers,
-            ServerCallHandler<ReqT, RespT> next) {
-
-        UUID userId = extractUserId(headers);
-        if (userId != null) {
-            log.debug("Extracted user ID from gRPC metadata: {}", userId);
-            MDC.put("userId", userId.toString());
-            Context context = Context.current().withValue(USER_ID_CONTEXT_KEY, userId);
-            ServerCall.Listener<ReqT> listener = Contexts.interceptCall(context, call, headers, next);
-            return new ForwardingServerCallListener.SimpleForwardingServerCallListener<>(listener) {
-                @Override
-                public void onComplete() {
-                    try {
-                        super.onComplete();
-                    } finally {
-                        MDC.remove("userId");
-                    }
-                }
-
-                @Override
-                public void onCancel() {
-                    try {
-                        super.onCancel();
-                    } finally {
-                        MDC.remove("userId");
-                    }
-                }
-            };
+            ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
+        String service = call.getMethodDescriptor().getServiceName();
+        if (!"booking.BookingGrpcService".equals(service) && !"payment.PaymentGrpcService".equals(service)) {
+            return next.startCall(call, headers);
         }
-
-        log.debug("No user ID found in gRPC metadata");
-        return next.startCall(call, headers);
+        Authentication actor = authenticate(headers.get(AUTHORIZATION));
+        if (actor == null) {
+            call.close(Status.UNAUTHENTICATED.withDescription("Valid bearer token required"), new Metadata());
+            return new ServerCall.Listener<>() {};
+        }
+        return Contexts.interceptCall(Context.current().withValue(ACTOR, actor), call, headers, next);
     }
 
-    private UUID extractUserId(Metadata headers) {
+    private Authentication authenticate(String header) {
+        if (header == null || !header.startsWith("Bearer ")) return null;
+        String token = header.substring(7);
         try {
-            String userIdStr = headers.get(USER_ID_METADATA_KEY);
-            if (userIdStr != null && !userIdStr.isEmpty()) {
-                return UUID.fromString(userIdStr);
-            }
-        } catch (IllegalArgumentException e) {
-            log.warn("Invalid user ID format in gRPC metadata: {}", e.getMessage());
+            if (!jwtService.validateToken(token)) return null;
+            String role = jwtService.extractRole(token);
+            if (role == null || role.isBlank()) return null;
+            return new UsernamePasswordAuthenticationToken(jwtService.extractUserId(token), null,
+                    List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+        } catch (RuntimeException ex) {
+            return null;
         }
-        return null;
     }
 }

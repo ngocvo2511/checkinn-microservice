@@ -13,7 +13,6 @@ import com.example.hotelservice.config.HoldExpiryProperties;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,7 +74,9 @@ public class AvailabilityService {
     public HoldResponse checkAndHold(HoldRequest request) {
         validateDates(request.checkInDate(), request.checkOutDate());
         validateQuantity(request.quantity());
-        RoomType roomType = loadRoomType(request.roomTypeId());
+        // Serialize first-row creation as well as existing availability rows for this room type.
+        RoomType roomType = roomTypeRepository.findByIdForUpdate(request.roomTypeId())
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
         int totalRooms = requireTotalRooms(roomType);
 
         List<LocalDate> dates = expandDates(request.checkInDate(), request.checkOutDate());
@@ -111,8 +112,12 @@ public class AvailabilityService {
     @Transactional
     public HoldResponse confirmHold(UUID holdId) {
         log.info("Confirming hold: {}", holdId);
-        RoomHold hold = roomHoldRepository.findByIdAndStatus(holdId, HoldStatus.HELD)
-                .orElseThrow(() -> new EntityNotFoundException("Hold not found or already finalized"));
+        RoomHold hold = lockHold(holdId);
+        if (hold.getStatus() == HoldStatus.CONFIRMED) return response(hold);
+        if (hold.getStatus() != HoldStatus.HELD) throw new IllegalStateException("Hold is already finalized");
+        if (hold.getExpiresAt() == null || !hold.getExpiresAt().isAfter(Instant.now())) {
+            throw new IllegalStateException("Hold expired before confirmation");
+        }
         RoomType roomType = loadRoomType(hold.getRoomTypeId());
         int totalRooms = requireTotalRooms(roomType);
 
@@ -121,6 +126,9 @@ public class AvailabilityService {
             RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
             if (availability.getHeld() < hold.getQuantity()) {
                 throw new IllegalStateException("Hold has insufficient held rooms for date: " + date);
+            }
+            if (availability.getBooked() < 0 || (long) availability.getBooked() + hold.getQuantity() > totalRooms) {
+                throw new IllegalStateException("Confirmed rooms would exceed configured inventory");
             }
             int oldHeld = availability.getHeld();
             int oldBooked = availability.getBooked();
@@ -139,23 +147,11 @@ public class AvailabilityService {
 
     @Transactional
     public HoldResponse releaseHold(UUID holdId) {
-        RoomHold hold = roomHoldRepository.findByIdAndStatus(holdId, HoldStatus.HELD)
-                .orElseThrow(() -> new EntityNotFoundException("Hold not found or already finalized"));
-        RoomType roomType = loadRoomType(hold.getRoomTypeId());
-
-        List<LocalDate> dates = expandDates(hold.getCheckInDate(), hold.getCheckOutDate());
-        for (LocalDate date : dates) {
-            RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
-            int newHeld = availability.getHeld() - hold.getQuantity();
-            if (newHeld < 0) newHeld = 0;
-            availability.setHeld(newHeld);
-            roomAvailabilityRepository.save(availability);
-        }
-
-        hold.setStatus(HoldStatus.RELEASED);
-        roomHoldRepository.save(hold);
-        return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
-
+        RoomHold hold = lockHold(holdId);
+        if (hold.getStatus() == HoldStatus.RELEASED) return response(hold);
+        if (hold.getStatus() != HoldStatus.HELD) throw new IllegalStateException("Only an active hold can be released");
+        releaseHoldInternal(hold);
+        return response(hold);
     }
 
     @Transactional(readOnly = true)
@@ -163,6 +159,26 @@ public class AvailabilityService {
         RoomHold hold = roomHoldRepository.findById(holdId)
                 .orElseThrow(() -> new EntityNotFoundException("Hold not found"));
         return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
+    }
+
+    @Transactional
+    public HoldResponse cancelReservation(UUID holdId) {
+        RoomHold hold = lockHold(holdId);
+        if (hold.getStatus() == HoldStatus.RELEASED) return response(hold);
+        if (hold.getStatus() == HoldStatus.HELD) {
+            releaseHoldInternal(hold);
+            return response(hold);
+        }
+        if (hold.getStatus() != HoldStatus.CONFIRMED) throw new IllegalStateException("Unsupported reservation state");
+        for (var date : expandDates(hold.getCheckInDate(), hold.getCheckOutDate())) {
+            var counters = getAvailabilityForUpdate(hold.getRoomTypeId(), date);
+            if (counters.getBooked() < hold.getQuantity()) throw new IllegalStateException("Booked counters are inconsistent");
+            counters.setBooked(counters.getBooked() - hold.getQuantity());
+            roomAvailabilityRepository.save(counters);
+        }
+        hold.setStatus(HoldStatus.RELEASED);
+        roomHoldRepository.save(hold);
+        return response(hold);
     }
 
     private RoomAvailability getAvailabilityForUpdate(UUID roomTypeId, LocalDate date) {
@@ -184,11 +200,8 @@ public class AvailabilityService {
 
     private int requireTotalRooms(RoomType roomType) {
         Integer totalRooms = roomType.getTotalRooms();
-        // If totalRooms is not configured, use a sensible default of 10
         if (totalRooms == null || totalRooms <= 0) {
-            // Log warning but don't fail - use default of 10
-            System.err.println("Warning: Room type " + roomType.getId() + " has no totalRooms configured, using default of 10");
-            return 10;
+            throw new InventoryNotConfiguredException();
         }
         return totalRooms;
     }
@@ -216,13 +229,20 @@ public class AvailabilityService {
         return Instant.now().plusSeconds((long) holdExpiryProperties.getMinutes() * 60);
     }
 
-    @Scheduled(fixedDelay = 60000, initialDelay = 60000)
     @Transactional
-    public void cleanupExpiredHolds() {
-        List<RoomHold> expiredHolds = roomHoldRepository.findExpiredHolds(Instant.now());
-        for (RoomHold hold : expiredHolds) {
-            releaseHoldInternal(hold);
-        }
+    public void expireHold(UUID holdId) {
+        RoomHold hold = lockHold(holdId);
+        if (hold.getStatus() == HoldStatus.HELD && hold.getExpiresAt() != null
+                && !hold.getExpiresAt().isAfter(Instant.now())) releaseHoldInternal(hold);
+    }
+
+    private RoomHold lockHold(UUID id) {
+        return roomHoldRepository.findByIdForUpdate(id)
+                .orElseThrow(() -> new EntityNotFoundException("Hold not found"));
+    }
+
+    private HoldResponse response(RoomHold hold) {
+        return new HoldResponse(hold.getId(), hold.getStatus(), hold.getExpiresAt());
     }
 
     private void releaseHoldInternal(RoomHold hold) {
@@ -231,7 +251,7 @@ public class AvailabilityService {
         for (LocalDate date : dates) {
             RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
             int newHeld = availability.getHeld() - hold.getQuantity();
-            if (newHeld < 0) newHeld = 0;
+            if (newHeld < 0) throw new IllegalStateException("Hold inventory counters are inconsistent");
             availability.setHeld(newHeld);
             roomAvailabilityRepository.save(availability);
         }

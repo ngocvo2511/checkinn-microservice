@@ -79,6 +79,19 @@ public class AvailabilityController {
         } catch (EntityNotFoundException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_RELEASE] Release hold not found - holdId: {}, reason: {}", holdId, ex.getMessage());
             return ResponseEntity.notFound().build();
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(409).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/hold/{holdId}/cancel")
+    public ResponseEntity<?> cancelReservation(@PathVariable UUID holdId) {
+        try {
+            return ResponseEntity.ok(availabilityService.cancelReservation(holdId));
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(409).body(ex.getMessage());
         }
     }
 

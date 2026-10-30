@@ -1,5 +1,50 @@
 # Docker local development
 
+## Standardization regressions (29/10/2026)
+
+After rebuilding the changed booking/hotel images and starting **only the test
+overlay**, run from the backend repository root:
+
+```powershell
+python docker/booking-security-smoke.py
+python docker/inventory-smoke.py
+python docker/catalog-security-smoke.py
+python docker/hold-concurrency-smoke.py
+python docker/cancellation-workflow-smoke.py
+```
+
+The booking check is read-only, uses short-lived test JWTs in memory, and checks
+direct REST, gateway REST and unauthenticated/forged-header gRPC access. It prints
+only case names and status codes. `--baseline` records pre-fix statuses and does
+not enforce regression success; do not use that flag for acceptance.
+The inventory check creates fresh room fixtures **only in the isolated clone**,
+checks null/zero/negative/explicit-ten inventory and rejects invalid holds without
+counter writes. Its `finally` cleanup removes only the generated fixture UUIDs.
+The booking/inventory scripts refuse datasource configuration outside the test PostgreSQL clone.
+They never print credentials, booking IDs, response bodies or copied room data.
+
+The catalog check also verifies the running hotel datasource is the isolated
+clone. It uses fresh UUIDs confirmed absent from city/hotel/room tables, so its
+DELETE/PUT/PATCH requests cannot change existing records. It verifies admin/owner/
+anonymous status codes through both direct service and the gateway rewrite.
+
+These checks do not verify actual VNPay sandbox settlement/refunds, legacy
+inventory provenance or the remaining P0 surfaces. Current results and limits
+are recorded in `../../PROJECT_STANDARDIZATION_PLAN.md`.
+
+Update 30/10/2026: `hold-concurrency-smoke.py` now exercises PostgreSQL-backed
+concurrent last-room holds, confirm/cancel replay, expiry cleanup and
+confirm-versus-release. `cancellation-workflow-smoke.py` creates synthetic room,
+booking and payment fixtures, validates price tampering, policy snapshots,
+cancellation, refund request/ADMIN approval and revenue event compatibility.
+Its VNPay return is **locally simulated with the test signing configuration**;
+it never calls the provider or claims actual settlement/refund. When that config
+is absent it uses the onsite flow and reports the provider scenario NOT_RUN.
+The script requires Mailpit and clone datasources for affected services, and
+cleans only generated fixture UUIDs in hotel/booking/revenue databases. Mailpit
+may retain synthetic test messages; queues are never purged. Existing inventory
+smoke tests mint the dedicated internal service JWT in memory for hold calls.
+
 Compose này phục vụ chạy và kiểm thử trước khi sửa nghiệp vụ. Không dùng database production: hotel/booking/revenue/regulations đang có `ddl-auto: update`; user dùng Flyway và `ddl-auto: validate`.
 
 ## Kiến trúc đã kiểm tra

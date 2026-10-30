@@ -64,8 +64,9 @@ class BookingScheduledTaskTest {
                 .status(PaymentStatus.PENDING)
                 .build();
 
-        when(bookingRepository.findByStatus(BookingStatus.PENDING)).thenReturn(List.of());
-        when(bookingRepository.findByStatus(BookingStatus.PENDING_PAYMENT)).thenReturn(List.of(expiredBooking));
+        when(bookingRepository.findIdsByStatus(BookingStatus.PENDING)).thenReturn(List.of());
+        when(bookingRepository.findIdsByStatus(BookingStatus.PENDING_PAYMENT)).thenReturn(List.of("booking-1"));
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(expiredBooking));
         when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(activePayment));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -76,5 +77,42 @@ class BookingScheduledTaskTest {
         assertThat(activePayment.getStatus()).isEqualTo(PaymentStatus.CANCELLED);
         verify(bookingRepository).save(expiredBooking);
         verify(paymentRepository).save(activePayment);
+    }
+    @Test void receivedMoneyAwaitingInventoryReconciliationIsNotAutoCancelled() {
+        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT)
+                .paidAmount(BigDecimal.TEN).holdExpiresAt(LocalDateTime.now().minusHours(1)).build();
+        when(bookingRepository.findIdsByStatus(BookingStatus.PENDING)).thenReturn(List.of());
+        when(bookingRepository.findIdsByStatus(BookingStatus.PENDING_PAYMENT)).thenReturn(List.of("booking-1"));
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        bookingScheduledTask.processExpiredPaymentHolds();
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        org.mockito.Mockito.verifyNoInteractions(paymentRepository);
+        org.mockito.Mockito.verify(bookingRepository, org.mockito.Mockito.never()).save(any());
+    }
+
+    @Test void bookingConfirmedWhileSchedulerWaitsForLockIsNotCancelled() {
+        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.CONFIRMED)
+                .paidAmount(BigDecimal.TEN).holdExpiresAt(LocalDateTime.now().minusHours(1)).build();
+        when(bookingRepository.findIdsByStatus(BookingStatus.PENDING)).thenReturn(List.of("booking-1"));
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+
+        bookingScheduledTask.processExpiredPaymentHolds();
+
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CONFIRMED);
+        org.mockito.Mockito.verifyNoInteractions(paymentRepository);
+        org.mockito.Mockito.verify(bookingRepository, org.mockito.Mockito.never()).save(any());
+        org.mockito.Mockito.verify(bookingRepository, org.mockito.Mockito.never()).findByStatus(any());
+    }
+
+    @Test void cancelledBookingIsNotOverwrittenByAutomaticCheckout() {
+        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.CANCELLED)
+                .checkOutDate(LocalDate.now().minusDays(1)).build();
+        when(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED)).thenReturn(List.of("booking-1"));
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+
+        bookingScheduledTask.processAutoCheckOut();
+
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
+        org.mockito.Mockito.verify(bookingRepository, org.mockito.Mockito.never()).save(any());
     }
 }

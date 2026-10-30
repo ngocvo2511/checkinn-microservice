@@ -26,6 +26,7 @@ public class PaymentEvent {
     int numberOfGuests;
     BigDecimal amount;
     String paymentStatus;
+    String bookingStatus;
     String paymentMethod;
     LocalDateTime paidAt;
     LocalDateTime eventAt;

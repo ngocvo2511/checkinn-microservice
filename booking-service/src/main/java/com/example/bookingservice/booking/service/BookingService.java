@@ -9,6 +9,7 @@ import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingItemRepository;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.integration.hotel.HotelAvailabilityClient;
+import com.example.bookingservice.integration.hotel.HotelCatalogClient;
 import com.example.bookingservice.integration.hotel.dto.HoldRequest;
 import com.example.bookingservice.integration.hotel.dto.HoldResponse;
 import com.example.bookingservice.integration.loyalty.ApplyPointsRequestDTO;
@@ -44,6 +45,9 @@ public class BookingService {
     private final HotelAvailabilityClient availabilityClient;
     private final HotelEventPublisher eventPublisher;
     private final LoyaltyPointsClient loyaltyPointsClient;
+    private final HotelCatalogClient catalogClient;
+    private final CancellationPolicy cancellationPolicy;
+    private final com.example.bookingservice.payment.refund.RefundRequestService refundRequests;
 
     // Giới hạn giảm giá tối đa khi sử dụng điểm: 50% tổng tiền
     private static final BigDecimal MAX_DISCOUNT_PERCENTAGE = new BigDecimal("0.5");
@@ -58,6 +62,8 @@ public class BookingService {
             throw new IllegalArgumentException("Booking must have at least one item");
         }
 
+        validateBookingInput(request);
+
         // Enforce same room type for multiple rooms
         if (request.getItems().size() > 1) {
             String firstRoomTypeId = request.getItems().get(0).getRoomTypeId();
@@ -68,6 +74,10 @@ public class BookingService {
                 throw new IllegalArgumentException("All items must have the same room type");
             }
         }
+
+        HotelCatalogClient.Room catalogRoom = catalogClient.getRoom(request.getItems().get(0).getRoomTypeId());
+        HotelCatalogClient.Hotel catalogHotel = catalogClient.getHotel(request.getHotelId());
+        validateCatalogOffer(request, catalogRoom, catalogHotel);
 
         // Hold rooms before creating booking
         String roomTypeId = request.getItems().get(0).getRoomTypeId();
@@ -93,11 +103,12 @@ public class BookingService {
             throw new IllegalStateException("Failed to hold rooms: " + e.getMessage());
         }
 
+        try {
         // Calculate total amount
         BigDecimal totalAmount = request.getItems().stream()
                 .map(item -> {
                     long nights = ChronoUnit.DAYS.between(request.getCheckInDate(), request.getCheckOutDate());
-                    return item.getUnitPrice()
+                    return catalogRoom.basePrice()
                             .multiply(BigDecimal.valueOf(item.getQuantity()))
                             .multiply(BigDecimal.valueOf(nights));
                 })
@@ -105,9 +116,6 @@ public class BookingService {
 
         // Apply voucher discount if provided
         BigDecimal voucherDiscount = BigDecimal.ZERO;
-        if (request.getVoucherCode() != null && !request.getVoucherCode().isEmpty()) {
-            throw new IllegalArgumentException("Dịch vụ mã giảm giá hiện chưa khả dụng");
-        }
 
         // Apply loyalty points discount if provided
         BigDecimal pointsDiscount = BigDecimal.ZERO;
@@ -150,7 +158,7 @@ public class BookingService {
         Booking booking = Booking.builder()
                 .userId(request.getUserId())
                 .hotelId(request.getHotelId())
-                .hotelName(request.getHotelName())
+                .hotelName(catalogHotel.name())
                 .checkInDate(request.getCheckInDate())
                 .checkOutDate(request.getCheckOutDate())
                 .adults(request.getAdults())
@@ -170,6 +178,7 @@ public class BookingService {
                 .holdExpiresAt(holdExpiry)
                 .build();
 
+        cancellationPolicy.snapshot(booking, request.getAcceptedCancellationPolicyVersion());
         booking = bookingRepository.save(booking);
         final Booking bookingRef = booking;
 
@@ -177,23 +186,24 @@ public class BookingService {
         List<BookingItem> items = request.getItems().stream()
                 .map(itemRequest -> {
                     long nights = ChronoUnit.DAYS.between(request.getCheckInDate(), request.getCheckOutDate());
-                    BigDecimal subtotal = itemRequest.getUnitPrice()
+                    BigDecimal subtotal = catalogRoom.basePrice()
                             .multiply(BigDecimal.valueOf(itemRequest.getQuantity()))
                             .multiply(BigDecimal.valueOf(nights));
 
                     return BookingItem.builder()
                             .booking(bookingRef)
                             .roomTypeId(itemRequest.getRoomTypeId())
-                            .roomTypeName(itemRequest.getRoomTypeName())
-                            .ratePlanId(itemRequest.getRatePlanId())
+                            .roomTypeName(catalogRoom.name())
+                            .ratePlanId(catalogRoom.id())
                             .checkInDate(itemRequest.getCheckInDate())
                             .checkOutDate(itemRequest.getCheckOutDate())
                             .quantity(itemRequest.getQuantity())
-                            .unitPrice(itemRequest.getUnitPrice())
+                            .unitPrice(catalogRoom.basePrice())
                             .nights((int) nights)
                             .subtotal(subtotal)
                             .taxFee(BigDecimal.ZERO)
-                            .cancellationPolicy(itemRequest.getCancellationPolicy())
+                            .cancellationPolicy(CancellationPolicy.VERSION.equals(request.getAcceptedCancellationPolicyVersion())
+                                    ? "STANDARD_24H_V1: Hủy miễn phí trước giờ nhận phòng ít nhất 24 giờ; hoàn tiền cần ADMIN duyệt. Trong 24 giờ hoặc đã nhận phòng: liên hệ hỗ trợ." : null)
                             .guestName(itemRequest.getGuestName())
                             .build();
                 })
@@ -205,8 +215,73 @@ public class BookingService {
         publishStatusEvent(booking, BookingStatus.PENDING.name());
 
         return toBookingResponse(booking);
+        } catch (RuntimeException failure) {
+            try {
+                availabilityClient.releaseHold(holdResponse.holdId());
+            } catch (RuntimeException releaseFailure) {
+                log.warn("Booking failed and hold release needs cleanup (type={})", releaseFailure.getClass().getSimpleName());
+            }
+            throw failure;
+        }
     }
 
+    private void validateBookingInput(CreateBookingRequest request) {
+        if (request.getAcceptedCancellationPolicyVersion() != null && !request.getAcceptedCancellationPolicyVersion().isBlank()
+                && !CancellationPolicy.VERSION.equals(request.getAcceptedCancellationPolicyVersion())) {
+            throw new IllegalArgumentException("Unsupported cancellation policy version");
+        }
+        if (request.getHotelId() == null || request.getHotelId().isBlank()
+                || request.getCheckInDate() == null || request.getCheckOutDate() == null
+                || !request.getCheckOutDate().isAfter(request.getCheckInDate())
+                || request.getCheckInDate().isBefore(cancellationPolicy.today())
+                || request.getAdults() == null || request.getAdults() < 1
+                || request.getChildren() == null || request.getChildren() < 0) {
+            throw new IllegalArgumentException("Invalid hotel, stay dates or guest counts");
+        }
+        if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
+            throw new IllegalArgumentException("Dịch vụ mã giảm giá hiện chưa khả dụng");
+        }
+        long quantity = 0;
+        for (var item : request.getItems()) {
+            if (item == null || item.getRoomTypeId() == null || item.getRoomTypeId().isBlank()
+                    || item.getQuantity() == null || item.getQuantity() < 1
+                    || item.getUnitPrice() == null || item.getUnitPrice().signum() <= 0
+                    || !request.getCheckInDate().equals(item.getCheckInDate())
+                    || !request.getCheckOutDate().equals(item.getCheckOutDate())
+                    || (item.getRatePlanId() != null && !item.getRatePlanId().isBlank()
+                        && !item.getRatePlanId().equals(item.getRoomTypeId()))) {
+                throw new IllegalArgumentException("Invalid room quantity, price, dates or unsupported rate plan");
+            }
+            quantity += item.getQuantity();
+            if (quantity > Integer.MAX_VALUE) throw new IllegalArgumentException("Room quantity is too large");
+        }
+    }
+
+    private void validateCatalogOffer(CreateBookingRequest request, HotelCatalogClient.Room room, HotelCatalogClient.Hotel hotel) {
+        if (room == null || hotel == null || !request.getHotelId().equals(room.hotelId())
+                || !request.getHotelId().equals(hotel.id())
+                || !request.getItems().get(0).getRoomTypeId().equals(room.id())
+                || !Boolean.TRUE.equals(room.isActive()) || !Boolean.TRUE.equals(hotel.isActive())
+                || !"APPROVED".equals(hotel.approvedStatus())
+                || room.basePrice() == null || room.basePrice().signum() <= 0) {
+            throw new IllegalArgumentException("Room does not belong to an active, approved hotel offer");
+        }
+        long quantity = request.getItems().stream().mapToLong(item -> item.getQuantity()).sum();
+        if (room.totalRooms() == null || room.totalRooms() < quantity || room.capacity() == null
+                || room.capacity().adults() == null || room.capacity().adults() < 1
+                || room.capacity().children() == null || room.capacity().children() < 0
+                || quantity * room.capacity().adults() < request.getAdults()
+                || quantity * room.capacity().children() < request.getChildren()) {
+            throw new IllegalArgumentException("Room quantity or capacity cannot satisfy the requested stay");
+        }
+        for (var item : request.getItems()) {
+            if (item.getUnitPrice().compareTo(room.basePrice()) != 0) {
+                throw new IllegalArgumentException("Room price has changed; refresh the offer before booking");
+            }
+        }
+    }
+
+    @Transactional(readOnly = true)
     public BookingResponse getBooking(String bookingId) {
         log.debug("[GET_BOOKING] Fetching booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
@@ -215,6 +290,7 @@ public class BookingService {
         return toBookingResponse(booking);
     }
 
+    @Transactional(readOnly = true)
     public List<BookingResponse> getUserBookings(String userId) {
         log.debug("[GET_USER_BOOKINGS] Fetching bookings for userId: {}", userId);
         List<BookingResponse> responses = bookingRepository.findByUserId(userId).stream()
@@ -224,6 +300,7 @@ public class BookingService {
         return responses;
     }
 
+    @Transactional(readOnly = true)
     public List<BookingResponse> getHotelBookings(String hotelId) {
         log.debug("[GET_HOTEL_BOOKINGS] Fetching bookings for hotelId: {}", hotelId);
         List<BookingResponse> responses = bookingRepository.findByHotelId(hotelId).stream()
@@ -236,8 +313,13 @@ public class BookingService {
     @Transactional
     public BookingResponse updateBookingStatus(String bookingId, BookingStatus status) {
         log.debug("[UPDATE_BOOKING_STATUS] Updating booking status - bookingId: {}, status: {}", bookingId, status);
-        Booking booking = bookingRepository.findById(bookingId)
+        Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+        if (booking.getStatus() == status) return toBookingResponse(booking);
+        boolean stayTransition = (booking.getStatus() == BookingStatus.CONFIRMED && status == BookingStatus.CHECKED_IN)
+                || (booking.getStatus() == BookingStatus.CHECKED_IN && status == BookingStatus.CHECKED_OUT)
+                || (booking.getStatus() == BookingStatus.CONFIRMED && status == BookingStatus.NO_SHOW);
+        if (!stayTransition) throw new IllegalArgumentException("Unsupported stay transition; use payment or cancellation workflow");
         booking.setStatus(status);
         booking = bookingRepository.save(booking);
         publishStatusEvent(booking, status.name());
@@ -246,26 +328,54 @@ public class BookingService {
     }
 
     @Transactional
-    public void cancelBooking(String bookingId) {
-        log.debug("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+    public void cancelBooking(String bookingId, String actorId) {
+        cancelBookingInternal(bookingId, actorId, false, "BOOKING_CANCELLED_STANDARD_24H");
+    }
 
-        if (booking.getStatus() == BookingStatus.CANCELLED ||
-                booking.getStatus() == BookingStatus.CHECKED_OUT) {
+    @Transactional
+    public void cancelBookingReviewed(String bookingId, String actorId, String reason) {
+        if (reason == null || reason.isBlank() || reason.length() > 1000) throw new IllegalArgumentException("A review reason is required");
+        cancelBookingInternal(bookingId, actorId, true, reason);
+    }
+
+    private void cancelBookingInternal(String bookingId, String actorId, boolean reviewed, String reason) {
+        log.debug("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
+        Booking booking = bookingRepository.findByIdForUpdate(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
+        if (booking.getStatus() == BookingStatus.CANCELLED) return;
+        if (booking.getStatus() == BookingStatus.CHECKED_IN || booking.getStatus() == BookingStatus.CHECKED_OUT
+                || booking.getStatus() == BookingStatus.NO_SHOW) {
             throw new IllegalArgumentException("Cannot cancel booking with status: " + booking.getStatus());
         }
-
-        // Release hold if exists
+        var payment = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId).orElse(null);
+        boolean paid = (booking.getPaidAmount() != null && booking.getPaidAmount().signum() > 0)
+                || (payment != null && payment.getStatus() == com.example.bookingservice.payment.enums.PaymentStatus.COMPLETED);
+        if (!reviewed && ((paid && !cancellationPolicy.freeCancellationAllowed(booking))
+                || (!paid && !cancellationPolicy.beforeCheckIn(booking)))) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Cancellation requires review: deadline passed or this booking has no accepted policy snapshot");
+        }
+        if (paid) {
+            if (payment == null || payment.getStatus() != com.example.bookingservice.payment.enums.PaymentStatus.COMPLETED) {
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, "Payment needs reconciliation");
+            }
+            refundRequests.request(payment.getId(), actorId, reason);
+        }
+        if (booking.getHoldId() == null && (paid || booking.getStatus() == BookingStatus.CONFIRMED)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, "Missing inventory reservation; manual reconciliation required");
+        }
         if (booking.getHoldId() != null) {
             try {
-                log.debug("[CANCEL_BOOKING] Releasing hold - bookingId: {}, holdId: {}", bookingId, booking.getHoldId());
-                availabilityClient.releaseHold(booking.getHoldId());
+                availabilityClient.cancelReservation(booking.getHoldId());
             } catch (Exception e) {
-                // Log but don't fail the cancellation
-                log.warn("[CANCEL_BOOKING] Failed to release hold - bookingId: {}, holdId: {}, error: {}",
-                        bookingId, booking.getHoldId(), e.getMessage(), e);
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                        "Inventory cancellation is not confirmed; retry or request review");
             }
+        }
+        if (payment != null && (payment.getStatus() == com.example.bookingservice.payment.enums.PaymentStatus.PENDING
+                || payment.getStatus() == com.example.bookingservice.payment.enums.PaymentStatus.ONSITE_PENDING)) {
+            payment.setStatus(com.example.bookingservice.payment.enums.PaymentStatus.CANCELLED);
+            paymentRepository.save(payment);
         }
 
         // Hoàn lại điểm khi hủy booking
@@ -516,6 +626,9 @@ public class BookingService {
                 .paymentMethod(paymentMethod)
                 .holdId(holdId)
                 .holdExpiresAt(holdExpiresAt)
+                .cancellationPolicyVersion(booking.getCancellationPolicyVersion())
+                .checkInAt(booking.getCheckInAt())
+                .freeCancellationUntil(booking.getFreeCancellationUntil())
                 .items(itemResponses)
                 .createdAt(booking.getCreatedAt())
                 .updatedAt(booking.getUpdatedAt())

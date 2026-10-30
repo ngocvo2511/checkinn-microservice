@@ -47,15 +47,19 @@ public class BookingScheduledTask {
         LocalDateTime expiryThreshold = LocalDateTime.now();
         
         // Find all PENDING and PENDING_PAYMENT bookings with holdExpiresAt in the past
-        List<Booking> pendingBookings = bookingRepository.findByStatus(BookingStatus.PENDING);
-        List<Booking> pendingPaymentBookings = bookingRepository.findByStatus(BookingStatus.PENDING_PAYMENT);
+        List<String> pendingBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING);
+        List<String> pendingPaymentBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING_PAYMENT);
         
-        List<Booking> allPendingBookings = new ArrayList<>();
+        List<String> allPendingBookings = new ArrayList<>();
         allPendingBookings.addAll(pendingBookings);
         allPendingBookings.addAll(pendingPaymentBookings);
         
         int cancelledCount = 0;
-        for (Booking booking : allPendingBookings) {
+        allPendingBookings.sort(String::compareTo);
+        for (String bookingId : allPendingBookings) {
+            Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking == null || (booking.getStatus() != BookingStatus.PENDING && booking.getStatus() != BookingStatus.PENDING_PAYMENT)
+                    || (booking.getPaidAmount() != null && booking.getPaidAmount().signum() > 0)) continue;
             if (booking.getHoldExpiresAt() != null && 
                 booking.getHoldExpiresAt().isBefore(expiryThreshold)) {
                 
@@ -95,13 +99,16 @@ public class BookingScheduledTask {
         LocalDate today = LocalDate.now();
         
         // Find all CONFIRMED or CHECKED_IN bookings with checkOutDate in the past
-        List<Booking> confirmedBookings = bookingRepository.findByStatus(BookingStatus.CONFIRMED);
-        List<Booking> checkedInBookings = bookingRepository.findByStatus(BookingStatus.CHECKED_IN);
+        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
+        List<String> checkedInBookings = bookingRepository.findIdsByStatus(BookingStatus.CHECKED_IN);
         
         confirmedBookings.addAll(checkedInBookings);
         
         int checkedOutCount = 0;
-        for (Booking booking : confirmedBookings) {
+        confirmedBookings.sort(String::compareTo);
+        for (String bookingId : confirmedBookings) {
+            Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking == null) continue;
             // Safety check: only process CONFIRMED or CHECKED_IN
             if (booking.getStatus() != BookingStatus.CONFIRMED && 
                 booking.getStatus() != BookingStatus.CHECKED_IN) {
@@ -144,10 +151,13 @@ public class BookingScheduledTask {
             return;
         }
 
-        List<Booking> confirmedBookings = bookingRepository.findByStatus(BookingStatus.CONFIRMED);
+        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
 
         int checkedInCount = 0;
-        for (Booking booking : confirmedBookings) {
+        confirmedBookings.sort(String::compareTo);
+        for (String bookingId : confirmedBookings) {
+            Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking == null) continue;
             // Double-check status before updating (safety check)
             if (booking.getStatus() != BookingStatus.CONFIRMED) {
                 log.warn("Skipping auto check-in for booking {} with unexpected status: {}", 
@@ -179,10 +189,13 @@ public class BookingScheduledTask {
         LocalDate today = LocalDate.now();
 
         // Find all CONFIRMED bookings with checkInDate before today (missed check-in day)
-        List<Booking> confirmedBookings = bookingRepository.findByStatus(BookingStatus.CONFIRMED);
+        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
 
         int noShowCount = 0;
-        for (Booking booking : confirmedBookings) {
+        confirmedBookings.sort(String::compareTo);
+        for (String bookingId : confirmedBookings) {
+            Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking == null) continue;
             // Safety check: only process CONFIRMED bookings
             if (booking.getStatus() != BookingStatus.CONFIRMED) {
                 log.warn("Skipping no-show check for booking {} with unexpected status: {}", 

@@ -68,6 +68,9 @@ public class EmailNotificationService {
     }
 
     public void sendPaymentSuccessNotification(BookingNotificationEvent event) {
+        String reservationNotice = "CONFIRMED".equals(event.getBookingStatus())
+                ? "Phòng đã được xác nhận. Vui lòng mang theo email này khi check-in."
+                : "Đã ghi nhận thanh toán nhưng đặt phòng chưa được xác nhận. Bộ phận hỗ trợ sẽ đối soát; email này không phải xác nhận nhận phòng.";
         try {
             logger.info("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_SEND] Start sending payment success email - bookingId: {}, email: {}", event.getBookingId(), event.getUserEmail());
             
@@ -102,7 +105,7 @@ public class EmailNotificationService {
                             </ul>
                         </div>
                         
-                        <p style='color: #666;'>Chúng tôi đã gửi xác nhận đến email của bạn. Vui lòng mang theo email này khi check-in.</p>
+                        <p style='color: #666;'>%s</p>
                         <p style='color: #666;'>Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi.</p>
                         
                         <hr style='margin: 30px 0; border: none; border-top: 1px solid #ddd;'>
@@ -121,7 +124,8 @@ public class EmailNotificationService {
                     event.getRooms(),
                     event.getRoomType() != null ? event.getRoomType() : "Standard Room",
                     event.getAmount(),
-                    event.getPaymentMethod()
+                    event.getPaymentMethod(),
+                    reservationNotice
             );
 
             helper.setText(content, true);
