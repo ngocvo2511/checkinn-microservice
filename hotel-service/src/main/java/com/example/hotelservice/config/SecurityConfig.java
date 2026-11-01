@@ -44,6 +44,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                                 .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/medias", "/medias/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/medias/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/medias/**").authenticated()
+                        .requestMatchers("/api/v1/reviews/owner/**", "/api/v1/reviews/check-booking/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reviews", "/api/v1/reviews/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/reviews/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/reviews/**").authenticated()
                         .requestMatchers("/api/v1/availability/hold", "/api/v1/availability/hold/**").access(bookingServiceOnly)
                         .requestMatchers(HttpMethod.POST, "/cities", "/cities/**").access(adminOnly)
                         .requestMatchers(HttpMethod.PUT, "/cities/**").access(adminOnly)

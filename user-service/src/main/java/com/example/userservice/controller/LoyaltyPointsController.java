@@ -20,13 +20,39 @@ import java.util.UUID;
 public class LoyaltyPointsController {
 
     private final LoyaltyPointsService loyaltyPointsService;
+    private final com.example.userservice.security.JwtService jwtService;
+
+    private io.jsonwebtoken.Claims actor(String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED, "Bearer token required");
+        }
+        try { return jwtService.parseToken(authorization.substring(7)).getBody(); }
+        catch (RuntimeException ex) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED, "Invalid bearer token");
+        }
+    }
+    private boolean bookingService(io.jsonwebtoken.Claims actor) {
+        return "booking-service".equals(actor.getSubject()) && "BOOKING_SERVICE".equals(actor.get("role",String.class));
+    }
+    private void requireService(String authorization) {
+        if (!bookingService(actor(authorization))) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN, "Booking service identity required");
+        }
+    }
+    private void requireRead(String authorization, UUID userId) {
+        var actor = actor(authorization);
+        if (!bookingService(actor) && !"ADMIN".equals(actor.get("role",String.class)) && !userId.toString().equals(actor.getSubject())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN, "Cannot access another user's points");
+        }
+    }
 
     /**
      * Lấy thông tin điểm của người dùng
      * GET /api/loyalty-points/{userId}
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<LoyaltyPointsResponse> getPoints(@PathVariable UUID userId) {
+    public ResponseEntity<LoyaltyPointsResponse> getPoints(@PathVariable UUID userId, @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireRead(authorization,userId);
         log.info("[LOYALTY_POINTS_GET] Getting loyalty points for user: {}", userId);
         LoyaltyPointsResponse response = loyaltyPointsService.getLoyaltyPoints(userId);
         return ResponseEntity.ok(response);
@@ -37,7 +63,8 @@ public class LoyaltyPointsController {
      * GET /api/loyalty-points/{userId}/transactions
      */
     @GetMapping("/{userId}/transactions")
-    public ResponseEntity<List<PointsTransactionResponse>> getTransactionHistory(@PathVariable UUID userId) {
+    public ResponseEntity<List<PointsTransactionResponse>> getTransactionHistory(@PathVariable UUID userId, @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireRead(authorization,userId);
         log.info("[LOYALTY_POINTS_HISTORY_USER] Getting transaction history for user: {}", userId);
         List<PointsTransactionResponse> transactions = loyaltyPointsService.getTransactionHistory(userId);
         return ResponseEntity.ok(transactions);
@@ -48,7 +75,11 @@ public class LoyaltyPointsController {
      * GET /api/loyalty-points/booking/{bookingId}/transactions
      */
     @GetMapping("/booking/{bookingId}/transactions")
-    public ResponseEntity<List<PointsTransactionResponse>> getBookingTransactions(@PathVariable String bookingId) {
+    public ResponseEntity<List<PointsTransactionResponse>> getBookingTransactions(@PathVariable String bookingId, @RequestHeader(value="Authorization",required=false) String authorization) {
+        var actor = actor(authorization);
+        if (!bookingService(actor) && !"ADMIN".equals(actor.get("role",String.class))) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN,"Booking ledger is service/admin only");
+        }
         log.info("[LOYALTY_POINTS_HISTORY_BOOKING] Getting transaction history for booking: {}", bookingId);
         List<PointsTransactionResponse> transactions = loyaltyPointsService.getBookingTransactionHistory(bookingId);
         return ResponseEntity.ok(transactions);
@@ -62,7 +93,8 @@ public class LoyaltyPointsController {
     public ResponseEntity<LoyaltyPointsResponse> earnPoints(
             @RequestParam String userId,
             @RequestParam String bookingId,
-            @RequestParam BigDecimal totalAmount) {
+            @RequestParam BigDecimal totalAmount, @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireService(authorization);
         log.info("[LOYALTY_POINTS_EARN] Earning points for user: {}, booking: {}, amount: {}", userId, bookingId, totalAmount);
         LoyaltyPointsResponse response = loyaltyPointsService.earnPoints(UUID.fromString(userId), bookingId, totalAmount);
         return ResponseEntity.ok(response);
@@ -73,7 +105,8 @@ public class LoyaltyPointsController {
      * POST /api/loyalty-points/use
      */
     @PostMapping("/use")
-    public ResponseEntity<BigDecimal> usePoints(@RequestBody ApplyPointsRequest request) {
+    public ResponseEntity<BigDecimal> usePoints(@RequestBody ApplyPointsRequest request, @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireService(authorization);
         log.info("[LOYALTY_POINTS_USE] Using points for user: {}, points: {}", request.getUserId(), request.getPointsToUse());
         BigDecimal discountAmount = loyaltyPointsService.usePoints(request);
         return ResponseEntity.ok(discountAmount);
@@ -86,7 +119,8 @@ public class LoyaltyPointsController {
     @PostMapping("/refund")
     public ResponseEntity<Void> refundPoints(
             @RequestParam String userId,
-            @RequestParam String bookingId) {
+            @RequestParam String bookingId, @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireService(authorization);
         log.info("[LOYALTY_POINTS_REFUND] Refunding points for user: {}, booking: {}", userId, bookingId);
         loyaltyPointsService.refundPoints(UUID.fromString(userId), bookingId);
         return ResponseEntity.ok().build();

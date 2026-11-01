@@ -44,7 +44,7 @@ def check(condition, case):
 
 
 def main():
-    for service in ['booking-service', 'hotel-service', 'revenue-service']:
+    for service in ['booking-service', 'hotel-service', 'revenue-service', 'user-service']:
         h.verify_running_clone(service)
     notification = h.run(h.COMPOSE + ['ps', '-q', 'notification-service'])
     environment = json.loads(h.run(['docker', 'inspect', '--format', '{{json .Config.Env}}', notification]))
@@ -110,6 +110,8 @@ def main():
         payment_id = complete_payment(booking_id)
         code, booking = api('GET', '/api/bookings/' + booking_id, customer)
         check(code == 200 and booking['status'] == 'CONFIRMED', 'booking is confirmed only after internal hold confirmation')
+        earned = h.sql('checkinn_user', "SELECT count(*) FROM points_transactions WHERE user_id='" + customer_id + "' AND booking_id='" + booking_id + "' AND transaction_type='EARN'")
+        check(earned == '1', 'booking Feign service credential awards points once despite callback replay')
         original_hold = str(uuid.UUID(booking['holdId']))
         missing_hold = str(uuid.uuid4())
         h.sql('checkinn_booking', "UPDATE bookings SET hold_id='" + missing_hold + "' WHERE id='" + booking_id + "'")
@@ -167,6 +169,7 @@ def main():
                 time.sleep(1)
             h.sql('checkinn_revenue', 'BEGIN; DELETE FROM payment_records WHERE booking_id IN (' + values + '); DELETE FROM booking_status_records WHERE booking_id IN (' + values + '); COMMIT;')
             h.sql('checkinn_booking', 'BEGIN; DELETE FROM refund_requests WHERE booking_id IN (' + values + '); DELETE FROM payments WHERE booking_id IN (' + values + '); DELETE FROM booking_items WHERE booking_id IN (' + values + '); DELETE FROM bookings WHERE id IN (' + values + '); COMMIT;')
+        h.sql('checkinn_user', "DELETE FROM points_transactions WHERE user_id='" + customer_id + "'; DELETE FROM loyalty_points WHERE user_id='" + customer_id + "'")
         h.sql('checkinn_hotel', "BEGIN; DELETE FROM room_holds WHERE room_type_id='" + room + "'; DELETE FROM room_availability WHERE room_type_id='" + room + "'; DELETE FROM room_types WHERE id='" + room + "'; COMMIT;")
     return 0
 

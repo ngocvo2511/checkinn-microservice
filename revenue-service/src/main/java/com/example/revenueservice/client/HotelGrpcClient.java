@@ -32,7 +32,7 @@ public class HotelGrpcClient {
         GetHotelByIdRequest request = GetHotelByIdRequest.newBuilder()
                 .setHotelId(hotelId)
                 .build();
-        return stub.getHotelById(request);
+        return stub.withDeadlineAfter(5, java.util.concurrent.TimeUnit.SECONDS).getHotelById(request);
     }
 
     private HotelOwnerInfo fetchHotelInfo(String hotelId) {
@@ -40,7 +40,7 @@ public class HotelGrpcClient {
             GetHotelByIdRequest request = GetHotelByIdRequest.newBuilder()
                     .setHotelId(hotelId)
                     .build();
-            GetHotelByIdResponse response = stub.getHotelById(request);
+            GetHotelByIdResponse response = stub.withDeadlineAfter(5, java.util.concurrent.TimeUnit.SECONDS).getHotelById(request);
             String city = response.hasAddress() ? response.getAddress().getCity() : null;
             return new HotelOwnerInfo(response.getName(), response.getOwnerId(), city);
         } catch (Exception e) {

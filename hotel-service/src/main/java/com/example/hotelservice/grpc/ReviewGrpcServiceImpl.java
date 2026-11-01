@@ -4,7 +4,7 @@ import com.example.hotelservice.Review.dto.response.HotelReviewResponse;
 import com.example.hotelservice.Review.dto.response.HotelReviewStatsResponse;
 import com.example.hotelservice.Review.dto.response.ReviewResponseResponse;
 import com.example.hotelservice.Review.service.ReviewService;
-import com.example.hotelservice.grpc.interceptor.UserContextInterceptor;
+import com.example.hotelservice.grpc.interceptor.ReviewAuthenticationInterceptor;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Timestamp;
 import io.grpc.Context;
@@ -49,6 +49,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -69,6 +73,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onCompleted();
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -97,6 +105,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -110,13 +122,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
     public void createReview(com.example.hotelservice.grpc.CreateReviewRequest request,
                             StreamObserver<com.example.hotelservice.grpc.ReviewResponse> responseObserver) {
         try {
-            UUID guestId = UserContextInterceptor.USER_ID_CONTEXT_KEY.get();
-            if (guestId == null) {
-                responseObserver.onError(Status.UNAUTHENTICATED
-                        .withDescription("User ID not found in context. Please provide x-user-id metadata.")
-                        .asRuntimeException());
-                return;
-            }
+            UUID guestId = ReviewAuthenticationInterceptor.actorId();
             UUID hotelId = UUID.fromString(request.getHotelId());
 
             com.example.hotelservice.Review.dto.request.CreateReviewRequest reviewRequest =
@@ -137,6 +143,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
         } catch (IllegalStateException ex) {
             responseObserver.onError(Status.ALREADY_EXISTS.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -154,13 +164,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             // But in our REST DTO, reviewId comes from the URL path
             // We'll use the proto's reviewId here
             UUID reviewId = UUID.fromString(request.getReviewId());
-            UUID guestId = UserContextInterceptor.USER_ID_CONTEXT_KEY.get();
-            if (guestId == null) {
-                responseObserver.onError(Status.UNAUTHENTICATED
-                        .withDescription("User ID not found in context. Please provide x-user-id metadata.")
-                        .asRuntimeException());
-                return;
-            }
+            UUID guestId = ReviewAuthenticationInterceptor.actorId();
 
             com.example.hotelservice.Review.dto.request.UpdateReviewRequest updateRequest =
                     com.example.hotelservice.Review.dto.request.UpdateReviewRequest.builder()
@@ -180,6 +184,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
             responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -194,8 +202,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                             StreamObserver<Empty> responseObserver) {
         try {
             UUID reviewId = UUID.fromString(request.getReviewId());
-            UUID userId = UUID.fromString(request.getUserId());
-            boolean isAdmin = request.getIsAdmin();
+            UUID userId = ReviewAuthenticationInterceptor.actorId();
+            boolean isAdmin = "ADMIN".equals(ReviewAuthenticationInterceptor.requireActor().getClaimAsString("role"));
 
             reviewService.deleteReview(reviewId, userId, isAdmin);
 
@@ -205,6 +213,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
             responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -220,7 +232,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                  StreamObserver<ReviewResponseDto> responseObserver) {
         try {
             UUID reviewId = UUID.fromString(request.getReviewId());
-            UUID ownerId = UUID.fromString(request.getOwnerId());
+            UUID ownerId = ReviewAuthenticationInterceptor.actorId();
 
             com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest responseRequest =
                     com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest.builder()
@@ -236,6 +248,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
             responseObserver.onError(Status.FAILED_PRECONDITION.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -250,7 +266,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                     StreamObserver<ReviewResponseDto> responseObserver) {
         try {
             UUID responseId = UUID.fromString(request.getResponseId());
-            UUID ownerId = UUID.fromString(request.getOwnerId());
+            UUID ownerId = ReviewAuthenticationInterceptor.actorId();
 
             com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest updateRequest =
                     com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest.builder()
@@ -266,6 +282,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
             responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -280,7 +300,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                     StreamObserver<Empty> responseObserver) {
         try {
             UUID responseId = UUID.fromString(request.getResponseId());
-            UUID ownerId = UUID.fromString(request.getOwnerId());
+            UUID ownerId = ReviewAuthenticationInterceptor.actorId();
 
             reviewService.deleteReviewResponse(responseId, ownerId);
 
@@ -290,6 +310,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
             responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -317,6 +341,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -331,13 +359,17 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                  StreamObserver<Empty> responseObserver) {
         try {
             UUID reviewId = UUID.fromString(request.getReviewId());
-            reviewService.markReviewHelpful(reviewId);
+            reviewService.markReviewHelpful(reviewId, ReviewAuthenticationInterceptor.actorId());
 
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -352,13 +384,17 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                    StreamObserver<Empty> responseObserver) {
         try {
             UUID reviewId = UUID.fromString(request.getReviewId());
-            reviewService.markReviewUnhelpful(reviewId);
+            reviewService.markReviewUnhelpful(reviewId, ReviewAuthenticationInterceptor.actorId());
 
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
         } catch (IllegalArgumentException ex) {
             responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
@@ -373,7 +409,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                      StreamObserver<CheckUserReviewExistsResponse> responseObserver) {
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
-            UUID guestId = UUID.fromString(request.getGuestId());
+            UUID guestId = ReviewAuthenticationInterceptor.actorId();
             UUID bookingId = request.getBookingId().isEmpty() ? null : UUID.fromString(request.getBookingId());
 
             // reviewService.checkUserReviewExists only takes hotelId and guestId
@@ -386,6 +422,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(response);
             responseObserver.onCompleted();
 
+        } catch (io.grpc.StatusRuntimeException ex) {
+            responseObserver.onError(ex);
+        } catch (SecurityException ex) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
