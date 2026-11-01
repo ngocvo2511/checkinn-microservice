@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-@FeignClient(name = "user-service", url = "${user-service.url:http://localhost:8081}")
+@FeignClient(name = "user-service", url = "${user-service.url:http://localhost:8082}", configuration = LoyaltyFeignConfiguration.class)
 public interface LoyaltyPointsClient {
 
     /**

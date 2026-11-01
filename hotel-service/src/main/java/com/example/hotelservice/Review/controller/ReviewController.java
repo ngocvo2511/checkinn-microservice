@@ -8,6 +8,8 @@ import com.example.hotelservice.Review.dto.response.HotelReviewStatsResponse;
 import com.example.hotelservice.Review.dto.response.ReviewResponseResponse;
 import com.example.hotelservice.Review.service.ReviewService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -36,8 +38,9 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<HotelReviewResponse> createReview(
             @Valid @RequestBody CreateReviewRequest request,
-            @RequestHeader("X-User-Id") UUID guestId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID guestId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_CREATE] Create review request received - hotelId: {}, guestId: {}, bookingId: {}",
             request.getHotelId(), guestId, request.getBookingId());
         HotelReviewResponse response = reviewService.createReview(request, guestId);
@@ -49,14 +52,15 @@ public class ReviewController {
     /**
      * Get all reviews for a hotel
      * GET /api/v1/reviews/hotel/{hotelId}
-     * Optional Header: X-User-Id for tracking user feedback
+     * Optional bearer token for personal feedback
      */
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<Page<HotelReviewResponse>> getHotelReviews(
             @PathVariable UUID hotelId,
             Pageable pageable,
-            @RequestHeader(value = "X-User-Id", required = false) UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = actor == null ? null : UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_GET_HOTEL] Fetch hotel reviews request received - hotelId: {}, userId: {}", hotelId, userId);
         Page<HotelReviewResponse> reviews = reviewService.getHotelReviews(hotelId, pageable, userId);
         log.info("[REVIEW_CONTROLLER_GET_HOTEL] Fetch hotel reviews success - hotelId: {}, returned: {}", hotelId, reviews.getTotalElements());
@@ -66,13 +70,14 @@ public class ReviewController {
     /**
      * Get review by ID
      * GET /api/v1/reviews/{reviewId}
-     * Optional Header: X-User-Id for tracking user feedback
+     * Optional bearer token for personal feedback
      */
     @GetMapping("/{reviewId}")
     public ResponseEntity<HotelReviewResponse> getReviewById(
             @PathVariable UUID reviewId,
-            @RequestHeader(value = "X-User-Id", required = false) UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = actor == null ? null : UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_GET_BY_ID] Fetch review request received - reviewId: {}, userId: {}", reviewId, userId);
         HotelReviewResponse review = reviewService.getReviewById(reviewId, userId);
         log.info("[REVIEW_CONTROLLER_GET_BY_ID] Fetch review success - reviewId: {}", reviewId);
@@ -88,8 +93,9 @@ public class ReviewController {
     public ResponseEntity<HotelReviewResponse> updateReview(
             @PathVariable UUID reviewId,
             @Valid @RequestBody UpdateReviewRequest request,
-            @RequestHeader("X-User-Id") UUID guestId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID guestId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_UPDATE] Update review request received - reviewId: {}, guestId: {}", reviewId, guestId);
         HotelReviewResponse response = reviewService.updateReview(reviewId, request, guestId);
         log.info("[REVIEW_CONTROLLER_UPDATE] Update review success - reviewId: {}, guestId: {}", reviewId, guestId);
@@ -104,9 +110,10 @@ public class ReviewController {
     @DeleteMapping("/{reviewId}")
     public ResponseEntity<Void> deleteReview(
             @PathVariable UUID reviewId,
-            @RequestHeader("X-User-Id") UUID userId,
-            @RequestHeader(value = "X-Is-Admin", defaultValue = "false") boolean isAdmin
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = UUID.fromString(actor.getSubject());
+        boolean isAdmin = "ADMIN".equals(actor.getClaimAsString("role"));
         log.info("[REVIEW_CONTROLLER_DELETE] Delete review request received - reviewId: {}, userId: {}, isAdmin: {}", reviewId, userId, isAdmin);
         reviewService.deleteReview(reviewId, userId, isAdmin);
         log.info("[REVIEW_CONTROLLER_DELETE] Delete review success - reviewId: {}, userId: {}", reviewId, userId);
@@ -116,13 +123,14 @@ public class ReviewController {
     /**
      * Get review statistics for a hotel
      * GET /api/v1/reviews/stats/hotel/{hotelId}
-     * Optional Header: X-User-Id for tracking user feedback in recent reviews
+     * Optional bearer token for personal feedback in recent reviews
      */
     @GetMapping("/stats/hotel/{hotelId}")
     public ResponseEntity<HotelReviewStatsResponse> getHotelReviewStats(
             @PathVariable UUID hotelId,
-            @RequestHeader(value = "X-User-Id", required = false) UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = actor == null ? null : UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_STATS] Fetch review stats request received - hotelId: {}, userId: {}", hotelId, userId);
         HotelReviewStatsResponse stats = reviewService.getHotelReviewStats(hotelId, userId);
         log.info("[REVIEW_CONTROLLER_STATS] Fetch review stats success - hotelId: {}", hotelId);
@@ -132,13 +140,14 @@ public class ReviewController {
     /**
      * Mark review as helpful
      * POST /api/v1/reviews/{reviewId}/helpful
-     * Optional Header: X-User-Id for tracking user feedback
+     * Optional bearer token for personal feedback
      */
     @PostMapping("/{reviewId}/helpful")
     public ResponseEntity<Void> markReviewHelpful(
             @PathVariable UUID reviewId,
-            @RequestHeader(value = "X-User-Id", required = false) UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_HELPFUL] Mark review helpful request received - reviewId: {}, userId: {}", reviewId, userId);
         reviewService.markReviewHelpful(reviewId, userId);
         log.info("[REVIEW_CONTROLLER_HELPFUL] Mark review helpful success - reviewId: {}, userId: {}", reviewId, userId);
@@ -148,13 +157,14 @@ public class ReviewController {
     /**
      * Mark review as unhelpful
      * POST /api/v1/reviews/{reviewId}/unhelpful
-     * Optional Header: X-User-Id for tracking user feedback
+     * Optional bearer token for personal feedback
      */
     @PostMapping("/{reviewId}/unhelpful")
     public ResponseEntity<Void> markReviewUnhelpful(
             @PathVariable UUID reviewId,
-            @RequestHeader(value = "X-User-Id", required = false) UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_UNHELPFUL] Mark review unhelpful request received - reviewId: {}, userId: {}", reviewId, userId);
         reviewService.markReviewUnhelpful(reviewId, userId);
         log.info("[REVIEW_CONTROLLER_UNHELPFUL] Mark review unhelpful success - reviewId: {}, userId: {}", reviewId, userId);
@@ -170,8 +180,9 @@ public class ReviewController {
     public ResponseEntity<ReviewResponseResponse> addReviewResponse(
             @PathVariable UUID reviewId,
             @Valid @RequestBody CreateReviewResponseRequest request,
-            @RequestHeader("X-User-Id") UUID ownerId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID ownerId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_ADD_RESPONSE] Add review response request received - reviewId: {}, ownerId: {}", reviewId, ownerId);
         ReviewResponseResponse response = reviewService.addReviewResponse(reviewId, request, ownerId);
         log.info("[REVIEW_CONTROLLER_ADD_RESPONSE] Add review response success - reviewId: {}, responseId: {}, ownerId: {}",
@@ -188,8 +199,9 @@ public class ReviewController {
     public ResponseEntity<ReviewResponseResponse> updateReviewResponse(
             @PathVariable UUID responseId,
             @Valid @RequestBody CreateReviewResponseRequest request,
-            @RequestHeader("X-User-Id") UUID ownerId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID ownerId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_UPDATE_RESPONSE] Update review response request received - responseId: {}, ownerId: {}", responseId, ownerId);
         ReviewResponseResponse response = reviewService.updateReviewResponse(responseId, request, ownerId);
         log.info("[REVIEW_CONTROLLER_UPDATE_RESPONSE] Update review response success - responseId: {}, ownerId: {}", responseId, ownerId);
@@ -204,8 +216,9 @@ public class ReviewController {
     @DeleteMapping("/response/{responseId}")
     public ResponseEntity<Void> deleteReviewResponse(
             @PathVariable UUID responseId,
-            @RequestHeader("X-User-Id") UUID ownerId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID ownerId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_DELETE_RESPONSE] Delete review response request received - responseId: {}, ownerId: {}", responseId, ownerId);
         reviewService.deleteReviewResponse(responseId, ownerId);
         log.info("[REVIEW_CONTROLLER_DELETE_RESPONSE] Delete review response success - responseId: {}, ownerId: {}", responseId, ownerId);
@@ -219,8 +232,9 @@ public class ReviewController {
     @GetMapping("/check-booking/{bookingId}")
     public ResponseEntity<HotelReviewResponse> checkBookingReviewed(
             @PathVariable UUID bookingId,
-            @RequestParam UUID userId
+            @AuthenticationPrincipal Jwt actor
     ) {
+        UUID userId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_CHECK_BOOKING] Check booking reviewed request received - bookingId: {}, userId: {}", bookingId, userId);
         Optional<HotelReviewResponse> review = reviewService.getReviewByBookingId(bookingId, userId);
         if (review.isPresent()) {
@@ -252,13 +266,14 @@ public class ReviewController {
     /**
      * Get all reviews for hotels owned by the authenticated owner
      * GET /api/v1/reviews/owner/all
-     * Header: X-User-Id (owner ID)
+     * Header: Authorization: Bearer {token}
      */
     @GetMapping("/owner/all")
     public ResponseEntity<Page<HotelReviewResponse>> getOwnerReviews(
-            @RequestHeader("X-User-Id") UUID ownerId,
+            @AuthenticationPrincipal Jwt actor,
             Pageable pageable
     ) {
+        UUID ownerId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_OWNER_ALL] Fetch owner reviews request received - ownerId: {}", ownerId);
         Page<HotelReviewResponse> reviews = reviewService.getReviewsByOwner(ownerId, pageable);
         log.info("[REVIEW_CONTROLLER_OWNER_ALL] Fetch owner reviews success - ownerId: {}, returned: {}", ownerId, reviews.getTotalElements());
@@ -268,14 +283,15 @@ public class ReviewController {
     /**
      * Get reviews for a specific hotel owned by the authenticated owner
      * GET /api/v1/reviews/owner/hotel/{hotelId}
-     * Header: X-User-Id (owner ID)
+     * Header: Authorization: Bearer {token}
      */
     @GetMapping("/owner/hotel/{hotelId}")
     public ResponseEntity<Page<HotelReviewResponse>> getOwnerHotelReviews(
             @PathVariable UUID hotelId,
-            @RequestHeader("X-User-Id") UUID ownerId,
+            @AuthenticationPrincipal Jwt actor,
             Pageable pageable
     ) {
+        UUID ownerId = UUID.fromString(actor.getSubject());
         log.info("[REVIEW_CONTROLLER_OWNER_HOTEL] Fetch owner hotel reviews request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
         Page<HotelReviewResponse> reviews = reviewService.getReviewsByOwnerAndHotel(ownerId, hotelId, pageable);
         log.info("[REVIEW_CONTROLLER_OWNER_HOTEL] Fetch owner hotel reviews success - hotelId: {}, ownerId: {}, returned: {}",

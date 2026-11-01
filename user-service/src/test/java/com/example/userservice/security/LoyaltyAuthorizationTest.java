@@ -1,0 +1,85 @@
+package com.example.userservice.security;
+
+import com.example.userservice.controller.LoyaltyPointsController;
+import com.example.userservice.service.LoyaltyPointsService;
+import com.example.userservice.config.SecurityConfig;
+import io.jsonwebtoken.*;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.web.servlet.MockMvc;
+import java.util.UUID;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(value=LoyaltyPointsController.class, properties={"spring.cloud.config.enabled=false","spring.cloud.discovery.enabled=false"})
+@Import({SecurityConfig.class,JwtMdcFilter.class})
+class LoyaltyAuthorizationTest {
+    static final UUID ACTOR=UUID.randomUUID(),OTHER=UUID.randomUUID();
+    @Autowired MockMvc mvc;
+    @MockBean JwtService jwt;
+    @MockBean LoyaltyPointsService points;
+    @BeforeEach void tokens() {
+        when(jwt.parseToken(anyString())).thenAnswer(call -> {
+            String token=call.getArgument(0);
+            if (token.equals("invalid")) throw new JwtException("invalid");
+            Claims claims=Jwts.claims().setSubject(token.equals("service")?"booking-service":ACTOR.toString());
+            claims.put("role",token.equals("service")||token.equals("forged-service")?"BOOKING_SERVICE":token.equals("admin")?"ADMIN":"CUSTOMER");
+            Jws<Claims> signed=mock(Jws.class); when(signed.getBody()).thenReturn(claims); return signed;
+        });
+    }
+    @Test void anonymousCannotReadSomeonePoints() throws Exception {
+        mvc.perform(get("/api/loyalty-points/"+OTHER)).andExpect(status().isUnauthorized()); verifyNoInteractions(points);
+    }
+    @Test void customerCannotReadOtherUser() throws Exception {
+        mvc.perform(get("/api/loyalty-points/"+OTHER).header("Authorization","Bearer customer"))
+            .andExpect(status().isForbidden()); verifyNoInteractions(points);
+    }
+    @Test void customerCanReadSelf() throws Exception {
+        mvc.perform(get("/api/loyalty-points/"+ACTOR).header("Authorization","Bearer customer")).andExpect(status().isOk());
+        verify(points).getLoyaltyPoints(ACTOR);
+    }
+    @Test void anonymousCannotEarn() throws Exception {
+        mvc.perform(post("/api/loyalty-points/earn").param("userId",ACTOR.toString()).param("bookingId","synthetic").param("totalAmount","1000"))
+            .andExpect(status().isUnauthorized()); verifyNoInteractions(points);
+    }
+    @Test void adminAndForgedServiceCannotEarn() throws Exception {
+        for(String token:new String[]{"admin","customer","forged-service"})
+            mvc.perform(post("/api/loyalty-points/earn").param("userId",ACTOR.toString()).param("bookingId","synthetic").param("totalAmount","1000")
+                .header("Authorization","Bearer "+token)).andExpect(status().isForbidden());
+        verifyNoInteractions(points);
+    }
+    @Test void verifiedBookingServiceCanEarn() throws Exception {
+        mvc.perform(post("/api/loyalty-points/earn").param("userId",ACTOR.toString()).param("bookingId","synthetic").param("totalAmount","1000")
+            .header("Authorization","Bearer service")).andExpect(status().isOk());
+        verify(points).earnPoints(eq(ACTOR),eq("synthetic"),any());
+    }
+    @Test void customerCannotUseOrRefundPointsDirectly() throws Exception {
+        mvc.perform(post("/api/loyalty-points/use").contentType("application/json")
+            .content("{\"userId\":\""+ACTOR+"\",\"bookingId\":\"synthetic\",\"pointsToUse\":1}")
+            .header("Authorization","Bearer customer")).andExpect(status().isForbidden());
+        mvc.perform(post("/api/loyalty-points/refund").param("userId",ACTOR.toString()).param("bookingId","synthetic")
+            .header("Authorization","Bearer customer")).andExpect(status().isForbidden()); verifyNoInteractions(points);
+    }
+    @Test void customerCannotEnumerateBookingLedger() throws Exception {
+        mvc.perform(get("/api/loyalty-points/booking/synthetic/transactions").header("Authorization","Bearer customer"))
+            .andExpect(status().isForbidden()); verifyNoInteractions(points);
+    }
+    @Test void invalidTokenIsUnauthorized() throws Exception {
+        mvc.perform(get("/api/loyalty-points/"+ACTOR).header("Authorization","Bearer invalid"))
+            .andExpect(status().isUnauthorized()); verifyNoInteractions(points);
+    }
+    @Test void verifiedBookingServiceCanUseAndRefund() throws Exception {
+        mvc.perform(post("/api/loyalty-points/use").contentType("application/json")
+            .content("{\"userId\":\""+ACTOR+"\",\"bookingId\":\"synthetic\",\"pointsToUse\":1}")
+            .header("Authorization","Bearer service")).andExpect(status().isOk());
+        verify(points).usePoints(any());
+        mvc.perform(post("/api/loyalty-points/refund").param("userId",ACTOR.toString()).param("bookingId","synthetic")
+            .header("Authorization","Bearer service")).andExpect(status().isOk());
+        verify(points).refundPoints(ACTOR,"synthetic");
+    }
+}

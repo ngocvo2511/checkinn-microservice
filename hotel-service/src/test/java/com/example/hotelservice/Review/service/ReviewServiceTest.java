@@ -31,12 +31,13 @@ class ReviewServiceTest {
 
     private HotelReviewRepository hotelReviewRepository;
     private HotelRepository hotelRepository;
+    private ReviewResponseRepository reviewResponseRepository;
     private ReviewService reviewService;
 
     @BeforeEach
     void setUp() {
         hotelReviewRepository = mock(HotelReviewRepository.class);
-        ReviewResponseRepository reviewResponseRepository = mock(ReviewResponseRepository.class);
+        reviewResponseRepository = mock(ReviewResponseRepository.class);
         ReviewFeedbackRepository reviewFeedbackRepository = mock(ReviewFeedbackRepository.class);
         hotelRepository = mock(HotelRepository.class);
         reviewService = new ReviewService(
@@ -107,7 +108,7 @@ class ReviewServiceTest {
         when(hotelRepository.existsByIdAndOwnerId(hotelId, ownerId)).thenReturn(false);
 
         assertThatThrownBy(() -> reviewService.getReviewsByOwnerAndHotel(ownerId, hotelId, PageRequest.of(0, 10)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(SecurityException.class);
 
         verify(hotelReviewRepository, never()).findByHotelIdAndStatusOrderByCreatedAtDesc(any(), any(), any());
     }
@@ -147,5 +148,89 @@ class ReviewServiceTest {
 
         assertThat(page.getContent()).hasSize(1);
         assertThat(page.getContent().get(0).getHotelName()).isEqualTo("RTM Hotel");
+    }
+    @Test
+    void anotherHotelOwnerCannotAddResponse() {
+        UUID reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), intruder = UUID.randomUUID();
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
+        var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
+        request.setContent("Thank you for your stay");
+        assertThatThrownBy(() -> reviewService.addReviewResponse(reviewId, request, intruder))
+                .isInstanceOf(SecurityException.class);
+    }
+
+    @Test
+    void anotherGuestCannotDeleteReview() {
+        UUID reviewId = UUID.randomUUID();
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).guestId(UUID.randomUUID()).build()));
+        assertThatThrownBy(() -> reviewService.deleteReview(reviewId, UUID.randomUUID(), false))
+                .isInstanceOf(SecurityException.class);
+        verify(hotelReviewRepository, never()).deleteById(any());
+    }
+    @Test
+    void actualHotelOwnerCanAddResponse() {
+        UUID reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
+        when(hotelRepository.existsByIdAndOwnerId(hotelId, owner)).thenReturn(true);
+        var repository = reviewResponseRepository;
+        when(repository.save(any())).thenAnswer(call -> call.getArgument(0));
+        var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
+        request.setContent("Thank you for your stay");
+        var result = reviewService.addReviewResponse(reviewId, request, owner);
+        assertThat(result.getOwnerId()).isEqualTo(owner);
+        verify(repository).save(any());
+    }
+
+    @Test
+    void reviewAuthorAndAdministratorCanDelete() {
+        UUID reviewId = UUID.randomUUID(), author = UUID.randomUUID();
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).guestId(author).build()));
+        reviewService.deleteReview(reviewId, author, false);
+        reviewService.deleteReview(reviewId, UUID.randomUUID(), true);
+        org.mockito.Mockito.verify(hotelReviewRepository, org.mockito.Mockito.times(2)).deleteById(reviewId);
+    }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
+    void legacyUnrelatedResponseAuthorCannotModifyResponse(boolean delete) {
+        UUID responseId = UUID.randomUUID(), reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), actor = UUID.randomUUID();
+        when(reviewResponseRepository.findById(responseId)).thenReturn(Optional.of(
+                com.example.hotelservice.Review.entity.ReviewResponse.builder()
+                        .id(responseId).reviewId(reviewId).ownerId(actor).build()));
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
+        var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
+        request.setContent("Synthetic updated response");
+        assertThatThrownBy(() -> {
+            if (delete) reviewService.deleteReviewResponse(responseId, actor);
+            else reviewService.updateReviewResponse(responseId, request, actor);
+        }).isInstanceOf(SecurityException.class);
+        verify(reviewResponseRepository, never()).save(any());
+        verify(reviewResponseRepository, never()).deleteById(any());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
+    void currentHotelOwnerCanModifyOwnResponse(boolean delete) {
+        UUID responseId = UUID.randomUUID(), reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), actor = UUID.randomUUID();
+        when(reviewResponseRepository.findById(responseId)).thenReturn(Optional.of(
+                com.example.hotelservice.Review.entity.ReviewResponse.builder()
+                        .id(responseId).reviewId(reviewId).ownerId(actor).build()));
+        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+                HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
+        when(hotelRepository.existsByIdAndOwnerId(hotelId, actor)).thenReturn(true);
+        when(reviewResponseRepository.save(any())).thenAnswer(call -> call.getArgument(0));
+        if (delete) {
+            reviewService.deleteReviewResponse(responseId, actor);
+            verify(reviewResponseRepository).deleteById(responseId);
+        } else {
+            var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
+            request.setContent("Synthetic updated response");
+            assertThat(reviewService.updateReviewResponse(responseId, request, actor).getContent())
+                    .isEqualTo(request.getContent());
+        }
     }
 }

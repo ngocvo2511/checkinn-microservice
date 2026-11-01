@@ -17,6 +17,27 @@ public class MediaServiceImpl implements MediaService {
 
     private final MediaAssetRepository repository;
     private final MediaClient mediaClient;
+    private final com.example.hotelservice.Hotel.repository.HotelRepository hotels;
+    private final com.example.hotelservice.Room.repository.RoomTypeRepository rooms;
+
+    private void requireTargetAccess(UUID targetId, MediaTargetType targetType) {
+        var authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken actor)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED, "Valid bearer token required");
+        }
+        UUID hotelId = targetType == MediaTargetType.ROOM_TYPE
+                ? rooms.findById(targetId).orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Room not found")).getHotelId()
+                : targetId;
+        if ("ADMIN".equals(actor.getToken().getClaimAsString("role"))) {
+            if (targetType == MediaTargetType.HOTEL && !hotels.existsById(hotelId)) {
+                throw new jakarta.persistence.EntityNotFoundException("Hotel not found");
+            }
+            return;
+        }
+        if (!hotels.existsByIdAndOwnerId(hotelId, UUID.fromString(actor.getToken().getSubject()))) {
+            throw new SecurityException("You do not own the media's hotel");
+        }
+    }
 
     @Override
     public MediaAsset uploadMultipart(
@@ -26,6 +47,8 @@ public class MediaServiceImpl implements MediaService {
             Integer sortOrder,
             MultipartFile file
     ) throws Exception {
+
+        requireTargetAccess(targetId, targetType);
 
         // 1) Gửi ảnh qua media-service để upload lên MinIO
         String url = mediaClient.upload(
@@ -54,12 +77,15 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public void delete(UUID id) {
         MediaAsset delete = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Media not found"));
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Media not found"));
+        requireTargetAccess(delete.getTargetId(), delete.getTargetType());
         UUID targetId = delete.getTargetId();
         MediaTargetType targetType = delete.getTargetType();
         Integer deletedOrder = delete.getSortOrder();
         // 1) Xoá file khỏi MinIO qua media-service
-        mediaClient.deleteByUrl(delete.getUrl());
+        if (!mediaClient.deleteByUrl(delete.getUrl())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY, "Storage did not acknowledge deletion");
+        }
 
         // 2) Xoá metadata DB
         repository.delete(delete);
@@ -80,8 +106,9 @@ public class MediaServiceImpl implements MediaService {
     public MediaAsset updateThumbnail(UUID mediaId) {
 
         MediaAsset selected = repository.findById(mediaId)
-                .orElseThrow(() -> new RuntimeException("Media not found"));
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Media not found"));
 
+        requireTargetAccess(selected.getTargetId(), selected.getTargetType());
         UUID targetId = selected.getTargetId();
         MediaTargetType targetType = selected.getTargetType();
 

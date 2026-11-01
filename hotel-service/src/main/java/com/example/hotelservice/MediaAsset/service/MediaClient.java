@@ -10,6 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class MediaClient {
+    private final com.example.hotelservice.security.HotelServiceTokenProvider tokens;
+    public MediaClient(com.example.hotelservice.security.HotelServiceTokenProvider tokens) { this.tokens = tokens; }
+    private MediaGrpcServiceGrpc.MediaGrpcServiceBlockingStub authorizedStub() {
+        io.grpc.Metadata headers = new io.grpc.Metadata();
+        headers.put(io.grpc.Metadata.Key.of("authorization", io.grpc.Metadata.ASCII_STRING_MARSHALLER), tokens.authorization());
+        return mediaStub.withInterceptors(io.grpc.stub.MetadataUtils.newAttachHeadersInterceptor(headers))
+                .withDeadlineAfter(10, java.util.concurrent.TimeUnit.SECONDS);
+    }
+
 
     @GrpcClient("media-service")
     private MediaGrpcServiceGrpc.MediaGrpcServiceBlockingStub mediaStub;
@@ -23,7 +32,7 @@ public class MediaClient {
                     .setFileData(ByteString.copyFrom(data))
                     .build();
 
-            UploadMediaResponse response = mediaStub.uploadMedia(request);
+            UploadMediaResponse response = authorizedStub().uploadMedia(request);
             return response.getUrl();
         }
         catch (Exception e) {
@@ -38,7 +47,7 @@ public class MediaClient {
                     .setFileName(fileName)
                     .build();
 
-            DeleteMediaResponse response = mediaStub.deleteMedia(request);
+            DeleteMediaResponse response = authorizedStub().deleteMedia(request);
             return response.getSuccess();
         } catch (Exception e) {
             throw new RuntimeException("Delete media on media-service failed", e);
@@ -59,7 +68,7 @@ public class MediaClient {
                     .setFileData(ByteString.copyFrom(data))
                     .build();
 
-            UploadDocumentResponse response = mediaStub.uploadPrivateDocument(request);
+            UploadDocumentResponse response = authorizedStub().uploadPrivateDocument(request);
             return response.getFilePath();
         } catch (Exception e) {
             throw new RuntimeException("Upload private document to media-service failed", e);
@@ -73,7 +82,7 @@ public class MediaClient {
                     .setExpiresInSeconds(expiresInSeconds)
                     .build();
 
-            GetSignedUrlResponse response = mediaStub.getSignedUrl(request);
+            GetSignedUrlResponse response = authorizedStub().getSignedUrl(request);
             return response.getSignedUrl();
         } catch (Exception e) {
             throw new RuntimeException("Get signed url from media-service failed", e);
@@ -99,7 +108,7 @@ public class MediaClient {
                     .setExpiresInSeconds(expiresInSeconds)
                     .build();
 
-            GetSignedUrlsResponse response = mediaStub.getSignedUrls(request);
+            GetSignedUrlsResponse response = authorizedStub().getSignedUrls(request);
             return response.getSignedUrlsMap() != null
                     ? new java.util.HashMap<>(response.getSignedUrlsMap())
                     : java.util.Collections.emptyMap();

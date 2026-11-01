@@ -9,6 +9,8 @@ overlay**, run from the backend repository root:
 python docker/booking-security-smoke.py
 python docker/inventory-smoke.py
 python docker/catalog-security-smoke.py
+python docker/review-security-smoke.py
+python docker/p0-boundary-smoke.py
 python docker/hold-concurrency-smoke.py
 python docker/cancellation-workflow-smoke.py
 ```
@@ -180,3 +182,34 @@ Smoke script kiểm tra health trong container, broker/Redis, Eureka registratio
 Monitoring cũ tại `monitoring/docker-compose.yml` đã được khảo sát nhưng vẫn là stack tùy chọn riêng: Prometheus dùng `host.docker.internal:8761`, promtail đọc `checkinn/logs` của host. Stack ứng dụng mới ghi stdout và log bên trong container, nên promtail cũ **không tự nhận log của stack mới**. Dùng `docker compose logs` làm cách quan sát được tài liệu này hỗ trợ. Chưa xác minh Prometheus/Loki/Grafana và không tự khởi chạy stack monitoring cũ.
 
 Kết quả mới nhất trên 5 database sao chép: [VALIDATION_CLONED_DATABASES_2026-10-28.md](VALIDATION_CLONED_DATABASES_2026-10-28.md). Báo cáo trước khi clone: [VALIDATION_2026-10-28.md](VALIDATION_2026-10-28.md); lần đầu chưa có Engine: [VALIDATION.md](VALIDATION.md).
+
+Review authorization (30/10/2026): `review-security-smoke.py` requires healthy
+hotel-service/gateway and the isolated PostgreSQL clone. It waits for gateway
+discovery before creating fresh synthetic review UUIDs under a cloned hotel;
+it tests header/body impersonation, hotel-owner response scope and persisted
+feedback identity, then removes only those generated review/feedback/response
+rows. It also checks anonymous and forged-metadata gRPC deletion are rejected.
+Review gRPC mutations now require a valid Bearer JWT; proto user/owner/admin
+fields and x-user-id metadata do not grant authority. The four public review
+read RPCs remain anonymous. Other hotel gRPC services are outside this change.
+
+P0 media/loyalty/report boundaries (30/10/2026): rebuild and deploy hotel,
+media, booking, user and revenue together. Hotel storage calls use signed
+hotel-service/HOTEL_SERVICE Bearer tokens (5 minute expiry); media gRPC rejects
+user/admin identities for all storage and private signing RPCs. This uses the
+existing shared SECRET_KEY convention; standalone media/revenue now also need
+that configured key. Revenue checks JWT expiry/signature and Redis revocation.
+Booking loyalty calls use signed booking-service/BOOKING_SERVICE tokens scoped
+to that Feign client, not a global interceptor. Loyalty mutations cannot be called
+directly by users or ADMIN; personal reads remain available to self and ADMIN.
+
+`p0-boundary-smoke.py` checks clone datasources/readiness, creates synthetic
+room/media/points fixtures, tests direct/gateway ownership and internal points
+calls, and cleans only generated UUIDs. Storage RPC tests deliberately use
+unauthenticated/admin calls that must fail before any Supabase request. Valid
+storage upload/delete/signing are covered with mocks, not real bucket writes.
+`cancellation-workflow-smoke.py` additionally verifies the booking Feign caller
+creates exactly one EARN ledger row after a simulated callback replay and cleans
+the generated user's points fixtures in the verified user clone. It still does
+not contact VNPay. Wait for Eureka convergence after image recreation before
+interpreting gateway transport failures as application authorization failures.

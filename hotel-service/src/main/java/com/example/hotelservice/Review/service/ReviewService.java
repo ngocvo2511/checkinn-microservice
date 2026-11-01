@@ -127,7 +127,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
         if (!review.getGuestId().equals(guestId)) {
-            throw new IllegalAccessError("Bạn không có quyền sửa đánh giá này");
+            throw new SecurityException("Bạn không có quyền sửa đánh giá này");
         }
 
         if (request.getRating() != null) {
@@ -172,7 +172,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
         if (!isAdmin && !review.getGuestId().equals(userId)) {
-            throw new IllegalAccessError("Bạn không có quyền xóa đánh giá này");
+            throw new SecurityException("Bạn không có quyền xóa đánh giá này");
         }
 
         hotelReviewRepository.deleteById(reviewId);
@@ -383,6 +383,10 @@ public class ReviewService {
         HotelReview review = hotelReviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
+        if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
+            throw new SecurityException("Bạn không có quyền trả lời đánh giá của khách sạn này");
+        }
+
         // Check if response already exists
         if (reviewResponseRepository.existsByReviewId(reviewId)) {
             throw new IllegalStateException("Đánh giá này đã có câu trả lời rồi");
@@ -405,8 +409,14 @@ public class ReviewService {
         ReviewResponse response = reviewResponseRepository.findById(responseId)
                 .orElseThrow(() -> new IllegalArgumentException("Trả lời không tồn tại"));
 
+        HotelReview review = hotelReviewRepository.findById(response.getReviewId())
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+        if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
+            throw new SecurityException("Bạn không sở hữu khách sạn của đánh giá này");
+        }
+
         if (!response.getOwnerId().equals(ownerId)) {
-            throw new IllegalAccessError("Bạn không có quyền sửa trả lời này");
+            throw new SecurityException("Bạn không có quyền sửa trả lời này");
         }
 
         response.setContent(request.getContent());
@@ -421,8 +431,14 @@ public class ReviewService {
         ReviewResponse response = reviewResponseRepository.findById(responseId)
                 .orElseThrow(() -> new IllegalArgumentException("Trả lời không tồn tại"));
 
+        HotelReview review = hotelReviewRepository.findById(response.getReviewId())
+                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+        if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
+            throw new SecurityException("Bạn không sở hữu khách sạn của đánh giá này");
+        }
+
         if (!response.getOwnerId().equals(ownerId)) {
-            throw new IllegalAccessError("Bạn không có quyền xóa trả lời này");
+            throw new SecurityException("Bạn không có quyền xóa trả lời này");
         }
 
         reviewResponseRepository.deleteById(responseId);
@@ -502,7 +518,7 @@ public class ReviewService {
     public Page<HotelReviewResponse> getReviewsByOwnerAndHotel(UUID ownerId, UUID hotelId, Pageable pageable) {
         // Verify that the hotel belongs to this owner
         if (!hotelRepository.existsByIdAndOwnerId(hotelId, ownerId)) {
-            throw new IllegalArgumentException("Bạn không có quyền xem đánh giá của khách sạn này");
+            throw new SecurityException("Bạn không có quyền xem đánh giá của khách sạn này");
         }
 
         // Get all reviews for this hotel
