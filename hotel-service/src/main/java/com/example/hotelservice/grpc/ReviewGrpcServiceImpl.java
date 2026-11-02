@@ -141,6 +141,10 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(mapReviewToProto(review));
             responseObserver.onCompleted();
 
+        } catch (org.springframework.web.server.ResponseStatusException ex) {
+            responseObserver.onError(Status.UNAVAILABLE.withDescription("Booking review eligibility unavailable").asRuntimeException());
+        } catch (IllegalArgumentException ex) {
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(ex.getMessage()).asRuntimeException());
         } catch (IllegalStateException ex) {
             responseObserver.onError(Status.ALREADY_EXISTS.withDescription(ex.getMessage()).asRuntimeException());
         } catch (io.grpc.StatusRuntimeException ex) {

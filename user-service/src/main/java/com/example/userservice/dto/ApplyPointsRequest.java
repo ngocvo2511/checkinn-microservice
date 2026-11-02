@@ -15,4 +15,9 @@ public class ApplyPointsRequest {
     private Long pointsToUse;  // Số điểm muốn sử dụng
     private String bookingId;  // ID của booking
     private String description;  // Mô tả sử dụng
+    private java.math.BigDecimal expectedDiscountAmount; // Trusted booking quote snapshot; optional for legacy callers.
+
+    public ApplyPointsRequest(UUID userId, Long pointsToUse, String bookingId, String description) {
+        this(userId, pointsToUse, bookingId, description, null);
+    }
 }

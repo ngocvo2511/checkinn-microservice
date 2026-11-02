@@ -63,6 +63,10 @@ public class JwtService {
         return UUID.fromString(claims.getBody().getSubject());
     }
 
+    public String extractSubject(String token) {
+        return parseToken(token).getBody().getSubject();
+    }
+
     public boolean validateToken(String token) {
         try {
             parseToken(token);

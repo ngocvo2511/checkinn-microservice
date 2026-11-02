@@ -92,7 +92,7 @@ def main():
                 case('storage '+rpc+(' admin' if credential else ' anonymous'),result.returncode!=0 and expected in result.stderr,True)
     finally:
         h.sql('checkinn_hotel',"DELETE FROM media_assets WHERE id='"+media+"'; DELETE FROM room_types WHERE id='"+room+"'")
-        h.sql('checkinn_user',"DELETE FROM points_transactions WHERE user_id='"+user+"'; DELETE FROM loyalty_points WHERE id='"+ledger_id+"'")
+        h.sql('checkinn_user',"DELETE FROM loyalty_commands WHERE user_id='"+user+"'; DELETE FROM points_transactions WHERE user_id='"+user+"'; DELETE FROM loyalty_points WHERE id='"+ledger_id+"'")
     return 1 if failures else 0
 
 if __name__=='__main__':

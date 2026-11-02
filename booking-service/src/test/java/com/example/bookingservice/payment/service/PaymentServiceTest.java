@@ -4,7 +4,6 @@ import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.booking.service.BookingService;
-import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.payment.dto.CreatePaymentRequest;
 import com.example.bookingservice.payment.entity.Payment;
@@ -38,7 +37,6 @@ class PaymentServiceTest {
     private BookingRepository bookingRepository;
     private BookingService bookingService;
     private HotelEventPublisher eventPublisher;
-    private LoyaltyPointsClient loyaltyPointsClient;
     private VnPayProperties vnPayProperties;
     private PaymentCreationPolicyFactory paymentCreationPolicyFactory;
     private PaymentService paymentService;
@@ -49,7 +47,6 @@ class PaymentServiceTest {
         bookingRepository = mock(BookingRepository.class);
         bookingService = mock(BookingService.class);
         eventPublisher = mock(HotelEventPublisher.class);
-        loyaltyPointsClient = mock(LoyaltyPointsClient.class);
         vnPayProperties = mock(VnPayProperties.class);
         paymentCreationPolicyFactory = mock(PaymentCreationPolicyFactory.class);
 
@@ -59,7 +56,6 @@ class PaymentServiceTest {
                 vnPayProperties,
                 bookingService,
                 eventPublisher,
-                loyaltyPointsClient,
                 paymentCreationPolicyFactory
         );
     }
@@ -195,7 +191,7 @@ class PaymentServiceTest {
         verify(bookingService, times(1)).confirmBookingHold("booking-1");
         verify(eventPublisher, times(1)).publishPaymentCompleted(any());
         verify(eventPublisher, times(1)).publishBookingStatus(any());
-        verify(loyaltyPointsClient, never()).earnPoints(any(), any(), any());
+        verify(bookingService).settleLoyaltyPoints(booking);
     }
 
     @Test
@@ -211,6 +207,19 @@ class PaymentServiceTest {
 
         assertThatThrownBy(() -> paymentService.createPayment(request)).isInstanceOf(IllegalArgumentException.class);
         verify(bookingService, never()).ensureActiveHold(any());
+        verify(paymentRepository, never()).save(any());
+    }
+
+    @Test void onsiteReceiptReplayRetriesOnlyLoyaltyWithoutRepeatingPaymentOrEvents() {
+        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.CONFIRMED).build();
+        Payment payment = Payment.builder().id("payment-1").bookingId("booking-1")
+                .method(PaymentMethod.HOTEL).status(PaymentStatus.COMPLETED).build();
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(payment));
+        assertThat(paymentService.confirmHotelPayment("booking-1").getStatus()).isEqualTo(PaymentStatus.COMPLETED);
+        verify(bookingService).settleLoyaltyPoints(booking);
+        verify(bookingService, never()).confirmBookingHold(any());
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
         verify(paymentRepository, never()).save(any());
     }
 
@@ -249,7 +258,7 @@ class PaymentServiceTest {
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
         verify(eventPublisher, never()).publishBookingStatus(any());
-        verify(loyaltyPointsClient, never()).earnPoints(any(), any(), any());
+        verify(bookingService, never()).settleLoyaltyPoints(any());
     }
 
     @org.junit.jupiter.params.ParameterizedTest
@@ -311,7 +320,7 @@ class PaymentServiceTest {
         verify(bookingService, never()).confirmBookingHold(any());
         verify(eventPublisher, times(1)).publishPaymentCompleted(any());
         verify(eventPublisher, never()).publishBookingStatus(any());
-        verify(loyaltyPointsClient, never()).earnPoints(any(), any(), any());
+        verify(bookingService, never()).settleLoyaltyPoints(any());
         verify(paymentRepository, never()).findByVnpayOrderId(any());
     }
 }

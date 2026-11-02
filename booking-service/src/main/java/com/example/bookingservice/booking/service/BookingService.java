@@ -52,6 +52,16 @@ public class BookingService {
     // Giới hạn giảm giá tối đa khi sử dụng điểm: 50% tổng tiền
     private static final BigDecimal MAX_DISCOUNT_PERCENTAGE = new BigDecimal("0.5");
 
+    @Transactional(readOnly = true)
+    public boolean isReviewEligible(String bookingId, String guestId, String hotelId) {
+        if (bookingId == null || bookingId.isBlank() || guestId == null || guestId.isBlank()
+                || hotelId == null || hotelId.isBlank()) return false;
+        return bookingRepository.findById(bookingId)
+                .filter(booking -> guestId.equals(booking.getUserId()) && hotelId.equals(booking.getHotelId())
+                        && booking.getStatus() == BookingStatus.CHECKED_OUT)
+                .isPresent();
+    }
+
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
         log.debug("[CREATE_BOOKING] Creating booking for hotel: {}, checkIn: {}, checkOut: {}",
@@ -122,34 +132,28 @@ public class BookingService {
         Long usedPoints = null;
         if (request.getPointsToUse() != null && request.getPointsToUse() > 0) {
             try {
-                // Validate user has enough points
-                LoyaltyPointsDTO userPoints = loyaltyPointsClient.getLoyaltyPoints(request.getUserId());
-                Long availablePoints = userPoints.getAvailablePoints();
-                
-                if (availablePoints < request.getPointsToUse()) {
-                    throw new IllegalArgumentException(
-                            String.format("Insufficient points. Available: %d, Requested: %d", 
-                                    availablePoints, request.getPointsToUse()));
+                var quote = loyaltyPointsClient.quote(new com.example.bookingservice.integration.loyalty.PointsQuoteRequest(
+                        request.getUserId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount)));
+                BigDecimal maxDiscount = totalAmount.subtract(voucherDiscount).multiply(MAX_DISCOUNT_PERCENTAGE);
+                if (quote == null || quote.redemptionRate() == null || quote.redemptionRate().signum() <= 0
+                        || quote.pointsToUse() < 0 || quote.pointsToUse() > request.getPointsToUse()
+                        || quote.discountAmount() == null || quote.discountAmount().signum() < 0
+                        || quote.discountAmount().compareTo(maxDiscount) > 0
+                        || quote.discountAmount().compareTo(quote.redemptionRate().multiply(BigDecimal.valueOf(quote.pointsToUse()))) != 0) {
+                    throw new IllegalStateException("Invalid points quote");
                 }
-                
-                // Calculate discount: 1 point = 1000 VND
-                pointsDiscount = BigDecimal.valueOf(request.getPointsToUse() * 1000);
-                usedPoints = request.getPointsToUse();
-
-                // Validate: discount cannot exceed 50% of total amount
-                BigDecimal maxDiscount = totalAmount.multiply(MAX_DISCOUNT_PERCENTAGE);
-                if (pointsDiscount.compareTo(maxDiscount) > 0) {
-                    log.warn("Points discount {} exceeds {}% limit of {}. Capping to max discount.",
-                            pointsDiscount, MAX_DISCOUNT_PERCENTAGE.multiply(new BigDecimal("100")).intValue(), maxDiscount);
-                    pointsDiscount = maxDiscount;
+                pointsDiscount = quote.discountAmount();
+                usedPoints = quote.pointsToUse() == 0 ? null : quote.pointsToUse();
+            } catch (feign.FeignException e) {
+                if (e.status() == 400 || e.status() == 409) {
+                    throw new org.springframework.web.server.ResponseStatusException(
+                            org.springframework.http.HttpStatus.valueOf(e.status()), "Points quote rejected");
                 }
-
-                log.debug("[CREATE_BOOKING] Successfully calculated {} points discount: {} VND (max allowed: {} VND)",
-                    request.getPointsToUse(), pointsDiscount, maxDiscount);
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                        "Points quote unavailable; retry before booking");
             } catch (Exception e) {
-                log.warn("Failed to calculate points discount: {}", e.getMessage());
-                pointsDiscount = BigDecimal.ZERO;
-                usedPoints = null; // Reset usedPoints on failure
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                        "Points quote unavailable; retry before booking");
             }
         }
 
@@ -342,7 +346,10 @@ public class BookingService {
         log.debug("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
-        if (booking.getStatus() == BookingStatus.CANCELLED) return;
+        if (booking.getStatus() == BookingStatus.CANCELLED) {
+            reverseBookingPoints(booking);
+            return;
+        }
         if (booking.getStatus() == BookingStatus.CHECKED_IN || booking.getStatus() == BookingStatus.CHECKED_OUT
                 || booking.getStatus() == BookingStatus.NO_SHOW) {
             throw new IllegalArgumentException("Cannot cancel booking with status: " + booking.getStatus());
@@ -378,15 +385,8 @@ public class BookingService {
             paymentRepository.save(payment);
         }
 
-        // Hoàn lại điểm khi hủy booking
-        if (booking.getEarnedPoints() != null && booking.getEarnedPoints() > 0) {
-            try {
-                loyaltyPointsClient.refundPoints(booking.getUserId(), bookingId);
-                log.debug("Successfully refunded points for cancelled booking: {}", bookingId);
-            } catch (Exception e) {
-                log.warn("Failed to refund points for booking {}: {}", bookingId, e.getMessage());
-            }
-        }
+        // Reverse both earning and redemption, including unknown remote outcomes.
+        reverseBookingPoints(booking);
 
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
@@ -413,28 +413,47 @@ public class BookingService {
             throw new RuntimeException("Failed to confirm hold: " + e.getMessage(), e);
         }
 
-        // Tích điểm khi booking được confirm (hoàn thành thanh toán)
-        try {
-            Long earnedPoints = calculateEarnedPoints(booking.getTotalAmount().add(
-                    booking.getVoucherDiscount() != null ? booking.getVoucherDiscount() : BigDecimal.ZERO
-            ).add(
-                    booking.getPointsDiscountAmount() != null ? booking.getPointsDiscountAmount() : BigDecimal.ZERO
-            ));
-            booking.setEarnedPoints(earnedPoints);
-            bookingRepository.save(booking);
+        settleLoyaltyPoints(booking);
+    }
 
-            loyaltyPointsClient.earnPoints(
-                    booking.getUserId(),
-                    bookingId,
-                    booking.getTotalAmount().add(
-                            booking.getVoucherDiscount() != null ? booking.getVoucherDiscount() : BigDecimal.ZERO
-                    ).add(
-                            booking.getPointsDiscountAmount() != null ? booking.getPointsDiscountAmount() : BigDecimal.ZERO
-                    )
-            );
-            log.debug("Successfully earned {} points for user: {}", earnedPoints, booking.getUserId());
+    public void settleLoyaltyPoints(Booking booking) {
+        try {
+            if (booking.getUsedPoints() != null && booking.getUsedPoints() > 0) {
+                BigDecimal discount = loyaltyPointsClient.usePoints(new ApplyPointsRequestDTO(booking.getUserId(),
+                        booking.getUsedPoints(), booking.getId(), "Points for booking " + booking.getId(), booking.getPointsDiscountAmount()));
+                if (discount == null || booking.getPointsDiscountAmount() == null
+                        || discount.compareTo(booking.getPointsDiscountAmount()) != 0) {
+                    throw new IllegalStateException("Points receipt does not match booking quote");
+                }
+            }
+            if (booking.getEarnedPoints() == null) {
+                var receipt = loyaltyPointsClient.earnPoints(booking.getUserId(), booking.getId(), booking.getTotalAmount());
+                if (receipt == null || receipt.getAwardedPoints() == null) {
+                    throw new IllegalStateException("Missing booking points receipt");
+                }
+                booking.setEarnedPoints(receipt.getAwardedPoints());
+                bookingRepository.save(booking);
+            }
         } catch (Exception e) {
-            log.warn("Failed to earn points for booking {}: {}", bookingId, e.getMessage());
+            // Payment receipt and confirmed inventory survive a loyalty outage.
+            // Marker remains null so a verified payment replay can retry the same commands.
+            log.warn("Loyalty settlement requires retry for booking {} (type={})", booking.getId(), e.getClass().getSimpleName());
+        }
+    }
+
+    private void reverseBookingPoints(Booking booking) {
+        try {
+            loyaltyPointsClient.refundPoints(booking.getUserId(), booking.getId());
+        } catch (feign.FeignException ex) {
+            if (ex.status() == 409) {
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                        "Points ledger requires reconciliation before cancellation can finish");
+            }
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                    "Points reversal is not confirmed; retry cancellation");
+        } catch (RuntimeException ex) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                    "Points reversal is not confirmed; retry cancellation");
         }
     }
 
@@ -651,15 +670,4 @@ public class BookingService {
         );
     }
 
-    /**
-     * Tính điểm từ tổng tiền (1000 VND = 1 điểm)
-     */
-    private Long calculateEarnedPoints(BigDecimal totalAmount) {
-        if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
-            return 0L;
-        }
-        // Tỷ lệ tích điểm: 1000 VND = 1 điểm (cần phải đặt phòng nhiều để tích)
-        BigDecimal earnConversionRate = new BigDecimal("1000");
-        return totalAmount.divide(earnConversionRate, 0, java.math.RoundingMode.DOWN).longValue();
-    }
 }

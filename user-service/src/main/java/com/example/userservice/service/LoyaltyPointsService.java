@@ -1,267 +1,238 @@
 package com.example.userservice.service;
 
-import com.example.userservice.dto.ApplyPointsRequest;
-import com.example.userservice.dto.LoyaltyPointsResponse;
-import com.example.userservice.dto.PointsTransactionResponse;
-import com.example.userservice.model.LoyaltyPoints;
-import com.example.userservice.model.PointsTransaction;
-import com.example.userservice.repository.LoyaltyPointsRepository;
-import com.example.userservice.repository.PointsTransactionRepository;
-import lombok.extern.slf4j.Slf4j;
+import com.example.userservice.dto.*;
+import com.example.userservice.model.*;
+import com.example.userservice.repository.*;
+import com.example.userservice.regulations.RegulationClient;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.math.RoundingMode;
+import java.util.*;
 
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class LoyaltyPointsService {
-
     private final LoyaltyPointsRepository loyaltyPointsRepository;
     private final PointsTransactionRepository pointsTransactionRepository;
+    private final RegulationClient regulationClient;
+    private final LoyaltyCommandRepository commands;
+    private final LoyaltyCommandLock commandLock;
 
-    private final com.example.userservice.regulations.RegulationClient regulationClient;
-
-    public LoyaltyPointsService(LoyaltyPointsRepository loyaltyPointsRepository, PointsTransactionRepository pointsTransactionRepository, com.example.userservice.regulations.RegulationClient regulationClient) {
-        this.loyaltyPointsRepository = loyaltyPointsRepository;
-        this.pointsTransactionRepository = pointsTransactionRepository;
-        this.regulationClient = regulationClient;
-    }
-
-    /**
-     * Tính điểm từ số tiền (tích điểm)
-     * @param amount Số tiền (VND)
-     * @return Số điểm tương ứng (1000 VND = 1 điểm)
-     */
     public Long calculatePoints(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            return 0L;
-        }
-        BigDecimal earnRate = regulationClient.getEarnConversionRate();
-        return amount.divide(earnRate, 0, java.math.RoundingMode.DOWN).longValue();
+        if (amount == null || amount.signum() <= 0) return 0L;
+        return amount.divide(validRate(regulationClient.getEarnConversionRate()), 0, RoundingMode.DOWN).longValueExact();
     }
 
-    /**
-     * Chuyển đổi điểm thành tiền (sử dụng điểm để giảm giá)
-     * @param points Số điểm
-     * @return Số tiền tương ứng (VND) - 1 điểm = 500 VND
-     */
     public BigDecimal convertPointsToAmount(Long points) {
-        if (points == null || points <= 0) {
-            return BigDecimal.ZERO;
-        }
-        BigDecimal redemptionRate = regulationClient.getRedemptionConversionRate();
-        return new BigDecimal(points).multiply(redemptionRate);
+        if (points == null || points <= 0) return BigDecimal.ZERO;
+        return BigDecimal.valueOf(points).multiply(validRate(regulationClient.getRedemptionConversionRate()));
     }
 
-    /**
-     * Tích điểm khi đặt phòng thành công
-     * @param userId ID của người dùng
-     * @param bookingId ID của booking
-     * @param totalAmount Tổng tiền của booking
-     */
+    @Transactional(readOnly = true)
+    public PointsQuoteResponse quote(PointsQuoteRequest request) {
+        if (request == null || request.userId() == null || request.pointsToUse() == null || request.pointsToUse() <= 0
+                || request.totalAmount() == null || request.totalAmount().signum() <= 0) {
+            throw new IllegalArgumentException("Positive points and total amount required");
+        }
+        BigDecimal rate = validRate(regulationClient.getRedemptionConversionRate());
+        BigDecimal cap = request.totalAmount().multiply(new BigDecimal("0.5"));
+        long actual = cap.divide(rate, 0, RoundingMode.DOWN).min(BigDecimal.valueOf(request.pointsToUse())).longValueExact();
+        var account = account(request.userId());
+        if (actual > Math.subtractExact(account.getTotalPoints(), account.getUsedPoints())) {
+            throw new IllegalArgumentException("Insufficient points");
+        }
+        return new PointsQuoteResponse(actual, rate.multiply(BigDecimal.valueOf(actual)), rate);
+    }
+
     @Transactional
     public LoyaltyPointsResponse earnPoints(UUID userId, String bookingId, BigDecimal totalAmount) {
-        log.info("[LOYALTY_POINTS_EARN_START] Earning points - userId: {}, bookingId: {}, amount: {}", userId, bookingId, totalAmount);
-
-        Long pointsToEarn = calculatePoints(totalAmount);
-        if (pointsToEarn == 0) {
-            log.warn("[LOYALTY_POINTS_EARN_SKIP] No points to earn for amount: {}", totalAmount);
-            return getLoyaltyPoints(userId);
+        validateCommand(userId, bookingId);
+        if (totalAmount == null || totalAmount.signum() < 0) throw new IllegalArgumentException("Amount must be nonnegative");
+        commandLock.acquire(bookingId, userId);
+        requireNotCancelled(userId, bookingId);
+        var previous = commands.findById(key(bookingId, "EARN"));
+        if (previous.isPresent()) {
+            requireSameInput(previous.get(), userId, totalAmount, null);
+            return earnedResponse(account(userId), previous.get().getResultPoints());
         }
-
-        LoyaltyPoints loyaltyPoints = loyaltyPointsRepository.findByUserId(userId)
-                .orElseGet(() -> LoyaltyPoints.builder()
-                        .userId(userId)
-                        .totalPoints(0L)
-                        .usedPoints(0L)
-                        .availablePoints(0L)
-                        .build());
-
-        loyaltyPoints.setTotalPoints(loyaltyPoints.getTotalPoints() + pointsToEarn);
-        loyaltyPoints.setAvailablePoints(loyaltyPoints.getTotalPoints() - loyaltyPoints.getUsedPoints());
-        LoyaltyPoints savedPoints = loyaltyPointsRepository.save(loyaltyPoints);
-
-        // Ghi nhận transaction
-        PointsTransaction transaction = PointsTransaction.builder()
-                .userId(userId)
-                .transactionType("EARN")
-                .points(pointsToEarn)
-                .bookingId(bookingId)
-                .description("Tích điểm từ đặt phòng #" + bookingId + ", số tiền: " + totalAmount + " VND")
-                .build();
-        pointsTransactionRepository.save(transaction);
-
-        log.info("[LOYALTY_POINTS_EARN_SUCCESS] Successfully earned {} points for user: {}", pointsToEarn, userId);
-        return mapToResponse(savedPoints);
+        var history = history(userId, bookingId);
+        if (history.stream().anyMatch(row -> "EARN".equals(row.getTransactionType()))) {
+            throw conflict("Legacy EARN has no command receipt; reconciliation required");
+        }
+        long earned = calculatePoints(totalAmount);
+        var account = account(userId);
+        account.setTotalPoints(Math.addExact(account.getTotalPoints(), earned));
+        saveAccount(account);
+        append(userId, bookingId, "EARN", earned, "Earned points for booking " + bookingId);
+        receipt(userId, bookingId, "EARN", totalAmount, null, earned, null);
+        return earnedResponse(account, earned);
     }
 
-    /**
-     * Sử dụng điểm để giảm giá
-     * @param request Thông tin sử dụng điểm
-     * @return Tổng tiền được giảm
-     */
     @Transactional
     public BigDecimal usePoints(ApplyPointsRequest request) {
-        log.info("[LOYALTY_POINTS_USE_START] Using points - userId: {}, points: {}, bookingId: {}", 
-                request.getUserId(), request.getPointsToUse(), request.getBookingId());
-
+        if (request == null) throw new IllegalArgumentException("Points request required");
         UUID userId = request.getUserId();
-        Long pointsToUse = request.getPointsToUse();
-
-        if (pointsToUse == null || pointsToUse <= 0) {
-            throw new IllegalArgumentException("Points to use must be greater than 0");
+        String bookingId = request.getBookingId();
+        validateCommand(userId, bookingId);
+        Long points = request.getPointsToUse();
+        if (points == null || points <= 0) throw new IllegalArgumentException("Points to use must be greater than 0");
+        BigDecimal expectedDiscount = request.getExpectedDiscountAmount();
+        if (expectedDiscount != null && expectedDiscount.signum() <= 0) {
+            throw new IllegalArgumentException("Expected discount must be positive");
         }
-
-        LoyaltyPoints loyaltyPoints = loyaltyPointsRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User has no loyalty points account"));
-
-        Long availablePoints = loyaltyPoints.getTotalPoints() - loyaltyPoints.getUsedPoints();
-        if (availablePoints < pointsToUse) {
-            throw new IllegalArgumentException(
-                    String.format("Insufficient points. Available: %d, Requested: %d", availablePoints, pointsToUse));
+        commandLock.acquire(bookingId, userId);
+        requireNotCancelled(userId, bookingId);
+        var previous = commands.findById(key(bookingId, "USE"));
+        if (previous.isPresent()) {
+            requireSameInput(previous.get(), userId, expectedDiscount, points);
+            return previous.get().getResultAmount();
         }
-
-        // Cập nhật điểm đã sử dụng
-        loyaltyPoints.setUsedPoints(loyaltyPoints.getUsedPoints() + pointsToUse);
-        loyaltyPointsRepository.save(loyaltyPoints);
-
-        // Ghi nhận transaction
-        PointsTransaction transaction = PointsTransaction.builder()
-                .userId(userId)
-                .transactionType("USE")
-                .points(pointsToUse)
-                .bookingId(request.getBookingId())
-                .description(request.getDescription() != null ? request.getDescription() 
-                        : "Sử dụng " + pointsToUse + " điểm cho đơn hàng #" + request.getBookingId())
-                .build();
-        pointsTransactionRepository.save(transaction);
-
-        BigDecimal discountAmount = convertPointsToAmount(pointsToUse);
-        log.info("[LOYALTY_POINTS_USE_SUCCESS] Successfully used {} points for user: {}, discount amount: {}", pointsToUse, userId, discountAmount);
-        return discountAmount;
+        var history = history(userId, bookingId);
+        if (history.stream().anyMatch(row -> "USE".equals(row.getTransactionType()))) {
+            throw conflict("Legacy USE has no monetary receipt; reconciliation required");
+        }
+        var account = account(userId);
+        long available = Math.subtractExact(account.getTotalPoints(), account.getUsedPoints());
+        if (available < points) throw new IllegalArgumentException("Insufficient points");
+        BigDecimal discount = expectedDiscount == null ? convertPointsToAmount(points) : expectedDiscount;
+        account.setUsedPoints(Math.addExact(account.getUsedPoints(), points));
+        saveAccount(account);
+        append(userId, bookingId, "USE", points, "Used points for booking " + bookingId);
+        receipt(userId, bookingId, "USE", expectedDiscount, points, points, discount);
+        return discount;
     }
 
-    /**
-     * Lấy thông tin điểm của người dùng
-     * @param userId ID của người dùng
-     * @return Thông tin điểm
-     */
+    /** Reads never insert an account or race a first EARN. */
+    @Transactional(readOnly = true)
     public LoyaltyPointsResponse getLoyaltyPoints(UUID userId) {
-        LoyaltyPoints loyaltyPoints = loyaltyPointsRepository.findByUserId(userId)
-                .orElseGet(() -> LoyaltyPoints.builder()
-                        .userId(userId)
-                        .totalPoints(0L)
-                        .usedPoints(0L)
-                        .availablePoints(0L)
-                        .build());
-        
-        // Nếu là entity mới (chưa lưu), lưu nó vào DB
-        if (loyaltyPoints.getId() == null) {
-            loyaltyPoints = loyaltyPointsRepository.save(loyaltyPoints);
-        }
-        
-        return mapToResponse(loyaltyPoints);
+        if (userId == null) throw new IllegalArgumentException("User required");
+        return mapToResponse(account(userId));
     }
 
-    /**
-     * Lấy lịch sử giao dịch điểm
-     * @param userId ID của người dùng
-     * @return Danh sách giao dịch
-     */
+    @Transactional(readOnly = true)
     public List<PointsTransactionResponse> getTransactionHistory(UUID userId) {
-        List<PointsTransaction> transactions = pointsTransactionRepository.findByUserIdOrderByCreatedAtDesc(userId);
-        return transactions.stream()
-                .map(this::mapTransactionToResponse)
-                .collect(Collectors.toList());
+        return pointsTransactionRepository.findByUserIdOrderByCreatedAtDesc(userId).stream()
+                .map(this::mapTransactionToResponse).toList();
     }
 
-    /**
-     * Lấy lịch sử giao dịch của một booking
-     * @param bookingId ID của booking
-     * @return Danh sách giao dịch
-     */
+    @Transactional(readOnly = true)
     public List<PointsTransactionResponse> getBookingTransactionHistory(String bookingId) {
-        List<PointsTransaction> transactions = pointsTransactionRepository.findByBookingId(bookingId);
-        return transactions.stream()
-                .map(this::mapTransactionToResponse)
-                .collect(Collectors.toList());
+        return pointsTransactionRepository.findByBookingId(bookingId).stream().map(this::mapTransactionToResponse).toList();
     }
 
-    /**
-     * Hoàn lại điểm khi hủy booking
-     * @param userId ID của người dùng
-     * @param bookingId ID của booking
-     */
     @Transactional
     public void refundPoints(UUID userId, String bookingId) {
-        log.info("[LOYALTY_POINTS_REFUND_START] Refunding points - userId: {}, bookingId: {}", userId, bookingId);
-
-        // Tìm tất cả transaction liên quan đến booking này
-        List<PointsTransaction> transactions = pointsTransactionRepository.findByBookingId(bookingId);
-
-        LoyaltyPoints loyaltyPoints = loyaltyPointsRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User has no loyalty points account"));
-
-        for (PointsTransaction transaction : transactions) {
-            if ("EARN".equals(transaction.getTransactionType())) {
-                // Hoàn lại điểm tích lũy
-                loyaltyPoints.setTotalPoints(Math.max(0, loyaltyPoints.getTotalPoints() - transaction.getPoints()));
-                
-                // Ghi nhận transaction hoàn lại
-                PointsTransaction refundTransaction = PointsTransaction.builder()
-                        .userId(userId)
-                        .transactionType("REFUND")
-                        .points(transaction.getPoints())
-                        .bookingId(bookingId)
-                        .description("Hoàn lại " + transaction.getPoints() + " điểm từ hủy đặt phòng #" + bookingId)
-                        .build();
-                pointsTransactionRepository.save(refundTransaction);
-            } else if ("USE".equals(transaction.getTransactionType())) {
-                // Hoàn lại điểm đã sử dụng
-                loyaltyPoints.setUsedPoints(Math.max(0, loyaltyPoints.getUsedPoints() - transaction.getPoints()));
-                
-                // Ghi nhận transaction hoàn lại
-                PointsTransaction refundTransaction = PointsTransaction.builder()
-                        .userId(userId)
-                        .transactionType("REFUND")
-                        .points(-transaction.getPoints())
-                        .bookingId(bookingId)
-                        .description("Hoàn lại " + transaction.getPoints() + " điểm đã sử dụng từ hủy đặt phòng #" + bookingId)
-                        .build();
-                pointsTransactionRepository.save(refundTransaction);
-            }
+        validateCommand(userId, bookingId);
+        commandLock.acquire(bookingId, userId);
+        var previous = commands.findById(key(bookingId, "CANCEL"));
+        if (previous.isPresent()) {
+            requireSameInput(previous.get(), userId, null, null);
+            return;
         }
-
-        loyaltyPoints.setAvailablePoints(loyaltyPoints.getTotalPoints() - loyaltyPoints.getUsedPoints());
-        loyaltyPointsRepository.save(loyaltyPoints);
-        log.info("[LOYALTY_POINTS_REFUND_SUCCESS] Successfully refunded points for user: {}", userId);
+        var history = history(userId, bookingId);
+        long earned = history.stream().filter(row -> "EARN".equals(row.getTransactionType()))
+                .mapToLong(PointsTransaction::getPoints).sum();
+        long used = history.stream().filter(row -> "USE".equals(row.getTransactionType()))
+                .mapToLong(PointsTransaction::getPoints).sum();
+        var account = account(userId);
+        if (account.getTotalPoints() < earned || account.getUsedPoints() < used) {
+            throw conflict("Ledger and account disagree; reconciliation required");
+        }
+        account.setTotalPoints(Math.subtractExact(account.getTotalPoints(), earned));
+        account.setUsedPoints(Math.subtractExact(account.getUsedPoints(), used));
+        // Preserve debt if points earned here were already spent on another booking.
+        saveAccount(account);
+        if (earned != 0) append(userId, bookingId, "REVERSE_EARN", earned, "Reversed earning for booking " + bookingId);
+        if (used != 0) append(userId, bookingId, "REVERSE_USE", -used, "Reversed redemption for booking " + bookingId);
+        // Even an empty ledger needs a tombstone against delayed EARN/USE.
+        receipt(userId, bookingId, "CANCEL", null, null, used - earned, null);
     }
 
-    private LoyaltyPointsResponse mapToResponse(LoyaltyPoints loyaltyPoints) {
-        return LoyaltyPointsResponse.builder()
-                .id(loyaltyPoints.getId())
-                .userId(loyaltyPoints.getUserId())
-                .totalPoints(loyaltyPoints.getTotalPoints())
-                .usedPoints(loyaltyPoints.getUsedPoints())
-                .availablePoints(loyaltyPoints.getAvailablePoints())
-                .createdAt(loyaltyPoints.getCreatedAt())
-                .updatedAt(loyaltyPoints.getUpdatedAt())
-                .build();
+    private void validateCommand(UUID userId, String bookingId) {
+        if (userId == null || bookingId == null || bookingId.isBlank() || bookingId.length() > 128) {
+            throw new IllegalArgumentException("User and booking (up to 128 characters) required");
+        }
     }
 
-    private PointsTransactionResponse mapTransactionToResponse(PointsTransaction transaction) {
-        return PointsTransactionResponse.builder()
-                .id(transaction.getId())
-                .userId(transaction.getUserId())
-                .transactionType(transaction.getTransactionType())
-                .points(transaction.getPoints())
-                .bookingId(transaction.getBookingId())
-                .description(transaction.getDescription())
-                .createdAt(transaction.getCreatedAt())
-                .build();
+    private void requireNotCancelled(UUID userId, String bookingId) {
+        commands.findById(key(bookingId, "CANCEL")).ifPresent(previous -> {
+            requireSameInput(previous, userId, null, null);
+            throw conflict("Booking points have been cancelled");
+        });
+    }
+
+    private List<PointsTransaction> history(UUID userId, String bookingId) {
+        var rows = pointsTransactionRepository.findByBookingId(bookingId);
+        if (rows.stream().anyMatch(row -> !userId.equals(row.getUserId()) || row.getPoints() == null
+                || row.getPoints() < 0 || !Set.of("EARN", "USE").contains(row.getTransactionType()))
+                || rows.stream().filter(row -> "EARN".equals(row.getTransactionType())).count() > 1
+                || rows.stream().filter(row -> "USE".equals(row.getTransactionType())).count() > 1) {
+            throw conflict("Ambiguous legacy booking ledger; reconciliation required");
+        }
+        return rows;
+    }
+
+    private LoyaltyPoints account(UUID userId) {
+        var accounts = loyaltyPointsRepository.findAllByUserId(userId);
+        if (accounts.size() > 1) throw conflict("Multiple loyalty accounts; reconciliation required");
+        return accounts.isEmpty() ? LoyaltyPoints.builder().userId(userId).totalPoints(0L).usedPoints(0L).availablePoints(0L).build()
+                : accounts.getFirst();
+    }
+
+    private void saveAccount(LoyaltyPoints account) {
+        account.setAvailablePoints(Math.subtractExact(account.getTotalPoints(), account.getUsedPoints()));
+        loyaltyPointsRepository.save(account);
+    }
+
+    private BigDecimal validRate(BigDecimal rate) {
+        if (rate == null || rate.signum() <= 0) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Points conversion rate unavailable");
+        }
+        return rate;
+    }
+
+    private void requireSameInput(LoyaltyCommand previous, UUID userId, BigDecimal amount, Long points) {
+        if (!userId.equals(previous.getUserId()) || !Objects.equals(points, previous.getInputPoints())
+                || (amount == null ? previous.getInputAmount() != null
+                : previous.getInputAmount() == null || amount.compareTo(previous.getInputAmount()) != 0)) {
+            throw conflict("Command key reused with a different user or payload");
+        }
+    }
+
+    private String key(String bookingId, String type) { return bookingId + "|" + type; }
+
+    private void receipt(UUID userId, String bookingId, String type, BigDecimal amount, Long points, long result, BigDecimal discount) {
+        commands.save(LoyaltyCommand.builder().commandKey(key(bookingId, type)).bookingId(bookingId).commandType(type)
+                .userId(userId).inputAmount(amount).inputPoints(points).resultPoints(result).resultAmount(discount).build());
+    }
+
+    private void append(UUID userId, String bookingId, String type, long points, String description) {
+        pointsTransactionRepository.save(PointsTransaction.builder().userId(userId).bookingId(bookingId)
+                .transactionType(type).points(points).description(description).build());
+    }
+
+    private ResponseStatusException conflict(String reason) { return new ResponseStatusException(HttpStatus.CONFLICT, reason); }
+
+    private LoyaltyPointsResponse mapToResponse(LoyaltyPoints account) {
+        return LoyaltyPointsResponse.builder().id(account.getId()).userId(account.getUserId())
+                .totalPoints(account.getTotalPoints()).usedPoints(account.getUsedPoints())
+                .availablePoints(Math.subtractExact(account.getTotalPoints(), account.getUsedPoints()))
+                .createdAt(account.getCreatedAt()).updatedAt(account.getUpdatedAt()).build();
+    }
+
+    private LoyaltyPointsResponse earnedResponse(LoyaltyPoints account, long earned) {
+        var response = mapToResponse(account);
+        response.setAwardedPoints(earned);
+        return response;
+    }
+
+    private PointsTransactionResponse mapTransactionToResponse(PointsTransaction row) {
+        return PointsTransactionResponse.builder().id(row.getId()).userId(row.getUserId())
+                .transactionType(row.getTransactionType()).points(row.getPoints()).bookingId(row.getBookingId())
+                .description(row.getDescription()).createdAt(row.getCreatedAt()).build();
     }
 }

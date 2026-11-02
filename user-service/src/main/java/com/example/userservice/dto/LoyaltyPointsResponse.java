@@ -19,4 +19,5 @@ public class LoyaltyPointsResponse {
     private Long availablePoints;  // Điểm sẵn sàng để dùng
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long awardedPoints; // Result of this booking command, not the aggregate balance.
 }

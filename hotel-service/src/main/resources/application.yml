@@ -38,6 +38,9 @@ grpc:
   server:
     port: 9092
   client:
+    booking-service:
+      address: "discovery:///booking-service"
+      negotiation-type: plaintext
     media-service:
       address: "discovery:///media-service"
       negotiation-type: plaintext

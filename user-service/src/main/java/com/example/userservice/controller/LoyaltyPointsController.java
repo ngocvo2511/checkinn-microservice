@@ -112,6 +112,26 @@ public class LoyaltyPointsController {
         return ResponseEntity.ok(discountAmount);
     }
 
+    @PostMapping("/quote")
+    public com.example.userservice.dto.PointsQuoteResponse quote(
+            @RequestBody com.example.userservice.dto.PointsQuoteRequest request,
+            @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireService(authorization);
+        return loyaltyPointsService.quote(request);
+    }
+
+    public record QuotePreviewRequest(Long pointsToUse, BigDecimal totalAmount) {}
+
+    /** Read-only preview; the caller never receives a service mutation credential. */
+    @PostMapping("/{userId}/quote")
+    public com.example.userservice.dto.PointsQuoteResponse previewQuote(@PathVariable UUID userId,
+            @RequestBody QuotePreviewRequest request,
+            @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireRead(authorization, userId);
+        return loyaltyPointsService.quote(new com.example.userservice.dto.PointsQuoteRequest(
+                userId, request.pointsToUse(), request.totalAmount()));
+    }
+
     /**
      * Hoàn lại điểm khi hủy booking (được gọi bởi booking-service)
      * POST /api/loyalty-points/refund

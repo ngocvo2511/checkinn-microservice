@@ -73,8 +73,8 @@ message GetReviewStatsRequest {
 message CreateReviewRequest {
   string hotel_id = 1;
   string guest_id = 2;
-  string booking_id = 3;  // optional
-  double rating = 4;      // 1.0 - 5.0
+  string booking_id = 3;  // required; verified booking guest/hotel/CHECKED_OUT
+  double rating = 4;      // 1.0 - 10.0
   string title = 5;
   string content = 6;
 }

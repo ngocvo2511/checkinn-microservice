@@ -9,6 +9,18 @@ package booking;
 service BookingGrpcService {
   rpc CreateBooking (CreateBookingRequest) returns (BookingResponse);
   rpc GetBooking (GetBookingRequest) returns (BookingResponse);
+  // Internal hotel-service check; does not expose contact/payment data.
+  rpc CheckReviewEligibility (ReviewEligibilityRequest) returns (ReviewEligibilityResponse);
+}
+
+message ReviewEligibilityRequest {
+  string bookingId = 1;
+  string guestId = 2;
+  string hotelId = 3;
+}
+
+message ReviewEligibilityResponse {
+  bool eligible = 1;
 }
 
 message CreateBookingRequest {

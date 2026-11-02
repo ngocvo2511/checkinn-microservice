@@ -68,6 +68,25 @@ class BookingServiceTest {
     }
 
     @Test
+    void reviewEligibilityRequiresMatchingGuestHotelAndCheckedOutBooking() {
+        Booking booking = Booking.builder().id("booking").userId("guest").hotelId("hotel")
+                .status(BookingStatus.CHECKED_OUT).build();
+        when(bookingRepository.findById("booking")).thenReturn(Optional.of(booking));
+        assertThat(bookingService.isReviewEligible("missing", "guest", "hotel")).isFalse();
+        assertThat(bookingService.isReviewEligible("booking", "other", "hotel")).isFalse();
+        assertThat(bookingService.isReviewEligible("booking", "guest", "other")).isFalse();
+        assertThat(bookingService.isReviewEligible("booking", "guest", "hotel")).isTrue();
+        for (BookingStatus status : BookingStatus.values()) {
+            booking.setStatus(status);
+            assertThat(bookingService.isReviewEligible("booking", "guest", "hotel"))
+                    .as("status %s", status).isEqualTo(status == BookingStatus.CHECKED_OUT);
+        }
+        assertThat(bookingService.isReviewEligible("", "guest", "hotel")).isFalse();
+        assertThat(bookingService.isReviewEligible("booking", "", "hotel")).isFalse();
+        assertThat(bookingService.isReviewEligible("booking", "guest", "")).isFalse();
+    }
+
+    @Test
     void createBookingRejectsEmptyItemsBeforeHoldingRooms() {
         CreateBookingRequest request = CreateBookingRequest.builder()
                 .hotelId("hotel-1")
@@ -117,6 +136,8 @@ class BookingServiceTest {
                 BigDecimal.valueOf(1_000_000), new HotelCatalogClient.Capacity(2, 0), true, 10));
         when(catalogClient.getHotel("hotel-1")).thenReturn(new HotelCatalogClient.Hotel("hotel-1", "Server Hotel", true, "APPROVED"));
         when(loyaltyPointsClient.getLoyaltyPoints("user-1")).thenReturn(points);
+        when(loyaltyPointsClient.quote(any())).thenReturn(new com.example.bookingservice.integration.loyalty.PointsQuote(
+                500L, new BigDecimal("500000"), new BigDecimal("1000")));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> {
             Booking booking = invocation.getArgument(0);
             booking.setId("booking-1");
@@ -129,7 +150,7 @@ class BookingServiceTest {
 
         assertThat(response.getTotalAmount()).isEqualByComparingTo("500000");
         assertThat(response.getPointsDiscountAmount()).isEqualByComparingTo("500000");
-        assertThat(response.getUsedPoints()).isEqualTo(900L);
+        assertThat(response.getUsedPoints()).isEqualTo(500L);
         assertThat(response.getStatus()).isEqualTo(BookingStatus.PENDING);
         assertThat(response.getHotelName()).isEqualTo("Server Hotel");
         assertThat(response.getItems().get(0).getRoomTypeName()).isEqualTo("Server Room");
@@ -305,6 +326,66 @@ class BookingServiceTest {
                 .hasMessage("Test database failure");
         verify(availabilityClient).releaseHold("hold-1");
         verify(eventPublisher, never()).publishBookingStatus(any());
+    }
+
+    @Test void settlementDebitsSnapshotBeforeEarningAndUsesActualAward() {
+        Booking booking = Booking.builder().id("booking-1").userId("customer-1").totalAmount(new BigDecimal("95000"))
+                .usedPoints(10L).pointsDiscountAmount(new BigDecimal("5000")).build();
+        when(loyaltyPointsClient.usePoints(any())).thenReturn(new BigDecimal("5000"));
+        LoyaltyPointsDTO award = new LoyaltyPointsDTO(); award.setAwardedPoints(9L);
+        when(loyaltyPointsClient.earnPoints("customer-1", "booking-1", new BigDecimal("95000"))).thenReturn(award);
+        bookingService.settleLoyaltyPoints(booking);
+        var order = org.mockito.Mockito.inOrder(loyaltyPointsClient);
+        order.verify(loyaltyPointsClient).usePoints(org.mockito.ArgumentMatchers.argThat(request ->
+                request.getPointsToUse() == 10 && request.getExpectedDiscountAmount().compareTo(new BigDecimal("5000")) == 0));
+        order.verify(loyaltyPointsClient).earnPoints("customer-1", "booking-1", new BigDecimal("95000"));
+        assertThat(booking.getEarnedPoints()).isEqualTo(9L);
+        bookingService.settleLoyaltyPoints(booking);
+        org.mockito.Mockito.verify(loyaltyPointsClient, org.mockito.Mockito.times(1)).earnPoints(any(), any(), any());
+    }
+
+    @Test void failedDebitDoesNotEarnOrSetSuccessfulMarker() {
+        Booking booking = Booking.builder().id("booking-1").userId("customer-1").totalAmount(new BigDecimal("95000"))
+                .usedPoints(10L).pointsDiscountAmount(new BigDecimal("5000")).build();
+        when(loyaltyPointsClient.usePoints(any())).thenThrow(new IllegalStateException("Unavailable"));
+        bookingService.settleLoyaltyPoints(booking);
+        assertThat(booking.getEarnedPoints()).isNull();
+        verify(loyaltyPointsClient, never()).earnPoints(any(), any(), any());
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @Test void cancellationReversesRedemptionEvenWithoutLocalEarnMarkerAndRetriesSafely() {
+        Booking booking = cancellationFixture(false); booking.setUsedPoints(10L);
+        bookingService.cancelBooking("booking-1", "customer-1");
+        bookingService.cancelBooking("booking-1", "customer-1");
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
+        org.mockito.Mockito.verify(loyaltyPointsClient, org.mockito.Mockito.times(2)).refundPoints("customer-1", "booking-1");
+        verify(availabilityClient).cancelReservation("hold-1");
+        verify(eventPublisher).publishBookingStatus(any());
+    }
+
+    @Test void reversalOutageDoesNotReportCancellationFinished() {
+        Booking booking = cancellationFixture(false);
+        org.mockito.Mockito.doThrow(new IllegalStateException("Unavailable")).when(loyaltyPointsClient).refundPoints(any(), any());
+        assertThatThrownBy(() -> bookingService.cancelBooking("booking-1", "customer-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        error -> assertThat(error.getStatusCode().value()).isEqualTo(503));
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING);
+        verify(eventPublisher, never()).publishBookingStatus(any());
+    }
+
+    @Test void quoteOutageReleasesHoldAndDoesNotSilentlyRemoveRequestedDiscount() {
+        String room = UUID.randomUUID().toString();
+        stubCatalog(room, "hotel-1", 2, true);
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
+        when(loyaltyPointsClient.quote(any())).thenThrow(new IllegalStateException("Unavailable"));
+        var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
+        request.setPointsToUse(100L);
+        assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOfSatisfying(
+                org.springframework.web.server.ResponseStatusException.class,
+                error -> assertThat(error.getStatusCode().value()).isEqualTo(503));
+        verify(availabilityClient).releaseHold("hold-1");
+        verify(bookingRepository, never()).save(any());
     }
     private Booking cancellationFixture(boolean paid) {
         Booking booking = Booking.builder().id("booking-1").userId("customer-1").hotelId("hotel-1")

@@ -15,4 +15,5 @@ public class LoyaltyPointsDTO {
     private Long totalPoints;
     private Long usedPoints;
     private Long availablePoints;
+    private Long awardedPoints;
 }

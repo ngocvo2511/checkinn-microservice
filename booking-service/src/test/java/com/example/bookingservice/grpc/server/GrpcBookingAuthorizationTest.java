@@ -30,6 +30,34 @@ class GrpcBookingAuthorizationTest {
         verifyNoInteractions(bookings);
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({"hotel-service,HOTEL_SERVICE,true", "hotel-service,ADMIN,false",
+            "other-service,HOTEL_SERVICE,false", "administrator,ADMIN,false", "guest,CUSTOMER,false", "owner,OWNER,false"})
+    void eligibilityRpcRequiresExactHotelServiceIdentity(String subject, String role, boolean allowed) {
+        var actor = new UsernamePasswordAuthenticationToken(subject, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+        StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> response = mock(StreamObserver.class);
+        when(bookings.isReviewEligible("booking", "guest", "hotel")).thenReturn(true);
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
+                .checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest.newBuilder()
+                        .setBookingId("booking").setGuestId("guest").setHotelId("hotel").build(), response));
+        if (allowed) {
+            verify(bookings).isReviewEligible("booking", "guest", "hotel");
+            verify(response).onNext(argThat(com.example.bookingservice.grpc.ReviewEligibilityResponse::getEligible));
+            verify(response).onCompleted();
+        } else {
+            verifyNoInteractions(bookings);
+            verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
+        }
+    }
+
+    @Test void anonymousCannotCheckEligibility() {
+        StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> response = mock(StreamObserver.class);
+        new BookingGrpcServer(bookings, access).checkReviewEligibility(
+                com.example.bookingservice.grpc.ReviewEligibilityRequest.getDefaultInstance(), response);
+        verifyNoInteractions(bookings);
+        verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.UNAUTHENTICATED));
+    }
+
     @Test void authenticatedCrossBookingRpcDoesNotReadData() {
         var actor = new UsernamePasswordAuthenticationToken("other", null, List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER")));
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() ->
