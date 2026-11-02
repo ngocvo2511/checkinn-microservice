@@ -11,6 +11,15 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler({IllegalArgumentException.class, ArithmeticException.class})
+    public ResponseEntity<Map<String,Object>> invalidPointsInput(RuntimeException ex) {
+        return ResponseEntity.badRequest().body(Map.of("status",400,"message","Invalid request or insufficient points"));
+    }
+
+    @ExceptionHandler(org.springframework.dao.DataAccessException.class)
+    public ResponseEntity<Map<String,Object>> pointsStorageUnavailable(org.springframework.dao.DataAccessException ex) {
+        return ResponseEntity.status(503).body(Map.of("status",503,"message","Points storage unavailable; retry the same command"));
+    }
     @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
     public ResponseEntity<Map<String,Object>> handleResponseStatus(org.springframework.web.server.ResponseStatusException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(Map.of("status",ex.getStatusCode().value(),"message", ex.getReason() == null ? "Request rejected" : ex.getReason()));

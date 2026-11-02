@@ -28,7 +28,7 @@ public class UserContextInterceptor implements ServerInterceptor {
         if (!"booking.BookingGrpcService".equals(service) && !"payment.PaymentGrpcService".equals(service)) {
             return next.startCall(call, headers);
         }
-        Authentication actor = authenticate(headers.get(AUTHORIZATION));
+        Authentication actor = authenticate(headers.get(AUTHORIZATION), call.getMethodDescriptor().getFullMethodName());
         if (actor == null) {
             call.close(Status.UNAUTHENTICATED.withDescription("Valid bearer token required"), new Metadata());
             return new ServerCall.Listener<>() {};
@@ -36,14 +36,21 @@ public class UserContextInterceptor implements ServerInterceptor {
         return Contexts.interceptCall(Context.current().withValue(ACTOR, actor), call, headers, next);
     }
 
-    private Authentication authenticate(String header) {
+    private Authentication authenticate(String header, String method) {
         if (header == null || !header.startsWith("Bearer ")) return null;
         String token = header.substring(7);
         try {
             if (!jwtService.validateToken(token)) return null;
             String role = jwtService.extractRole(token);
             if (role == null || role.isBlank()) return null;
-            return new UsernamePasswordAuthenticationToken(jwtService.extractUserId(token), null,
+            String subject = jwtService.extractSubject(token);
+            if (subject == null || subject.isBlank()) return null;
+            // Machine subjects are accepted only by the narrow internal RPC.
+            // Existing booking/payment entry points still require a user UUID.
+            if (!"booking.BookingGrpcService/CheckReviewEligibility".equals(method)) {
+                java.util.UUID.fromString(subject);
+            }
+            return new UsernamePasswordAuthenticationToken(subject, null,
                     List.of(new SimpleGrantedAuthority("ROLE_" + role)));
         } catch (RuntimeException ex) {
             return null;

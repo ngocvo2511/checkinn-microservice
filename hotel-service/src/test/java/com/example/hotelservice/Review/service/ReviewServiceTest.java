@@ -33,6 +33,7 @@ class ReviewServiceTest {
     private HotelRepository hotelRepository;
     private ReviewResponseRepository reviewResponseRepository;
     private ReviewService reviewService;
+    private ReviewEligibilityClient eligibility;
 
     @BeforeEach
     void setUp() {
@@ -40,14 +41,45 @@ class ReviewServiceTest {
         reviewResponseRepository = mock(ReviewResponseRepository.class);
         ReviewFeedbackRepository reviewFeedbackRepository = mock(ReviewFeedbackRepository.class);
         hotelRepository = mock(HotelRepository.class);
+        eligibility = mock(ReviewEligibilityClient.class);
+        when(eligibility.isEligible(any(), any(), any())).thenReturn(true);
         reviewService = new ReviewService(
                 hotelReviewRepository,
                 reviewResponseRepository,
                 reviewFeedbackRepository,
                 new ReviewMapper(),
                 mock(UserGrpcClient.class),
-                hotelRepository
+                hotelRepository,
+                eligibility
         );
+    }
+
+    @Test
+    void missingBookingCannotCreateReview() {
+        var request = CreateReviewRequest.builder().hotelId(UUID.randomUUID()).build();
+        assertThatThrownBy(() -> reviewService.createReview(request, UUID.randomUUID()))
+                .isInstanceOf(IllegalArgumentException.class);
+        verify(hotelReviewRepository, never()).save(any());
+        org.mockito.Mockito.verifyNoInteractions(eligibility);
+    }
+
+    @Test
+    void ineligibleBookingCannotCreateReview() {
+        UUID booking = UUID.randomUUID(), guest = UUID.randomUUID(), hotel = UUID.randomUUID();
+        when(eligibility.isEligible(booking, guest, hotel)).thenReturn(false);
+        var request = CreateReviewRequest.builder().bookingId(booking).hotelId(hotel).build();
+        assertThatThrownBy(() -> reviewService.createReview(request, guest)).isInstanceOf(SecurityException.class);
+        verify(hotelReviewRepository, never()).save(any());
+    }
+
+    @Test
+    void bookingOutageCannotCreateReview() {
+        when(eligibility.isEligible(any(), any(), any())).thenThrow(
+                new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE));
+        var request = CreateReviewRequest.builder().bookingId(UUID.randomUUID()).hotelId(UUID.randomUUID()).build();
+        assertThatThrownBy(() -> reviewService.createReview(request, UUID.randomUUID()))
+                .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+        verify(hotelReviewRepository, never()).save(any());
     }
 
     @Test

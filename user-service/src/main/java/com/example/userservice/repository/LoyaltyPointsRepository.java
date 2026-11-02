@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface LoyaltyPointsRepository extends JpaRepository<LoyaltyPoints, UUID> {
     Optional<LoyaltyPoints> findByUserId(UUID userId);
+    java.util.List<LoyaltyPoints> findAllByUserId(UUID userId);
 }

@@ -15,7 +15,6 @@ import com.example.bookingservice.payment.service.factory.PaymentCreationPolicyF
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import com.example.bookingservice.messaging.event.PaymentEvent;
-import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.example.bookingservice.payment.vnpay.VnPayProperties;
@@ -40,7 +39,6 @@ public class PaymentService {
     private final VnPayProperties vnPayProperties;
     private final BookingService bookingService;
     private final HotelEventPublisher eventPublisher;
-    private final LoyaltyPointsClient loyaltyPointsClient;
     private final PaymentCreationPolicyFactory paymentCreationPolicyFactory;
 
     @Transactional
@@ -152,6 +150,9 @@ public class PaymentService {
 
         if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
             validateVnPayReplay(payment, responseCode, transactionId);
+            if (payment.getStatus() == PaymentStatus.COMPLETED && pointsSettlementAllowed(lockedBooking)) {
+                bookingService.settleLoyaltyPoints(lockedBooking);
+            }
             log.info("[VNPAY_CALLBACK_REPLAY] Returning existing result - orderId: {}, paymentStatus: {}",
                     orderId, payment.getStatus());
             return toPaymentResponse(payment);
@@ -180,45 +181,7 @@ public class PaymentService {
                     && confirmReservation(booking);
             bookingRepository.save(booking);
 
-            // Handle loyalty points: trừ điểm đã sử dụng và tích lũy điểm mới
-            if (reservationConfirmed && booking.getUserId() != null) {
-                try {
-                    String userId = booking.getUserId().toString();
-                    
-                    // Trừ điểm đã sử dụng (nếu có) - chỉ trừ khi payment success
-                    if (booking.getUsedPoints() != null && booking.getUsedPoints() > 0) {
-                        log.info("Deducting {} points for user: {}", booking.getUsedPoints(), userId);
-                        loyaltyPointsClient.usePoints(
-                            new com.example.bookingservice.integration.loyalty.ApplyPointsRequestDTO(
-                                userId,
-                                booking.getUsedPoints(),
-                                booking.getId(),
-                                "Sử dụng điểm cho booking #" + booking.getId()
-                            )
-                        );
-                    }
-                    
-                    // Tích lũy điểm mới từ thanh toán
-                    // Pass totalAmount to the API - it will calculate points internally
-                    if (booking.getEarnedPoints() == null) {
-                        log.info("Earning points for user: {} from booking: {} with total amount: {}", 
-                            userId, booking.getId(), booking.getTotalAmount());
-                        loyaltyPointsClient.earnPoints(
-                                userId,
-                                booking.getId(),
-                                booking.getTotalAmount() // Pass total amount, not pre-calculated points
-                        );
-                        booking.setEarnedPoints(calculateEarnedPoints(booking.getTotalAmount()));
-                        bookingRepository.save(booking);
-                        log.info("Successfully processed loyalty points");
-                    } else {
-                        log.info("Skipping loyalty point earning for booking {} because it was already awarded", booking.getId());
-                    }
-                } catch (Exception e) {
-                    log.error("Failed to process loyalty points: {}", e.getMessage(), e);
-                    // Don't fail the payment if earning points fails
-                }
-            }
+            // confirmBookingHold settles loyalty for both VNPay and onsite receipts.
             PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
             try {
                 log.info("[PUBLISH_EVENT] Publishing payment.completed for paymentId: {}, bookingId: {}", payment.getId(), booking.getId());
@@ -294,6 +257,12 @@ public class PaymentService {
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
 
+        var previous = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId).orElse(null);
+        if (previous != null && previous.getMethod() == PaymentMethod.HOTEL && previous.getStatus() == PaymentStatus.COMPLETED) {
+            if (pointsSettlementAllowed(booking)) bookingService.settleLoyaltyPoints(booking);
+            return toPaymentResponse(previous);
+        }
+
         Payment payment = paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(bookingId, PaymentStatus.ONSITE_PENDING)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
         if (payment.getAmount() == null || booking.getTotalAmount() == null || payment.getAmount().signum() <= 0
@@ -336,6 +305,11 @@ public class PaymentService {
             log.warn("Payment received but reservation needs reconciliation (type={})", ex.getClass().getSimpleName());
             return false;
         }
+    }
+
+    private boolean pointsSettlementAllowed(Booking booking) {
+        return booking.getStatus() == BookingStatus.CONFIRMED || booking.getStatus() == BookingStatus.CHECKED_IN
+                || booking.getStatus() == BookingStatus.CHECKED_OUT;
     }
 
     private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
@@ -404,13 +378,6 @@ public class PaymentService {
             .bookingStatus(statusLabel)
             .eventAt(LocalDateTime.now())
             .build();
-    }
-
-    private Long calculateEarnedPoints(BigDecimal totalAmount) {
-        if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
-            return 0L;
-        }
-        return totalAmount.divide(BigDecimal.valueOf(1000), 0, java.math.RoundingMode.DOWN).longValue();
     }
 
     private void validateCanCreateNewPayment(Payment payment) {

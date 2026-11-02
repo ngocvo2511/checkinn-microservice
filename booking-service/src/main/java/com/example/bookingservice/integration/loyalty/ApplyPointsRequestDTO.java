@@ -16,4 +16,9 @@ public class ApplyPointsRequestDTO {
     private Long pointsToUse;
     private String bookingId;
     private String description;
+    private BigDecimal expectedDiscountAmount;
+
+    public ApplyPointsRequestDTO(String userId, Long pointsToUse, String bookingId, String description) {
+        this(userId, pointsToUse, bookingId, description, null);
+    }
 }

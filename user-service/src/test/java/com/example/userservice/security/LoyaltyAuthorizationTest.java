@@ -47,6 +47,34 @@ class LoyaltyAuthorizationTest {
         mvc.perform(post("/api/loyalty-points/earn").param("userId",ACTOR.toString()).param("bookingId","synthetic").param("totalAmount","1000"))
             .andExpect(status().isUnauthorized()); verifyNoInteractions(points);
     }
+
+    @Test void quoteRemainsServiceOnly() throws Exception {
+        String body = "{\"userId\":\"" + ACTOR + "\",\"pointsToUse\":10,\"totalAmount\":1000000}";
+        for (String token : new String[]{"customer", "admin", "forged-service"}) {
+            mvc.perform(post("/api/loyalty-points/quote").contentType("application/json").content(body)
+                    .header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
+        }
+        verifyNoInteractions(points);
+        mvc.perform(post("/api/loyalty-points/quote").contentType("application/json").content(body)
+                .header("Authorization", "Bearer service")).andExpect(status().isOk());
+        verify(points).quote(any());
+    }
+
+    @Test void ownQuotePreviewUsesVerifiedPathScopeNotBodyIdentity() throws Exception {
+        String body = "{\"userId\":\"" + OTHER + "\",\"pointsToUse\":900,\"totalAmount\":1000000}";
+        mvc.perform(post("/api/loyalty-points/" + ACTOR + "/quote").contentType("application/json").content(body)
+                .header("Authorization", "Bearer customer")).andExpect(status().isOk());
+        verify(points).quote(argThat(request -> ACTOR.equals(request.userId()) && request.pointsToUse() == 900));
+    }
+
+    @Test void anonymousAndCrossUserCannotPreviewAnotherUsersPoints() throws Exception {
+        String body = "{\"pointsToUse\":1,\"totalAmount\":1000000}";
+        mvc.perform(post("/api/loyalty-points/" + OTHER + "/quote").contentType("application/json").content(body))
+                .andExpect(status().isUnauthorized());
+        mvc.perform(post("/api/loyalty-points/" + OTHER + "/quote").contentType("application/json").content(body)
+                .header("Authorization", "Bearer customer")).andExpect(status().isForbidden());
+        verifyNoInteractions(points);
+    }
     @Test void adminAndForgedServiceCannotEarn() throws Exception {
         for(String token:new String[]{"admin","customer","forged-service"})
             mvc.perform(post("/api/loyalty-points/earn").param("userId",ACTOR.toString()).param("bookingId","synthetic").param("totalAmount","1000")

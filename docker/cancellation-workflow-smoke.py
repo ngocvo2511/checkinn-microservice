@@ -5,6 +5,7 @@ request goes to VNPay and no real settlement is claimed. Email must use Mailpit.
 All booking/room data is synthetic, and cleanup is scoped to generated UUIDs.
 """
 import datetime
+from decimal import Decimal, ROUND_DOWN
 import hashlib
 import hmac
 import importlib.util
@@ -70,8 +71,8 @@ def main():
                'items': [{'roomTypeId': room, 'roomTypeName': 'client-room-must-not-be-trusted', 'ratePlanId': room,
                           'checkInDate': check_in, 'checkOutDate': check_out, 'quantity': 1, 'unitPrice': 1000000}]}
 
-    def complete_payment(booking):
-        if settings.get('VNPAY_HASH_SECRET') and settings.get('VNPAY_TMN_CODE'):
+    def complete_payment(booking, amount=1000000, onsite=False):
+        if not onsite and settings.get('VNPAY_HASH_SECRET') and settings.get('VNPAY_TMN_CODE'):
             code, payment = api('POST', '/api/payments/vnpay/create?bookingId=' + booking, customer)
             check(code == 200, 'VNPay initiation uses canonical server total without contacting provider')
             payment_id = str(uuid.UUID(payment['orderId']))
@@ -84,18 +85,19 @@ def main():
                 return api('GET', '/api/payments/vnpay/return?' + query + '&vnp_SecureHash=' + signature)
             code, _ = callback()
             check(code == 400, 'correctly signed but wrong amount is rejected before payment mutation')
-            params['vnp_Amount'] = '100000000'
+            params['vnp_Amount'] = str(amount * 100)
             code, result = callback()
             check(code == 200 and result['status'] == 'COMPLETED', 'SIMULATED provider return records successful payment')
             code, replay = callback()
             check(code == 200 and replay['id'] == payment_id, 'SIMULATED provider callback replay is idempotent')
             return payment_id
-        code, payment = api('POST', '/api/payments', customer, {'bookingId': booking, 'amount': 1000000, 'method': 'HOTEL'})
+        code, payment = api('POST', '/api/payments', customer, {'bookingId': booking, 'amount': amount, 'method': 'HOTEL'})
         check(code == 201, 'onsite payment creation uses canonical amount')
         payment_id = str(uuid.UUID(payment['id']))
         code, result = api('POST', '/api/payments/' + booking + '/confirm', administrator)
         check(code == 200 and result['status'] == 'COMPLETED', 'authorized onsite receipt confirms internal inventory')
-        print(json.dumps({'case': 'VNPay provider settlement', 'result': 'NOT_RUN', 'reason': 'no signing config; onsite flow tested instead'}), flush=True)
+        if not onsite:
+            print(json.dumps({'case': 'VNPay provider settlement', 'result': 'NOT_RUN', 'reason': 'no signing config; onsite flow tested instead'}), flush=True)
         return payment_id
 
     try:
@@ -148,6 +150,49 @@ def main():
         check(code == 409, 'paid legacy booking requires explicit review')
         code, _ = api('POST', '/api/bookings/' + legacy_id + '/cancel-reviewed', administrator, {'reason': 'HOTEL_UNAVAILABLE'})
         check(code == 204, 'ADMIN reviewed hotel-unavailable cancellation can handle legacy booking')
+        # Real service caller, authoritative rate/cap, both receipt paths and reversal.
+        rates = json.loads(h.run(h.COMPOSE + ['exec', '-T', 'user-service', 'curl', '-fsS', '--max-time', '10',
+                                             'http://regulations-service:8091/api/regulations/typed/points']))
+        earn_rate, redemption_rate = Decimal(str(rates['earnConversionRate'])), Decimal(str(rates['redemptionConversionRate']))
+        if earn_rate <= 0 or redemption_rate < 1 or redemption_rate != redemption_rate.to_integral_value():
+            raise RuntimeError('NEEDS_ENVIRONMENT: positive whole-VND redemption rate required for this payment fixture')
+        cap_points = int(Decimal('500000') / redemption_rate)
+        if cap_points <= 0:
+            raise RuntimeError('NEEDS_ENVIRONMENT: rate exceeds fixture discount cap')
+        seed_points = cap_points + 10
+        service = h.token(settings['SECRET_KEY'], 'booking-service', 'BOOKING_SERVICE')
+        seed_status = int(h.run(h.COMPOSE + ['exec', '-T', 'user-service', 'curl', '-sS', '--max-time', '20', '-X', 'POST',
+                                            '-H', '@-', '-o', '/dev/null', '-w', '%{http_code}',
+                                            'http://localhost:8082/api/loyalty-points/earn?userId=' + customer_id + '&bookingId='
+                                            + str(uuid.uuid4()) + '&totalAmount=' + str(earn_rate * seed_points)],
+                                            'Authorization: Bearer ' + service + '\n'))
+        check(seed_status == 200, 'seed synthetic points via verified service command')
+        for onsite in [False, True]:
+            label = 'onsite' if onsite else 'VNPay or configured fallback'
+            points_payload = json.loads(json.dumps(payload)); points_payload['pointsToUse'] = cap_points + 500
+            code, points_booking = api('POST', '/api/bookings', customer, points_payload)
+            check(code == 201, label + ' points booking creates from service quote')
+            points_id = str(uuid.UUID(points_booking['id'])); new_bookings.append(points_id)
+            discount = int(redemption_rate * cap_points)
+            net = 1000000 - discount
+            check(points_booking['usedPoints'] == cap_points and points_booking['pointsDiscountAmount'] == discount
+                  and points_booking['totalAmount'] == net, label + ' capped discount debits only actual whole points')
+            points_payment = complete_payment(points_id, net, onsite)
+            code, settled = api('GET', '/api/bookings/' + points_id, customer)
+            awarded = int((Decimal(net) / earn_rate).to_integral_value(rounding=ROUND_DOWN))
+            check(code == 200 and settled['status'] == 'CONFIRMED' and settled['earnedPoints'] == awarded,
+                  label + ' booking uses actual net earning receipt from Regulations')
+            if onsite:
+                code, replay = api('POST', '/api/payments/' + points_id + '/confirm', administrator)
+                check(code == 200 and replay['id'] == points_payment, 'onsite receipt replay can retry loyalty safely')
+            check(h.sql('checkinn_user', "SELECT count(*) FROM points_transactions WHERE user_id='" + customer_id
+                        + "' AND booking_id='" + points_id + "' AND transaction_type IN ('EARN','USE')") == '2',
+                  label + ' payment replay has exactly one EARN and one USE')
+            code, _ = api('DELETE', '/api/bookings/' + points_id, customer)
+            check(code == 204, label + ' paid cancellation reverses earning and redemption')
+            code, _ = api('DELETE', '/api/bookings/' + points_id, customer)
+            check(code == 204 and h.sql('checkinn_user', "SELECT available_points FROM loyalty_points WHERE user_id='" + customer_id + "'")
+                  == str(seed_points), label + ' reversal replay restores seed balance once')
         values = ','.join("'" + str(uuid.UUID(value)) + "'" for value in new_bookings)
         for _ in range(10):
             received = int(h.sql('checkinn_revenue', 'SELECT count(*) FROM payment_records WHERE booking_id IN (' + values + ')'))
@@ -169,7 +214,7 @@ def main():
                 time.sleep(1)
             h.sql('checkinn_revenue', 'BEGIN; DELETE FROM payment_records WHERE booking_id IN (' + values + '); DELETE FROM booking_status_records WHERE booking_id IN (' + values + '); COMMIT;')
             h.sql('checkinn_booking', 'BEGIN; DELETE FROM refund_requests WHERE booking_id IN (' + values + '); DELETE FROM payments WHERE booking_id IN (' + values + '); DELETE FROM booking_items WHERE booking_id IN (' + values + '); DELETE FROM bookings WHERE id IN (' + values + '); COMMIT;')
-        h.sql('checkinn_user', "DELETE FROM points_transactions WHERE user_id='" + customer_id + "'; DELETE FROM loyalty_points WHERE user_id='" + customer_id + "'")
+        h.sql('checkinn_user', "DELETE FROM loyalty_commands WHERE user_id='" + customer_id + "'; DELETE FROM points_transactions WHERE user_id='" + customer_id + "'; DELETE FROM loyalty_points WHERE user_id='" + customer_id + "'")
         h.sql('checkinn_hotel', "BEGIN; DELETE FROM room_holds WHERE room_type_id='" + room + "'; DELETE FROM room_availability WHERE room_type_id='" + room + "'; DELETE FROM room_types WHERE id='" + room + "'; COMMIT;")
     return 0
 

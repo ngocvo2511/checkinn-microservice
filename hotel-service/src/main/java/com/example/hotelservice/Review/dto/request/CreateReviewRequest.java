@@ -56,5 +56,6 @@ public class CreateReviewRequest {
     @Size(min = 10, max = 5000, message = "Nội dung phải từ 10-5000 ký tự")
     private String content;
 
+    @NotNull(message = "Booking không được để trống")
     private UUID bookingId;
 }

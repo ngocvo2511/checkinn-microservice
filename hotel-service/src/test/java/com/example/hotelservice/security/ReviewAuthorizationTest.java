@@ -39,6 +39,24 @@ class ReviewAuthorizationTest {
                 .header("X-Is-Admin", "true")).andExpect(status().isUnauthorized());
         verifyNoInteractions(reviews);
     }
+    @Test void missingBookingIsRejectedBeforeServiceCall() throws Exception {
+        mvc.perform(post("/api/v1/reviews").header("Authorization", "Bearer customer")
+                .contentType("application/json").content("{\"hotelId\":\"" + REVIEW
+                        + "\",\"rating\":8,\"title\":\"Synthetic review\",\"content\":\"Synthetic regression content\"}"))
+                .andExpect(status().isBadRequest());
+        verifyNoInteractions(reviews);
+    }
+
+    @Test void createUsesVerifiedGuestAndKeepsBookingLookupOutageAs503() throws Exception {
+        when(reviews.createReview(any(), eq(ACTOR))).thenThrow(new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE, "Booking review eligibility unavailable"));
+        mvc.perform(post("/api/v1/reviews").header("Authorization", "Bearer customer").header("X-User-Id", OTHER)
+                .contentType("application/json").content("{\"hotelId\":\"" + REVIEW
+                        + "\",\"bookingId\":\"" + OTHER
+                        + "\",\"rating\":8,\"title\":\"Synthetic review\",\"content\":\"Synthetic regression content\"}"))
+                .andExpect(status().isServiceUnavailable());
+        verify(reviews).createReview(argThat(request -> OTHER.equals(request.getBookingId())), eq(ACTOR));
+    }
     @Test void deleteUsesVerifiedSubjectAndRole() throws Exception {
         mvc.perform(delete("/api/v1/reviews/" + REVIEW).header("Authorization", "Bearer customer")
                 .header("X-User-Id", OTHER).header("X-Is-Admin", "true")).andExpect(status().isNoContent());

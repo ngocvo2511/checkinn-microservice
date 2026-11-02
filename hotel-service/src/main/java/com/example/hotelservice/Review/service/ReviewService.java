@@ -41,27 +41,23 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
     private final UserGrpcClient userGrpcClient;
     private final HotelRepository hotelRepository;
+    private final ReviewEligibilityClient reviewEligibilityClient;
 
     /**
      * Create a new review
      */
     public HotelReviewResponse createReview(CreateReviewRequest request, UUID guestId) {
+        if (request.getBookingId() == null || request.getHotelId() == null || guestId == null) {
+            throw new IllegalArgumentException("Booking, hotel and authenticated guest are required for a review");
+        }
+        if (!reviewEligibilityClient.isEligible(request.getBookingId(), guestId, request.getHotelId())) {
+            throw new SecurityException("Only the booking guest can review its hotel after checkout");
+        }
         // Check if guest already reviewed this hotel for this booking
-        if (request.getBookingId() != null) {
-            Optional<HotelReview> existing = hotelReviewRepository
-                    .findByHotelIdAndGuestIdAndBookingId(
-                            request.getHotelId(),
-                            guestId,
-                            request.getBookingId()
-                    );
-            if (existing.isPresent()) {
-                throw new IllegalStateException("Bạn đã đánh giá khách sạn này cho booking này rồi");
-            }
-        } else {
-            // Check if guest already reviewed this hotel (without specific booking)
-            if (hotelReviewRepository.existsByHotelIdAndGuestId(request.getHotelId(), guestId)) {
-                throw new IllegalStateException("Bạn chỉ có thể đánh giá mỗi khách sạn một lần");
-            }
+        Optional<HotelReview> existing = hotelReviewRepository.findByHotelIdAndGuestIdAndBookingId(
+                request.getHotelId(), guestId, request.getBookingId());
+        if (existing.isPresent()) {
+            throw new IllegalStateException("Bạn đã đánh giá khách sạn này cho booking này rồi");
         }
 
         HotelReview review = reviewMapper.createRequestToEntity(request);

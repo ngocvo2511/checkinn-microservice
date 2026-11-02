@@ -10,6 +10,9 @@ python docker/booking-security-smoke.py
 python docker/inventory-smoke.py
 python docker/catalog-security-smoke.py
 python docker/review-security-smoke.py
+python docker/review-eligibility-smoke.py
+python docker/loyalty-ledger-smoke.py
+python docker/loyalty-preview-smoke.py
 python docker/p0-boundary-smoke.py
 python docker/hold-concurrency-smoke.py
 python docker/cancellation-workflow-smoke.py
@@ -29,6 +32,43 @@ The catalog check also verifies the running hotel datasource is the isolated
 clone. It uses fresh UUIDs confirmed absent from city/hotel/room tables, so its
 DELETE/PUT/PATCH requests cannot change existing records. It verifies admin/owner/
 anonymous status codes through both direct service and the gateway rewrite.
+
+The review eligibility check requires both hotel and booking clone datasources.
+It creates synthetic booking UUIDs, tests guest/hotel/CHECKED_OUT binding through
+direct REST and gateway REST, then removes only its synthetic reviews/bookings.
+Deploy booking-service with the new CheckReviewEligibility RPC before hotel-service;
+an older or unavailable booking server causes review creation to return 503.
+
+Loyalty command validation (02/11/2026): rebuild/start **user-service before
+booking-service** on the test overlay. Flyway V3 creates only `loyalty_commands`;
+it does not rewrite existing accounts or ledger rows. The new user-service must
+be present before the booking quote/receipt client is used. Keep the services
+coordinated when publishing: older booking code still has the old rate/cap logic.
+
+`loyalty-ledger-smoke.py` checks same-command retries, concurrent first accounts,
+overspending, cancellation races, legacy ambiguity and transaction rollback. It
+uses fresh user/booking UUIDs. Its temporary PostgreSQL trigger rejects receipt
+insertion **only for one generated synthetic user**, then removes the trigger,
+function and fixture rows in `finally`. It never changes Regulations or copied
+accounts. The cancellation workflow now also covers quoted points, actual net
+earning receipts and reversal through onsite and locally simulated VNPay paths.
+
+Command receipts bind booking/type/user/input and retain the original discount.
+Transaction locks serialize booking then account, including a first account.
+Direct SQL writers bypass this protocol; ambiguous pre-existing accounts/ledger
+return 409 for reconciliation. Point reservation between quote and payment and
+automatic recovery/outbox after remote success remain separate open work;
+these tests do not establish those behaviors. Frontend quote preview coverage
+is described below.
+
+Update 02/11/2026 (batch11): authenticated point preview is available at
+`POST /api/loyalty-points/{userId}/quote`, guarded by the existing points read
+scope. Body identity is ignored; the verified path user is authoritative. The
+original `POST /quote` remains booking-service-only, as do all mutations.
+`loyalty-preview-smoke.py` checks self/cross-user/anonymous scope, parity with the
+internal quote, mutation denials and no ledger/account changes on synthetic
+fixtures. Frontend booking and PointsDiscountSection now use this read-only
+preview through a caller-token proxy; reserve/recovery remains open.
 
 These checks do not verify actual VNPay sandbox settlement/refunds, legacy
 inventory provenance or the remaining P0 surfaces. Current results and limits

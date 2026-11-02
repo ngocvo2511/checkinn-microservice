@@ -80,6 +80,21 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
     }
 
     @Override
+    public void checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest request,
+            StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> observer) {
+        try {
+            var actor = GrpcAccess.actor();
+            GrpcAccess.require(actor.isAuthenticated() && "hotel-service".equals(actor.getName())
+                    && actor.getAuthorities().stream().anyMatch(a -> "ROLE_HOTEL_SERVICE".equals(a.getAuthority())));
+            boolean eligible = bookingService.isReviewEligible(request.getBookingId(), request.getGuestId(), request.getHotelId());
+            observer.onNext(com.example.bookingservice.grpc.ReviewEligibilityResponse.newBuilder().setEligible(eligible).build());
+            observer.onCompleted();
+        } catch (Exception ex) {
+            observer.onError(GrpcAccess.error(ex));
+        }
+    }
+
+    @Override
     public void getBooking(com.example.bookingservice.grpc.GetBookingRequest request, StreamObserver<com.example.bookingservice.grpc.BookingResponse> responseObserver) {
         log.info("[gRPC_GET_BOOKING] Request received - bookingId: {}", request.getId());
         try {

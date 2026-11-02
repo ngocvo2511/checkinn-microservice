@@ -49,12 +49,39 @@ class UserContextInterceptorTest {
         verifyNoInteractions(next);
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"CheckReviewEligibility", "GetBooking", "CreateBooking"})
+    void signedHotelServiceSubjectIsRestrictedToEligibilityRpc(String method) {
+        var descriptor = call.getMethodDescriptor().toBuilder()
+                .setFullMethodName("booking.BookingGrpcService/" + method).build();
+        when(call.getMethodDescriptor()).thenReturn(descriptor);
+        String secret = "test-key-at-least-thirty-two-bytes-long-123456";
+        var tokens = new JwtService(mock(com.example.bookingservice.security.TokenRevocationService.class), secret);
+        String credential = io.jsonwebtoken.Jwts.builder().setSubject("hotel-service").claim("role", "HOTEL_SERVICE")
+                .setExpiration(new java.util.Date(System.currentTimeMillis() + 60000))
+                .signWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(secret.getBytes(java.nio.charset.StandardCharsets.UTF_8)),
+                        io.jsonwebtoken.SignatureAlgorithm.HS256).compact();
+        headers.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), "Bearer " + credential);
+        when(next.startCall(any(), any())).thenAnswer(invocation -> {
+            assertThat(UserContextInterceptor.ACTOR.get().getName()).isEqualTo("hotel-service");
+            return new ServerCall.Listener<String>() {};
+        });
+        new UserContextInterceptor(tokens).interceptCall(call, headers, next);
+        if (method.equals("CheckReviewEligibility")) {
+            verify(next).startCall(call, headers);
+            verify(call, never()).close(any(), any());
+        } else {
+            verifyNoInteractions(next);
+            verify(call).close(argThat(status -> status.getCode() == Status.Code.UNAUTHENTICATED), any());
+        }
+    }
+
     @Test void verifiedActorPropagatesToListenerAndDoesNotLeakAfterCall() {
         UUID principal = UUID.randomUUID();
         headers.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), "Bearer valid");
         headers.put(Metadata.Key.of("x-user-id", Metadata.ASCII_STRING_MARSHALLER), UUID.randomUUID().toString());
         when(jwt.validateToken("valid")).thenReturn(true);
-        when(jwt.extractUserId("valid")).thenReturn(principal);
+        when(jwt.extractSubject("valid")).thenReturn(principal.toString());
         when(jwt.extractRole("valid")).thenReturn("CUSTOMER");
         when(next.startCall(any(), any())).thenAnswer(invocation -> {
             assertThat(UserContextInterceptor.ACTOR.get().getName()).isEqualTo(principal.toString());
