@@ -71,6 +71,20 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<MediaAsset> getByTarget(UUID targetId, MediaTargetType targetType) {
+        UUID hotelId = targetId;
+        if (targetType == MediaTargetType.ROOM_TYPE) {
+            var room = rooms.findById(targetId).orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Room not found"));
+            if (!Boolean.TRUE.equals(room.getIsActive())) throw new jakarta.persistence.EntityNotFoundException("Room not found");
+            hotelId = room.getHotelId();
+        }
+        var hotel = hotels.findById(hotelId).orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Hotel not found"));
+        if (!Boolean.TRUE.equals(hotel.getIsActive()) || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
+            throw new jakarta.persistence.EntityNotFoundException("Hotel not found");
+        return repository.findByTargetIdAndTargetTypeOrderBySortOrderAsc(targetId, targetType);
+    }
+
+    @Override public List<MediaAsset> getPreviewByTarget(UUID targetId, MediaTargetType targetType) {
+        requireTargetAccess(targetId, targetType);
         return repository.findByTargetIdAndTargetTypeOrderBySortOrderAsc(targetId, targetType);
     }
 

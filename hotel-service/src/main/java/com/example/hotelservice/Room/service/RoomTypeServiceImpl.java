@@ -101,6 +101,41 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         rt.setIsActive(false);
     }
 
+    @Override public RoomType getPublicById(UUID roomTypeId) {
+        RoomType room = getById(roomTypeId);
+        requirePublishedHotel(room.getHotelId());
+        if (!Boolean.TRUE.equals(room.getIsActive())) throw new EntityNotFoundException("Không tìm thấy loại phòng");
+        return room;
+    }
+
+    @Override public List<RoomType> getPublicByHotel(UUID hotelId) {
+        requirePublishedHotel(hotelId);
+        return getByHotel(hotelId).stream().filter(room -> Boolean.TRUE.equals(room.getIsActive())).toList();
+    }
+
+    @Override public RoomType getPreviewById(UUID roomTypeId, UUID actorId, boolean admin) {
+        RoomType room = getById(roomTypeId);
+        authorizePreview(room.getHotelId(), actorId, admin);
+        return room;
+    }
+
+    @Override public List<RoomType> getPreviewByHotel(UUID hotelId, UUID actorId, boolean admin) {
+        authorizePreview(hotelId, actorId, admin);
+        return getByHotel(hotelId);
+    }
+
+    private void requirePublishedHotel(UUID hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
+        if (!Boolean.TRUE.equals(hotel.getIsActive()) || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
+            throw new EntityNotFoundException("Không tìm thấy khách sạn");
+    }
+
+    private void authorizePreview(UUID hotelId, UUID actorId, boolean admin) {
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
+        if (actorId == null || (!admin && !actorId.equals(hotel.getOwnerId())))
+            throw new org.springframework.security.access.AccessDeniedException("Không có quyền xem loại phòng");
+    }
+
     private void authorizeOwner(UUID hotelId, UUID ownerId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));

@@ -15,6 +15,9 @@ import java.util.UUID;
 
 @Repository
 public interface HotelReviewRepository extends JpaRepository<HotelReview, UUID> {
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT r FROM HotelReview r WHERE r.id = ?1")
+    Optional<HotelReview> findByIdForUpdate(UUID id);
 
     /**
      * Get all reviews for a specific hotel with pagination
@@ -34,6 +37,7 @@ public interface HotelReviewRepository extends JpaRepository<HotelReview, UUID> 
      * Get reviews by guest
      */
     List<HotelReview> findByGuestId(UUID guestId);
+    Optional<HotelReview> findByBookingIdAndGuestId(UUID bookingId, UUID guestId);
 
     /**
      * Check if guest already reviewed this hotel for this booking

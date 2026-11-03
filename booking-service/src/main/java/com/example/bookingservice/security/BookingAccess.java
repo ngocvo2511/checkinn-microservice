@@ -21,6 +21,7 @@ public class BookingAccess {
     private final BookingRepository bookings;
     private final PaymentRepository payments;
     private final RestTemplate restTemplate;
+    private final JwtService jwt;
 
     @Value("${hotel.service.url:http://hotel-service}")
     private String hotelServiceUrl;
@@ -46,7 +47,10 @@ public class BookingAccess {
         if (isAdmin(actor)) return true;
         if (!hasRole(actor, "OWNER")) return false;
         try {
-            Map<?, ?> hotel = restTemplate.getForObject(hotelServiceUrl + "/hotels/{id}", Map.class, hotelId);
+            var headers = new org.springframework.http.HttpHeaders();
+            headers.setBearerAuth(jwt.generateInventoryServiceToken());
+            Map<?, ?> hotel = restTemplate.exchange(hotelServiceUrl + "/internal/hotels/{id}/owner", org.springframework.http.HttpMethod.GET,
+                    new org.springframework.http.HttpEntity<>(headers), Map.class, hotelId).getBody();
             return hotel != null && isSelf(actor, String.valueOf(hotel.get("ownerId")));
         } catch (RestClientException ex) {
             // A dependency outage must never grant access or look like an empty booking list.

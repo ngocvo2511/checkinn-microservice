@@ -58,6 +58,12 @@ public class MediaAssetController {
         return ResponseEntity.ok(assets);
     }
 
+    @GetMapping("/preview")
+    public ResponseEntity<?> preview(@RequestParam UUID targetId, @RequestParam MediaTargetType targetType) {
+        return ResponseEntity.ok().cacheControl(org.springframework.http.CacheControl.noStore())
+                .body(mediaAssetService.getPreviewByTarget(targetId, targetType));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         log.info("[MEDIA_CONTROLLER_DELETE] Delete media request received - mediaId: {}", id);

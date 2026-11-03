@@ -52,6 +52,7 @@ class BookingAuthorizationTest {
 
     @BeforeEach
     void setUp() {
+        when(jwt.generateInventoryServiceToken()).thenReturn("synthetic-service-token");
         when(jwt.validateToken(anyString())).thenReturn(true);
         when(jwt.extractUserId("customer")).thenReturn(CUSTOMER);
         when(jwt.extractUserId("other")).thenReturn(OTHER);
@@ -72,7 +73,7 @@ class BookingAuthorizationTest {
         when(payments.findByVnpayOrderId("payment-1")).thenReturn(Optional.of(Payment.builder()
                 .id("payment-1").bookingId("booking-1").amount(new java.math.BigDecimal("1000000"))
                 .method(com.example.bookingservice.payment.enums.PaymentMethod.VNPAY).build()));
-        when(hotel.getForObject(anyString(), eq(Map.class), eq("hotel-1"))).thenReturn(Map.of("ownerId", OTHER.toString()));
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1"))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", OTHER.toString())));
     }
 
     @Test void anonymousCannotReadBooking() throws Exception {
@@ -124,7 +125,7 @@ class BookingAuthorizationTest {
                 .andExpect(status().isOk());
     }
     @Test void unrelatedOwnerCannotListHotelBookings() throws Exception {
-        when(hotel.getForObject(anyString(), eq(Map.class), eq("hotel-1"))).thenReturn(Map.of("ownerId", CUSTOMER.toString()));
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1"))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", CUSTOMER.toString())));
         mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer owner"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
@@ -201,7 +202,7 @@ class BookingAuthorizationTest {
     }
 
     @Test void ownershipLookupFailureDoesNotGrantOwnerAccess() throws Exception {
-        when(hotel.getForObject(anyString(), eq(Map.class), eq("hotel-1")))
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1")))
                 .thenThrow(new org.springframework.web.client.ResourceAccessException("test outage"));
         mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer owner"))
                 .andExpect(status().isServiceUnavailable());

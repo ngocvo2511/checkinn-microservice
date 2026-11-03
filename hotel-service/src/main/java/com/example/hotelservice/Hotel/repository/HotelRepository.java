@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface HotelRepository extends JpaRepository<Hotel, UUID> {
+    List<Hotel> findByIsActiveTrueAndApprovedStatus(HotelApprovalStatus status);
+
+    List<Hotel> findByCityIdAndIsActiveTrueAndApprovedStatus(UUID cityId, HotelApprovalStatus status);
+
+    List<Hotel> findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus(String name, HotelApprovalStatus status);
+
     // Lấy tất cả hotel của 1 owner
     List<Hotel> findByOwnerId(UUID ownerId);
 
