@@ -12,9 +12,7 @@ import com.example.bookingservice.integration.hotel.HotelAvailabilityClient;
 import com.example.bookingservice.integration.hotel.HotelCatalogClient;
 import com.example.bookingservice.integration.hotel.dto.HoldRequest;
 import com.example.bookingservice.integration.hotel.dto.HoldResponse;
-import com.example.bookingservice.integration.loyalty.ApplyPointsRequestDTO;
 import com.example.bookingservice.integration.loyalty.LoyaltyPointsClient;
-import com.example.bookingservice.integration.loyalty.LoyaltyPointsDTO;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import com.example.bookingservice.payment.repository.PaymentRepository;
@@ -48,9 +46,20 @@ public class BookingService {
     private final HotelCatalogClient catalogClient;
     private final CancellationPolicy cancellationPolicy;
     private final com.example.bookingservice.payment.refund.RefundRequestService refundRequests;
+    private final BookingCreationLock creationLock;
 
     // Giới hạn giảm giá tối đa khi sử dụng điểm: 50% tổng tiền
     private static final BigDecimal MAX_DISCOUNT_PERCENTAGE = new BigDecimal("0.5");
+
+    @Transactional(readOnly = true)
+    public String getLoyaltyBookingState(String bookingId, String userId) {
+        if (bookingId == null || bookingId.isBlank() || userId == null || userId.isBlank()) return "UNKNOWN";
+        if (!creationLock.tryAcquire(bookingId)) return "UNKNOWN";
+        return bookingRepository.findById(bookingId).map(booking -> {
+            if (!userId.equals(booking.getUserId())) return "UNKNOWN";
+            return booking.getStatus() == BookingStatus.CANCELLED ? "CANCELLED" : "ACTIVE";
+        }).orElse("MISSING");
+    }
 
     @Transactional(readOnly = true)
     public boolean isReviewEligible(String bookingId, String guestId, String hotelId) {
@@ -113,6 +122,7 @@ public class BookingService {
             throw new IllegalStateException("Failed to hold rooms: " + e.getMessage());
         }
 
+        String reservedBookingId = null;
         try {
         // Calculate total amount
         BigDecimal totalAmount = request.getItems().stream()
@@ -127,35 +137,9 @@ public class BookingService {
         // Apply voucher discount if provided
         BigDecimal voucherDiscount = BigDecimal.ZERO;
 
-        // Apply loyalty points discount if provided
+        // Start with canonical gross amount; reserve points only after the booking has a correlation ID.
         BigDecimal pointsDiscount = BigDecimal.ZERO;
         Long usedPoints = null;
-        if (request.getPointsToUse() != null && request.getPointsToUse() > 0) {
-            try {
-                var quote = loyaltyPointsClient.quote(new com.example.bookingservice.integration.loyalty.PointsQuoteRequest(
-                        request.getUserId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount)));
-                BigDecimal maxDiscount = totalAmount.subtract(voucherDiscount).multiply(MAX_DISCOUNT_PERCENTAGE);
-                if (quote == null || quote.redemptionRate() == null || quote.redemptionRate().signum() <= 0
-                        || quote.pointsToUse() < 0 || quote.pointsToUse() > request.getPointsToUse()
-                        || quote.discountAmount() == null || quote.discountAmount().signum() < 0
-                        || quote.discountAmount().compareTo(maxDiscount) > 0
-                        || quote.discountAmount().compareTo(quote.redemptionRate().multiply(BigDecimal.valueOf(quote.pointsToUse()))) != 0) {
-                    throw new IllegalStateException("Invalid points quote");
-                }
-                pointsDiscount = quote.discountAmount();
-                usedPoints = quote.pointsToUse() == 0 ? null : quote.pointsToUse();
-            } catch (feign.FeignException e) {
-                if (e.status() == 400 || e.status() == 409) {
-                    throw new org.springframework.web.server.ResponseStatusException(
-                            org.springframework.http.HttpStatus.valueOf(e.status()), "Points quote rejected");
-                }
-                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
-                        "Points quote unavailable; retry before booking");
-            } catch (Exception e) {
-                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
-                        "Points quote unavailable; retry before booking");
-            }
-        }
 
         // Keep booking hold expiry aligned with hold-service response
         LocalDateTime holdExpiry = parseHoldExpiry(holdResponse);
@@ -184,6 +168,37 @@ public class BookingService {
 
         cancellationPolicy.snapshot(booking, request.getAcceptedCancellationPolicyVersion());
         booking = bookingRepository.save(booking);
+        if (request.getPointsToUse() != null && request.getPointsToUse() > 0) {
+            try {
+                if (!creationLock.tryAcquire(booking.getId())) throw new IllegalStateException("Booking creation is already in progress");
+                Instant deadline = Instant.parse(holdResponse.expiresAt()).truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
+                reservedBookingId = booking.getId(); // Set before RPC: a timeout may hide a committed hold.
+                var quote = loyaltyPointsClient.reserve(new com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO(
+                        request.getUserId(), booking.getId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount), deadline));
+                BigDecimal maxDiscount = totalAmount.subtract(voucherDiscount).multiply(MAX_DISCOUNT_PERCENTAGE);
+                if (quote == null || !booking.getId().equals(quote.bookingId()) || !"HELD".equals(quote.state())
+                        || !deadline.equals(quote.holdExpiresAt()) || quote.redemptionRate() == null || quote.redemptionRate().signum() <= 0
+                        || quote.pointsToUse() < 0 || quote.pointsToUse() > request.getPointsToUse()
+                        || quote.discountAmount() == null || quote.discountAmount().signum() < 0
+                        || quote.discountAmount().compareTo(maxDiscount) > 0
+                        || quote.discountAmount().compareTo(quote.redemptionRate().multiply(BigDecimal.valueOf(quote.pointsToUse()))) != 0) {
+                    throw new IllegalStateException("Invalid points reservation receipt");
+                }
+                booking.setUsedPoints(quote.pointsToUse() == 0 ? null : quote.pointsToUse());
+                booking.setPointsDiscountAmount(quote.discountAmount());
+                booking.setTotalAmount(totalAmount.subtract(voucherDiscount).subtract(quote.discountAmount()));
+            } catch (feign.FeignException ex) {
+                if (ex.status() == 400 || ex.status() == 409) {
+                    throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.valueOf(ex.status()),
+                            "Points reservation rejected");
+                }
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                        "Points reservation unavailable; retry before booking");
+            } catch (Exception ex) {
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                        "Points reservation unavailable; retry before booking");
+            }
+        }
         final Booking bookingRef = booking;
 
         // Create booking items
@@ -216,6 +231,10 @@ public class BookingService {
         bookingItemRepository.saveAll(items);
         booking.setItems(items);
 
+        if (!holdExpiry.isAfter(LocalDateTime.now())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Inventory hold expired during booking creation");
+        }
         publishStatusEvent(booking, BookingStatus.PENDING.name());
 
         return toBookingResponse(booking);
@@ -224,6 +243,13 @@ public class BookingService {
                 availabilityClient.releaseHold(holdResponse.holdId());
             } catch (RuntimeException releaseFailure) {
                 log.warn("Booking failed and hold release needs cleanup (type={})", releaseFailure.getClass().getSimpleName());
+            }
+            if (reservedBookingId != null) {
+                try {
+                    loyaltyPointsClient.refundPoints(request.getUserId(), reservedBookingId);
+                } catch (RuntimeException releaseFailure) {
+                    log.warn("Points hold requires recovery after booking failure (type={})", releaseFailure.getClass().getSimpleName());
+                }
             }
             throw failure;
         }
@@ -394,6 +420,8 @@ public class BookingService {
         log.debug("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
     }
 
+    // Inventory failure must not mark the caller's payment receipt transaction rollback-only.
+    @Transactional(noRollbackFor = HoldConfirmationException.class)
     public void confirmBookingHold(String bookingId) {
         log.debug("[CONFIRM_BOOKING_HOLD] Confirming booking hold for booking: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
@@ -401,7 +429,7 @@ public class BookingService {
 
         if (booking.getHoldId() == null) {
             log.error("Booking {} has no holdId, cannot confirm hold", bookingId);
-            throw new IllegalStateException("Booking has no holdId");
+            throw new HoldConfirmationException(new IllegalStateException("Booking has no holdId"));
         }
 
         log.debug("[CONFIRM_BOOKING_HOLD] Confirming hold {} for booking {}", booking.getHoldId(), bookingId);
@@ -410,51 +438,34 @@ public class BookingService {
             log.debug("Successfully confirmed hold {} for booking {}", booking.getHoldId(), bookingId);
         } catch (Exception e) {
             log.error("Failed to confirm hold {} for booking {}: {}", booking.getHoldId(), bookingId, e.getMessage(), e);
-            throw new RuntimeException("Failed to confirm hold: " + e.getMessage(), e);
+            throw new HoldConfirmationException(e);
         }
 
         settleLoyaltyPoints(booking);
     }
 
-    public void settleLoyaltyPoints(Booking booking) {
-        try {
-            if (booking.getUsedPoints() != null && booking.getUsedPoints() > 0) {
-                BigDecimal discount = loyaltyPointsClient.usePoints(new ApplyPointsRequestDTO(booking.getUserId(),
-                        booking.getUsedPoints(), booking.getId(), "Points for booking " + booking.getId(), booking.getPointsDiscountAmount()));
-                if (discount == null || booking.getPointsDiscountAmount() == null
-                        || discount.compareTo(booking.getPointsDiscountAmount()) != 0) {
-                    throw new IllegalStateException("Points receipt does not match booking quote");
-                }
-            }
-            if (booking.getEarnedPoints() == null) {
-                var receipt = loyaltyPointsClient.earnPoints(booking.getUserId(), booking.getId(), booking.getTotalAmount());
-                if (receipt == null || receipt.getAwardedPoints() == null) {
-                    throw new IllegalStateException("Missing booking points receipt");
-                }
-                booking.setEarnedPoints(receipt.getAwardedPoints());
-                bookingRepository.save(booking);
-            }
-        } catch (Exception e) {
-            // Payment receipt and confirmed inventory survive a loyalty outage.
-            // Marker remains null so a verified payment replay can retry the same commands.
-            log.warn("Loyalty settlement requires retry for booking {} (type={})", booking.getId(), e.getClass().getSimpleName());
+    public static class HoldConfirmationException extends RuntimeException {
+        public HoldConfirmationException(Throwable cause) {
+            super("Failed to confirm hold", cause);
         }
     }
 
+    /** Persist intent in the caller's booking/payment transaction; no remote ledger effect before commit. */
+    public void settleLoyaltyPoints(Booking booking) {
+        if ("SETTLED".equals(booking.getLoyaltyStatus()) || "REVIEW_REQUIRED".equals(booking.getLoyaltyStatus())) return;
+        queueLoyalty(booking);
+    }
+
     private void reverseBookingPoints(Booking booking) {
-        try {
-            loyaltyPointsClient.refundPoints(booking.getUserId(), booking.getId());
-        } catch (feign.FeignException ex) {
-            if (ex.status() == 409) {
-                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
-                        "Points ledger requires reconciliation before cancellation can finish");
-            }
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
-                    "Points reversal is not confirmed; retry cancellation");
-        } catch (RuntimeException ex) {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
-                    "Points reversal is not confirmed; retry cancellation");
-        }
+        if ("REVERSED".equals(booking.getLoyaltyStatus())) return;
+        queueLoyalty(booking);
+    }
+
+    private void queueLoyalty(Booking booking) {
+        booking.setLoyaltyStatus("PENDING");
+        booking.setLoyaltyNextAttemptAt(LocalDateTime.now());
+        booking.setLoyaltyLastError(null);
+        bookingRepository.save(booking);
     }
 
     private void publishStatusEvent(Booking booking, String statusLabel) {
@@ -636,6 +647,7 @@ public class BookingService {
                 .voucherCode(booking.getVoucherCode())
                 .voucherDiscount(booking.getVoucherDiscount())
                 .earnedPoints(booking.getEarnedPoints())
+                .loyaltyStatus(booking.getLoyaltyStatus())
                 .usedPoints(booking.getUsedPoints())
                 .pointsDiscountAmount(booking.getPointsDiscountAmount())
                 .contactName(booking.getContactName())

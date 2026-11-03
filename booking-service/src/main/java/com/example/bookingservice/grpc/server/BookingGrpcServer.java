@@ -80,6 +80,21 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
     }
 
     @Override
+    public void getLoyaltyBookingState(com.example.bookingservice.grpc.LoyaltyBookingStateRequest request,
+            StreamObserver<com.example.bookingservice.grpc.LoyaltyBookingStateResponse> observer) {
+        try {
+            var actor = GrpcAccess.actor();
+            GrpcAccess.require(actor.isAuthenticated() && "user-service".equals(actor.getName())
+                    && actor.getAuthorities().stream().anyMatch(a -> "ROLE_USER_SERVICE".equals(a.getAuthority())));
+            observer.onNext(com.example.bookingservice.grpc.LoyaltyBookingStateResponse.newBuilder()
+                    .setState(bookingService.getLoyaltyBookingState(request.getBookingId(), request.getUserId())).build());
+            observer.onCompleted();
+        } catch (Exception ex) {
+            observer.onError(GrpcAccess.error(ex));
+        }
+    }
+
+    @Override
     public void checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest request,
             StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> observer) {
         try {

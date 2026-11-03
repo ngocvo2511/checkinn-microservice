@@ -132,6 +132,10 @@ def main():
             h.sql('checkinn_user', "INSERT INTO points_transactions(id,user_id,booking_id,transaction_type,points,description,created_at) VALUES ('"
                   + str(uuid.uuid4()) + "','" + legacy_user + "','" + legacy_booking + "','EARN',10,'Synthetic legacy duplicate',now())")
         case('ambiguous legacy reversal requires reconciliation', refund(legacy_user, legacy_booking)[0], 409)
+        case('ambiguous legacy account cannot quote a new discount', api('POST', '/quote', {
+            'userId': legacy_user, 'pointsToUse': 1, 'totalAmount': str(redemption_rate * 10)})[0], 409)
+        case('ambiguous legacy account cannot spend on another booking', use(legacy_user, str(uuid.uuid4()), 1)[0], 409)
+        case('ambiguous legacy account cannot accumulate a new earning', earn(legacy_user, str(uuid.uuid4()), earn_rate)[0], 409)
         case('legacy balance and rows untouched', balance(legacy_user) == (100, 0, 100) and count('points_transactions', legacy_user) == 2)
 
         # Fail the receipt INSERT after account and ledger writes to prove real rollback.
@@ -152,7 +156,7 @@ def main():
     finally:
         if trigger_created:
             h.sql('checkinn_user', 'DROP TRIGGER IF EXISTS ' + trigger + ' ON loyalty_commands; DROP FUNCTION IF EXISTS ' + trigger + '()')
-        h.sql('checkinn_user', "DELETE FROM loyalty_commands WHERE user_id IN ('" + all_users
+        h.sql('checkinn_user', "DELETE FROM points_reservations WHERE user_id IN ('" + all_users + "'); DELETE FROM loyalty_commands WHERE user_id IN ('" + all_users
               + "'); DELETE FROM points_transactions WHERE user_id IN ('" + all_users
               + "'); DELETE FROM loyalty_points WHERE user_id IN ('" + all_users + "')")
     case('synthetic fixture cleanup', sum(count(table, actor) for table in

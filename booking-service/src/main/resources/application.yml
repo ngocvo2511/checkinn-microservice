@@ -1,4 +1,8 @@
 spring:
+  task:
+    scheduling:
+      pool:
+        size: 2
   application:
     name: booking-service
   datasource:
@@ -58,6 +62,12 @@ server:
 
 jwt:
   secret: ${SECRET_KEY}
+
+loyalty:
+  settlement:
+    delay-ms: ${LOYALTY_SETTLEMENT_DELAY_MS:5000}
+    initial-delay-ms: ${LOYALTY_SETTLEMENT_INITIAL_DELAY_MS:30000}
+    retry-seconds: ${LOYALTY_SETTLEMENT_RETRY_SECONDS:30}
 
 logging:
   file:

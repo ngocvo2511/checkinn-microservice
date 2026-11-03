@@ -139,6 +139,7 @@ services:
     environment:
       <<: *java-env
       SERVER_PORT: "8082"
+      BOOKING_GRPC_ADDRESS: ${BOOKING_GRPC_ADDRESS:-booking-service:9093}
       SPRING_DATASOURCE_URL: ${USER_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_user}
       SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD:-}

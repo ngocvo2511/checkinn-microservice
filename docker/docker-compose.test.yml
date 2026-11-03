@@ -31,6 +31,10 @@ services:
 
   user-service:
     environment:
+      BOOKING_GRPC_ADDRESS: booking-service:9093
+      POINTS_RECOVERY_DELAY_MS: "1000"
+      POINTS_RECOVERY_INITIAL_DELAY_MS: "5000"
+      POINTS_RECOVERY_RETRY_SECONDS: "2"
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_user
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -47,6 +51,9 @@ services:
 
   booking-service:
     environment:
+      LOYALTY_SETTLEMENT_DELAY_MS: "500"
+      LOYALTY_SETTLEMENT_INITIAL_DELAY_MS: "5000"
+      LOYALTY_SETTLEMENT_RETRY_SECONDS: "2"
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_booking
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}

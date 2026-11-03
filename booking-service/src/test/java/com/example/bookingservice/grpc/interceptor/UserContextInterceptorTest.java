@@ -50,24 +50,27 @@ class UserContextInterceptorTest {
     }
 
     @org.junit.jupiter.params.ParameterizedTest
-    @org.junit.jupiter.params.provider.ValueSource(strings = {"CheckReviewEligibility", "GetBooking", "CreateBooking"})
-    void signedHotelServiceSubjectIsRestrictedToEligibilityRpc(String method) {
+    @org.junit.jupiter.params.provider.CsvSource({"hotel-service,HOTEL_SERVICE,CheckReviewEligibility,true",
+            "hotel-service,HOTEL_SERVICE,GetBooking,false", "hotel-service,HOTEL_SERVICE,CreateBooking,false",
+            "user-service,USER_SERVICE,GetLoyaltyBookingState,true", "user-service,USER_SERVICE,GetBooking,false",
+            "user-service,USER_SERVICE,CreateBooking,false"})
+    void signedMachineSubjectsAreRestrictedToNarrowRpcs(String subject, String role, String method, boolean allowed) {
         var descriptor = call.getMethodDescriptor().toBuilder()
                 .setFullMethodName("booking.BookingGrpcService/" + method).build();
         when(call.getMethodDescriptor()).thenReturn(descriptor);
         String secret = "test-key-at-least-thirty-two-bytes-long-123456";
         var tokens = new JwtService(mock(com.example.bookingservice.security.TokenRevocationService.class), secret);
-        String credential = io.jsonwebtoken.Jwts.builder().setSubject("hotel-service").claim("role", "HOTEL_SERVICE")
+        String credential = io.jsonwebtoken.Jwts.builder().setSubject(subject).claim("role", role)
                 .setExpiration(new java.util.Date(System.currentTimeMillis() + 60000))
                 .signWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(secret.getBytes(java.nio.charset.StandardCharsets.UTF_8)),
                         io.jsonwebtoken.SignatureAlgorithm.HS256).compact();
         headers.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), "Bearer " + credential);
         when(next.startCall(any(), any())).thenAnswer(invocation -> {
-            assertThat(UserContextInterceptor.ACTOR.get().getName()).isEqualTo("hotel-service");
+            assertThat(UserContextInterceptor.ACTOR.get().getName()).isEqualTo(subject);
             return new ServerCall.Listener<String>() {};
         });
         new UserContextInterceptor(tokens).interceptCall(call, headers, next);
-        if (method.equals("CheckReviewEligibility")) {
+        if (allowed) {
             verify(next).startCall(call, headers);
             verify(call, never()).close(any(), any());
         } else {

@@ -20,4 +20,5 @@ public class LoyaltyPointsResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long awardedPoints; // Result of this booking command, not the aggregate balance.
+    private Long reservedPoints;
 }

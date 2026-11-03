@@ -12,7 +12,7 @@ import java.util.List;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "bookings")
+@Table(name = "bookings", indexes = @Index(name = "bookings_loyalty_due", columnList = "loyalty_status,loyalty_next_attempt_at"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -87,6 +87,15 @@ public class Booking {
     private java.time.Instant checkInAt;
     @Column(name = "free_cancellation_until")
     private java.time.Instant freeCancellationUntil;
+
+    // Durable intent, committed atomically with the payment/cancellation outcome.
+    // NULL identifies historical rows; no automatic financial backfill.
+    @Column(length = 24)
+    private String loyaltyStatus;
+    private LocalDateTime loyaltyNextAttemptAt;
+    private Integer loyaltyAttempts;
+    @Column(length = 64)
+    private String loyaltyLastError;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingItem> items;

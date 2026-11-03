@@ -47,7 +47,8 @@ public class UserContextInterceptor implements ServerInterceptor {
             if (subject == null || subject.isBlank()) return null;
             // Machine subjects are accepted only by the narrow internal RPC.
             // Existing booking/payment entry points still require a user UUID.
-            if (!"booking.BookingGrpcService/CheckReviewEligibility".equals(method)) {
+            if (!"booking.BookingGrpcService/CheckReviewEligibility".equals(method)
+                    && !"booking.BookingGrpcService/GetLoyaltyBookingState".equals(method)) {
                 java.util.UUID.fromString(subject);
             }
             return new UsernamePasswordAuthenticationToken(subject, null,

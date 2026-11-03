@@ -30,6 +30,16 @@ spring:
       client:
         url: http://localhost:9095
 
+booking:
+  grpc:
+    address: ${BOOKING_GRPC_ADDRESS:localhost:9093}
+
+points:
+  recovery:
+    delay-ms: ${POINTS_RECOVERY_DELAY_MS:30000}
+    initial-delay-ms: ${POINTS_RECOVERY_INITIAL_DELAY_MS:30000}
+    retry-seconds: ${POINTS_RECOVERY_RETRY_SECONDS:60}
+
 grpc:
   server:
     port: 9097
