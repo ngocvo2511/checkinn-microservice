@@ -39,8 +39,8 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
 
-            Hotel hotel = hotelService.getById(hotelId);
-            List<RoomType> roomTypes = roomTypeService.getByHotel(hotelId);
+            Hotel hotel = hotelService.getPublishedById(hotelId);
+            List<RoomType> roomTypes = roomTypeService.getPublicByHotel(hotelId);
             List<MediaAsset> images = mediaAssetService.getByTarget(hotelId, MediaTargetType.HOTEL);
 
             GetHotelByIdResponse.Builder builder = GetHotelByIdResponse.newBuilder()
@@ -71,9 +71,13 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
             responseObserver.onCompleted();
             log.info("[gRPC_GET_HOTEL_BY_ID] Response sent successfully - hotelId: {}", request.getHotelId());
 
+        } catch (jakarta.persistence.EntityNotFoundException ex) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
+        } catch (IllegalArgumentException ex) {
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
         } catch (Exception ex) {
             log.error("[gRPC_GET_HOTEL_BY_ID] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
         }
     }
 
@@ -87,7 +91,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
         log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Request received - hotelId: {}", request.getHotelId());
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
-            List<RoomType> roomTypes = roomTypeService.getByHotel(hotelId);
+            List<RoomType> roomTypes = roomTypeService.getPublicByHotel(hotelId);
 
             GetRoomTypesByHotelResponse.Builder builder = GetRoomTypesByHotelResponse.newBuilder();
 
@@ -100,9 +104,13 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
             responseObserver.onCompleted();
             log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Response sent successfully - hotelId: {}", request.getHotelId());
 
+        } catch (jakarta.persistence.EntityNotFoundException ex) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
+        } catch (IllegalArgumentException ex) {
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
         } catch (Exception ex) {
             log.error("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
         }
     }
 
@@ -116,7 +124,7 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
         log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Request received - roomTypeId: {}", request.getRoomTypeId());
         try {
             UUID rtId = UUID.fromString(request.getRoomTypeId());
-            RoomType roomType = roomTypeService.getById(rtId);
+            RoomType roomType = roomTypeService.getPublicById(rtId);
 
             List<MediaAsset> images = mediaAssetService.getByTarget(rtId, MediaTargetType.ROOM_TYPE);
 
@@ -130,9 +138,13 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
             responseObserver.onCompleted();
             log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Response sent successfully - roomTypeId: {}", request.getRoomTypeId());
 
+        } catch (jakarta.persistence.EntityNotFoundException ex) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
+        } catch (IllegalArgumentException ex) {
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
         } catch (Exception ex) {
             log.error("[gRPC_GET_ROOM_TYPE_BY_ID] Failed - roomTypeId: {}, error: {}", request.getRoomTypeId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
         }
     }
 
@@ -141,15 +153,11 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     // ============================================================
 
     private HotelAddress mapHotelAddress(String json) throws Exception {
-        JsonNode node = objectMapper.readTree(json);
-
-        return HotelAddress.newBuilder()
-                .setStreet(nvl(node.path("street").asText()))
-                .setCity(nvl(node.path("city").asText()))
-                .setCountry(nvl(node.path("country").asText()))
-                .setLatitude(node.path("latitude").asDouble(0))
-                .setLongitude(node.path("longitude").asDouble(0))
-                .build();
+        var address = objectMapper.readValue(json, com.example.hotelservice.Hotel.dto.request.HotelAddressDto.class).forRead();
+        return HotelAddress.newBuilder().setStreet(nvl(address.street())).setCity(nvl(address.city())).setCountry(nvl(address.country()))
+                .setLatitude(address.latitude() == null ? 0 : address.latitude())
+                .setLongitude(address.longitude() == null ? 0 : address.longitude())
+                .setCoordinateSource(nvl(address.coordinateSource())).build();
     }
 
     private RoomTypeBasic mapRoomTypeBasic(RoomType rt) {

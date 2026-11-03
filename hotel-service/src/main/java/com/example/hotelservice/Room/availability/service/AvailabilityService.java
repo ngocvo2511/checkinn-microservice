@@ -27,6 +27,7 @@ import java.util.UUID;
 public class AvailabilityService {
 
     private final RoomTypeRepository roomTypeRepository;
+    private final com.example.hotelservice.Hotel.repository.HotelRepository hotelRepository;
     private final RoomAvailabilityRepository roomAvailabilityRepository;
     private final RoomHoldRepository roomHoldRepository;
     private final HoldExpiryProperties holdExpiryProperties;
@@ -36,6 +37,7 @@ public class AvailabilityService {
         validateDates(checkIn, checkOut);
         validateQuantity(quantity);
         RoomType roomType = loadRoomType(roomTypeId);
+        requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
 
         for (LocalDate date : expandDates(checkIn, checkOut)) {
@@ -54,6 +56,7 @@ public class AvailabilityService {
     public int getAvailableRoomCount(UUID roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         validateDates(checkIn, checkOut);
         RoomType roomType = loadRoomType(roomTypeId);
+        requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
 
         int minAvailable = totalRooms;
@@ -77,6 +80,7 @@ public class AvailabilityService {
         // Serialize first-row creation as well as existing availability rows for this room type.
         RoomType roomType = roomTypeRepository.findByIdForUpdate(request.roomTypeId())
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
+        requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
 
         List<LocalDate> dates = expandDates(request.checkInDate(), request.checkOutDate());
@@ -196,6 +200,13 @@ public class AvailabilityService {
     private RoomType loadRoomType(UUID roomTypeId) {
         return roomTypeRepository.findById(roomTypeId)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
+    }
+
+    private void requirePublished(RoomType room) {
+        var hotel = hotelRepository.findById(room.getHotelId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
+        if (!Boolean.TRUE.equals(room.getIsActive()) || !Boolean.TRUE.equals(hotel.getIsActive())
+                || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
+            throw new EntityNotFoundException("Không tìm thấy loại phòng");
     }
 
     private int requireTotalRooms(RoomType roomType) {

@@ -76,6 +76,17 @@ public abstract class HotelMapper {
         @Mapping(target = "faqs", expression = "java(getQuestions(entity.getId()))")
     public abstract HotelResponse toHotelResponse(Hotel entity);
 
+    @InheritConfiguration(name = "toHotelResponse")
+    @Mapping(target = "roomTypes", expression = "java(toPublishedRoomTypeResponses(entity.getRoomTypes()))")
+    public abstract HotelResponse toPublicHotelResponse(Hotel entity);
+
+    protected List<RoomTypeResponse> toPublishedRoomTypeResponses(List<RoomType> rooms) {
+        if (rooms == null) return List.of();
+        return rooms.stream().filter(room -> Boolean.TRUE.equals(room.getIsActive()))
+                .map(roomTypeMapper::toRoomTypeResponse).toList();
+    }
+
+
     // ----------- Hotel -> PendingHotelResponse (record) -----------
     public PendingHotelResponse toPendingHotelResponse(Hotel hotel) {
 
@@ -151,7 +162,7 @@ public abstract class HotelMapper {
     }
 
     protected HotelAddressDto readAddress(String json) {
-        try { return objectMapper.readValue(json, HotelAddressDto.class); }
+        try { return objectMapper.readValue(json, HotelAddressDto.class).forRead(); }
         catch (Exception ex) { throw new RuntimeException(ex); }
     }
 

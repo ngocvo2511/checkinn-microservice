@@ -126,4 +126,39 @@ class RoomTypeServiceImplTest {
                 .isActive(active)
                 .build();
     }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.class)
+    void publicRoomReadsRequirePublishedParentButPreviewKeepsAllStates(com.example.hotelservice.Hotel.enums.HotelApprovalStatus status) {
+        UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
+        Hotel hotel = hotel(hotelId, owner); hotel.setApprovedStatus(status); hotel.setIsActive(true);
+        RoomType room = new RoomType(); room.setId(id); room.setHotelId(hotelId); room.setIsActive(true);
+        when(roomTypeRepository.findById(id)).thenReturn(Optional.of(room));
+        when(roomTypeRepository.findByHotelId(hotelId)).thenReturn(List.of(room));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        if (status == com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED) {
+            assertThat(roomTypeService.getPublicById(id)).isSameAs(room);
+            assertThat(roomTypeService.getPublicByHotel(hotelId)).containsExactly(room);
+        } else {
+            assertThatThrownBy(() -> roomTypeService.getPublicById(id)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+            assertThatThrownBy(() -> roomTypeService.getPublicByHotel(hotelId)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        }
+        assertThat(roomTypeService.getPreviewById(id, owner, false)).isSameAs(room);
+        assertThat(roomTypeService.getPreviewByHotel(hotelId, UUID.randomUUID(), true)).containsExactly(room);
+        assertThatThrownBy(() -> roomTypeService.getPreviewById(id, UUID.randomUUID(), false)).isInstanceOf(org.springframework.security.access.AccessDeniedException.class);
+    }
+
+    @Test void inactiveRoomHiddenAndStillEditableInOwnPreview() {
+        UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
+        Hotel hotel = hotel(hotelId, owner); hotel.setIsActive(true); hotel.setApprovedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED);
+        RoomType room = new RoomType(); room.setId(id); room.setHotelId(hotelId); room.setIsActive(false);
+        when(roomTypeRepository.findById(id)).thenReturn(Optional.of(room));
+        when(roomTypeRepository.findByHotelId(hotelId)).thenReturn(List.of(room));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        assertThatThrownBy(() -> roomTypeService.getPublicById(id)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThat(roomTypeService.getPublicByHotel(hotelId)).isEmpty();
+        assertThat(roomTypeService.getPreviewById(id, owner, false)).isSameAs(room);
+        hotel.setIsActive(false);
+        assertThatThrownBy(() -> roomTypeService.getPublicByHotel(hotelId)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+    }
+
 }

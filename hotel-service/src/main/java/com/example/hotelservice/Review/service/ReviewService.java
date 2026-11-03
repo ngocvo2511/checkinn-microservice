@@ -64,7 +64,17 @@ public class ReviewService {
         review.setGuestId(guestId);
         review.setStatus(ReviewStatus.PUBLISHED);
 
-        HotelReview saved = hotelReviewRepository.save(review);
+        HotelReview saved;
+        try {
+            // Flush here so a racing insert is mapped at the service boundary, not after return.
+            saved = hotelReviewRepository.saveAndFlush(review);
+        } catch (org.springframework.dao.DataAccessException ex) {
+            if (ex.getMostSpecificCause() instanceof java.sql.SQLException sql && "23505".equals(sql.getSQLState())) {
+                throw new IllegalStateException("Bạn đã đánh giá khách sạn này cho booking này rồi");
+            }
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE, "Review storage temporarily unavailable");
+        }
         HotelReviewResponse response = reviewMapper.entityToResponse(saved);
         enrichGuestInfo(response);
         return response;
@@ -83,6 +93,7 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public Page<HotelReviewResponse> getHotelReviews(UUID hotelId, Pageable pageable, UUID userId) {
+        requirePublishedHotel(hotelId);
         Page<HotelReview> reviews = hotelReviewRepository
                 .findByHotelIdAndStatusOrderByCreatedAtDesc(hotelId, ReviewStatus.PUBLISHED, pageable);
 
@@ -107,8 +118,7 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public HotelReviewResponse getReviewById(UUID reviewId, UUID userId) {
-        HotelReview review = hotelReviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+        HotelReview review = publishedReview(reviewId);
         HotelReviewResponse response = reviewMapper.entityToResponse(review);
         enrichGuestInfo(response);
         enrichUserFeedback(response, userId);
@@ -119,7 +129,7 @@ public class ReviewService {
      * Update review (only by review author)
      */
     public HotelReviewResponse updateReview(UUID reviewId, UpdateReviewRequest request, UUID guestId) {
-        HotelReview review = hotelReviewRepository.findById(reviewId)
+        HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
         if (!review.getGuestId().equals(guestId)) {
@@ -164,7 +174,7 @@ public class ReviewService {
      * Delete review (only by review author or admin)
      */
     public void deleteReview(UUID reviewId, UUID userId, boolean isAdmin) {
-        HotelReview review = hotelReviewRepository.findById(reviewId)
+        HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
 
         if (!isAdmin && !review.getGuestId().equals(userId)) {
@@ -187,6 +197,7 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public HotelReviewStatsResponse getHotelReviewStats(UUID hotelId, UUID userId) {
+        requirePublishedHotel(hotelId);
         long total = hotelReviewRepository.countByHotelIdAndStatus(hotelId, ReviewStatus.PUBLISHED);
         Optional<Double> avgRating = hotelReviewRepository.getAverageRating(hotelId, ReviewStatus.PUBLISHED);
 
@@ -316,8 +327,8 @@ public class ReviewService {
      * Mark review feedback (with optional user tracking)
      */
     private void markReviewFeedback(UUID reviewId, UUID userId, FeedbackType feedbackType) {
-        HotelReview review = hotelReviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+        // Serialize votes with content/status changes; a stale vote must not republish a moderated row.
+        HotelReview review = requirePublished(hotelReviewRepository.findByIdForUpdate(reviewId));
 
         // If userId is provided, track user's vote
         if (userId != null) {
@@ -445,6 +456,7 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public Optional<ReviewResponseResponse> getReviewResponse(UUID reviewId) {
+        publishedReview(reviewId);
         return reviewResponseRepository.findByReviewId(reviewId)
                 .map(this::mapResponseToDto);
     }
@@ -463,12 +475,26 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public Optional<HotelReviewResponse> getReviewByBookingId(UUID bookingId, UUID userId) {
-        return hotelReviewRepository.findAll().stream()
-                .filter(review -> review.getBookingId() != null &&
-                                  review.getBookingId().equals(bookingId) &&
-                                  review.getGuestId().equals(userId))
-                .findFirst()
+        if (bookingId == null || userId == null) throw new IllegalArgumentException("Booking and authenticated guest required");
+        return hotelReviewRepository.findByBookingIdAndGuestId(bookingId, userId)
                 .map(reviewMapper::entityToResponse);
+    }
+
+    private void requirePublishedHotel(UUID hotelId) {
+        var hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Đánh giá không tồn tại"));
+        if (!Boolean.TRUE.equals(hotel.getIsActive()) || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
+            throw new jakarta.persistence.EntityNotFoundException("Đánh giá không tồn tại");
+    }
+
+    private HotelReview publishedReview(UUID reviewId) {
+        return requirePublished(hotelReviewRepository.findById(reviewId));
+    }
+
+    private HotelReview requirePublished(Optional<HotelReview> review) {
+        HotelReview published = review.filter(row -> row.getStatus() == ReviewStatus.PUBLISHED)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Đánh giá không tồn tại"));
+        requirePublishedHotel(published.getHotelId());
+        return published;
     }
 
     /**

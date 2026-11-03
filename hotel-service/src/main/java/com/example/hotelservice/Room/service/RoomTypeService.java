@@ -17,6 +17,11 @@ public interface RoomTypeService {
 
     List<RoomType> getByHotel(UUID hotelId);
 
+    RoomType getPublicById(UUID roomTypeId);
+    List<RoomType> getPublicByHotel(UUID hotelId);
+    RoomType getPreviewById(UUID roomTypeId, UUID actorId, boolean admin);
+    List<RoomType> getPreviewByHotel(UUID hotelId, UUID actorId, boolean admin);
+
     void activateRoomType(UUID roomTypeId, UUID ownerId);
 
     void deactivateRoomType(UUID roomTypeId, UUID ownerId);

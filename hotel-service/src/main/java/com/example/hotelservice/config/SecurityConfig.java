@@ -40,10 +40,17 @@ public class SecurityConfig {
                 new AuthorizationDecision(authentication.get() instanceof JwtAuthenticationToken jwt
                         && "booking-service".equals(jwt.getToken().getSubject())
                         && "BOOKING_SERVICE".equals(jwt.getToken().getClaimAsString("role")));
+        AuthorizationManager<RequestAuthorizationContext> revenueServiceOnly = (authentication, context) ->
+                new AuthorizationDecision(authentication.get() instanceof JwtAuthenticationToken jwt
+                        && "revenue-service".equals(jwt.getToken().getSubject())
+                        && "REVENUE_SERVICE".equals(jwt.getToken().getClaimAsString("role")));
         http
                 .csrf(csrf -> csrf.disable())
                                 .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/internal/reports/**").access(revenueServiceOnly)
+                        .requestMatchers("/internal/hotels/**").access(bookingServiceOnly)
+                        .requestMatchers("/medias/preview", "/api/v1/{roomTypeId}/preview", "/api/v1/hotel/{hotelId}/preview").authenticated()
                         .requestMatchers(HttpMethod.POST, "/medias", "/medias/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/medias/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/medias/**").authenticated()
@@ -59,7 +66,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/hotels/{hotelId}/approve", "/hotels/{hotelId}/deactivate").access(adminOnly)
                         .requestMatchers(HttpMethod.POST, "/hotels/{hotelId}/reject").access(adminOnly)
                         .requestMatchers(HttpMethod.PATCH, "/hotels/{hotelId}/activate").access(adminOnly)
-                        .requestMatchers("/hotels/owner", "/hotels/owner/**", "/hotels/{hotelId}/documents").authenticated()
+                        .requestMatchers("/hotels/owner", "/hotels/owner/**", "/hotels/{hotelId}/documents", "/hotels/{hotelId}/preview").authenticated()
                         .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/api/v1").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/hotels/**", "/api/v1/{roomTypeId}",
                                 "/api/v1/{roomTypeId}/activate", "/api/v1/{roomTypeId}/deactivate").authenticated()

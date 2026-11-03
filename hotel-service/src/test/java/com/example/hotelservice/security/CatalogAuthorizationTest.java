@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = {CityController.class, HotelController.class, RoomTypeController.class,
+@WebMvcTest(value = {CityController.class, HotelController.class, RoomTypeController.class, com.example.hotelservice.Hotel.controller.HotelOwnershipController.class, com.example.hotelservice.Hotel.controller.HotelReportContextController.class,
         com.example.hotelservice.Room.availability.controller.AvailabilityController.class}, properties = {
         "spring.cloud.config.enabled=false", "spring.cloud.discovery.enabled=false",
         "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration"})
@@ -41,6 +41,7 @@ class CatalogAuthorizationTest {
     @MockBean JwtDecoder decoder;
     @MockBean TokenRevocationService revocation;
     @MockBean CityService cities;
+    @MockBean com.example.hotelservice.City.repository.CityRepository cityRepository;
     @MockBean CityMapper cityMapper;
     @MockBean LocationService locations;
     @MockBean HotelService hotels;
@@ -126,4 +127,59 @@ class CatalogAuthorizationTest {
                 .andExpect(status().isOk());
         verify(inventory).getHold(TARGET);
     }
+    @Test void anonymousCannotPreviewHotelUsingForgedIdentityHeaders() throws Exception {
+        mvc.perform(get("/hotels/" + TARGET + "/preview").header("X-User-Id", ACTOR).header("X-Is-Admin", "true"))
+                .andExpect(status().isUnauthorized());
+        verifyNoInteractions(hotels);
+    }
+    @Test void previewUsesSignedOwnerAndDisablesCaching() throws Exception {
+        mvc.perform(get("/hotels/" + TARGET + "/preview").header("Authorization", "Bearer owner")
+                        .header("X-User-Id", TARGET).header("X-Is-Admin", "true"))
+                .andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Cache-Control", "no-store"));
+        verify(hotels).getPreview(TARGET, ACTOR, false);
+    }
+    @Test void signedAdminCanRequestPreview() throws Exception {
+        mvc.perform(get("/hotels/" + TARGET + "/preview").header("Authorization", "Bearer admin"))
+                .andExpect(status().isOk());
+        verify(hotels).getPreview(TARGET, ACTOR, true);
+    }
+    @Test void signedOwnerPublicDetailStillUsesPublicPolicy() throws Exception {
+        mvc.perform(get("/hotels/" + TARGET).header("Authorization", "Bearer owner")).andExpect(status().isOk());
+        verify(hotels).getDetail(TARGET);
+        verify(hotels, never()).getPreview(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.anyBoolean());
+    }
+
+    @Test void roomPreviewRequiresAuthenticationAndUsesSignedActor() throws Exception {
+        mvc.perform(get("/api/v1/" + TARGET + "/preview")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/v1/" + TARGET + "/preview").header("Authorization", "Bearer owner").header("X-Is-Admin", "true"))
+                .andExpect(status().isOk());
+        verify(rooms).getPreviewById(TARGET, ACTOR, false);
+    }
+    @Test void internalOwnerLookupRequiresExactMachineIdentity() throws Exception {
+        mvc.perform(get("/internal/hotels/" + TARGET + "/owner")).andExpect(status().isUnauthorized());
+        for (String token : List.of("owner", "admin", "forged-service"))
+            mvc.perform(get("/internal/hotels/" + TARGET + "/owner").header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
+        verifyNoInteractions(hotels);
+        when(hotels.getById(TARGET)).thenReturn(com.example.hotelservice.Hotel.entity.Hotel.builder().ownerId(ACTOR).build());
+        mvc.perform(get("/internal/hotels/" + TARGET + "/owner").header("Authorization", "Bearer service"))
+                .andExpect(status().isOk()).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().json("{\"ownerId\":\"" + ACTOR + "\"}"));
+    }
+
+    @Test void reportContextRequiresExactRevenueMachineAndReturnsOnlyMinimalFields() throws Exception {
+        mvc.perform(get("/internal/reports/hotels/" + TARGET)).andExpect(status().isUnauthorized());
+        for (String token : List.of("owner", "admin", "service", "forged-service"))
+            mvc.perform(get("/internal/reports/hotels/" + TARGET).header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
+        when(decoder.decode("revenue")).thenReturn(Jwt.withTokenValue("revenue").header("alg","HS256")
+                .subject("revenue-service").claim("role","REVENUE_SERVICE").build());
+        when(hotels.getById(TARGET)).thenReturn(com.example.hotelservice.Hotel.entity.Hotel.builder()
+                .ownerId(ACTOR).cityId(TARGET).name("Synthetic private hotel").isActive(false).build());
+        when(rooms.getByHotel(TARGET)).thenReturn(List.of());
+        mvc.perform(get("/internal/reports/hotels/" + TARGET).header("Authorization","Bearer revenue"))
+                .andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.ownerId").value(ACTOR.toString()))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.contactEmail").doesNotExist())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.address").doesNotExist());
+    }
+
 }

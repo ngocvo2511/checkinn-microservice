@@ -14,6 +14,32 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class ReviewGrpcAuthorizationTest {
+    @Test void suppliedBookingIsCheckedForSignedGuestInsteadOfAnyEarlierStay() {
+        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews);
+        UUID actor = UUID.randomUUID(), hotel = UUID.randomUUID(), booking = UUID.randomUUID();
+        var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("test").header("alg", "HS256")
+                .subject(actor.toString()).claim("role", "CUSTOMER").build();
+        @SuppressWarnings("unchecked") StreamObserver<com.example.hotelservice.grpc.CheckUserReviewExistsResponse> observer = mock(StreamObserver.class);
+        io.grpc.Context.current().withValue(com.example.hotelservice.grpc.interceptor.ReviewAuthenticationInterceptor.ACTOR, jwt).run(() ->
+                endpoint.checkUserReviewExists(com.example.hotelservice.grpc.CheckUserReviewExistsRequest.newBuilder()
+                        .setHotelId(hotel.toString()).setGuestId(UUID.randomUUID().toString()).setBookingId(booking.toString()).build(), observer));
+        verify(reviews).getReviewByHotelGuestBooking(hotel, actor, booking);
+        verify(reviews, never()).checkUserReviewExists(any(), any());
+        verify(observer).onNext(argThat(result -> !result.getExists()));
+    }
+
+    @Test void unpublishedDetailAndResponseMapToNotFound() {
+        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews);
+        when(reviews.getReviewById(any())).thenThrow(new jakarta.persistence.EntityNotFoundException("Review not found"));
+        when(reviews.getReviewResponse(any())).thenThrow(new jakarta.persistence.EntityNotFoundException("Review not found"));
+        @SuppressWarnings("unchecked") StreamObserver<ReviewResponse> detail = mock(StreamObserver.class);
+        @SuppressWarnings("unchecked") StreamObserver<com.example.hotelservice.grpc.ReviewResponseDto> response = mock(StreamObserver.class);
+        endpoint.getReviewById(com.example.hotelservice.grpc.GetReviewByIdRequest.newBuilder().setReviewId(UUID.randomUUID().toString()).build(), detail);
+        endpoint.getReviewResponse(com.example.hotelservice.grpc.GetReviewResponseRequest.newBuilder().setReviewId(UUID.randomUUID().toString()).build(), response);
+        verify(detail).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.NOT_FOUND));
+        verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.NOT_FOUND));
+        verify(detail, never()).onNext(any()); verify(response, never()).onNext(any());
+    }
     @Test void createMapsEligibilityFailuresWithoutAcceptingBodyGuest() {
         ReviewService reviews = mock(ReviewService.class);
         var endpoint = new ReviewGrpcServiceImpl(reviews);

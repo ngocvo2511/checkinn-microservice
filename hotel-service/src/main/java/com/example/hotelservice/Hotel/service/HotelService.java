@@ -34,7 +34,11 @@ public interface HotelService {
 
     Hotel getById(UUID hotelId);
 
+    Hotel getPublishedById(UUID hotelId);
+
     com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId);
+
+    HotelResponse getPreview(UUID hotelId, UUID requesterId, boolean isAdmin);
 
     List<Hotel> getByOwner(UUID ownerId);
 

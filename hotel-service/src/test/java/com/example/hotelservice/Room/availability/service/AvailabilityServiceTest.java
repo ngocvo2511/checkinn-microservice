@@ -30,7 +30,8 @@ class AvailabilityServiceTest {
     private final RoomTypeRepository rooms = mock(RoomTypeRepository.class);
     private final RoomAvailabilityRepository availability = mock(RoomAvailabilityRepository.class);
     private final RoomHoldRepository holds = mock(RoomHoldRepository.class);
-    private final AvailabilityService service = new AvailabilityService(rooms, availability, holds, new HoldExpiryProperties());
+    private final com.example.hotelservice.Hotel.repository.HotelRepository hotels = mock(com.example.hotelservice.Hotel.repository.HotelRepository.class);
+    private final AvailabilityService service = new AvailabilityService(rooms, hotels, availability, holds, new HoldExpiryProperties());
     private final UUID roomId = UUID.randomUUID();
     private final LocalDate checkIn = LocalDate.of(2027, 1, 10);
     private final LocalDate checkOut = checkIn.plusDays(2);
@@ -39,6 +40,10 @@ class AvailabilityServiceTest {
     @BeforeEach void setUp() {
         room = new RoomType();
         room.setId(roomId);
+        room.setHotelId(UUID.randomUUID());
+        room.setIsActive(true);
+        when(hotels.findById(room.getHotelId())).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder()
+                .isActive(true).approvedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED).build()));
         when(rooms.findById(roomId)).thenReturn(Optional.of(room));
         when(rooms.findByIdForUpdate(roomId)).thenReturn(Optional.of(room));
     }
@@ -188,4 +193,24 @@ class AvailabilityServiceTest {
         mvc.perform(post("/api/v1/availability/hold/" + id + "/release")).andExpect(status().isConflict());
         verifyNoInteractions(availability);
     }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(value = com.example.hotelservice.Hotel.enums.HotelApprovalStatus.class, names = {"DRAFT", "PENDING", "REJECTED"})
+    void unpublishedParentCannotAdvertiseOrCreateNewHold(com.example.hotelservice.Hotel.enums.HotelApprovalStatus state) {
+        room.setTotalRooms(4);
+        when(hotels.findById(room.getHotelId())).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder()
+                .isActive(true).approvedStatus(state).build()));
+        assertThatThrownBy(() -> service.getAvailableRoomCount(roomId, checkIn, checkOut)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> service.isAvailable(roomId, checkIn, checkOut, 1)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> service.checkAndHold(new HoldRequest(roomId, checkIn, checkOut, 1))).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        verifyNoInteractions(availability, holds);
+    }
+    @Test void inactiveRoomOrMissingParentCannotAdvertiseInventory() {
+        room.setTotalRooms(4); room.setIsActive(false);
+        assertThatThrownBy(() -> service.getAvailableRoomCount(roomId, checkIn, checkOut)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        room.setIsActive(true);
+        when(hotels.findById(room.getHotelId())).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.checkAndHold(new HoldRequest(roomId, checkIn, checkOut, 1))).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        verifyNoInteractions(availability, holds);
+    }
+
 }

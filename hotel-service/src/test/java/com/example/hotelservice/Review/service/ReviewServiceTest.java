@@ -29,6 +29,72 @@ import static org.mockito.Mockito.when;
 
 class ReviewServiceTest {
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(value = com.example.hotelservice.Review.enums.ReviewStatus.class, names = {"PENDING", "REJECTED"})
+    void publicDetailNeverReturnsUnpublishedReview(com.example.hotelservice.Review.enums.ReviewStatus status) {
+        UUID id = UUID.randomUUID();
+        when(hotelReviewRepository.findById(id)).thenReturn(Optional.of(HotelReview.builder().id(id).status(status).build()));
+        assertThatThrownBy(() -> reviewService.getReviewById(id, UUID.randomUUID())).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(value = com.example.hotelservice.Review.enums.ReviewStatus.class, names = {"PENDING", "REJECTED"})
+    void publicResponseDoesNotRevealUnpublishedParent(com.example.hotelservice.Review.enums.ReviewStatus status) {
+        UUID id = UUID.randomUUID();
+        when(hotelReviewRepository.findById(id)).thenReturn(Optional.of(HotelReview.builder().id(id).status(status).build()));
+        assertThatThrownBy(() -> reviewService.getReviewResponse(id)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        org.mockito.Mockito.verifyNoInteractions(reviewResponseRepository);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(value = com.example.hotelservice.Review.enums.ReviewStatus.class, names = {"PENDING", "REJECTED"})
+    void unpublishedReviewsCannotReceivePublicVotes(com.example.hotelservice.Review.enums.ReviewStatus status) {
+        UUID id = UUID.randomUUID();
+        when(hotelReviewRepository.findByIdForUpdate(id)).thenReturn(Optional.of(HotelReview.builder().id(id).status(status).build()));
+        assertThatThrownBy(() -> reviewService.markReviewHelpful(id, UUID.randomUUID())).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        verify(hotelReviewRepository, never()).save(any());
+    }
+
+    @Test void privateBookingLookupUsesOnlyTheAuthenticatedGuestsTupleAndIncludesUnpublished() {
+        UUID booking = UUID.randomUUID(), author = UUID.randomUUID();
+        when(hotelReviewRepository.findByBookingIdAndGuestId(booking, author)).thenReturn(Optional.of(
+                HotelReview.builder().id(UUID.randomUUID()).bookingId(booking).guestId(author)
+                        .status(com.example.hotelservice.Review.enums.ReviewStatus.REJECTED).build()));
+        assertThat(reviewService.getReviewByBookingId(booking, author)).isPresent();
+        verify(hotelReviewRepository, never()).findAll();
+    }
+
+    @Test void concurrentDuplicateConstraintHasTheSameControlledErrorAsSequentialDuplicate() {
+        var duplicate = new org.springframework.dao.DataIntegrityViolationException("private database details",
+                new java.sql.SQLException("private constraint details", "23505"));
+        when(hotelReviewRepository.save(any())).thenThrow(duplicate);
+        when(hotelReviewRepository.saveAndFlush(any())).thenThrow(duplicate);
+        var request = CreateReviewRequest.builder().hotelId(UUID.randomUUID()).bookingId(UUID.randomUUID()).rating(BigDecimal.TEN).build();
+        assertThatThrownBy(() -> reviewService.createReview(request, UUID.randomUUID()))
+                .isInstanceOf(IllegalStateException.class).hasMessageNotContaining("private");
+    }
+
+    @Test void storageFailuresCannotExposeSqlDetails() {
+        when(hotelReviewRepository.saveAndFlush(any())).thenThrow(new org.springframework.dao.DataIntegrityViolationException(
+                "private SQL statement", new java.sql.SQLException("private column values", "23514")));
+        var request = CreateReviewRequest.builder().hotelId(UUID.randomUUID()).bookingId(UUID.randomUUID()).rating(BigDecimal.TEN).build();
+        assertThatThrownBy(() -> reviewService.createReview(request, UUID.randomUUID()))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class, error -> {
+                    assertThat(error.getStatusCode().value()).isEqualTo(503);
+                    assertThat(error.getReason()).doesNotContain("private");
+                });
+    }
+
+    @Test void authorCanEditOwnUnpublishedReviewWithoutPublishingIt() {
+        UUID id = UUID.randomUUID(), author = UUID.randomUUID();
+        var review = HotelReview.builder().id(id).guestId(author)
+                .status(com.example.hotelservice.Review.enums.ReviewStatus.REJECTED).build();
+        when(hotelReviewRepository.findByIdForUpdate(id)).thenReturn(Optional.of(review));
+        when(hotelReviewRepository.save(any())).thenAnswer(call -> call.getArgument(0));
+        var update = new com.example.hotelservice.Review.dto.request.UpdateReviewRequest(); update.setTitle("Updated private title");
+        assertThat(reviewService.updateReview(id, update, author).getStatus()).isEqualTo(com.example.hotelservice.Review.enums.ReviewStatus.REJECTED);
+    }
+
     private HotelReviewRepository hotelReviewRepository;
     private HotelRepository hotelRepository;
     private ReviewResponseRepository reviewResponseRepository;
@@ -41,6 +107,8 @@ class ReviewServiceTest {
         reviewResponseRepository = mock(ReviewResponseRepository.class);
         ReviewFeedbackRepository reviewFeedbackRepository = mock(ReviewFeedbackRepository.class);
         hotelRepository = mock(HotelRepository.class);
+        when(hotelRepository.findById(any())).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder()
+                .isActive(true).approvedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED).build()));
         eligibility = mock(ReviewEligibilityClient.class);
         when(eligibility.isEligible(any(), any(), any())).thenReturn(true);
         reviewService = new ReviewService(
@@ -119,7 +187,7 @@ class ReviewServiceTest {
 
         when(hotelReviewRepository.findByHotelIdAndGuestIdAndBookingId(hotelId, guestId, bookingId))
                 .thenReturn(Optional.empty());
-        when(hotelReviewRepository.save(any(HotelReview.class))).thenAnswer(invocation -> {
+        when(hotelReviewRepository.saveAndFlush(any(HotelReview.class))).thenAnswer(invocation -> {
             HotelReview review = invocation.getArgument(0);
             review.setId(UUID.randomUUID());
             return review;
@@ -129,7 +197,7 @@ class ReviewServiceTest {
 
         assertThat(response.getGuestId()).isEqualTo(guestId);
         assertThat(response.getStatus().name()).isEqualTo("PUBLISHED");
-        verify(hotelReviewRepository).save(any(HotelReview.class));
+        verify(hotelReviewRepository).saveAndFlush(any(HotelReview.class));
     }
 
     @Test
@@ -195,7 +263,7 @@ class ReviewServiceTest {
     @Test
     void anotherGuestCannotDeleteReview() {
         UUID reviewId = UUID.randomUUID();
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).guestId(UUID.randomUUID()).build()));
         assertThatThrownBy(() -> reviewService.deleteReview(reviewId, UUID.randomUUID(), false))
                 .isInstanceOf(SecurityException.class);
@@ -219,7 +287,7 @@ class ReviewServiceTest {
     @Test
     void reviewAuthorAndAdministratorCanDelete() {
         UUID reviewId = UUID.randomUUID(), author = UUID.randomUUID();
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).guestId(author).build()));
         reviewService.deleteReview(reviewId, author, false);
         reviewService.deleteReview(reviewId, UUID.randomUUID(), true);
@@ -265,4 +333,20 @@ class ReviewServiceTest {
                     .isEqualTo(request.getContent());
         }
     }
+    @Test void hiddenHotelReviewsCannotBeReadOrVotedButOwnLookupRemainsAvailable() {
+        UUID hotel = UUID.randomUUID(), review = UUID.randomUUID(), guest = UUID.randomUUID(), booking = UUID.randomUUID();
+        var row = HotelReview.builder().id(review).hotelId(hotel).guestId(guest).bookingId(booking)
+                .status(com.example.hotelservice.Review.enums.ReviewStatus.PUBLISHED).build();
+        when(hotelRepository.findById(hotel)).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder().isActive(false).build()));
+        when(hotelReviewRepository.findById(review)).thenReturn(Optional.of(row));
+        when(hotelReviewRepository.findByIdForUpdate(review)).thenReturn(Optional.of(row));
+        when(hotelReviewRepository.findByBookingIdAndGuestId(booking, guest)).thenReturn(Optional.of(row));
+        assertThatThrownBy(() -> reviewService.getReviewById(review)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> reviewService.getHotelReviews(hotel, org.springframework.data.domain.PageRequest.of(0,10))).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> reviewService.getHotelReviewStats(hotel)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> reviewService.getReviewResponse(review)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThatThrownBy(() -> reviewService.markReviewHelpful(review, guest)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        assertThat(reviewService.getReviewByBookingId(booking,guest)).isPresent();
+    }
+
 }

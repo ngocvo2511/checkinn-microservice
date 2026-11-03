@@ -17,6 +17,8 @@ public interface MediaService {
 
     List<MediaAsset> getByTarget(UUID targetId, MediaTargetType targetType);
 
+    List<MediaAsset> getPreviewByTarget(UUID targetId, MediaTargetType targetType);
+
     void delete(UUID mediaId);
     MediaAsset updateThumbnail(UUID mediaId);
 }

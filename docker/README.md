@@ -333,3 +333,97 @@ creates exactly one EARN ledger row after a simulated callback replay and cleans
 the generated user's points fixtures in the verified user clone. It still does
 not contact VNPay. Wait for Eureka convergence after image recreation before
 interpreting gateway transport failures as application authorization failures.
+
+
+Review consistency (03/11/2026): run `python docker/review-consistency-smoke.py`
+after rebuilding hotel-service in `checkinn-test`. The script verifies clone
+connections, creates a separate synthetic hotel and CHECKED_OUT bookings, and
+cleans only generated fixtures. Its private recovery manifest is in ignored
+`docker/logs`; do not publish copied data or credentials.
+
+The existing UNIQUE(hotel_id, guest_id, booking_id) constraint is retained.
+Concurrent duplicate creation returns REST400 / gRPC ALREADY_EXISTS without SQL
+details. PENDING/REJECTED reviews and their owner responses return public404 /
+NOT_FOUND; votes are rejected. Authenticated self booking lookup retains private
+reviews and uses the signed actor, including when gRPC supplies a booking ID.
+Row locking serializes edits/votes with moderation; the smoke test holds a real
+PostgreSQL lock and checks that a waiting vote cannot republish a rejected row.
+This covers review status only; hotel active/approval and authorized hotel preview
+remain separate work under STD-023. No schema migration or copied-data rewrite is
+part of this change.
+
+
+Hotel REST publication (03/11/2026): public `/hotels`, `/hotels/search`,
+`/hotels/city/{cityId}` and `/hotels/{hotelId}` require active + APPROVED.
+Detail returns404 for unpublished hotels even with an owner token. Owners/admins
+use authenticated `GET /hotels/{hotelId}/preview` (Cache-Control: no-store).
+The signed actor must own the hotel or have ADMIN role; identity headers do not
+grant access. Own hotel lists retain all approval states. The host editor uses
+preview for initial load and refresh and never falls back to public detail.
+
+After rebuilding hotel-service, `python docker/hotel-publication-smoke.py` checks
+direct/gateway REST behavior using five fresh synthetic hotels in the clone and
+removes those rows. It does not change existing hotel state or call storage.
+Hotel gRPC, room/availability parent-publication policy and location consistency
+remain separate STD-023 follow-up work; internal raw hotel lookup is unchanged.
+
+
+The cloned hotel schema originally had an outdated approval CHECK rejecting
+DRAFT despite the existing Java create workflow. Reviewed deployment SQL is
+`docker/sql/hotel-draft-approval-upgrade.sql`: it expands the named CHECK inside
+a transaction, validates existing rows and rewrites no values. Applied only to
+the test clone on03/11. Apply this schema upgrade before testing/deploying the
+DRAFT workflow where the old constraint remains; `ddl-auto=update` did not
+repair that legacy CHECK. Smoke scripts do not execute migrations automatically.
+
+
+STD-023 completion (03/11/2026, supersedes the earlier follow-up boundaries):
+public Hotel gRPC calls now use the same active+APPROVED hotel and active room
+policy as REST. Missing/unpublished returns NOT_FOUND; invalid UUID returns
+INVALID_ARGUMENT. Public hotel DTOs include only active rooms; owner/admin hotel
+preview retains inactive rooms. Room preview endpoints are authenticated
+`GET /api/v1/{roomTypeId}/preview` and `/api/v1/hotel/{hotelId}/preview`.
+The host room editor uses private preview. Public media and review reads also
+check hotel publication; `GET /medias/preview` requires actual target ownership
+or ADMIN. Own booking-review lookup remains private and independent of catalog
+publication, and CHECKED_OUT review creation still uses booking eligibility.
+
+Public availability and new holds require a published hotel and active room.
+Existing accepted hold confirmation, release, expiration and cancellation do not
+reapply publication policy. Booking ownership lookup uses signed booking-service
+JWT at `GET /internal/hotels/{id}/owner`, returning only ownerId, so unpublishing a
+hotel does not remove the host's authority over historical bookings. User/admin
+or a different subject with BOOKING_SERVICE role cannot use that endpoint.
+
+Address JSON adds coordinateSource without a database migration. Missing
+coordinates stay UNKNOWN; legacy unmarked coordinates are LEGACY_UNVERIFIED on
+read and are not returned as an exact hotel pin. CITY_CENTROID is never a hotel
+location. OWNER_PROVIDED/GEOCODED retain valid coordinates. No historical address
+rows are rewritten. A city change requires a new address and resolves its city
+name from the selected city; old street/coordinates cannot silently carry over.
+The frontend removes city-coordinate fallback, labels city-area suggestions and
+hides hotel travel distances when hotel coordinates are unavailable.
+
+`python docker/publication-completion-smoke.py` verifies REST/gRPC and private
+identity scopes on five generated hotels, active/inactive rooms, CHECKED_OUT
+bookings and reviews, then cleans all generated records. It also tests legacy
+coordinate provenance, city updates, historical booking access and confirm/cancel
+after unpublication. The script fingerprints existing hotel data before/after;
+all writes remain restricted to fresh UUIDs in checkinn-test clones.
+
+
+Revenue reports also need unpublished historical catalog context. Their hotel
+facade and capacity/info clients now use service-only REST endpoints
+`/internal/reports/hotels/{id}` and `/internal/reports/rooms/{id}` with a signed
+revenue-service/REVENUE_SERVICE JWT (5 minute expiry). They return only IDs,
+name/city/owner and room capacities, without contact/media/documents/coordinates.
+The booking-service credential cannot access report context, and revenue cannot
+access the booking ownership endpoint. No public gRPC bypass was added. Report
+owner/admin authorization remains in revenue-service; dependency failures return
+503 and are not cached permanently as missing owner or zero capacity.
+Deploy hotel, booking and revenue changes together on the test stack before
+running `publication-completion-smoke.py`. Its report cases check all five hotel
+states and inactive-room capacity for historical occupancy, with cross-owner
+and exact machine-identity denial. Hotel service adds coordinate_source field6 to its public gRPC address. The
+older revenue DTO proto remains wire-compatible; report lookup now uses REST
+and never consumes hotel coordinates.

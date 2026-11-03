@@ -82,7 +82,7 @@ public class HotelServiceImpl implements HotelService {
         hotel.setName(request.name());
         hotel.setDescription(request.description());
         hotel.setStarRating(request.starRating());
-        HotelAddressDto resolvedAddress = resolveAddressWithFallback(request.address(), request.cityId());
+        HotelAddressDto resolvedAddress = resolveAddress(request.address());
         hotel.setAddress(writeJson(resolvedAddress));
         hotel.setContactEmail(request.contactEmail());
         hotel.setContactPhone(request.contactPhone());
@@ -164,13 +164,21 @@ public class HotelServiceImpl implements HotelService {
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật khách sạn này.");
 
+        boolean cityChanged = request.cityId() != null && !request.cityId().equals(hotel.getCityId());
+        if (cityChanged && request.address() == null)
+            throw new IllegalArgumentException("Đổi thành phố cần cung cấp lại địa chỉ khách sạn.");
+        var targetCity = cityChanged ? cityRepository.findById(request.cityId())
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy thành phố")) : null;
+        HotelAddressDto newAddress = request.address();
+        if (targetCity != null) newAddress = new HotelAddressDto(newAddress.street(), targetCity.getName(), newAddress.country(),
+                newAddress.latitude(), newAddress.longitude(), newAddress.coordinateSource());
+
         if (request.name() != null) hotel.setName(request.name());
         if (request.description() != null) hotel.setDescription(request.description());
         if (request.starRating() != null) hotel.setStarRating(request.starRating());
         if (request.cityId() != null) hotel.setCityId(request.cityId());
         if (request.address() != null) {
-            UUID targetCityId = request.cityId() != null ? request.cityId() : hotel.getCityId();
-            HotelAddressDto resolvedAddress = resolveAddressWithFallback(request.address(), targetCityId);
+            HotelAddressDto resolvedAddress = resolveAddress(newAddress);
             hotel.setAddress(writeJson(resolvedAddress));
         }
         if (request.contactEmail() != null) hotel.setContactEmail(request.contactEmail());
@@ -195,7 +203,26 @@ public class HotelServiceImpl implements HotelService {
     @Transactional(readOnly = true)
     @Override
     public com.example.hotelservice.Hotel.dto.response.HotelResponse getDetail(UUID hotelId) {
+        return hotelMapper.toPublicHotelResponse(getPublishedById(hotelId));
+    }
+
+    @Override
+    public Hotel getPublishedById(UUID hotelId) {
         Hotel hotel = getById(hotelId);
+        if (!Boolean.TRUE.equals(hotel.getIsActive()) || hotel.getApprovedStatus() != HotelApprovalStatus.APPROVED) {
+            throw new EntityNotFoundException("Không tìm thấy khách sạn");
+        }
+        return hotel;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public com.example.hotelservice.Hotel.dto.response.HotelResponse getPreview(UUID hotelId, UUID requesterId, boolean isAdmin) {
+        if (requesterId == null) throw new AccessDeniedException("Authentication required");
+        Hotel hotel = getById(hotelId);
+        if (!isAdmin && !requesterId.equals(hotel.getOwnerId())) {
+            throw new AccessDeniedException("Bạn không có quyền xem khách sạn này.");
+        }
         return hotelMapper.toHotelResponse(hotel);
     }
 
@@ -210,14 +237,14 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Hotel> getByCity(UUID cityId) {
         log.info("[GET_HOTELS_BY_CITY] Fetching hotels for cityId: {}", cityId);
-        return hotelRepository.findByCityId(cityId);
+        return hotelRepository.findByCityIdAndIsActiveTrueAndApprovedStatus(cityId, HotelApprovalStatus.APPROVED);
     }
 
     // ========== SEARCH: HOTELS BY NAME ==========
     @Override
     public List<Hotel> searchByName(String name) {
         log.info("[SEARCH_HOTELS] Searching hotels by name: {}", name);
-        return hotelRepository.findByNameContainingIgnoreCase(name);
+        return hotelRepository.findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus(name, HotelApprovalStatus.APPROVED);
     }
 
     // ========== SEARCH: HOTELS BY OWNER AND CITY ==========
@@ -237,7 +264,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Hotel> getAllApprovedHotels() {
         log.info("[GET_APPROVED_HOTELS] Fetching approved hotels");
-        return hotelRepository.findByApprovedStatus(HotelApprovalStatus.APPROVED);
+        return hotelRepository.findByIsActiveTrueAndApprovedStatus(HotelApprovalStatus.APPROVED);
     }
 
     @Override
@@ -775,36 +802,18 @@ public class HotelServiceImpl implements HotelService {
         return hotel;
     }
 
-    private HotelAddressDto resolveAddressWithFallback(HotelAddressDto address, UUID cityId) {
-        if (address == null) {
-            return null;
-        }
-
-        Double lat = address.latitude();
-        Double lng = address.longitude();
-
-        if (lat == null || lng == null || (lat == 0.0 && lng == 0.0)) {
-            if (cityId != null) {
-                var cityOpt = cityRepository.findById(cityId);
-                if (cityOpt.isPresent()) {
-                    var city = cityOpt.get();
-                    if (city.getLatitude() != null && city.getLongitude() != null) {
-                        lat = city.getLatitude();
-                        lng = city.getLongitude();
-                        log.info("[COORDINATE_FALLBACK] Missing coordinates, fell back to city {} ({}, {})",
-                                city.getName(), lat, lng);
-                    }
-                }
-            }
-        }
-
-        return new HotelAddressDto(
-                address.street(),
-                address.city(),
-                address.country(),
-                lat,
-                lng
-        );
+    private HotelAddressDto resolveAddress(HotelAddressDto address) {
+        if (address == null) throw new IllegalArgumentException("Cần cung cấp địa chỉ khách sạn.");
+        Double lat = address.latitude(), lng = address.longitude();
+        if (lat == null || lng == null || (lat == 0.0 && lng == 0.0))
+            return new HotelAddressDto(address.street(), address.city(), address.country(), null, null, "UNKNOWN");
+        if (!Double.isFinite(lat) || !Double.isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180)
+            throw new IllegalArgumentException("Tọa độ khách sạn không hợp lệ.");
+        String source = address.coordinateSource();
+        if (source == null) source = "OWNER_PROVIDED";
+        if (!java.util.Set.of("OWNER_PROVIDED", "GEOCODED", "CITY_CENTROID", "LEGACY_UNVERIFIED", "UNKNOWN").contains(source))
+            throw new IllegalArgumentException("Nguồn tọa độ không hợp lệ.");
+        return new HotelAddressDto(address.street(), address.city(), address.country(), lat, lng, source);
     }
 
     private String writeJson(Object obj) {

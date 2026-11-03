@@ -136,6 +136,13 @@ public class HotelController {
         return ResponseEntity.ok(hotel);
     }
 
+    @GetMapping("/{hotelId}/preview")
+    public ResponseEntity<HotelResponse> getHotelPreview(@PathVariable UUID hotelId, @AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok()
+                .cacheControl(org.springframework.http.CacheControl.noStore())
+                .body(hotelService.getPreview(hotelId, UUID.fromString(jwt.getSubject()), verifyAdmin(jwt)));
+    }
+
     // -------------------------------------------------------
     // Lấy tất cả khách sạn đã duyệt
     // -------------------------------------------------------
@@ -144,7 +151,7 @@ public class HotelController {
         log.info("[HOTEL_CONTROLLER_GET_APPROVED] Fetch approved hotels request received");
         List<HotelResponse> hotels = hotelService.getAllApprovedHotels()
                 .stream()
-                .map(hotelMapper::toHotelResponse)
+                .map(hotelMapper::toPublicHotelResponse)
                 .toList();
         return ResponseEntity.ok(hotels);
     }
@@ -202,7 +209,7 @@ public class HotelController {
         log.info("[HOTEL_CONTROLLER_SEARCH] Search hotels by name request received - name: {}", name);
         var hotels = hotelService.searchByName(name)
                 .stream()
-                .map(hotelMapper::toHotelResponse)
+                .map(hotelMapper::toPublicHotelResponse)
                 .toList();
 
         return ResponseEntity.ok(hotels);
@@ -216,7 +223,7 @@ public class HotelController {
         log.info("[HOTEL_CONTROLLER_CITY] Fetch hotels by city request received - cityId: {}", cityId);
         var hotels = hotelService.getByCity(cityId)
                 .stream()
-                .map(hotelMapper::toHotelResponse)
+                .map(hotelMapper::toPublicHotelResponse)
                 .toList();
 
         return ResponseEntity.ok(hotels);

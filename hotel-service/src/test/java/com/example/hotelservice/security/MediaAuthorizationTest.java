@@ -71,6 +71,8 @@ class MediaAuthorizationTest {
         verify(assets).saveAll(any());
     }
     @Test void publicListingStillAvailable() throws Exception {
+        when(hotels.findById(HOTEL)).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder()
+                .isActive(true).approvedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED).build()));
         mvc.perform(get("/medias").param("targetId",HOTEL.toString()).param("targetType","HOTEL")).andExpect(status().isOk());
     }
     @Test void failedStorageDeleteDoesNotDeleteMetadata() throws Exception {
@@ -79,4 +81,13 @@ class MediaAuthorizationTest {
         mvc.perform(delete("/medias/"+MEDIA).header("Authorization","Bearer owner")).andExpect(status().isBadGateway());
         verify(assets,never()).delete(any());
     }
+    @Test void hiddenHotelMediaCannotBeReadPubliclyButOwnerCanPreview() throws Exception {
+        when(hotels.findById(HOTEL)).thenReturn(Optional.of(com.example.hotelservice.Hotel.entity.Hotel.builder().isActive(false).build()));
+        when(hotels.existsByIdAndOwnerId(HOTEL,ACTOR)).thenReturn(true);
+        mvc.perform(get("/medias").param("targetId",HOTEL.toString()).param("targetType","HOTEL")).andExpect(status().isNotFound());
+        mvc.perform(get("/medias/preview").param("targetId",HOTEL.toString()).param("targetType","HOTEL")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/medias/preview").param("targetId",HOTEL.toString()).param("targetType","HOTEL").header("Authorization","Bearer owner")).andExpect(status().isOk());
+        verifyNoInteractions(storage);
+    }
+
 }

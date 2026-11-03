@@ -178,7 +178,7 @@ class HotelServiceImplTest {
     }
 
     @Test
-    void createHotel_WhenCoordinatesMissing_ShouldFallbackToCityCoordinates() throws Exception {
+    void createHotel_WhenCoordinatesMissing_ShouldRemainUnknown() throws Exception {
         UUID ownerId = UUID.randomUUID();
         UUID cityId = UUID.randomUUID();
 
@@ -218,11 +218,10 @@ class HotelServiceImplTest {
 
         assertThat(created).isNotNull();
         assertThat(created.getApprovedStatus()).isEqualTo(HotelApprovalStatus.DRAFT);
-        verify(cityRepository).findById(cityId);
+        verify(cityRepository, never()).findById(cityId);
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(obj -> {
             if (obj instanceof HotelAddressDto addr) {
-                return addr.latitude() != null && addr.latitude().equals(16.0544)
-                        && addr.longitude() != null && addr.longitude().equals(108.2022);
+                return addr.latitude() == null && addr.longitude() == null && "UNKNOWN".equals(addr.coordinateSource());
             }
             return false;
         }));
@@ -274,7 +273,7 @@ class HotelServiceImplTest {
     }
 
     @Test
-    void createHotel_WhenCoordinatesZero_ShouldFallbackToCityCoordinates() throws Exception {
+    void createHotel_WhenCoordinatesZero_ShouldRemainUnknown() throws Exception {
         UUID ownerId = UUID.randomUUID();
         UUID cityId = UUID.randomUUID();
 
@@ -310,11 +309,10 @@ class HotelServiceImplTest {
 
         assertThat(created).isNotNull();
         assertThat(created.getApprovedStatus()).isEqualTo(HotelApprovalStatus.DRAFT);
-        verify(cityRepository).findById(cityId);
+        verify(cityRepository, never()).findById(cityId);
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(obj -> {
             if (obj instanceof HotelAddressDto addr) {
-                return addr.latitude() != null && addr.latitude().equals(16.0544)
-                        && addr.longitude() != null && addr.longitude().equals(108.2022);
+                return addr.latitude() == null && addr.longitude() == null && "UNKNOWN".equals(addr.coordinateSource());
             }
             return false;
         }));
@@ -471,4 +469,96 @@ class HotelServiceImplTest {
         assertThatThrownBy(() -> hotelService.deleteDraftHotel(hotelId, ownerId))
                 .isInstanceOf(IllegalStateException.class);
     }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({"DRAFT,true", "PENDING,true", "REJECTED,true", "APPROVED,false", "APPROVED,null", "null,true"})
+    void publicDetailHidesUnpublishedHotels(String status, String active) {
+        UUID id = UUID.randomUUID();
+        Hotel hotel = Hotel.builder().id(id).ownerId(UUID.randomUUID())
+                .approvedStatus("null".equals(status) ? null : HotelApprovalStatus.valueOf(status))
+                .isActive("null".equals(active) ? null : Boolean.valueOf(active)).build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        assertThatThrownBy(() -> hotelService.getDetail(id)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+        verify(hotelMapper, never()).toHotelResponse(any());
+    }
+
+    @Test
+    void publicDetailMapsActiveApprovedHotel() {
+        UUID id = UUID.randomUUID();
+        Hotel hotel = Hotel.builder().id(id).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        hotelService.getDetail(id);
+        verify(hotelMapper).toPublicHotelResponse(hotel);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.EnumSource(HotelApprovalStatus.class)
+    void ownerAndAdminPreviewRetainUnpublishedState(HotelApprovalStatus status) {
+        UUID id = UUID.randomUUID(), owner = UUID.randomUUID();
+        Hotel hotel = Hotel.builder().id(id).ownerId(owner).isActive(false).approvedStatus(status).build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        hotelService.getPreview(id, owner, false);
+        hotelService.getPreview(id, UUID.randomUUID(), true);
+        verify(hotelMapper, org.mockito.Mockito.times(2)).toHotelResponse(hotel);
+        assertThat(hotel.getApprovedStatus()).isEqualTo(status);
+        assertThat(hotel.getIsActive()).isFalse();
+    }
+
+    @Test
+    void previewRejectsUnrelatedActorAndMissingPrincipalBeforeMapping() {
+        UUID id = UUID.randomUUID();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(Hotel.builder().ownerId(UUID.randomUUID()).build()));
+        assertThatThrownBy(() -> hotelService.getPreview(id, UUID.randomUUID(), false)).isInstanceOf(AccessDeniedException.class);
+        assertThatThrownBy(() -> hotelService.getPreview(id, null, true)).isInstanceOf(AccessDeniedException.class);
+        verify(hotelMapper, never()).toHotelResponse(any());
+    }
+
+    @Test
+    void missingPreviewReturnsNotFound() {
+        assertThatThrownBy(() -> hotelService.getPreview(UUID.randomUUID(), UUID.randomUUID(), false))
+                .isInstanceOf(jakarta.persistence.EntityNotFoundException.class);
+    }
+
+    @Test
+    void publicListsUsePublicationQueriesAndOwnListsKeepUnpublishedHotels() {
+        UUID city = UUID.randomUUID(), owner = UUID.randomUUID();
+        hotelService.getAllApprovedHotels();
+        hotelService.getByCity(city);
+        hotelService.searchByName("fixture");
+        verify(hotelRepository).findByIsActiveTrueAndApprovedStatus(HotelApprovalStatus.APPROVED);
+        verify(hotelRepository).findByCityIdAndIsActiveTrueAndApprovedStatus(city, HotelApprovalStatus.APPROVED);
+        verify(hotelRepository).findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus("fixture", HotelApprovalStatus.APPROVED);
+        Hotel draft = Hotel.builder().ownerId(owner).approvedStatus(HotelApprovalStatus.DRAFT).isActive(false).build();
+        when(hotelRepository.findByOwnerId(owner)).thenReturn(List.of(draft));
+        when(hotelRepository.findByOwnerIdAndCityId(owner, city)).thenReturn(List.of(draft));
+        assertThat(hotelService.getByOwner(owner)).containsExactly(draft);
+        assertThat(hotelService.getByOwnerAndCity(owner, city)).containsExactly(draft);
+    }
+
+    @Test void cityChangeWithoutAddressFailsBeforeMutatingHotel() {
+        UUID id = UUID.randomUUID(), owner = UUID.randomUUID(), oldCity = UUID.randomUUID();
+        Hotel hotel = Hotel.builder().id(id).ownerId(owner).cityId(oldCity).address("old-address").build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,UUID.randomUUID(),null,null,null,null,null,null,null,null,null,null,null);
+        assertThatThrownBy(() -> hotelService.updateHotel(id, request, owner)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(hotel.getCityId()).isEqualTo(oldCity); assertThat(hotel.getAddress()).isEqualTo("old-address");
+        verify(hotelRepository, never()).save(any());
+    }
+    @Test void cityChangeResolvesNewCityAndDropsOldCoordinates() throws Exception {
+        UUID id = UUID.randomUUID(), owner = UUID.randomUUID(), newCity = UUID.randomUUID();
+        Hotel hotel = Hotel.builder().id(id).ownerId(owner).cityId(UUID.randomUUID()).address("old-address").build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        when(cityRepository.findById(newCity)).thenReturn(Optional.of(City.builder().id(newCity).name("New city").latitude(12.0).longitude(108.0).build()));
+        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,newCity,new HotelAddressDto("New street","Stale city","Vietnam",null,null),null,null,null,null,null,null,null,null,null,null);
+        hotelService.updateHotel(id, request, owner);
+        verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(value -> value instanceof HotelAddressDto address
+                && "New city".equals(address.city()) && address.latitude() == null && "UNKNOWN".equals(address.coordinateSource())));
+    }
+    @Test void legacyAndCityCoordinatesAreNeverAdvertisedAsHotelPin() throws Exception {
+        var mapper = new ObjectMapper();
+        var legacy = mapper.readValue("{\"street\":\"Street\",\"city\":\"City\",\"country\":\"VN\",\"latitude\":12,\"longitude\":108}", HotelAddressDto.class).forRead();
+        assertThat(legacy.coordinateSource()).isEqualTo("LEGACY_UNVERIFIED"); assertThat(legacy.latitude()).isNull();
+        assertThat(new HotelAddressDto("Street","City","VN",12.0,108.0,"CITY_CENTROID").forRead().latitude()).isNull();
+        assertThat(new HotelAddressDto("Street","City","VN",12.0,108.0,"OWNER_PROVIDED").forRead().latitude()).isEqualTo(12.0);
+    }
+
 }

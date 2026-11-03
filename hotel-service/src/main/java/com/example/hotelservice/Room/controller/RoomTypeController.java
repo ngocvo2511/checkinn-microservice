@@ -69,7 +69,7 @@ public class RoomTypeController {
     @GetMapping("/{roomTypeId}")
     public ResponseEntity<RoomTypeResponse> getById(@PathVariable UUID roomTypeId) {
         log.info("[ROOM_TYPE_CONTROLLER_GET_BY_ID] Fetch room type request received - roomTypeId: {}", roomTypeId);
-        var entity = roomTypeService.getById(roomTypeId);
+        var entity = roomTypeService.getPublicById(roomTypeId);
         log.info("[ROOM_TYPE_CONTROLLER_GET_BY_ID] Fetch room type success - roomTypeId: {}", roomTypeId);
         return ResponseEntity.ok(roomTypeMapper.toRoomTypeResponse(entity));
     }
@@ -81,13 +81,27 @@ public class RoomTypeController {
     public ResponseEntity<?> getByHotel(@PathVariable UUID hotelId) {
         log.info("[ROOM_TYPE_CONTROLLER_GET_BY_HOTEL] Fetch room types by hotel request received - hotelId: {}", hotelId);
 
-        var list = roomTypeService.getByHotel(hotelId)
+        var list = roomTypeService.getPublicByHotel(hotelId)
                 .stream()
                 .map(roomTypeMapper::toRoomTypeResponse)
                 .toList();
 
         log.info("[ROOM_TYPE_CONTROLLER_GET_BY_HOTEL] Fetch room types by hotel success - hotelId: {}, count: {}", hotelId, list.size());
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/{roomTypeId}/preview")
+    public ResponseEntity<RoomTypeResponse> preview(@PathVariable UUID roomTypeId, @AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok().cacheControl(org.springframework.http.CacheControl.noStore())
+                .body(roomTypeMapper.toRoomTypeResponse(roomTypeService.getPreviewById(roomTypeId,
+                        UUID.fromString(jwt.getSubject()), "ADMIN".equals(jwt.getClaimAsString("role")))));
+    }
+
+    @GetMapping("/hotel/{hotelId}/preview")
+    public ResponseEntity<?> previewByHotel(@PathVariable UUID hotelId, @AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok().cacheControl(org.springframework.http.CacheControl.noStore())
+                .body(roomTypeService.getPreviewByHotel(hotelId, UUID.fromString(jwt.getSubject()),
+                        "ADMIN".equals(jwt.getClaimAsString("role"))).stream().map(roomTypeMapper::toRoomTypeResponse).toList());
     }
 
     // Activate / deactivate
