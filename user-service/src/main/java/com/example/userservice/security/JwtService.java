@@ -44,6 +44,12 @@ public class JwtService {
         return generateToken(userId, "CUSTOMER");
     }
 
+    public String generatePointsRecoveryToken() {
+        return Jwts.builder().setSubject("user-service").claim("role", "USER_SERVICE")
+                .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 300_000))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+    }
+
     public Jws<Claims> parseToken(String token) {
         if (tokenRevocationService.isRevoked(token)) {
             throw new IllegalStateException("Token has been revoked");

@@ -62,7 +62,7 @@ def main():
              + user + "'") == '1000000' and h.sql('checkinn_user', "SELECT (SELECT count(*) FROM points_transactions WHERE user_id='"
              + user + "') + (SELECT count(*) FROM loyalty_commands WHERE user_id='" + user + "')") == '0')
     finally:
-        h.sql('checkinn_user', "DELETE FROM loyalty_commands WHERE user_id='" + user + "'; DELETE FROM points_transactions WHERE user_id='"
+        h.sql('checkinn_user', "DELETE FROM points_reservations WHERE user_id='" + user + "'; DELETE FROM loyalty_commands WHERE user_id='" + user + "'; DELETE FROM points_transactions WHERE user_id='"
               + user + "'; DELETE FROM loyalty_points WHERE user_id='" + user + "'")
     return 1 if failures else 0
 

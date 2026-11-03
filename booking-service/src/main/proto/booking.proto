@@ -11,6 +11,18 @@ service BookingGrpcService {
   rpc GetBooking (GetBookingRequest) returns (BookingResponse);
   // Internal hotel-service check; does not expose contact/payment data.
   rpc CheckReviewEligibility (ReviewEligibilityRequest) returns (ReviewEligibilityResponse);
+  // Narrow user-service recovery lookup; never returns booking/contact/payment data.
+  rpc GetLoyaltyBookingState (LoyaltyBookingStateRequest) returns (LoyaltyBookingStateResponse);
+}
+
+message LoyaltyBookingStateRequest {
+  string bookingId = 1;
+  string userId = 2;
+}
+
+message LoyaltyBookingStateResponse {
+  // MISSING, CANCELLED, ACTIVE or UNKNOWN (including a user mismatch).
+  string state = 1;
 }
 
 message ReviewEligibilityRequest {

@@ -19,6 +19,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class GrpcBookingAuthorizationTest {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({"user-service,USER_SERVICE,true", "user-service,ADMIN,false",
+            "other-service,USER_SERVICE,false", "hotel-service,HOTEL_SERVICE,false", "administrator,ADMIN,false", "guest,CUSTOMER,false"})
+    void pointsRecoveryLookupRequiresExactUserServiceIdentity(String subject, String role, boolean allowed) {
+        var actor = new UsernamePasswordAuthenticationToken(subject, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+        StreamObserver<com.example.bookingservice.grpc.LoyaltyBookingStateResponse> response = mock(StreamObserver.class);
+        when(bookings.getLoyaltyBookingState("booking", "guest")).thenReturn("ACTIVE");
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
+                .getLoyaltyBookingState(com.example.bookingservice.grpc.LoyaltyBookingStateRequest.newBuilder()
+                        .setBookingId("booking").setUserId("guest").build(), response));
+        if (allowed) {
+            verify(bookings).getLoyaltyBookingState("booking", "guest");
+            verify(response).onNext(argThat(value -> value.getState().equals("ACTIVE")));
+            verify(response).onCompleted();
+        } else {
+            verifyNoInteractions(bookings);
+            verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
+        }
+    }
+
     private final BookingService bookings = mock(BookingService.class);
     private final PaymentService payments = mock(PaymentService.class);
     private final BookingAccess access = mock(BookingAccess.class);

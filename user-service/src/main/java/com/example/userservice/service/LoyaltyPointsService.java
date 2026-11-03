@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -21,6 +23,10 @@ public class LoyaltyPointsService {
     private final RegulationClient regulationClient;
     private final LoyaltyCommandRepository commands;
     private final LoyaltyCommandLock commandLock;
+    private final PointsReservationRepository reservations;
+
+    @org.springframework.beans.factory.annotation.Value("${points.recovery.retry-seconds:60}")
+    private long recoveryRetrySeconds = 60;
 
     public Long calculatePoints(BigDecimal amount) {
         if (amount == null || amount.signum() <= 0) return 0L;
@@ -32,20 +38,56 @@ public class LoyaltyPointsService {
         return BigDecimal.valueOf(points).multiply(validRate(regulationClient.getRedemptionConversionRate()));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public PointsQuoteResponse quote(PointsQuoteRequest request) {
         if (request == null || request.userId() == null || request.pointsToUse() == null || request.pointsToUse() <= 0
                 || request.totalAmount() == null || request.totalAmount().signum() <= 0) {
             throw new IllegalArgumentException("Positive points and total amount required");
         }
+        requireUnambiguousAccount(request.userId());
         BigDecimal rate = validRate(regulationClient.getRedemptionConversionRate());
         BigDecimal cap = request.totalAmount().multiply(new BigDecimal("0.5"));
         long actual = cap.divide(rate, 0, RoundingMode.DOWN).min(BigDecimal.valueOf(request.pointsToUse())).longValueExact();
         var account = account(request.userId());
-        if (actual > Math.subtractExact(account.getTotalPoints(), account.getUsedPoints())) {
+        if (actual > spendable(account)) {
             throw new IllegalArgumentException("Insufficient points");
         }
         return new PointsQuoteResponse(actual, rate.multiply(BigDecimal.valueOf(actual)), rate);
+    }
+
+    @Transactional
+    public PointsReservationResponse reserve(ReservePointsRequest request) {
+        if (request == null) throw new IllegalArgumentException("Reservation required");
+        validateCommand(request.userId(), request.bookingId());
+        if (request.pointsToUse() == null || request.pointsToUse() <= 0 || request.totalAmount() == null
+                || request.totalAmount().signum() <= 0 || request.holdExpiresAt() == null) {
+            throw new IllegalArgumentException("Positive points, amount and inventory deadline required");
+        }
+        commandLock.acquire(request.bookingId(), request.userId());
+        requireNotCancelled(request.userId(), request.bookingId());
+        Instant deadline = request.holdExpiresAt().truncatedTo(ChronoUnit.MILLIS);
+        var previous = reservations.findById(request.bookingId());
+        if (previous.isPresent()) {
+            var held = previous.get();
+            if (!request.userId().equals(held.getUserId()) || !request.pointsToUse().equals(held.getRequestedPoints())
+                    || request.totalAmount().compareTo(held.getTotalAmount()) != 0 || !deadline.equals(held.getHoldExpiresAt())
+                    || held.getState() == PointsReservationState.CANCELLED) {
+                throw conflict("Reservation key reused with a different input or cancelled booking");
+            }
+            return reservationResponse(held);
+        }
+        if (!deadline.isAfter(Instant.now())) throw conflict("Inventory hold deadline has passed");
+        if (!history(request.userId(), request.bookingId()).isEmpty()
+                || commands.existsById(key(request.bookingId(), "USE")) || commands.existsById(key(request.bookingId(), "EARN"))) {
+            throw conflict("Existing booking ledger cannot be reserved retroactively");
+        }
+        var quote = quote(new PointsQuoteRequest(request.userId(), request.pointsToUse(), request.totalAmount()));
+        var held = PointsReservation.builder().bookingId(request.bookingId()).userId(request.userId())
+                .requestedPoints(request.pointsToUse()).totalAmount(request.totalAmount()).points(quote.pointsToUse())
+                .discountAmount(quote.discountAmount()).redemptionRate(quote.redemptionRate()).state(PointsReservationState.HELD)
+                .holdExpiresAt(deadline).nextCheckAt(deadline).build();
+        reservations.save(held);
+        return reservationResponse(held);
     }
 
     @Transactional
@@ -54,6 +96,15 @@ public class LoyaltyPointsService {
         if (totalAmount == null || totalAmount.signum() < 0) throw new IllegalArgumentException("Amount must be nonnegative");
         commandLock.acquire(bookingId, userId);
         requireNotCancelled(userId, bookingId);
+        reservations.findById(bookingId).ifPresent(held -> {
+            if (!userId.equals(held.getUserId()) || (held.getState() == PointsReservationState.HELD && held.getPoints() > 0)) {
+                throw conflict("Reserved points must be committed before earning");
+            }
+            if (held.getState() == PointsReservationState.HELD) {
+                held.setState(PointsReservationState.COMMITTED); // A zero-point hold needs no USE entry.
+                reservations.save(held);
+            }
+        });
         var previous = commands.findById(key(bookingId, "EARN"));
         if (previous.isPresent()) {
             requireSameInput(previous.get(), userId, totalAmount, null);
@@ -63,6 +114,7 @@ public class LoyaltyPointsService {
         if (history.stream().anyMatch(row -> "EARN".equals(row.getTransactionType()))) {
             throw conflict("Legacy EARN has no command receipt; reconciliation required");
         }
+        requireUnambiguousAccount(userId);
         long earned = calculatePoints(totalAmount);
         var account = account(userId);
         account.setTotalPoints(Math.addExact(account.getTotalPoints(), earned));
@@ -96,9 +148,24 @@ public class LoyaltyPointsService {
             throw conflict("Legacy USE has no monetary receipt; reconciliation required");
         }
         var account = account(userId);
-        long available = Math.subtractExact(account.getTotalPoints(), account.getUsedPoints());
-        if (available < points) throw new IllegalArgumentException("Insufficient points");
-        BigDecimal discount = expectedDiscount == null ? convertPointsToAmount(points) : expectedDiscount;
+        var own = reservations.findById(bookingId).orElse(null);
+        BigDecimal discount;
+        if (own != null) {
+            if (!userId.equals(own.getUserId()) || own.getState() != PointsReservationState.HELD
+                    || !points.equals(own.getPoints()) || expectedDiscount == null
+                    || expectedDiscount.compareTo(own.getDiscountAmount()) != 0) {
+                throw conflict("Redemption does not match the held reservation");
+            }
+            // The hold remains backed until explicit release, including payment at the inventory deadline.
+            // Honour an existing hold even if another earning reversal has since created account debt.
+            discount = own.getDiscountAmount();
+            own.setState(PointsReservationState.COMMITTED);
+            reservations.save(own);
+        } else {
+            requireUnambiguousAccount(userId);
+            if (spendable(account) < points) throw new IllegalArgumentException("Insufficient points");
+            discount = expectedDiscount == null ? convertPointsToAmount(points) : expectedDiscount;
+        }
         account.setUsedPoints(Math.addExact(account.getUsedPoints(), points));
         saveAccount(account);
         append(userId, bookingId, "USE", points, "Used points for booking " + bookingId);
@@ -107,7 +174,7 @@ public class LoyaltyPointsService {
     }
 
     /** Reads never insert an account or race a first EARN. */
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public LoyaltyPointsResponse getLoyaltyPoints(UUID userId) {
         if (userId == null) throw new IllegalArgumentException("User required");
         return mapToResponse(account(userId));
@@ -131,6 +198,7 @@ public class LoyaltyPointsService {
         var previous = commands.findById(key(bookingId, "CANCEL"));
         if (previous.isPresent()) {
             requireSameInput(previous.get(), userId, null, null);
+            cancelReservation(userId, bookingId);
             return;
         }
         var history = history(userId, bookingId);
@@ -150,6 +218,49 @@ public class LoyaltyPointsService {
         if (used != 0) append(userId, bookingId, "REVERSE_USE", -used, "Reversed redemption for booking " + bookingId);
         // Even an empty ledger needs a tombstone against delayed EARN/USE.
         receipt(userId, bookingId, "CANCEL", null, null, used - earned, null);
+        cancelReservation(userId, bookingId);
+    }
+
+    /** The booking lookup runs outside this transaction; never wait on booking while holding a points lock. */
+    @Transactional
+    public void reconcileReservation(String bookingId, UUID userId, String observedBookingState) {
+        validateCommand(userId, bookingId);
+        commandLock.acquire(bookingId, userId);
+        var held = reservations.findById(bookingId).orElse(null);
+        Instant now = Instant.now();
+        if (held == null || held.getState() != PointsReservationState.HELD || !userId.equals(held.getUserId())
+                || held.getHoldExpiresAt().isAfter(now)) return;
+        if ("MISSING".equals(observedBookingState) || "CANCELLED".equals(observedBookingState)) {
+            refundPoints(userId, bookingId);
+        } else {
+            // ACTIVE and unknown/outage outcomes must not release funds promised to a payment.
+            held.setNextCheckAt(now.plusSeconds(Math.max(1, recoveryRetrySeconds)));
+            reservations.save(held);
+        }
+    }
+
+    private void cancelReservation(UUID userId, String bookingId) {
+        reservations.findById(bookingId).ifPresent(held -> {
+            if (!userId.equals(held.getUserId())) throw conflict("Reservation belongs to another user");
+            held.setState(PointsReservationState.CANCELLED);
+            reservations.save(held);
+        });
+    }
+
+    private PointsReservationResponse reservationResponse(PointsReservation held) {
+        return new PointsReservationResponse(held.getBookingId(), held.getPoints(), held.getDiscountAmount(),
+                held.getRedemptionRate(), held.getHoldExpiresAt(), held.getState().name());
+    }
+
+    private long spendable(LoyaltyPoints account) {
+        return Math.subtractExact(Math.subtractExact(account.getTotalPoints(), account.getUsedPoints()),
+                reservations.sumHeldByUserId(account.getUserId()));
+    }
+
+    private void requireUnambiguousAccount(UUID userId) {
+        if (pointsTransactionRepository.hasAmbiguousEarningOrUse(userId)) {
+            throw conflict("Account has ambiguous historical points; reconciliation required before new commands");
+        }
     }
 
     private void validateCommand(UUID userId, String bookingId) {
@@ -218,9 +329,11 @@ public class LoyaltyPointsService {
     private ResponseStatusException conflict(String reason) { return new ResponseStatusException(HttpStatus.CONFLICT, reason); }
 
     private LoyaltyPointsResponse mapToResponse(LoyaltyPoints account) {
+        long reserved = reservations.sumHeldByUserId(account.getUserId());
         return LoyaltyPointsResponse.builder().id(account.getId()).userId(account.getUserId())
                 .totalPoints(account.getTotalPoints()).usedPoints(account.getUsedPoints())
-                .availablePoints(Math.subtractExact(account.getTotalPoints(), account.getUsedPoints()))
+                .availablePoints(Math.subtractExact(Math.subtractExact(account.getTotalPoints(), account.getUsedPoints()), reserved))
+                .reservedPoints(reserved)
                 .createdAt(account.getCreatedAt()).updatedAt(account.getUpdatedAt()).build();
     }
 

@@ -12,7 +12,9 @@ python docker/catalog-security-smoke.py
 python docker/review-security-smoke.py
 python docker/review-eligibility-smoke.py
 python docker/loyalty-ledger-smoke.py
+python docker/loyalty-ledger-audit.py
 python docker/loyalty-preview-smoke.py
+python docker/points-reservation-smoke.py
 python docker/p0-boundary-smoke.py
 python docker/hold-concurrency-smoke.py
 python docker/cancellation-workflow-smoke.py
@@ -56,10 +58,9 @@ earning receipts and reversal through onsite and locally simulated VNPay paths.
 Command receipts bind booking/type/user/input and retain the original discount.
 Transaction locks serialize booking then account, including a first account.
 Direct SQL writers bypass this protocol; ambiguous pre-existing accounts/ledger
-return 409 for reconciliation. Point reservation between quote and payment and
-automatic recovery/outbox after remote success remain separate open work;
-these tests do not establish those behaviors. Frontend quote preview coverage
-is described below.
+return 409 for reconciliation. General inventory/provider/event outbox remains
+open; durable loyalty work is described in batch13 below. Frontend quote preview coverage
+is described below; pending reservations are covered by batch12 below.
 
 Update 02/11/2026 (batch11): authenticated point preview is available at
 `POST /api/loyalty-points/{userId}/quote`, guarded by the existing points read
@@ -68,7 +69,86 @@ original `POST /quote` remains booking-service-only, as do all mutations.
 `loyalty-preview-smoke.py` checks self/cross-user/anonymous scope, parity with the
 internal quote, mutation denials and no ledger/account changes on synthetic
 fixtures. Frontend booking and PointsDiscountSection now use this read-only
-preview through a caller-token proxy; reserve/recovery remains open.
+preview through a caller-token proxy.
+
+Update 02/11/2026 (batch12): Flyway V4 adds `points_reservations` without
+rewriting historical accounts or journals. Deploy the booking state RPC and
+user-service reservation API together, then use the new booking creation flow;
+avoid mixed old/new points writers. `BOOKING_GRPC_ADDRESS` defaults to
+`booking-service:9093` in Compose. A signed user-service/USER_SERVICE credential
+can read only the narrow recovery state RPC, not general booking data.
+Available points exclude HELD funds. Creation reserves; payment commits its
+bound snapshot; cancellation releases/reverses once. UI previews remain read-only.
+
+Recovery checks HELD rows after the inventory deadline. ACTIVE, in-flight creation
+and failed/unknown lookups retain funds with backoff; only MISSING/CANCELLED
+releases them. A PostgreSQL transaction lock prevents uncommitted creation from
+appearing missing. Expiry alone never releases a financial hold. Defaults are
+30 seconds initial/scheduling delay, 60 seconds retry, and 20 candidates per pass.
+The test overlay accelerates these intervals only for regression.
+
+`points-reservation-smoke.py` covers concurrent reserve/commit/reversal, rollback
+of reserved USE on receipt failure and conservative orphan recovery. It briefly
+stops/restarts **only checkinn-test booking-service** to test lookup outage; run
+it separately from booking workflow tests. Its receipt fault trigger is scoped
+to a fresh booking UUID. `cancellation-workflow-smoke.py` also injects a deferred
+commit fault scoped to its generated room UUID to test a remote hold surviving
+local rollback. Both remove only their triggers/functions and synthetic rows.
+These tests do not establish general inventory/event outbox recovery or actual
+provider settlement/refunds.
+
+Update 03/11/2026 (batch13, STD-022 completion): booking/payment transactions
+persist `loyalty_status=PENDING` and the next attempt timestamp on the booking
+row. They do not call USE/EARN/CANCEL before local commit. A worker locks the
+committed booking, checks its paid receipt and reservation status, then replays
+idempotent user-service commands. CANCELLED source always reverses, including
+when an earlier settlement candidate was queued. Completion marker failure
+keeps the durable intent pending; a crash/restart resumes it. No callback replay
+is required. This is a transactional work queue using the source row, not an
+in-memory task or a general RabbitMQ outbox.
+
+Default cadence is 5 seconds (30 seconds initial delay), 30 seconds after a
+transient failure, 20 candidates per pass. Two scheduling threads keep this
+worker separate from booking expiry tasks. Unknown transport failures retry;
+invalid receipts/source state or 400/409 move to `REVIEW_REQUIRED`, without
+claiming an award/reversal. Read `loyalty_attempts`/`loyalty_last_error` from the
+booking clone for diagnostics; do not rewrite ambiguous legacy journals.
+`BookingResponse.loyaltyStatus` exposes PENDING/SETTLED/REVERSED/REVIEW_REQUIRED;
+booking details explains pending/review and lets the customer refresh.
+Cancellation still records the booking/refund request under the agreed policy;
+point reversal may complete asynchronously. Cash/provider refund status is
+separate and remains unavailable until provider integration is verified.
+
+Legacy protection (03/11): Flyway V5 adds only two read indexes on the old
+journal. New quotes/reservations, unreserved spending and new earnings reject409
+when an account participates in duplicate EARN/USE for a booking, including
+cross-user duplicates. Original command receipts and already backed reservations
+remain replayable; valid reversal is still allowed. This does not normalize old
+balances or assume that a missing journal opening entry is corruption. Customer
+quote409 explicitly asks for reconciliation and permits booking without points.
+
+`loyalty-ledger-audit.py` checks the running user clone and executes an explicit
+read-only RepeatableRead transaction. It prints counts only and writes detailed
+identifiers to **ignored** `docker/logs/loyalty-ledger-audit-private.json`. Keep that
+report private; do not commit copied financial data. Duplicate accounts, duplicate
+EARN/USE, missing receipts and unverified opening differences are review queues,
+not automatic correction instructions. Verified opening provenance is required
+before any manual backfill; direct SQL/older writers bypass the protocol.
+
+Schema addition: `sql/loyalty-settlement-upgrade.sql` is the equivalent additive
+DDL for reviewed deployments. Only the test clone's existing ddl-auto=update
+was used here. Historical NULL markers are not automatically backfilled; no
+copied account/ledger is normalized. Reservation booking ID plus immutable
+rate/actual-points/discount snapshot identifies the accepted quote; later rate
+changes cannot reprice its payment or command retries. Browser preview remains
+indicative until booking creation returns that authoritative quote.
+
+The workflow smoke now tests EARN failure after committed USE, a booking process
+restart with pending work, remote success with failed local completion commit,
+local cancellation rollback before remote reversal and reversal completion
+commit failure. Triggers are scoped to generated UUIDs and removed in finally.
+It briefly restarts test booking-service, so run separately from other booking
+runtime suites. VNPay callbacks are still locally simulated, never settlement.
 
 These checks do not verify actual VNPay sandbox settlement/refunds, legacy
 inventory provenance or the remaining P0 surfaces. Current results and limits

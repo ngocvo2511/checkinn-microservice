@@ -120,6 +120,14 @@ public class LoyaltyPointsController {
         return loyaltyPointsService.quote(request);
     }
 
+    @PostMapping("/reserve")
+    public com.example.userservice.dto.PointsReservationResponse reserve(
+            @RequestBody com.example.userservice.dto.ReservePointsRequest request,
+            @RequestHeader(value="Authorization",required=false) String authorization) {
+        requireService(authorization);
+        return loyaltyPointsService.reserve(request);
+    }
+
     public record QuotePreviewRequest(Long pointsToUse, BigDecimal totalAmount) {}
 
     /** Read-only preview; the caller never receives a service mutation credential. */

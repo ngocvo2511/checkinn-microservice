@@ -60,6 +60,18 @@ class LoyaltyAuthorizationTest {
         verify(points).quote(any());
     }
 
+    @Test void reservationIsNeverGrantedByCustomerAdminOrForgedServiceRole() throws Exception {
+        String body = "{\"userId\":\"" + ACTOR + "\",\"bookingId\":\"synthetic\",\"pointsToUse\":10,\"totalAmount\":1000000,\"holdExpiresAt\":\"2098-01-01T00:00:00Z\"}";
+        for (String token : new String[]{"customer", "admin", "forged-service"}) {
+            mvc.perform(post("/api/loyalty-points/reserve").contentType("application/json").content(body)
+                    .header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
+        }
+        verifyNoInteractions(points);
+        mvc.perform(post("/api/loyalty-points/reserve").contentType("application/json").content(body)
+                .header("Authorization", "Bearer service")).andExpect(status().isOk());
+        verify(points).reserve(any());
+    }
+
     @Test void ownQuotePreviewUsesVerifiedPathScopeNotBodyIdentity() throws Exception {
         String body = "{\"userId\":\"" + OTHER + "\",\"pointsToUse\":900,\"totalAmount\":1000000}";
         mvc.perform(post("/api/loyalty-points/" + ACTOR + "/quote").contentType("application/json").content(body)

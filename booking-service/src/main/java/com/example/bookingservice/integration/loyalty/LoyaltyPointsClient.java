@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 
 @FeignClient(name = "user-service", url = "${user-service.url:http://localhost:8082}", configuration = LoyaltyFeignConfiguration.class)
 public interface LoyaltyPointsClient {
+    @PostMapping("/api/loyalty-points/reserve")
+    PointsReservationDTO reserve(@RequestBody ReservePointsRequestDTO request);
     @PostMapping("/api/loyalty-points/quote")
     PointsQuote quote(@RequestBody PointsQuoteRequest request);
 
