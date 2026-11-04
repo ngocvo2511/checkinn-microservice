@@ -322,3 +322,13 @@ networks:
 volumes:
   redis-data:
   rabbitmq-data:
+
+  osrm-backend:
+    image: osrm/osrm-backend:latest
+    container_name: checkinn-osrm
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm-data:/data
+    command: osrm-routed --algorithm mld /data/vietnam-latest.osrm
