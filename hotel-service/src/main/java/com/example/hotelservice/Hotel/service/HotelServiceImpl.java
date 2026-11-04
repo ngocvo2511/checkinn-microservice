@@ -58,6 +58,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class HotelServiceImpl implements HotelService {
 
     private static final int SIGNED_URL_EXPIRY_SECONDS = 300;
+    private final AccommodationTypeService accommodationTypes;
     private final UserGrpcClient userGrpcClient;
     private final MediaClient mediaClient;
     private final HotelRepository hotelRepository;
@@ -76,7 +77,9 @@ public class HotelServiceImpl implements HotelService {
     @Transactional
     public Hotel createHotel(HotelCreateRequest request, UUID ownerId) {
         log.info("[CREATE_HOTEL] Creating hotel - ownerId: {}, cityId: {}, name: {}", ownerId, request.cityId(), request.name());
+        if (request.accommodationType() == null) throw new IllegalArgumentException("Vui lòng chọn loại hình lưu trú");
         Hotel hotel = new Hotel();
+        hotel.setAccommodationType(request.accommodationType());
         hotel.setOwnerId(ownerId);
         hotel.setCityId(request.cityId());
         hotel.setName(request.name());
@@ -159,7 +162,7 @@ public class HotelServiceImpl implements HotelService {
     @Transactional
     public Hotel updateHotel(UUID hotelId, HotelUpdateRequest request, UUID ownerId) {
         log.info("[UPDATE_HOTEL] Updating hotel - hotelId: {}, ownerId: {}", hotelId, ownerId);
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật khách sạn này.");
@@ -187,6 +190,7 @@ public class HotelServiceImpl implements HotelService {
         if (request.taxId() != null) hotel.setTaxId(request.taxId());
         if (request.operationLicenseNumber() != null) hotel.setOperationLicenseNumber(request.operationLicenseNumber());
         if (request.ownerIdentityNumber() != null) hotel.setOwnerIdentityNumber(request.ownerIdentityNumber());
+        if (request.accommodationType() != null) accommodationTypes.proposeLocked(hotel, request.accommodationType(), ownerId);
         Hotel saved = hotelRepository.save(hotel);
         log.info("[UPDATE_HOTEL] Hotel updated successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return saved;
@@ -489,9 +493,11 @@ public class HotelServiceImpl implements HotelService {
 
     // ========== ADMIN: APPROVE ==========
     @Override @Transactional
-    public void approveHotel(UUID hotelId) {
+    public void approveHotel(UUID hotelId, long expectedRevision) {
         log.info("[APPROVE_HOTEL] Approving hotel - hotelId: {}", hotelId);
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
+        if (hotel.getRevision() != expectedRevision || hotel.getApprovedStatus() != HotelApprovalStatus.PENDING)
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,"Thông tin đã thay đổi. Hãy tải lại trước khi duyệt.");
         hotel.setApprovedStatus(HotelApprovalStatus.APPROVED);
         hotel.setRejectionReason(null);
         hotel.setIsActive(true);

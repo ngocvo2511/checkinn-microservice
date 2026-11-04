@@ -251,13 +251,14 @@ public class HotelController {
     @PutMapping("/{hotelId}/approve")
     public ResponseEntity<?> approveHotel(
             @AuthenticationPrincipal Jwt jwt,
-            @PathVariable UUID hotelId
+            @PathVariable UUID hotelId,
+            @RequestParam long revision
     ) {
         if(!verifyAdmin(jwt)){
             return ResponseEntity.status(403).body("Access denied");
         }
         log.info("[HOTEL_CONTROLLER_APPROVE] Approve hotel request received - hotelId: {}", hotelId);
-        hotelService.approveHotel(hotelId);
+        hotelService.approveHotel(hotelId, revision);
         return ResponseEntity.ok("Hotel approved");
     }
 

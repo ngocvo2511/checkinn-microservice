@@ -57,6 +57,7 @@ class HotelServiceImplTest {
     private HotelMapper hotelMapper;
     private MediaAssetRepository mediaAssetRepository;
 
+    private AccommodationTypeService accommodationTypes;
     private HotelServiceImpl hotelService;
 
     @BeforeEach
@@ -74,7 +75,10 @@ class HotelServiceImplTest {
         hotelMapper = mock(HotelMapper.class);
         mediaAssetRepository = mock(MediaAssetRepository.class);
 
+        accommodationTypes = new AccommodationTypeService(hotelRepository, mock(com.example.hotelservice.Hotel.repository.AccommodationTypeChangeRepository.class));
+        when(hotelRepository.findForUpdate(any())).thenAnswer(inv -> hotelRepository.findById(inv.getArgument(0)));
         hotelService = new HotelServiceImpl(
+                accommodationTypes,
                 userGrpcClient,
                 mediaClient,
                 hotelRepository,
@@ -88,6 +92,22 @@ class HotelServiceImplTest {
                 hotelMapper,
                 mediaAssetRepository
         );
+    }
+
+    @Test void newDraftRequiresAnExplicitTypeEvenOutsideController() throws Exception {
+        var request = new com.fasterxml.jackson.databind.ObjectMapper().readValue("{}", HotelCreateRequest.class);
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> hotelService.createHotel(request, UUID.randomUUID()));
+        verify(hotelRepository, never()).save(any());
+    }
+
+    @Test void initialApprovalRejectsAnOlderRevision() {
+        UUID id=UUID.randomUUID();
+        Hotel hotel=Hotel.builder().id(id).revision(7).approvedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.PENDING).isActive(false).build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        org.junit.jupiter.api.Assertions.assertThrows(org.springframework.web.server.ResponseStatusException.class,()->hotelService.approveHotel(id,6));
+        org.junit.jupiter.api.Assertions.assertEquals(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.PENDING,hotel.getApprovedStatus());
+        hotelService.approveHotel(id,7);
+        org.junit.jupiter.api.Assertions.assertTrue(hotel.getIsActive());
     }
 
     @Test
@@ -206,7 +226,7 @@ class HotelServiceImplTest {
                 null,
                 null,
                 null
-        );
+        , com.example.hotelservice.Hotel.enums.AccommodationType.HOTEL);
 
         when(hotelRepository.save(any(Hotel.class))).thenAnswer(invocation -> {
             Hotel h = invocation.getArgument(0);
@@ -258,7 +278,7 @@ class HotelServiceImplTest {
                 null,
                 null,
                 null
-        );
+        , null);
 
         Hotel updated = hotelService.updateHotel(hotelId, updateRequest, ownerId);
 
@@ -301,7 +321,7 @@ class HotelServiceImplTest {
                 null,
                 null,
                 null
-        );
+        , com.example.hotelservice.Hotel.enums.AccommodationType.HOTEL);
 
         when(hotelRepository.save(any(Hotel.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -339,7 +359,7 @@ class HotelServiceImplTest {
                 null,
                 null,
                 null
-        );
+        , com.example.hotelservice.Hotel.enums.AccommodationType.HOTEL);
 
         when(hotelRepository.save(any(Hotel.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -538,7 +558,7 @@ class HotelServiceImplTest {
         UUID id = UUID.randomUUID(), owner = UUID.randomUUID(), oldCity = UUID.randomUUID();
         Hotel hotel = Hotel.builder().id(id).ownerId(owner).cityId(oldCity).address("old-address").build();
         when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
-        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,UUID.randomUUID(),null,null,null,null,null,null,null,null,null,null,null);
+        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,UUID.randomUUID(),null,null,null,null,null,null,null,null,null,null,null, null);
         assertThatThrownBy(() -> hotelService.updateHotel(id, request, owner)).isInstanceOf(IllegalArgumentException.class);
         assertThat(hotel.getCityId()).isEqualTo(oldCity); assertThat(hotel.getAddress()).isEqualTo("old-address");
         verify(hotelRepository, never()).save(any());
@@ -548,7 +568,7 @@ class HotelServiceImplTest {
         Hotel hotel = Hotel.builder().id(id).ownerId(owner).cityId(UUID.randomUUID()).address("old-address").build();
         when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
         when(cityRepository.findById(newCity)).thenReturn(Optional.of(City.builder().id(newCity).name("New city").latitude(12.0).longitude(108.0).build()));
-        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,newCity,new HotelAddressDto("New street","Stale city","Vietnam",null,null),null,null,null,null,null,null,null,null,null,null);
+        HotelUpdateRequest request = new HotelUpdateRequest(null,null,null,newCity,new HotelAddressDto("New street","Stale city","Vietnam",null,null),null,null,null,null,null,null,null,null,null,null, null);
         hotelService.updateHotel(id, request, owner);
         verify(objectMapper).writeValueAsString(org.mockito.ArgumentMatchers.argThat(value -> value instanceof HotelAddressDto address
                 && "New city".equals(address.city()) && address.latitude() == null && "UNKNOWN".equals(address.coordinateSource())));

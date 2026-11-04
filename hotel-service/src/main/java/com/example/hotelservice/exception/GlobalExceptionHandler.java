@@ -69,6 +69,18 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(status, ex.getReason(), req.getRequestURI());
     }
 
+    @ExceptionHandler({org.springframework.http.converter.HttpMessageNotReadableException.class,
+            org.springframework.validation.BindException.class, org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
+            org.springframework.web.bind.MissingServletRequestParameterException.class})
+    public ResponseEntity<Map<String,Object>> malformed(Exception ex, HttpServletRequest req) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST,"Dữ liệu yêu cầu không hợp lệ",req.getRequestURI());
+    }
+
+    @ExceptionHandler({org.springframework.orm.ObjectOptimisticLockingFailureException.class, jakarta.persistence.OptimisticLockException.class})
+    public ResponseEntity<Map<String,Object>> stale(Exception ex, HttpServletRequest req) {
+        return buildErrorResponse(HttpStatus.CONFLICT,"Thông tin đã thay đổi. Hãy tải lại.",req.getRequestURI());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex, HttpServletRequest req) {
         log.error("[GLOBAL_EXCEPTION] Unhandled exception - path: {}, message: {}", req.getRequestURI(), ex.getMessage(), ex);

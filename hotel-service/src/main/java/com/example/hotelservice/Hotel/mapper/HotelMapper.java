@@ -74,6 +74,7 @@ public abstract class HotelMapper {
     @Mapping(target = "policies", expression = "java(getPolicies(entity.getId()))")
     @Mapping(target = "amenityCategories", expression = "java(getAmenities(entity.getId()))")
         @Mapping(target = "faqs", expression = "java(getQuestions(entity.getId()))")
+    @Mapping(target = "accommodationTypeLabel", expression = "java(entity.getAccommodationType() == null ? null : entity.getAccommodationType().getLabel())")
     public abstract HotelResponse toHotelResponse(Hotel entity);
 
     @InheritConfiguration(name = "toHotelResponse")
@@ -96,6 +97,9 @@ public abstract class HotelMapper {
 
         return PendingHotelResponse.builder()
                 .id(hotel.getId())
+                .revision(hotel.getRevision())
+                .accommodationType(hotel.getAccommodationType())
+                .accommodationTypeLabel(hotel.getAccommodationType()==null?null:hotel.getAccommodationType().getLabel())
                 .name(hotel.getName())
                 .address(readAddress(hotel.getAddress())
                 )
@@ -117,6 +121,9 @@ public abstract class HotelMapper {
 
         return PendingHotelDetailResponse.builder()
                 .id(hotel.getId())
+                .revision(hotel.getRevision())
+                .accommodationType(hotel.getAccommodationType())
+                .accommodationTypeLabel(hotel.getAccommodationType()==null?null:hotel.getAccommodationType().getLabel())
                 .name(hotel.getName())
                 .description(hotel.getDescription())
                 .starRating(hotel.getStarRating())
