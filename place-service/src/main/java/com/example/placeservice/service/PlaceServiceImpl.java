@@ -1,5 +1,7 @@
 package com.example.placeservice.service;
 
+import com.example.placeservice.dto.osrm.Coordinate;
+import com.example.placeservice.dto.osrm.RoadMetrics;
 import com.example.placeservice.dto.response.NearbyPlaceResponse;
 import com.example.placeservice.dto.response.PlacePhotoDto;
 import com.example.placeservice.dto.response.PlaceReviewDto;
@@ -9,6 +11,7 @@ import com.example.placeservice.repository.NearbyPlaceProjection;
 import com.example.placeservice.repository.PlacePhotoRepository;
 import com.example.placeservice.repository.PlaceRepository;
 import com.example.placeservice.repository.PlaceReviewRepository;
+import com.example.placeservice.service.osrm.RoadDistanceService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,7 @@ public class PlaceServiceImpl implements PlaceService {
     private final PlaceReviewRepository placeReviewRepository;
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
+    private final RoadDistanceService roadDistanceService;
 
     private static final Duration CACHE_TTL = Duration.ofHours(24);
 
@@ -56,25 +60,27 @@ public class PlaceServiceImpl implements PlaceService {
             return cachedResponses;
         }
 
-        // Query Local Database (Haversine formula in native SQL)
+        // Query Local Database (Haversine formula in native SQL) with 1.25x expanded radius buffer
+        double candidateRadiusKm = targetRadiusKm * 1.25;
+        int candidateLimit = Math.max(targetLimit * 2, 25);
         List<NearbyPlaceProjection> projections = placeRepository.findNearbyPlaces(
                 latitude,
                 longitude,
-                targetRadiusKm,
+                candidateRadiusKm,
                 targetCategory.name(),
-                targetLimit
+                candidateLimit
         );
 
         if (!projections.isEmpty()) {
-            log.info("[NEARBY_PLACES] Found {} places in database for coordinates ({}, {}) within {} km. Serving from DB.",
-                    projections.size(), latitude, longitude, targetRadiusKm);
-            List<NearbyPlaceResponse> responses = buildResponsesFromProjections(projections);
+            log.info("[NEARBY_PLACES] Found {} candidate places in DB for coordinates ({}, {}) within {} km (buffer: {} km). Enriching with road distances.",
+                    projections.size(), latitude, longitude, targetRadiusKm, candidateRadiusKm);
+            List<NearbyPlaceResponse> responses = buildResponsesWithRoadMetrics(latitude, longitude, projections, targetRadiusKm, targetLimit);
             saveToCache(cacheKey, responses);
             return responses;
         }
 
         log.info("[NEARBY_PLACES] Zero places found in DB within {} km for coordinates ({}, {}). Returning empty list.",
-                targetRadiusKm, latitude, longitude);
+                candidateRadiusKm, latitude, longitude);
         saveToCache(cacheKey, Collections.emptyList());
         return Collections.emptyList();
     }
@@ -234,6 +240,92 @@ public class PlaceServiceImpl implements PlaceService {
                         .photos(photosByPlaceId.getOrDefault(place.getId(), Collections.emptyList()))
                         .reviews(reviewsByPlaceId.getOrDefault(place.getId(), Collections.emptyList()))
                         .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<NearbyPlaceResponse> buildResponsesWithRoadMetrics(
+            Double originLat,
+            Double originLng,
+            List<NearbyPlaceProjection> projections,
+            double targetRadiusKm,
+            int limit
+    ) {
+        if (projections == null || projections.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Coordinate origin = new Coordinate(originLat, originLng);
+        List<Coordinate> destinationCoordinates = projections.stream()
+                .map(p -> new Coordinate(p.getLatitude(), p.getLongitude()))
+                .collect(Collectors.toList());
+
+        Map<Coordinate, RoadMetrics> roadMetricsMap = roadDistanceService.getRoadMetrics(origin, destinationCoordinates);
+
+        List<UUID> placeIds = projections.stream().map(NearbyPlaceProjection::getId).collect(Collectors.toList());
+
+        Map<UUID, List<PlacePhotoDto>> photosByPlaceId = placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(placeIds)
+                .stream()
+                .collect(Collectors.groupingBy(
+                        photo -> photo.getPlace().getId(),
+                        Collectors.mapping(photo -> PlacePhotoDto.builder()
+                                .id(photo.getId())
+                                .photoUrl(photo.getPhotoUrl())
+                                .displayOrder(photo.getDisplayOrder())
+                                .build(), Collectors.toList())
+                ));
+
+        Map<UUID, List<PlaceReviewDto>> reviewsByPlaceId = placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(placeIds)
+                .stream()
+                .collect(Collectors.groupingBy(
+                        review -> review.getPlace().getId(),
+                        Collectors.mapping(review -> PlaceReviewDto.builder()
+                                .id(review.getId())
+                                .authorName(review.getAuthorName())
+                                .authorAvatarUrl(review.getAuthorAvatarUrl())
+                                .rating(review.getRating())
+                                .comment(review.getComment())
+                                .relativeTimeDescription(review.getRelativeTimeDescription())
+                                .publishTime(review.getPublishTime())
+                                .build(), Collectors.toList())
+                ));
+
+        return projections.stream()
+                .map(proj -> {
+                    Coordinate dest = new Coordinate(proj.getLatitude(), proj.getLongitude());
+                    RoadMetrics metrics = roadMetricsMap.get(dest);
+
+                    Double roadDistKm;
+                    Integer durationMin;
+                    if (metrics != null) {
+                        roadDistKm = metrics.getDistanceKm();
+                        durationMin = metrics.getDurationMinutes();
+                    } else {
+                        roadDistKm = proj.getDistanceKm() != null ? Math.round(proj.getDistanceKm() * 1.35 * 10.0) / 10.0 : 0.0;
+                        durationMin = NearbyPlaceResponse.calculateTravelTimeMinutes(roadDistKm);
+                    }
+
+                    return NearbyPlaceResponse.builder()
+                            .id(proj.getId())
+                            .googlePlaceId(proj.getGooglePlaceId())
+                            .name(proj.getName())
+                            .category(proj.getCategory())
+                            .address(proj.getAddress())
+                            .latitude(proj.getLatitude())
+                            .longitude(proj.getLongitude())
+                            .rating(proj.getRating() != null ? Math.round(proj.getRating() * 10.0) / 10.0 : null)
+                            .userRatingsTotal(proj.getUserRatingsTotal())
+                            .coverImageUrl(proj.getCoverImageUrl())
+                            .detailUrl(proj.getDetailUrl())
+                            .provinceName(proj.getProvinceName())
+                            .distanceKm(roadDistKm)
+                            .estimatedTravelTimeMinutes(durationMin)
+                            .photos(photosByPlaceId.getOrDefault(proj.getId(), Collections.emptyList()))
+                            .reviews(reviewsByPlaceId.getOrDefault(proj.getId(), Collections.emptyList()))
+                            .build();
+                })
+                .filter(res -> res.distanceKm() != null && res.distanceKm() <= targetRadiusKm)
+                .sorted(Comparator.comparing(NearbyPlaceResponse::distanceKm))
+                .limit(limit)
                 .collect(Collectors.toList());
     }
 

@@ -52,3 +52,8 @@ logging:
       [traceId=%X{traceId:-}]
       %logger
       - %msg%n
+
+osrm:
+  base-url: ${OSRM_BASE_URL:http://localhost:5000}
+  timeout-ms: ${OSRM_TIMEOUT_MS:1500}
+  enabled: ${OSRM_ENABLED:true}
