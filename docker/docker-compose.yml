@@ -317,18 +317,24 @@ services:
       retries: 12
       start_period: 60s
 
+  osrm-backend:
+    image: osrm/osrm-backend:latest
+    container_name: checkinn-osrm
+    restart: unless-stopped
+    networks: [checkinn]
+    ports: ["127.0.0.1:${OSRM_PORT:-5000}:5000"]
+    volumes:
+      - ./osrm-data:/data
+    command: osrm-routed --algorithm mld --mmap --max-table-size 1000 /data/vietnam-latest.osrm
+    healthcheck:
+      test: [CMD-SHELL, "bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/5000' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 networks:
   checkinn:
 volumes:
   redis-data:
   rabbitmq-data:
-
-  osrm-backend:
-    image: osrm/osrm-backend:latest
-    container_name: checkinn-osrm
-    restart: unless-stopped
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./osrm-data:/data
-    command: osrm-routed --algorithm mld /data/vietnam-latest.osrm
