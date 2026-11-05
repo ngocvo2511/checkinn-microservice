@@ -36,6 +36,8 @@ public record HotelResponse(
         Instant updatedAt,
         java.math.BigDecimal lowestPrice,
         List<RoomTypeResponse> roomTypes,
-        List<MediaAssetResponse> mediaAssets
+        List<MediaAssetResponse> mediaAssets,
+        com.example.hotelservice.Hotel.enums.AccommodationType accommodationType,
+        String accommodationTypeLabel
 ) {}
 

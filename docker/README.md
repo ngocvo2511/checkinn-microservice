@@ -427,3 +427,69 @@ states and inactive-room capacity for historical occupancy, with cross-owner
 and exact machine-identity denial. Hotel service adds coordinate_source field6 to its public gRPC address. The
 older revenue DTO proto remains wire-compatible; report lookup now uses REST
 and never consumes hotel coordinates.
+
+
+### Accommodation classification — FEAT-ACCOMMODATION-TYPE (04/11/2026)
+
+Hotel-service has **no Flyway dependency/history** in the inspected hotel clone.
+The SQL files in `src/main/resources/db/migration` are not a migration runner.
+Apply `sql/hotel-accommodation-type-20261104.sql` explicitly with PostgreSQL
+`psql -X -v ON_ERROR_STOP=1 -f ...` against the reviewed target **before** starting
+the new hotel image. This is a transactional, advisory-locked, receipted migration
+(`checkinn_feature_migrations`), not a guessed Flyway V6. It adds nullable
+`hotels.accommodation_type` without a default/backfill, a numeric hotel revision,
+validated code CHECKs and a review table with one PENDING row per hotel enforced
+by a partial unique index. The application refuses an incomplete expansion if
+the deployment receipt/CHECK/index is missing. Keep the migration immutable once
+applied; corrections require a new migration. Global clean-schema provisioning
+is still separate work (STD-021).
+
+For the **existing verified test clone only**, from the backend repository:
+
+```powershell
+python docker/accommodation-migration-test.py
+# Rebuild/up hotel-service with -p checkinn-test and the .env.test/compose.test overlay.
+python docker/hotel-publication-smoke.py
+```
+
+The migration harness verifies the resolved clone datasource, Compose project,
+actual database/user, two applications of the migration, legacy fingerprint,
+nullability, no default, validated constraint and absence of backfill. It refuses
+non-clone execution. The workflow harness waits for gateway discovery, writes only
+fresh synthetic hotel/room/request UUIDs, tests real PostgreSQL lock contention,
+and checks that existing hotel values are identical after cleanup. It never calls
+payment, storage or SMTP. Do not run it concurrently with other fixture writers.
+
+The four codes/labels are HOTEL/Hotel, VILLA/Villa, APARTMENT/Apartment and
+GUEST_HOUSE/Guest House. New create requests must include `accommodationType`,
+even for DRAFT; old records may remain NULL. Omitted/null update keeps the current
+classification. Invalid values and malformed query codes return400. Public
+`GET /hotels/accommodation-types` is the catalog; repeated `accommodationTypes`
+on `/hotels/offers` uses OR within types and AND with existing offer criteria.
+NULL hotels remain eligible without this filter and do not match a type filter.
+
+Owner `GET/POST /hotels/{id}/accommodation-type-changes` returns private history
+or proposes a change. For APPROVED hotels, the published type and active state
+remain unchanged. ADMIN `GET /hotels/accommodation-type-changes/pending` and
+`POST /hotels/accommodation-type-changes/{requestId}/approve|reject` use a
+specific immutable request ID; reject body is `{ "reason": "..." }`. Locks are
+always hotel then request; duplicate submissions share the pending request,
+replacement supersedes it, exact completed reviewer retries do not replay writes,
+and stale/superseded/opposing decisions return409. History/queue responses are
+no-store. Public DTOs contain only the published code/label, no review metadata.
+
+Initial hotel approval now requires `PUT /hotels/{id}/approve?revision=N` using
+`revision` from the pending-detail response. Editing a PENDING registration changes
+that revision; an older decision returns409 and the admin must reload/review.
+Generic hotel approval never approves a separate classification proposal.
+
+Coordinate backend/frontend release: old read clients can ignore additive fields,
+but an old create client without a selected type intentionally gets400. Do not
+re-enable that client after enforcement. Roll back the search surface/disable the
+new filter while retaining compatible create/approval forms and the enforcing
+backend. Retain the expanded schema and all review history; never drop columns,
+backfill HOTEL or promote a pending request as a rollback. A binary rollback to
+pre-enforcement code is **not** a supported rollback target. No production rollout,
+source database write or historical classification has been performed here.
+
+The accommodation workflow harness and /hotels/offers filtering integration are delivered by the dependent search-fix PR. Run that harness after both backend PRs are present.

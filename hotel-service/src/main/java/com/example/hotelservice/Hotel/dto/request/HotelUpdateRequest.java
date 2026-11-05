@@ -24,6 +24,7 @@ public record HotelUpdateRequest(
         String businessLicenseNumber,
         String taxId,
         String operationLicenseNumber,
-        String ownerIdentityNumber
+        String ownerIdentityNumber,
+        com.example.hotelservice.Hotel.enums.AccommodationType accommodationType
 ) {}
 

@@ -58,7 +58,7 @@ public interface HotelService {
 
     void deactivateHotel(UUID hotelId);
 
-    void approveHotel(UUID hotelId);
+    void approveHotel(UUID hotelId, long expectedRevision);
 
     void rejectHotel(UUID hotelId, String note);
 

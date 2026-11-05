@@ -18,6 +18,9 @@ import java.util.UUID;
 @Builder
 public class PendingHotelDetailResponse {
     UUID id;
+    long revision;
+    String accommodationTypeLabel;
+    com.example.hotelservice.Hotel.enums.AccommodationType accommodationType;
     String name;
     String description;
     Short starRating;

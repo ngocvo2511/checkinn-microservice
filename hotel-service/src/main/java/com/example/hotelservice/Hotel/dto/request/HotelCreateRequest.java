@@ -27,6 +27,7 @@ public record HotelCreateRequest(
         // ====== Chính sách và tiện ích ======
         List<PolicyRequest> policies,
         List<QuestionRequest> questions,
-        List<AmenityRequest> amenityCategories
+        List<AmenityRequest> amenityCategories,
+        com.example.hotelservice.Hotel.enums.AccommodationType accommodationType
 ) {}
 

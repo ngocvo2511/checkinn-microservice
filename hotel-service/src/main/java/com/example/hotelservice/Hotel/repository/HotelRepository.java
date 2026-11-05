@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface HotelRepository extends JpaRepository<Hotel, UUID> {
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select h from Hotel h where h.id = :id")
+    java.util.Optional<Hotel> findForUpdate(@org.springframework.data.repository.query.Param("id") UUID id);
+
     List<Hotel> findByIsActiveTrueAndApprovedStatus(HotelApprovalStatus status);
 
     List<Hotel> findByCityIdAndIsActiveTrueAndApprovedStatus(UUID cityId, HotelApprovalStatus status);

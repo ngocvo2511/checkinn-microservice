@@ -45,6 +45,14 @@ public class Hotel {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "accommodation_type", length = 32)
+    private com.example.hotelservice.Hotel.enums.AccommodationType accommodationType;
+
+    @Version
+    @Column(nullable = false)
+    private long revision;
+
     @Column(name = "star_rating")
     private Short starRating;
 

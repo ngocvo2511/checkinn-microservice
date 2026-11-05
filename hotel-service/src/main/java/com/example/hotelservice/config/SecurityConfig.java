@@ -48,6 +48,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                                 .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                         .requestMatchers("/hotels/accommodation-type-changes/**").access(adminOnly)
+                        .requestMatchers("/hotels/{hotelId}/accommodation-type-changes").authenticated()
                         .requestMatchers("/internal/reports/**").access(revenueServiceOnly)
                         .requestMatchers("/internal/hotels/**").access(bookingServiceOnly)
                         .requestMatchers("/medias/preview", "/api/v1/{roomTypeId}/preview", "/api/v1/hotel/{hotelId}/preview").authenticated()
