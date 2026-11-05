@@ -23,6 +23,7 @@ public abstract class RoomTypeMapper {
     // ---------------- CreateRoomTypeRequest -> RoomType ----------------
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "description", expression = "java(request.description())")
     @Mapping(target = "capacity", expression = "java(writeJson(request.capacity()))")
     @Mapping(target = "amenities", expression = "java(writeJson(request.amenities()))")
     @Mapping(target = "createdAt", ignore = true)
@@ -33,6 +34,7 @@ public abstract class RoomTypeMapper {
     // ---------------- RoomType -> RoomTypeResponse (record) ----------------
 
     @Mapping(target = "capacity", expression = "java(readCapacity(entity.getCapacity()))")
+    @Mapping(target = "description", expression = "java(entity.getDescription())")
     @Mapping(target = "amenities", expression = "java(readAmenities(entity.getAmenities()))")
     @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(entity.getMediaAssets()))")
     public abstract RoomTypeResponse toRoomTypeResponse(RoomType entity);

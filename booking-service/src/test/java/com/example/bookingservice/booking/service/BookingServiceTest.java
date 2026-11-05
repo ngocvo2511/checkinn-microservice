@@ -33,6 +33,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BookingServiceTest {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans={true,false})
+    void recoveryReleasesUnpaidOnsiteNoShowFundsButNeverPaidFunds(boolean paid) {
+        var b=Booking.builder().id("booking").userId("guest").status(BookingStatus.NO_SHOW)
+                .onsiteReservationStatus("V1_RELEASED").paidAmount(paid ? BigDecimal.TEN : BigDecimal.ZERO).build();
+        when(bookingRepository.findById("booking")).thenReturn(Optional.of(b));
+        assertThat(bookingService.getLoyaltyBookingState("booking","guest")).isEqualTo(paid ? "ACTIVE" : "CANCELLED");
+    }
 
     private BookingRepository bookingRepository;
     private BookingItemRepository bookingItemRepository;
@@ -229,7 +237,154 @@ class BookingServiceTest {
     }
 
     @Test
-    void ensureActiveHoldCancelsBookingWhenHoldExpired() {
+    void acceptedBookingRetryDoesNotHoldInventoryOrRepriceAgain() {
+        String room = UUID.randomUUID().toString();
+        var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
+        request.setIdempotencyKey(UUID.randomUUID().toString());
+        var existing = Booking.builder().id("accepted").userId(request.getUserId()).items(List.of())
+                .idempotencyRequestHash(BookingIdempotency.requestHash(request)).build();
+        when(bookingRepository.findByIdempotencyKeyHash(any())).thenReturn(Optional.of(existing));
+        assertThat(bookingService.createBooking(request).getId()).isEqualTo("accepted");
+        org.mockito.Mockito.verifyNoInteractions(availabilityClient, catalogClient, eventPublisher);
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @Test
+    void idempotencyKeyCannotBeReusedForChangedInput() {
+        String room = UUID.randomUUID().toString();
+        var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
+        request.setIdempotencyKey(UUID.randomUUID().toString());
+        when(bookingRepository.findByIdempotencyKeyHash(any())).thenReturn(Optional.of(Booking.builder()
+                .userId(request.getUserId()).idempotencyRequestHash("different-input").build()));
+        assertThatThrownBy(() -> bookingService.createBooking(request))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
+        org.mockito.Mockito.verifyNoInteractions(availabilityClient, catalogClient, eventPublisher);
+    }
+
+    @Test
+    void bookingResponseSerializesHoldExpiryAsAnAbsoluteInstantInAnyServerZone() throws Exception {
+        var originalZone = java.util.TimeZone.getDefault();
+        try {
+            var expiry = Instant.parse("2027-01-10T03:15:00Z");
+            for (String zone : List.of("UTC", "Asia/Ho_Chi_Minh")) {
+                java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(zone));
+                var booking = pendingHold();
+                booking.setItems(List.of());
+                booking.setHoldExpiresAt(LocalDateTime.ofInstant(expiry, java.time.ZoneId.systemDefault()));
+                var response = bookingService.getBooking("booking-1");
+                var mapper = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules()
+                        .disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                assertThat(mapper.readTree(mapper.writeValueAsString(response)).get("holdExpiresAt").asText())
+                        .isEqualTo(expiry.toString());
+            }
+        } finally {
+            java.util.TimeZone.setDefault(originalZone);
+        }
+    }
+
+    @Test
+    void emptyDiscoveryCacheDoesNotBecomeAnInvalidHold() {
+        var booking = pendingHold();
+        when(availabilityClient.getHold("hold-1")).thenThrow(new IllegalArgumentException("Service Instance cannot be null"));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @Test
+    void holdLookupTimeoutIsUnavailableWithoutCancellingOrPublishing() {
+        var booking = pendingHold();
+        when(availabilityClient.getHold("hold-1")).thenThrow(new org.springframework.web.client.ResourceAccessException("timeout"));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingRepository, never()).save(any());
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
+        verify(availabilityClient, never()).releaseHold(any());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.NullAndEmptySource
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"invalid-deadline", "2026-11-05T12:00:00"})
+    void malformedHoldExpiryDoesNotGrantAnotherFifteenMinutes(String expiry) {
+        var booking = pendingHold();
+        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", "HELD", expiry));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingRepository, never()).save(any());
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"RELEASED", "EXPIRED", "CANCELLED", "CONFIRMED"})
+    void authoritativeInactiveHoldBlocksPaymentWithoutPartialCancellation(String status) {
+        var booking = pendingHold();
+        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", status, Instant.now().plusSeconds(600).toString()));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingRepository, never()).save(any());
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
+    }
+
+    @Test
+    void missingOrMismatchedOrUnknownHoldResponseFailsClosed() {
+        var booking = pendingHold();
+        for (var response : java.util.Arrays.asList(null,
+                new HoldResponse("other-hold", "HELD", Instant.now().plusSeconds(600).toString()),
+                new HoldResponse("hold-1", "UNKNOWN", Instant.now().plusSeconds(600).toString()))) {
+            when(availabilityClient.getHold("hold-1")).thenReturn(response);
+            assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                    .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                            e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
+        }
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @Test
+    void activeAuthoritativeHoldAllowsPaymentWithoutRewritingItsDeadline() {
+        var booking = pendingHold();
+        var deadline = booking.getHoldExpiresAt();
+        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(600).toString()));
+        assertThat(bookingService.ensureActiveHold("booking-1")).isSameAs(booking);
+        assertThat(booking.getHoldExpiresAt()).isEqualTo(deadline);
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.NullAndEmptySource
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"invalid-deadline", "2026-11-05T12:00:00"})
+    void bookingWithoutPointsAlsoRequiresAnActualInventoryDeadline(String expiry) {
+        String room = UUID.randomUUID().toString();
+        stubCatalog(room, "hotel-1", 2, true);
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", expiry));
+        var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
+        assertThatThrownBy(() -> bookingService.createBooking(request))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
+        verify(bookingRepository, never()).save(any());
+        verify(availabilityClient).releaseHold("hold-1");
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
+    }
+
+    private Booking pendingHold() {
+        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT)
+                .paidAmount(BigDecimal.ZERO).holdId("hold-1")
+                .holdExpiresAt(LocalDateTime.now().plusMinutes(10)).build();
+        when(bookingRepository.findById("booking-1")).thenReturn(Optional.of(booking));
+        return booking;
+    }
+
+    @Test
+    void expiredHoldRejectsPaymentWithoutPublishingARolledBackCancellation() {
         Booking booking = Booking.builder()
                 .id("booking-1")
                 .userId("user-1")
@@ -249,12 +404,13 @@ class BookingServiceTest {
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("expired");
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
 
-        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
-        verify(availabilityClient).releaseHold("hold-1");
-        verify(bookingRepository).save(booking);
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(availabilityClient, never()).releaseHold("hold-1");
+        verify(bookingRepository, never()).save(any());
+        org.mockito.Mockito.verifyNoInteractions(eventPublisher);
     }
 
     private CreateBookingRequest baseBookingRequest(List<CreateBookingItemRequest> items) {

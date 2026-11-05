@@ -9,6 +9,12 @@ public record RoomTypeUpdateRequest(
         CapacityDto capacity,
         List<String> amenities,
         Boolean isActive,
-        Integer roomAmount
-) {}
+        Integer roomAmount,
+        String description
+) {
+    public RoomTypeUpdateRequest(String name, BigDecimal basePrice, CapacityDto capacity, List<String> amenities,
+                                 Boolean isActive, Integer roomAmount) {
+        this(name, basePrice, capacity, amenities, isActive, roomAmount, null);
+    }
+}
 

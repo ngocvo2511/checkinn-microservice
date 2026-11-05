@@ -176,3 +176,62 @@ mvn spring-boot:run
 - Tất cả items trong một booking phải cùng room_type khi quantity > 1
 - Voucher validation được gọi tới voucher service (cần implement)
 - VNPay integration cần setup webhook callback
+
+
+## Onsite reservation V1 — approved 05/11/2026
+
+New HOTEL payment choices persist ONSITE_PENDING and a durable V1_PENDING
+reservation intent atomically. This is not a receipt: paidAmount remains zero.
+Only a successful inventory confirmation changes the booking to CONFIRMED and
+V1_CONFIRMED. Inventory is booked for the existing check-in/check-out dates,
+independent of the original short HELD deadline. Same-choice retries return the
+same existing payment; they do not create another payment or renew inventory.
+
+A bounded two-thread wake-up executor starts work after local commit, with a
+one-second durable DB polling fallback (ten seconds initial delay). It does not
+block a committing request opening a second database transaction, avoiding
+connection-pool starvation. Work locks booking before inventory, validates the
+committed HOTEL payment and zero paid amount, and replays the existing idempotent
+hold confirmation. Transport/unknown outcomes keep intent pending with five-second
+backoff. Missing/terminal/inconsistent source needs review; no new hold is guessed.
+A local completion commit failure leaves the intent retryable after process restart.
+
+V1 bookings bypass calendar expiry/auto check-in/check-out/no-show jobs. Host
+records attendance explicitly; no-show cannot be recorded before the arrival
+date. Cancellation/no-show commit their source decision and queue an idempotent
+inventory release; a queued confirmation never reopens a terminal booking.
+Unpaid no-show releases the unused points reservation; an actual paid receipt is
+not erased or automatically refunded. Existing cancellation/refund policy applies.
+
+Host/ADMIN records an onsite receipt only after reservation confirmation. Its
+amount comes from the persisted server total. Receipt retries do not add money;
+loyalty USE/EARN is queued only after actual receipt commit. New onsite payment/
+status events are sent after their local transaction commits, not on rollback.
+This is not a general reliable RabbitMQ outbox: delivery gaps/ordering and actual
+provider refund/query/settlement remain separate standardization work.
+
+Apply docker/sql/onsite-reservation-v1-20261105.sql to the BOOKING database before
+releasing the writer. Four nullable fields and an index have no default/backfill;
+NULL policy identifies legacy rows and is never auto-promoted. Deploy the truthful
+frontend first (it safely displays legacy/unknown states), then the new backend.
+Keep expanded schema on rollback. Do not revert to an old writer/scheduler that
+ignores V1 fields while V1 bookings exist; disable writes and forward-fix instead.
+Historical onsite bookings require review, not a guessed inventory backfill.
+
+Verified-clone commands (run runtime harnesses separately):
+
+```powershell
+python -X utf8 docker/onsite-reservation-smoke.py --migrate-only
+# Build/up only booking-service in checkinn-test with the test overlay.
+python -X utf8 docker/onsite-reservation-smoke.py
+python -X utf8 docker/booking-security-smoke.py
+python -X utf8 docker/booking-hold-verification-smoke.py
+```
+
+The onsite harness uses fresh synthetic hotel/room/guest/booking UUIDs, validates
+clone datasources and Mailpit, injects UUID-scoped HTTP-timeout and deferred-commit
+faults, restarts only test booking-service, then removes its faults and fixtures.
+It records synthetic host cash receipts, never real cash or provider transactions.
+BookingResponse.onsiteReservationStatus exposes V1_PENDING/V1_CONFIRMED/
+V1_REVIEW_REQUIRED/V1_RELEASED. Clients must read authoritative booking state;
+HTTP201 ONSITE_PENDING alone never proves the room was confirmed or money received.

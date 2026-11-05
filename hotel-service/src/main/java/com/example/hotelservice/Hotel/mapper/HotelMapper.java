@@ -79,6 +79,7 @@ public abstract class HotelMapper {
 
     @InheritConfiguration(name = "toHotelResponse")
     @Mapping(target = "roomTypes", expression = "java(toPublishedRoomTypeResponses(entity.getRoomTypes()))")
+    @Mapping(target = "amenityCategories", expression = "java(getPublicAmenities(entity.getId()))")
     public abstract HotelResponse toPublicHotelResponse(Hotel entity);
 
     protected List<RoomTypeResponse> toPublishedRoomTypeResponses(List<RoomType> rooms) {
@@ -226,6 +227,14 @@ public abstract class HotelMapper {
     }
 
     protected List<AmenityResponse> getAmenities(UUID hotelId) {
+        return getAmenities(hotelId, false);
+    }
+
+    protected List<AmenityResponse> getPublicAmenities(UUID hotelId) {
+        return getAmenities(hotelId, true);
+    }
+
+    private List<AmenityResponse> getAmenities(UUID hotelId, boolean publicOnly) {
         if (hotelId == null) return List.of();
 
         List<HotelAmenityCategory> categories =
@@ -236,11 +245,13 @@ public abstract class HotelMapper {
 
         Map<UUID, List<HotelAmenity>> amenityMap =
                 amenities.stream()
+                        .filter(item -> !publicOnly || Boolean.TRUE.equals(item.getIsActive()))
                         .collect(java.util.stream.Collectors.groupingBy(
                                 a -> a.getCategory().getId()
                         ));
 
         return categories.stream()
+                .filter(category -> !publicOnly || Boolean.TRUE.equals(category.getIsActive()))
                 .map(category -> AmenityResponse.builder()
                         .id(category.getId().toString())
                         .title(category.getTitle())

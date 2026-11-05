@@ -530,3 +530,157 @@ backend. Retain the expanded schema and all review history; never drop columns,
 backfill HOTEL or promote a pending request as a rollback. A binary rollback to
 pre-enforcement code is **not** a supported rollback target. No production rollout,
 source database write or historical classification has been performed here.
+
+
+### Booking create commands / verified hold gate (05/11/2026)
+
+Deploy the additive SQL in `sql/booking-idempotency-20261105.sql` to the booking
+DB and `sql/hold-idempotency-20261105.sql` to the hotel DB before the new binaries.
+Both migrations are transactional/replayable, add nullable fields and unique
+indexes, and never backfill historical rows. The hotel service must accept the
+new inventory command before releasing the booking service and frontend.
+`python docker/booking-idempotency-schema-test.py` applies/replays only against
+verified running clones and checks historical row fingerprints and constraints.
+No production migration was performed. Retain the schema on rollback; disable
+new booking writes before reverting a writer that ignores these command fields.
+
+REST create and booking gRPC accept additive UUID `idempotencyKey`. It is scoped
+to the authenticated customer; body userId never changes the signed actor.
+Concurrent same-key/same-input requests return the same current booking,
+including after publication/price changes; a changed business input returns409.
+Keys identify an attempt, not a guarantee that two intentionally different keys
+represent the same stay. Legacy requests without a key retain their response
+shape and cannot obtain command retry guarantees. New frontend forms always
+send a key, retain it after an ambiguous response, and rotate it when input
+changes. Reloading/remounting a form starts a new attempt: retain the caller's
+key outside the form if implementing durable/reload retries in another client.
+
+PostgreSQL transaction locks serialize initial creation across processes. The
+key yields a stable booking ID and inventory command; hotel inventory serializes
+and binds that command to room/dates/quantity. Replays return the original hold
+state/deadline without adding stock or extending TTL. If local commit fails
+after a remote hold succeeded, retry recovers the same hold. A compensated,
+released or expired hold cannot silently become a new reservation; request409
+requires reviewing the attempt. Unknown hold outcomes remain unavailable503.
+Historical unkeyed orphans are not automatically linked or rewritten.
+
+Payment eligibility checks never publish/cancel and then throw from a rolled
+back transaction. Known missing/terminal/expired holds block a new payment409;
+transport/discovery/malformed responses return503 and preserve booking/payment
+state. The existing explicit cancellation and scheduled expiry workflows still
+own cancellation. New bookings require an actual inventory expiry even without
+points. `BookingResponse.holdExpiresAt` is now an absolute UTC ISO timestamp;
+legacy local timestamp storage is unchanged and assumes the same deployment
+zone used by its writer. Changing a historical database's writer timezone still
+requires provenance review (STD-021), not a guessed backfill.
+
+Payment UI never derives TTL from creation time or a local fifteen-minute clock;
+unknown/expired deadlines disable payment and offer reload. Initial auth loading
+and stale booking reads are handled. The browser suites use intercepted responses,
+not a real provider. Native `python docker/booking-hold-verification-smoke.py`
+uses API-created synthetic bookings on verified clones/Mailpit, temporarily
+stops/restarts only test hotel-service and injects a UUID-scoped deferred booking
+commit fault. Run separately from other runtime suites. It cleans generated
+booking/room/hold/report records and its own trigger, without purging queues.
+These changes do not implement provider query/refund/settlement, distributed
+payment confirmation/cancellation recovery, or a general event outbox.
+
+
+### Public hotel facts (05/11/2026)
+
+Public hotel/offer DTOs expose only active amenity categories/items. Private
+management previews keep inactive data. Search filters use the complete label
+set, exact hotel-level names with AND, without inferring aliases, room scope or
+shared semantic IDs. No catalog mapping/backfill was performed. Missing facts
+never synthesize amenities, review scores, crossed-out prices, loyalty awards,
+location, policies or FAQ. Detail labels totalRooms as configured total, not
+availability for the selected dates. Unknown review data blocks an active rating
+filter with retry; it is not a successful empty result. Autocomplete hides legacy
+seed hotelCount; that legacy API field is not certified as a live aggregate.
+`search-offers-smoke.py` now also verifies inactive item/category exclusion with
+fresh fixtures and removes only those fixtures. Frontend regression uses the
+actual production artifact with intercepted synthetic API responses.
+
+
+### Room description round-trip (05/11/2026)
+
+Apply `sql/room-description-20261105.sql` to the hotel database before deploying
+the new hotel writer. It adds nullable TEXT with no default/backfill. Existing
+clones can verify apply/replay and unchanged legacy fingerprints with:
+
+```powershell
+python -X utf8 docker/room-description-smoke.py --migrate-only
+# Rebuild/up hotel-service only in checkinn-test.
+python -X utf8 docker/room-description-smoke.py
+```
+
+REST create/update/response now round-trip plain room `description`. Omitted/null
+partial update preserves existing text; an empty string clears it. New/legacy
+create may omit it. No synthetic description is assigned to old rooms. Explicit
+MapStruct expressions prevent generic JSON conversion of this String; frontend
+room adapters do not JSON-decode user-entered quotes or JSON-looking text.
+RoomTypeDto gRPC adds optional description field9, which older readers ignore.
+The native harness verifies clone identity, uses only fresh UUID fixtures and
+checks real PostgreSQL/API persistence plus owner authorization; its finally
+block discovers lost-response fixtures under the generated hotel before cleanup.
+Retain the additive column if reverting the binary. No production migration or
+historical string normalization was performed.
+
+
+## Onsite reservation V1 — approved 05/11/2026
+
+New HOTEL payment choices persist ONSITE_PENDING and a durable V1_PENDING
+reservation intent atomically. This is not a receipt: paidAmount remains zero.
+Only a successful inventory confirmation changes the booking to CONFIRMED and
+V1_CONFIRMED. Inventory is booked for the existing check-in/check-out dates,
+independent of the original short HELD deadline. Same-choice retries return the
+same existing payment; they do not create another payment or renew inventory.
+
+A bounded two-thread wake-up executor starts work after local commit, with a
+one-second durable DB polling fallback (ten seconds initial delay). It does not
+block a committing request opening a second database transaction, avoiding
+connection-pool starvation. Work locks booking before inventory, validates the
+committed HOTEL payment and zero paid amount, and replays the existing idempotent
+hold confirmation. Transport/unknown outcomes keep intent pending with five-second
+backoff. Missing/terminal/inconsistent source needs review; no new hold is guessed.
+A local completion commit failure leaves the intent retryable after process restart.
+
+V1 bookings bypass calendar expiry/auto check-in/check-out/no-show jobs. Host
+records attendance explicitly; no-show cannot be recorded before the arrival
+date. Cancellation/no-show commit their source decision and queue an idempotent
+inventory release; a queued confirmation never reopens a terminal booking.
+Unpaid no-show releases the unused points reservation; an actual paid receipt is
+not erased or automatically refunded. Existing cancellation/refund policy applies.
+
+Host/ADMIN records an onsite receipt only after reservation confirmation. Its
+amount comes from the persisted server total. Receipt retries do not add money;
+loyalty USE/EARN is queued only after actual receipt commit. New onsite payment/
+status events are sent after their local transaction commits, not on rollback.
+This is not a general reliable RabbitMQ outbox: delivery gaps/ordering and actual
+provider refund/query/settlement remain separate standardization work.
+
+Apply docker/sql/onsite-reservation-v1-20261105.sql to the BOOKING database before
+releasing the writer. Four nullable fields and an index have no default/backfill;
+NULL policy identifies legacy rows and is never auto-promoted. Deploy the truthful
+frontend first (it safely displays legacy/unknown states), then the new backend.
+Keep expanded schema on rollback. Do not revert to an old writer/scheduler that
+ignores V1 fields while V1 bookings exist; disable writes and forward-fix instead.
+Historical onsite bookings require review, not a guessed inventory backfill.
+
+Verified-clone commands (run runtime harnesses separately):
+
+```powershell
+python -X utf8 docker/onsite-reservation-smoke.py --migrate-only
+# Build/up only booking-service in checkinn-test with the test overlay.
+python -X utf8 docker/onsite-reservation-smoke.py
+python -X utf8 docker/booking-security-smoke.py
+python -X utf8 docker/booking-hold-verification-smoke.py
+```
+
+The onsite harness uses fresh synthetic hotel/room/guest/booking UUIDs, validates
+clone datasources and Mailpit, injects UUID-scoped HTTP-timeout and deferred-commit
+faults, restarts only test booking-service, then removes its faults and fixtures.
+It records synthetic host cash receipts, never real cash or provider transactions.
+BookingResponse.onsiteReservationStatus exposes V1_PENDING/V1_CONFIRMED/
+V1_REVIEW_REQUIRED/V1_RELEASED. Clients must read authoritative booking state;
+HTTP201 ONSITE_PENDING alone never proves the room was confirmed or money received.

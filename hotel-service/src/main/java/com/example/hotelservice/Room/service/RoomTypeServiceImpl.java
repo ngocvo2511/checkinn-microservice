@@ -37,6 +37,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         RoomType rt = new RoomType();
         rt.setHotelId(request.hotelId());
         rt.setName(request.name());
+        rt.setDescription(request.description());
         rt.setBasePrice(request.basePrice());
         rt.setCapacity(writeJson(request.capacity()));
         rt.setAmenities(writeJson(request.amenities()));
@@ -73,6 +74,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
             throw new SecurityException("Không có quyền cập nhật loại phòng");
 
         if (request.name() != null) rt.setName(request.name());
+        // Partial-update compatibility: omitted/null leaves existing text; empty string explicitly clears it.
+        if (request.description() != null) rt.setDescription(request.description());
         if (request.basePrice() != null) rt.setBasePrice(request.basePrice());
         if (request.capacity() != null) rt.setCapacity(writeJson(request.capacity()));
         if (request.amenities() != null) rt.setAmenities(writeJson(request.amenities()));

@@ -12,7 +12,10 @@ import java.util.List;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "bookings", indexes = @Index(name = "bookings_loyalty_due", columnList = "loyalty_status,loyalty_next_attempt_at"))
+@Table(name = "bookings", indexes = {
+        @Index(name = "bookings_onsite_due", columnList = "onsite_reservation_status,onsite_next_attempt_at"),
+        @Index(name = "bookings_loyalty_due", columnList = "loyalty_status,loyalty_next_attempt_at"),
+        @Index(name = "bookings_idempotency_key_hash_unique", columnList = "idempotency_key_hash", unique = true)})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +23,13 @@ import java.math.BigDecimal;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    @Column(length = 64, updatable = false)
+    private String idempotencyKeyHash;
+
+    @Column(length = 64, updatable = false)
+    private String idempotencyRequestHash;
 
     @Column(nullable = false)
     private String userId;
@@ -97,6 +105,14 @@ public class Booking {
     @Column(length = 64)
     private String loyaltyLastError;
 
+    // NULL is a legacy booking; never infer/backfill a historical reservation policy.
+    @Column(length = 24)
+    private String onsiteReservationStatus;
+    private LocalDateTime onsiteNextAttemptAt;
+    private Integer onsiteAttempts;
+    @Column(length = 64)
+    private String onsiteLastError;
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingItem> items;
 
@@ -108,6 +124,7 @@ public class Booking {
 
     @PrePersist
     protected void onCreate() {
+        if (id == null) id = java.util.UUID.randomUUID().toString();
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
         if (status == null) {

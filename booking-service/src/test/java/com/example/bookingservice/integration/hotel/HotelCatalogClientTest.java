@@ -12,6 +12,16 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
 class HotelCatalogClientTest {
+    @Test void emptyDiscoveryCacheIsDependencyFailureRatherThanBadBookingInput() {
+        RestTemplate rest = new RestTemplate();
+        rest.setInterceptors(java.util.List.of((request, body, execution) -> {
+            throw new IllegalArgumentException("Service Instance cannot be null, serviceId: hotel-service");
+        }));
+        var client = new HotelCatalogClient(rest);
+        ReflectionTestUtils.setField(client, "hotelServiceUrl", "http://hotel-service");
+        assertThatThrownBy(() -> client.getRoom("room-1")).isInstanceOfSatisfying(ResponseStatusException.class,
+                error -> assertThat(error.getStatusCode()).isEqualTo(HttpStatus.SERVICE_UNAVAILABLE));
+    }
     @Test void readsAuthoritativeRoomOfferAndIgnoresUnrelatedMetadata() {
         RestTemplate rest = new RestTemplate();
         var server = MockRestServiceServer.bindTo(rest).build();

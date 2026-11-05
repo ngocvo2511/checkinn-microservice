@@ -40,6 +40,7 @@ public class PaymentService {
     private final BookingService bookingService;
     private final HotelEventPublisher eventPublisher;
     private final PaymentCreationPolicyFactory paymentCreationPolicyFactory;
+    private final org.springframework.context.ApplicationEventPublisher applicationEvents;
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
@@ -50,6 +51,16 @@ public class PaymentService {
         Booking booking = bookingRepository.findByIdForUpdate(request.getBookingId())
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + request.getBookingId()));
         log.info("[CREATE_PAYMENT] Booking loaded - bookingId: {}, userId: {}", booking.getId(), booking.getUserId());
+        var existingOnsite = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(booking.getId()).orElse(null);
+        if (booking.getOnsiteReservationStatus() != null && booking.getPaidAmount() != null && booking.getPaidAmount().signum() == 0 && existingOnsite != null
+                && existingOnsite.getMethod() == PaymentMethod.HOTEL && existingOnsite.getStatus() == PaymentStatus.ONSITE_PENDING
+                && java.util.Set.of(BookingStatus.PENDING, BookingStatus.PENDING_PAYMENT, BookingStatus.CONFIRMED,
+                    BookingStatus.CHECKED_IN).contains(booking.getStatus())) {
+            if (existingOnsite.getAmount() == null || request.getAmount() == null || request.getAmount().compareTo(existingOnsite.getAmount()) != 0)
+                throw new IllegalArgumentException("Payment amount must equal the accepted server total");
+            applicationEvents.publishEvent(new com.example.bookingservice.booking.service.OnsiteReservationService.Requested(booking.getId()));
+            return toPaymentResponse(existingOnsite);
+        }
         validateBookingCanStartPayment(booking);
 
         if (request.getAmount() == null || request.getAmount().signum() <= 0
@@ -72,7 +83,12 @@ public class PaymentService {
             bookingRepository.save(booking);
         }
 
+        booking.setOnsiteReservationStatus("V1_PENDING");
+        booking.setOnsiteNextAttemptAt(LocalDateTime.now());
+        booking.setOnsiteLastError(null);
+        bookingRepository.save(booking);
         payment = paymentRepository.save(payment);
+        applicationEvents.publishEvent(new com.example.bookingservice.booking.service.OnsiteReservationService.Requested(booking.getId()));
         log.info("[CREATE_PAYMENT] Payment created - paymentId: {}, bookingId: {}, method: {}", payment.getId(), payment.getBookingId(), payment.getMethod());
         return toPaymentResponse(payment);
     }
@@ -271,6 +287,11 @@ public class PaymentService {
                     "Stored onsite payment amount requires reconciliation");
         }
 
+        if (booking.getOnsiteReservationStatus() != null && (!"V1_CONFIRMED".equals(booking.getOnsiteReservationStatus())
+                || !java.util.Set.of(BookingStatus.CONFIRMED, BookingStatus.CHECKED_IN, BookingStatus.CHECKED_OUT).contains(booking.getStatus()))) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Reservation must be confirmed before an onsite receipt is accepted");
+        }
         // Mark payment as completed
         payment.setStatus(PaymentStatus.COMPLETED);
         payment.setPaidAt(LocalDateTime.now());
@@ -279,13 +300,15 @@ public class PaymentService {
         // Update booking paid amount
         booking.setPaidAmount(booking.getTotalAmount());
         confirmReservation(booking);
+        if (pointsSettlementAllowed(booking)) bookingService.settleLoyaltyPoints(booking);
         bookingRepository.save(booking);
 
         // Publish payment event
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
         try {
             log.info("[PUBLISH_EVENT] Publishing payment.completed for hotel-confirmed payment - bookingId: {}", bookingId);
-            eventPublisher.publishPaymentCompleted(event);
+            com.example.bookingservice.booking.service.OnsiteEvents.afterCommit(booking,
+                    () -> eventPublisher.publishPaymentCompleted(event));
             log.info("[PUBLISH_EVENT] Published payment.completed for bookingId: {}", bookingId);
         } catch (Exception e) {
             log.error("[PUBLISH_EVENT] Failed to publish payment.completed for bookingId: {}: {}", bookingId, e.getMessage(), e);

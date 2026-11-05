@@ -20,6 +20,13 @@ public record RoomTypeResponse(
         Integer totalRooms,
         Instant createdAt,
         Instant updatedAt,
-        List<MediaAssetResponse> mediaAssets
-) {}
+        List<MediaAssetResponse> mediaAssets,
+        String description
+) {
+    public RoomTypeResponse(UUID id, UUID hotelId, String name, BigDecimal basePrice, CapacityDto capacity,
+                            List<String> amenities, Boolean isActive, Integer totalRooms, Instant createdAt,
+                            Instant updatedAt, List<MediaAssetResponse> mediaAssets) {
+        this(id, hotelId, name, basePrice, capacity, amenities, isActive, totalRooms, createdAt, updatedAt, mediaAssets, null);
+    }
+}
 

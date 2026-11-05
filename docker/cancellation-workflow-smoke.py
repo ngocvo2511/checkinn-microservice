@@ -108,6 +108,8 @@ def main():
         code, payment = api('POST', '/api/payments', customer, {'bookingId': booking, 'amount': amount, 'method': 'HOTEL'})
         check(code == 201, 'onsite payment creation uses canonical amount')
         payment_id = str(uuid.UUID(payment['id']))
+        check(wait_for(lambda: h.sql('checkinn_booking', "SELECT status='CONFIRMED' AND onsite_reservation_status='V1_CONFIRMED' AND paid_amount=0 FROM bookings WHERE id='" + booking + "'") == 't'),
+              'onsite inventory confirms before host records a receipt; no money is collected by the choice')
         if commit_fault:
             source_query = "SELECT status,paid_amount,coalesce(loyalty_status,'NULL') FROM bookings WHERE id='" + booking + "'"
             before = h.sql('checkinn_booking', source_query)
@@ -120,7 +122,7 @@ def main():
                   'local payment commit failure leaves no premature USE or EARN')
             drop_fault(commit_fault)
         code, result = api('POST', '/api/payments/' + booking + '/confirm', administrator)
-        check(code == 200 and result['status'] == 'COMPLETED', 'authorized onsite receipt confirms internal inventory')
+        check(code == 200 and result['status'] == 'COMPLETED', 'authorized onsite receipt records money after inventory confirmation')
         if not onsite:
             print(json.dumps({'case': 'VNPay provider settlement', 'result': 'NOT_RUN', 'reason': 'no signing config; onsite flow tested instead'}), flush=True)
         return payment_id
@@ -249,7 +251,7 @@ def main():
                 fault = install_fault('checkinn_user', 'loyalty_commands', 'INSERT', "NEW.booking_id='" + points_id + "' AND NEW.command_type='EARN'")
             else:
                 fault = install_fault('checkinn_booking', 'bookings', 'UPDATE', "NEW.id='" + points_id + "' AND NEW.loyalty_status='SETTLED'")
-            payment_fault = install_fault('checkinn_booking', 'bookings', 'UPDATE', "NEW.id='" + points_id + "' AND NEW.status='CONFIRMED'", deferred=True) if onsite else None
+            payment_fault = install_fault('checkinn_booking', 'bookings', 'UPDATE', "NEW.id='" + points_id + "' AND NEW.paid_amount>0", deferred=True) if onsite else None
             points_payment = complete_payment(points_id, net, onsite, payment_fault)
             if not onsite:
                 check(wait_for(lambda: h.sql('checkinn_booking', "SELECT loyalty_attempts>0 AND loyalty_status='PENDING' FROM bookings WHERE id='" + points_id + "'") == 't')

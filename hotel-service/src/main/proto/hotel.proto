@@ -81,6 +81,7 @@ message RoomTypeDto {
   repeated string amenities = 6;
   bool is_active = 7;
   repeated MediaAsset images = 8;
+  optional string description = 9;
 }
 
 message RoomTypeBasic {

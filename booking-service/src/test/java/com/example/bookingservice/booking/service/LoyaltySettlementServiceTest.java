@@ -18,6 +18,16 @@ import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.*;
 
 class LoyaltySettlementServiceTest {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans={true,false})
+    void onsiteNoShowOnlyReleasesUnusedPointsWhenThereIsNoReceipt(boolean paid) {
+        booking.setStatus(BookingStatus.NO_SHOW); booking.setOnsiteReservationStatus("V1_RELEASED");
+        if (!paid) booking.setPaidAmount(BigDecimal.ZERO);
+        service.process("booking");
+        assertThat(booking.getLoyaltyStatus()).isEqualTo(paid ? "SETTLED" : "REVERSED");
+        if (!paid) { verify(points).refundPoints("guest","booking"); verify(points,never()).usePoints(any()); verify(points,never()).earnPoints(any(),any(),any()); }
+        else verify(points,never()).refundPoints(any(),any());
+    }
     BookingRepository bookings = mock(BookingRepository.class);
     PaymentRepository payments = mock(PaymentRepository.class);
     LoyaltyPointsClient points = mock(LoyaltyPointsClient.class);

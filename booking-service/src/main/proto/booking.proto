@@ -49,6 +49,7 @@ message CreateBookingRequest {
   string specialRequests = 11;
   string voucherCode = 12;
   repeated CreateBookingItemRequest items = 13;
+  string idempotencyKey = 14;
 }
 
 message CreateBookingItemRequest {
