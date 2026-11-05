@@ -11,11 +11,5 @@ public record LocationResponse(
         Integer hotelCount,
         Instant createdAt,
         String parentName,
-        String type, // "PROVINCE" hoặc "CITY"
-        UUID parentId
-) {
-    public LocationResponse(UUID id, String name, Double latitude, Double longitude, Integer hotelCount,
-            Instant createdAt, String parentName, String type) {
-        this(id,name,latitude,longitude,hotelCount,createdAt,parentName,type,null);
-    }
-}
+        String type  // "PROVINCE" hoặc "CITY"
+) {}

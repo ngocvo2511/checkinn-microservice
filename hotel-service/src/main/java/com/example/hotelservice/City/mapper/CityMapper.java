@@ -11,7 +11,6 @@ public interface CityMapper {
     @Mapping(target = "hotelCount", expression = "java(request.hotelCount() == null ? 0 : request.hotelCount())")
     City toCityEntity(CityCreateRequest request);
 
-    @Mapping(target = "parentName", source = "province.name")
-    @Mapping(target = "parentId", source = "province.id")
+    @Mapping(target = "parentName", expression = "java(null)")
     CityResponse toCityResponse(City entity);
 }

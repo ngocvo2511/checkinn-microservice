@@ -429,43 +429,6 @@ older revenue DTO proto remains wire-compatible; report lookup now uses REST
 and never consumes hotel coordinates.
 
 
-### Canonical room offers and search regressions (04/11/2026)
-
-Deploy the new hotel-service before the corresponding frontend. The additive
-public `GET /hotels/offers` endpoint (gateway `/api/hotel/hotels/offers`) accepts
-`cityId` or `provinceId`, legacy `cityName`, `hotelName`, paired ISO `checkIn` /
-`checkOut`, `rooms`, `adults`, `children`, and inclusive `minPrice` / `maxPrice`.
-Prices are base prices per room/night, matching booking's existing basePrice
-model. Defaults: one room, one adult, zero children, no backend price restriction.
-Dates may be omitted together. Invalid criteria return400. Unknown inventory
-returns409; dependency failures are not converted to sold-out results.
-
-Each result wraps the existing public `hotel` DTO plus an `offer` binding one
-roomTypeId, quantity, unitPrice, totalPerNight and optional date-aware
-availableRooms/checkIn/checkOut/checkedAt. Capacity uses requested quantity,
-with adult and child capacities checked independently on that same room type.
-Undated offers have null availability and checkedAt; totalRooms is not current
-availability. One repeatable-read transaction keeps catalog/inventory reads
-consistent within the response. Results use hotel UUID order, offer price ties
-use room UUID. This search is read-only and does not reserve inventory.
-
-Province expansion uses the city/province relation; known IDs do not fall back
-to display names. City/location DTOs now include additive parentId; no database
-migration is needed. Legacy name/city hotel list routes keep their response shape.
-
-After rebuilding/starting hotel-service **only in checkinn-test**, run:
-
-```powershell
-python docker/search-offers-smoke.py
-```
-
-The script verifies the hotel's datasource points to the clone, creates fresh
-hotel/room UUIDs, checks capacity/price/per-night supply, public visibility,
-HTTP validation, gateway routing and unknown inventory, then deletes only those
-fixtures in finally. It does not contact payment, media or email providers.
-No previous cloned hotel/room/inventory rows are modified.
-
-
 ### Accommodation classification — FEAT-ACCOMMODATION-TYPE (04/11/2026)
 
 Hotel-service has **no Flyway dependency/history** in the inspected hotel clone.
@@ -486,8 +449,6 @@ For the **existing verified test clone only**, from the backend repository:
 ```powershell
 python docker/accommodation-migration-test.py
 # Rebuild/up hotel-service with -p checkinn-test and the .env.test/compose.test overlay.
-python docker/accommodation-type-smoke.py
-python docker/search-offers-smoke.py
 python docker/hotel-publication-smoke.py
 ```
 
@@ -530,3 +491,5 @@ backend. Retain the expanded schema and all review history; never drop columns,
 backfill HOTEL or promote a pending request as a rollback. A binary rollback to
 pre-enforcement code is **not** a supported rollback target. No production rollout,
 source database write or historical classification has been performed here.
+
+The accommodation workflow harness and /hotels/offers filtering integration are delivered by the dependent search-fix PR. Run that harness after both backend PRs are present.

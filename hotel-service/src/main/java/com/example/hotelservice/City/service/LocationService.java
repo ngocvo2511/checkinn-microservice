@@ -51,8 +51,7 @@ public class LocationService {
                     city.getHotelCount(),
                     city.getCreatedAt(),
                     parent != null ? parent.getName() : null,
-                    "CITY",
-                    parent != null ? parent.getId() : null
+                    "CITY"
             ));
         }
 
@@ -96,8 +95,7 @@ public class LocationService {
                         c.getHotelCount(),
                         c.getCreatedAt(),
                         parent != null ? parent.getName() : null,
-                        "CITY",
-                        parent != null ? parent.getId() : null
+                        "CITY"
                 ));
             }
         }

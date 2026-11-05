@@ -130,8 +130,7 @@ public class CityController {
                 city.getLongitude(),
                 city.getHotelCount(),
                 city.getCreatedAt(),
-                parent != null ? parent.getName() : null,
-                parent != null ? parent.getId() : null
+                parent != null ? parent.getName() : null
         );
     }
 }
