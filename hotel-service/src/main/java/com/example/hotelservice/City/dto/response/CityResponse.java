@@ -10,5 +10,6 @@ public record CityResponse(
         Double longitude,
         Integer hotelCount,
         Instant createdAt,
-        String parentName
+        String parentName,
+        UUID parentId
 ) {}
