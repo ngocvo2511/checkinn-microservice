@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "room_holds")
+@Table(name = "room_holds", indexes = @Index(name = "room_holds_command_id_unique", columnList = "command_id", unique = true))
 @Getter
 @Setter
 public class RoomHold {
@@ -18,6 +18,9 @@ public class RoomHold {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @Column(name = "command_id", updatable = false)
+    private UUID commandId;
 
     @Column(name = "room_type_id", nullable = false)
     private UUID roomTypeId;

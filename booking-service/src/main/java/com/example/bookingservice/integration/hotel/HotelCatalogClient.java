@@ -34,7 +34,7 @@ public class HotelCatalogClient {
             return response;
         } catch (HttpClientErrorException.NotFound ex) {
             throw new IllegalArgumentException("Catalog resource not found");
-        } catch (RestClientException ex) {
+        } catch (RestClientException | IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Hotel catalog unavailable");
         }
     }

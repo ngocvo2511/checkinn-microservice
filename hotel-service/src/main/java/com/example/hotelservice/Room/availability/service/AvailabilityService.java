@@ -77,6 +77,21 @@ public class AvailabilityService {
     public HoldResponse checkAndHold(HoldRequest request) {
         validateDates(request.checkInDate(), request.checkOutDate());
         validateQuantity(request.quantity());
+        if (request.commandId() != null) {
+            // Lock the command before room/hold rows, including first-row and cross-room races.
+            roomHoldRepository.lockCreationCommand(request.commandId());
+            RoomHold existing = roomHoldRepository.findByCommandId(request.commandId()).orElse(null);
+            if (existing != null) {
+                if (!request.roomTypeId().equals(existing.getRoomTypeId())
+                        || !request.checkInDate().equals(existing.getCheckInDate())
+                        || !request.checkOutDate().equals(existing.getCheckOutDate())
+                        || !Integer.valueOf(request.quantity()).equals(existing.getQuantity())) {
+                    throw new IllegalStateException("Inventory command already used for different input");
+                }
+                // Return the original state/deadline, including terminal states. Never renew/rebook it.
+                return response(existing);
+            }
+        }
         // Serialize first-row creation as well as existing availability rows for this room type.
         RoomType roomType = roomTypeRepository.findByIdForUpdate(request.roomTypeId())
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
@@ -100,6 +115,7 @@ public class AvailabilityService {
         }
 
         RoomHold hold = new RoomHold();
+        hold.setCommandId(request.commandId());
         hold.setRoomTypeId(roomType.getId());
         hold.setHotelId(roomType.getHotelId());
         hold.setCheckInDate(request.checkInDate());
@@ -237,7 +253,9 @@ public class AvailabilityService {
     }
 
     private Instant calculateExpiryTime() {
-        return Instant.now().plusSeconds((long) holdExpiryProperties.getMinutes() * 60);
+        // PostgreSQL timestamps have less precision than Instant. Persist and return the same deadline.
+        return Instant.now().plusSeconds((long) holdExpiryProperties.getMinutes() * 60)
+                .truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     }
 
     @Transactional

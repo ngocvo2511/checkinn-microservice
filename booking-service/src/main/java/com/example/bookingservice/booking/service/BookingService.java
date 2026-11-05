@@ -57,7 +57,9 @@ public class BookingService {
         if (!creationLock.tryAcquire(bookingId)) return "UNKNOWN";
         return bookingRepository.findById(bookingId).map(booking -> {
             if (!userId.equals(booking.getUserId())) return "UNKNOWN";
-            return booking.getStatus() == BookingStatus.CANCELLED ? "CANCELLED" : "ACTIVE";
+            boolean unusedOnsiteNoShow = booking.getStatus() == BookingStatus.NO_SHOW && booking.getOnsiteReservationStatus() != null
+                    && booking.getPaidAmount() != null && booking.getPaidAmount().signum() == 0;
+            return booking.getStatus() == BookingStatus.CANCELLED || unusedOnsiteNoShow ? "CANCELLED" : "ACTIVE";
         }).orElse("MISSING");
     }
 
@@ -73,6 +75,19 @@ public class BookingService {
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
+        String keyHash = BookingIdempotency.keyHash(request);
+        String requestHash = keyHash == null ? null : BookingIdempotency.requestHash(request);
+        if (keyHash != null) {
+            // Transaction-scoped PostgreSQL lock also serializes the first insert across processes.
+            bookingRepository.lockCreationCommand(keyHash);
+            Booking accepted = bookingRepository.findByIdempotencyKeyHash(keyHash).orElse(null);
+            if (accepted != null) {
+                if (!request.getUserId().equals(accepted.getUserId()) || !requestHash.equals(accepted.getIdempotencyRequestHash())) {
+                    throw holdConflict("Idempotency key was already used for different booking input");
+                }
+                return toBookingResponse(accepted);
+            }
+        }
         log.debug("[CREATE_BOOKING] Creating booking for hotel: {}, checkIn: {}, checkOut: {}",
                 request.getHotelId(), request.getCheckInDate(), request.getCheckOutDate());
 
@@ -108,7 +123,8 @@ public class BookingService {
                 UUID.fromString(roomTypeId),
                 request.getCheckInDate(),
                 request.getCheckOutDate(),
-                totalQuantity
+                totalQuantity,
+                keyHash == null ? null : BookingIdempotency.holdCommand(keyHash)
         );
 
         log.debug("[CREATE_BOOKING] Attempting to hold rooms with request: roomTypeId={}, quantity={}", roomTypeId, totalQuantity);
@@ -116,14 +132,19 @@ public class BookingService {
         HoldResponse holdResponse;
         try {
             holdResponse = availabilityClient.holdRooms(holdRequest);
-            log.debug("[CREATE_BOOKING] Successfully held rooms, holdId: {}", holdResponse.holdId());
+            log.debug("[CREATE_BOOKING] Inventory hold request returned");
         } catch (Exception e) {
             log.error("Failed to hold rooms", e);
-            throw new IllegalStateException("Failed to hold rooms: " + e.getMessage());
+            if (e instanceof org.springframework.web.client.HttpClientErrorException conflict
+                    && conflict.getStatusCode().value() == 409) {
+                throw holdConflict("Inventory command cannot be reused; refresh the booking attempt");
+            }
+            throw holdUnavailable();
         }
 
         String reservedBookingId = null;
         try {
+        requireHoldResponse(holdResponse, null);
         // Calculate total amount
         BigDecimal totalAmount = request.getItems().stream()
                 .map(item -> {
@@ -144,6 +165,9 @@ public class BookingService {
         // Keep booking hold expiry aligned with hold-service response
         LocalDateTime holdExpiry = parseHoldExpiry(holdResponse);
         Booking booking = Booking.builder()
+                .id(keyHash == null ? null : BookingIdempotency.bookingId(keyHash))
+                .idempotencyKeyHash(keyHash)
+                .idempotencyRequestHash(requestHash)
                 .userId(request.getUserId())
                 .hotelId(request.getHotelId())
                 .hotelName(catalogHotel.name())
@@ -240,7 +264,9 @@ public class BookingService {
         return toBookingResponse(booking);
         } catch (RuntimeException failure) {
             try {
-                availabilityClient.releaseHold(holdResponse.holdId());
+                if (holdResponse != null && holdResponse.holdId() != null && !holdResponse.holdId().isBlank()) {
+                    availabilityClient.releaseHold(holdResponse.holdId());
+                }
             } catch (RuntimeException releaseFailure) {
                 log.warn("Booking failed and hold release needs cleanup (type={})", releaseFailure.getClass().getSimpleName());
             }
@@ -350,6 +376,17 @@ public class BookingService {
                 || (booking.getStatus() == BookingStatus.CHECKED_IN && status == BookingStatus.CHECKED_OUT)
                 || (booking.getStatus() == BookingStatus.CONFIRMED && status == BookingStatus.NO_SHOW);
         if (!stayTransition) throw new IllegalArgumentException("Unsupported stay transition; use payment or cancellation workflow");
+        if (status == BookingStatus.NO_SHOW && booking.getOnsiteReservationStatus() != null) {
+            if (booking.getCheckInDate() == null || booking.getCheckInDate().isAfter(cancellationPolicy.today()))
+                throw new IllegalArgumentException("Cannot record no-show before the arrival date");
+            queueOnsiteRelease(booking);
+            var payment = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId).orElse(null);
+            if (payment != null && payment.getStatus() == com.example.bookingservice.payment.enums.PaymentStatus.ONSITE_PENDING) {
+                payment.setStatus(com.example.bookingservice.payment.enums.PaymentStatus.CANCELLED);
+                paymentRepository.save(payment);
+                reverseBookingPoints(booking);
+            }
+        }
         booking.setStatus(status);
         booking = bookingRepository.save(booking);
         publishStatusEvent(booking, status.name());
@@ -397,7 +434,9 @@ public class BookingService {
         if (booking.getHoldId() == null && (paid || booking.getStatus() == BookingStatus.CONFIRMED)) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, "Missing inventory reservation; manual reconciliation required");
         }
-        if (booking.getHoldId() != null) {
+        if (booking.getOnsiteReservationStatus() != null) {
+            queueOnsiteRelease(booking);
+        } else if (booking.getHoldId() != null) {
             try {
                 availabilityClient.cancelReservation(booking.getHoldId());
             } catch (Exception e) {
@@ -418,6 +457,12 @@ public class BookingService {
         bookingRepository.save(booking);
         publishStatusEvent(booking, BookingStatus.CANCELLED.name());
         log.debug("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
+    }
+
+    private void queueOnsiteRelease(Booking booking) {
+        booking.setOnsiteReservationStatus("V1_PENDING");
+        booking.setOnsiteNextAttemptAt(LocalDateTime.now());
+        booking.setOnsiteLastError(null);
     }
 
     // Inventory failure must not mark the caller's payment receipt transaction rollback-only.
@@ -493,7 +538,7 @@ public class BookingService {
                 .build();
         try {
             log.debug("[PUBLISH_EVENT] Publishing booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
-            eventPublisher.publishBookingStatus(event);
+            OnsiteEvents.afterCommit(booking, () -> eventPublisher.publishBookingStatus(event));
             log.debug("[PUBLISH_EVENT] Published booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
         } catch (Exception e) {
             log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
@@ -511,78 +556,65 @@ public class BookingService {
         }
     }
 
-    @Transactional
+    /** Payment eligibility check only. Cancellation belongs to the cancellation/expiry workflows.
+     * Never emit a cancellation before throwing from a transaction that will roll back.
+     */
+    @Transactional(readOnly = true)
     public Booking ensureActiveHold(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
-
+        if (booking.getHoldId() == null || booking.getHoldId().isBlank()) {
+            throw holdConflict("Booking has no inventory hold; reconciliation required");
+        }
         if (booking.getHoldExpiresAt() != null && !booking.getHoldExpiresAt().isAfter(LocalDateTime.now())) {
-            if (booking.getHoldId() != null) {
-                try {
-                    availabilityClient.releaseHold(booking.getHoldId());
-                } catch (Exception e) {
-                    log.warn("Failed to release expired hold {} for booking {}: {}",
-                            booking.getHoldId(), booking.getId(), e.getMessage());
-                }
-            }
-
-            booking.setStatus(BookingStatus.CANCELLED);
-            bookingRepository.save(booking);
-            publishStatusEvent(booking, BookingStatus.CANCELLED.name());
-            throw new IllegalStateException("Booking hold has expired");
+            throw holdConflict("Booking hold has expired");
         }
 
-        if (hasUsableHold(booking)) {
-            return booking;
+        HoldResponse hold;
+        try {
+            hold = availabilityClient.getHold(booking.getHoldId());
+        } catch (org.springframework.web.client.HttpClientErrorException.NotFound ex) {
+            throw holdConflict("Inventory hold no longer exists");
+        } catch (org.springframework.web.client.RestClientException | IllegalArgumentException ex) {
+            throw holdUnavailable();
         }
-
-        booking.setStatus(BookingStatus.CANCELLED);
-        bookingRepository.save(booking);
-        publishStatusEvent(booking, BookingStatus.CANCELLED.name());
-        throw new IllegalStateException("Booking hold is no longer valid");
+        requireHoldResponse(hold, booking.getHoldId());
+        LocalDateTime expiry = parseHoldExpiry(hold);
+        if (!expiry.isAfter(LocalDateTime.now())) throw holdConflict("Booking hold has expired");
+        return booking;
     }
 
-    private boolean hasUsableHold(Booking booking) {
-        if (booking.getHoldId() == null || booking.getHoldId().isBlank()) {
-            return false;
+    private void requireHoldResponse(HoldResponse hold, String expectedId) {
+        if (hold == null || hold.holdId() == null || hold.holdId().isBlank()
+                || (expectedId != null && !expectedId.equals(hold.holdId())) || hold.status() == null) {
+            throw holdUnavailable();
         }
-
-        try {
-            HoldResponse hold = availabilityClient.getHold(booking.getHoldId());
-            if (hold == null || !"HELD".equalsIgnoreCase(hold.status())) {
-                return false;
-            }
-
-            LocalDateTime expiresAt = parseHoldExpiry(hold);
-            if (expiresAt == null || !expiresAt.isAfter(LocalDateTime.now())) {
-                availabilityClient.releaseHold(booking.getHoldId());
-                return false;
-            }
-
-            LocalDateTime currentExpiry = booking.getHoldExpiresAt();
-            if (currentExpiry == null || !currentExpiry.isEqual(expiresAt)) {
-                booking.setHoldExpiresAt(expiresAt);
-                bookingRepository.save(booking);
-            }
-            return true;
-        } catch (Exception e) {
-            log.warn("Existing hold {} is not usable for booking {}: {}",
-                    booking.getHoldId(), booking.getId(), e.getMessage());
-            return false;
+        switch (hold.status()) {
+            case "HELD" -> { }
+            case "RELEASED", "EXPIRED", "CANCELLED", "CONFIRMED" ->
+                    throw holdConflict("Inventory hold is not available for a new payment");
+            default -> throw holdUnavailable();
         }
+    }
+
+    private org.springframework.web.server.ResponseStatusException holdUnavailable() {
+        return new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                "Inventory hold could not be verified; retry or request reconciliation");
+    }
+
+    private org.springframework.web.server.ResponseStatusException holdConflict(String reason) {
+        return new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, reason);
     }
 
     private LocalDateTime parseHoldExpiry(HoldResponse holdResponse) {
         if (holdResponse == null || holdResponse.expiresAt() == null || holdResponse.expiresAt().isBlank()) {
-            return LocalDateTime.now().plusMinutes(15);
+            throw holdUnavailable();
         }
-
         try {
-            Instant expiresAt = Instant.parse(holdResponse.expiresAt());
-            return LocalDateTime.ofInstant(expiresAt, ZoneId.systemDefault());
-        } catch (Exception e) {
-            log.warn("Unable to parse hold expiry '{}', using default 15 minutes", holdResponse.expiresAt());
-            return LocalDateTime.now().plusMinutes(15);
+            return LocalDateTime.ofInstant(Instant.parse(holdResponse.expiresAt()), ZoneId.systemDefault());
+        } catch (java.time.format.DateTimeParseException ex) {
+            throw holdUnavailable();
         }
     }
 
@@ -606,18 +638,20 @@ public class BookingService {
                 .collect(Collectors.toList());
 
         String holdId = booking.getHoldId();
-        LocalDateTime holdExpiresAt = booking.getHoldExpiresAt();
+        // Existing timestamp storage keeps the deployment's local clock convention.
+        // The wire value must carry an offset so browsers do not reinterpret it in their own zone.
+        Instant holdExpiresAt = booking.getHoldExpiresAt() == null ? null
+                : booking.getHoldExpiresAt().atZone(ZoneId.systemDefault()).toInstant();
 
         // If holdExpiresAt not set in DB, try fetching from availability service
         if (holdId != null && holdExpiresAt == null) {
             try {
                 HoldResponse hr = availabilityClient.getHold(holdId);
                 if (hr != null && hr.expiresAt() != null && !hr.expiresAt().isBlank()) {
-                    Instant exp = Instant.parse(hr.expiresAt());
-                    holdExpiresAt = LocalDateTime.ofInstant(exp, ZoneId.systemDefault());
+                    if (holdId.equals(hr.holdId())) holdExpiresAt = Instant.parse(hr.expiresAt());
                 }
             } catch (Exception e) {
-                // Swallow; countdown will fallback client-side
+                // Unknown remains null; clients must not manufacture a local TTL.
             }
         }
 
@@ -655,6 +689,7 @@ public class BookingService {
                 .contactPhone(booking.getContactPhone())
                 .specialRequests(booking.getSpecialRequests())
                 .paymentMethod(paymentMethod)
+                .onsiteReservationStatus(booking.getOnsiteReservationStatus())
                 .holdId(holdId)
                 .holdExpiresAt(holdExpiresAt)
                 .cancellationPolicyVersion(booking.getCancellationPolicyVersion())

@@ -48,6 +48,30 @@ class AvailabilityServiceTest {
         when(rooms.findByIdForUpdate(roomId)).thenReturn(Optional.of(room));
     }
 
+    @Test void correlatedHoldRetryReturnsOriginalWithoutIncrementingInventoryOrRenewingExpiry() {
+        var command = UUID.randomUUID();
+        var original = new RoomHold();
+        original.setId(UUID.randomUUID()); original.setCommandId(command); original.setRoomTypeId(roomId);
+        original.setCheckInDate(checkIn); original.setCheckOutDate(checkOut); original.setQuantity(1);
+        original.setStatus(HoldStatus.HELD); original.setExpiresAt(java.time.Instant.now().plusSeconds(600));
+        when(holds.findByCommandId(command)).thenReturn(Optional.of(original));
+        var response = service.checkAndHold(new HoldRequest(roomId, checkIn, checkOut, 1, command));
+        assertThat(response.holdId()).isEqualTo(original.getId());
+        assertThat(response.expiresAt()).isEqualTo(original.getExpiresAt());
+        verifyNoInteractions(availability, rooms);
+        verify(holds, never()).save(any());
+    }
+
+    @Test void correlatedHoldRejectsDifferentRoomOrQuantity() {
+        var command = UUID.randomUUID();
+        var original = new RoomHold(); original.setRoomTypeId(UUID.randomUUID());
+        when(holds.findByCommandId(command)).thenReturn(Optional.of(original));
+        assertThatThrownBy(() -> service.checkAndHold(new HoldRequest(roomId, checkIn, checkOut, 1, command)))
+                .isInstanceOf(IllegalStateException.class);
+        verifyNoInteractions(availability, rooms);
+        verify(holds, never()).save(any());
+    }
+
     @ParameterizedTest @NullSource @ValueSource(ints = {0, -1})
     void invalidInventoryCannotBeAdvertisedAsTenRooms(Integer total) {
         room.setTotalRooms(total);
@@ -71,6 +95,15 @@ class AvailabilityServiceTest {
         assertThat(service.getAvailableRoomCount(roomId, checkIn, checkOut)).isEqualTo(10);
         assertThat(service.isAvailable(roomId, checkIn, checkOut, 10)).isTrue();
         assertThat(service.isAvailable(roomId, checkIn, checkOut, 11)).isFalse();
+    }
+
+    @Test void newHoldDeadlineUsesDatabaseSafePrecisionBeforeItsFirstResponse() {
+        room.setTotalRooms(10);
+        when(availability.save(any())).thenAnswer(call -> call.getArgument(0));
+        when(holds.save(any())).thenAnswer(call -> call.getArgument(0));
+        var response = service.checkAndHold(new HoldRequest(roomId, checkIn, checkOut, 1, UUID.randomUUID()));
+        assertThat(response.expiresAt().getNano() % 1_000_000).isZero();
+        verify(holds).save(org.mockito.ArgumentMatchers.argThat(hold -> hold.getExpiresAt().equals(response.expiresAt())));
     }
 
     @Test void availabilityUsesMinimumAcrossStayAndPreservesExistingCounters() {

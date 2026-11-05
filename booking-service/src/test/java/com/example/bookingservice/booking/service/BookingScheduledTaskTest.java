@@ -23,6 +23,28 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BookingScheduledTaskTest {
+    @Test void onsiteUnknownConfirmationMustNotExpireAsAnUnpaidHold() {
+        var booking = Booking.builder().id("onsite").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
+                .holdExpiresAt(LocalDateTime.now().minusHours(1)).onsiteReservationStatus("V1_PENDING").build();
+        var bookings = mock(BookingRepository.class); var payments = mock(PaymentRepository.class);
+        when(bookings.findIdsByStatus(BookingStatus.PENDING_PAYMENT)).thenReturn(List.of("onsite"));
+        when(bookings.findByIdForUpdate("onsite")).thenReturn(Optional.of(booking));
+        new BookingScheduledTask(bookings, payments).processExpiredPaymentHolds();
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        org.mockito.Mockito.verifyNoInteractions(payments);
+    }
+    @Test void onsiteConfirmedBookingCannotBecomeNoShowOrCheckedOutByCalendar() {
+        var booking = Booking.builder().id("onsite").status(BookingStatus.CONFIRMED).paidAmount(BigDecimal.ZERO)
+                .checkInDate(LocalDate.now().minusDays(3)).checkOutDate(LocalDate.now().minusDays(2))
+                .onsiteReservationStatus("V1_CONFIRMED").build();
+        var bookings = mock(BookingRepository.class); var payments = mock(PaymentRepository.class);
+        when(bookings.findIdsByStatus(BookingStatus.CONFIRMED)).thenReturn(List.of("onsite"));
+        when(bookings.findByIdForUpdate("onsite")).thenReturn(Optional.of(booking));
+        var jobs = new BookingScheduledTask(bookings, payments);
+        jobs.processAutoCheckOut(); jobs.processNoShow(); jobs.processAutoCheckIn();
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CONFIRMED);
+        org.mockito.Mockito.verify(bookings, org.mockito.Mockito.never()).save(any());
+    }
 
     private BookingRepository bookingRepository;
     private PaymentRepository paymentRepository;

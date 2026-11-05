@@ -58,6 +58,7 @@ public class BookingScheduledTask {
         allPendingBookings.sort(String::compareTo);
         for (String bookingId : allPendingBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null || (booking.getStatus() != BookingStatus.PENDING && booking.getStatus() != BookingStatus.PENDING_PAYMENT)
                     || (booking.getPaidAmount() != null && booking.getPaidAmount().signum() > 0)) continue;
             if (booking.getHoldExpiresAt() != null && 
@@ -108,6 +109,7 @@ public class BookingScheduledTask {
         confirmedBookings.sort(String::compareTo);
         for (String bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;
             // Safety check: only process CONFIRMED or CHECKED_IN
             if (booking.getStatus() != BookingStatus.CONFIRMED && 
@@ -157,6 +159,7 @@ public class BookingScheduledTask {
         confirmedBookings.sort(String::compareTo);
         for (String bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;
             // Double-check status before updating (safety check)
             if (booking.getStatus() != BookingStatus.CONFIRMED) {
@@ -195,6 +198,7 @@ public class BookingScheduledTask {
         confirmedBookings.sort(String::compareTo);
         for (String bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
+            if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;
             // Safety check: only process CONFIRMED bookings
             if (booking.getStatus() != BookingStatus.CONFIRMED) {

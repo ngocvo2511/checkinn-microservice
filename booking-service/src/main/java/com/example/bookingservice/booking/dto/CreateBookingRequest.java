@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CreateBookingRequest {
+    private String idempotencyKey;
     private String userId;
     private String hotelId;
     private String hotelName;

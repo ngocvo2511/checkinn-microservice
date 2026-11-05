@@ -32,7 +32,9 @@ public class LoyaltySettlementService {
                 || booking.getLoyaltyNextAttemptAt() == null || booking.getLoyaltyNextAttemptAt().isAfter(LocalDateTime.now())) return;
         booking.setLoyaltyAttempts(Math.addExact(booking.getLoyaltyAttempts() == null ? 0 : booking.getLoyaltyAttempts(), 1));
         try {
-            if (booking.getStatus() == BookingStatus.CANCELLED) {
+            if (booking.getStatus() == BookingStatus.CANCELLED
+                    || (booking.getStatus() == BookingStatus.NO_SHOW && booking.getOnsiteReservationStatus() != null
+                        && booking.getPaidAmount() != null && booking.getPaidAmount().signum() == 0)) {
                 points.refundPoints(booking.getUserId(), bookingId);
                 booking.setLoyaltyStatus("REVERSED");
             } else {

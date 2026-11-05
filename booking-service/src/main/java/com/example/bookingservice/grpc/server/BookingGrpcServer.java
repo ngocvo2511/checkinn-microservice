@@ -39,6 +39,7 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
             var actor = GrpcAccess.actor();
             GrpcAccess.require(access.canCreate(actor, request.getUserId()));
             CreateBookingRequest create = CreateBookingRequest.builder()
+                    .idempotencyKey(request.getIdempotencyKey())
                     .userId(actor.getName())
                     .hotelId(request.getHotelId())
                     .hotelName(request.getHotelName())

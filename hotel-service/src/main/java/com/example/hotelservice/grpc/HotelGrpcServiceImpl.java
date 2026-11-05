@@ -178,6 +178,8 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
                 .setBasePrice(rt.getBasePrice().doubleValue())
                 .setIsActive(rt.getIsActive());
 
+        if (rt.getDescription() != null) builder.setDescription(rt.getDescription());
+
         // capacity
         if (rt.getCapacity() != null) {
             builder.setCapacity(mapCapacity(rt.getCapacity()));

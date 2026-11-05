@@ -3,6 +3,7 @@ import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import time
 import uuid
 from urllib.parse import urlencode
 
@@ -18,6 +19,7 @@ def main():
     h.verify_running_clone('hotel-service')
     hotel, owner = str(uuid.uuid4()), str(uuid.uuid4())
     rooms = [str(uuid.uuid4()) for _ in range(3)]
+    categories = [str(uuid.uuid4()) for _ in range(2)]
     marker = 'search-regression-' + hotel
     container = h.run(h.COMPOSE + ['ps','-q','hotel-service'])
     city = str(uuid.UUID(h.sql('checkinn_hotel','SELECT id FROM cities ORDER BY id LIMIT 1')))
@@ -31,6 +33,18 @@ def main():
         return int(code), json.loads(body) if body else None
     def search(**extra):
         return request(dict(hotelName=marker,checkIn='2027-01-10',checkOut='2027-01-12',**extra))
+    # Read-only readiness through Gateway before fixtures; never retry a write.
+    deadline = time.monotonic() + 120
+    while True:
+        try:
+            code, _ = request(dict(hotelName=marker), False)
+            if code == 200:
+                break
+        except RuntimeError:
+            pass
+        if time.monotonic() >= deadline:
+            raise RuntimeError('NEEDS_ENVIRONMENT: gateway discovery is not ready')
+        time.sleep(1)
     try:
         created = h.sql('checkinn_hotel', "WITH fixture AS (INSERT INTO hotels SELECT (jsonb_populate_record(NULL::hotels,to_jsonb(h)||jsonb_build_object('id','"+hotel+"','owner_id','"+owner+"','city_id','"+city+"','name','"+marker+"','is_active',true,'approved_status','APPROVED','created_at',now(),'updated_at',now()))).* FROM hotels h LIMIT 1 RETURNING id) SELECT count(*) FROM fixture")
         check(created == '1','fresh hotel fixture created in verified clone')
@@ -38,6 +52,10 @@ def main():
             created = h.sql('checkinn_hotel', "WITH fixture AS (INSERT INTO room_types SELECT (jsonb_populate_record(NULL::room_types,to_jsonb(r)||jsonb_build_object('id','"+room+"','hotel_id','"+hotel+"','name','Synthetic offer room','base_price',"+str(price)+",'total_rooms',"+str(total)+",'capacity',jsonb_build_object('adults',"+str(adults)+",'children',"+str(children)+"),'amenities','[]'::jsonb,'is_active',true,'created_at',now(),'updated_at',now()))).* FROM room_types r LIMIT 1 RETURNING id) SELECT count(*) FROM fixture")
             check(created == '1','fresh room fixture created')
         h.sql('checkinn_hotel',"INSERT INTO room_availability(id,room_type_id,date,held,booked,created_at,updated_at) VALUES ('"+str(uuid.uuid4())+"','"+rooms[1]+"','2027-01-11',0,2,now(),now())")
+        for category, active in zip(categories, ['true', 'false']):
+            h.sql('checkinn_hotel', "INSERT INTO hotel_amenity_categories(id,hotel_id,title,is_active,created_at,updated_at) VALUES ('"+category+"','"+hotel+"','Synthetic amenity category',"+active+",now(),now())")
+        for category, title, active in [(categories[0], 'Published amenity', 'true'), (categories[0], 'Inactive amenity', 'false'), (categories[1], 'Hidden category amenity', 'true')]:
+            h.sql('checkinn_hotel', "INSERT INTO hotel_amenities(id,category_id,title,is_active,created_at) VALUES ('"+str(uuid.uuid4())+"','"+category+"','"+title+"',"+active+",now())")
         code, result = search(rooms=1,adults=4,children=0,maxPrice=200000)
         check(code == 200 and result == [],'one requested room cannot borrow capacity from ten physical rooms')
         code, result = search(rooms=2,adults=4,children=0,minPrice=200000,maxPrice=200000)
@@ -49,6 +67,9 @@ def main():
         check(code == 200 and result[0]['offer']['roomTypeId'] == rooms[2],'inclusive price and adult/child constraints match same room')
         code, result = request(dict(hotelName=marker,rooms=1,adults=2))
         check(code == 200 and result[0]['offer']['availableRooms'] is None and result[0]['offer']['checkedAt'] is None,'undated search never presents configured inventory as dated availability')
+        groups = result[0]['hotel']['amenityCategories']
+        check(len(groups) == 1 and [item['title'] for item in groups[0]['items']] == ['Published amenity'],
+              'public offer facts exclude inactive items and categories')
         code, result = search(rooms=0)
         check(code == 400,'invalid room count is a validation error')
         code, result = request(dict(hotelName=marker,checkIn='2027-01-10'))
@@ -66,6 +87,8 @@ def main():
         check(code == 409,'unknown inventory is an error rather than sold out')
         check(h.sql('checkinn_hotel',"SELECT held,booked FROM room_availability WHERE room_type_id='"+rooms[1]+"'") == '0|2','search never mutates availability counters')
     finally:
+        for category in categories:
+            h.sql('checkinn_hotel', "DELETE FROM hotel_amenities WHERE category_id='"+category+"'; DELETE FROM hotel_amenity_categories WHERE id='"+category+"' AND hotel_id='"+hotel+"'")
         for room in rooms:
             h.sql('checkinn_hotel',"DELETE FROM room_availability WHERE room_type_id='"+room+"'")
             h.sql('checkinn_hotel',"DELETE FROM room_types WHERE id='"+room+"' AND hotel_id='"+hotel+"'")

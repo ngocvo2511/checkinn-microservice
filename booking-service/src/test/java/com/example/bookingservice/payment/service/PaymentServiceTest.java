@@ -32,6 +32,34 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class PaymentServiceTest {
+    @Test void confirmedOnsitePaymentChoiceReplaysWithoutAnotherHoldOrPayment() {
+        var booking = Booking.builder().id("booking-1").status(BookingStatus.CONFIRMED).paidAmount(BigDecimal.ZERO)
+                .onsiteReservationStatus("V1_CONFIRMED").totalAmount(BigDecimal.TEN).build();
+        var payment = Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.HOTEL)
+                .status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build();
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(payment));
+        assertThat(paymentService.createPayment(CreatePaymentRequest.builder().bookingId("booking-1")
+                .method(PaymentMethod.HOTEL).amount(BigDecimal.TEN).build()).getId()).isEqualTo("payment-1");
+        verify(paymentRepository, never()).save(any()); verifyNoInventoryOrLoyalty();
+    }
+    private void verifyNoInventoryOrLoyalty() {
+        verify(bookingService, never()).ensureActiveHold(any());
+        verify(bookingService, never()).confirmBookingHold(any());
+        verify(bookingService, never()).settleLoyaltyPoints(any());
+    }
+
+    @Test void onsiteReceiptCannotClaimMoneyWhileInventoryIsUnknown() {
+        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
+                .onsiteReservationStatus("V1_PENDING").totalAmount(BigDecimal.TEN).build();
+        var payment = Payment.builder().id("payment-1").method(PaymentMethod.HOTEL).status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build();
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc("booking-1", PaymentStatus.ONSITE_PENDING)).thenReturn(Optional.of(payment));
+        assertThatThrownBy(() -> paymentService.confirmHotelPayment("booking-1"))
+                .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+        assertThat(payment.getStatus()).isEqualTo(PaymentStatus.ONSITE_PENDING);
+        verify(paymentRepository, never()).save(any()); verifyNoInventoryOrLoyalty();
+    }
 
     private PaymentRepository paymentRepository;
     private BookingRepository bookingRepository;
@@ -56,7 +84,8 @@ class PaymentServiceTest {
                 vnPayProperties,
                 bookingService,
                 eventPublisher,
-                paymentCreationPolicyFactory
+                paymentCreationPolicyFactory,
+                mock(org.springframework.context.ApplicationEventPublisher.class)
         );
     }
 

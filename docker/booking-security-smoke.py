@@ -25,7 +25,7 @@ COMPOSE = ['docker', 'compose', '-p', 'checkinn-test', '--project-directory', st
 
 
 def run(args, data=None):
-    result = subprocess.run(args, input=data, capture_output=True, text=True, timeout=45)
+    result = subprocess.run(args, input=data, capture_output=True, text=True, encoding='utf-8', timeout=45)
     if result.returncode:
         raise RuntimeError('Test stack command failed; inspect local diagnostics privately')
     return result.stdout.strip()

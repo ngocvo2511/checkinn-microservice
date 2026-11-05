@@ -33,6 +33,9 @@ public class RoomType {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(columnDefinition = "text")
+    private String description;
+
     @Column(name = "base_price", nullable = false)
     private BigDecimal basePrice;
 

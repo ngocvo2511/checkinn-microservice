@@ -14,6 +14,12 @@ public record RoomTypeCreateRequest(
         @NotNull BigDecimal basePrice,
         @NotNull @Valid CapacityDto capacity,
         @NotNull Integer roomAmount,
-        List<String> amenities
-) {}
+        List<String> amenities,
+        String description
+) {
+    public RoomTypeCreateRequest(UUID hotelId, String name, BigDecimal basePrice, CapacityDto capacity,
+                                 Integer roomAmount, List<String> amenities) {
+        this(hotelId, name, basePrice, capacity, roomAmount, amenities, null);
+    }
+}
 

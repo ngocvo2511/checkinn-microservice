@@ -15,6 +15,11 @@ import java.util.UUID;
 
 @Repository
 public interface RoomHoldRepository extends JpaRepository<RoomHold, UUID> {
+    @Query(value = "select cast(pg_advisory_xact_lock(hashtextextended(cast(?1 as text), 0)) as text)", nativeQuery = true)
+    String lockCreationCommand(UUID commandId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<RoomHold> findByCommandId(UUID commandId);
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT h FROM RoomHold h WHERE h.id = ?1")
     Optional<RoomHold> findByIdForUpdate(UUID id);
