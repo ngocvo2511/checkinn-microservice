@@ -14,39 +14,27 @@ public class RegulationClient {
 
     private static final Logger logger = LoggerFactory.getLogger(RegulationClient.class);
 
-    private final RegulationLocalCache cache;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private final String regulationsBaseUrl;
 
-    public RegulationClient(RegulationLocalCache cache, @Value("${regulations.service.url:http://localhost:8090}") String regulationsBaseUrl) {
-        this.cache = cache;
+    public RegulationClient(RestTemplate restTemplate, @Value("${regulations.service.url:http://localhost:8090}") String regulationsBaseUrl) {
+        this.restTemplate = restTemplate;
         this.regulationsBaseUrl = regulationsBaseUrl;
     }
 
     public BigDecimal getCommissionRate() {
-        String cached = cache.get("COMMISSION_RATE");
-        if (cached != null) {
-            try {
-                return new BigDecimal(cached);
-            } catch (NumberFormatException ex) {
-                logger.warn("[REVENUE_REGULATION_CLIENT_INVALID_CACHE] Invalid cached commission rate: {}", cached);
-            }
-        }
-
-        // Fallback to regulations service typed endpoint
+        // Unversioned broker cache values cannot identify a current financial rule.
         try {
             ResponseEntity<CommissionResponse> resp = restTemplate.getForEntity(regulationsBaseUrl + "/api/regulations/typed/commission", CommissionResponse.class);
             if (resp.getStatusCode().is2xxSuccessful() && resp.getBody() != null && resp.getBody().commissionRate != null) {
-                String value = resp.getBody().commissionRate.toString();
-                cache.put("COMMISSION_RATE", value);
                 return resp.getBody().commissionRate;
             }
         } catch (Exception ex) {
-            logger.warn("[REVENUE_REGULATION_CLIENT_FALLBACK] Failed to fetch commission rate from regulations-service", ex);
+            logger.warn("[REVENUE_COMMISSION_UNAVAILABLE]");
         }
 
-        // final fallback: 0.10
-        return new BigDecimal("0.10");
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,"Commission authority unavailable");
     }
 
     // simple DTO for typed endpoint response

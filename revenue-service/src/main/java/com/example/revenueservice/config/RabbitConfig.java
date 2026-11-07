@@ -14,6 +14,39 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
+    @Bean
+    public org.springframework.amqp.rabbit.retry.MessageRecoverer revenueRecoverer() {
+        return (message,cause)->{
+            org.slf4j.LoggerFactory.getLogger(RabbitConfig.class).warn("[REVENUE_RETRY_EXHAUSTED]");
+            throw new org.springframework.amqp.AmqpRejectAndDontRequeueException("Revenue retry exhausted");
+        };
+    }
+
+    @Bean
+    public org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+            org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer configurer,
+            ConnectionFactory connectionFactory) {
+        var factory=new org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory();
+        configurer.configure(factory,connectionFactory);
+        var strategy=new org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler.DefaultExceptionStrategy() {
+            @Override protected void logFatalException(org.springframework.amqp.rabbit.support.ListenerExecutionFailedException failure,Throwable cause) {}
+        };
+        var handler=new org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler(strategy) {
+            @Override protected void log(Throwable failure) {
+                org.slf4j.LoggerFactory.getLogger(RabbitConfig.class).warn("[REVENUE_LISTENER_FAILED]");
+            }
+        };
+        handler.setDiscardFatalsWithXDeath(false);
+        factory.setErrorHandler(handler);factory.setDefaultRequeueRejected(false);
+        return factory;
+    }
+
+    @Bean public TopicExchange revenueDeadLetterExchange() { return new TopicExchange("revenue.dlx",true,false); }
+    @Bean public Queue revenueDeadLetterQueue() { return new Queue("revenue.events.dlq",true); }
+    @Bean public Binding revenueDeadLetterBinding(Queue revenueDeadLetterQueue,TopicExchange revenueDeadLetterExchange) {
+        return BindingBuilder.bind(revenueDeadLetterQueue).to(revenueDeadLetterExchange).with("revenue.dead");
+    }
+
     @Value("${app.rabbit.exchange:hotel.events}")
     private String exchangeName;
 

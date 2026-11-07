@@ -26,6 +26,15 @@
       "arguments": {},
       "auto_delete": false,
       "internal": false
+    },
+    {
+      "name": "revenue.dlx",
+      "type": "topic",
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false,
+      "internal": false
     }
   ],
   "queues": [
@@ -65,6 +74,20 @@
     },
     {
       "name": "notification.otp.dlq",
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false
+    },
+    {
+      "name": "revenue.booking.queue",
+      "durable": true,
+      "vhost": "checkinn",
+      "arguments": {},
+      "auto_delete": false
+    },
+    {
+      "name": "revenue.events.dlq",
       "durable": true,
       "vhost": "checkinn",
       "arguments": {},
@@ -111,11 +134,40 @@
       "routing_key": "notification.otp.dead",
       "vhost": "checkinn",
       "arguments": {}
+    },
+    {
+      "source": "hotel.events",
+      "destination": "revenue.booking.queue",
+      "destination_type": "queue",
+      "routing_key": "booking.status.*",
+      "vhost": "checkinn",
+      "arguments": {}
+    },
+    {
+      "source": "revenue.dlx",
+      "destination": "revenue.events.dlq",
+      "destination_type": "queue",
+      "routing_key": "revenue.dead",
+      "vhost": "checkinn",
+      "arguments": {}
     }
   ],
   "vhosts": [
     {
       "name": "checkinn"
+    }
+  ],
+  "policies": [
+    {
+      "vhost": "checkinn",
+      "name": "revenue-quarantine-v1",
+      "pattern": "^revenue\\.(payment|booking)\\.queue$",
+      "definition": {
+        "dead-letter-exchange": "revenue.dlx",
+        "dead-letter-routing-key": "revenue.dead"
+      },
+      "priority": 10,
+      "apply-to": "queues"
     }
   ]
 }

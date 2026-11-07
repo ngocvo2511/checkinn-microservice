@@ -270,7 +270,10 @@ class PaymentServiceTest {
         verify(eventPublisher, never()).publishPaymentRefunded(any());
     }
 
-    @Test void callbackQueuesReservationWithoutClaimingInventorySuccess() {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.NullAndEmptySource
+    @org.junit.jupiter.params.provider.ValueSource(strings = "2026-02-28T17:01:00Z")
+    void callbackQueuesReservationWithoutClaimingInventorySuccess(String signedTime) {
         Booking booking = Booking.builder().id("booking-1").userId("user-1")
                 .status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal("1000000"))
                 .checkInDate(LocalDate.now().plusDays(2)).checkOutDate(LocalDate.now().plusDays(3)).build();
@@ -280,7 +283,19 @@ class PaymentServiceTest {
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
         when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        paymentService.processVNPayCallback("payment-1", "00", "123456789");
+        var transactionAt = signedTime == null || signedTime.isEmpty() ? null : java.time.Instant.parse(signedTime);
+        paymentService.processVNPayCallback("payment-1", "00", "123456789", transactionAt);
+        assertThat(payment.getTransactionOccurredAt()).isEqualTo(transactionAt);
+        var snapshot = org.mockito.ArgumentCaptor.forClass(com.example.bookingservice.messaging.event.PaymentEvent.class);
+        verify(eventPublisher).publishPaymentCompleted(snapshot.capture());
+        assertThat(snapshot.getValue().getTransactionAt()).isEqualTo(transactionAt);
+        paymentService.processVNPayCallback("payment-1", "00", "123456789", transactionAt);
+        verify(eventPublisher, times(1)).publishPaymentCompleted(any());
+        if (transactionAt != null) {
+            assertThatThrownBy(() -> paymentService.processVNPayCallback("payment-1", "00", "123456789", transactionAt.plusSeconds(1)))
+                    .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+            assertThat(payment.getTransactionOccurredAt()).isEqualTo(transactionAt);
+        }
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
@@ -367,7 +382,9 @@ class PaymentServiceTest {
             assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
             assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
             assertThat(booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
-            org.mockito.Mockito.verifyNoInteractions(bookingService,eventPublisher);
+            org.mockito.Mockito.verifyNoInteractions(bookingService);
+            // Producer is a transactional outbox enqueue; no broker or inventory I/O here.
+            verify(eventPublisher,times(1)).publishPaymentCompleted(any());
             org.springframework.transaction.support.TransactionSynchronizationManager.getSynchronizations().forEach(sync -> sync.afterCommit());
             verify(eventPublisher,times(1)).publishPaymentCompleted(any());
         } finally {org.springframework.transaction.support.TransactionSynchronizationManager.clearSynchronization();}

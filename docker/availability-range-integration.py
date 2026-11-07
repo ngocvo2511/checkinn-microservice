@@ -16,13 +16,17 @@ spec.loader.exec_module(h)
 
 
 def main():
-    h.verify_running_clone('hotel-service')
     config = json.loads(h.run(h.COMPOSE + ['config', '--format', 'json']))
     label = sys.argv[1] if len(sys.argv) > 1 else 'availability-range-integration'
     assert re.fullmatch('[a-z0-9-]+', label)
     suite = sys.argv[2] if len(sys.argv) > 2 else 'range'
     test = {'range': 'AvailabilityRangeIntegrationTest', 'location': 'LocationSearchIntegrationTest',
-            'candidates': 'HotelOfferCandidatesIntegrationTest'}[suite]
+            'candidates': 'HotelOfferCandidatesIntegrationTest', 'amenities': 'AmenityCatalogQueryIntegrationTest',
+            'revenue': 'RevenueEventOrderingIntegrationTest', 'outbox': 'BookingEventOutboxIntegrationTest'}[suite]
+    service = {'revenue':'revenue-service','outbox':'booking-service'}.get(suite,'hotel-service')
+    module = service
+    database = {'revenue':'checkinn_revenue','outbox':'checkinn_booking'}.get(suite,'checkinn_hotel')
+    h.verify_running_clone(service)
     container = None
     try:
         result = subprocess.run(['docker', 'run', '--rm', '-d', '--label', 'checkinn.test.range-transport=true',
@@ -46,11 +50,11 @@ def main():
                 time.sleep(.25)
         env = dict(os.environ)
         env.update({'CHECKINN_RANGE_TEST': 'true',
-            'CHECKINN_RANGE_DB_URL': 'jdbc:postgresql://127.0.0.1:' + port + '/checkinn_hotel',
-            'CHECKINN_RANGE_DB_PASSWORD': config['services']['hotel-service']['environment']['SPRING_DATASOURCE_PASSWORD']})
+            'CHECKINN_RANGE_DB_URL': 'jdbc:postgresql://127.0.0.1:' + port + '/' + database,
+            'CHECKINN_RANGE_DB_PASSWORD': config['services'][service]['environment']['SPRING_DATASOURCE_PASSWORD']})
         maven = os.environ.get('MAVEN_CMD') or str(Path.home() / 'Downloads/apache-maven-3.9.9-bin/apache-maven-3.9.9/bin/mvn.cmd')
         with (root.parent.parent / 'logs' / (label + '.log')).open('w', encoding='utf-8') as log:
-            result = subprocess.run([maven, '-o', '-B', '-ntp', '-pl', 'hotel-service',
+            result = subprocess.run([maven, '-o', '-B', '-ntp', '-pl', module,
                 '-Dtest=' + test, 'test'], cwd=root.parent, env=env,
                 stdout=log, stderr=subprocess.STDOUT, timeout=900)
         print(json.dumps({'suite': label, 'exit': result.returncode}), flush=True)
