@@ -39,6 +39,7 @@ public class BookingResponse {
     private String specialRequests;
     private String paymentMethod; // HOTEL, VNPAY - lấy từ Payment entity
     private String onsiteReservationStatus;
+    private String paidReservationStatus;
     private String holdId;
     private java.time.Instant holdExpiresAt;
     private String cancellationPolicyVersion;

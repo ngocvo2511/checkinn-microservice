@@ -166,6 +166,8 @@ public class PaymentService {
 
         if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
             validateVnPayReplay(payment, responseCode, transactionId);
+            if (payment.getStatus() == PaymentStatus.COMPLETED && "V1_PENDING".equals(lockedBooking.getPaidReservationStatus()))
+                applicationEvents.publishEvent(new com.example.bookingservice.booking.service.PaidReservationService.Requested(lockedBooking.getId()));
             if (payment.getStatus() == PaymentStatus.COMPLETED && pointsSettlementAllowed(lockedBooking)) {
                 bookingService.settleLoyaltyPoints(lockedBooking);
             }
@@ -192,31 +194,16 @@ public class PaymentService {
             Booking booking = lockedBooking;
             BigDecimal previouslyPaid = booking.getPaidAmount() == null ? BigDecimal.ZERO : booking.getPaidAmount();
             booking.setPaidAmount(previouslyPaid.add(payment.getAmount()));
-            boolean reservationConfirmed = previouslyPaid.signum() == 0
-                    && payment.getAmount().compareTo(booking.getTotalAmount()) == 0
-                    && confirmReservation(booking);
+            booking.setPaidReservationStatus("V1_PENDING");
+            booking.setPaidReservationPaymentId(payment.getId());
+            booking.setPaidReservationNextAttemptAt(LocalDateTime.now());
+            booking.setPaidReservationLastError(null);
             bookingRepository.save(booking);
+            applicationEvents.publishEvent(new com.example.bookingservice.booking.service.PaidReservationService.Requested(booking.getId()));
 
-            // confirmBookingHold settles loyalty for both VNPay and onsite receipts.
-            PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
-            try {
-                log.info("[PUBLISH_EVENT] Publishing payment.completed for paymentId: {}, bookingId: {}", payment.getId(), booking.getId());
-                eventPublisher.publishPaymentCompleted(event);
-                log.info("[PUBLISH_EVENT] Published payment.completed for paymentId: {}", payment.getId());
-            } catch (Exception e) {
-                log.error("[PUBLISH_EVENT] Failed to publish payment.completed for paymentId: {}: {}", payment.getId(), e.getMessage(), e);
-            }
+            PaymentEvent event=buildPaymentEvent(booking,payment,PaymentStatus.COMPLETED.name());
+            com.example.bookingservice.booking.service.OnsiteEvents.afterCommit(booking,() -> eventPublisher.publishPaymentCompleted(event));
 
-            if (reservationConfirmed) {
-            BookingStatusEvent statusEvent = buildBookingStatusEvent(booking, BookingStatus.CONFIRMED.name());
-            try {
-                log.info("[PUBLISH_EVENT] Publishing booking.status.changed for bookingId: {}, status: {}", booking.getId(), BookingStatus.CONFIRMED.name());
-                eventPublisher.publishBookingStatus(statusEvent);
-                log.info("[PUBLISH_EVENT] Published booking.status.changed for bookingId: {}", booking.getId());
-            } catch (Exception e) {
-                log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
-            }
-            }
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setVnpayResponseCode(responseCode);
@@ -331,8 +318,9 @@ public class PaymentService {
     }
 
     private boolean pointsSettlementAllowed(Booking booking) {
-        return booking.getStatus() == BookingStatus.CONFIRMED || booking.getStatus() == BookingStatus.CHECKED_IN
-                || booking.getStatus() == BookingStatus.CHECKED_OUT;
+        return (booking.getPaidReservationStatus() == null || "V1_CONFIRMED".equals(booking.getPaidReservationStatus()))
+                && (booking.getStatus() == BookingStatus.CONFIRMED || booking.getStatus() == BookingStatus.CHECKED_IN
+                    || booking.getStatus() == BookingStatus.CHECKED_OUT);
     }
 
     private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {

@@ -206,21 +206,20 @@ class PaymentServiceTest {
         when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        doAnswer(invocation -> {
-            booking.setEarnedPoints(1000L);
-            return null;
-        }).when(bookingService).confirmBookingHold("booking-1");
-
         paymentService.processVNPayCallback("payment-1", "00", "vnpay-txn-1");
         var replayResponse = paymentService.processVNPayCallback("payment-1", "00", "vnpay-txn-1");
 
         assertThat(replayResponse.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         assertThat(replayResponse.getVnpayResponseCode()).isEqualTo("00");
 
-        verify(bookingService, times(1)).confirmBookingHold("booking-1");
+        assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
+        assertThat(booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
+        assertThat(booking.getPaidReservationPaymentId()).isEqualTo("payment-1");
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+        verify(bookingService, never()).confirmBookingHold(any());
         verify(eventPublisher, times(1)).publishPaymentCompleted(any());
-        verify(eventPublisher, times(1)).publishBookingStatus(any());
-        verify(bookingService).settleLoyaltyPoints(booking);
+        verify(eventPublisher, never()).publishBookingStatus(any());
+        verify(bookingService, never()).settleLoyaltyPoints(any());
     }
 
     @Test
@@ -271,7 +270,7 @@ class PaymentServiceTest {
         verify(eventPublisher, never()).publishPaymentRefunded(any());
     }
 
-    @Test void callbackHoldFailureRecordsMoneyWithoutClaimingReservationIsConfirmed() {
+    @Test void callbackQueuesReservationWithoutClaimingInventorySuccess() {
         Booking booking = Booking.builder().id("booking-1").userId("user-1")
                 .status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal("1000000"))
                 .checkInDate(LocalDate.now().plusDays(2)).checkOutDate(LocalDate.now().plusDays(3)).build();
@@ -281,7 +280,6 @@ class PaymentServiceTest {
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
         when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        org.mockito.Mockito.doThrow(new IllegalStateException("Hold expired")).when(bookingService).confirmBookingHold("booking-1");
         paymentService.processVNPayCallback("payment-1", "00", "123456789");
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
@@ -352,4 +350,27 @@ class PaymentServiceTest {
         verify(bookingService, never()).settleLoyaltyPoints(any());
         verify(paymentRepository, never()).findByVnpayOrderId(any());
     }
+    @Test void providerReceiptHasNoRemoteReservationEffectsBeforeCommit() {
+        var booking=Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
+            .totalAmount(new BigDecimal("1000000")).holdId("hold-1").checkInDate(LocalDate.now().plusDays(2))
+            .checkOutDate(LocalDate.now().plusDays(3)).items(java.util.List.of()).build();
+        var payment=Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.VNPAY)
+            .status(PaymentStatus.PENDING).amount(new BigDecimal("1000000")).build();
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
+        when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        org.springframework.transaction.support.TransactionSynchronizationManager.initSynchronization();
+        try {
+            paymentService.processVNPayCallback("payment-1","00","123456789");
+            assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
+            assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
+            assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
+            assertThat(booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
+            org.mockito.Mockito.verifyNoInteractions(bookingService,eventPublisher);
+            org.springframework.transaction.support.TransactionSynchronizationManager.getSynchronizations().forEach(sync -> sync.afterCommit());
+            verify(eventPublisher,times(1)).publishPaymentCompleted(any());
+        } finally {org.springframework.transaction.support.TransactionSynchronizationManager.clearSynchronization();}
+    }
+
 }

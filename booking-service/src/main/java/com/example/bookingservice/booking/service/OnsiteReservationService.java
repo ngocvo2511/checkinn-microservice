@@ -53,7 +53,8 @@ public class OnsiteReservationService {
             }
             b.setOnsiteNextAttemptAt(null);
             b.setOnsiteLastError(null);
-            return event(b);
+            // Terminal decision already emitted at its source commit; release ACK is not another state transition.
+            return b.getStatus()==BookingStatus.CANCELLED || b.getStatus()==BookingStatus.NO_SHOW ? null : event(b);
         } catch (org.springframework.web.client.HttpClientErrorException ex) {
             if (ex.getStatusCode().value() == 400 || ex.getStatusCode().value() == 404 || ex.getStatusCode().value() == 409) review(b, "INVENTORY_RECONCILIATION_REQUIRED");
             else retry(b);

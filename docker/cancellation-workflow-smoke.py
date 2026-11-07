@@ -176,11 +176,23 @@ def main():
         code, _ = api('DELETE', '/api/bookings/' + booking_id, customer)
         unchanged = h.sql('checkinn_booking', "SELECT status FROM bookings WHERE id='" + booking_id + "'")
         requests = h.sql('checkinn_booking', "SELECT count(*) FROM refund_requests WHERE booking_id='" + booking_id + "'")
-        check(code == 503 and unchanged == 'CONFIRMED' and requests == '0',
-              'inventory acknowledgement failure rolls back local cancellation and refund request')
+        inventory_column='paid_reservation_status' if settings.get('VNPAY_HASH_SECRET') and settings.get('VNPAY_TMN_CODE') else 'onsite_reservation_status'
+        check(code == 204 and unchanged == 'CANCELLED' and requests == '1',
+              'accepted cancellation and one refund intent commit before remote release')
+        check(wait_for(lambda: h.sql('checkinn_booking', "SELECT "+inventory_column+" FROM bookings WHERE id='"+booking_id+"'")=='V1_REVIEW_REQUIRED'),
+              'missing inventory reference is a visible review outcome, never a false release acknowledgement')
+        check(h.sql('checkinn_hotel', "SELECT status FROM room_holds WHERE id='"+original_hold+"'")=='CONFIRMED',
+              'unverified reference does not release unrelated stock')
+        # Explicit fixture forensic correction only; production code never substitutes a guessed hold.
         h.sql('checkinn_booking', "UPDATE bookings SET hold_id='" + original_hold + "' WHERE id='" + booking_id + "'")
-        code, _ = api('DELETE', '/api/bookings/' + booking_id, customer)
-        check(code == 204, 'eligible paid cancellation succeeds')
+        code,_=api('DELETE','/api/bookings/'+booking_id,customer)
+        check(code==204 and h.sql('checkinn_booking',"SELECT "+inventory_column+" FROM bookings WHERE id='"+booking_id+"'")=='V1_REVIEW_REQUIRED',
+              'customer replay cannot bypass inventory review')
+        code,_=api('POST','/api/bookings/'+booking_id+'/cancel-reviewed',administrator,{'reason':'ORIGINAL_INVENTORY_REFERENCE_VERIFIED'})
+        check(code==204 and wait_for(lambda:h.sql('checkinn_booking',"SELECT "+inventory_column+" FROM bookings WHERE id='"+booking_id+"'")=='V1_RELEASED'),
+              'ADMIN reviewed retry completes release of the reconciled original inventory')
+        check(h.sql('checkinn_booking',"SELECT inventory_reviewed_by='"+administrator_id+"' AND inventory_review_reason='ORIGINAL_INVENTORY_REFERENCE_VERIFIED' AND inventory_reviewed_at IS NOT NULL FROM bookings WHERE id='"+booking_id+"'")=='t',
+              'inventory retry records authenticated reviewer and reason without mutating money')
         code, receipt = api('GET', '/api/payments/' + payment_id + '/refund-request', customer)
         check(code == 200 and receipt['status'] == 'REQUESTED' and receipt['amount'] == 1000000
               and receipt['requestedBy'] == customer_id, 'refund request preserves server amount and authenticated requester')

@@ -54,7 +54,7 @@ class OnsiteReservationServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.EnumSource(value=BookingStatus.class,names={"CANCELLED","NO_SHOW"})
     void cancellationWinsOverQueuedConfirmationAndReleaseIsIdempotent(BookingStatus terminal) {
-        b.setStatus(terminal); service.process("booking"); service.process("booking");
+        b.setStatus(terminal); assertThat(service.process("booking")).isNull(); service.process("booking");
         verify(inventory, times(1)).cancelReservation("hold"); verify(inventory, never()).confirmHold(any());
         assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_RELEASED");
     }

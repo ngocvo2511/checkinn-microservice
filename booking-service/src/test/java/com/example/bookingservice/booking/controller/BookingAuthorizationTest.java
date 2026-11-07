@@ -80,6 +80,15 @@ class BookingAuthorizationTest {
         mvc.perform(get("/api/bookings/booking-1")).andExpect(status().isUnauthorized());
         verifyNoInteractions(service);
     }
+    @Test void storedHttpSessionCannotReplaceVerifiedBearer() throws Exception {
+        var context=org.springframework.security.core.context.SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(CUSTOMER,null,
+                org.springframework.security.core.authority.AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
+        var session=new org.springframework.mock.web.MockHttpSession();
+        session.setAttribute(org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,context);
+        mvc.perform(get("/api/bookings/count/total").session(session)).andExpect(status().isUnauthorized());
+        verifyNoInteractions(service);
+    }
     @Test void customerCanReadOwnBooking() throws Exception {
         mvc.perform(get("/api/bookings/booking-1").header("Authorization", "Bearer customer"))
                 .andExpect(status().isOk());
@@ -136,7 +145,7 @@ class BookingAuthorizationTest {
     }
     @Test void createCannotImpersonateAnotherUser() throws Exception {
         mvc.perform(post("/api/bookings").header("Authorization", "Bearer customer")
-                        .contentType("application/json").content("{\"userId\":\"" + OTHER + "\"}"))
+                        .contentType("application/json").content(validBookingBody(OTHER.toString())))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
@@ -149,7 +158,7 @@ class BookingAuthorizationTest {
         when(service.createBooking(any())).thenAnswer(invocation -> BookingResponse.builder()
                 .id("new-booking").userId(invocation.<com.example.bookingservice.booking.dto.CreateBookingRequest>getArgument(0).getUserId()).build());
         mvc.perform(post("/api/bookings").header("Authorization", "Bearer customer")
-                        .contentType("application/json").content("{}"))
+                        .contentType("application/json").content(validBookingBody(null)))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.userId").value(CUSTOMER.toString()));
     }
 
@@ -305,7 +314,7 @@ class BookingAuthorizationTest {
     @Test void catalogOutageRemainsServiceUnavailable() throws Exception {
         when(service.createBooking(any())).thenThrow(new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE));
         mvc.perform(post("/api/bookings").header("Authorization", "Bearer customer")
-                        .contentType("application/json").content("{}"))
+                        .contentType("application/json").content(validBookingBody(null)))
                 .andExpect(status().isServiceUnavailable());
     }
     @Test void reviewedCancellationRequiresAReasonBeforeServiceMutation() throws Exception {
@@ -322,4 +331,11 @@ class BookingAuthorizationTest {
                 .andExpect(status().isOk());
         verify(paymentService).processVNPayCallback("payment-1", "00", "123456789");
     }
+    private static String validBookingBody(String userId) {
+        return "{\"hotelId\":\"11111111-1111-4111-8111-111111111111\",\"checkInDate\":\"2099-01-01\",\"checkOutDate\":\"2099-01-02\","
+            +"\"adults\":2,\"children\":0,\"contactName\":\"Synthetic guest\",\"contactEmail\":\"synthetic@example.invalid\",\"contactPhone\":\"0000000000\","
+            +"\"items\":[{\"roomTypeId\":\"22222222-2222-4222-8222-222222222222\",\"checkInDate\":\"2099-01-01\",\"checkOutDate\":\"2099-01-02\",\"quantity\":1,\"unitPrice\":1000000}]"
+            +(userId==null?"":",\"userId\":\""+userId+"\"")+"}";
+    }
+
 }
