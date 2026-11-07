@@ -75,6 +75,7 @@ public class BookingService {
 
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
+        com.example.bookingservice.validation.InputValidation.require(request);
         String keyHash = BookingIdempotency.keyHash(request);
         String requestHash = keyHash == null ? null : BookingIdempotency.requestHash(request);
         if (keyHash != null) {
@@ -137,7 +138,7 @@ public class BookingService {
             log.error("Failed to hold rooms", e);
             if (e instanceof org.springframework.web.client.HttpClientErrorException conflict
                     && conflict.getStatusCode().value() == 409) {
-                throw holdConflict("Inventory command cannot be reused; refresh the booking attempt");
+                throw holdConflict("Requested inventory cannot be reserved; refresh availability or request review");
             }
             throw holdUnavailable();
         }
@@ -292,7 +293,7 @@ public class BookingService {
                 || request.getCheckInDate().isBefore(cancellationPolicy.today())
                 || request.getAdults() == null || request.getAdults() < 1
                 || request.getChildren() == null || request.getChildren() < 0) {
-            throw new IllegalArgumentException("Invalid hotel, stay dates or guest counts");
+            throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("checkOutDate","Stay dates must be ordered and arrival must not be in the past"));
         }
         if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
             throw new IllegalArgumentException("Dịch vụ mã giảm giá hiện chưa khả dụng");
@@ -306,7 +307,7 @@ public class BookingService {
                     || !request.getCheckOutDate().equals(item.getCheckOutDate())
                     || (item.getRatePlanId() != null && !item.getRatePlanId().isBlank()
                         && !item.getRatePlanId().equals(item.getRoomTypeId()))) {
-                throw new IllegalArgumentException("Invalid room quantity, price, dates or unsupported rate plan");
+                throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("items","Room dates must match the stay and rate plan must match the room"));
             }
             quantity += item.getQuantity();
             if (quantity > Integer.MAX_VALUE) throw new IllegalArgumentException("Room quantity is too large");
@@ -410,6 +411,7 @@ public class BookingService {
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
         if (booking.getStatus() == BookingStatus.CANCELLED) {
+            if (reviewed) retryCancelledInventoryAfterReview(booking, actorId, reason);
             reverseBookingPoints(booking);
             return;
         }
@@ -434,7 +436,11 @@ public class BookingService {
         if (booking.getHoldId() == null && (paid || booking.getStatus() == BookingStatus.CONFIRMED)) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, "Missing inventory reservation; manual reconciliation required");
         }
-        if (booking.getOnsiteReservationStatus() != null) {
+        if (booking.getPaidReservationStatus() != null) {
+            booking.setPaidReservationStatus("V1_PENDING");
+            booking.setPaidReservationNextAttemptAt(LocalDateTime.now());
+            booking.setPaidReservationLastError(null);
+        } else if (booking.getOnsiteReservationStatus() != null) {
             queueOnsiteRelease(booking);
         } else if (booking.getHoldId() != null) {
             try {
@@ -457,6 +463,22 @@ public class BookingService {
         bookingRepository.save(booking);
         publishStatusEvent(booking, BookingStatus.CANCELLED.name());
         log.debug("[CANCEL_BOOKING] Booking cancelled successfully - bookingId: {}", bookingId);
+    }
+
+    /** Existing ADMIN-only reviewed workflow may retry the same reconciled reference, never guess a new hold. */
+    private void retryCancelledInventoryAfterReview(Booking booking, String actorId, String reason) {
+        boolean paidReview="V1_REVIEW_REQUIRED".equals(booking.getPaidReservationStatus());
+        boolean onsiteReview="V1_REVIEW_REQUIRED".equals(booking.getOnsiteReservationStatus());
+        if (!paidReview && !onsiteReview) return;
+        if (booking.getHoldId()==null || booking.getHoldId().isBlank())
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Original inventory reference must be reconciled before retry");
+        booking.setInventoryReviewedBy(actorId);booking.setInventoryReviewReason(reason.strip());booking.setInventoryReviewedAt(Instant.now());
+        if (paidReview) {
+            booking.setPaidReservationStatus("V1_PENDING");booking.setPaidReservationNextAttemptAt(LocalDateTime.now());booking.setPaidReservationLastError(null);
+        }
+        if (onsiteReview) queueOnsiteRelease(booking);
+        bookingRepository.save(booking);
     }
 
     private void queueOnsiteRelease(Booking booking) {
@@ -690,6 +712,7 @@ public class BookingService {
                 .specialRequests(booking.getSpecialRequests())
                 .paymentMethod(paymentMethod)
                 .onsiteReservationStatus(booking.getOnsiteReservationStatus())
+                .paidReservationStatus(booking.getPaidReservationStatus())
                 .holdId(holdId)
                 .holdExpiresAt(holdExpiresAt)
                 .cancellationPolicyVersion(booking.getCancellationPolicyVersion())

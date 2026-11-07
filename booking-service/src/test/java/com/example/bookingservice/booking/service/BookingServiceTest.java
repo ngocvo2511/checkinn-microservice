@@ -162,7 +162,7 @@ class BookingServiceTest {
     @Test
     void createBookingRejectsEmptyItemsBeforeHoldingRooms() {
         CreateBookingRequest request = CreateBookingRequest.builder()
-                .hotelId("hotel-1")
+                .hotelId("11111111-1111-4111-8111-111111111111")
                 .checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2))
                 .items(List.of())
@@ -205,9 +205,9 @@ class BookingServiceTest {
         points.setAvailablePoints(1_000L);
 
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", expiresAt));
-        when(catalogClient.getRoom(roomTypeId)).thenReturn(new HotelCatalogClient.Room(roomTypeId, "hotel-1", "Server Room",
+        when(catalogClient.getRoom(roomTypeId)).thenReturn(new HotelCatalogClient.Room(roomTypeId, "11111111-1111-4111-8111-111111111111", "Server Room",
                 BigDecimal.valueOf(1_000_000), new HotelCatalogClient.Capacity(2, 0), true, 10));
-        when(catalogClient.getHotel("hotel-1")).thenReturn(new HotelCatalogClient.Hotel("hotel-1", "Server Hotel", true, "APPROVED"));
+        when(catalogClient.getHotel("11111111-1111-4111-8111-111111111111")).thenReturn(new HotelCatalogClient.Hotel("11111111-1111-4111-8111-111111111111", "Server Hotel", true, "APPROVED"));
         when(loyaltyPointsClient.getLoyaltyPoints("user-1")).thenReturn(points);
         when(loyaltyPointsClient.reserve(any())).thenAnswer(call -> {
             com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO reserve = call.getArgument(0);
@@ -364,7 +364,7 @@ class BookingServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(strings = {"invalid-deadline", "2026-11-05T12:00:00"})
     void bookingWithoutPointsAlsoRequiresAnActualInventoryDeadline(String expiry) {
         String room = UUID.randomUUID().toString();
-        stubCatalog(room, "hotel-1", 2, true);
+        stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", expiry));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
         assertThatThrownBy(() -> bookingService.createBooking(request))
@@ -388,7 +388,7 @@ class BookingServiceTest {
         Booking booking = Booking.builder()
                 .id("booking-1")
                 .userId("user-1")
-                .hotelId("hotel-1")
+                .hotelId("11111111-1111-4111-8111-111111111111")
                 .hotelName("Tripto")
                 .checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2))
@@ -413,10 +413,52 @@ class BookingServiceTest {
         org.mockito.Mockito.verifyNoInteractions(eventPublisher);
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"", " ", "not-an-email"})
+    void invalidContactEmailNeverCreatesInventoryOrOtherEffects(String email) {
+        var request=baseBookingRequest(List.of(item(UUID.randomUUID().toString(),1,BigDecimal.TEN)));
+        request.setContactEmail(email);
+        assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class);
+        org.mockito.Mockito.verifyNoInteractions(bookingRepository,bookingItemRepository,paymentRepository,availabilityClient,eventPublisher,loyaltyPointsClient,catalogClient);
+    }
+
+    @Test void missingContactNameNeverReachesInventory() {
+        var request=baseBookingRequest(List.of(item(UUID.randomUUID().toString(),1,BigDecimal.TEN)));
+        request.setContactName(null);
+        assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class);
+        org.mockito.Mockito.verifyNoInteractions(bookingRepository,availabilityClient,catalogClient);
+    }
+
+    @Test void storageBoundContactInputNeverCreatesAConnectionOrHold() {
+        var request=baseBookingRequest(List.of(item(UUID.randomUUID().toString(),1,BigDecimal.TEN)));
+        request.setContactName("x".repeat(256));
+        assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class);
+        org.mockito.Mockito.verifyNoInteractions(bookingRepository,availabilityClient,catalogClient);
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans={false,true})
+    void adminReviewCanRetryCancelledInventoryAfterItsReferenceWasReconciled(boolean onsite) {
+        var booking=Booking.builder().id("booking-1").status(BookingStatus.CANCELLED).holdId("reconciled-original-hold")
+            .loyaltyStatus("REVERSED").paidAmount(BigDecimal.TEN)
+            .paidReservationStatus(onsite?null:"V1_REVIEW_REQUIRED")
+            .onsiteReservationStatus(onsite?"V1_REVIEW_REQUIRED":null).build();
+        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        bookingService.cancelBooking("booking-1","customer");
+        assertThat(onsite?booking.getOnsiteReservationStatus():booking.getPaidReservationStatus()).isEqualTo("V1_REVIEW_REQUIRED");
+        bookingService.cancelBookingReviewed("booking-1","admin","Original inventory reference verified");
+        assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
+        assertThat(booking.getInventoryReviewedBy()).isEqualTo("admin");
+        assertThat(booking.getInventoryReviewReason()).isEqualTo("Original inventory reference verified");
+        assertThat(booking.getInventoryReviewedAt()).isNotNull();
+        assertThat(onsite?booking.getOnsiteReservationStatus():booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
+        org.mockito.Mockito.verifyNoInteractions(availabilityClient,paymentRepository);
+    }
+
     private CreateBookingRequest baseBookingRequest(List<CreateBookingItemRequest> items) {
         return CreateBookingRequest.builder()
                 .userId("user-1")
-                .hotelId("hotel-1")
+                .hotelId("11111111-1111-4111-8111-111111111111")
                 .hotelName("Tripto Hotel")
                 .checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2))
@@ -459,7 +501,7 @@ class BookingServiceTest {
     @Test void changedCatalogPriceIsRejectedBeforeHoldingInventory() {
         String id = UUID.randomUUID().toString();
         var request = baseBookingRequest(List.of(item(id, 1, BigDecimal.ONE)));
-        stubCatalog(id, "hotel-1", 2, true);
+        stubCatalog(id, "11111111-1111-4111-8111-111111111111", 2, true);
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("price has changed");
         verify(availabilityClient, never()).holdRooms(any());
@@ -475,7 +517,7 @@ class BookingServiceTest {
 
     @Test void oneRoomCannotUseCapacityOfTenPhysicalRooms() {
         String id = UUID.randomUUID().toString();
-        stubCatalog(id, "hotel-1", 2, true);
+        stubCatalog(id, "11111111-1111-4111-8111-111111111111", 2, true);
         var request = baseBookingRequest(List.of(item(id, 1, new BigDecimal("1000000"))));
         request.setAdults(4);
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class)
@@ -485,7 +527,7 @@ class BookingServiceTest {
 
     @Test void inactiveHotelOfferIsRejectedBeforeHoldingInventory() {
         String id = UUID.randomUUID().toString();
-        stubCatalog(id, "hotel-1", 2, false);
+        stubCatalog(id, "11111111-1111-4111-8111-111111111111", 2, false);
         var request = baseBookingRequest(List.of(item(id, 1, new BigDecimal("1000000"))));
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class);
         verify(availabilityClient, never()).holdRooms(any());
@@ -494,7 +536,7 @@ class BookingServiceTest {
     private void stubCatalog(String id, String hotelId, int adults, boolean active) {
         when(catalogClient.getRoom(id)).thenReturn(new HotelCatalogClient.Room(id, hotelId, "Server Room",
                 new BigDecimal("1000000"), new HotelCatalogClient.Capacity(adults, 0), active, 10));
-        when(catalogClient.getHotel("hotel-1")).thenReturn(new HotelCatalogClient.Hotel("hotel-1", "Server Hotel", active, "APPROVED"));
+        when(catalogClient.getHotel("11111111-1111-4111-8111-111111111111")).thenReturn(new HotelCatalogClient.Hotel("11111111-1111-4111-8111-111111111111", "Server Hotel", active, "APPROVED"));
     }
 
     @Test void eligibleCancellationCreatesRefundRequestAndReleasesInventoryOnce() {
@@ -542,7 +584,7 @@ class BookingServiceTest {
     }
     @Test void databaseFailureAfterHoldTriggersInventoryCompensation() {
         String room = UUID.randomUUID().toString();
-        stubCatalog(room, "hotel-1", 2, true);
+        stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
         when(bookingRepository.save(any())).thenThrow(new IllegalStateException("Test database failure"));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
@@ -586,7 +628,7 @@ class BookingServiceTest {
 
     @Test void reserveUnknownOutcomeReleasesInventoryAndRequestsPointCompensation() {
         String room = UUID.randomUUID().toString();
-        stubCatalog(room, "hotel-1", 2, true);
+        stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
         when(bookingRepository.save(any())).thenAnswer(call -> {
             Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking;
@@ -606,7 +648,7 @@ class BookingServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
     void invalidReceiptOrFailureAfterReserveCompensatesBothResources(boolean invalidReceipt) {
         String room = UUID.randomUUID().toString();
-        stubCatalog(room, "hotel-1", 2, true);
+        stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
         when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking; });
         when(loyaltyPointsClient.reserve(any())).thenAnswer(call -> {
@@ -624,7 +666,7 @@ class BookingServiceTest {
 
     @Test void pointsReserveRequiresAnActualInventoryDeadlineRatherThanFallbackMinutes() {
         String room = UUID.randomUUID().toString();
-        stubCatalog(room, "hotel-1", 2, true);
+        stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
         when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", "invalid-deadline"));
         when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking; });
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000")))); request.setPointsToUse(100L);
@@ -633,7 +675,7 @@ class BookingServiceTest {
         verify(availabilityClient).releaseHold("hold-1");
     }
     private Booking cancellationFixture(boolean paid) {
-        Booking booking = Booking.builder().id("booking-1").userId("customer-1").hotelId("hotel-1")
+        Booking booking = Booking.builder().id("booking-1").userId("customer-1").hotelId("11111111-1111-4111-8111-111111111111")
                 .checkInDate(LocalDate.now().plusDays(3)).checkOutDate(LocalDate.now().plusDays(4))
                 .paidAmount(paid ? new BigDecimal("1000000") : BigDecimal.ZERO).holdId("hold-1")
                 .totalAmount(new BigDecimal("1000000")).status(paid ? BookingStatus.CONFIRMED : BookingStatus.PENDING).items(List.of()).build();

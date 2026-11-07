@@ -44,7 +44,7 @@ public class BookingController {
 
     @PostMapping
     @PreAuthorize("@bookingAccess.canCreate(authentication, #request.userId)")
-    public ResponseEntity<?> createBooking(@RequestBody CreateBookingRequest request, Authentication actor) {
+    public ResponseEntity<?> createBooking(@jakarta.validation.Valid @RequestBody CreateBookingRequest request, Authentication actor) {
         request.setUserId(actor.getName());
         try {
             log.info("[CREATE_BOOKING] Request received - userId: {}, hotelId: {}, checkIn: {}, checkOut: {}",
@@ -53,6 +53,8 @@ public class BookingController {
             log.info("[CREATE_BOOKING] Booking created - bookingId: {}, userId: {}, hotelId: {}",
                 booking.getId(), booking.getUserId(), booking.getHotelId());
             return ResponseEntity.status(HttpStatus.CREATED).body(booking);
+        } catch (com.example.bookingservice.validation.InputValidation.InvalidInput e) {
+            throw e;
         } catch (IllegalArgumentException e) {
             log.error("Validation error creating booking: {}", e.getMessage(), e);
             Map<String, String> error = new HashMap<>();
@@ -62,11 +64,8 @@ public class BookingController {
         } catch (org.springframework.web.server.ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            log.error("Error creating booking: {}", e.getMessage(), e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Internal Server Error");
-            error.put("message", e.getMessage());
-            error.put("type", e.getClass().getSimpleName());
+            var error=com.example.bookingservice.api.ApiErrorSupport.body(500,"/api/bookings",null);
+            log.error("Booking creation failed - type: {}, requestId: {}",e.getClass().getSimpleName(),error.get("requestId"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
     }

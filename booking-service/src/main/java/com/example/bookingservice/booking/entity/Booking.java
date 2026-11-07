@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bookings", indexes = {
+        @Index(name = "bookings_paid_reservation_due", columnList = "paid_reservation_status,paid_reservation_next_attempt_at"),
         @Index(name = "bookings_onsite_due", columnList = "onsite_reservation_status,onsite_next_attempt_at"),
         @Index(name = "bookings_loyalty_due", columnList = "loyalty_status,loyalty_next_attempt_at"),
         @Index(name = "bookings_idempotency_key_hash_unique", columnList = "idempotency_key_hash", unique = true)})
@@ -112,6 +113,20 @@ public class Booking {
     private Integer onsiteAttempts;
     @Column(length = 64)
     private String onsiteLastError;
+
+    // Only new verified provider receipts opt in; legacy paid rows require explicit review.
+    @Column(length = 24)
+    private String paidReservationStatus;
+    private String paidReservationPaymentId;
+    private LocalDateTime paidReservationNextAttemptAt;
+    private Integer paidReservationAttempts;
+    @Column(length = 64)
+    private String paidReservationLastError;
+
+    private String inventoryReviewedBy;
+    @Column(length = 1000)
+    private String inventoryReviewReason;
+    private java.time.Instant inventoryReviewedAt;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingItem> items;

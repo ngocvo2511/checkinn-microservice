@@ -5,8 +5,10 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import static org.mockito.Mockito.*;
 
 class OnsiteEventsTest {
-    @Test void eventsOnlyRunAfterActualCommitAndAreDiscardedOnRollback() {
-        var booking=Booking.builder().onsiteReservationStatus("V1_PENDING").build();
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(booleans={false,true})
+    void eventsOnlyRunAfterActualCommitAndAreDiscardedOnRollback(boolean paid) {
+        var booking=Booking.builder().onsiteReservationStatus(paid?null:"V1_PENDING").paidReservationStatus(paid?"V1_PENDING":null).build();
         Runnable publish=mock(Runnable.class);
         TransactionSynchronizationManager.initSynchronization();
         try {

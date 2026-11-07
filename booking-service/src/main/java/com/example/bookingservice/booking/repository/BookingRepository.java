@@ -13,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, String> {
+    @Query("SELECT b.id FROM Booking b WHERE b.paidReservationStatus = 'V1_PENDING' AND b.paidReservationNextAttemptAt <= ?1 ORDER BY b.paidReservationNextAttemptAt, b.id")
+    List<String> findDuePaidReservations(LocalDateTime now, org.springframework.data.domain.Pageable page);
     @Query("SELECT b.id FROM Booking b WHERE b.onsiteReservationStatus = 'V1_PENDING' AND b.onsiteNextAttemptAt <= ?1 ORDER BY b.onsiteNextAttemptAt, b.id")
     List<String> findDueOnsite(LocalDateTime now, org.springframework.data.domain.Pageable page);
     java.util.Optional<Booking> findByIdempotencyKeyHash(String keyHash);

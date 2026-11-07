@@ -235,3 +235,28 @@ It records synthetic host cash receipts, never real cash or provider transaction
 BookingResponse.onsiteReservationStatus exposes V1_PENDING/V1_CONFIRMED/
 V1_REVIEW_REQUIRED/V1_RELEASED. Clients must read authoritative booking state;
 HTTP201 ONSITE_PENDING alone never proves the room was confirmed or money received.
+
+
+### Booking input validation (05/11/2026)
+
+Create requests are validated at HTTP and service/RPC boundaries before catalog,
+inventory or points effects. Contact name/email/phone, canonical UUID hotel/room
+identifiers, dates, positive quantity/price and guest counts are checked; nested
+items cannot be NULL. Body userId remains optional and is replaced with the
+signed principal at HTTP entry. Existing idempotency and cross-field stay rules
+remain authoritative. Fractional JSON integers return400, never truncated counts.
+Validation responses include fieldErrors without rejected values. Optional
+fields and legacy stored rows are not backfilled or promoted.
+
+
+### Verified payment and room confirmation (06/11/2026)
+
+A verified successful provider callback commits receipt/money and durable V1
+inventory intent atomically, then confirms its original hold after commit.
+BookingResponse.paidReservationStatus distinguishes pending/confirmed/review/
+released stock work; COMPLETED payment is not automatically CONFIRMED booking.
+No callback replay, replacement stock, new charge or invented refund is used to
+recover a timeout/local completion failure. Legacy NULL policy is not backfilled.
+Apply paid-reservation-v1-20261105.sql and inventory-review-audit-20261106.sql
+from docker/sql in the BOOKING database before the new binary. See Docker README
+for clone-only test commands, reviewer audit and rollback/deployment constraints.
