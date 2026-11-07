@@ -10,10 +10,10 @@ import java.util.UUID;
 
 public record RoomTypeCreateRequest(
         @NotNull UUID hotelId,
-        @NotBlank String name,
-        @NotNull BigDecimal basePrice,
+        @NotBlank @jakarta.validation.constraints.Size(max=100) String name,
+        @NotNull @jakarta.validation.constraints.Positive BigDecimal basePrice,
         @NotNull @Valid CapacityDto capacity,
-        @NotNull Integer roomAmount,
+        @NotNull @jakarta.validation.constraints.Min(1) Integer roomAmount,
         List<String> amenities,
         String description
 ) {

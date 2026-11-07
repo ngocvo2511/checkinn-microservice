@@ -34,9 +34,27 @@ class RoomTypeServiceImplTest {
     void setUp() {
         roomTypeRepository = mock(RoomTypeRepository.class);
         hotelRepository = mock(HotelRepository.class);
-        roomTypeService = new RoomTypeServiceImpl(roomTypeRepository, hotelRepository, new ObjectMapper());
+        roomTypeService = new RoomTypeServiceImpl(roomTypeRepository, hotelRepository, new ObjectMapper(), org.mockito.Mockito.mock(RoomInventoryReviewService.class));
     }
 
+    @Test void metadataUsesCurrentLockedSnapshotWithoutRewritingASeparatePriceOrStockChange() {
+        UUID hotelId=UUID.randomUUID(),ownerId=UUID.randomUUID(),id=UUID.randomUUID();
+        var stale=roomType(id,hotelId,2,true);var current=roomType(id,hotelId,4,true);current.setBasePrice(BigDecimal.valueOf(2_000_000));
+        when(roomTypeRepository.findById(id)).thenReturn(Optional.of(stale));
+        when(roomTypeRepository.findByIdForUpdate(id)).thenReturn(Optional.of(current));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId,ownerId)));
+        when(roomTypeRepository.save(any())).thenAnswer(call->call.getArgument(0));
+        var result=roomTypeService.updateRoomType(id,new RoomTypeUpdateRequest(null,null,null,null,null,null,"Updated metadata"),ownerId);
+        assertThat(result.getBasePrice()).isEqualByComparingTo("2000000");assertThat(result.getTotalRooms()).isEqualTo(4);assertThat(result.getDescription()).isEqualTo("Updated metadata");assertThat(stale.getDescription()).isNull();
+    }
+    @Test void roomAmountGuardUsesCurrentValueAfterCompetingIncrease() {
+        UUID hotelId=UUID.randomUUID(),ownerId=UUID.randomUUID(),id=UUID.randomUUID();
+        when(roomTypeRepository.findById(id)).thenReturn(Optional.of(roomType(id,hotelId,2,true)));
+        when(roomTypeRepository.findByIdForUpdate(id)).thenReturn(Optional.of(roomType(id,hotelId,4,true)));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId,ownerId)));
+        assertThatThrownBy(()->roomTypeService.updateRoomType(id,new RoomTypeUpdateRequest(null,null,null,null,null,3),ownerId)).isInstanceOf(IllegalArgumentException.class);
+        verify(roomTypeRepository,never()).save(any());
+    }
     @Test
     void createRoomTypeRejectsUnauthorizedOwner() {
         UUID hotelId = UUID.randomUUID();
@@ -69,7 +87,7 @@ class RoomTypeServiceImplTest {
         UUID roomTypeId = UUID.randomUUID();
         RoomType roomType = roomType(roomTypeId, hotelId, 5, true);
 
-        when(roomTypeRepository.findById(roomTypeId)).thenReturn(Optional.of(roomType));
+        when(roomTypeRepository.findByIdForUpdate(roomTypeId)).thenReturn(Optional.of(roomType));
         when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId, ownerId)));
 
         RoomTypeUpdateRequest request = new RoomTypeUpdateRequest(null, null, null, null, null, 4);
@@ -87,7 +105,7 @@ class RoomTypeServiceImplTest {
         UUID roomTypeId = UUID.randomUUID();
         RoomType roomType = roomType(roomTypeId, hotelId, 5, true);
 
-        when(roomTypeRepository.findById(roomTypeId)).thenReturn(Optional.of(roomType));
+        when(roomTypeRepository.findByIdForUpdate(roomTypeId)).thenReturn(Optional.of(roomType));
         when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId, ownerId)));
 
         roomTypeService.deactivateRoomType(roomTypeId, ownerId);
@@ -95,6 +113,16 @@ class RoomTypeServiceImplTest {
 
         roomTypeService.activateRoomType(roomTypeId, ownerId);
         assertThat(roomType.getIsActive()).isTrue();
+    }
+
+    @Test void unknownLegacyInventoryRequiresReviewBeforeAssigningAnAmount() {
+        UUID hotelId=UUID.randomUUID(), ownerId=UUID.randomUUID(), roomId=UUID.randomUUID();
+        RoomType room=roomType(roomId,hotelId,5,true); room.setTotalRooms(null);
+        when(roomTypeRepository.findByIdForUpdate(roomId)).thenReturn(Optional.of(room));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId,ownerId)));
+        assertThatThrownBy(() -> roomTypeService.updateRoomType(roomId,new RoomTypeUpdateRequest(null,null,null,null,null,5),ownerId))
+            .isInstanceOf(com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException.class);
+        verify(roomTypeRepository,never()).save(any());
     }
 
     private RoomTypeCreateRequest createRequest(UUID hotelId, int roomAmount) {

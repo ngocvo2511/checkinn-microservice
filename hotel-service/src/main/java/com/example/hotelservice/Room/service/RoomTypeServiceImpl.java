@@ -24,10 +24,12 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     private final RoomTypeRepository roomTypeRepository;
     private final HotelRepository hotelRepository;
     private final ObjectMapper objectMapper;
+    private final RoomInventoryReviewService inventoryReview;
 
     @Override
     @Transactional
     public RoomType createRoomType(RoomTypeCreateRequest request, UUID ownerId) {
+        com.example.hotelservice.validation.InputValidation.require(request);
         Hotel hotel = hotelRepository.findById(request.hotelId())
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
 
@@ -57,6 +59,12 @@ public class RoomTypeServiceImpl implements RoomTypeService {
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
     }
 
+    // Mutations share the inventory row lock so Hibernate cannot flush a stale full row.
+    private RoomType getByIdForUpdate(UUID roomTypeId) {
+        return roomTypeRepository.findByIdForUpdate(roomTypeId)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
+    }
+
     @Override
     public List<RoomType> getByHotel(UUID hotelId) {
         return roomTypeRepository.findByHotelId(hotelId);
@@ -65,7 +73,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Override
     @Transactional
     public RoomType updateRoomType(UUID roomTypeId, RoomTypeUpdateRequest request, UUID ownerId) {
-        RoomType rt = getById(roomTypeId);
+        com.example.hotelservice.validation.InputValidation.require(request);
+        RoomType rt = getByIdForUpdate(roomTypeId);
 
         Hotel hotel = hotelRepository.findById(rt.getHotelId())
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
@@ -81,6 +90,9 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         if (request.amenities() != null) rt.setAmenities(writeJson(request.amenities()));
         if (request.isActive() != null) rt.setIsActive(request.isActive());
         if (request.roomAmount() != null){
+            inventoryReview.requireLegacyUpdateAllowed(rt, request.roomAmount());
+            if (rt.getTotalRooms() == null || rt.getTotalRooms() <= 0)
+                throw new com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException();
             if(request.roomAmount() < rt.getTotalRooms()) {
                 throw new IllegalArgumentException("Số lượng phòng phải lớn hơn hoặc bằng số lượng phòng trước đó.");
             }
@@ -92,14 +104,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override @Transactional
     public void activateRoomType(UUID roomTypeId, UUID ownerId) {
-        RoomType rt = getById(roomTypeId);
+        RoomType rt = getByIdForUpdate(roomTypeId);
         authorizeOwner(rt.getHotelId(), ownerId);
         rt.setIsActive(true);
     }
 
     @Override @Transactional
     public void deactivateRoomType(UUID roomTypeId, UUID ownerId) {
-        RoomType rt = getById(roomTypeId);
+        RoomType rt = getByIdForUpdate(roomTypeId);
         authorizeOwner(rt.getHotelId(), ownerId);
         rt.setIsActive(false);
     }

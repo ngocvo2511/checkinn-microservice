@@ -23,6 +23,9 @@ public record RoomTypeResponse(
         List<MediaAssetResponse> mediaAssets,
         String description
 ) {
+    @com.fasterxml.jackson.annotation.JsonProperty("textEncoding")
+    public String textEncoding() { return "PLAIN_V1"; }
+
     public RoomTypeResponse(UUID id, UUID hotelId, String name, BigDecimal basePrice, CapacityDto capacity,
                             List<String> amenities, Boolean isActive, Integer totalRooms, Instant createdAt,
                             Instant updatedAt, List<MediaAssetResponse> mediaAssets) {

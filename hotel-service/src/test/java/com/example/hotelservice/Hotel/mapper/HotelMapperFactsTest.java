@@ -17,6 +17,7 @@ class HotelMapperFactsTest {
         var amenities = mock(HotelAmenityRepository.class);
         mapper.hotelAmenityCategoryRepository = categories;
         mapper.hotelAmenityRepository = amenities;
+        mapper.amenityCatalog = mock(com.example.hotelservice.Amenity.service.AmenityCatalogService.class);
         var hotel = UUID.randomUUID();
         var active = HotelAmenityCategory.builder().id(UUID.randomUUID()).hotelId(hotel).title("Active category").isActive(true).build();
         var inactive = HotelAmenityCategory.builder().id(UUID.randomUUID()).hotelId(hotel).title("Inactive category").isActive(false).build();

@@ -1,11 +1,11 @@
 package com.example.hotelservice.Room.dto.request;
 
 public record CapacityDto(
-        int adults,
-        int children,
+        @jakarta.validation.constraints.NotNull @jakarta.validation.constraints.Min(1) Integer adults,
+        @jakarta.validation.constraints.NotNull @jakarta.validation.constraints.Min(0) Integer children,
         String bedType,
-        Integer roomSize,
+        @jakarta.validation.constraints.Min(0) Integer roomSize,
         Boolean breakfastIncluded,
-        Integer breakfastQuantity
+        @jakarta.validation.constraints.Min(0) Integer breakfastQuantity
 ) {}
 

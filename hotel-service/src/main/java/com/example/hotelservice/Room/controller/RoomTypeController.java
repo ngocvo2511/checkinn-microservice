@@ -33,7 +33,7 @@ public class RoomTypeController {
     @PostMapping
     public ResponseEntity<RoomTypeResponse> createRoomType(
             @AuthenticationPrincipal Jwt jwt,
-            @RequestBody RoomTypeCreateRequest request
+            @jakarta.validation.Valid @RequestBody RoomTypeCreateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[ROOM_TYPE_CONTROLLER_CREATE] Create room type request received - hotelId: {}, ownerId: {}, name: {}",
@@ -51,7 +51,7 @@ public class RoomTypeController {
     public ResponseEntity<RoomTypeResponse> updateRoomType(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID roomTypeId,
-            @RequestBody RoomTypeUpdateRequest request
+            @jakarta.validation.Valid @RequestBody RoomTypeUpdateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[ROOM_TYPE_CONTROLLER_UPDATE] Update room type request received - roomTypeId: {}, ownerId: {}", roomTypeId, ownerId);

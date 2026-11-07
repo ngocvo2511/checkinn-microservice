@@ -684,3 +684,653 @@ It records synthetic host cash receipts, never real cash or provider transaction
 BookingResponse.onsiteReservationStatus exposes V1_PENDING/V1_CONFIRMED/
 V1_REVIEW_REQUIRED/V1_RELEASED. Clients must read authoritative booking state;
 HTTP201 ONSITE_PENDING alone never proves the room was confirmed or money received.
+
+
+## Request validation (05/11/2026 rollout notes)
+
+Hotel/room create and partial update validate supplied fields at both MVC and
+service boundaries, before persistence/geocoding. Nested address/capacity are
+validated. New room capacity requires adults >= 1 and children >= 0; room price
+and room count must be positive. Optional size/breakfast counts accept unknown
+NULL and zero, reject negatives. Star rating, when supplied, follows the
+existing 1..5 form contract. Existing hotel legal/contact constraints are now
+active. No new optional update field becomes mandatory.
+
+Booking validates contact, UUID identifiers, guest/item counts and nested items
+before catalog/hold/points effects, including direct RPC/service entry. Existing
+stay-date, same-item-date, quantity-overflow and rate-plan rules remain in force.
+JSON fractional integers are rejected rather than truncated. Validation HTTP400
+includes a fieldErrors map and never echoes rejected contact or raw JSON values.
+Malformed JSON uses fieldErrors.request; nested bean paths retain their field
+path. Authentication/authorization remains required on the original routes.
+
+A legacy room with NULL/nonpositive total_rooms may still receive unrelated
+partial edits. Attempting to assign a new room count returns409 for inventory
+review; it does not infer a previous capacity or silently reset booked supply.
+No schema/data migration is part of this change.
+
+Run `python -X utf8 docker/input-validation-smoke.py` on checkinn-test only, after
+building/updating hotel-service and booking-service. It verifies actual clone
+datasources, uses fresh synthetic hotel/room UUIDs, checks direct and gateway
+HTTP400/fieldErrors, source fingerprints, zero invalid booking/hold writes and
+legacy inventory409, then removes only its generated fixtures. Run separately
+from inventory/onsite recovery harnesses.
+
+
+## Internal authentication/session contract (05/11/2026)
+
+The frontend uses usernameOrEmail/password for both custom and NextAuth
+credentials. The canonical backend response is token, UUID-string userId and
+persisted uppercase CUSTOMER/OWNER/ADMIN role. External Google access tokens are
+never accepted as internal bearer credentials; Google UI/provider is disabled
+until a verified backend exchange is implemented. Existing OAuth cookies and
+malformed storage are treated as an unauthenticated client state.
+
+`python -X utf8 docker/auth-session-smoke.py` checks real registration/login,
+UUID/JWT principal and roles, wrong-password/unverified-email denials, owner/
+customer cross-user denials, logout and cross-service401 after token revocation.
+It verifies user/booking clone datasources and the running Mailpit configuration.
+It uses random-password synthetic accounts, sets verified email/ADMIN role only
+as explicit fixture preparation, and removes its generated accounts/OTP rows
+and token-hash revocation keys. No copied account is modified and no shared queue
+or Redis database is purged. Native acceptance does not imply actual OTP/OAuth
+or external identity-provider integration has been tested.
+
+
+## Verified-payment inventory recovery V1 (05–06/11/2026)
+
+New successful verified VNPay callbacks commit their immutable financial receipt,
+paidAmount and a receipt-bound paid_reservation_status=V1_PENDING intent together.
+They do not call inventory before that transaction commits. A bounded two-thread
+wake-up pool and durable due-row scheduler confirm the original hold afterward;
+CONFIRMED is written only after inventory acknowledges it. Unknown transport
+retries; missing/expired/ambiguous source requires V1_REVIEW_REQUIRED, with money
+retained and no replacement hold or second payment. Local completion commit
+failure replays the same hold after restart without another provider callback.
+Loyalty settlement queues only after room confirmation and actual receipt.
+
+New V1 paid cancellations commit CANCELLED/refund-request/points-reversal intent
+before remote inventory release. Source cancellation wins against a queued
+confirmation. Inventory acknowledgement updates V1_RELEASED; it does not claim
+provider refund execution. Release completion does not emit the already-published
+CANCELLED/NO_SHOW booking transition again. Monetary refunds still require the
+existing separate approved execution contract; no fake provider success is added.
+
+Apply BOOKING SQL in order before the new binary:
+1. docker/sql/paid-reservation-v1-20261105.sql (five nullable queue/bound-receipt fields + due index).
+2. docker/sql/inventory-review-audit-20261106.sql (three nullable reviewer fields).
+Neither defaults/backfills old rows. NULL identifies legacy work provenance and
+is not automatically promoted. Deploy compatible truthful UI before the writer;
+retain expanded schema and do not run an older writer over new V1 intents.
+
+If a cancelled V1 onsite/paid booking needs inventory review, reconcile its
+original hold reference through the existing controlled operational process.
+An ADMIN may then POST /api/bookings/{id}/cancel-reviewed with a nonblank reason
+to retry release against that same reference. Reviewer identity comes from the
+signed principal; inventory_reviewed_by/reason/at and attempt history are stored.
+Customer cancel replay cannot restart reviewed work. The endpoint does not
+substitute a hold, reopen a booking, create another refund request or alter money.
+
+Verified-clone-only commands, run each runtime harness separately:
+
+```powershell
+python -X utf8 docker/paid-reservation-smoke.py --migrate-only
+python -X utf8 docker/paid-reservation-smoke.py
+python -X utf8 docker/cancellation-workflow-smoke.py
+python -X utf8 docker/onsite-reservation-smoke.py
+python -X utf8 docker/booking-security-smoke.py
+```
+
+The paid harness signs SIMULATED local callbacks using test configuration, tests
+wrong signatures/amounts, deferred receipt/cancellation/completion commit faults,
+actual HTTP timeout, restart, concurrency, terminal inventory review and cleanup.
+It never contacts a provider or performs actual payment/refund/QueryDR settlement.
+Browser return-page refresh/polling reads booking state, never resubmits the
+provider callback. Receipt success alone is not a room-confirmation acknowledgement.
+This source-row queue is not a reliable general RabbitMQ outbox; delivery/order
+recovery for reporting/notifications remains separately tracked in STD-029.
+
+
+### Reviewed global amenity catalog (STD-016, 2026-11-06)
+
+Apply `docker/sql/amenity-catalog-v1-20261106.sql` to the **hotel database** before
+starting this hotel-service version. The script is transactional, additive and
+replayable, with no catalog seeds or automatic label backfill. Startup checks the
+required columns. Back up using the established deployment procedure; this is not
+a command to modify a production database from the test harness. Rollback the
+application only if necessary, leaving the new tables/audit rows intact.
+
+- `GET /amenity-catalog`: active codes and labels, public.
+- `GET/POST /admin/amenity-catalog`, `PUT /admin/amenity-catalog/{code}`: ADMIN only;
+  code is immutable; label/description/active edits require the current revision.
+  Create requires revision 0. Duplicate creates and stale edits return 409.
+- `GET /hotels/{hotelId}/amenity-mappings`: owner of that hotel or ADMIN.
+- `POST /hotels/{hotelId}/amenity-mappings/{amenityId}/requests`: owned existing
+  raw amenity ID, existing active `codes`, `revision` and optional `note`.
+  `codes: []` explicitly proposes clearing classification; it does not delete raw data.
+- `GET /admin/amenity-mappings?page=0`: ADMIN pending queue, 50 per page.
+  `/admin/amenity-mappings/history?page=0` retains past requests, actors and reasons.
+- `POST /admin/amenity-mappings/{id}/review`: ADMIN `{approve,revision,reason}`;
+  nonblank reason required for both decisions. A stale, superseded or changed-label
+  approval is rejected. Deleted raw targets can be rejected, never approved.
+- `GET /hotels/offers?...&amenityCodes=CODE_A&amenityCodes=CODE_B`: all codes must
+  be effective on that property. Unknown, inactive and empty codes return 400.
+  Existing list responses and literal `amenity` frontend URLs remain supported.
+  Public amenity items add `verifiedCodes` without changing their original title.
+
+An owner proposes a classification; an ADMIN checks the actual meaning before
+approving. There is no automatic Wi-Fi/free/paid equivalence or production seed
+list. The host detail Amenities section and `/admin/amenities` provide this workflow.
+Mapping state is serialized with legacy raw amenities CRUD under the hotel row
+lock. A checked title snapshot, active item/category/catalog and current raw UUID
+are required for public effect. Physical replacement keeps audit records but does
+not transfer mappings to the replacement UUID. Rejection keeps a previous valid
+approval; approval of an empty set clears it. Concurrent stale writers get 409.
+
+This catalog currently classifies **property-level** hotel amenities. Room JSON
+labels remain literal and cannot fulfill a property-level code. Operators must
+review legacy mappings individually; unclassified labels stay visible and usable
+through their existing literal flow. No historical data migration or alias merge
+is implied by deploying the schema.
+
+Run `python -X utf8 docker/amenity-catalog-smoke.py` only with the isolated
+`checkinn-test` clone stack. It verifies the running datasource, migration replay
+and legacy fingerprints, real JWT authorization, revisions/parallel proposals,
+review/clear/deactivate behavior, search semantics, legacy replacement and audit
+retention, then removes only that run's UUID-scoped fixtures.
+
+
+### Core HTTP errors and read deadlines (STD-026, 2026-11-06)
+
+Hotel/booking JSON endpoints retain their HTTP statuses and successful DTOs. Errors
+now include `status`, `error`, `code`, `message`, `path`, `timestamp`, `requestId`
+and optional `fieldErrors`; `X-Request-ID` matches the body, with `Cache-Control:
+no-store`. Codes distinguish INVALID_REQUEST/VALIDATION_ERROR, UNAUTHORIZED,
+FORBIDDEN, NOT_FOUND, METHOD_NOT_ALLOWED, CONFLICT, INVENTORY_NOT_CONFIGURED,
+INSUFFICIENT_INVENTORY, DEPENDENCY_UNAVAILABLE/DEPENDENCY_TIMEOUT and INTERNAL_ERROR.
+Unexpected 5xx responses never expose exception messages, class names or stack
+traces. Legacy String/empty errors are adapted; 204/success bodies remain intact.
+Unknown resources are404 and unsupported methods405 (with Allow), rather than500.
+Malformed/revoked bearer tokens remain denied401; unavailable revocation storage
+in hotel-service is503 and never grants access.
+
+Availability check derives `available` from a single `availableRooms` observation;
+its room/hotel/date reads use a repeatable snapshot. It is not a reservation or a
+promise that stock will remain unchanged after the response. Hold creation is the
+stock authority: insufficient inventory is now409/INSUFFICIENT_INVENTORY, not400.
+Consumers must retain legacy error compatibility during rollout, not retry a write
+automatically merely because it timed out.
+
+Booking outbound HTTP defaults remain connect3000/read5000ms (`clients.*-timeout-ms`).
+Hotel user-profile RPC now uses `clients.user-grpc-deadline-ms` (positive, default5000);
+RPC failure is a503 dependency error. This change does not broaden RPC permissions.
+The frontend booking/payment/loyalty adapter bounds both headers and body to15000ms,
+keeps safe error metadata and never automatically retries mutations. A timeout is
+an **unknown outcome**: read the source booking/payment state and reuse an existing
+idempotency command where applicable. These are per-call/client deadlines, not a
+claim of a distributed end-to-end latency SLA or rollback of an already committed
+transaction.
+
+On isolated clones run `python -X utf8 docker/api-error-smoke.py`,
+`python -X utf8 docker/hold-concurrency-smoke.py` and existing validation/security/
+paid-reservation harnesses. The error harness uses scoped synthetic room/catalog
+records, concurrent two-night commits and a deferred trigger restricted to one new
+catalog code. Finally removes only that run's trigger/function and fixtures.
+
+
+### User RPC credential boundary and password reset (STD-020 P0 follow-up, 2026-11-06)
+
+UserService RPCs no longer trust network location or `x-user-id`. Auth-service
+attaches a signed, five-minute `auth-service`/`AUTH_SERVICE` identity to register,
+login and reset-password calls. Only that exact subject+role may call those RPCs;
+end-user ADMIN tokens cannot bypass the HTTP OTP reset flow. Hotel-service attaches
+its existing `hotel-service`/`HOTEL_SERVICE` identity for its read-only account
+enrichment. GetUserById also allows a verified self or ADMIN user; cross-user reads
+and unknown service identities are denied. Revoked/expired/invalid tokens fail closed.
+This preserves existing trusted internal consumers; it does not expose service
+credentials to the browser or grant a client-supplied role.
+
+Roll out the updated auth/hotel clients **before** enabling the user-service RPC
+interceptor. There is no anonymous compatibility fallback. In the local test stack
+all three images are updated and health checked before regression tests. Auth/hotel
+profile RPC deadlines default to5000ms and must remain positive.
+
+Password reset preserves the existing verify-then-reset UI. The final reset requires
+one stored verified, unexpired OTP proof, locks it, consumes it and updates the hash
+in one user-database transaction. Commit failure restores proof/password together;
+concurrent/reset replay cannot reuse the proof. Missing/expired/unverified/ambiguous
+proof is rejected. Email verification updates only its flag so a concurrent request
+cannot merge an old detached password over a successful reset. OTP format,10-minute
+expiry and5-attempt policy are unchanged; generation uses SecureRandom. There is
+no schema migration or historical-user/password modification in this change.
+
+`python -X utf8 docker/user-rpc-security-smoke.py` is restricted to running clones
+and Mailpit. It creates random-password synthetic accounts, sends RPC credentials
+and payloads through memory/stdin, records status/boolean assertions only, exercises
+OTP/replay/concurrency/deferred commit failure and actual client enrichment, then
+removes only those accounts/OTPs/profiles, scoped fault objects and its own revoked
+credential key. It never resets an existing account, sends real email, logs a
+password/token/OTP/hash, or purges a shared database/queue/Redis keyspace.
+
+Full-account field minimization remains separate. Account-wide OTP-reset revocation
+is implemented by the approved policy below; individual-token logout still revokes
+only the selected token.
+
+### OTP reset: account-wide session revocation
+
+A successful final OTP reset invalidates every prior session for that UUID account.
+User/booking/hotel/revenue/regulations check an opaque per-account Redis generation,
+including legacy tokens without the additive `sessionGeneration` claim. Accounts
+never reset retain their existing valid legacy sessions. Auth signs the generation
+captured by user-service while validating credentials under the account row lock;
+it must not read a newer generation after validating an old password. Unique JWT
+`jti` values preserve separate logout sessions. Machine identities retain their
+narrow subject/role checks. HTTP security chains are stateless; a stored HTTP
+security context cannot replace a verified bearer. The anonymous debug token
+controller has been removed entirely.
+
+The reset transaction locks the account, consumes the verified OTP, writes a new
+`auth:session-generation:<UUID>` marker without TTL and waits for local Redis AOF
+fsync (`WAITAOF 1 0 1500`) on the same connection before changing the password.
+**Redis 7.2+ with AOF enabled and a persistent volume is required** (test stack:
+7.4.9). No database schema change is needed. Every UUID-user session fails closed
+when the revocation store is unavailable, even with the legacy fail-open option.
+Do not expire, evict, flush, or restore old generation markers as ordinary cache:
+a marker loss/old backup could make legacy sessions valid again. Coordinate any
+Redis disaster recovery with signing-key/session invalidation; AOF confirmation
+protects local process restart, not disk loss or stale-backup restore.
+
+Revocation is monotonic: a later DB commit failure rolls back password and OTP,
+but never restores the old generation. The old password can then log in again,
+issuing a new session. A Redis write/fsync error aborts password reset; a timeout
+may already have invalidated prior sessions, which is safe. Do not compensate by
+restoring old session generations. This is deliberate fail-closed ordering, not
+a claim of a distributed PostgreSQL/Redis transaction.
+
+Deploy compatible token readers in all five services and the auth issuer before
+enabling reset in the updated user-service. Drain old replicas before resuming
+reset traffic; mixed old readers can accept revoked sessions. Verify AOF/durability
+and preserve existing blacklist data. No anonymous fallback is provided.
+
+Verification against isolated clones/Mailpit only:
+- `python -X utf8 docker/session-store-integration.py`: opt-in real Redis/AOF and
+  PostgreSQL transaction tests, temporary read-only ACL/loopback transport, scoped
+  cleanup; no shared keyspace purge.
+- `python -X utf8 docker/reset-session-smoke.py`: real login/reset JWTs across all
+  five consumers, legacy compatibility, rollback/replay/signature tampering,
+  account isolation, individual logout, concurrent login/reset and hard restart
+  of the test Redis while retaining its volume. Never run against production.
+
+`session-store-integration.py` supplies clone credentials through child-process
+environment only. Integration classes are opt-in with `CHECKINN_SESSION_TEST=true`;
+the helper establishes and cleans their isolated transport/fixtures. Existing
+application-context tests remain unchanged.
+
+
+### Public search review summaries (additive)
+
+`GET /api/v1/reviews/summaries?hotelIds=<UUID>&hotelIds=<UUID>` (gateway prefix
+`/api/hotel`) accepts 1–100 raw identifiers, deduplicates them, and returns rows in
+request order. Only active APPROVED properties appear. Each row contains exactly
+`hotelId`, `totalReviews`, `averageRating`; count includes PUBLISHED reviews only,
+average is rounded HALF_UP to two decimals. Zero reviews is count0/average null.
+Unknown/private properties are omitted, not fabricated as known zero. Bad/missing
+IDs or an oversized batch return400. No schema/index migration is required.
+
+One aggregate repository query returns these facts without hydrating review text,
+feedback, responses or user profiles. Existing detail statistics/review APIs retain
+their contracts. Search uses sequential chunks of at most100 and rejects invalid,
+unsolicited or duplicate rows. Failed/missing summaries remain unknown; a selected
+guest-rating filter cannot silently turn that failure into empty matches. Browser
+credentials are unnecessary for these public aggregates.
+
+`python -X utf8 docker/review-summary-smoke.py` verifies actual clone query/API
+behavior, direct+gateway publication/privacy/rounding/input boundaries and legacy
+detail compatibility. It reports response-byte and sequential-client timing
+observations with data sizes and Compose/curl overhead. This small fixture is not
+a throughput benchmark or an SLO. Cleanup targets only the generated property and
+review fixtures. Full offer projection, global sorting/pagination and other
+inventory/location query baselines remain separate STD-014/025 work.
+
+
+### Global offer sorting and offset pages
+
+The additive public endpoint is `GET /hotels/offers/page` (gateway prefix
+`/api/hotel`). Legacy `/hotels/offers` remains a list with its original shape.
+All existing location/name/dates/capacity/price/type/reviewed-code parameters apply.
+Additional repeated parameters: `starRatings` (integers1..5), `guestRatings`
+(thresholds0..10; OR), `amenities` (exact property-level literal labels; AND).
+A comma inside one `amenities` value is preserved, not split into aliases/filters.
+No room-only labels are promoted to hotel amenities.
+
+Controls: `page=0` by default (zero-based), `size=20` by default (range1..50),
+`sort=DEFAULT|PRICE_ASC|PRICE_DESC|RATING_DESC`. DEFAULT is lexical hotel UUID,
+not a popularity recommendation. Other sorts use ascending UUID for ties;
+known-unrated hotels sort last by rating and cannot satisfy a guest-score filter.
+Invalid controls/filter values return400. Prices come from the same matched room
+offer that satisfies occupancy, stock and dates; no client price/inventory guesses.
+
+Response: `content[{hotel,offer,reviews}]`, `page`, `size`, `sort`, `totalElements`,
+`totalPages`, `availableAmenities`. Review facts use the published aggregate from
+the same read snapshot. All global filters and ordering precede the page boundary;
+all totals follow filters. An out-of-range page is empty but keeps the true total.
+`availableAmenities` contains observed literal labels from the room-eligible
+candidate set before star/score/literal filters and pagination, so moving pages
+does not remove filter choices. It contains labels, not per-hotel detail objects.
+
+Each request uses one REPEATABLE_READ database snapshot. Separate offset requests
+are not pinned to one historical snapshot: live changes may move rows between
+pages. Reload applies current data; the UI resets page on sort/size/filter changes,
+keeps URL/back/reload consistent and offers return-to-first on an empty stale page.
+Search consumes server pages and review facts together, without browser filtering
+or extra per-hotel review/profile calls. API errors remain errors with retry.
+
+This bounds returned hotel content, not the server candidate scan: the current
+matching pipeline still maps candidates and reads dated inventory before offset
+selection. Broader projection/query/throughput work remains STD-025; no unsupported
+latency SLO or distributed snapshot guarantee is claimed.
+
+`python -X utf8 docker/search-pagination-smoke.py` uses exact synthetic clone
+hotel/room/review/amenity fixtures to verify direct+gateway global sort/ties/counts,
+dated supply/capacity/price consistency, invalid input, literal comma binding,
+publication and legacy list compatibility. Reads preserve inventory; cleanup
+removes only those fixture UUIDs. Do not run the smoke script against production.
+
+
+### Canonical text encoding and rolling compatibility
+
+HotelResponse and RoomTypeResponse now include additive `textEncoding: PLAIN_V1`.
+Text is ordinary JSON string content, including intentional quotes, Unicode,
+multiline text and literal null/undefined strings. Real optional nulls remain null.
+Address/capacity/amenities remain object/object/array as before; no schema migration.
+MapStruct JSON helpers are qualified so they only serve explicit JSON-column
+expressions, not implicit conversion of every scalar String.
+
+Roll out the compatible frontend adapter first, then the PN-tagged backend and
+drain old replicas. Frontend supports absent-tag responses from the old generated
+mappers: decode exactly one proven encoding layer for hotel scalar/nested city
+and room name fields. Manual policy/FAQ/amenity and room-description text is
+already plain even in the old contract. Never recursively strip quotes, interpret
+plain null-like strings as null, or guess an unrecognized encoding version.
+Existing address-object compatibility remains bounded and does not decode its
+interior text fields. The compatibility fallback is deliberately retained.
+
+This fixes DTO encoding, not a claim that JSONB+String is inherently invalid.
+Aggregate-only clone audit and actual Hibernate API writes prove current JSONB
+shapes. Do not auto-strip existing quoted database names: historical encoding
+artifacts and intentional punctuation need provenance/manual review. No automatic
+historical-data rewrite or migration is included.
+
+`python -X utf8 docker/canonical-text-smoke.py` verifies actual validated owner API
+writes, canonical direct/gateway text/shape/version, and real frontend Node
+adapters against that verified test gateway's host port. It records assertions,
+not data/credentials; exact synthetic cleanup also verifies existing hotel/room
+fingerprints remain unchanged. Browser tests separately verify literal card/modal
+rendering and description display. Use isolated clones only.
+
+### Room facts and owner mutations
+
+Unknown capacity, configured stock and optional descriptive metadata remain null;
+zero children and explicit false breakfast are known values. Dated availableRooms
+is never a replacement for configured totalRooms. Public selection requires known
+positive price/stock and valid core capacity. Owner edits send only changed fields;
+a description-only edit does not rewrite price, capacity or stock. Existing six
+capacity fields roundtrip; descriptive metadata never changes booking prices.
+Unknown historical stock requires review, rather than assigning an invented count.
+
+Room update/activate/deactivate use the existing pessimistic RoomType row lock in
+their transaction, shared with hold creation. This prevents Hibernate full-row
+flushes from overwriting a concurrent price/stock change and makes the stock
+no-decrease guard evaluate the committed current value. Explicit client updates
+still replace the requested field; this is not optimistic versioning for stale UI
+payloads or a global distributed transaction guarantee.
+
+On verified checkinn-test clones only, run:
+
+```powershell
+python -X utf8 docker/unknown-room-facts-smoke.py
+python -X utf8 docker/room-mutation-concurrency-smoke.py
+```
+
+The latter uses synthetic fixtures and scoped temporary trigger/advisory barriers
+to observe real PostgreSQL blocking between two actual owner API requests. Cleanup
+drops only its own objects/rows and checks existing hotel/room fingerprints. It
+does not run against production or print credentials.
+
+### Dated inventory read budget (STD-025)
+
+`getAvailableRoomCount` reads configured stock and publication, then one scalar
+MAX(held + booked) aggregate over [checkIn, checkOut). Missing dated rows mean no
+recorded load; they are not created by a read. It retains the repeatable-read
+snapshot and clamps the result to 0..configured stock. Counters widen to long
+before addition; held/booked maxima from different nights are never combined.
+Hold/confirm/release locks and mutations remain separate and unchanged.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py availability-range-integration
+```
+
+This opt-in test boots JPA repositories only against a verified checkinn-test clone
+through a temporary loopback transport. No application jobs or provider clients
+start. Fixtures exist only inside a rolled-back PostgreSQL transaction; schema
+creation is disabled. Hibernate Statistics measures prepared statements: 1-night
+and 30-night single-room reads both use 3 statements (room, parent, stay aggregate),
+versus 32 previously for 30 nights. This is a query-count result, not a latency SLO
+or a claim that the complete search candidate pipeline is optimized. Default
+unit runs skip the environment-dependent integration test; run it explicitly.
+
+
+Selective location search now filters with escaped case-insensitive contains in
+repository queries and fetches each matched city's province in the same query.
+It retains literal Unicode labels, stable parent IDs and province/city grouping;
+percent/underscore/backslash in input remain literal. No accent-folding, aliasing,
+arbitrary limit, or new index is inferred. Explicit all-locations remains a catalog
+API. On the measured selective fixture, loaded entities decrease from214 to4;
+this is not a no-table-scan or latency claim.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py location-search-integration location
+python -X utf8 docker/location-search-smoke.py
+```
+
+The former is another opt-in actual JPA test with rollback and two-query/loaded
+entity budgets. The latter checks direct/gateway lookup and legacy text-location
+hotel offers with scoped fixtures and unchanged existing-record fingerprints.
+
+
+Paged offers use internal eligibility/filter facts before the global page boundary,
+then map the complete public hotel DTO only for selected content. Internal facts
+are never emitted as partial public representations. Off-page hotel/room media,
+policy, FAQ, city/address mapping is avoided; global inventory/review/filter/facet
+semantics and the final response shape remain intact. The legacy list endpoint
+continues to use full DTOs. This is not SQL LIMIT/projection across the entire
+candidate pipeline: room/facet reads are grouped by published property IDs, dated
+availability is grouped by eligible room IDs, and selected amenities can be read again during
+full mapping. Invocation-budget unit tests are not reported as measured SQL SLOs.
+
+
+Paged candidates now batch dated inventory reads: one room query, one parent
+publication query, and one grouped peak-load query per at most500 unique eligible
+room IDs. This is an internal SQL parameter chunk size, not a result cap. All
+requested IDs and parent publication/configured stock are validated; missing rooms
+or invalid inventory fail rather than returning partial/guessed counts. Undated
+offers remain unverified (availableRooms/checkedAt null). Snapshot matching never
+falls back to single-room reads or treats a missing snapshot entry as sold out.
+Legacy single-room/list APIs remain compatible. The opt-in range JPA test also
+checks3-room outcomes8/3/10 and an actual3-statement bulk budget (previous loop7,
+with shared-parent first-level cache reuse). Unit501-room coverage verifies the
+chunk boundary does not truncate results; it is not a real501-room load test.
+
+
+### Persisted counter/hold safety
+
+Malformed stored counters are not repaired automatically. Single and grouped
+availability aggregates detect either held<0 or booked<0 even when their sum is
+positive; reads fail409 with INVENTORY_INCONSISTENT rather than advertising a
+configured count. This validation shares the existing aggregate query/budget.
+Positive overcommitted load still reads as zero supply. Holding widens subtraction
+before comparing quantity. Confirm refuses already-overcommitted load; positive
+release/cancel can reduce load and retain the existing unknown-stock compatibility.
+Persisted zero/negative hold quantity is rejected before state/counter mutations.
+Release checks the held bound before subtraction, so corrupt negative values
+cannot overflow into positive stock. Existing terminal idempotency is preserved.
+
+These safeguards concern malformed persisted data; they do not establish that
+healthy valid booking requests produce such values or that production has them.
+Keep malformed records for reviewed repair using trusted source data. No automatic
+backfill, new fee/payment policy, destructive migration, or production write is
+included. Cleanup isolates each expired hold so one bad record does not stop the
+remaining holds from being processed.
+
+```powershell
+python -X utf8 docker/inventory-counter-safety-smoke.py
+python -X utf8 docker/availability-range-integration.py inventory-counter-range-integration
+```
+
+The native harness inserts only exact scoped malformed fixtures in verified clones,
+checks authorized API conflict/unchanged-state behavior, and removes them while
+verifying existing-record fingerprints. It never repairs historical data.
+
+
+Province/city candidate hotel lookup is batched by stable city IDs with the same
+active/APPROVED conditions; old single-city lookup remains compatible. Room and
+literal facet facts for published candidates now use two JPA queries per at most500
+properties (active rooms plus active category/item scalar projection). There is no
+per-property lazy room/category/item read in this phase. Candidate facts never
+become partial public DTOs: final selected hotels still use the full mapper. No
+reviewed amenity codes are invented by raw-label projection; the existing validated
+catalog eligibility and reviewed-code full response remain separate authorities.
+Optional code-filter matching still has its previous per-property lookup until
+its own measured/regression-tested change. No full-search latency SLO is inferred.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py candidate-facts-integration candidates
+```
+
+This actual JPA test measures the candidate phase only (two hotels6→2 statements),
+excluding initial hotel lookup/final selected detail/JDBC reviewed-code reads.
+Fixtures verify inactive exclusions, literal comma/Vietnamese labels and per-hotel
+room/capacity isolation. They roll back without starting application jobs.
+
+### Reviewed legacy room stock (07/11/2026)
+
+Apply `sql/room-inventory-review-v1-20261107.sql` to the reviewed HOTEL database
+before deploying the updated hotel service. The script creates two additive audit
+tables/indexes; it does not seed approvals, backfill counts or change bookings.
+Replay was tested twice on the isolated clone with unchanged room fingerprints.
+Keep the tables/audit if rolling application code back; do not drop production data.
+
+OWNER proposes a positive room quantity with evidence/source in the room editor.
+ADMIN reviews from `/admin/inventory-reviews`, with a mandatory decision reason.
+Both operations use the displayed revision. A superseded/stale/replayed request
+cannot be approved. Proposal never changes stock. Approval atomically updates only
+configured quantity and review metadata, using the same room lock as inventory
+holds and room edits. It rejects changed snapshots, negative counters, and counts
+below the maximum combined held+booked on any recorded night. This conservative
+legacy verification does not introduce date-effective capacity or rewrite history.
+
+Review-managed quantities cannot be changed through the old room update API;
+unchanged quantities/other edits and unmanaged legacy behavior remain compatible.
+Unknown counts require sourced proposal and approval. Existing values such as10
+remain unverified until humans review them; no value is automatically declared
+wrong or trusted. Pending new proposals preserve an unchanged previously approved
+quantity. An out-of-band quantity change makes the verified flag false.
+Actual physical counts and source review remain human work, not test fixtures.
+
+```powershell
+python -X utf8 docker/room-inventory-review-smoke.py
+```
+
+The harness verifies the running clone before inserting scoped synthetic fixtures,
+checks backend permissions, revisions, concurrent administrators, ledger bounds,
+deferred-commit rollback, audit and exact cleanup. Never run it against production.
+
+### Auth failure and validation contract (07/11/2026)
+
+Auth logs exclude raw identity/credentials/OTP/JWT/provider payload and throwable
+causes. OTP proxy preserves plus aliases, keeps known invalid proof false, and
+reports unavailable outcomes503 instead of success or credential errors. Account
+RPC infrastructure faults also return UNAVAILABLE; known business rejections keep
+their existing contract. Reset commit faults are503/successfalse and leave password
+and proof unchanged. ValidateToken RPC now applies the same logout/generation gate
+as the resource consumers; Redis failure is UNAVAILABLE without issuing claims.
+These changes do not claim User REST/service/notification logging is fully reviewed.
+
+```powershell
+python -X utf8 docker/auth-validation-smoke.py
+python -X utf8 docker/reset-session-smoke.py
+python -X utf8 docker/user-rpc-security-smoke.py
+```
+
+Run these sequentially on the test stack with Mailpit. Reset harness deliberately
+crashes/restores test Redis and verifies AOF plus all six token-validation surfaces;
+it never prints raw application logs or generated private inputs. Latest actual
+acceptance:11 validator,117 reset,46 User RPC assertions passed. Auth-session fresh
+retry33 passed; first registration failure remains recorded with undetermined cause.
+
+### Historical working-tree checkpoint (07/11/2026, before final review)
+
+Both repositories currently use `fix/user-otp-boundary`; earlier batch branches
+carried the same uncommitted changes forward. They are not separate ready-made PRs.
+Review the complete working tree, including new untracked source/tests/SQL, before
+committing. No staging/commit/push was performed. The two pre-existing `.idea`
+changes were preserved and should be reviewed separately from application code.
+Local `.env` files remain ignored; runtime logs/build outputs are outside the
+pending application changes.
+
+Review in these dependency groups:
+
+1. Auth/User plus session validators in resource services: reset proof, shared
+   generation/revocation, internal RPC authorization, removal of debug token issuer,
+   safe account/OTP errors and logs; corresponding NextAuth/custom session changes.
+2. Booking/payment: durable paid/onsite inventory outcomes, recovery, validation and
+   client payment-state interpretation. A paid receipt alone cannot promise a room.
+3. Hotel/search: unknown facts, transaction locks/counter checks, global pagination,
+   bounded candidate/review reads, stable location/amenity contracts, and reviewed
+   OWNER/ADMIN physical inventory workflow; associated frontend forms/filter state.
+
+Additional SQL introduced by these pending changes must be reviewed in its correct
+database **before** deploying the new backend:
+
+| Database | Additive scripts under `docker/sql` |
+| --- | --- |
+| HOTEL | `amenity-catalog-v1-20261106.sql`, `room-inventory-review-v1-20261107.sql` |
+| BOOKING | `paid-reservation-v1-20261105.sql`, `inventory-review-audit-20261106.sql` |
+
+Keep prior baseline migrations described above. Do not run HOTEL scripts against
+BOOKING or infer rollout from Hibernate updates in the clone. No production schema
+or data was changed. Do not discard audit/financial tables to roll application code
+back; retain pending work and reconcile its authoritative state.
+
+Remaining findings are explicit follow-up scope, not half-written features in this
+checkpoint: real legacy physical counts/source review; provider-specific settlement/
+refund integration and full recovery/outbox contracts; optional reviewed-code search
+fan-out/full-load SLO; notification SMTP failure propagation and payload-safe retry/
+DLQ logging. Notification source was inspected but not modified in this checkpoint.
+Auth/User log probes do not certify the notification worker's logs.
+
+Final checkpoint verification: the selected offline six-module package command
+passed673 executed tests (User99/Auth47/Hotel274/Booking227/Revenue18/Regulations8),
+with five opt-in integrations skipped explicitly. Environment-dependent
+ApplicationTests remain unchanged and excluded from this selected command; they
+are not counted as passes. Final User OTP runtime14, User RPC46 and extended
+reset117 assertions all passed on fresh fixtures after all test services became
+healthy. User OTP tests check safe503 through Auth's global HTTP error contract
+and explicit503/verifiedfalse at the User DTO boundary, plus rollback and private
+account log probes. Account-email marking and intermediate proof verification
+retain their existing separate transactions; no combined atomicity is claimed.
+
+```powershell
+python -X utf8 docker/user-otp-boundary-smoke.py
+```
+
+The workspace-root PROJECT_STANDARDIZATION_PLAN.md is outside both Git repos;
+its local update is not automatically pushed with either repository. This README
+and the frontend tests README retain the operational checkpoint inside Git.
+
+
+## Final review and PR preparation (07/11/2026)
+
+See [REVIEW_2026-11-07.md](REVIEW_2026-11-07.md) for the final branch order,
+fresh test results, ownership exclusions and current frontend build blocker.
+The historical uncommitted checkpoint above is superseded by that review.

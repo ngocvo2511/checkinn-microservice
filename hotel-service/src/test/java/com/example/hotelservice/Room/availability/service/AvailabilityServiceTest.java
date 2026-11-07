@@ -38,6 +38,7 @@ class AvailabilityServiceTest {
     private RoomType room;
 
     @BeforeEach void setUp() {
+        when(availability.findLoadForStay(any(),any(),any())).thenReturn(load(0,0));
         room = new RoomType();
         room.setId(roomId);
         room.setHotelId(UUID.randomUUID());
@@ -112,14 +113,30 @@ class AvailabilityServiceTest {
         first.setHeld(2); first.setBooked(3);
         RoomAvailability second = new RoomAvailability();
         second.setHeld(3); second.setBooked(5);
-        when(availability.findByRoomTypeIdAndDateReadOnly(roomId, checkIn)).thenReturn(Optional.of(first));
-        when(availability.findByRoomTypeIdAndDateReadOnly(roomId, checkIn.plusDays(1))).thenReturn(Optional.of(second));
+        when(availability.findLoadForStay(roomId, checkIn, checkOut)).thenReturn(load(8,0));
         assertThat(service.getAvailableRoomCount(roomId, checkIn, checkOut)).isEqualTo(2);
         assertThat(service.isAvailable(roomId, checkIn, checkOut, 3)).isFalse();
         assertThat(second.getHeld()).isEqualTo(3);
         assertThat(second.getBooked()).isEqualTo(5);
         verify(availability, never()).save(any());
         verifyNoInteractions(holds);
+    }
+
+    @Test void rangeReadClampsOvercommitButRejectsInconsistentNegativeCounters() {
+        room.setTotalRooms(10);
+        when(availability.findLoadForStay(roomId, checkIn, checkOut)).thenReturn(load(4_294_967_294L,0));
+        assertThat(service.getAvailableRoomCount(roomId, checkIn, checkOut)).isZero();
+        when(availability.findLoadForStay(roomId, checkIn, checkOut)).thenReturn(load(4,1));
+        assertThatThrownBy(()->service.getAvailableRoomCount(roomId, checkIn, checkOut)).isInstanceOf(InventoryInconsistentException.class);
+        verify(availability, never()).save(any());
+        verifyNoInteractions(holds);
+    }
+
+    private RoomAvailabilityRepository.StayLoad load(long peak,long invalid) {
+        return new RoomAvailabilityRepository.StayLoad() {
+            public Long getPeakOccupied() { return peak; }
+            public Long getInvalidCounters() { return invalid; }
+        };
     }
 
     @Test void missingInventoryReturnsConflictForAvailabilityApi() throws Exception {

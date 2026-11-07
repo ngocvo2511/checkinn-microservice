@@ -15,6 +15,23 @@ import java.util.UUID;
 
 @Repository
 public interface HotelReviewRepository extends JpaRepository<HotelReview, UUID> {
+    interface PublicSummary {
+        UUID getHotelId();
+        long getTotalReviews();
+        Double getAverageRating();
+    }
+
+    /** One aggregate query; never hydrate review text, guest profiles or private hotels. */
+    @Query("""
+        SELECT h.id AS hotelId, COUNT(r.id) AS totalReviews, AVG(r.rating) AS averageRating
+        FROM Hotel h LEFT JOIN HotelReview r ON r.hotelId=h.id AND r.status=:reviewStatus
+        WHERE h.id IN :hotelIds AND h.isActive=true AND h.approvedStatus=:approval
+        GROUP BY h.id
+        """)
+    List<PublicSummary> summarizePublished(@Param("hotelIds") List<UUID> hotelIds,
+            @Param("reviewStatus") ReviewStatus reviewStatus,
+            @Param("approval") com.example.hotelservice.Hotel.enums.HotelApprovalStatus approval);
+
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT r FROM HotelReview r WHERE r.id = ?1")
     Optional<HotelReview> findByIdForUpdate(UUID id);

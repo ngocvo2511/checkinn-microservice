@@ -44,6 +44,8 @@ public interface HotelService {
 
     List<Hotel> getByCity(UUID cityId);
 
+    List<Hotel> getByCities(java.util.Collection<UUID> cityIds);
+
     List<Hotel> getByOwnerAndCity(UUID ownerId, UUID cityId);
 
     List<Hotel> searchByName(String name);

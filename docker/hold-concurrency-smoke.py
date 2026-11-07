@@ -44,7 +44,8 @@ def main():
         inventory.SERVICE_CREDENTIAL = service_credential
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
             results = list(pool.map(lambda _: inventory.request('hold', payload), range(4)))
-        check(sum(code == 200 for code, _ in results) == 1 and all(code in [200, 400] for code, _ in results),
+        check(sum(code == 200 for code, _ in results) == 1 and all(code in [200, 409] for code, _ in results)
+              and all(body.get("code")=="INSUFFICIENT_INVENTORY" for code,body in results if code==409),
               'four competing requests for the last room have exactly one winner')
         check(counts() == '1|0', 'held and booked counters after first-row concurrency')
         hold = next(body['holdId'] for code, body in results if code == 200)

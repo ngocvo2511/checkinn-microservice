@@ -39,5 +39,8 @@ public record HotelResponse(
         List<MediaAssetResponse> mediaAssets,
         com.example.hotelservice.Hotel.enums.AccommodationType accommodationType,
         String accommodationTypeLabel
-) {}
+) {
+    @com.fasterxml.jackson.annotation.JsonProperty("textEncoding")
+    public String textEncoding() { return "PLAIN_V1"; }
+}
 
