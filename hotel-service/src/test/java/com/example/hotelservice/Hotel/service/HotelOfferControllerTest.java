@@ -30,6 +30,20 @@ class HotelOfferControllerTest {
     final HotelOfferCandidates candidates = new HotelOfferCandidates(mock(com.example.hotelservice.Room.repository.RoomTypeRepository.class),
             mock(com.example.hotelservice.Amenity.repository.HotelAmenityRepository.class),mapper);
     final HotelOfferController controller = new HotelOfferController(hotels,mapper,offers,locations,cities,amenities,summaries,candidates);
+    @Test void reviewedCodeFilterUsesOneBulkSelectionBeforeDetailMapping() {
+        var a=Hotel.builder().id(UUID.randomUUID()).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build();
+        var b=Hotel.builder().id(UUID.randomUUID()).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build();
+        when(hotels.searchByName("Fixture")).thenReturn(List.of(a,b));
+        when(amenities.matchingHotels(anyCollection(),eq(List.of("WIFI_FREE")))).thenReturn(java.util.Set.of(b.getId()));
+        var response=mock(com.example.hotelservice.Hotel.dto.response.HotelResponse.class);
+        when(mapper.toPublicHotelResponse(b)).thenReturn(response);
+        when(offers.match(eq(response),any())).thenReturn(java.util.Optional.empty());
+        assertTrue(controller.search(new HotelOfferCriteria(null,null,null,"Fixture",null,null,1,1,0,null,null,null,List.of("WIFI_FREE"))).isEmpty());
+        verify(amenities,times(1)).matchingHotels(anyCollection(),eq(List.of("WIFI_FREE")));
+        verify(amenities,never()).matches(any(),any());
+        verify(mapper,never()).toPublicHotelResponse(a);
+        verify(mapper).toPublicHotelResponse(b);
+    }
     @Test void fullDetailMappingBudgetFollowsPageSizeAfterGlobalSort() {
         var entities=new java.util.ArrayList<Hotel>();
         var facts=new java.util.ArrayList<com.example.hotelservice.Review.dto.response.ReviewSummaryResponse>();
