@@ -12,5 +12,7 @@ public record BookingStatusEvent(
         int nights,
         int rooms,
         String bookingStatus,
-        LocalDateTime eventAt
+        LocalDateTime eventAt,
+        Long eventVersion,
+        java.util.UUID eventId
 ) {}

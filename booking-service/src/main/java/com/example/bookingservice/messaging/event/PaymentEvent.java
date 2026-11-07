@@ -30,4 +30,7 @@ public class PaymentEvent {
     String paymentMethod;
     LocalDateTime paidAt;
     LocalDateTime eventAt;
+    String paymentId;
+    String transactionId;
+    java.time.Instant transactionAt;
 }

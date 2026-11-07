@@ -18,7 +18,7 @@ class OnsiteReservationServiceTest {
     final BookingRepository bookings = mock(BookingRepository.class);
     final PaymentRepository payments = mock(PaymentRepository.class);
     final HotelAvailabilityClient inventory = mock(HotelAvailabilityClient.class);
-    final OnsiteReservationService service = new OnsiteReservationService(bookings, payments, inventory);
+    final OnsiteReservationService service = new OnsiteReservationService(bookings, payments, inventory, mock(com.example.bookingservice.messaging.HotelEventPublisher.class));
     Booking b;
     @BeforeEach void setup() {
         b = Booking.builder().id("booking").holdId("hold").status(BookingStatus.PENDING_PAYMENT)

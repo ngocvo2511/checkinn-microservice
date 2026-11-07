@@ -36,8 +36,7 @@ public class OnsiteReservationRecovery {
     }
     private void attempt(String id) {
         try {
-            var event = reservations.process(id); // proxy commits before any status event is sent
-            if (event != null) events.publishBookingStatus(event);
+            reservations.process(id); // source state and outbox snapshot commit atomically
         } catch (RuntimeException ex) {
             try { reservations.defer(id); }
             catch (RuntimeException unavailable) { log.warn("Onsite recovery deferred (type={})", unavailable.getClass().getSimpleName()); }

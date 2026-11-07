@@ -7,10 +7,14 @@ public record OwnerSummaryResponse(
         BigDecimal totalRevenue,
         BigDecimal totalNetRevenue,
         BigDecimal totalCommission,
-        List<HotelSummaryItem> hotels
+        List<HotelSummaryItem> hotels,
+        BigDecimal commissionRate
 ) {
     
     public OwnerSummaryResponse(BigDecimal totalRevenue, List<HotelSummaryItem> hotels) {
-        this(totalRevenue, null, null, hotels);
+        this(totalRevenue, null, null, hotels,null);
+    }
+    public OwnerSummaryResponse(BigDecimal totalRevenue,BigDecimal totalNetRevenue,BigDecimal totalCommission,List<HotelSummaryItem> hotels) {
+        this(totalRevenue,totalNetRevenue,totalCommission,hotels,null);
     }
 }

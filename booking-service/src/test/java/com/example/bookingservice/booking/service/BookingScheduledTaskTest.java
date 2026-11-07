@@ -29,7 +29,7 @@ class BookingScheduledTaskTest {
         var bookings = mock(BookingRepository.class); var payments = mock(PaymentRepository.class);
         when(bookings.findIdsByStatus(BookingStatus.PENDING_PAYMENT)).thenReturn(List.of("onsite"));
         when(bookings.findByIdForUpdate("onsite")).thenReturn(Optional.of(booking));
-        new BookingScheduledTask(bookings, payments).processExpiredPaymentHolds();
+        new BookingScheduledTask(bookings, payments, mock(com.example.bookingservice.messaging.HotelEventPublisher.class)).processExpiredPaymentHolds();
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
         org.mockito.Mockito.verifyNoInteractions(payments);
     }
@@ -40,7 +40,7 @@ class BookingScheduledTaskTest {
         var bookings = mock(BookingRepository.class); var payments = mock(PaymentRepository.class);
         when(bookings.findIdsByStatus(BookingStatus.CONFIRMED)).thenReturn(List.of("onsite"));
         when(bookings.findByIdForUpdate("onsite")).thenReturn(Optional.of(booking));
-        var jobs = new BookingScheduledTask(bookings, payments);
+        var jobs = new BookingScheduledTask(bookings, payments, mock(com.example.bookingservice.messaging.HotelEventPublisher.class));
         jobs.processAutoCheckOut(); jobs.processNoShow(); jobs.processAutoCheckIn();
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CONFIRMED);
         org.mockito.Mockito.verify(bookings, org.mockito.Mockito.never()).save(any());
@@ -54,7 +54,7 @@ class BookingScheduledTaskTest {
     void setUp() {
         bookingRepository = mock(BookingRepository.class);
         paymentRepository = mock(PaymentRepository.class);
-        bookingScheduledTask = new BookingScheduledTask(bookingRepository, paymentRepository);
+        bookingScheduledTask = new BookingScheduledTask(bookingRepository, paymentRepository, mock(com.example.bookingservice.messaging.HotelEventPublisher.class));
     }
 
     @Test

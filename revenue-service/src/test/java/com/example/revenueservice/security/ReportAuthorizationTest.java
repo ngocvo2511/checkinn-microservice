@@ -72,4 +72,15 @@ class ReportAuthorizationTest {
         mvc.perform(get(dates("/api/reports/admin/summary")).header("Authorization","Bearer revoked"))
             .andExpect(status().isUnauthorized()); verifyNoInteractions(reports);
     }
+    @Test void invalidGroupingCannotSilentlyBecomeDailyReport() throws Exception {
+        mvc.perform(get(dates("/api/reports/admin/revenue")+"&groupBy=invalid").header("Authorization","Bearer admin"))
+                .andExpect(status().isBadRequest());verifyNoInteractions(reports);
+    }
+    @Test void databaseUnavailableHasStableSafe503Envelope() throws Exception {
+        when(reports.adminSummary(any(),any())).thenThrow(new org.springframework.dao.DataAccessResourceFailureException("synthetic-private-database-marker"));
+        mvc.perform(get(dates("/api/reports/admin/summary")).header("Authorization","Bearer admin"))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.code").value("DEPENDENCY_UNAVAILABLE"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("synthetic-private"))));
+    }
 }
