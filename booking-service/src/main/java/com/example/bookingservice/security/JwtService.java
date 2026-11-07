@@ -74,6 +74,8 @@ public class JwtService {
                 return false;
             }
             return true;
+        } catch (SessionStoreUnavailableException e) {
+            throw e;
         } catch (Exception e) {
             return false;
         }

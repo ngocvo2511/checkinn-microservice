@@ -36,6 +36,8 @@ message UserResponse {
   string email = 3;
   string fullName = 4;
   string role = 5;
+  // Captured during credential validation; empty for the initial legacy session family.
+  string session_generation = 6;
 }
 
 message LoginRequest {

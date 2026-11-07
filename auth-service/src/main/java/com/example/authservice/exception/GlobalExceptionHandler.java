@@ -21,13 +21,15 @@ public class GlobalExceptionHandler {
         if (status == null) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        log.error("[GLOBAL_EXCEPTION] ResponseStatusException - method: {}, path: {}, status: {}, message: {}",
-                req.getMethod(), req.getRequestURI(), status.value(), ex.getReason(), ex);
+        log.error("[GLOBAL_EXCEPTION] Request failed - method: {}, path: {}, status: {}",
+                req.getMethod(), req.getRequestURI(), status.value());
+        String message=status.is5xxServerError() || ex.getReason()==null || ex.getReason().isBlank()
+                ? status.getReasonPhrase() : ex.getReason();
         return ResponseEntity.status(status).body(Map.of(
                 "timestamp", Instant.now().toString(),
                 "status", status.value(),
                 "error", status.getReasonPhrase(),
-                "message", ex.getReason(),
+                "message", message,
                 "path", req.getRequestURI()
         ));
     }
@@ -35,13 +37,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex, HttpServletRequest req) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        log.error("[GLOBAL_EXCEPTION] Unhandled exception - method: {}, path: {}, message: {}",
-            req.getMethod(), req.getRequestURI(), ex.getMessage(), ex);
+        log.error("[GLOBAL_EXCEPTION] Unhandled exception - method: {}, path: {}, errorType: {}",
+            req.getMethod(), req.getRequestURI(), ex.getClass().getSimpleName());
         return ResponseEntity.status(status).body(Map.of(
                 "timestamp", Instant.now().toString(),
                 "status", status.value(),
                 "error", status.getReasonPhrase(),
-                "message", ex.getMessage(),
+                "message", status.getReasonPhrase(),
                 "path", req.getRequestURI()
         ));
     }

@@ -24,6 +24,22 @@ class AuthServiceTest {
     }
 
     @Test
+    void unavailableUserServiceIsNotAnInvalidPassword() {
+        var request=new com.example.authservice.dto.LoginRequestDto();request.setUsernameOrEmail("synthetic@example.invalid");request.setPassword("synthetic-password");
+        for(var status:java.util.List.of(io.grpc.Status.UNAVAILABLE,io.grpc.Status.DEADLINE_EXCEEDED)) {
+            org.mockito.Mockito.doThrow(status.asRuntimeException()).when(userGrpcClient).login(request.getUsernameOrEmail(),request.getPassword());
+            var failure=org.junit.jupiter.api.Assertions.assertThrows(ResponseStatusException.class,()->authService.login(request));
+            org.junit.jupiter.api.Assertions.assertEquals(503,failure.getStatusCode().value());
+        }
+    }
+    @Test
+    void realCredentialFailureRemainsUnauthorized() {
+        var request=new com.example.authservice.dto.LoginRequestDto();request.setUsernameOrEmail("synthetic@example.invalid");request.setPassword("synthetic-password");
+        org.mockito.Mockito.when(userGrpcClient.login(request.getUsernameOrEmail(),request.getPassword())).thenThrow(io.grpc.Status.UNAUTHENTICATED.asRuntimeException());
+        var failure=org.junit.jupiter.api.Assertions.assertThrows(ResponseStatusException.class,()->authService.login(request));
+        org.junit.jupiter.api.Assertions.assertEquals(401,failure.getStatusCode().value());
+    }
+    @Test
     void registerRejectsPasswordShorterThanPolicy() {
         RegisterRequestDto request = new RegisterRequestDto();
         request.setUsername("rtm-user");

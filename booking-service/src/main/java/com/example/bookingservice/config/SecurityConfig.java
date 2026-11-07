@@ -43,6 +43,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .sessionManagement(session->session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -56,11 +57,11 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setContentType("application/json");
-                            response.setStatus(401);
-                            response.getWriter().write("{\"error\":\"Unauthorized\",\"message\":\"" + authException.getMessage() + "\"}");
+                        .authenticationEntryPoint((request,response,error)->{
+                            response.setHeader("WWW-Authenticate","Bearer");
+                            com.example.bookingservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());
                         })
+                        .accessDeniedHandler((request,response,error)->com.example.bookingservice.api.ApiErrorSupport.write(response,403,request.getRequestURI()))
                 );
 
         return http.build();

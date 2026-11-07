@@ -45,10 +45,11 @@ public class SecurityConfig {
                         && "revenue-service".equals(jwt.getToken().getSubject())
                         && "REVENUE_SERVICE".equals(jwt.getToken().getClaimAsString("role")));
         http
+                .sessionManagement(session->session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())
                                 .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                         .requestMatchers("/hotels/accommodation-type-changes/**").access(adminOnly)
+                        .requestMatchers("/hotels/accommodation-type-changes/**").access(adminOnly)
                         .requestMatchers("/hotels/{hotelId}/accommodation-type-changes").authenticated()
                         .requestMatchers("/internal/reports/**").access(revenueServiceOnly)
                         .requestMatchers("/internal/hotels/**").access(bookingServiceOnly)
@@ -75,8 +76,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/hotels/**").authenticated()
                         .anyRequest().permitAll()
                 )
+                .exceptionHandling(errors -> errors
+                        .authenticationEntryPoint((request,response,error)->{response.setHeader("WWW-Authenticate","Bearer");com.example.hotelservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());})
+                        .accessDeniedHandler((request,response,error)->com.example.hotelservice.api.ApiErrorSupport.write(response,403,request.getRequestURI())))
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint((request,response,error)->{response.setHeader("WWW-Authenticate","Bearer");com.example.hotelservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());})
+                        .accessDeniedHandler((request,response,error)->com.example.hotelservice.api.ApiErrorSupport.write(response,403,request.getRequestURI()))
                 );
 
         return http.build();

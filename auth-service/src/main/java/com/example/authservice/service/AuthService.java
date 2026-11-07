@@ -28,8 +28,7 @@ public class AuthService {
     private final TokenRevocationService tokenRevocationService;
 
     public AuthResponseDto register(RegisterRequestDto request, UserRole userRole) {
-        logger.debug("[REGISTER] User registration attempt - username: {}, email: {}, role: {}",
-                request.getUsername(), request.getEmail(), userRole);
+        logger.debug("[REGISTER] User registration attempt - role: {}", userRole);
         try {
             validatePassword(request.getPassword(), "REGISTER", request.getEmail());
 
@@ -42,15 +41,13 @@ public class AuthService {
                     userRole
             );
 
-            logger.debug("[REGISTER] User account created successfully - userId: {}, email: {}",
-                    user.getId(), user.getEmail());
+            logger.debug("[REGISTER] User account created successfully - userId: {}", user.getId());
             MDC.put("userId", user.getId());
 
             logger.debug("[REGISTER] Generating JWT token for userId: {}", user.getId());
-            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
+            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole(), user.getSessionGeneration());
 
-            logger.debug("[REGISTER] Registration successful - userId: {}, email: {}",
-                    user.getId(), user.getEmail());
+            logger.debug("[REGISTER] Registration successful - userId: {}", user.getId());
 
             return AuthResponseDto.builder()
                     .token(token)
@@ -62,38 +59,40 @@ public class AuthService {
                     .build();
 
         } catch (StatusRuntimeException e) {
+            if(accountUnavailable(e))
+                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"User account service temporarily unavailable");
             String msg = extractGrpcMessage(e);
-            logger.error("[REGISTER] gRPC error during registration - username: {}, email: {}, error: {}",
-                    request.getUsername(), request.getEmail(), msg, e);
+            logger.error("[REGISTER] gRPC registration failed - status: {}", e.getStatus().getCode());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Đăng ký thất bại: " + msg, e);
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("[REGISTER] Exception during registration - username: {}, email: {}, error: {}",
-                    request.getUsername(), request.getEmail(), e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            logger.error("[REGISTER] Registration failed - errorType: {}", e.getClass().getSimpleName());
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Authentication temporarily unavailable");
         } finally {
             MDC.remove("userId");
         }
     }
 
     public AuthResponseDto login(LoginRequestDto request) {
-        logger.debug("[LOGIN] Login attempt - usernameOrEmail: {}", request.getUsernameOrEmail());
+        if (request == null || request.getUsernameOrEmail() == null || request.getUsernameOrEmail().isBlank()
+                || request.getPassword() == null || request.getPassword().isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login identity and password are required");
+        logger.debug("[LOGIN] Login attempt");
         try {
-            logger.debug("[LOGIN] Calling user-service to verify credentials for: {}", request.getUsernameOrEmail());
+            logger.debug("[LOGIN] Calling user-service to verify credentials");
             UserResponse user = userGrpcClient.login(
                     request.getUsernameOrEmail(),
                     request.getPassword()
             );
 
-            logger.debug("[LOGIN] User authenticated successfully - userId: {}, username: {}, role: {}",
-                    user.getId(), user.getUsername(), user.getRole());
+            logger.debug("[LOGIN] User authenticated successfully - userId: {}", user.getId());
             MDC.put("userId", user.getId());
 
             logger.debug("[LOGIN] Generating JWT token for userId: {}", user.getId());
-            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole());
+            String token = jwtService.generateToken(UUID.fromString(user.getId()), user.getRole(), user.getSessionGeneration());
 
-            logger.debug("[LOGIN] Login successful - userId: {}, email: {}", user.getId(), user.getEmail());
+            logger.debug("[LOGIN] Login successful - userId: {}", user.getId());
 
             return AuthResponseDto.builder()
                     .token(token)
@@ -104,40 +103,40 @@ public class AuthService {
                     .build();
 
         } catch (StatusRuntimeException e) {
+            if(accountUnavailable(e))
+                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"User account service temporarily unavailable");
             String msg = extractGrpcMessage(e);
-            logger.warn("[LOGIN] Authentication failed - usernameOrEmail: {}, gRPC code: {}, message: {}",
-                    request.getUsernameOrEmail(), e.getStatus().getCode(), msg, e);
+            logger.warn("[LOGIN] Authentication failed - status: {}", e.getStatus().getCode());
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, msg, e);
         } catch (Exception e) {
-            logger.error("[LOGIN] Exception during login - usernameOrEmail: {}, error: {}",
-                    request.getUsernameOrEmail(), e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage(), e);
+            logger.error("[LOGIN] Login failed - errorType: {}", e.getClass().getSimpleName());
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Authentication temporarily unavailable");
         } finally {
             MDC.remove("userId");
         }
     }
 
     public void resetPassword(String email, String newPassword) {
-        logger.debug("[RESET_PASSWORD] Password reset attempt - email: {}", email);
+        logger.debug("[RESET_PASSWORD] Password reset attempt");
         try {
             validatePassword(newPassword, "RESET_PASSWORD", email);
 
-            logger.debug("[RESET_PASSWORD] Calling user-service to reset password for email: {}", email);
+            logger.debug("[RESET_PASSWORD] Calling user-service to reset password");
             userGrpcClient.resetPassword(email, newPassword);
 
-            logger.debug("[RESET_PASSWORD] Password reset successful - email: {}", email);
+            logger.debug("[RESET_PASSWORD] Password reset successful");
 
         } catch (StatusRuntimeException e) {
+            if(accountUnavailable(e))
+                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"User account service temporarily unavailable");
             String msg = extractGrpcMessage(e);
-            logger.error("[RESET_PASSWORD] gRPC error during password reset - email: {}, message: {}",
-                    email, msg, e);
+            logger.error("[RESET_PASSWORD] gRPC password reset failed - status: {}", e.getStatus().getCode());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Đặt lại mật khẩu thất bại: " + msg, e);
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("[RESET_PASSWORD] Exception during password reset - email: {}, error: {}",
-                    email, e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            logger.error("[RESET_PASSWORD] Password reset failed - errorType: {}", e.getClass().getSimpleName());
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Authentication temporarily unavailable");
         }
     }
 
@@ -159,10 +158,17 @@ public class AuthService {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("[LOGOUT] Failed to revoke token: {}", e.getMessage(), e);
+            logger.error("[LOGOUT] Failed to revoke token - errorType: {}", e.getClass().getSimpleName());
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "Logout is temporarily unavailable because token revocation storage cannot be reached", e);
         }
+    }
+
+    private boolean accountUnavailable(StatusRuntimeException error) {
+        return switch(error.getStatus().getCode()) {
+            case UNAVAILABLE, DEADLINE_EXCEEDED, INTERNAL, UNKNOWN -> true;
+            default -> false;
+        };
     }
 
     private String extractGrpcMessage(StatusRuntimeException e) {
@@ -175,8 +181,7 @@ public class AuthService {
 
     private void validatePassword(String password, String action, String email) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
-            logger.warn("[{}] Invalid password format - email: {}, passwordLength: {}",
-                    action, email, password != null ? password.length() : 0);
+            logger.warn("[{}] Invalid password format", action);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Mật khẩu phải có ít nhất " + MIN_PASSWORD_LENGTH + " ký tự");
         }

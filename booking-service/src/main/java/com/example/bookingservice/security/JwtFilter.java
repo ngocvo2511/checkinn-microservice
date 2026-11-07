@@ -65,10 +65,19 @@ public class JwtFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(auth);
                         log.debug("Authentication set in SecurityContext");
                     } else {
-                        log.warn("Token validation failed");
+                        SecurityContextHolder.clearContext();
+                        response.setHeader("WWW-Authenticate","Bearer");
+                        com.example.bookingservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());
+                        return;
                     }
+                } catch (SessionStoreUnavailableException e) {
+                    SecurityContextHolder.clearContext();
+                    com.example.bookingservice.api.ApiErrorSupport.write(response,503,request.getRequestURI());return;
                 } catch (Exception e) {
-                    log.error("Error processing JWT token", e);
+                    SecurityContextHolder.clearContext();
+                    response.setHeader("WWW-Authenticate","Bearer");
+                    com.example.bookingservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());
+                    return;
                 }
             } else {
                 log.debug("No Bearer token found in Authorization header");

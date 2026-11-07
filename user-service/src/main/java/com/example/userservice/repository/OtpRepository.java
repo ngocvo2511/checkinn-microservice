@@ -11,4 +11,7 @@ public interface OtpRepository extends JpaRepository<Otp, UUID> {
     Optional<Otp> findByEmailAndIsVerifiedFalse(String email);
     Optional<Otp> findByEmail(String email);
     void deleteByEmail(String email);
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select o from Otp o where o.email=:email order by o.createdAt desc")
+    java.util.List<Otp> findAllForUpdate(@org.springframework.data.repository.query.Param("email") String email);
 }

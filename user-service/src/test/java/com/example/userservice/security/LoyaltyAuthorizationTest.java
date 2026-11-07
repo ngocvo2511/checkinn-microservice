@@ -32,6 +32,10 @@ class LoyaltyAuthorizationTest {
             Jws<Claims> signed=mock(Jws.class); when(signed.getBody()).thenReturn(claims); return signed;
         });
     }
+    @Test void removedDebugTokenIssuerIsNotFound() throws Exception {
+        mvc.perform(get("/api/test/generate-token/"+OTHER)).andExpect(status().isNotFound());
+        verifyNoInteractions(jwt,points);
+    }
     @Test void anonymousCannotReadSomeonePoints() throws Exception {
         mvc.perform(get("/api/loyalty-points/"+OTHER)).andExpect(status().isUnauthorized()); verifyNoInteractions(points);
     }

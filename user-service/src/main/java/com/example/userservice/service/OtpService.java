@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -47,12 +47,12 @@ public class OtpService {
         // Send via RabbitMQ to notification service
         sendOtpViaRabbitMQ(email, otpCode);
 
-        log.info("[OTP_GENERATE_AND_SEND] OTP generated and sent to notification service - email: {}", email);
+        log.info("[OTP_GENERATE_AND_SEND] OTP generated and sent to notification service");
         return otpCode;
     }
 
     private String generateOtp() {
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         int otp = 100000 + random.nextInt(900000);
         return String.valueOf(otp);
     }
@@ -72,70 +72,45 @@ public class OtpService {
                     event
             );
 
-            log.info("[OTP_RABBITMQ_PUBLISH] OTP email event published to RabbitMQ - email: {}", email);
+            log.info("[OTP_RABBITMQ_PUBLISH] OTP email event published to RabbitMQ");
         } catch (Exception e) {
-            log.error("[OTP_RABBITMQ_PUBLISH_ERROR] Failed to send OTP event to RabbitMQ - email: {}, error: {}", email, e.getMessage(), e);
+            log.error("[OTP_RABBITMQ_PUBLISH_ERROR] OTP delivery failed - errorType: {}", e.getClass().getSimpleName());
             throw new RuntimeException("Failed to send OTP notification", e);
         }
     }
 
     @Transactional
     public boolean verifyOtp(String email, String otpCode) {
-        // First try to find unverified OTP
-        Optional<Otp> otpOptional = otpRepository.findByEmailAndIsVerifiedFalse(email);
-        
-        // If not found, try to find verified OTP (for reset password flow)
-        if (otpOptional.isEmpty()) {
-            otpOptional = otpRepository.findByEmail(email).stream()
-                    .filter(otp -> otp.getOtpCode().equals(otpCode) && otp.isVerified())
-                    .findFirst();
-            
-            if (otpOptional.isPresent()) {
-                Otp otp = otpOptional.get();
-                // Check if already verified OTP is still valid (not expired)
-                if (LocalDateTime.now().isBefore(otp.getExpiryTime())) {
-                    log.info("[OTP_VERIFY_REUSE] Using already verified OTP - email: {}", email);
-                    return true;
-                } else {
-                    log.warn("[OTP_VERIFY_EXPIRED] Verified OTP expired - email: {}", email);
-                    otpRepository.delete(otp);
-                    return false;
-                }
-            }
-            
-            log.warn("[OTP_VERIFY_NOT_FOUND] OTP not found - email: {}", email);
-            return false;
-        }
-
-        Otp otp = otpOptional.get();
-
-        // Check if OTP has expired
-        if (LocalDateTime.now().isAfter(otp.getExpiryTime())) {
-            log.warn("[OTP_VERIFY_EXPIRED] OTP expired - email: {}", email);
+        var rows=otpRepository.findAllForUpdate(email);
+        if(rows.size()!=1) return false; // Preserve ambiguous data; request a fresh challenge.
+        Otp otp=rows.getFirst();
+        if(otp.getExpiryTime()==null || !otp.getExpiryTime().isAfter(LocalDateTime.now()) || otp.getAttemptCount()>=MAX_ATTEMPTS) {
             otpRepository.delete(otp);
             return false;
         }
-
-        // Check attempt count
-        if (otp.getAttemptCount() >= MAX_ATTEMPTS) {
-            log.warn("[OTP_VERIFY_MAX_ATTEMPTS] Max OTP attempts exceeded - email: {}", email);
-            otpRepository.delete(otp);
-            return false;
-        }
-
-        // Check if OTP matches
-        if (!otp.getOtpCode().equals(otpCode)) {
-            otp.setAttemptCount(otp.getAttemptCount() + 1);
+        if(!otp.getOtpCode().equals(otpCode)) {
+            otp.setAttemptCount(otp.getAttemptCount()+1);
             otpRepository.save(otp);
-            log.warn("[OTP_VERIFY_INVALID] Invalid OTP attempt - email: {}, attempt: {}", email, otp.getAttemptCount());
             return false;
         }
-
-        // Mark as verified
-        otp.setVerified(true);
-        otpRepository.save(otp);
-        log.info("[OTP_VERIFY_SUCCESS] OTP verified successfully - email: {}", email);
+        // A successful intermediate verification remains usable for the final reset.
+        // Incorrect guesses still consume the same budget after verification.
+        if(!otp.isVerified()) {
+            otp.setVerified(true);
+            otpRepository.save(otp);
+        }
         return true;
+    }
+
+    /** Preserve verify-then-reset UI; consume the verified proof in the password transaction. */
+    @Transactional
+    public void consumeVerifiedForReset(String email) {
+        var rows=otpRepository.findAllForUpdate(email);
+        var now=LocalDateTime.now();
+        long valid=rows.stream().filter(o->o.isVerified() && o.getAttemptCount()<MAX_ATTEMPTS && o.getExpiryTime()!=null && o.getExpiryTime().isAfter(now)).count();
+        if(rows.size()!=1 || valid!=1) throw new IllegalArgumentException("Verified OTP required for password reset");
+        otpRepository.deleteAll(rows);
+        otpRepository.flush();
     }
 
     public boolean isOtpVerified(String email) {

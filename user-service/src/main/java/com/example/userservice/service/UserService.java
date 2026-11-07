@@ -35,27 +35,26 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final OtpService otpService;
+    private final com.example.userservice.security.TokenRevocationService sessions;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User registerUser(RegisterRequest request, Role role) {
-        logger.info("[REGISTER] User registration attempt - username: {}, email: {}, role: {}", 
-                request.getUsername(), request.getEmail(), role);
+        logger.info("[REGISTER] User registration attempt");
         try {
             if (userRepository.existsByUsername(request.getUsername())) {
-            logger.warn("[REGISTER] Registration failed - username already exists: {}", request.getUsername());
+            logger.warn("[REGISTER] Registration failed - username already exists");
             throw new RuntimeException("Tên đăng nhập đã tồn tại");
             }
 
             if (userRepository.existsByEmail(request.getEmail())) {
-            logger.warn("[REGISTER] Registration failed - email already exists: {}", request.getEmail());
+            logger.warn("[REGISTER] Registration failed - email already exists");
             throw new RuntimeException("Email đã tồn tại");
             }
 
             validatePassword(request.getPassword());
 
-            logger.debug("[REGISTER] Creating user account - username: {}, email: {}", 
-                request.getUsername(), request.getEmail());
+            logger.debug("[REGISTER] Creating user account");
 
             User user = User.builder()
                 .username(request.getUsername())
@@ -75,11 +74,10 @@ public class UserService {
             User savedUser = userRepository.save(user); // cascade sẽ tự lưu profile
             MDC.put("userId", savedUser.getId().toString());
 
-            logger.info("[REGISTER] User account created successfully - userId: {}, username: {}, email: {}", 
-                savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+            logger.info("[REGISTER] User account created successfully - userId: {}", savedUser.getId());
 
             // Generate and send OTP
-            logger.debug("[REGISTER] Generating and sending OTP to email: {}", request.getEmail());
+            logger.debug("[REGISTER] Generating and sending OTP");
             otpService.generateAndSendOtp(request.getEmail());
 
             logger.info("[REGISTER] Registration completed successfully - userId: {}", savedUser.getId());
@@ -95,43 +93,43 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
     }
 
+    @Transactional
     public UserLoginResult login(String usernameOrEmail, String password) {
-        logger.info("[LOGIN] Login attempt - usernameOrEmail: {}", usernameOrEmail);
+        logger.info("[LOGIN] Login attempt");
         try {
             User user = userRepository
-                    .findByEmailOrUsername(usernameOrEmail, usernameOrEmail)
+                    .findIdentityForUpdate(usernameOrEmail)
                     .orElseThrow(() -> {
-                        logger.warn("[LOGIN] User not found - usernameOrEmail: {}", usernameOrEmail);
+                        logger.warn("[LOGIN] User not found");
                         return new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
                     });
 
             MDC.put("userId", user.getId().toString());
-            logger.debug("[LOGIN] User found - userId: {}, username: {}", user.getId(), user.getUsername());
+            logger.debug("[LOGIN] User found - userId: {}", user.getId());
 
             if (!user.isEmailVerified()) {
-                logger.warn("[LOGIN] Email not verified - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                logger.warn("[LOGIN] Email not verified - userId: {}", user.getId());
                 throw new RuntimeException("Email chưa được xác thực. Vui lòng xác thực email trước");
             }
             if(!user.getIsActive()) {
-                logger.warn("[LOGIN] Account locked - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                logger.warn("[LOGIN] Account locked - userId: {}", user.getId());
                 throw new RuntimeException("Account is locked. Please contact support");
             }
 
             if (!passwordEncoder.matches(password, user.getPassword())) {
-                logger.warn("[LOGIN] Password mismatch - userId: {}, usernameOrEmail: {}", user.getId(), usernameOrEmail);
+                logger.warn("[LOGIN] Password mismatch - userId: {}", user.getId());
                 throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
             }
 
-            logger.info("[LOGIN] Password verified successfully - userId: {}, username: {}", 
-                    user.getId(), user.getUsername());
+            logger.info("[LOGIN] Password verified successfully - userId: {}", user.getId());
 
             UserProfile profile = userProfileRepository
                     .findByUserId(user.getId())
                     .orElse(null); // profile có thể chưa tạo
 
-            logger.info("[LOGIN] Login successful - userId: {}, email: {}", user.getId(), user.getEmail());
+            logger.info("[LOGIN] Login successful - userId: {}", user.getId());
 
-            return new UserLoginResult(user, profile);
+            return new UserLoginResult(user, profile, sessions.currentUserGeneration(user.getId()));
         } finally {
             MDC.remove("userId");
         }
@@ -141,13 +139,13 @@ public class UserService {
         logger.info("[PROFILE_GET] Fetch user profile request received - userId: {}", userId);
 
         User user = getUserById(userId);
-        logger.info("[PROFILE_GET] User loaded - userId: {}, username: {}", userId, user.getUsername());
+        logger.info("[PROFILE_GET] User loaded - userId: {}", userId);
 
         // If profile missing (older accounts), create an empty one to avoid 401
         UserProfile profile = userProfileRepository.findByUserId(userId)
                 .orElseGet(() -> createEmptyProfile(user));
 
-        logger.info("[PROFILE_GET] Using profile - userId: {}, fullName: {}", userId, profile.getFullName());
+        logger.info("[PROFILE_GET] Using profile - userId: {}", userId);
 
         return UserProfileDto.builder()
                 .id(user.getId())
@@ -215,9 +213,10 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public void changePassword(UUID userId, String currentPassword, String newPassword) {
         logger.info("[PASSWORD_CHANGE] Change password request received - userId: {}", userId);
-        User user = getUserById(userId);
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         // Verify current password
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
@@ -232,36 +231,41 @@ public class UserService {
         logger.info("[PASSWORD_CHANGE] Change password success - userId: {}", userId);
     }
 
+    @Transactional
     public void verifyUserEmail(String email) {
-        logger.info("[EMAIL_VERIFY] Verify user email request received - email: {}", email);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
-
-        user.setEmailVerified(true);
-        userRepository.save(user);
-        logger.info("[EMAIL_VERIFY] Verify user email success - email: {}", email);
+        logger.info("[EMAIL_VERIFY] Verify user email request received");
+        if (userRepository.markEmailVerified(email)!=1) throw new RuntimeException("Không tìm thấy người dùng");
+        // Do not merge a detached account here: concurrent reset must retain its new password.
+        logger.info("[EMAIL_VERIFY] Verify user email success");
     }
 
+    @Transactional
     public void resetPassword(String email, String newPassword) {
-        logger.info("[PASSWORD_RESET] Reset password request received - email: {}", email);
-        User user = userRepository.findByEmail(email)
+        logger.info("[PASSWORD_RESET] Password reset requested");
+        User user = userRepository.findByEmailForUpdate(email)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         validatePassword(newPassword);
 
+        otpService.consumeVerifiedForReset(email);
+        sessions.rotateUserSessions(user.getId());
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        logger.info("[PASSWORD_RESET] Reset password success - email: {}", email);
+        logger.info("[PASSWORD_RESET] Password reset completed");
     }
 
     public class UserLoginResult {
         private User user;
         private UserProfile profile;
+        private final String sessionGeneration;
 
-        public UserLoginResult(User user, UserProfile profile) {
+        public UserLoginResult(User user, UserProfile profile, String sessionGeneration) {
+            this.sessionGeneration=sessionGeneration;
             this.user = user;
             this.profile = profile;
         }
+
+        public String getSessionGeneration() { return sessionGeneration; }
 
         public User getUser() {
             return user;
@@ -325,7 +329,7 @@ public class UserService {
      */
     @Transactional
     public void lockAccount(UUID userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
         user.setIsActive(false);
         userRepository.save(user);
     }
@@ -335,7 +339,7 @@ public class UserService {
      */
     @Transactional
     public void unlockAccount(UUID userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
         user.setIsActive(true);
         userRepository.save(user);
     }

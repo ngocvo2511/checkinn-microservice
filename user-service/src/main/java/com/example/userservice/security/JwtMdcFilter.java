@@ -37,6 +37,10 @@ public class JwtMdcFilter extends OncePerRequestFilter {
                 try {
                     UUID userId = jwtService.extractUserId(token);
                     MDC.put("userId", userId.toString());
+                } catch (SessionStoreUnavailableException ex) {
+                    response.setStatus(503);response.setContentType("application/json");
+                    new com.fasterxml.jackson.databind.ObjectMapper().writeValue(response.getWriter(),java.util.Map.of("code","DEPENDENCY_UNAVAILABLE","message","Session verification unavailable"));
+                    return;
                 } catch (Exception ignored) {
                     // Controllers perform the request-level authentication response.
                 }

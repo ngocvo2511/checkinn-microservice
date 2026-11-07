@@ -11,6 +11,12 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler({org.springframework.web.servlet.resource.NoResourceFoundException.class,
+            org.springframework.web.servlet.NoHandlerFoundException.class})
+    public ResponseEntity<Map<String,Object>> notFound(Exception ex) {
+        return ResponseEntity.status(404).body(Map.of("status",404,"message","Resource not found"));
+    }
+
     @ExceptionHandler({IllegalArgumentException.class, ArithmeticException.class})
     public ResponseEntity<Map<String,Object>> invalidPointsInput(RuntimeException ex) {
         return ResponseEntity.badRequest().body(Map.of("status",400,"message","Invalid request or insufficient points"));

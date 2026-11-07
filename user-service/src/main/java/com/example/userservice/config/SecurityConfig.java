@@ -21,10 +21,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Disable default login form / basic auth and allow our manual JWT validation in controllers
-        http.csrf(AbstractHttpConfigurer::disable)
+        http.sessionManagement(session->session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+            .csrf(AbstractHttpConfigurer::disable)
             .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-            .httpBasic(Customizer.withDefaults())
+            .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable);
         return http.build();
     }

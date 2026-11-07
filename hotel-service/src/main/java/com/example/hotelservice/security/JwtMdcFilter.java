@@ -35,11 +35,24 @@ public class JwtMdcFilter extends OncePerRequestFilter {
         try {
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
-                if (tokenRevocationService.isRevoked(token)) {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token has been revoked");
+                boolean revoked;
+                try { revoked=tokenRevocationService.isRevoked(token); }
+                catch (IllegalStateException ex) {
+                    com.example.hotelservice.api.ApiErrorSupport.write(response,503,request.getRequestURI());
                     return;
                 }
-                Jwt jwt = jwtDecoder.decode(token);
+                if (revoked) {
+                    response.setHeader("WWW-Authenticate","Bearer");
+                    com.example.hotelservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());
+                    return;
+                }
+                Jwt jwt;
+                try { jwt=jwtDecoder.decode(token); }
+                catch (org.springframework.security.oauth2.jwt.JwtException | IllegalArgumentException ex) {
+                    response.setHeader("WWW-Authenticate","Bearer");
+                    com.example.hotelservice.api.ApiErrorSupport.write(response,401,request.getRequestURI());
+                    return;
+                }
                 if (jwt.getSubject() != null && !jwt.getSubject().isBlank()) {
                     MDC.put("userId", jwt.getSubject());
                 }
