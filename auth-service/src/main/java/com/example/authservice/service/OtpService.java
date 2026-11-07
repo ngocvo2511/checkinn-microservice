@@ -7,19 +7,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
+import java.net.URI;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class OtpService {
-
     private final RestTemplate restTemplate;
 
     @Value("${user.service.url:http://localhost:8082}")
@@ -27,70 +29,53 @@ public class OtpService {
 
     public OtpVerificationResponse verifyOtp(String email, String otpCode) {
         try {
-            String url = userServiceUrl + "/api/otp/verify";
-            
-            VerifyOtpRequest request = VerifyOtpRequest.builder()
-                    .email(email)
-                    .otpCode(otpCode)
-                    .build();
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<VerifyOtpRequest> entity = new HttpEntity<>(request, headers);
-
-            log.info("Verifying OTP for email: {}", email);
-            OtpVerificationResponse response = restTemplate.postForObject(url, entity, OtpVerificationResponse.class);
-            
-            log.info("OTP verification result for {}: {}", email, response != null ? response.isVerified() : "null");
+            var request=VerifyOtpRequest.builder().email(email).otpCode(otpCode).build();
+            var headers=new HttpHeaders();headers.setContentType(MediaType.APPLICATION_JSON);
+            log.info("[OTP_VERIFY] Requesting verification");
+            var response=restTemplate.postForObject(userServiceUrl+"/api/otp/verify",new HttpEntity<>(request,headers),OtpVerificationResponse.class);
+            if(response==null)throw unavailable();
+            log.info("[OTP_VERIFY] Verification completed - verified: {}",response.isVerified());
             return response;
-            
-        } catch (Exception e) {
-            log.error("Error verifying OTP: {}", e.getMessage(), e);
-            return OtpVerificationResponse.builder()
-                    .verified(false)
-                    .message("Xác thực OTP thất bại: " + e.getMessage())
-                    .email(email)
-                    .build();
+        } catch(Exception error) {
+            log.error("[OTP_VERIFY] Upstream request failed - errorType: {}",error.getClass().getSimpleName());
+            throw upstreamFailure(error);
         }
     }
 
-    public Map<String, Object> resendOtp(String email) {
+    public Map<String,Object> resendOtp(String email) {
+        return command("resend",email);
+    }
+
+    public Map<String,Object> generateAndSendOtp(String email) {
+        return command("generate",email);
+    }
+
+    private Map<String,Object> command(String operation,String email) {
+        if(email==null || email.isBlank())throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"OTP email is required");
         try {
-            String url = userServiceUrl + "/api/otp/resend?email=" + email;
-            
-            log.info("Resending OTP for email: {}", email);
+            // Strict template-variable encoding preserves '+' aliases and prevents query injection.
+            URI uri=UriComponentsBuilder.fromHttpUrl(userServiceUrl+"/api/otp/"+operation)
+                    .queryParam("email","{email}").encode().buildAndExpand(Map.of("email",email)).toUri();
+            log.info("[OTP_COMMAND] Requesting {}",operation);
             @SuppressWarnings("unchecked")
-            Map<String, Object> response = restTemplate.postForObject(url, null, Map.class);
-            
-            log.info("OTP resend result for {}: {}", email, response);
-            return response != null ? response : Map.of("success", false, "message", "Không thể gửi lại OTP");
-            
-        } catch (Exception e) {
-            log.error("Error resending OTP: {}", e.getMessage(), e);
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("success", false);
-            errorResponse.put("message", "Không thể gửi lại OTP: " + e.getMessage());
-            return errorResponse;
+            Map<String,Object> response=restTemplate.postForObject(uri,null,Map.class);
+            if(response==null || !(response.get("success") instanceof Boolean))throw unavailable();
+            log.info("[OTP_COMMAND] {} completed - success: {}",operation,response.get("success"));
+            return response;
+        } catch(Exception error) {
+            log.error("[OTP_COMMAND] {} failed - errorType: {}",operation,error.getClass().getSimpleName());
+            throw upstreamFailure(error);
         }
     }
 
-    public Map<String, Object> generateAndSendOtp(String email) {
-        try {
-            String url = userServiceUrl + "/api/otp/generate?email=" + email;
-            
-            log.info("Generating and sending OTP for email: {}", email);
-            @SuppressWarnings("unchecked")
-            Map<String, Object> response = restTemplate.postForObject(url, null, Map.class);
-            
-            log.info("OTP generation result for {}: {}", email, response);
-            return response != null ? response : Map.of("success", false, "message", "Không thể tạo OTP");
-            
-        } catch (Exception e) {
-            log.error("Error generating OTP: {}", e.getMessage(), e);
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("success", false);
-            errorResponse.put("message", "Không thể tạo OTP: " + e.getMessage());
-            return errorResponse;
-        }
+    private ResponseStatusException upstreamFailure(Exception error) {
+        if(error instanceof ResponseStatusException typed)return typed;
+        if(error instanceof HttpStatusCodeException http && http.getStatusCode().value()==400)
+            return new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid OTP request");
+        return unavailable();
+    }
+
+    private ResponseStatusException unavailable() {
+        return new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"OTP service temporarily unavailable");
     }
 }

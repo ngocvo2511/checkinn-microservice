@@ -20,6 +20,8 @@ public class OtpController {
     @PostMapping("/verify")
     public ResponseEntity<OtpVerificationResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
         try {
+            if(request==null || blank(request.getEmail()) || blank(request.getOtpCode()))
+                throw new IllegalArgumentException("Missing OTP input");
             boolean isValid = otpService.verifyOtp(request.getEmail(), request.getOtpCode());
             
             if (isValid) {
@@ -39,10 +41,11 @@ public class OtpController {
                         .build());
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(OtpVerificationResponse.builder()
+            var status=failureStatus(e);
+            return ResponseEntity.status(status).body(OtpVerificationResponse.builder()
                     .verified(false)
-                    .message(e.getMessage())
-                    .email(request.getEmail())
+                    .message(failureMessage(status))
+                    .email(request==null?null:request.getEmail())
                     .build());
         }
     }
@@ -50,15 +53,17 @@ public class OtpController {
     @PostMapping("/resend")
     public ResponseEntity<?> resendOtp(@RequestParam String email) {
         try {
+            if(blank(email))throw new IllegalArgumentException("Missing email");
             otpService.generateAndSendOtp(email);
             return ResponseEntity.ok(java.util.Map.of(
                     "success", true,
                     "message", "Mã OTP đã được gửi đến email của bạn"
             ));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(java.util.Map.of(
+            var status=failureStatus(e);
+            return ResponseEntity.status(status).body(java.util.Map.of(
                     "success", false,
-                    "message", e.getMessage()
+                    "message", failureMessage(status)
             ));
         }
     }
@@ -66,16 +71,40 @@ public class OtpController {
     @PostMapping("/generate")
     public ResponseEntity<?> generateAndSendOtp(@RequestParam String email) {
         try {
+            if(blank(email))throw new IllegalArgumentException("Missing email");
             otpService.generateAndSendOtp(email);
             return ResponseEntity.ok(java.util.Map.of(
                     "success", true,
                     "message", "Mã OTP đã được tạo và gửi đến email của bạn"
             ));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(java.util.Map.of(
+            var status=failureStatus(e);
+            return ResponseEntity.status(status).body(java.util.Map.of(
                     "success", false,
-                    "message", e.getMessage()
+                    "message", failureMessage(status)
             ));
         }
+    }
+
+    private static boolean blank(String value) { return value==null || value.isBlank(); }
+    private static org.springframework.http.HttpStatus failureStatus(Exception failure) {
+        Throwable cause=failure;
+        for(int depth=0;cause!=null && depth<16;depth++,cause=cause.getCause()) {
+            if(cause instanceof org.springframework.dao.DataAccessException
+                    || cause instanceof org.springframework.transaction.TransactionException
+                    || cause instanceof org.springframework.amqp.AmqpException
+                    || cause instanceof java.sql.SQLException
+                    || cause instanceof com.example.userservice.security.SessionStoreUnavailableException)
+                return org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
+        }
+        return failure instanceof IllegalArgumentException ? org.springframework.http.HttpStatus.BAD_REQUEST
+                : org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+    private static String failureMessage(org.springframework.http.HttpStatus status) {
+        return switch(status) {
+            case BAD_REQUEST -> "Invalid OTP request";
+            case SERVICE_UNAVAILABLE -> "OTP service temporarily unavailable";
+            default -> "OTP request could not be completed";
+        };
     }
 }

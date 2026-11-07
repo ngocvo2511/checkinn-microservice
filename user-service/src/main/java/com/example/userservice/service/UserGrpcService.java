@@ -31,11 +31,9 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void registerUser(com.checkinn.user.grpc.RegisterRequest request,
                              StreamObserver<UserResponse> responseObserver) {
 
-        logger.info("[gRPC_REGISTER] Register request received - username: {}, email: {}, role: {}",
-                request.getUsername(), request.getEmail(), request.getRole());
+        logger.info("[gRPC_REGISTER] Register request received");
 
         try {
-            logger.debug("[gRPC_REGISTER] Processing registration for username: {}", request.getUsername());
             User user = userService.registerUser(
                     com.example.userservice.dto.RegisterRequest.builder()
                             .username(request.getUsername())
@@ -46,27 +44,27 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                     (request.getRole()== UserRole.OWNER) ? Role.OWNER : Role.CUSTOMER
             );
 
-            logger.info("[gRPC_REGISTER] User registered successfully via gRPC - userId: {}, username: {}",
-                    user.getId(), user.getUsername());
+            logger.info("[gRPC_REGISTER] User registered successfully via gRPC - userId: {}", user.getId());
 
             UserResponse response = UserResponse.newBuilder()
                     .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
-                    .setFullName(user.getProfile().getFullName())
+                    .setFullName(fullName(user))
                     .setRole(user.getRole().name())
                     .build();
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
 
+        } catch (com.example.userservice.security.SessionStoreUnavailableException e) {
+            responseObserver.onError(Status.UNAVAILABLE.withDescription("Session verification unavailable").asRuntimeException());
         } catch (Exception e) {
-            logger.error("[gRPC_REGISTER] Registration error - username: {}, email: {}, error: {}",
-                    request.getUsername(), request.getEmail(), e.getMessage(), e);
+            if (dependencyUnavailable(e, responseObserver)) return;
+            logger.warn("[gRPC_REGISTER] Registration rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.getMessage())
-                    .withCause(e)
                     .asRuntimeException()
             );
         }
@@ -77,6 +75,11 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void getUserById(GetUserRequest request,
                             StreamObserver<UserResponse> responseObserver) {
 
+        if (!com.example.userservice.security.UserRpcAccess.canRead(request.getId())) {
+            responseObserver.onError(Status.PERMISSION_DENIED.withDescription("User profile access denied").asRuntimeException());
+            return;
+        }
+
         try {
             User user = userService.getUserById(UUID.fromString(request.getId()));
 
@@ -84,19 +87,21 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                     .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
-                    .setFullName(user.getProfile().getFullName())
+                    .setFullName(fullName(user))
                     .setRole(user.getRole().name())
                     .build();
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
 
+        } catch (com.example.userservice.security.SessionStoreUnavailableException e) {
+            responseObserver.onError(Status.UNAVAILABLE.withDescription("Session verification unavailable").asRuntimeException());
         } catch (Exception e) {
-            logger.error("[gRPC_GET_USER_BY_ID_ERROR] GetUserById error - id: {}, error: {}", request.getId(), e.getMessage(), e);
+            if (dependencyUnavailable(e, responseObserver)) return;
+            logger.warn("[gRPC_GET_USER_BY_ID_ERROR] Profile request rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.NOT_FOUND
                     .withDescription(e.getMessage())
-                    .withCause(e)
                     .asRuntimeException()
             );
         }
@@ -106,11 +111,9 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void loginUser(LoginRequest request,
                           StreamObserver<UserResponse> responseObserver) {
 
-        logger.info("[gRPC_LOGIN] Login request received - usernameOrEmail: {}",
-                request.getUsernameOrEmail());
+        logger.info("[gRPC_LOGIN] Login request received");
 
         try {
-            logger.debug("[gRPC_LOGIN] Processing login for: {}", request.getUsernameOrEmail());
             var result = userService.login(
                     request.getUsernameOrEmail(),
                     request.getPassword()
@@ -119,14 +122,15 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             User user = result.getUser();
             UserProfile profile = result.getProfile();
 
-            logger.info("[gRPC_LOGIN] User authenticated successfully via gRPC - userId: {}, username: {}, role: {}",
-                    user.getId(), user.getUsername(), user.getRole().name());
+            logger.info("[gRPC_LOGIN] User authenticated successfully via gRPC - userId: {}, role: {}",
+                    user.getId(), user.getRole().name());
 
             UserResponse.Builder res = UserResponse.newBuilder()
                     .setId(String.valueOf(user.getId()))
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
-                    .setRole(user.getRole().name());
+                    .setRole(user.getRole().name())
+                    .setSessionGeneration(result.getSessionGeneration());
 
             if (profile != null && profile.getFullName() != null) {
                 res.setFullName(profile.getFullName());
@@ -137,13 +141,14 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(res.build());
             responseObserver.onCompleted();
 
+        } catch (com.example.userservice.security.SessionStoreUnavailableException e) {
+            responseObserver.onError(Status.UNAVAILABLE.withDescription("Session verification unavailable").asRuntimeException());
         } catch (Exception e) {
-            logger.error("[gRPC_LOGIN] Login error - usernameOrEmail: {}, error: {}",
-                    request.getUsernameOrEmail(), e.getMessage(), e);
+            if (dependencyUnavailable(e, responseObserver)) return;
+            logger.warn("[gRPC_LOGIN] Login rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.UNAUTHENTICATED
                     .withDescription(e.getMessage())
-                    .withCause(e)
                     .asRuntimeException()
             );
         }
@@ -159,14 +164,35 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(com.google.protobuf.Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
+        } catch (com.example.userservice.security.SessionStoreUnavailableException e) {
+            responseObserver.onError(Status.UNAVAILABLE.withDescription("Session verification unavailable").asRuntimeException());
         } catch (Exception e) {
-            logger.error("[gRPC_RESET_PASSWORD_ERROR] Reset password error - email: {}, error: {}", request.getEmail(), e.getMessage(), e);
-            responseObserver.onError(
-                Status.INVALID_ARGUMENT
-                    .withDescription(e.getMessage())
-                    .withCause(e)
-                    .asRuntimeException()
-            );
+            if (dependencyUnavailable(e, responseObserver)) return;
+            logger.warn("[gRPC_RESET_PASSWORD_ERROR] Reset rejected - errorType: {}",e.getClass().getSimpleName());
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Password reset could not be completed").asRuntimeException());
         }
+    }
+
+    private static String fullName(User user) {
+        UserProfile profile = user.getProfile();
+        return profile == null || profile.getFullName() == null ? "" : profile.getFullName();
+    }
+
+    private static boolean dependencyUnavailable(Exception failure, StreamObserver<?> observer) {
+        // Delivery failures can be wrapped by the service; inspect causes without exposing payloads.
+        Throwable cause = failure;
+        for (int depth = 0; cause != null && depth < 16; depth++, cause = cause.getCause()) {
+            if (cause instanceof org.springframework.dao.DataAccessException
+                    || cause instanceof org.springframework.transaction.TransactionException
+                    || cause instanceof org.springframework.amqp.AmqpException
+                    || cause instanceof java.sql.SQLException
+                    || cause instanceof com.example.userservice.security.SessionStoreUnavailableException) {
+                logger.error("[gRPC_DEPENDENCY_UNAVAILABLE] Account operation failed - errorType: {}",
+                        cause.getClass().getSimpleName());
+                observer.onError(Status.UNAVAILABLE.withDescription("Account service temporarily unavailable").asRuntimeException());
+                return true;
+            }
+        }
+        return false;
     }
 }

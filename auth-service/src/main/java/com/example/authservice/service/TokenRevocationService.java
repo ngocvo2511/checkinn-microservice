@@ -22,7 +22,24 @@ public class TokenRevocationService {
     private final StringRedisTemplate redisTemplate;
 
     @Value("${app.token-revocation.key-prefix:auth:revoked-token:}")
-    private String keyPrefix;
+    private String keyPrefix="auth:revoked-token:";
+
+    @Value("${app.token-revocation.user-generation-prefix:auth:session-generation:}")
+    private String userGenerationPrefix="auth:session-generation:";
+
+    /** Signature, expiry, subject and claim types must be validated by the caller first. */
+    public boolean isRevoked(String token, java.util.UUID userId, String generation) {
+        try {
+            if(Boolean.TRUE.equals(redisTemplate.hasKey(keyPrefix+sha256(token))))return true;
+            String current=redisTemplate.opsForValue().get(userGenerationPrefix+userId);
+            if(current==null)current=""; // Legacy is valid only before this account's first rotation.
+            else java.util.UUID.fromString(current);
+            return !current.equals(generation==null?"":generation);
+        } catch(Exception error) {
+            // User-token validation never fails open, including for a legacy token.
+            throw new SessionStoreUnavailableException();
+        }
+    }
 
     public void revoke(String token, Date expiresAt) {
         Duration ttl = Duration.between(Instant.now(), expiresAt.toInstant());

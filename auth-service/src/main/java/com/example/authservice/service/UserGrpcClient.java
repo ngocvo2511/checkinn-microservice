@@ -5,7 +5,20 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 @Service
+@lombok.RequiredArgsConstructor
 public class UserGrpcClient {
+
+    private final JwtService jwt;
+    @org.springframework.beans.factory.annotation.Value("${clients.user-grpc-deadline-ms:5000}")
+    private long deadlineMs=5000;
+
+    private UserServiceGrpc.UserServiceBlockingStub authenticated() {
+        if(deadlineMs<=0)throw new IllegalStateException("User RPC deadline must be positive");
+        io.grpc.Metadata metadata=new io.grpc.Metadata();
+        metadata.put(io.grpc.Metadata.Key.of("authorization",io.grpc.Metadata.ASCII_STRING_MARSHALLER),"Bearer "+jwt.generateUserServiceToken());
+        return userStub.withInterceptors(io.grpc.stub.MetadataUtils.newAttachHeadersInterceptor(metadata))
+                .withDeadlineAfter(deadlineMs,java.util.concurrent.TimeUnit.MILLISECONDS);
+    }
 
     @GrpcClient("user-service")
     private UserServiceGrpc.UserServiceBlockingStub userStub;
@@ -17,7 +30,7 @@ public class UserGrpcClient {
                 .setPassword(password)
                 .build();
 
-        return userStub.loginUser(request);
+        return authenticated().loginUser(request);
     }
 
     public UserResponse register(String username, String email, String password, String fullName, UserRole userRole) {
@@ -30,7 +43,7 @@ public class UserGrpcClient {
                 .setRole(userRole)
                 .build();
 
-        return userStub.registerUser(request);
+        return authenticated().registerUser(request);
     }
 
     public void resetPassword(String email, String newPassword) {
@@ -39,6 +52,6 @@ public class UserGrpcClient {
                 .setNewPassword(newPassword)
                 .build();
 
-        userStub.resetPassword(request);
+        authenticated().resetPassword(request);
     }
 }

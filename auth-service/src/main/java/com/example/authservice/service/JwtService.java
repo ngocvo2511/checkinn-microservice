@@ -28,14 +28,22 @@ public class JwtService {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(UUID userId, String role) {
+    public String generateToken(UUID userId, String role, String sessionGeneration) {
         return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
                 .setSubject(userId.toString())
                 .claim("role", role)
+                .claim("sessionGeneration",sessionGeneration)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24h
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String generateUserServiceToken() {
+        return Jwts.builder().setSubject("auth-service").claim("role","AUTH_SERVICE")
+                .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis()+300_000))
+                .signWith(key,SignatureAlgorithm.HS256).compact();
     }
 
     public Jws<Claims> parseToken(String token) {
