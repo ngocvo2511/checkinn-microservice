@@ -108,7 +108,8 @@ public class HotelOfferController {
                     && criteria.matchesType(hotel.getAccommodationType())
                     && (!locationFilter || cityIds.contains(hotel.getCityId()))) unique.put(hotel.getId(),hotel);
         }
-        unique.entrySet().removeIf(entry -> !amenities.matches(entry.getKey(),criteria.amenityCodes()));
+        if(criteria.amenityCodes()!=null && !criteria.amenityCodes().isEmpty())
+            unique.keySet().retainAll(amenities.matchingHotels(unique.keySet(),criteria.amenityCodes()));
         return unique;
     }
 }

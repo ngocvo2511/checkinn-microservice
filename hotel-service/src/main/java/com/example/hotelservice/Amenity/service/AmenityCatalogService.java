@@ -158,4 +158,27 @@ public class AmenityCatalogService {
         var available=new HashSet<String>(); effectiveCodes(hotelId).values().forEach(items->items.forEach(c->available.add(c.code())));
         return available.containsAll(codes);
     }
+    public Set<UUID> matchingHotels(Collection<UUID> hotelIds, Collection<String> codes) {
+        var ids=new ArrayList<>(new LinkedHashSet<>(hotelIds));
+        if(codes==null || codes.isEmpty()) return new HashSet<>(ids);
+        var requested=new LinkedHashSet<>(codes);
+        Set<UUID> result=new HashSet<>();
+        // Bound bind-parameter growth without one round trip per property.
+        for(int offset=0;offset<ids.size();offset+=500) {
+            var chunk=ids.subList(offset,Math.min(offset+500,ids.size()));
+            String hotelsSql=String.join(",",Collections.nCopies(chunk.size(),"?"));
+            String codesSql=String.join(",",Collections.nCopies(requested.size(),"?"));
+            var args=new ArrayList<Object>(chunk);args.addAll(requested);args.add(requested.size());
+            jdbc.query("""
+                SELECT s.hotel_id FROM amenity_mapping_states s
+                JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='APPROVED' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id
+                JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active
+                JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active
+                JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id
+                JOIN amenity_catalog k ON k.code=rc.code AND k.active
+                """+" WHERE s.hotel_id IN ("+hotelsSql+") AND k.code IN ("+codesSql+") GROUP BY s.hotel_id HAVING count(DISTINCT k.code)=?",
+                rs->{result.add(rs.getObject(1,UUID.class));},args.toArray());
+        }
+        return result;
+    }
 }
