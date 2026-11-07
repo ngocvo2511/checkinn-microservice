@@ -19,7 +19,7 @@ class HotelOfferSearchServiceTest {
     final LocalDate in = LocalDate.of(2026,12,1), out = in.plusDays(2);
     HotelOfferCriteria criteria(int rooms, int adults, int children, Integer min, Integer max, boolean dated) {
         return new HotelOfferCriteria(null,null,null,"Fixture",dated?in:null,dated?out:null,rooms,adults,children,
-            min==null?null:BigDecimal.valueOf(min),max==null?null:BigDecimal.valueOf(max),null);
+            min==null?null:BigDecimal.valueOf(min),max==null?null:BigDecimal.valueOf(max),null,null);
     }
     RoomTypeResponse room(int price, int adults, int children, int total, boolean active) {
         return new RoomTypeResponse(UUID.randomUUID(),UUID.randomUUID(),"Room",BigDecimal.valueOf(price),
@@ -29,6 +29,13 @@ class HotelOfferSearchServiceTest {
         HotelResponse h = mock(HotelResponse.class);
         when(h.roomTypes()).thenReturn(List.of(rooms));
         return h;
+    }
+    @Test void partialLegacyCapacityCannotAdvertiseOrCrashBeforeTheInventoryRead() {
+        for(var capacity:List.of(new CapacityDto(null,0,null,null,null,null),new CapacityDto(2,null,null,null,null,null))){
+            var r=new RoomTypeResponse(UUID.randomUUID(),UUID.randomUUID(),"Legacy unknown",BigDecimal.valueOf(100),capacity,List.of(),true,2,null,null,List.of());
+            assertTrue(service.match(hotel(r),criteria(1,1,0,null,null,true)).isEmpty());
+        }
+        verifyNoInteractions(availability);
     }
     @Test void requestedRoomCountRatherThanEntireInventoryDeterminesCapacity() {
         var r=room(100,2,0,10,true);
@@ -90,5 +97,30 @@ class HotelOfferSearchServiceTest {
         var r=room(100,2,0,3,true);
         when(availability.getAvailableRoomCount(r.id(),in,out)).thenReturn(1);
         assertTrue(service.match(hotel(r),criteria(2,4,0,null,null,true)).isEmpty());
+    }
+
+    @Test void pagedSnapshotReadsOnlyEligibleRoomIdsOnceAndKeepsSoldOutPriceSeparate() {
+        var wrongCapacity=room(50,1,0,0,true);
+        var cheap=room(100,2,0,3,true);var expensive=room(300,2,0,3,true);
+        var h=hotel(wrongCapacity,cheap,expensive);var criteria=criteria(2,4,0,null,null,true);
+        var snapshot=java.util.Map.of(cheap.id(),0,expensive.id(),2);
+        when(availability.getAvailableRoomCounts(List.of(cheap.id(),expensive.id()),in,out)).thenReturn(snapshot);
+        assertEquals(snapshot,service.availabilityFor(List.of(h,h),criteria));
+        var offer=service.match(h,criteria,snapshot).orElseThrow();
+        assertEquals(expensive.id(),offer.roomTypeId());assertEquals(BigDecimal.valueOf(300),offer.unitPrice());assertEquals(2,offer.availableRooms());
+        verify(availability,times(1)).getAvailableRoomCounts(List.of(cheap.id(),expensive.id()),in,out);
+        verify(availability,never()).getAvailableRoomCount(any(),any(),any());
+    }
+    @Test void incompleteOrFailedBatchReadCannotBecomeAnEmptyOrUndatedOffer() {
+        var r=room(100,2,0,3,true);var h=hotel(r);var criteria=criteria(1,1,0,null,null,true);
+        assertThrows(IllegalStateException.class,()->service.match(h,criteria,java.util.Map.of()));
+        when(availability.getAvailableRoomCounts(anyList(),eq(in),eq(out))).thenThrow(new IllegalStateException("upstream unavailable"));
+        assertThrows(IllegalStateException.class,()->service.availabilityFor(List.of(h),criteria));
+    }
+    @Test void undatedCandidateCollectionNeverQueriesDatedAvailability() {
+        var h=hotel(room(100,2,0,3,true));
+        var snapshot=service.availabilityFor(List.of(h),criteria(1,1,0,null,null,false));
+        assertTrue(snapshot.isEmpty());assertNull(service.match(h,criteria(1,1,0,null,null,false),snapshot).orElseThrow().availableRooms());
+        verifyNoInteractions(availability);
     }
 }

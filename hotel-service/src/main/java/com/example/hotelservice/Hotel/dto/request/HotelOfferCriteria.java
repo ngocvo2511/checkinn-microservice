@@ -7,7 +7,7 @@ import java.util.UUID;
 public record HotelOfferCriteria(UUID cityId, UUID provinceId, String cityName, String hotelName,
         @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate checkIn,
         @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate checkOut, Integer rooms, Integer adults, Integer children,
-        BigDecimal minPrice, BigDecimal maxPrice, java.util.List<String> accommodationTypes) {
+        BigDecimal minPrice, BigDecimal maxPrice, java.util.List<String> accommodationTypes, java.util.List<String> amenityCodes) {
     public boolean matchesType(com.example.hotelservice.Hotel.enums.AccommodationType type) {
         return accommodationTypes == null || accommodationTypes.isEmpty() || (type != null && accommodationTypes.contains(type.name()));
     }

@@ -29,8 +29,9 @@ public class AvailabilityController {
     ) {
         log.info("[AVAILABILITY_CONTROLLER_CHECK] Check availability request received - roomTypeId: {}, checkIn: {}, checkOut: {}, quantity: {}",
             roomTypeId, checkIn, checkOut, quantity);
-        boolean available = availabilityService.isAvailable(roomTypeId, checkIn, checkOut, quantity);
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive");
         int availableRooms = availabilityService.getAvailableRoomCount(roomTypeId, checkIn, checkOut);
+        boolean available = availableRooms >= quantity;
         log.info("[AVAILABILITY_CONTROLLER_CHECK] Check availability success - roomTypeId: {}, available: {}, availableRooms: {}",
             roomTypeId, available, availableRooms);
         return ResponseEntity.ok(new AvailabilityCheckResponse(available, availableRooms));
@@ -44,6 +45,8 @@ public class AvailabilityController {
             HoldResponse response = availabilityService.checkAndHold(request);
             log.info("[AVAILABILITY_CONTROLLER_HOLD] Hold success - holdId: {}, roomTypeId: {}", response.holdId(), request.roomTypeId());
             return ResponseEntity.ok(response);
+        } catch (com.example.hotelservice.Room.availability.service.InsufficientInventoryException ex) {
+            return ResponseEntity.status(409).body(java.util.Map.of("code","INSUFFICIENT_INVENTORY","message",ex.getMessage()));
         } catch (IllegalArgumentException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_HOLD] Hold rejected - roomTypeId: {}, reason: {}", request.roomTypeId(), ex.getMessage());
             return ResponseEntity.badRequest().body(ex.getMessage());

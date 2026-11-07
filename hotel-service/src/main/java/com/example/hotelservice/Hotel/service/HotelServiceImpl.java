@@ -58,6 +58,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class HotelServiceImpl implements HotelService {
 
     private static final int SIGNED_URL_EXPIRY_SECONDS = 300;
+    private static final int SEARCH_CITY_BATCH_SIZE = 500;
     private final AccommodationTypeService accommodationTypes;
     private final UserGrpcClient userGrpcClient;
     private final MediaClient mediaClient;
@@ -76,6 +77,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel createHotel(HotelCreateRequest request, UUID ownerId) {
+        com.example.hotelservice.validation.InputValidation.require(request);
         log.info("[CREATE_HOTEL] Creating hotel - ownerId: {}, cityId: {}, name: {}", ownerId, request.cityId(), request.name());
         if (request.accommodationType() == null) throw new IllegalArgumentException("Vui lòng chọn loại hình lưu trú");
         Hotel hotel = new Hotel();
@@ -161,6 +163,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updateHotel(UUID hotelId, HotelUpdateRequest request, UUID ownerId) {
+        com.example.hotelservice.validation.InputValidation.require(request);
         log.info("[UPDATE_HOTEL] Updating hotel - hotelId: {}, ownerId: {}", hotelId, ownerId);
         Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
@@ -242,6 +245,20 @@ public class HotelServiceImpl implements HotelService {
     public List<Hotel> getByCity(UUID cityId) {
         log.info("[GET_HOTELS_BY_CITY] Fetching hotels for cityId: {}", cityId);
         return hotelRepository.findByCityIdAndIsActiveTrueAndApprovedStatus(cityId, HotelApprovalStatus.APPROVED);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Hotel> getByCities(java.util.Collection<UUID> cityIds) {
+        if (cityIds == null || cityIds.stream().anyMatch(java.util.Objects::isNull))
+            throw new IllegalArgumentException("City IDs are required");
+        var ids=new java.util.ArrayList<>(new java.util.LinkedHashSet<>(cityIds));
+        var result=new java.util.ArrayList<Hotel>();
+        // Internal parameter chunks keep all requested cities/results, including large provinces.
+        for(int offset=0;offset<ids.size();offset+=SEARCH_CITY_BATCH_SIZE)
+            result.addAll(hotelRepository.findByCityIdInAndIsActiveTrueAndApprovedStatus(
+                    ids.subList(offset,Math.min(offset+SEARCH_CITY_BATCH_SIZE,ids.size())),HotelApprovalStatus.APPROVED));
+        return List.copyOf(result);
     }
 
     // ========== SEARCH: HOTELS BY NAME ==========
@@ -543,7 +560,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updateAmenities(UUID hotelId, List<AmenityRequest> amenityCategories, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật tiện ích của khách sạn này.");
@@ -582,7 +599,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel addAmenityCategory(UUID hotelId, AmenityRequest amenityRequest, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền thêm tiện ích vào khách sạn này.");
@@ -613,7 +630,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel clearAmenities(UUID hotelId, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa tiện ích của khách sạn này.");
@@ -627,7 +644,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel removeAmenityCategory(UUID hotelId, String categoryTitle, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa tiện ích của khách sạn này.");

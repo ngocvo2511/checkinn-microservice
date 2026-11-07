@@ -49,6 +49,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                                 .addFilterBefore(jwtMdcFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin/inventory-reviews", "/admin/inventory-reviews/**").access(adminOnly)
+                        .requestMatchers("/api/v1/{roomId}/inventory-review").authenticated()
+                         .requestMatchers("/admin/amenity-catalog", "/admin/amenity-catalog/**", "/admin/amenity-mappings", "/admin/amenity-mappings/**").access(adminOnly)
+                        .requestMatchers("/hotels/{hotelId}/amenity-mappings", "/hotels/{hotelId}/amenity-mappings/**").authenticated()
                         .requestMatchers("/hotels/accommodation-type-changes/**").access(adminOnly)
                         .requestMatchers("/hotels/{hotelId}/accommodation-type-changes").authenticated()
                         .requestMatchers("/internal/reports/**").access(revenueServiceOnly)

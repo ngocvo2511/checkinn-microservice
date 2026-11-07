@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.UUID;
 
 public record HotelUpdateRequest(
-        String name,
+        @jakarta.validation.constraints.Pattern(regexp="(?s).*\\S.*", message="must not be blank") @jakarta.validation.constraints.Size(max=255) String name,
         String description,
-        Short starRating,
+        @jakarta.validation.constraints.Min(1) @jakarta.validation.constraints.Max(5) Short starRating,
         UUID cityId,
-        HotelAddressDto address,
-        @Email String contactEmail,
-        @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number") String contactPhone,
+        @jakarta.validation.Valid HotelAddressDto address,
+        @Email @jakarta.validation.constraints.Size(max=100) String contactEmail,
+        @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number") @jakarta.validation.constraints.Size(max=20) String contactPhone,
         Boolean isActive,
         List <PolicyRequest> policies,
         List<QuestionRequest> questions,
         List <AmenityRequest> amenityCategories,
-        String businessLicenseNumber,
-        String taxId,
-        String operationLicenseNumber,
-        String ownerIdentityNumber,
+        @jakarta.validation.constraints.Size(max=50) String businessLicenseNumber,
+        @jakarta.validation.constraints.Size(max=50) String taxId,
+        @jakarta.validation.constraints.Size(max=50) String operationLicenseNumber,
+        @jakarta.validation.constraints.Size(max=50) String ownerIdentityNumber,
         com.example.hotelservice.Hotel.enums.AccommodationType accommodationType
 ) {}
 

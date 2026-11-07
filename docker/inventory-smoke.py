@@ -26,8 +26,12 @@ def request(path, body=None):
         with urllib.request.urlopen(req, timeout=25) as response:
             return response.status, json.load(response)
     except urllib.error.HTTPError as error:
-        error.close()
-        return error.code, None
+        try:
+            try: body = json.load(error)
+            except (ValueError, UnicodeDecodeError): body = {}
+            return error.code, body
+        finally:
+            error.close()
 
 
 def main():

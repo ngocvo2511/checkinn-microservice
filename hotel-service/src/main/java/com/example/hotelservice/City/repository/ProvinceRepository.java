@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, UUID> {
+    java.util.List<Province> findByNameContainingIgnoreCase(String name);
     Optional<Province> findByName(String name);
     boolean existsByName(String name);
 }

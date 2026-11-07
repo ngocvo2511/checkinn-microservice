@@ -21,11 +21,22 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(com.example.hotelservice.Room.availability.service.InventoryInconsistentException.class)
+    public ResponseEntity<Map<String, Object>> handleInventoryInconsistent(
+            com.example.hotelservice.Room.availability.service.InventoryInconsistentException ex,
+            HttpServletRequest req) {
+        var response=buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), req.getRequestURI());
+        response.getBody().put("code","INVENTORY_INCONSISTENT");
+        return response;
+    }
+
     @ExceptionHandler(com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException.class)
     public ResponseEntity<Map<String, Object>> handleInventoryNotConfigured(
             com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException ex,
             HttpServletRequest req) {
-        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), req.getRequestURI());
+        var response=buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), req.getRequestURI());
+        response.getBody().put("code","INVENTORY_NOT_CONFIGURED");
+        return response;
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -54,11 +65,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest req) {
-        String message = ex.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
-        log.warn("[GLOBAL_EXCEPTION] MethodArgumentNotValidException - path: {}, message: {}", req.getRequestURI(), message);
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, message, req.getRequestURI());
+        Map<String,String> fields=new java.util.TreeMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(e -> fields.merge(e.getField(),e.getDefaultMessage(),(a,b)->a.compareTo(b)<=0?a:b));
+        return validationResponse(fields,req);
+    }
+
+    @ExceptionHandler(com.example.hotelservice.validation.InputValidation.InvalidInput.class)
+    public ResponseEntity<Map<String,Object>> invalidInput(com.example.hotelservice.validation.InputValidation.InvalidInput ex, HttpServletRequest req) {
+        return validationResponse(ex.getFieldErrors(),req);
+    }
+
+    private ResponseEntity<Map<String,Object>> validationResponse(Map<String,String> fields,HttpServletRequest req) {
+        var result=buildErrorResponse(HttpStatus.BAD_REQUEST,"Invalid request fields",req.getRequestURI());
+        result.getBody().put("fieldErrors",fields);
+        return result;
     }
 
     @ExceptionHandler(ResponseStatusException.class)
@@ -73,7 +93,7 @@ public class GlobalExceptionHandler {
             org.springframework.validation.BindException.class, org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
             org.springframework.web.bind.MissingServletRequestParameterException.class})
     public ResponseEntity<Map<String,Object>> malformed(Exception ex, HttpServletRequest req) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST,"Dữ liệu yêu cầu không hợp lệ",req.getRequestURI());
+        return validationResponse(Map.of("request","Malformed request"),req);
     }
 
     @ExceptionHandler({org.springframework.orm.ObjectOptimisticLockingFailureException.class, jakarta.persistence.OptimisticLockException.class})
@@ -81,19 +101,26 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.CONFLICT,"Thông tin đã thay đổi. Hãy tải lại.",req.getRequestURI());
     }
 
+
+    @ExceptionHandler({org.springframework.web.servlet.resource.NoResourceFoundException.class,
+            org.springframework.web.servlet.NoHandlerFoundException.class,
+            org.springframework.web.HttpRequestMethodNotSupportedException.class,
+            org.springframework.web.HttpMediaTypeNotSupportedException.class,
+            org.springframework.web.HttpMediaTypeNotAcceptableException.class})
+    public ResponseEntity<Map<String,Object>> framework(Exception ex,HttpServletRequest req) {
+        var error=(org.springframework.web.ErrorResponse)ex;
+        var status=HttpStatus.valueOf(error.getStatusCode().value());
+        return ResponseEntity.status(status).headers(error.getHeaders()).body(buildErrorResponse(status,status.getReasonPhrase(),req.getRequestURI()).getBody());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex, HttpServletRequest req) {
-        log.error("[GLOBAL_EXCEPTION] Unhandled exception - path: {}, message: {}", req.getRequestURI(), ex.getMessage(), ex);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage() != null ? ex.getMessage() : "Lỗi máy chủ nội bộ", req.getRequestURI());
+        var response=buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Internal server error",req.getRequestURI());
+        log.error("Unhandled API exception - type: {}, path: {}, requestId: {}",ex.getClass().getSimpleName(),req.getRequestURI(),response.getBody().get("requestId"));
+        return response;
     }
 
     private ResponseEntity<Map<String, Object>> buildErrorResponse(HttpStatus status, String message, String path) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", Instant.now().toString());
-        body.put("status", status.value());
-        body.put("error", status.getReasonPhrase());
-        body.put("message", message);
-        body.put("path", path);
-        return ResponseEntity.status(status).body(body);
+        return ResponseEntity.status(status).body(com.example.hotelservice.api.ApiErrorSupport.body(status.value(),path,Map.of("message",message==null?status.getReasonPhrase():message)));
     }
 }

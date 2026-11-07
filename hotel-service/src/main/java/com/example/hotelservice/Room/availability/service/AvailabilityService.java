@@ -18,7 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import com.example.hotelservice.Hotel.entity.Hotel;
+import com.example.hotelservice.Room.availability.repository.RoomAvailabilityRepository.OccupiedRoom;
 import java.util.UUID;
 
 @Service
@@ -26,51 +35,63 @@ import java.util.UUID;
 @Slf4j
 public class AvailabilityService {
 
+    private static final int READ_BATCH_SIZE = 500;
+
     private final RoomTypeRepository roomTypeRepository;
     private final com.example.hotelservice.Hotel.repository.HotelRepository hotelRepository;
     private final RoomAvailabilityRepository roomAvailabilityRepository;
     private final RoomHoldRepository roomHoldRepository;
     private final HoldExpiryProperties holdExpiryProperties;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public boolean isAvailable(UUID roomTypeId, LocalDate checkIn, LocalDate checkOut, int quantity) {
-        validateDates(checkIn, checkOut);
         validateQuantity(quantity);
-        RoomType roomType = loadRoomType(roomTypeId);
-        requirePublished(roomType);
-        int totalRooms = requireTotalRooms(roomType);
-
-        for (LocalDate date : expandDates(checkIn, checkOut)) {
-            RoomAvailability availability = roomAvailabilityRepository.findByRoomTypeIdAndDateReadOnly(roomTypeId, date)
-                    .orElse(null);
-            int held = availability != null ? availability.getHeld() : 0;
-            int booked = availability != null ? availability.getBooked() : 0;
-            if (totalRooms - held - booked < quantity) {
-                return false;
-            }
-        }
-        return true;
+        return getAvailableRoomCount(roomTypeId, checkIn, checkOut) >= quantity;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public int getAvailableRoomCount(UUID roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         validateDates(checkIn, checkOut);
         RoomType roomType = loadRoomType(roomTypeId);
         requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
 
-        int minAvailable = totalRooms;
-        for (LocalDate date : expandDates(checkIn, checkOut)) {
-            RoomAvailability availability = roomAvailabilityRepository.findByRoomTypeIdAndDateReadOnly(roomTypeId, date)
-                    .orElse(null);
-            int held = availability != null ? availability.getHeld() : 0;
-            int booked = availability != null ? availability.getBooked() : 0;
-            int available = totalRooms - held - booked;
-            if (available < minAvailable) {
-                minAvailable = available;
+        long peakOccupied = requirePeak(roomAvailabilityRepository.findLoadForStay(roomTypeId, checkIn, checkOut));
+        return (int) Math.max(0L, Math.min(totalRooms, (long) totalRooms - peakOccupied));
+    }
+
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
+    public Map<UUID,Integer> getAvailableRoomCounts(List<UUID> roomTypeIds, LocalDate checkIn, LocalDate checkOut) {
+        validateDates(checkIn,checkOut);
+        if (roomTypeIds == null || roomTypeIds.stream().anyMatch(Objects::isNull))
+            throw new IllegalArgumentException("Room IDs are required");
+        var result=new LinkedHashMap<UUID,Integer>();
+        var ids=new ArrayList<>(new LinkedHashSet<>(roomTypeIds));
+        // Bound SQL parameter sets, not the total number of eligible rooms/results.
+        for (int offset=0;offset<ids.size();offset+=READ_BATCH_SIZE) {
+            var chunk=ids.subList(offset,Math.min(offset+READ_BATCH_SIZE,ids.size()));
+            var rooms=roomTypeRepository.findAllById(chunk);
+            var byId=rooms.stream().collect(Collectors.toMap(RoomType::getId,r->r));
+            if (!byId.keySet().equals(new HashSet<>(chunk)))
+                throw new EntityNotFoundException("Không tìm thấy loại phòng");
+            var parentIds=rooms.stream().map(RoomType::getHotelId).collect(Collectors.toSet());
+            var parents=hotelRepository.findAllById(parentIds).stream().collect(Collectors.toMap(
+                    Hotel::getId,h->h));
+            for (var room:rooms) {
+                requirePublished(room,parents.get(room.getHotelId()));
+                requireTotalRooms(room);
+            }
+            var peaks=roomAvailabilityRepository.findPeakOccupiedForRooms(chunk,checkIn,checkOut).stream()
+                    .collect(Collectors.toMap(
+                            OccupiedRoom::getRoomTypeId,
+                            this::requirePeak));
+            for (var id:chunk) {
+                int total=requireTotalRooms(byId.get(id));
+                long peak=peaks.getOrDefault(id,0L);
+                result.put(id,(int)Math.max(0L,Math.min(total,(long)total-peak)));
             }
         }
-        return Math.max(0, minAvailable);
+        return Map.copyOf(result);
     }
 
     @Transactional
@@ -102,9 +123,10 @@ public class AvailabilityService {
 
         for (LocalDate date : dates) {
             RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
-            int remaining = totalRooms - availability.getHeld() - availability.getBooked();
+            if (availability.getHeld() < 0 || availability.getBooked() < 0) throw new InventoryInconsistentException();
+            long remaining = (long) totalRooms - availability.getHeld() - availability.getBooked();
             if (remaining < request.quantity()) {
-                throw new IllegalArgumentException("Not enough rooms on date: " + date);
+                throw new InsufficientInventoryException(date);
             }
         }
 
@@ -138,12 +160,16 @@ public class AvailabilityService {
         if (hold.getExpiresAt() == null || !hold.getExpiresAt().isAfter(Instant.now())) {
             throw new IllegalStateException("Hold expired before confirmation");
         }
+        requireHoldQuantity(hold);
         RoomType roomType = loadRoomType(hold.getRoomTypeId());
         int totalRooms = requireTotalRooms(roomType);
 
         List<LocalDate> dates = expandDates(hold.getCheckInDate(), hold.getCheckOutDate());
         for (LocalDate date : dates) {
             RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
+            if (availability.getHeld() < 0 || availability.getBooked() < 0
+                    || (long) availability.getHeld() + availability.getBooked() > totalRooms)
+                throw new InventoryInconsistentException();
             if (availability.getHeld() < hold.getQuantity()) {
                 throw new IllegalStateException("Hold has insufficient held rooms for date: " + date);
             }
@@ -190,6 +216,7 @@ public class AvailabilityService {
             return response(hold);
         }
         if (hold.getStatus() != HoldStatus.CONFIRMED) throw new IllegalStateException("Unsupported reservation state");
+        requireHoldQuantity(hold);
         for (var date : expandDates(hold.getCheckInDate(), hold.getCheckOutDate())) {
             var counters = getAvailabilityForUpdate(hold.getRoomTypeId(), date);
             if (counters.getBooked() < hold.getQuantity()) throw new IllegalStateException("Booked counters are inconsistent");
@@ -220,7 +247,11 @@ public class AvailabilityService {
 
     private void requirePublished(RoomType room) {
         var hotel = hotelRepository.findById(room.getHotelId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
-        if (!Boolean.TRUE.equals(room.getIsActive()) || !Boolean.TRUE.equals(hotel.getIsActive())
+        requirePublished(room,hotel);
+    }
+
+    private void requirePublished(RoomType room, com.example.hotelservice.Hotel.entity.Hotel hotel) {
+        if (hotel == null || !Boolean.TRUE.equals(room.getIsActive()) || !Boolean.TRUE.equals(hotel.getIsActive())
                 || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
             throw new EntityNotFoundException("Không tìm thấy loại phòng");
     }
@@ -231,6 +262,17 @@ public class AvailabilityService {
             throw new InventoryNotConfiguredException();
         }
         return totalRooms;
+    }
+
+    private long requirePeak(RoomAvailabilityRepository.StayLoad load) {
+        if (load == null || load.getPeakOccupied() == null || load.getInvalidCounters() == null
+                || load.getInvalidCounters() != 0 || load.getPeakOccupied() < 0)
+            throw new InventoryInconsistentException();
+        return load.getPeakOccupied();
+    }
+
+    private void requireHoldQuantity(RoomHold hold) {
+        if (hold.getQuantity() == null || hold.getQuantity() <= 0) throw new InventoryInconsistentException();
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {
@@ -275,12 +317,13 @@ public class AvailabilityService {
     }
 
     private void releaseHoldInternal(RoomHold hold) {
+        requireHoldQuantity(hold);
         RoomType roomType = loadRoomType(hold.getRoomTypeId());
         List<LocalDate> dates = expandDates(hold.getCheckInDate(), hold.getCheckOutDate());
         for (LocalDate date : dates) {
             RoomAvailability availability = getAvailabilityForUpdate(roomType.getId(), date);
+            if (availability.getHeld() < hold.getQuantity()) throw new InventoryInconsistentException();
             int newHeld = availability.getHeld() - hold.getQuantity();
-            if (newHeld < 0) throw new IllegalStateException("Hold inventory counters are inconsistent");
             availability.setHeld(newHeld);
             roomAvailabilityRepository.save(availability);
         }

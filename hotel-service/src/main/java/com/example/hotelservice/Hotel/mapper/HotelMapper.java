@@ -54,6 +54,9 @@ public abstract class HotelMapper {
     @Autowired
     protected com.example.hotelservice.Amenity.repository.HotelAmenityRepository hotelAmenityRepository;
 
+    @Autowired
+    protected com.example.hotelservice.Amenity.service.AmenityCatalogService amenityCatalog;
+
     // ----------- CreateHotelRequest -> Hotel -----------
 
     @Mapping(target = "id", ignore = true)
@@ -81,6 +84,51 @@ public abstract class HotelMapper {
     @Mapping(target = "roomTypes", expression = "java(toPublishedRoomTypeResponses(entity.getRoomTypes()))")
     @Mapping(target = "amenityCategories", expression = "java(getPublicAmenities(entity.getId()))")
     public abstract HotelResponse toPublicHotelResponse(Hotel entity);
+
+    /** Internal global-filter/eligibility facts. Full DTO mapping happens after the page boundary. */
+    @Named("searchCandidate")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "starRating", source = "starRating")
+    @Mapping(target = "roomTypes", expression = "java(toSearchRoomTypeResponses(entity.getRoomTypes()))")
+    @Mapping(target = "amenityCategories", expression = "java(getPublicAmenities(entity.getId()))")
+    // Explicit constructor-component ignores are required by this MapStruct version for records.
+    @Mapping(target = "ownerId", ignore = true)
+    @Mapping(target = "cityId", ignore = true)
+    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "description", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "contactEmail", ignore = true)
+    @Mapping(target = "contactPhone", ignore = true)
+    @Mapping(target = "policies", ignore = true)
+    @Mapping(target = "faqs", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @Mapping(target = "approvedStatus", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "lowestPrice", ignore = true)
+    @Mapping(target = "mediaAssets", ignore = true)
+    @Mapping(target = "accommodationType", ignore = true)
+    @Mapping(target = "accommodationTypeLabel", ignore = true)
+    public abstract HotelResponse toSearchCandidateResponse(Hotel entity);
+
+    // Inherited record constructor ignores are not honored by the current generator.
+    // Explicit internal construction keeps detail getters out of this batch-read path.
+    @Named("searchCandidateWithFacts")
+    public HotelResponse toSearchCandidateResponseWithFacts(Hotel entity, List<RoomType> rooms,
+                                                           List<AmenityResponse> publicAmenities) {
+        if (entity == null) return null;
+        return new HotelResponse(entity.getId(),null,null,null,null,entity.getStarRating(),
+                null,null,null,null,null,publicAmenities,null,null,null,
+                null,null,null,toSearchRoomTypeResponses(rooms),null,null,null);
+    }
+
+    protected List<RoomTypeResponse> toSearchRoomTypeResponses(List<RoomType> rooms) {
+        if (rooms == null) return List.of();
+        return rooms.stream().filter(room -> Boolean.TRUE.equals(room.getIsActive()))
+                .map(roomTypeMapper::toSearchCandidateResponse).toList();
+    }
 
     protected List<RoomTypeResponse> toPublishedRoomTypeResponses(List<RoomType> rooms) {
         if (rooms == null) return List.of();
@@ -164,6 +212,7 @@ public abstract class HotelMapper {
 
 
     // ---------- JSON Helpers ----------
+    @Named("jsonColumn")
     protected String writeJson(Object value) {
         try { return objectMapper.writeValueAsString(value); }
         catch (Exception ex) { throw new RuntimeException(ex); }
@@ -243,6 +292,7 @@ public abstract class HotelMapper {
         List<HotelAmenity> amenities =
                 hotelAmenityRepository.findAllByCategoryHotelId(hotelId);
 
+        var verifiedCodes = amenityCatalog.effectiveCodes(hotelId);
         Map<UUID, List<HotelAmenity>> amenityMap =
                 amenities.stream()
                         .filter(item -> !publicOnly || Boolean.TRUE.equals(item.getIsActive()))
@@ -262,6 +312,7 @@ public abstract class HotelMapper {
                                         .map(item -> AmenityItemResponse.builder()
                                                 .id(item.getId().toString())
                                                 .title(item.getTitle())
+                                                .verifiedCodes(verifiedCodes.getOrDefault(item.getId(), List.of()))
                                                 .build())
                                         .toList()
                         )

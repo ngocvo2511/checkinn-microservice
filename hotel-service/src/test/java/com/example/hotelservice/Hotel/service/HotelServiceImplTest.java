@@ -44,6 +44,29 @@ import static org.mockito.Mockito.when;
 
 class HotelServiceImplTest {
 
+    @Test void bulkCityLookupDeduplicatesStableIdsAndUsesPublishedRepositoryScope() {
+        UUID a=UUID.randomUUID(),b=UUID.randomUUID();
+        Hotel published=Hotel.builder().id(UUID.randomUUID()).cityId(a).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build();
+        when(hotelRepository.findByCityIdInAndIsActiveTrueAndApprovedStatus(List.of(a,b),HotelApprovalStatus.APPROVED)).thenReturn(List.of(published));
+        assertThat(hotelService.getByCities(List.of(a,b,a))).containsExactly(published);
+        verify(hotelRepository).findByCityIdInAndIsActiveTrueAndApprovedStatus(List.of(a,b),HotelApprovalStatus.APPROVED);
+        verify(hotelRepository,never()).findByCityIdAndIsActiveTrueAndApprovedStatus(any(),any());
+    }
+    @Test void emptyOrInvalidCityCollectionsNeverBecomeAnUnscopedHotelQuery() {
+        assertThat(hotelService.getByCities(List.of())).isEmpty();
+        assertThatThrownBy(()->hotelService.getByCities(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->hotelService.getByCities(java.util.Arrays.asList((UUID)null))).isInstanceOf(IllegalArgumentException.class);
+        org.mockito.Mockito.verifyNoInteractions(hotelRepository);
+    }
+    @Test void cityParameterChunkingIncludesResultsAfterTheFirstFiveHundred() {
+        var ids=java.util.stream.IntStream.range(0,501).mapToObj(i->UUID.randomUUID()).toList();
+        when(hotelRepository.findByCityIdInAndIsActiveTrueAndApprovedStatus(any(),org.mockito.ArgumentMatchers.eq(HotelApprovalStatus.APPROVED)))
+                .thenAnswer(call->((java.util.Collection<UUID>)call.getArgument(0)).stream()
+                        .map(id->Hotel.builder().id(id).cityId(id).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build()).toList());
+        assertThat(hotelService.getByCities(ids)).extracting(Hotel::getCityId).containsExactlyInAnyOrderElementsOf(ids);
+        verify(hotelRepository,org.mockito.Mockito.times(2)).findByCityIdInAndIsActiveTrueAndApprovedStatus(any(),org.mockito.ArgumentMatchers.eq(HotelApprovalStatus.APPROVED));
+    }
+
     private UserGrpcClient userGrpcClient;
     private MediaClient mediaClient;
     private HotelRepository hotelRepository;

@@ -16,5 +16,7 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, UUID> {
     Optional<RoomType> findByIdForUpdate(UUID id);
     List<RoomType> findByHotelId(UUID hotelId);
 
+    List<RoomType> findByHotelIdInAndIsActiveTrue(java.util.Collection<UUID> hotelIds);
+
     boolean existsByIdAndHotelId(UUID roomTypeId, UUID hotelId);
 }

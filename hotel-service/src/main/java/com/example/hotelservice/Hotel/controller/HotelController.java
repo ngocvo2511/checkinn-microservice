@@ -42,7 +42,7 @@ public class HotelController {
     @PostMapping
     public ResponseEntity<HotelResponse> createHotel(
             @AuthenticationPrincipal Jwt jwt,
-            @RequestBody HotelCreateRequest request
+            @jakarta.validation.Valid @RequestBody HotelCreateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[HOTEL_CONTROLLER_CREATE] Create hotel request received - ownerId: {}, cityId: {}, name: {}",
@@ -116,7 +116,7 @@ public class HotelController {
     public ResponseEntity<HotelResponse> updateHotel(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
-            @RequestBody HotelUpdateRequest request
+            @jakarta.validation.Valid @RequestBody HotelUpdateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[HOTEL_CONTROLLER_UPDATE] Update hotel request received - hotelId: {}, ownerId: {}", hotelId, ownerId);

@@ -16,6 +16,8 @@ public interface HotelRepository extends JpaRepository<Hotel, UUID> {
 
     List<Hotel> findByCityIdAndIsActiveTrueAndApprovedStatus(UUID cityId, HotelApprovalStatus status);
 
+    List<Hotel> findByCityIdInAndIsActiveTrueAndApprovedStatus(java.util.Collection<UUID> cityIds, HotelApprovalStatus status);
+
     List<Hotel> findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus(String name, HotelApprovalStatus status);
 
     // Lấy tất cả hotel của 1 owner

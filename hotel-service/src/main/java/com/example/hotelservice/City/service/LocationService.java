@@ -7,6 +7,7 @@ import com.example.hotelservice.City.repository.CityRepository;
 import com.example.hotelservice.City.repository.ProvinceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,46 +61,42 @@ public class LocationService {
     }
 
     /**
-     * Tìm kiếm locations theo tên hoặc code
+     * Tìm kiếm locations theo tên
      */
+    @Transactional(readOnly = true)
     public List<LocationResponse> searchLocations(String query) {
-        String q = query.toLowerCase();
         List<LocationResponse> results = new ArrayList<>();
 
         // Search in provinces
-        var provinces = provinceRepository.findAll();
+        var provinces = provinceRepository.findByNameContainingIgnoreCase(query);
         for (Province p : provinces) {
-            if (p.getName().toLowerCase().contains(q)) {
-                results.add(new LocationResponse(
-                        p.getId(),
-                        p.getName(),
-                        p.getLatitude(),
-                        p.getLongitude(),
-                        p.getHotelCount(),
-                        p.getCreatedAt(),
-                        null,
-                        "PROVINCE"
-                ));
-            }
+            results.add(new LocationResponse(
+                    p.getId(),
+                    p.getName(),
+                    p.getLatitude(),
+                    p.getLongitude(),
+                    p.getHotelCount(),
+                    p.getCreatedAt(),
+                    null,
+                    "PROVINCE"
+            ));
         }
 
         // Search in cities
-        var cities = cityRepository.findAll();
+        var cities = cityRepository.findByNameContainingIgnoreCase(query);
         for (City c : cities) {
-            if (c.getName().toLowerCase().contains(q)) {
-                var parent = c.getProvince();
-                results.add(new LocationResponse(
-                        c.getId(),
-                        c.getName(),
-                        c.getLatitude(),
-                        c.getLongitude(),
-                        c.getHotelCount(),
-                        c.getCreatedAt(),
-                        parent != null ? parent.getName() : null,
-                        "CITY",
-                        parent != null ? parent.getId() : null
-                ));
-            }
+            var parent = c.getProvince();
+            results.add(new LocationResponse(
+                    c.getId(),
+                    c.getName(),
+                    c.getLatitude(),
+                    c.getLongitude(),
+                    c.getHotelCount(),
+                    c.getCreatedAt(),
+                    parent != null ? parent.getName() : null,
+                    "CITY",
+                    parent != null ? parent.getId() : null
+            ));
         }
 
         return results;

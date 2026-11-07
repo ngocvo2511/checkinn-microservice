@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.UUID;
 
 public record HotelCreateRequest(
-        @NotBlank String name,
+        @NotBlank @jakarta.validation.constraints.Size(max=255) String name,
         String description,
-        Short starRating,
+        @jakarta.validation.constraints.Min(1) @jakarta.validation.constraints.Max(5) Short starRating,
         @NotNull UUID cityId,
-        @NotNull HotelAddressDto address,
-        @Email String contactEmail,
-        @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number") String contactPhone,
+        @NotNull @jakarta.validation.Valid HotelAddressDto address,
+        @Email @jakarta.validation.constraints.Size(max=100) String contactEmail,
+        @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number") @jakarta.validation.constraints.Size(max=20) String contactPhone,
 
         // ====== Tài liệu pháp lý ======
-        @NotBlank String businessLicenseNumber,
-        @NotBlank String taxId,
-        String operationLicenseNumber,
-        @NotBlank String ownerIdentityNumber,
+        @NotBlank @jakarta.validation.constraints.Size(max=50) String businessLicenseNumber,
+        @NotBlank @jakarta.validation.constraints.Size(max=50) String taxId,
+        @jakarta.validation.constraints.Size(max=50) String operationLicenseNumber,
+        @NotBlank @jakarta.validation.constraints.Size(max=50) String ownerIdentityNumber,
 
         // ====== Chính sách và tiện ích ======
         List<PolicyRequest> policies,

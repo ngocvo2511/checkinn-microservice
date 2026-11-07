@@ -11,4 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class AmenityItemResponse {
     String id;
     String title;
+    java.util.List<com.example.hotelservice.Amenity.service.AmenityCatalogService.Code> verifiedCodes;
 }
