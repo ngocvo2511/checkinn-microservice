@@ -1,5 +1,9 @@
 # Docker local development
 
+Media/private-document HTTP/gRPC contract checkpoint (09/11/2026):
+[media-service/README.md](../media-service/README.md). This batch uses isolated
+loopback providers and needs no schema/bucket change or live storage credentials.
+
 Latest independent regulation checkpoint, migration and commands:
 [regulations-service/README.md](../regulations-service/README.md). Apply its
 REGULATIONS-only additive outbox script before deploying that writer. This

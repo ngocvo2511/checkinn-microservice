@@ -1,257 +1,133 @@
 package com.example.mediaservice;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import java.io.IOException;
+import java.net.*;
+import java.net.http.*;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.*;
 
 @Service
-@Slf4j
 public class SupabaseStorageService {
-
     private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
-    private final String storageBaseUrl;
-    private final String bucket;
-    private final String privateBucket;
-    private final String key;
+    private final ObjectMapper json=new ObjectMapper();
+    private final String storageBaseUrl,bucket,privateBucket,key;
+    private final long timeoutNanos;
 
-    public SupabaseStorageService(
-            @Value("${supabase.url}") String supabaseUrl,
-            @Value("${supabase.bucket}") String bucket,
+    public SupabaseStorageService(String url,String bucket,String privateBucket,String key) {
+        this(url,bucket,privateBucket,key,HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(2)).build(),5000);
+    }
+    @Autowired
+    public SupabaseStorageService(@Value("${supabase.url}") String url,@Value("${supabase.bucket}") String bucket,
             @Value("${supabase.private-bucket:hotel-documents}") String privateBucket,
-            @Value("${supabase.service-role-key}") String key
-    ) {
-        this.httpClient = HttpClient.newHttpClient();
-        this.objectMapper = new ObjectMapper();
-        this.storageBaseUrl = supabaseUrl.endsWith("/") ? supabaseUrl.substring(0, supabaseUrl.length() - 1) : supabaseUrl;
-        this.bucket = bucket;
-        this.privateBucket = privateBucket;
-        this.key = key;
+            @Value("${supabase.service-role-key}") String key,HttpClient client,
+            @Value("${supabase.request-timeout-ms:5000}") long timeoutMillis) {
+        if(timeoutMillis<=0)throw new IllegalArgumentException("Positive storage request timeout required");
+        this.storageBaseUrl=url.replaceAll("/+$","");this.bucket=bucket;this.privateBucket=privateBucket;
+        this.key=key;this.httpClient=client;this.timeoutNanos=Duration.ofMillis(timeoutMillis).toNanos();
     }
-
-    public String uploadMedia(byte[] fileData, String objectName, String mimeType) throws IOException, InterruptedException {
-        String encodedObjectName = encodePath(objectName);
-        String uploadUrl = String.format("%s/storage/v1/object/%s/%s", storageBaseUrl, bucket, encodedObjectName);
-        log.info("[SUPABASE_STORAGE_UPLOAD] Upload request prepared - bucket: {}, objectName: {}, mimeType: {}, bytes: {}, url: {}",
-                bucket, objectName, mimeType, fileData != null ? fileData.length : 0, uploadUrl);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(uploadUrl))
-                .header("Authorization", "Bearer " + key)
-                .header("apikey", key)
-                .header("Content-Type", mimeType)
-                .PUT(HttpRequest.BodyPublishers.ofByteArray(fileData))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            log.error("[SUPABASE_STORAGE_UPLOAD] Upload failed - bucket: {}, objectName: {}, status: {}, body: {}",
-                    bucket, objectName, response.statusCode(), response.body());
-            throw new IOException("Supabase upload failed: " + response.statusCode() + " - " + response.body());
-        }
-
-        log.info("[SUPABASE_STORAGE_UPLOAD] Upload success - bucket: {}, objectName: {}", bucket, objectName);
-
-        return String.format("%s/storage/v1/object/public/%s/%s", storageBaseUrl, bucket, encodedObjectName);
+    public String uploadMedia(byte[] bytes,String path,String mimeType) throws IOException,InterruptedException {
+        String encoded=encodePath(path);
+        upload(bytes,"/object/"+bucket+"/"+encoded,mimeType);
+        return storageBaseUrl+"/storage/v1/object/public/"+bucket+"/"+encoded;
     }
-
-    public boolean deleteMedia(String objectName) throws IOException, InterruptedException {
-        String encodedObjectName = encodePath(objectName);
-        String deleteUrl = String.format("%s/storage/v1/object/%s/%s", storageBaseUrl, bucket, encodedObjectName);
-
-        log.info("[SUPABASE_STORAGE_DELETE] Delete request prepared - bucket: {}, objectName: {}, url: {}", bucket, objectName, deleteUrl);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(deleteUrl))
-                .header("Authorization", "Bearer " + key)
-                .header("apikey", key)
-                .DELETE()
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        boolean deleted = response.statusCode() == 200 || response.statusCode() == 204;
-        if (deleted) {
-            log.info("[SUPABASE_STORAGE_DELETE] Delete success - bucket: {}, objectName: {}, status: {}", bucket, objectName, response.statusCode());
-        } else {
-            log.warn("[SUPABASE_STORAGE_DELETE] Delete returned non-success status - bucket: {}, objectName: {}, status: {}, body: {}",
-                    bucket, objectName, response.statusCode(), response.body());
-        }
-        return deleted;
+    public String uploadPrivateDocument(byte[] bytes,String path,String mimeType) throws IOException,InterruptedException {
+        upload(bytes,"/object/"+privateBucket+"/"+encodePath(path),mimeType);return path;
     }
-
-    public String uploadPrivateDocument(byte[] fileData, String objectName, String mimeType) throws IOException, InterruptedException {
-        String encodedObjectName = encodePath(objectName);
-        String uploadUrl = String.format("%s/storage/v1/object/%s/%s", storageBaseUrl, privateBucket, encodedObjectName);
-        log.info("[SUPABASE_STORAGE_DOC_UPLOAD] Upload request prepared - bucket: {}, objectName: {}, mimeType: {}, bytes: {}, url: {}",
-                privateBucket, objectName, mimeType, fileData != null ? fileData.length : 0, uploadUrl);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(uploadUrl))
-                .header("Authorization", "Bearer " + key)
-                .header("apikey", key)
-                .header("Content-Type", mimeType)
-                .PUT(HttpRequest.BodyPublishers.ofByteArray(fileData))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            log.error("[SUPABASE_STORAGE_DOC_UPLOAD] Upload failed - bucket: {}, objectName: {}, status: {}, body: {}",
-                    privateBucket, objectName, response.statusCode(), response.body());
-            throw new IOException("Supabase private document upload failed: " + response.statusCode() + " - " + response.body());
-        }
-
-        log.info("[SUPABASE_STORAGE_DOC_UPLOAD] Upload success - bucket: {}, objectName: {}", privateBucket, objectName);
-        return objectName;
+    private void upload(byte[] bytes,String path,String mimeType) throws IOException,InterruptedException {
+        if(bytes==null || bytes.length==0 || mimeType==null || mimeType.isBlank())throw new IllegalArgumentException("Valid file data and MIME type required");
+        var response=send(request(path).header("Content-Type",mimeType).PUT(HttpRequest.BodyPublishers.ofByteArray(bytes)),deadline());
+        requireSuccess(response);
     }
-
-    public String createSignedUrl(String objectName, int expiresInSeconds) throws IOException, InterruptedException {
-        String encodedObjectName = encodePath(objectName);
-        String signUrl = String.format("%s/storage/v1/object/sign/%s/%s", storageBaseUrl, privateBucket, encodedObjectName);
-        String requestBody = String.format("{\"expiresIn\":%d}", expiresInSeconds > 0 ? expiresInSeconds : 300);
-
-        log.info("[SUPABASE_STORAGE_SIGN] Sign request prepared - bucket: {}, objectName: {}, expiresIn: {}, url: {}",
-                privateBucket, objectName, expiresInSeconds, signUrl);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(signUrl))
-                .header("Authorization", "Bearer " + key)
-                .header("apikey", key)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            log.error("[SUPABASE_STORAGE_SIGN] Sign failed - bucket: {}, objectName: {}, status: {}, body: {}",
-                    privateBucket, objectName, response.statusCode(), response.body());
-            throw new IOException("Supabase sign url failed: " + response.statusCode() + " - " + response.body());
-        }
-
-        JsonNode root = objectMapper.readTree(response.body());
-        String signedUrlPart = root.hasNonNull("signedURL") ? root.get("signedURL").asText() :
-                root.hasNonNull("signedUrl") ? root.get("signedUrl").asText() : null;
-
-        if (signedUrlPart == null || signedUrlPart.isBlank()) {
-            throw new IOException("Supabase returned empty signedURL: " + response.body());
-        }
-
-        return formatSignedUrl(signedUrlPart);
+    public boolean deleteMedia(String path) throws IOException,InterruptedException {
+        var response=send(request("/object/"+bucket+"/"+encodePath(path)).DELETE(),deadline());
+        if(response.statusCode()==404)return false;
+        requireSuccess(response);return response.statusCode()==200 || response.statusCode()==204;
     }
-
-    public Map<String, String> createSignedUrls(List<String> objectNames, int expiresInSeconds) throws IOException, InterruptedException {
-        if (objectNames == null || objectNames.isEmpty()) {
-            return Collections.emptyMap();
-        }
-
-        List<String> validNames = objectNames.stream()
-                .filter(name -> name != null && !name.isBlank())
-                .distinct()
-                .toList();
-
-        if (validNames.isEmpty()) {
-            return Collections.emptyMap();
-        }
-
-        String signBatchUrl = String.format("%s/storage/v1/object/sign/%s", storageBaseUrl, privateBucket);
-        int expiry = expiresInSeconds > 0 ? expiresInSeconds : 300;
-
-        Map<String, Object> reqBodyMap = new HashMap<>();
-        reqBodyMap.put("expiresIn", expiry);
-        reqBodyMap.put("paths", validNames);
-        String requestBody = objectMapper.writeValueAsString(reqBodyMap);
-
-        log.info("[SUPABASE_STORAGE_SIGN_BATCH] Sign batch request prepared - bucket: {}, fileCount: {}, expiresIn: {}, url: {}",
-                privateBucket, validNames.size(), expiry, signBatchUrl);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(signBatchUrl))
-                .header("Authorization", "Bearer " + key)
-                .header("apikey", key)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() >= 200 && response.statusCode() < 300) {
-            JsonNode root = objectMapper.readTree(response.body());
-            if (root.isArray()) {
-                Map<String, String> resultMap = new HashMap<>();
-                for (JsonNode item : root) {
-                    String path = item.hasNonNull("path") ? item.get("path").asText() : null;
-                    String error = item.hasNonNull("error") ? item.get("error").asText() : null;
-                    String signedUrlPart = item.hasNonNull("signedURL") ? item.get("signedURL").asText() :
-                            item.hasNonNull("signedUrl") ? item.get("signedUrl").asText() : null;
-
-                    if (path != null) {
-                        if (error != null && !error.isBlank()) {
-                            log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Error for path {}: {}", path, error);
-                        } else if (signedUrlPart != null && !signedUrlPart.isBlank()) {
-                            resultMap.put(path, formatSignedUrl(signedUrlPart));
-                        }
-                    }
-                }
-                log.info("[SUPABASE_STORAGE_SIGN_BATCH] Sign batch success - requested: {}, signed: {}", validNames.size(), resultMap.size());
-                return resultMap;
-            }
-        }
-
-        log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Batch sign returned status {}, falling back to individual calls: {}",
-                response.statusCode(), response.body());
-
-        Map<String, String> fallbackMap = new HashMap<>();
-        for (String name : validNames) {
-            try {
-                String signed = createSignedUrl(name, expiry);
-                if (signed != null) {
-                    fallbackMap.put(name, signed);
-                }
-            } catch (Exception e) {
-                log.warn("[SUPABASE_STORAGE_SIGN_BATCH] Fallback sign failed for {}: {}", name, e.getMessage());
-            }
-        }
-        return fallbackMap;
+    public String createSignedUrl(String path,int expiry) throws IOException,InterruptedException {
+        return signOne(path,expiry,deadline());
     }
-
-    private String formatSignedUrl(String signedUrlPart) {
-        if (signedUrlPart == null || signedUrlPart.isBlank()) {
-            return null;
-        }
-
-        if (signedUrlPart.startsWith("http://") || signedUrlPart.startsWith("https://")) {
-            return signedUrlPart;
-        }
-
-        if (signedUrlPart.startsWith("/storage/v1")) {
-            return storageBaseUrl + signedUrlPart;
-        }
-
-        return storageBaseUrl + "/storage/v1/" + signedUrlPart;
+    private String signOne(String path,int expiry,long deadline) throws IOException,InterruptedException {
+        var response=send(request("/object/sign/"+privateBucket+"/"+encodePath(path)).header("Content-Type","application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json.writeValueAsString(Map.of("expiresIn",expiry>0?expiry:300)))),deadline);
+        requireSuccess(response);return signedUrl(parse(response.body()),path);
     }
-
+    public Map<String,String> createSignedUrls(List<String> paths,int expiry) throws IOException,InterruptedException {
+        if(paths==null || paths.isEmpty())return Collections.emptyMap();
+        var unique=new LinkedHashSet<String>();
+        for(String path:paths){encodePath(path);unique.add(path);}
+        long deadline=deadline();
+        var response=send(request("/object/sign/"+privateBucket).header("Content-Type","application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json.writeValueAsString(Map.of("paths",unique,"expiresIn",expiry>0?expiry:300)))),deadline);
+        var result=new LinkedHashMap<String,String>();
+        // Legacy servers without the batch route retain compatibility under ONE total time budget.
+        if(response.statusCode()==404 || response.statusCode()==405) {
+            for(String path:unique)result.put(path,signOne(path,expiry,deadline));return result;
+        }
+        requireSuccess(response);JsonNode root=parse(response.body());
+        if(!root.isArray())throw protocol();
+        for(JsonNode item:root) {
+            JsonNode path=item.get("path"),error=item.get("error");
+            if(path==null || !path.isTextual() || !unique.contains(path.asText()) || result.containsKey(path.asText())
+                    || (error!=null && !error.isNull() && (!error.isTextual() || !error.asText().isBlank())))throw protocol();
+            result.put(path.asText(),signedUrl(item,path.asText()));
+        }
+        if(result.size()!=unique.size())throw protocol();return result;
+    }
+    private HttpRequest.Builder request(String path) {
+        return HttpRequest.newBuilder(URI.create(storageBaseUrl+"/storage/v1"+path))
+                .header("Authorization","Bearer "+key).header("apikey",key);
+    }
+    private long deadline(){return System.nanoTime()+timeoutNanos;}
+    private HttpResponse<String> send(HttpRequest.Builder request,long deadline) throws IOException,InterruptedException {
+        long remaining=deadline-System.nanoTime();
+        if(remaining<=0)throw new HttpTimeoutException("Storage operation timed out");
+        var pending=httpClient.sendAsync(request.timeout(Duration.ofNanos(remaining)).build(),HttpResponse.BodyHandlers.ofString());
+        try { return pending.get(remaining,java.util.concurrent.TimeUnit.NANOSECONDS); }
+        catch(java.util.concurrent.TimeoutException timeout) {
+            pending.cancel(true);throw new HttpTimeoutException("Storage operation timed out");
+        } catch(InterruptedException interrupted) { pending.cancel(true);throw interrupted;
+        } catch(java.util.concurrent.ExecutionException failure) {
+            if(failure.getCause() instanceof HttpTimeoutException)throw new HttpTimeoutException("Storage operation timed out");
+            throw new IOException("Storage transport unavailable");
+        }
+    }
+    private void requireSuccess(HttpResponse<?> response) throws IOException {
+        if(response.statusCode()<200 || response.statusCode()>=300)throw new IOException("Storage request failed (HTTP "+response.statusCode()+")");
+    }
+    private JsonNode parse(String body) throws IOException {
+        try {JsonNode value=json.readTree(body);if(value==null)throw protocol();return value;}
+        catch(com.fasterxml.jackson.core.JsonProcessingException invalid){throw protocol();}
+    }
+    private String signedUrl(JsonNode value,String expectedPath) throws IOException {
+        JsonNode url=value.get("signedURL");if(url==null || url.isNull())url=value.get("signedUrl");
+        if(url==null || !url.isTextual() || url.asText().isBlank())throw protocol();
+        String part=url.asText(),full;
+        if(part.startsWith("http://") || part.startsWith("https://"))full=part;
+        else if(part.startsWith("/storage/v1/"))full=storageBaseUrl+part;
+        else full=storageBaseUrl+"/storage/v1/"+part.replaceFirst("^/","");
+        try {
+            URI result=URI.create(full),base=URI.create(storageBaseUrl);
+            if(!Objects.equals(result.getScheme(),base.getScheme()) || !Objects.equals(result.getRawAuthority(),base.getRawAuthority())
+                    || result.getUserInfo()!=null || result.getFragment()!=null
+                    || !result.getPath().equals(base.getPath()+"/storage/v1/object/sign/"+privateBucket+"/"+expectedPath))throw protocol();
+            return result.toASCIIString();
+        }catch(IllegalArgumentException malformed){throw protocol();}
+    }
+    private IOException protocol(){return new IOException("Storage returned an invalid or incomplete signing response");}
     private String encodePath(String path) {
-        String[] segments = path.split("/");
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < segments.length; i++) {
-            if (i > 0) {
-                result.append("/");
-            }
-            result.append(URLEncoder.encode(segments[i], StandardCharsets.UTF_8).replace("+", "%20"));
+        if(path==null || path.isBlank() || path.startsWith("/") || path.endsWith("/") || path.contains("\\")
+                || path.codePoints().anyMatch(Character::isISOControl))throw new IllegalArgumentException("Invalid storage object path");
+        var encoded=new ArrayList<String>();
+        for(String segment:path.split("/",-1)) {
+            if(segment.isEmpty() || segment.equals(".") || segment.equals(".."))throw new IllegalArgumentException("Invalid storage object path");
+            encoded.add(URLEncoder.encode(segment,StandardCharsets.UTF_8).replace("+","%20"));
         }
-        return result.toString();
+        return String.join("/",encoded);
     }
 }
-

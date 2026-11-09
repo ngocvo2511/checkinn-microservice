@@ -66,7 +66,7 @@ public class HotelController {
             @RequestParam(value = "ownerIdentityBack", required = false) org.springframework.web.multipart.MultipartFile ownerIdentityBack
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
-        log.info("[HOTEL_CONTROLLER_UPLOAD_DOCS] Upload documents request received - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        log.debug("[HOTEL_DOCUMENT_UPLOAD_REQUESTED]");
         hotelService.uploadHotelDocuments(hotelId, ownerId, businessLicense, operationLicense, ownerIdentityFront, ownerIdentityBack);
         return ResponseEntity.ok(Map.of("message", "Tải tài liệu xác thực thành công"));
     }
@@ -78,7 +78,7 @@ public class HotelController {
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         boolean isAdmin = verifyAdmin(jwt);
-        log.info("[HOTEL_CONTROLLER_GET_DOCS] Get documents request received - hotelId: {}, ownerId: {}, isAdmin: {}", hotelId, ownerId, isAdmin);
+        log.debug("[HOTEL_DOCUMENT_PREVIEW_REQUESTED]");
         var docs = hotelService.getVerificationDocuments(hotelId, ownerId, isAdmin);
         return ResponseEntity.ok(docs);
     }

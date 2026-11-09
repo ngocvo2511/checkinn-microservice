@@ -24,8 +24,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.UploadMediaResponse> responseObserver
     ) {
         try {
-            log.info("[MEDIA_GRPC_UPLOAD] Upload request received - fileName: {}, mimeType: {}, bytes: {}",
-                request.getFileName(), request.getMimeType(), request.getFileData().size());
+            log.debug("[MEDIA_GRPC_UPLOAD]");
             String sanitizedFileName = sanitizeFileName(request.getFileName());
             String objectName = UUID.randomUUID() + "_" + sanitizedFileName;
             String url = storageService.uploadMedia(
@@ -34,7 +33,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
                     request.getMimeType()
             );
 
-            log.info("[MEDIA_GRPC_UPLOAD] Upload success - originalFileName: {}, objectName: {}", request.getFileName(), objectName);
+            log.debug("[MEDIA_GRPC_UPLOAD]");
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
                             .setUrl(url)
@@ -43,13 +42,8 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            log.error("[MEDIA_GRPC_UPLOAD] Upload failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
-            responseObserver.onError(
-                    Status.INTERNAL
-                            .withDescription("Upload media failed")
-                            .withCause(e)
-                            .asRuntimeException()
-            );
+            log.debug("[MEDIA_GRPC_UPLOAD]");
+            fail(e, responseObserver);
         }
     }
 
@@ -59,10 +53,10 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.DeleteMediaResponse> responseObserver
     ) {
         try {
-            log.info("[MEDIA_GRPC_DELETE] Delete request received - fileName: {}", request.getFileName());
+            log.debug("[MEDIA_GRPC_DELETE]");
             boolean deleted = storageService.deleteMedia(request.getFileName());
 
-            log.info("[MEDIA_GRPC_DELETE] Delete completed - fileName: {}, success: {}", request.getFileName(), deleted);
+            log.debug("[MEDIA_GRPC_DELETE]");
             responseObserver.onNext(
                     com.example.mediaservice.grpc.DeleteMediaResponse.newBuilder()
                             .setSuccess(deleted)
@@ -71,13 +65,8 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            log.error("[MEDIA_GRPC_DELETE] Delete failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
-            responseObserver.onError(
-                    Status.INTERNAL
-                            .withDescription("Delete media failed")
-                            .withCause(e)
-                            .asRuntimeException()
-            );
+            log.debug("[MEDIA_GRPC_DELETE]");
+            fail(e, responseObserver);
         }
     }
 
@@ -87,8 +76,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.UploadDocumentResponse> responseObserver
     ) {
         try {
-            log.info("[MEDIA_GRPC_DOC_UPLOAD] Private document upload received - fileName: {}, mimeType: {}, bytes: {}",
-                    request.getFileName(), request.getMimeType(), request.getFileData().size());
+            log.debug("[MEDIA_GRPC_DOC_UPLOAD]");
             String sanitizedFileName = sanitizeFileName(request.getFileName());
             String objectName = UUID.randomUUID() + "_" + sanitizedFileName;
             String filePath = storageService.uploadPrivateDocument(
@@ -97,7 +85,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
                     request.getMimeType()
             );
 
-            log.info("[MEDIA_GRPC_DOC_UPLOAD] Private document uploaded - originalFileName: {}, filePath: {}", request.getFileName(), filePath);
+            log.debug("[MEDIA_GRPC_DOC_UPLOAD]");
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadDocumentResponse.newBuilder()
                             .setFilePath(filePath)
@@ -105,13 +93,8 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             );
             responseObserver.onCompleted();
         } catch (Exception e) {
-            log.error("[MEDIA_GRPC_DOC_UPLOAD] Document upload failed - fileName: {}, error: {}", request.getFileName(), e.getMessage(), e);
-            responseObserver.onError(
-                    Status.INTERNAL
-                            .withDescription("Upload private document failed: " + e.getMessage())
-                            .withCause(e)
-                            .asRuntimeException()
-            );
+            log.debug("[MEDIA_GRPC_DOC_UPLOAD]");
+            fail(e, responseObserver);
         }
     }
 
@@ -121,14 +104,13 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.GetSignedUrlResponse> responseObserver
     ) {
         try {
-            log.info("[MEDIA_GRPC_SIGN] Get signed url request received - filePath: {}, expiresIn: {}",
-                    request.getFilePath(), request.getExpiresInSeconds());
+            log.debug("[MEDIA_GRPC_SIGN]");
             String signedUrl = storageService.createSignedUrl(
                     request.getFilePath(),
                     request.getExpiresInSeconds()
             );
 
-            log.info("[MEDIA_GRPC_SIGN] Signed url generated for filePath: {}", request.getFilePath());
+            log.debug("[MEDIA_GRPC_SIGN]");
             responseObserver.onNext(
                     com.example.mediaservice.grpc.GetSignedUrlResponse.newBuilder()
                             .setSignedUrl(signedUrl)
@@ -136,13 +118,8 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             );
             responseObserver.onCompleted();
         } catch (Exception e) {
-            log.error("[MEDIA_GRPC_SIGN] Get signed url failed - filePath: {}, error: {}", request.getFilePath(), e.getMessage(), e);
-            responseObserver.onError(
-                    Status.INTERNAL
-                            .withDescription("Get signed url failed: " + e.getMessage())
-                            .withCause(e)
-                            .asRuntimeException()
-            );
+            log.debug("[MEDIA_GRPC_SIGN]");
+            fail(e, responseObserver);
         }
     }
 
@@ -152,12 +129,9 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             StreamObserver<com.example.mediaservice.grpc.GetSignedUrlsResponse> responseObserver
     ) {
         try {
-            log.info("[MEDIA_GRPC_SIGN_BATCH] Get signed urls request received - pathsCount: {}, expiresIn: {}",
-                    request.getFilePathsCount(), request.getExpiresInSeconds());
+            log.debug("[MEDIA_GRPC_SIGN_BATCH]");
 
-            java.util.List<String> paths = request.getFilePathsList().stream()
-                    .filter(p -> p != null && !p.isBlank())
-                    .toList();
+            java.util.List<String> paths = request.getFilePathsList();
 
             java.util.Map<String, String> signedUrlsMap = storageService.createSignedUrls(
                     paths,
@@ -178,19 +152,29 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
                 );
             }
 
-            log.info("[MEDIA_GRPC_SIGN_BATCH] Signed urls generated - total: {}", signedUrlsMap.size());
+            log.debug("[MEDIA_GRPC_SIGN_BATCH]");
             responseObserver.onNext(responseBuilder.build());
             responseObserver.onCompleted();
 
         } catch (Exception e) {
-            log.error("[MEDIA_GRPC_SIGN_BATCH] Get signed urls batch failed - error: {}", e.getMessage(), e);
-            responseObserver.onError(
-                    Status.INTERNAL
-                            .withDescription("Get signed urls batch failed: " + e.getMessage())
-                            .withCause(e)
-                            .asRuntimeException()
-            );
+            log.debug("[MEDIA_GRPC_SIGN_BATCH]");
+            fail(e, responseObserver);
         }
+    }
+
+    private void fail(Exception error,StreamObserver<?> observer) {
+        Status status;
+        if(error instanceof InterruptedException) {
+            Thread.currentThread().interrupt();status=Status.CANCELLED.withDescription("Storage operation interrupted");
+        } else if(error instanceof java.net.http.HttpTimeoutException) {
+            status=Status.DEADLINE_EXCEEDED.withDescription("Storage operation timed out");
+        } else if(error instanceof IllegalArgumentException) {
+            status=Status.INVALID_ARGUMENT.withDescription("Invalid storage request");
+        } else if(error instanceof java.io.IOException) {
+            status=Status.UNAVAILABLE.withDescription("Storage service unavailable");
+        } else status=Status.INTERNAL.withDescription("Unable to complete storage operation");
+        log.warn("[MEDIA_OPERATION_FAILED] {}",status.getCode());
+        observer.onError(status.asRuntimeException());
     }
 
     /**
