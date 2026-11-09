@@ -38,11 +38,22 @@ class ReviewAuthenticationInterceptorTest {
     }
     @Test void revokedBearerDoesNotReachService() {
         method("CreateReview"); bearer("revoked"); when(revocation.isRevoked("revoked")).thenReturn(true);
-        denied(); verifyNoInteractions(decoder);
+        when(decoder.decode("revoked")).thenReturn(Jwt.withTokenValue("revoked").header("alg", "HS256")
+                .subject(UUID.randomUUID().toString()).build());
+        denied(); verify(decoder).decode("revoked");
     }
-    @Test void invalidSignatureDoesNotReachService() {
+    @Test void invalidSignatureDoesNotReachServiceOrSessionStore() {
         method("AddReviewResponse"); bearer("invalid"); when(decoder.decode("invalid")).thenThrow(new JwtException("Invalid"));
-        denied();
+        denied(); verifyNoInteractions(revocation);
+    }
+    @Test void sessionOutageIsUnavailableRatherThanInvalidIdentity() {
+        method("DeleteReview"); bearer("valid");
+        when(decoder.decode("valid")).thenReturn(Jwt.withTokenValue("valid").header("alg", "HS256")
+                .subject(UUID.randomUUID().toString()).build());
+        when(revocation.isRevoked("valid")).thenThrow(new SessionStoreUnavailableException());
+        interceptor.interceptCall(call, headers, next);
+        verify(call).close(argThat(status -> status.getCode() == Status.Code.UNAVAILABLE), any());
+        verifyNoInteractions(next);
     }
     @Test void publicReadRemainsAnonymous() {
         method("GetHotelReviews"); when(next.startCall(any(), any())).thenReturn(new ServerCall.Listener<>() {});

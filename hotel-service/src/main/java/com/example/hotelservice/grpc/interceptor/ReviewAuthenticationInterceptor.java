@@ -33,13 +33,16 @@ public class ReviewAuthenticationInterceptor implements ServerInterceptor {
             if (bearer != null) {
                 if (!bearer.startsWith("Bearer ")) throw new IllegalArgumentException();
                 String token = bearer.substring(7);
-                if (revocation.isRevoked(token)) throw new IllegalArgumentException();
                 actor = decoder.decode(token);
                 UUID.fromString(actor.getSubject());
+                if (revocation.isRevoked(token)) throw new IllegalArgumentException();
             }
             if (actor == null && !PUBLIC_READS.contains(call.getMethodDescriptor().getBareMethodName())) {
                 throw new IllegalArgumentException();
             }
+        } catch (com.example.hotelservice.security.SessionStoreUnavailableException unavailable) {
+            call.close(Status.UNAVAILABLE.withDescription("Session verification temporarily unavailable"), new Metadata());
+            return new ServerCall.Listener<>() {};
         } catch (RuntimeException ex) {
             call.close(Status.UNAUTHENTICATED.withDescription("Valid bearer token required"), new Metadata());
             return new ServerCall.Listener<>() {};

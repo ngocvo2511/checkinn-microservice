@@ -1343,3 +1343,26 @@ and the frontend tests README retain the operational checkpoint inside Git.
 See [REVIEW_2026-11-07.md](REVIEW_2026-11-07.md) for the final branch order,
 fresh test results, ownership exclusions and current frontend build blocker.
 The historical uncommitted checkpoint above is superseded by that review.
+
+## Review contract checkpoint (09/11/2026)
+
+See [hotel review checkpoint](../hotel-service/REVIEW_CONTRACT_2026-11-09.md).
+Branches in both repos: `fix/review-contract-consistency`. Apply HOTEL
+`sql/review-response-integrity-20261109.sql` before new writers, then deploy backend
+`GET /api/v1/reviews/me` before frontend. The additive script rejects duplicate
+replies and preserves existing orphans with NOT VALID FKs; no automatic cleanup.
+
+Hotel304 executed tests PASS +8 opt-ins skipped; PostgreSQL/JPA4 PASS separately;
+rebuilt healthy hotel image native HTTP/gRPC23 assertions PASS, including8 racing
+HTTP replies → one201 + seven409. Only postgres-test/redis/rabbitmq/eureka/hotel
+were started for this batch; no place/OSRM or production migration was involved.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py review-history-final reviews
+python -X utf8 docker/review-response-smoke.py
+```
+
+These runners require the verified isolated checkinn-test clone. Existing2 reply
+and3 feedback orphans remain unchanged and need a separate retention decision.
+After verification the five containers started for this batch were stopped;
+their containers/volumes/data remain intact. Restart the clone before rerunning.

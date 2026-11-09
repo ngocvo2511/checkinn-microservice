@@ -23,7 +23,7 @@ def main():
     test = {'range': 'AvailabilityRangeIntegrationTest', 'location': 'LocationSearchIntegrationTest',
             'candidates': 'HotelOfferCandidatesIntegrationTest', 'amenities': 'AmenityCatalogQueryIntegrationTest',
             'revenue': 'RevenueEventOrderingIntegrationTest', 'outbox': 'BookingEventOutboxIntegrationTest',
-            'regulations': 'RegulationTransactionIntegrationTest'}[suite]
+            'regulations': 'RegulationTransactionIntegrationTest', 'reviews':'ReviewResponseIntegrationTest'}[suite]
     service = {'revenue':'revenue-service','outbox':'booking-service','regulations':'regulations-service'}.get(suite,'hotel-service')
     module = service
     database = {'revenue':'checkinn_revenue','outbox':'checkinn_booking','regulations':'checkinn_regulations'}.get(suite,'checkinn_hotel')

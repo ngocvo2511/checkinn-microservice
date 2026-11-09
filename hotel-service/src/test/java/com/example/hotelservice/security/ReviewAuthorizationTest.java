@@ -1,5 +1,6 @@
 package com.example.hotelservice.security;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import com.example.hotelservice.Review.controller.ReviewController;
 import com.example.hotelservice.Review.service.ReviewService;
 import com.example.hotelservice.config.SecurityConfig;
@@ -33,6 +34,31 @@ class ReviewAuthorizationTest {
         when(decoder.decode(anyString())).thenAnswer(call -> Jwt.withTokenValue(call.getArgument(0))
                 .header("alg", "HS256").subject(ACTOR.toString())
                 .claim("role", "admin".equals(call.getArgument(0)) ? "ADMIN" : "CUSTOMER").build());
+    }
+    @Test void anonymousCannotReadOwnHistoryWithForgedIdentity() throws Exception {
+        mvc.perform(get("/api/v1/reviews/me").param("userId", OTHER.toString()).header("X-User-Id", OTHER))
+                .andExpect(status().isUnauthorized());
+        verifyNoInteractions(reviews);
+    }
+    @Test void ownHistoryUsesVerifiedSubjectAndPageInsteadOfForgedIdentity() throws Exception {
+        when(reviews.getMyReviews(eq(ACTOR), any())).thenReturn(org.springframework.data.domain.Page.empty());
+        mvc.perform(get("/api/v1/reviews/me").header("Authorization", "Bearer customer")
+                .header("X-User-Id", OTHER).param("userId", OTHER.toString()).param("page", "2").param("size", "4"))
+                .andExpect(status().isOk());
+        verify(reviews).getMyReviews(eq(ACTOR), argThat(page -> page.getPageNumber() == 2 && page.getPageSize() == 4));
+    }
+    @Test void duplicateReplyIsAConflictRatherThanMalformedInput() throws Exception {
+        when(reviews.addReviewResponse(eq(REVIEW),any(),eq(ACTOR)))
+                .thenThrow(new com.example.hotelservice.Review.service.ReviewConflictException());
+        mvc.perform(post("/api/v1/reviews/" + REVIEW + "/response").header("Authorization","Bearer customer")
+                .contentType("application/json").content("{\"content\":\"Synthetic owner reply\"}"))
+                .andExpect(status().isConflict());
+    }
+    @Test void ownHistoryStorageFailureStaysSafeAndUnavailable() throws Exception {
+        when(reviews.getMyReviews(eq(ACTOR),any())).thenThrow(new org.springframework.dao.DataAccessResourceFailureException("synthetic-private-storage-detail"));
+        mvc.perform(get("/api/v1/reviews/me").header("Authorization","Bearer customer"))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("synthetic-private"))));
     }
     @Test void anonymousCannotDeleteEvenWithForgedHeaders() throws Exception {
         mvc.perform(delete("/api/v1/reviews/" + REVIEW).header("X-User-Id", OTHER)

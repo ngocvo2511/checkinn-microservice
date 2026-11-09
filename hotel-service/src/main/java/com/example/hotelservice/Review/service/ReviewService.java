@@ -43,6 +43,26 @@ public class ReviewService {
     private final HotelRepository hotelRepository;
     private final ReviewEligibilityClient reviewEligibilityClient;
 
+    @Transactional(readOnly = true)
+    public Page<HotelReviewResponse> getMyReviews(UUID guestId, Pageable pageable) {
+        Objects.requireNonNull(guestId, "Authenticated guest required");
+        var ordered = org.springframework.data.domain.PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "createdAt", "id"));
+        var reviews = hotelReviewRepository.findByGuestId(guestId, ordered);
+        if (reviews.isEmpty()) return reviews.map(reviewMapper::entityToResponse);
+        var responses = reviewResponseRepository.findByReviewIdIn(reviews.stream().map(HotelReview::getId).toList())
+                .stream().collect(Collectors.toMap(ReviewResponse::getReviewId, this::mapResponseToDto));
+        var names = hotelRepository.findAllById(reviews.stream().map(HotelReview::getHotelId).distinct().toList())
+                .stream().filter(hotel -> hotel.getName() != null)
+                .collect(Collectors.toMap(com.example.hotelservice.Hotel.entity.Hotel::getId,
+                        com.example.hotelservice.Hotel.entity.Hotel::getName));
+        return reviews.map(review -> {
+            var dto = reviewMapper.entityToResponse(review);
+            dto.setOwnerResponse(responses.get(review.getId())); dto.setHotelName(names.get(review.getHotelId()));
+            return dto;
+        });
+    }
+
     /**
      * Create a new review
      */
@@ -57,7 +77,7 @@ public class ReviewService {
         Optional<HotelReview> existing = hotelReviewRepository.findByHotelIdAndGuestIdAndBookingId(
                 request.getHotelId(), guestId, request.getBookingId());
         if (existing.isPresent()) {
-            throw new IllegalStateException("Bạn đã đánh giá khách sạn này cho booking này rồi");
+            throw new ReviewConflictException();
         }
 
         HotelReview review = reviewMapper.createRequestToEntity(request);
@@ -70,7 +90,7 @@ public class ReviewService {
             saved = hotelReviewRepository.saveAndFlush(review);
         } catch (org.springframework.dao.DataAccessException ex) {
             if (ex.getMostSpecificCause() instanceof java.sql.SQLException sql && "23505".equals(sql.getSQLState())) {
-                throw new IllegalStateException("Bạn đã đánh giá khách sạn này cho booking này rồi");
+                throw new ReviewConflictException();
             }
             throw new org.springframework.web.server.ResponseStatusException(
                     org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE, "Review storage temporarily unavailable");
@@ -130,7 +150,7 @@ public class ReviewService {
      */
     public HotelReviewResponse updateReview(UUID reviewId, UpdateReviewRequest request, UUID guestId) {
         HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Review not found"));
 
         if (!review.getGuestId().equals(guestId)) {
             throw new SecurityException("Bạn không có quyền sửa đánh giá này");
@@ -175,7 +195,7 @@ public class ReviewService {
      */
     public void deleteReview(UUID reviewId, UUID userId, boolean isAdmin) {
         HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Review not found"));
 
         if (!isAdmin && !review.getGuestId().equals(userId)) {
             throw new SecurityException("Bạn không có quyền xóa đánh giá này");
@@ -387,68 +407,50 @@ public class ReviewService {
      * Add owner response to review
      */
     public ReviewResponseResponse addReviewResponse(UUID reviewId, CreateReviewResponseRequest request, UUID ownerId) {
-        HotelReview review = hotelReviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
-
+        HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Review not found"));
         if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
-            throw new SecurityException("Bạn không có quyền trả lời đánh giá của khách sạn này");
+            throw new SecurityException("Hotel ownership required");
         }
-
-        // Check if response already exists
         if (reviewResponseRepository.existsByReviewId(reviewId)) {
-            throw new IllegalStateException("Đánh giá này đã có câu trả lời rồi");
+            throw new ReviewConflictException();
         }
-
-        ReviewResponse response = ReviewResponse.builder()
-                .reviewId(reviewId)
-                .ownerId(ownerId)
-                .content(request.getContent())
-                .build();
-
-        ReviewResponse saved = reviewResponseRepository.save(response);
-        return mapResponseToDto(saved);
+        ReviewResponse response = ReviewResponse.builder().reviewId(reviewId).ownerId(ownerId)
+                .content(request.getContent()).build();
+        try {
+            return mapResponseToDto(reviewResponseRepository.saveAndFlush(response));
+        } catch (org.springframework.dao.DataIntegrityViolationException failure) {
+            if (failure.getMostSpecificCause() instanceof java.sql.SQLException sql && "23505".equals(sql.getSQLState())) {
+                throw new ReviewConflictException();
+            }
+            throw failure;
+        }
     }
 
-    /**
-     * Update owner response
-     */
     public ReviewResponseResponse updateReviewResponse(UUID responseId, CreateReviewResponseRequest request, UUID ownerId) {
-        ReviewResponse response = reviewResponseRepository.findById(responseId)
-                .orElseThrow(() -> new IllegalArgumentException("Trả lời không tồn tại"));
-
-        HotelReview review = hotelReviewRepository.findById(response.getReviewId())
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
-        if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
-            throw new SecurityException("Bạn không sở hữu khách sạn của đánh giá này");
-        }
-
-        if (!response.getOwnerId().equals(ownerId)) {
-            throw new SecurityException("Bạn không có quyền sửa trả lời này");
-        }
-
+        ReviewResponse response = ownedResponseForUpdate(responseId, ownerId);
         response.setContent(request.getContent());
-        ReviewResponse updated = reviewResponseRepository.save(response);
-        return mapResponseToDto(updated);
+        return mapResponseToDto(reviewResponseRepository.save(response));
     }
 
-    /**
-     * Delete owner response
-     */
     public void deleteReviewResponse(UUID responseId, UUID ownerId) {
-        ReviewResponse response = reviewResponseRepository.findById(responseId)
-                .orElseThrow(() -> new IllegalArgumentException("Trả lời không tồn tại"));
-
-        HotelReview review = hotelReviewRepository.findById(response.getReviewId())
-                .orElseThrow(() -> new IllegalArgumentException("Đánh giá không tồn tại"));
-        if (!hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
-            throw new SecurityException("Bạn không sở hữu khách sạn của đánh giá này");
-        }
-
-        if (!response.getOwnerId().equals(ownerId)) {
-            throw new SecurityException("Bạn không có quyền xóa trả lời này");
-        }
-
+        ownedResponseForUpdate(responseId, ownerId);
         reviewResponseRepository.deleteById(responseId);
+    }
+
+    private ReviewResponse ownedResponseForUpdate(UUID responseId, UUID ownerId) {
+        // Read only the parent ID before locking: do not cache a stale child entity.
+        UUID reviewId = reviewResponseRepository.findReviewIdById(responseId)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Response not found"));
+        HotelReview review = hotelReviewRepository.findByIdForUpdate(reviewId)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Review not found"));
+        ReviewResponse response = reviewResponseRepository.findById(responseId)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Response not found"));
+        if (!reviewId.equals(response.getReviewId()) || !ownerId.equals(response.getOwnerId())
+                || !hotelRepository.existsByIdAndOwnerId(review.getHotelId(), ownerId)) {
+            throw new SecurityException("Response author and hotel ownership required");
+        }
+        return response;
     }
 
     /**

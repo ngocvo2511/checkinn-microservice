@@ -7,13 +7,11 @@ import com.example.hotelservice.Review.service.ReviewService;
 import com.example.hotelservice.grpc.interceptor.ReviewAuthenticationInterceptor;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Timestamp;
-import io.grpc.Context;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
@@ -24,6 +22,7 @@ import java.util.UUID;
 public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServiceImplBase {
 
     private final ReviewService reviewService;
+    private final ReviewRpcPolicy policy;
 
     // ============================================================
     // GET HOTEL REVIEWS
@@ -33,10 +32,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                                 StreamObserver<GetHotelReviewsResponse> responseObserver) {
         try {
             UUID hotelId = UUID.fromString(request.getHotelId());
-            int page = request.getPage() > 0 ? request.getPage() : 0;
-            int size = request.getSize() > 0 ? request.getSize() : 10;
+            Pageable pageable = policy.page(request.getPage(),request.getSize());
 
-            Pageable pageable = PageRequest.of(page, size);
             Page<HotelReviewResponse> reviews = reviewService.getHotelReviews(hotelId, pageable);
 
             GetHotelReviewsResponse.Builder builder = GetHotelReviewsResponse.newBuilder()
@@ -49,13 +46,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -71,15 +63,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
             responseObserver.onNext(mapReviewToProto(review));
             responseObserver.onCompleted();
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -105,13 +90,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -136,24 +116,14 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                             .bookingId(request.getBookingId().isEmpty() ? null : UUID.fromString(request.getBookingId()))
                             .build();
 
+            policy.validate(reviewRequest);
             HotelReviewResponse review = reviewService.createReview(reviewRequest, guestId);
 
             responseObserver.onNext(mapReviewToProto(review));
             responseObserver.onCompleted();
 
-        } catch (org.springframework.web.server.ResponseStatusException ex) {
-            responseObserver.onError(Status.UNAVAILABLE.withDescription("Review creation temporarily unavailable").asRuntimeException());
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.ALREADY_EXISTS.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -169,6 +139,7 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             // We'll use the proto's reviewId here
             UUID reviewId = UUID.fromString(request.getReviewId());
             UUID guestId = ReviewAuthenticationInterceptor.actorId();
+            if(!Double.isFinite(request.getRating()) || request.getRating()<0)throw new IllegalArgumentException("Invalid review rating");
 
             com.example.hotelservice.Review.dto.request.UpdateReviewRequest updateRequest =
                     com.example.hotelservice.Review.dto.request.UpdateReviewRequest.builder()
@@ -179,22 +150,14 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                             .content(request.getContent().isEmpty() ? null : request.getContent())
                             .build();
 
+            policy.validate(updateRequest);
             HotelReviewResponse review = reviewService.updateReview(reviewId, updateRequest, guestId);
 
             responseObserver.onNext(mapReviewToProto(review));
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -214,17 +177,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -243,22 +197,14 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                             .content(request.getContent())
                             .build();
 
+            policy.validate(responseRequest);
             ReviewResponseResponse response = reviewService.addReviewResponse(reviewId, responseRequest, ownerId);
 
             responseObserver.onNext(mapResponseToProto(response));
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.FAILED_PRECONDITION.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -277,22 +223,14 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
                             .content(request.getContent())
                             .build();
 
+            policy.validate(updateRequest);
             ReviewResponseResponse response = reviewService.updateReviewResponse(responseId, updateRequest, ownerId);
 
             responseObserver.onNext(mapResponseToProto(response));
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -311,17 +249,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (IllegalStateException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -343,15 +272,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             }
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -368,15 +290,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -393,15 +308,8 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
 
-        } catch (IllegalArgumentException | jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -427,14 +335,35 @@ public class ReviewGrpcServiceImpl extends ReviewGrpcServiceGrpc.ReviewGrpcServi
             responseObserver.onNext(response);
             responseObserver.onCompleted();
 
-        } catch (io.grpc.StatusRuntimeException ex) {
-            responseObserver.onError(ex);
-        } catch (SecurityException ex) {
-            responseObserver.onError(Status.PERMISSION_DENIED.withDescription(ex.getMessage()).asRuntimeException());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage()).asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
+    }
+
+    private void fail(Exception failure,StreamObserver<?> observer) {
+        Status.Code code;
+        if(failure instanceof io.grpc.StatusRuntimeException rpc)code=rpc.getStatus().getCode();
+        else if(failure instanceof org.springframework.web.server.ResponseStatusException http)code=switch(http.getStatusCode().value()) {
+            case 400->Status.Code.INVALID_ARGUMENT;case 401->Status.Code.UNAUTHENTICATED;
+            case 403->Status.Code.PERMISSION_DENIED;case 404->Status.Code.NOT_FOUND;
+            case 409->Status.Code.ALREADY_EXISTS;case 429->Status.Code.RESOURCE_EXHAUSTED;
+            case 503->Status.Code.UNAVAILABLE;case 504->Status.Code.DEADLINE_EXCEEDED;default->Status.Code.INTERNAL;
+        };
+        else if(failure instanceof jakarta.persistence.EntityNotFoundException)code=Status.Code.NOT_FOUND;
+        else if(failure instanceof SecurityException)code=Status.Code.PERMISSION_DENIED;
+        else if(failure instanceof IllegalArgumentException || failure instanceof jakarta.validation.ConstraintViolationException)code=Status.Code.INVALID_ARGUMENT;
+        else if(failure instanceof org.springframework.dao.OptimisticLockingFailureException)code=Status.Code.ABORTED;
+        else if(failure instanceof org.springframework.dao.DataAccessException)code=Status.Code.UNAVAILABLE;
+        else if(failure instanceof com.example.hotelservice.Review.service.ReviewConflictException)code=Status.Code.ALREADY_EXISTS;
+        else code=Status.Code.INTERNAL;
+        String message=switch(code) {
+            case INVALID_ARGUMENT->"Invalid review request";case NOT_FOUND->"Review resource not found";
+            case PERMISSION_DENIED->"Review access denied";case UNAUTHENTICATED->"Valid bearer required";
+            case ALREADY_EXISTS->"Review resource already exists";case UNAVAILABLE->"Review service unavailable";
+            case DEADLINE_EXCEEDED->"Review dependency timed out";default->"Review request could not be completed";
+        };
+        org.slf4j.LoggerFactory.getLogger(getClass()).warn("[REVIEW_RPC_FAILED] {}",code);
+        observer.onError(Status.fromCode(code).withDescription(message).asRuntimeException());
     }
 
     // ============================================================

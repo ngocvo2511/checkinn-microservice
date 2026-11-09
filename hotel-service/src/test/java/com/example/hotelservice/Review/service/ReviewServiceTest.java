@@ -252,7 +252,7 @@ class ReviewServiceTest {
     @Test
     void anotherHotelOwnerCannotAddResponse() {
         UUID reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), intruder = UUID.randomUUID();
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
         var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
         request.setContent("Thank you for your stay");
@@ -272,16 +272,16 @@ class ReviewServiceTest {
     @Test
     void actualHotelOwnerCanAddResponse() {
         UUID reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
         when(hotelRepository.existsByIdAndOwnerId(hotelId, owner)).thenReturn(true);
         var repository = reviewResponseRepository;
-        when(repository.save(any())).thenAnswer(call -> call.getArgument(0));
+        when(repository.saveAndFlush(any())).thenAnswer(call -> call.getArgument(0));
         var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
         request.setContent("Thank you for your stay");
         var result = reviewService.addReviewResponse(reviewId, request, owner);
         assertThat(result.getOwnerId()).isEqualTo(owner);
-        verify(repository).save(any());
+        verify(repository).saveAndFlush(any());
     }
 
     @Test
@@ -297,10 +297,11 @@ class ReviewServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
     void legacyUnrelatedResponseAuthorCannotModifyResponse(boolean delete) {
         UUID responseId = UUID.randomUUID(), reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), actor = UUID.randomUUID();
+        when(reviewResponseRepository.findReviewIdById(responseId)).thenReturn(Optional.of(reviewId));
         when(reviewResponseRepository.findById(responseId)).thenReturn(Optional.of(
                 com.example.hotelservice.Review.entity.ReviewResponse.builder()
                         .id(responseId).reviewId(reviewId).ownerId(actor).build()));
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
         var request = new com.example.hotelservice.Review.dto.request.CreateReviewResponseRequest();
         request.setContent("Synthetic updated response");
@@ -316,10 +317,11 @@ class ReviewServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
     void currentHotelOwnerCanModifyOwnResponse(boolean delete) {
         UUID responseId = UUID.randomUUID(), reviewId = UUID.randomUUID(), hotelId = UUID.randomUUID(), actor = UUID.randomUUID();
+        when(reviewResponseRepository.findReviewIdById(responseId)).thenReturn(Optional.of(reviewId));
         when(reviewResponseRepository.findById(responseId)).thenReturn(Optional.of(
                 com.example.hotelservice.Review.entity.ReviewResponse.builder()
                         .id(responseId).reviewId(reviewId).ownerId(actor).build()));
-        when(hotelReviewRepository.findById(reviewId)).thenReturn(Optional.of(
+        when(hotelReviewRepository.findByIdForUpdate(reviewId)).thenReturn(Optional.of(
                 HotelReview.builder().id(reviewId).hotelId(hotelId).build()));
         when(hotelRepository.existsByIdAndOwnerId(hotelId, actor)).thenReturn(true);
         when(reviewResponseRepository.save(any())).thenAnswer(call -> call.getArgument(0));
