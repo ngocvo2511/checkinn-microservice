@@ -12,6 +12,40 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 
 class RegulationClientTest {
+    @Test void actualHttpReadsObserveChangedRateAndNeverUseCachedSuccessDuringOutage() throws Exception {
+        var server=com.sun.net.httpserver.HttpServer.create(new java.net.InetSocketAddress("127.0.0.1",0),0);
+        var calls=new java.util.concurrent.atomic.AtomicInteger();
+        server.createContext("/api/regulations/typed/points",exchange->{
+            int call=calls.incrementAndGet();
+            byte[] body=("{\"earnConversionRate\":"+(call==1?10000:8000)+",\"redemptionConversionRate\":700}").getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type","application/json");
+            // A gateway outage also verifies failure without the HTTP library's optional 503 retry.
+            exchange.sendResponseHeaders(call>2?502:200,body.length);exchange.getResponseBody().write(body);exchange.close();
+        });
+        server.start();
+        try {
+            var cache=new RegulationLocalCache();cache.put("POINTS_EARN_CONVERSION_RATE","123");
+            var client=new RegulationClient(cache,"http://127.0.0.1:"+server.getAddress().getPort());
+            assertThat(client.getEarnConversionRate()).isEqualByComparingTo("10000");
+            assertThat(client.getEarnConversionRate()).isEqualByComparingTo("8000");
+            assertThatThrownBy(client::getEarnConversionRate).isInstanceOfSatisfying(ResponseStatusException.class,
+                    error->assertThat(error.getStatusCode().value()).isEqualTo(503));
+            assertThat(calls.get()).isEqualTo(3);
+        } finally {server.stop(0);}
+    }
+    @Test void stalePositiveCacheCannotOverrideTheAuthoritativeRateOrHideItsOutage() {
+        var cache=mock(RegulationLocalCache.class);
+        when(cache.get("POINTS_EARN_CONVERSION_RATE")).thenReturn("123");
+        var client=new RegulationClient(cache,"http://regulations");
+        var server=MockRestServiceServer.bindTo((RestTemplate)ReflectionTestUtils.getField(client,"restTemplate")).build();
+        server.expect(requestTo("http://regulations/api/regulations/typed/points"))
+                .andRespond(withSuccess("{\"earnConversionRate\":10000,\"redemptionConversionRate\":700}",MediaType.APPLICATION_JSON));
+        server.expect(requestTo("http://regulations/api/regulations/typed/points")).andRespond(withServerError());
+        assertThat(client.getEarnConversionRate()).isEqualByComparingTo("10000");
+        assertThatThrownBy(client::getEarnConversionRate).isInstanceOfSatisfying(ResponseStatusException.class,
+                error->assertThat(error.getStatusCode().value()).isEqualTo(503));
+        server.verify();
+    }
     @Test void missingRateNeverBecomesAHardcodedFallback() {
         var client = new RegulationClient(mock(RegulationLocalCache.class), "http://regulations");
         var server = MockRestServiceServer.bindTo((RestTemplate) ReflectionTestUtils.getField(client, "restTemplate")).build();

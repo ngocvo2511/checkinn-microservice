@@ -9,6 +9,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+    @Bean
+    public org.springframework.amqp.rabbit.core.RabbitTemplate regulationRabbitTemplate(
+            org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory, MessageConverter converter) {
+        if(connectionFactory instanceof org.springframework.amqp.rabbit.connection.CachingConnectionFactory cached) {
+            cached.setPublisherConfirmType(org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType.CORRELATED);
+            cached.setPublisherReturns(true);
+        }
+        var template=new org.springframework.amqp.rabbit.core.RabbitTemplate(connectionFactory);
+        template.setMessageConverter(converter);template.setMandatory(true);return template;
+    }
+
     public static final String REGULATION_ROUTING_KEY = "regulation.updated";
 
     @Bean

@@ -26,6 +26,7 @@ public class Regulation {
     @Column(nullable = false)
     private boolean active = true;
 
+    @Version
     @Column(nullable = false)
     private int version = 1;
 

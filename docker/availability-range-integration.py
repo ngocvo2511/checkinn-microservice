@@ -22,10 +22,11 @@ def main():
     suite = sys.argv[2] if len(sys.argv) > 2 else 'range'
     test = {'range': 'AvailabilityRangeIntegrationTest', 'location': 'LocationSearchIntegrationTest',
             'candidates': 'HotelOfferCandidatesIntegrationTest', 'amenities': 'AmenityCatalogQueryIntegrationTest',
-            'revenue': 'RevenueEventOrderingIntegrationTest', 'outbox': 'BookingEventOutboxIntegrationTest'}[suite]
-    service = {'revenue':'revenue-service','outbox':'booking-service'}.get(suite,'hotel-service')
+            'revenue': 'RevenueEventOrderingIntegrationTest', 'outbox': 'BookingEventOutboxIntegrationTest',
+            'regulations': 'RegulationTransactionIntegrationTest'}[suite]
+    service = {'revenue':'revenue-service','outbox':'booking-service','regulations':'regulations-service'}.get(suite,'hotel-service')
     module = service
-    database = {'revenue':'checkinn_revenue','outbox':'checkinn_booking'}.get(suite,'checkinn_hotel')
+    database = {'revenue':'checkinn_revenue','outbox':'checkinn_booking','regulations':'checkinn_regulations'}.get(suite,'checkinn_hotel')
     h.verify_running_clone(service)
     container = None
     try:

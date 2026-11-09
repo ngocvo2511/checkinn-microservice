@@ -38,18 +38,25 @@ public class JwtFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            if (jwtService.validateToken(token)) {
-                UUID userId = jwtService.extractUserId(token);
-                String role = jwtService.extractRole(token);
+            try {
+                String token = authHeader.substring(7);
+                if (jwtService.validateToken(token)) {
+                    UUID userId = jwtService.extractUserId(token);
+                    String role = jwtService.extractRole(token);
 
-                List<SimpleGrantedAuthority> authorities =
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                    List<SimpleGrantedAuthority> authorities =
+                            List.of(new SimpleGrantedAuthority("ROLE_" + role));
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userId.toString(), null, authorities);
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(userId.toString(), null, authorities);
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (SessionStoreUnavailableException unavailable) {
+                SecurityContextHolder.clearContext();
+                response.setStatus(503);response.setContentType("application/json");
+                response.getWriter().write("{\"status\":503,\"code\":\"SESSION_STORE_UNAVAILABLE\",\"message\":\"Session verification unavailable\"}");
+                return;
             }
         }
 

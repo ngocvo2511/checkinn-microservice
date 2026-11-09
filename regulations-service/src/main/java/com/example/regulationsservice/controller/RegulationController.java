@@ -42,14 +42,14 @@ public class RegulationController {
 
     @GetMapping("/{key}")
     public ResponseEntity<RegulationDto> getRegulation(@PathVariable("key") String key) {
-        log.info("[REGULATION_CONTROLLER_GET] Fetch regulation request received - key: {}", key);
+        log.debug("[REGULATION_CONTROLLER_GET]");
         return regulationService.findRegulation(key)
                 .map(regulation -> {
-                    log.info("[REGULATION_CONTROLLER_GET] Fetch regulation success - key: {}", key);
+                    log.debug("[REGULATION_CONTROLLER_FOUND]");
                     return ResponseEntity.ok(regulation);
                 })
                 .orElseGet(() -> {
-                    log.info("[REGULATION_CONTROLLER_GET] Regulation not found - key: {}", key);
+                    log.debug("[REGULATION_CONTROLLER_MISSING]");
                     return ResponseEntity.notFound().build();
                 });
     }
@@ -58,7 +58,7 @@ public class RegulationController {
     public ResponseEntity<CommissionRateDto> getTypedCommissionRate() {
         log.info("[REGULATION_CONTROLLER_GET_COMMISSION] Fetch commission rate request received");
         CommissionRateDto dto = regulationService.getCommissionRateDto();
-        log.info("[REGULATION_CONTROLLER_GET_COMMISSION] Fetch commission rate success - rate: {}", dto.getCommissionRate());
+        log.debug("[REGULATION_CONTROLLER_GET_COMMISSION_SUCCESS]");
         return ResponseEntity.ok(dto);
     }
 
@@ -66,8 +66,7 @@ public class RegulationController {
     public ResponseEntity<PointsConversionDto> getTypedPointsConversionRates() {
         log.info("[REGULATION_CONTROLLER_GET_POINTS] Fetch points conversion rates request received");
         PointsConversionDto dto = regulationService.getPointsConversionRatesDto();
-        log.info("[REGULATION_CONTROLLER_GET_POINTS] Fetch points conversion rates success - earnRate: {}, redemptionRate: {}",
-                dto.getEarnConversionRate(), dto.getRedemptionConversionRate());
+        log.debug("[REGULATION_CONTROLLER_GET_POINTS_SUCCESS]");
         return ResponseEntity.ok(dto);
     }
 
@@ -85,12 +84,14 @@ public class RegulationController {
             @Valid @RequestBody RegulationDto request,
             Authentication authentication) {
         verifyAdminRole(authentication);
+        if (!key.equals(request.getRegulationKey())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST,
+                    "Path and body regulation keys must agree");
+        }
         String changedBy = authentication != null ? authentication.getName() : "anonymous";
-        log.info("[REGULATION_CONTROLLER_UPDATE] Update regulation request received - key: {}, changedBy: {}, version: {}",
-            key, changedBy, request.getVersion());
+        log.info("[REGULATION_CONTROLLER_WRITE_REQUESTED]");
         RegulationDto saved = regulationService.upsertRegulation(key, request, changedBy);
-        log.info("[REGULATION_CONTROLLER_UPDATE] Update regulation success - key: {}, changedBy: {}, version: {}",
-            key, changedBy, saved.getVersion());
+        log.info("[REGULATION_CONTROLLER_WRITE_COMMITTED] version={}", saved.getVersion());
         return ResponseEntity.ok(saved);
     }
 

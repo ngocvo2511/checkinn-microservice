@@ -1,5 +1,10 @@
 # Docker local development
 
+Latest independent regulation checkpoint, migration and commands:
+[regulations-service/README.md](../regulations-service/README.md). Apply its
+REGULATIONS-only additive outbox script before deploying that writer. This
+checkpoint does not implicitly merge the separate booking/revenue review branch.
+
 ## Standardization regressions (29/10/2026)
 
 After rebuilding the changed booking/hotel images and starting **only the test
