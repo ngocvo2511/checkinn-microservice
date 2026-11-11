@@ -40,7 +40,7 @@ import java.util.*;
 @Service
 public class RevenueReportService {
 
-    private final PaymentRecordRepository paymentRecordRepository;
+    private final RevenueCashFlows cashFlows;
     private final BookingStatusRecordRepository bookingStatusRecordRepository;
     private final HotelCapacityClient hotelCapacityClient;
     private final HotelGrpcClient hotelGrpcClient;
@@ -54,12 +54,12 @@ public class RevenueReportService {
 
             private static final Logger logger = LoggerFactory.getLogger(RevenueReportService.class);
 
-    public RevenueReportService(PaymentRecordRepository paymentRecordRepository,
+    public RevenueReportService(RevenueCashFlows cashFlows,
                                 BookingStatusRecordRepository bookingStatusRecordRepository,
                                 HotelCapacityClient hotelCapacityClient,
                                 HotelGrpcClient hotelGrpcClient,
                                 com.example.revenueservice.regulations.RegulationClient regulationClient) {
-        this.paymentRecordRepository = paymentRecordRepository;
+        this.cashFlows = cashFlows;
         this.bookingStatusRecordRepository = bookingStatusRecordRepository;
         this.hotelCapacityClient = hotelCapacityClient;
         this.hotelGrpcClient = hotelGrpcClient;
@@ -72,8 +72,8 @@ public class RevenueReportService {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
         List<PaymentRecord> payments = hotelId == null
-                ? paymentRecordRepository.findByEventAtBetween(start, end)
-                : paymentRecordRepository.findByHotelIdAndEventAtBetween(hotelId, start, end);
+                ? cashFlows.read(null, from, to)
+                : cashFlows.read(hotelId, from, to);
 
         Map<LocalDate, BigDecimal> buckets = new TreeMap<>();
         for (PaymentRecord record : payments) {
@@ -98,17 +98,18 @@ public class RevenueReportService {
         LocalDateTime end = to.plusDays(1).atStartOfDay();
 
         List<PaymentRecord> payments = hotelId == null
-            ? paymentRecordRepository.findByEventAtBetween(start, end)
-            : paymentRecordRepository.findByHotelIdAndEventAtBetween(hotelId, start, end);
+            ? cashFlows.read(null, from, to)
+            : cashFlows.read(hotelId, from, to);
         BigDecimal totalRevenue = BigDecimal.ZERO;
         int completedCount = 0;
+        Set<String> completedBookings=new HashSet<>();
         for (PaymentRecord record : payments) {
             BigDecimal signed = record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("REFUNDED")
                     ? record.getAmount().negate()
                     : record.getAmount();
             totalRevenue = totalRevenue.add(signed);
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                completedCount++;
+                if(completedBookings.add(record.getBookingId()))completedCount++;
             }
         }
 
@@ -204,7 +205,7 @@ public class RevenueReportService {
     public OwnerRevenueResponse ownerRevenue(String ownerId, LocalDate from, LocalDate to, GroupBy groupBy) {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> payments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> payments = cashFlows.readOwner(ownerId, from, to);
 
         Map<String, List<PaymentRecord>> byHotel = new HashMap<>();
         for (PaymentRecord record : payments) {
@@ -233,9 +234,10 @@ public class RevenueReportService {
 
     @Transactional(readOnly = true)
     public OwnerSummaryResponse ownerSummary(String ownerId, LocalDate from, LocalDate to) {
+        BigDecimal reportCommissionRate=regulationClient.getCommissionRate();
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> payments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> payments = cashFlows.readOwner(ownerId, from, to);
 
         Map<String, List<PaymentRecord>> paymentsByHotel = new HashMap<>();
         Map<String, List<BookingStatusRecord>> statusByHotel = new HashMap<>();
@@ -265,13 +267,14 @@ public class RevenueReportService {
 
             BigDecimal hotelRevenue = BigDecimal.ZERO;
             int completedCount = 0;
+        Set<String> completedBookings=new HashSet<>();
             for (PaymentRecord record : entry.getValue()) {
                 BigDecimal signed = record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("REFUNDED")
                         ? record.getAmount().negate()
                         : record.getAmount();
                 hotelRevenue = hotelRevenue.add(signed);
                 if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                    completedCount++;
+                    if(completedBookings.add(record.getBookingId()))completedCount++;
                 }
             }
             totalRevenue = totalRevenue.add(hotelRevenue);
@@ -283,18 +286,11 @@ public class RevenueReportService {
             double cancelRate = calculateCancellationRateInternal(hotelStatuses);
 
             // Calculate platform commission (dynamic) and net revenue
-            BigDecimal commissionRate = regulationClient.getCommissionRate();
+            BigDecimal commissionRate = reportCommissionRate;
             BigDecimal platformCommission = hotelRevenue.multiply(commissionRate);
             BigDecimal netRevenue = hotelRevenue.multiply(BigDecimal.ONE.subtract(commissionRate));
 
-            // Get occupancy rate with fallback to 0.0 if error occurs
-            double occupancyRate = 0.0;
-            try {
-                OccupancyResponse occ = occupancy(hid, from, to);
-                occupancyRate = occ.occupancyRate();
-            } catch (Exception e) {
-                logger.warn("Could not calculate occupancy for hotel {}: {}", hid, e.getMessage());
-            }
+            double occupancyRate = occupancy(hid, from, to).occupancyRate();
 
             items.add(new HotelSummaryItem(
                     hid, 
@@ -313,11 +309,11 @@ public class RevenueReportService {
         items.sort(Comparator.comparing(HotelSummaryItem::hotelName, Comparator.nullsLast(String::compareToIgnoreCase)));
         
         // Calculate totals for net revenue and commission
-        BigDecimal commissionRate = regulationClient.getCommissionRate();
+        BigDecimal commissionRate = reportCommissionRate;
         BigDecimal totalNetRevenue = totalRevenue != null ? totalRevenue.multiply(BigDecimal.ONE.subtract(commissionRate)) : BigDecimal.ZERO;
         BigDecimal totalCommission = totalRevenue != null ? totalRevenue.multiply(commissionRate) : BigDecimal.ZERO;
         
-        return new OwnerSummaryResponse(totalRevenue, totalNetRevenue, totalCommission, items);
+        return new OwnerSummaryResponse(totalRevenue, totalNetRevenue, totalCommission, items,reportCommissionRate);
     }
 
     private RevenueResponse buildRevenueFromRecords(List<PaymentRecord> records, GroupBy groupBy) {
@@ -338,6 +334,7 @@ public class RevenueReportService {
 
     private double calculateCancellationRateInternal(List<BookingStatusRecord> records) {
         Map<String, BookingStatusRecord> latestByBooking = new HashMap<>();
+        records=new ArrayList<>(records);
         records.sort(Comparator.comparing(BookingStatusRecord::getEventAt));
         for (BookingStatusRecord record : records) {
             latestByBooking.put(record.getBookingId(), record);
@@ -358,14 +355,16 @@ public class RevenueReportService {
 
     @Transactional(readOnly = true)
     public AdminSummaryResponse adminSummary(LocalDate from, LocalDate to) {
+        BigDecimal reportCommissionRate=regulationClient.getCommissionRate();
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
         
-        List<PaymentRecord> allPayments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> allPayments = cashFlows.read(null, from, to);
         List<BookingStatusRecord> allStatuses = bookingStatusRecordRepository.findByEventAtBetween(start, end);
         
         BigDecimal totalRevenue = BigDecimal.ZERO;
         long totalBookings = 0;
+        Set<String> completedBookings=new HashSet<>();
         BigDecimal totalCommission = BigDecimal.ZERO;
         
         for (PaymentRecord record : allPayments) {
@@ -374,11 +373,11 @@ public class RevenueReportService {
                     : record.getAmount();
             totalRevenue = totalRevenue.add(signed);
             
-            BigDecimal commission = signed.multiply(regulationClient.getCommissionRate());
+            BigDecimal commission = signed.multiply(reportCommissionRate);
             totalCommission = totalCommission.add(commission);
             
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                totalBookings++;
+                if(completedBookings.add(record.getBookingId()))totalBookings++;
             }
         }
         
@@ -393,7 +392,7 @@ public class RevenueReportService {
                 totalRevenue,
                 totalCommission,
                 totalBookings,
-                regulationClient.getCommissionRate(),
+                reportCommissionRate,
                 systemCancellationRate,
                 topHotels,
                 regionalBreakdown,
@@ -407,7 +406,7 @@ public class RevenueReportService {
     public AdminRevenueResponse adminRevenue(LocalDate from, LocalDate to, GroupBy groupBy) {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> payments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> payments = cashFlows.read(null, from, to);
         
         RevenueResponse systemRevenue = buildRevenueFromRecords(payments, groupBy);
         
@@ -435,15 +434,15 @@ public class RevenueReportService {
     public List<TopHotelItem> getTopHotels(LocalDate from, LocalDate to, int limit) {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> allPayments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> allPayments = cashFlows.read(null, from, to);
         
         Map<String, List<PaymentRecord>> byHotel = new HashMap<>();
-        Map<String, Long> bookingCountByHotel = new HashMap<>();
+        Map<String, Set<String>> bookingCountByHotel = new HashMap<>();
         
         for (PaymentRecord record : allPayments) {
             byHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                bookingCountByHotel.merge(record.getHotelId(), 1L, Long::sum);
+                bookingCountByHotel.computeIfAbsent(record.getHotelId(),key->new HashSet<>()).add(record.getBookingId());
             }
         }
         
@@ -460,7 +459,7 @@ public class RevenueReportService {
                             : p.getAmount())
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             String city = info.city() != null ? info.city() : "Unknown";
-            long bookingCount = bookingCountByHotel.getOrDefault(hotelId, 0L);
+            long bookingCount = bookingCountByHotel.getOrDefault(hotelId, Set.of()).size();
             double occupancyRate = occupancy(hotelId, from, to).occupancyRate();
             
             items.add(new TopHotelItem(
@@ -482,7 +481,7 @@ public class RevenueReportService {
     private List<RegionalRevenue> getRegionalBreakdown(LocalDate from, LocalDate to) {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> allPayments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> allPayments = cashFlows.read(null, from, to);
         
         Map<String, List<PaymentRecord>> byCity = new HashMap<>();
         Map<String, Set<String>> hotelsByCity = new HashMap<>();
@@ -551,7 +550,7 @@ public class RevenueReportService {
     private BigDecimal calculateTotalRevenue(LocalDate from, LocalDate to) {
         LocalDateTime start = from.atStartOfDay();
         LocalDateTime end = to.plusDays(1).atStartOfDay();
-        List<PaymentRecord> payments = paymentRecordRepository.findByEventAtBetween(start, end);
+        List<PaymentRecord> payments = cashFlows.read(null, from, to);
         
         return payments.stream()
                 .map(p -> p.getPaymentStatus() != null && p.getPaymentStatus().equalsIgnoreCase("REFUNDED")

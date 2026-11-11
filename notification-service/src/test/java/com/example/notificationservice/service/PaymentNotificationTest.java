@@ -25,6 +25,10 @@ class PaymentNotificationTest {
     @Test void legacyEventWithUnknownBookingStatusDoesNotInventConfirmation() throws Exception {
         assertThat(render(null)).contains("đặt phòng chưa được xác nhận");
     }
+    @Test void missingRoomFactsAreNotInventedInPaymentReceiptEmail() throws Exception {
+        assertThat(render("CONFIRMED")).doesNotContain("Standard Room", "Số phòng:</strong> 0")
+                .contains("Chưa có thông tin");
+    }
     private String render(String bookingStatus) throws Exception {
         JavaMailSender mail = mock(JavaMailSender.class);
         MimeMessage message = new MimeMessage(Session.getInstance(new Properties()));

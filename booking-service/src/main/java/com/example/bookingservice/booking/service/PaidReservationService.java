@@ -22,6 +22,7 @@ public class PaidReservationService {
     private final BookingRepository bookings;
     private final PaymentRepository payments;
     private final HotelAvailabilityClient inventory;
+    private final com.example.bookingservice.messaging.HotelEventPublisher events;
     private final BookingService bookingService;
     public record Requested(String bookingId) {}
 
@@ -61,7 +62,8 @@ public class PaidReservationService {
         }
         b.setPaidReservationNextAttemptAt(null);b.setPaidReservationLastError(null);
         // Cancellation was already published when its source decision committed.
-        return cancelled ? null : event(b);
+        if(cancelled)return null;
+        var snapshot=event(b);events.publishBookingStatus(snapshot);return snapshot;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

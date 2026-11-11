@@ -23,5 +23,10 @@ public record PaymentEvent(
         String paymentStatus,
         String paymentMethod,
         LocalDateTime paidAt,
-        LocalDateTime eventAt
+        LocalDateTime eventAt,
+        Long eventVersion,
+        java.util.UUID eventId,
+        String paymentId,
+        String transactionId,
+        java.time.Instant transactionAt
 ) {}

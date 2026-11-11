@@ -1448,3 +1448,156 @@ No schema or data migration. Branches contain prior uncommitted checkpoints.
 After these runs the five started test containers were stopped, preserving data
 and volumes; start the designated clone again before rerunning. Docker Desktop
 was already running and remains running. No machine shutdown or commit/push.
+## Event outbox and cash reporting V1 (07/11/2026)
+
+Historical implementation checkpoint before the final review and branch split:
+The new producer commits event snapshots in the SAME PostgreSQL transaction as
+booking/payment state. Recovery transitions and scheduled transitions participate;
+there is no source after-commit broker-send gap. The worker publishes persistent
+messages with mandatory routing and correlated publisher confirms, preserves one
+pending predecessor per booking, and retries an unknown/failed outcome. An event
+keeps its ID/version across restart and a broker-accepted/local-commit failure.
+Versions are monotonic ordering positions, with legitimate gaps after rollback.
+
+Revenue applies source versions rather than arrival/receive time. Legacy events
+use their source timestamp; equal-position conflicts, missing facts and invalid
+new transaction metadata are durably REVIEW_REQUIRED, not silently overwritten.
+One current projection per booking is enforced after a duplicate audit. An inbox
+receipt, cash movement and projection share the consumer transaction. Notification
+SMTP is still at-least-once: a broker replay can deliver another email after SMTP
+accepted an earlier attempt; no exactly-once email claim is made.
+
+### Apply schema/topology before coordinated deployment
+
+Additive scripts, in their own databases (never generic destructive schema.sql):
+
+| Database | Script under `docker/sql` |
+|---|---|
+| BOOKING | `booking-event-outbox-v1-20261107.sql` |
+| BOOKING | `booking-transaction-time-v1-20261107.sql` |
+| REVENUE | `revenue-event-receipts-v1-20261107.sql` |
+| REVENUE | `revenue-source-versions-v1-20261107.sql` |
+| REVENUE | `revenue-cash-transactions-v1-20261107.sql` |
+| REVENUE | `revenue-history-gaps-v1-20261107.sql` |
+
+All six replayed twice on verified clones. Receipt migration refuses ambiguous
+pre-existing duplicate booking projections; it never deletes or chooses a winner.
+Legacy source version/identity remain NULL. No historical cash rows are invented.
+Keep these additive tables/financial history on application rollback.
+
+`docker/rabbitmq/definitions.json` additionally declares revenue's booking binding,
+durable dead-letter exchange/queue, and a scoped `revenue-quarantine-v1` policy.
+The policy adds DLX to existing revenue queues without changing their declaration
+arguments or deleting/recreating queues. Import/verify it for the correct vhost
+before deploying consumers with bounded retry. The checked-in policy targets
+`checkinn` and default revenue queue names; adapt the deployment policy if those
+names differ. Never replace a production broker's users/credentials from fixtures.
+
+On the isolated local stack the actual command was:
+
+```powershell
+docker compose -p checkinn-test --project-directory docker --env-file docker/.env --env-file docker/.env.test -f docker/docker-compose.yml -f docker/docker-compose.test.yml --profile app exec -T rabbitmq rabbitmqctl import_definitions /etc/rabbitmq/definitions.json
+```
+
+Deploy revenue before booking so the expanded event contract is understood. Then
+deploy booking's transactional producer and compatible notification. Scoped `up`
+commands use `--no-deps --wait` and do not manage unrelated routing/place services.
+
+### Approved reporting policy and honest legacy limits
+
+User-approved policy: keep CREDIT and DEBIT as separate immutable transactions;
+report each on its actual transaction day. Full-payment V1 permits one credit and
+one full refund per payment identity. Re-emitting a financial receipt with another
+outbox ID cannot charge/report it twice. Conflicting identity/amount/time or partial
+refund facts require review; partial settlement is not silently treated as full.
+An out-of-order refund does not discard the later-arriving older credit movement.
+
+New events carry payment identity, transaction reference and an explicit Instant.
+Completed source receipts derive this Instant in the same process that records the
+receipt. No refund timestamp is inferred from the original payment timestamp. The
+actual refund execution/provider adapter remains unavailable as before: a tested
+consumer contract is not proof that a provider settled a refund.
+
+Report dates are inclusive civil dates in `Asia/Ho_Chi_Minh`; database selection
+uses an Instant start inclusive/end exclusive. UI month/day/negative cash charts
+use the same calendar. Do not change `reporting.zone` independently of the matching
+frontend calendar contract. Numeric API response shapes remain compatible, with
+an additive owner-summary `commissionRate` fraction (0.23 displays as23%). A
+booking count counts distinct bookings with a CREDIT in the selected period.
+
+Commission/net-after-fee figures retain the existing current-rule calculation
+and are labelled estimates, not settled platform payouts. One authoritative rate
+is fetched through the bounded HTTP client per summary; unversioned cache events
+and a hardcoded10% are not a reporting authority. Missing authority/occupancy
+returns a dependency error, never a fabricated rate or0% occupancy.
+
+Latest legacy payment projections do NOT reconstruct transaction history. Known
+legacy or conflicted cash scope returns503 `REPORT_RECONCILIATION_REQUIRED`;
+financial screens show that condition without empty/zero success. Actual historical
+receipts and reviewed provenance are needed before those scopes can be certified.
+The separate gap manifest survives a newer source projection; changing an event
+version cannot clear evidence of missing history. Resolution requires an actor and
+nonempty reviewed evidence. The manifest contains no inferred money/date. Native
+`revenue-history-gap-smoke.py` red->green4/4 verifies this invariant.
+No production historical data was changed or backfilled. Do not remove the gate
+or infer transaction dates solely from old receive-time/latest-state records.
+
+### Regressions and measured READ baseline
+
+```powershell
+python -X utf8 docker/availability-range-integration.py amenity-bulk-final amenities
+python -X utf8 docker/availability-range-integration.py revenue-cash-integration revenue
+python -X utf8 docker/availability-range-integration.py booking-outbox-integration outbox
+python -X utf8 docker/booking-events-smoke.py
+python -X utf8 docker/revenue-broker-smoke.py
+python -X utf8 docker/revenue-history-gap-smoke.py
+python -X utf8 docker/search-read-baseline.py
+```
+
+The integration runner only forwards verified test PostgreSQL to loopback, uses
+JPA/JDBC transactions, rolls back or deletes exact generated fixtures, and never
+prints database credentials. The booking smoke deliberately restarts ONLY test
+RabbitMQ/booking, and injects commit faults scoped to generated UUIDs. Run it
+alone. It verifies actual broker replay and the real authorized cash-report API.
+The revenue smoke uses a separate disposable vhost/worker and retains malformed
+or exhausted messages in its DLQ. DLQ/inbox/cash payloads contain private data;
+operator-only review and controlled retention are required. Creation compensation also runs after a confirmed transaction rollback, including
+a commit failure outside the method body; committed/UNKNOWN completion never
+releases a potentially valid hold. Failed cleanup retains the existing inventory
+TTL/points recovery safety net. Logs record safe
+phase codes, not raw exception bodies, email/OTP or arbitrary message headers.
+
+Evidence: booking event native33/33 PASS; revenue broker9/9 PASS; actual JPA
+outbox1 and ordered/cash projection1 PASS; reviewed amenity API79/79 PASS. The
+selected default package suites deliberately skip opt-in integrations; they do
+not count as integration passes. Full module totals are recorded in plan62–64.
+
+READ baseline:24 hotels,48 active room types,2-night stay, page size5/24 global
+matches;10 sequential +8 requests at concurrency4. All18 HTTP responses, price
+ordering and dated counts correct; no availability rows created by READ. Windows
+Docker-exec/curl-inclusive p50=713.8ms, p95/max=837.1ms, warmup=1114.2ms. This is a
+small measured local fixture baseline, not a production load/SLO certification.
+Reviewed-code matching has actual PostgreSQL3→1 SQL and501 IDs→2 bounded queries.
+
+Standard frontend build remains blocked by upstream `NearbyPlacesSection.tsx:161`
+`showDistance` props. No place source or typecheck bypass changed. New report UI
+was tested using its actual Next dev server; this is not a green production build.
+
+Payment transaction timestamps are explicit instants. VNPay's HMAC-covered
+`vnp_PayDate` is parsed strictly as its GMT+7 transaction time; delayed callbacks
+do not move cash to the arrival day. Malformed provided dates return400, replay
+with a conflicting known date409. The optional GET field may be absent: the
+receipt remains compatible but cash reporting requires reconciliation rather
+than inventing a date. Legacy `paid_at` is never used to backfill transaction
+time. Onsite receipts record their actual local acceptance instant. Native33
+cases include signed delayed/invalid/replayed callbacks and actual date-scoped
+ledger/report reads, without contacting VNPay. Official field contract:
+[GET/hash fields](https://sandbox.vnpayment.vn/apis/docs/chuyen-doi-thuat-toan/changeTypeHash.html)
+and [transaction time spec](https://sandbox.vnpayment.vn/apis/files/VNPAY%20Payment%20Gateway_Techspec%20Post%20method%202.1.0-VN.pdf).
+
+
+### Final event/reporting review
+
+See [REVIEW_EVENTS_2026-11-07.md](REVIEW_EVENTS_2026-11-07.md) for review fixes,
+fresh validation, the separate PR scopes and coordinated deployment requirements.
+The older checkpoint results above remain historical.

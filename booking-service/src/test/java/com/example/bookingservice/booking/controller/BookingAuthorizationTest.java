@@ -268,6 +268,14 @@ class BookingAuthorizationTest {
         verifyNoInteractions(paymentService);
     }
 
+    @Test void signedCallbackRejectsImpossibleProviderPaymentDate() throws Exception {
+        mvc.perform(signedReturn(Map.of("vnp_TxnRef", "payment-1", "vnp_ResponseCode", "00",
+                "vnp_TransactionNo", "123456789", "vnp_TmnCode", "TEST_MERCHANT",
+                "vnp_Amount", "100000000", "vnp_TransactionStatus", "00", "vnp_PayDate", "20260230000100")))
+                .andExpect(status().isBadRequest());
+        verifyNoInteractions(paymentService);
+    }
+
     private org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder signedReturn(Map<String, String> params) {
         var builder = get("/api/payments/vnpay/return");
         params.forEach(builder::param);
@@ -329,7 +337,16 @@ class BookingAuthorizationTest {
                 "vnp_TmnCode", "TEST_MERCHANT", "vnp_Amount", "100000000", "vnp_TransactionStatus", "00");
         mvc.perform(signedReturn(params))
                 .andExpect(status().isOk());
-        verify(paymentService).processVNPayCallback("payment-1", "00", "123456789");
+        verify(paymentService).processVNPayCallback("payment-1", "00", "123456789", null);
+    }
+
+    @Test void signedProviderDateUsesGmtPlusSevenEvenWhenCallbackArrivesLater() throws Exception {
+        mvc.perform(signedReturn(Map.of("vnp_TxnRef", "payment-1", "vnp_ResponseCode", "00",
+                "vnp_TransactionNo", "123456789", "vnp_TmnCode", "TEST_MERCHANT",
+                "vnp_Amount", "100000000", "vnp_TransactionStatus", "00", "vnp_PayDate", "20260301000100")))
+                .andExpect(status().isOk());
+        verify(paymentService).processVNPayCallback("payment-1", "00", "123456789",
+                java.time.Instant.parse("2026-02-28T17:01:00Z"));
     }
     private static String validBookingBody(String userId) {
         return "{\"hotelId\":\"11111111-1111-4111-8111-111111111111\",\"checkInDate\":\"2099-01-01\",\"checkOutDate\":\"2099-01-02\","

@@ -1,7 +1,6 @@
 package com.example.notificationservice.service;
 
 import com.example.notificationservice.model.BookingNotificationEvent;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class EmailNotificationService {
 
     public void sendBookingConfirmation(BookingNotificationEvent event) {
         try {
-            logger.info("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_SEND] Start sending booking confirmation email - bookingId: {}, email: {}", event.getBookingId(), event.getUserEmail());
+            logger.info("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_SEND]");
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -59,11 +58,11 @@ public class EmailNotificationService {
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
-            logger.info("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_SENT] Booking confirmation email sent - bookingId: {}, email: {}", event.getBookingId(), event.getUserEmail());
+            logger.info("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_SENT]");
 
         } catch (Exception e) {
-            logger.error("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_ERROR] Error sending booking confirmation email - bookingId: {}, message: {}", event.getBookingId(), e.getMessage(), e);
-            throw new RuntimeException("Failed to send booking confirmation email", e);
+            logger.error("[NOTIFICATION_BOOKING_CONFIRMATION_EMAIL_ERROR]");
+            throw new IllegalStateException("Booking confirmation delivery failed");
         }
     }
 
@@ -72,7 +71,7 @@ public class EmailNotificationService {
                 ? "Phòng đã được xác nhận. Vui lòng mang theo email này khi check-in."
                 : "Đã ghi nhận thanh toán nhưng đặt phòng chưa được xác nhận. Bộ phận hỗ trợ sẽ đối soát; email này không phải xác nhận nhận phòng.";
         try {
-            logger.info("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_SEND] Start sending payment success email - bookingId: {}, email: {}", event.getBookingId(), event.getUserEmail());
+            logger.info("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_SEND]");
             
             // Simple text email
             MimeMessage message = mailSender.createMimeMessage();
@@ -98,7 +97,7 @@ public class EmailNotificationService {
                                 <li><strong>Ngày trả phòng:</strong> %s</li>
                                 <li><strong>Số đêm:</strong> %d đêm</li>
                                 <li><strong>Số khách:</strong> %d người</li>
-                                <li><strong>Số phòng:</strong> %d</li>
+                                <li><strong>Số phòng:</strong> %s</li>
                                 <li><strong>Loại phòng:</strong> %s</li>
                                 <li><strong>Tổng tiền:</strong> %,.0f VNĐ</li>
                                 <li><strong>Phương thức thanh toán:</strong> %s</li>
@@ -121,8 +120,8 @@ public class EmailNotificationService {
                     event.getCheckOutDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     event.getNights(),
                     event.getNumberOfGuests(),
-                    event.getRooms(),
-                    event.getRoomType() != null ? event.getRoomType() : "Standard Room",
+                    event.getRooms()>0 ? Integer.toString(event.getRooms()) : "Chưa có thông tin",
+                    event.getRoomType() != null ? event.getRoomType() : "Chưa có thông tin",
                     event.getAmount(),
                     event.getPaymentMethod(),
                     reservationNotice
@@ -131,12 +130,11 @@ public class EmailNotificationService {
             helper.setText(content, true);
             mailSender.send(message);
             
-            logger.info("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_SENT] Payment success email sent - bookingId: {}, email: {}", 
-                    event.getBookingId(), event.getUserEmail());
+            logger.info("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_SENT]");
 
         } catch (Exception e) {
-            logger.error("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_ERROR] Error sending payment success email - bookingId: {}, message: {}", 
-                    event.getBookingId(), e.getMessage(), e);
+            logger.error("[NOTIFICATION_PAYMENT_SUCCESS_EMAIL_ERROR]");
+            throw new IllegalStateException("Payment notification delivery failed");
         }
     }
 
@@ -180,11 +178,11 @@ public class EmailNotificationService {
             helper.setText(content, true);
             mailSender.send(message);
 
-            logger.info("[NOTIFICATION_OTP_EMAIL_SENT] OTP email sent successfully to: {}", email);
+            logger.info("[NOTIFICATION_OTP_EMAIL_SENT]");
 
         } catch (Exception e) {
-            logger.error("[NOTIFICATION_OTP_EMAIL_ERROR] Failed to send OTP email to {}: {}", email, e.getMessage(), e);
-            throw new RuntimeException("Failed to send OTP verification email", e);
+            logger.error("[NOTIFICATION_OTP_EMAIL_ERROR]");
+            throw new IllegalStateException("OTP notification delivery failed");
         }
     }
 }
