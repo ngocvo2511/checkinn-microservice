@@ -35,9 +35,8 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getHotelById(GetHotelByIdRequest request,
                              StreamObserver<GetHotelByIdResponse> responseObserver) {
 
-        log.info("[gRPC_GET_HOTEL_BY_ID] Request received - hotelId: {}", request.getHotelId());
         try {
-            UUID hotelId = UUID.fromString(request.getHotelId());
+            UUID hotelId = catalogId(request.getHotelId());
 
             Hotel hotel = hotelService.getPublishedById(hotelId);
             List<RoomType> roomTypes = roomTypeService.getPublicByHotel(hotelId);
@@ -69,15 +68,9 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
-            log.info("[gRPC_GET_HOTEL_BY_ID] Response sent successfully - hotelId: {}", request.getHotelId());
 
-        } catch (jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
-        } catch (IllegalArgumentException ex) {
-            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
-        } catch (Exception ex) {
-            log.error("[gRPC_GET_HOTEL_BY_ID] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -88,29 +81,30 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getRoomTypesByHotel(GetRoomTypesByHotelRequest request,
                                     StreamObserver<GetRoomTypesByHotelResponse> responseObserver) {
 
-        log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Request received - hotelId: {}", request.getHotelId());
         try {
-            UUID hotelId = UUID.fromString(request.getHotelId());
+            UUID hotelId = catalogId(request.getHotelId());
             List<RoomType> roomTypes = roomTypeService.getPublicByHotel(hotelId);
 
             GetRoomTypesByHotelResponse.Builder builder = GetRoomTypesByHotelResponse.newBuilder();
 
+            var imagesByRoom = new java.util.HashMap<UUID,java.util.List<MediaAsset>>();
+            if (!roomTypes.isEmpty()) {
+                var roomIds = roomTypes.stream().map(RoomType::getId).collect(java.util.stream.Collectors.toSet());
+                for (MediaAsset image : mediaAssetService.getPublicRoomMediaByHotel(hotelId)) {
+                    if (image.getTargetType()!=MediaTargetType.ROOM_TYPE || !roomIds.contains(image.getTargetId())) throw new CatalogDataException();
+                    imagesByRoom.computeIfAbsent(image.getTargetId(),key->new java.util.ArrayList<>()).add(image);
+                }
+            }
             for (RoomType rt : roomTypes) {
-                List<MediaAsset> images = mediaAssetService.getByTarget(rt.getId(), MediaTargetType.ROOM_TYPE);
-                builder.addRoomTypes(mapRoomTypeDto(rt, images));
+                if (!hotelId.equals(rt.getHotelId())) throw new CatalogDataException();
+                builder.addRoomTypes(mapRoomTypeDto(rt, imagesByRoom.getOrDefault(rt.getId(),List.of())));
             }
 
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
-            log.info("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Response sent successfully - hotelId: {}", request.getHotelId());
 
-        } catch (jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
-        } catch (IllegalArgumentException ex) {
-            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
-        } catch (Exception ex) {
-            log.error("[gRPC_GET_ROOM_TYPES_BY_HOTEL] Failed - hotelId: {}, error: {}", request.getHotelId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -121,9 +115,8 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     public void getRoomTypeById(GetRoomTypeByIdRequest request,
                                 StreamObserver<GetRoomTypeByIdResponse> responseObserver) {
 
-        log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Request received - roomTypeId: {}", request.getRoomTypeId());
         try {
-            UUID rtId = UUID.fromString(request.getRoomTypeId());
+            UUID rtId = catalogId(request.getRoomTypeId());
             RoomType roomType = roomTypeService.getPublicById(rtId);
 
             List<MediaAsset> images = mediaAssetService.getByTarget(rtId, MediaTargetType.ROOM_TYPE);
@@ -136,15 +129,9 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
-            log.info("[gRPC_GET_ROOM_TYPE_BY_ID] Response sent successfully - roomTypeId: {}", request.getRoomTypeId());
 
-        } catch (jakarta.persistence.EntityNotFoundException ex) {
-            responseObserver.onError(Status.NOT_FOUND.withDescription("Published catalog item not found").asRuntimeException());
-        } catch (IllegalArgumentException ex) {
-            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid catalog identifier").asRuntimeException());
-        } catch (Exception ex) {
-            log.error("[gRPC_GET_ROOM_TYPE_BY_ID] Failed - roomTypeId: {}, error: {}", request.getRoomTypeId(), ex.getMessage(), ex);
-            responseObserver.onError(Status.INTERNAL.withDescription("Catalog lookup unavailable").asRuntimeException());
+        } catch (Exception failure) {
+            fail(failure,responseObserver);
         }
     }
 
@@ -161,10 +148,11 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     }
 
     private RoomTypeBasic mapRoomTypeBasic(RoomType rt) {
+        if (rt.getTotalRooms()==null || rt.getTotalRooms()<=0) throw new com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException();
         return RoomTypeBasic.newBuilder()
                 .setId(rt.getId().toString())
                 .setName(nvl(rt.getName()))
-                .setBasePrice(rt.getBasePrice().doubleValue())
+                .setBasePrice(price(rt))
                 .setTotal(rt.getTotalRooms())
                 .build();
     }
@@ -175,20 +163,28 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
                 .setId(rt.getId().toString())
                 .setHotelId(rt.getHotelId().toString())
                 .setName(nvl(rt.getName()))
-                .setBasePrice(rt.getBasePrice().doubleValue())
+                .setBasePrice(price(rt))
                 .setIsActive(rt.getIsActive());
 
         if (rt.getDescription() != null) builder.setDescription(rt.getDescription());
 
         // capacity
         if (rt.getCapacity() != null) {
-            builder.setCapacity(mapCapacity(rt.getCapacity()));
+            var capacity=mapCapacity(rt.getCapacity());
+            if(capacity!=null)builder.setCapacity(capacity);
         }
 
         // amenities
         if (rt.getAmenities() != null) {
-            List<String> amenities = objectMapper.readValue(rt.getAmenities(), List.class);
-            builder.addAllAmenities(amenities);
+            JsonNode amenities = objectMapper.readTree(rt.getAmenities());
+            if (amenities==null)throw new CatalogDataException();
+            if (!amenities.isNull()) {
+                if (!amenities.isArray()) throw new CatalogDataException();
+                for(JsonNode item:amenities) {
+                    if(!item.isTextual()) throw new CatalogDataException();
+                    builder.addAmenities(item.textValue());
+                }
+            }
         }
 
         for (MediaAsset img : images) {
@@ -200,11 +196,55 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
 
     private Capacity mapCapacity(String json) throws Exception {
         JsonNode node = objectMapper.readTree(json);
+        if(node==null)throw new CatalogDataException();
+        if(node.isNull())return null;
+        if(!node.isObject())throw new CatalogDataException();
+        return Capacity.newBuilder().setAdults(count(node,"adults",1)).setChildren(count(node,"children",0)).build();
+    }
 
-        return Capacity.newBuilder()
-                .setAdults(node.path("adults").asInt(0))
-                .setChildren(node.path("children").asInt(0))
-                .build();
+    private int count(JsonNode node,String name,int minimum) {
+        var value=node.get(name);
+        if(value==null || !value.isIntegralNumber() || !value.canConvertToInt() || value.intValue()<minimum)throw new CatalogDataException();
+        return value.intValue();
+    }
+
+    private double price(RoomType room) {
+        if(room.getBasePrice()==null || room.getBasePrice().signum()<=0)throw new CatalogDataException();
+        double value=room.getBasePrice().doubleValue();
+        if(!Double.isFinite(value) || value<=0)throw new CatalogDataException();
+        return value;
+    }
+
+    private UUID catalogId(String raw) {
+        UUID id=UUID.fromString(raw);
+        if(!id.toString().equalsIgnoreCase(raw))throw new IllegalArgumentException("Invalid catalog identifier");
+        return id;
+    }
+
+    private static class CatalogDataException extends RuntimeException {}
+
+    private void fail(Exception failure,StreamObserver<?> observer) {
+        Status.Code code;
+        if(failure instanceof CatalogDataException || failure instanceof com.fasterxml.jackson.core.JsonProcessingException)code=Status.Code.DATA_LOSS;
+        else if(failure instanceof com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException)code=Status.Code.FAILED_PRECONDITION;
+        else if(failure instanceof jakarta.persistence.EntityNotFoundException)code=Status.Code.NOT_FOUND;
+        else if(failure instanceof org.springframework.dao.DataAccessException)code=Status.Code.UNAVAILABLE;
+        else if(failure instanceof io.grpc.StatusRuntimeException rpc)code=rpc.getStatus().getCode();
+        else if(failure instanceof org.springframework.web.server.ResponseStatusException http)code=switch(http.getStatusCode().value()) {
+            case 400->Status.Code.INVALID_ARGUMENT;case 401->Status.Code.UNAUTHENTICATED;case 403->Status.Code.PERMISSION_DENIED;
+            case 404->Status.Code.NOT_FOUND;case 503->Status.Code.UNAVAILABLE;case 504->Status.Code.DEADLINE_EXCEEDED;default->Status.Code.INTERNAL;
+        };
+        else if(failure instanceof SecurityException || failure instanceof org.springframework.security.access.AccessDeniedException)code=Status.Code.PERMISSION_DENIED;
+        else if(failure instanceof IllegalArgumentException)code=Status.Code.INVALID_ARGUMENT;
+        else code=Status.Code.INTERNAL;
+        String message=switch(code) {
+            case INVALID_ARGUMENT->"Invalid catalog identifier";case NOT_FOUND->"Published catalog item not found";
+            case DATA_LOSS->"Stored catalog data is invalid";case FAILED_PRECONDITION->"Catalog inventory is not configured";
+            case UNAVAILABLE->"Catalog storage temporarily unavailable";case DEADLINE_EXCEEDED->"Catalog dependency timed out";
+            default->"Catalog request could not be completed";
+        };
+        log.warn("[CATALOG_RPC_FAILED] {}",code);
+        observer.onError(Status.fromCode(code).withDescription(message).asRuntimeException());
     }
 
     private com.example.hotelservice.grpc.MediaAsset mapMedia(com.example.hotelservice.MediaAsset.entity.MediaAsset m) {

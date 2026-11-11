@@ -14,11 +14,11 @@ public record RoomTypeCreateRequest(
         @NotNull @jakarta.validation.constraints.Positive BigDecimal basePrice,
         @NotNull @Valid CapacityDto capacity,
         @NotNull @jakarta.validation.constraints.Min(1) Integer roomAmount,
-        List<String> amenities,
+        List<@jakarta.validation.constraints.NotNull String> amenities,
         String description
 ) {
     public RoomTypeCreateRequest(UUID hotelId, String name, BigDecimal basePrice, CapacityDto capacity,
-                                 Integer roomAmount, List<String> amenities) {
+                                 Integer roomAmount, List<@jakarta.validation.constraints.NotNull String> amenities) {
         this(hotelId, name, basePrice, capacity, roomAmount, amenities, null);
     }
 }

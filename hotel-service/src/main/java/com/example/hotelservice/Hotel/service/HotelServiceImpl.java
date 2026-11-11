@@ -107,7 +107,7 @@ public class HotelServiceImpl implements HotelService {
             request.policies().forEach(p -> {
                 PolicyCategoryType categoryType = policyCategoryTypeRepository
                         .findByName(p.getCategory())
-                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + p.getCategory()));
+                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách"));
                 
                 HotelPolicy policy = HotelPolicy.builder()
                         .hotel(finalHotel)
@@ -194,6 +194,9 @@ public class HotelServiceImpl implements HotelService {
         if (request.operationLicenseNumber() != null) hotel.setOperationLicenseNumber(request.operationLicenseNumber());
         if (request.ownerIdentityNumber() != null) hotel.setOwnerIdentityNumber(request.ownerIdentityNumber());
         if (request.accommodationType() != null) accommodationTypes.proposeLocked(hotel, request.accommodationType(), ownerId);
+        if (request.amenityCategories() != null) updateAmenities(hotelId, request.amenityCategories(), ownerId);
+        if (request.policies() != null) updatePolicies(hotelId, request.policies(), ownerId);
+        if (request.questions() != null) updateQuestions(hotelId, request.questions(), ownerId);
         Hotel saved = hotelRepository.save(hotel);
         log.info("[UPDATE_HOTEL] Hotel updated successfully - hotelId: {}, ownerId: {}", hotelId, ownerId);
         return saved;
@@ -459,7 +462,7 @@ public class HotelServiceImpl implements HotelService {
     @Transactional
     public void deleteDraftHotel(UUID hotelId, UUID ownerId) {
         log.info("[DELETE_DRAFT_HOTEL] Request to delete draft hotel - hotelId: {}, ownerId: {}", hotelId, ownerId);
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId)) {
             throw new AccessDeniedException("Bạn không có quyền xóa khách sạn này.");
@@ -467,6 +470,11 @@ public class HotelServiceImpl implements HotelService {
 
         if (hotel.getApprovedStatus() != HotelApprovalStatus.DRAFT) {
             throw new IllegalStateException("Chỉ có thể xóa khách sạn ở trạng thái bản nháp (DRAFT).");
+        }
+
+        if (hotelRepository.hasRoomTypes(hotelId)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                    "Không thể xóa bản nháp khi khách sạn còn phòng.");
         }
 
         hotelAmenityRepository.deleteAllByCategoryHotelId(hotelId);
@@ -561,6 +569,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updateAmenities(UUID hotelId, List<AmenityRequest> amenityCategories, UUID ownerId) {
+        com.example.hotelservice.validation.InputValidation.requireItems(amenityCategories,"amenityCategories");
         Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
@@ -600,6 +609,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel addAmenityCategory(UUID hotelId, AmenityRequest amenityRequest, UUID ownerId) {
+        com.example.hotelservice.validation.InputValidation.require(amenityRequest);
         Hotel hotel = hotelRepository.findForUpdate(hotelId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn."));
 
         if (!hotel.getOwnerId().equals(ownerId))
@@ -653,7 +663,7 @@ public class HotelServiceImpl implements HotelService {
         HotelAmenityCategory category = hotelAmenityCategoryRepository
                 .findByHotelIdAndTitle(hotelId, categoryTitle)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Không tìm thấy danh mục tiện ích: " + categoryTitle
+                        "Không tìm thấy danh mục tiện ích"
                 ));
 
         // Xóa tất cả amenities trong category
@@ -668,7 +678,8 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updatePolicies(UUID hotelId, List<PolicyRequest> policies, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        com.example.hotelservice.validation.InputValidation.requireItems(policies,"policies");
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật chính sách của khách sạn này.");
@@ -679,7 +690,7 @@ public class HotelServiceImpl implements HotelService {
             policies.forEach(p -> {
                 PolicyCategoryType categoryType = policyCategoryTypeRepository
                         .findByName(p.getCategory())
-                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + p.getCategory()));
+                        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách"));
                 
                 HotelPolicy policy = HotelPolicy.builder()
                         .hotel(hotel)
@@ -698,14 +709,15 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel addPolicy(UUID hotelId, PolicyRequest policyRequest, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        com.example.hotelservice.validation.InputValidation.require(policyRequest);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền thêm chính sách cho khách sạn này.");
 
         PolicyCategoryType categoryType = policyCategoryTypeRepository
                 .findByName(policyRequest.getCategory())
-                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách: " + policyRequest.getCategory()));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại chính sách"));
 
         HotelPolicy policy = HotelPolicy.builder()
                 .hotel(hotel)
@@ -722,7 +734,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel clearPolicies(UUID hotelId, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa chính sách của khách sạn này.");
@@ -735,7 +747,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel removePolicy(UUID hotelId, UUID policyId, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa chính sách của khách sạn này.");
@@ -753,7 +765,8 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel updateQuestions(UUID hotelId, List<QuestionRequest> questions, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        com.example.hotelservice.validation.InputValidation.requireItems(questions,"questions");
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền cập nhật câu hỏi của khách sạn này.");
@@ -779,7 +792,8 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel addQuestion(UUID hotelId, QuestionRequest questionRequest, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        com.example.hotelservice.validation.InputValidation.require(questionRequest);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền thêm câu hỏi cho khách sạn này.");
@@ -799,7 +813,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel clearQuestions(UUID hotelId, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa câu hỏi của khách sạn này.");
@@ -812,7 +826,7 @@ public class HotelServiceImpl implements HotelService {
     @Override
     @Transactional
     public Hotel removeQuestion(UUID hotelId, UUID questionId, UUID ownerId) {
-        Hotel hotel = getById(hotelId);
+        Hotel hotel = accommodationTypes.lockHotel(hotelId);
 
         if (!hotel.getOwnerId().equals(ownerId))
             throw new SecurityException("Bạn không có quyền xóa câu hỏi của khách sạn này.");

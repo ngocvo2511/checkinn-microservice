@@ -49,7 +49,7 @@ public class AmenityController {
     public ResponseEntity<HotelResponse> updateAmenities(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
-            @RequestBody AmenityUpdateRequest request
+            @jakarta.validation.Valid @RequestBody AmenityUpdateRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[AMENITY_CONTROLLER_UPDATE] Update amenities request received - hotelId: {}, ownerId: {}, categoriesCount: {}",
@@ -66,7 +66,7 @@ public class AmenityController {
     public ResponseEntity<HotelResponse> addAmenityCategory(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
-            @RequestBody AmenityRequest request
+            @jakarta.validation.Valid @RequestBody AmenityRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[AMENITY_CONTROLLER_ADD] Add amenity category request received - hotelId: {}, ownerId: {}", hotelId, ownerId);

@@ -7,12 +7,12 @@ public record RoomTypeUpdateRequest(
         @jakarta.validation.constraints.Pattern(regexp="(?s).*\\S.*", message="must not be blank") @jakarta.validation.constraints.Size(max=100) String name,
         @jakarta.validation.constraints.Positive BigDecimal basePrice,
         @jakarta.validation.Valid CapacityDto capacity,
-        List<String> amenities,
+        List<@jakarta.validation.constraints.NotNull String> amenities,
         Boolean isActive,
         @jakarta.validation.constraints.Min(1) Integer roomAmount,
         String description
 ) {
-    public RoomTypeUpdateRequest(String name, BigDecimal basePrice, CapacityDto capacity, List<String> amenities,
+    public RoomTypeUpdateRequest(String name, BigDecimal basePrice, CapacityDto capacity, List<@jakarta.validation.constraints.NotNull String> amenities,
                                  Boolean isActive, Integer roomAmount) {
         this(name, basePrice, capacity, amenities, isActive, roomAmount, null);
     }

@@ -32,8 +32,8 @@ public class MediaAssetController {
             @RequestParam(required = false, defaultValue = "0") Integer sortOrder,
             @RequestPart("file") MultipartFile file
     ) throws Exception {
-        log.info("[MEDIA_CONTROLLER_UPLOAD] Upload media request received - targetId: {}, targetType: {}, isThumbnail: {}, sortOrder: {}, fileName: {}, fileSize: {}",
-            targetId, targetType, isThumbnail, sortOrder, file.getOriginalFilename(), file.getSize());
+        log.info("[MEDIA_CONTROLLER_UPLOAD] Upload media request received - targetId: {}, targetType: {}, isThumbnail: {}, sortOrder: {}, fileSize: {}",
+            targetId, targetType, isThumbnail, sortOrder, file.getSize());
 
         var asset = mediaAssetService.uploadMultipart(
                 targetId,

@@ -12,6 +12,10 @@ public interface HotelRepository extends JpaRepository<Hotel, UUID> {
     @org.springframework.data.jpa.repository.Query("select h from Hotel h where h.id = :id")
     java.util.Optional<Hotel> findForUpdate(@org.springframework.data.repository.query.Param("id") UUID id);
 
+    // Includes inactive rooms: draft deletion must not orphan any room data.
+    @org.springframework.data.jpa.repository.Query("SELECT (COUNT(r) > 0) FROM RoomType r WHERE r.hotelId = ?1")
+    boolean hasRoomTypes(UUID hotelId);
+
     List<Hotel> findByIsActiveTrueAndApprovedStatus(HotelApprovalStatus status);
 
     List<Hotel> findByCityIdAndIsActiveTrueAndApprovedStatus(UUID cityId, HotelApprovalStatus status);

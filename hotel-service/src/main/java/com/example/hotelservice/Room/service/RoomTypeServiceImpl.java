@@ -30,7 +30,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Transactional
     public RoomType createRoomType(RoomTypeCreateRequest request, UUID ownerId) {
         com.example.hotelservice.validation.InputValidation.require(request);
-        Hotel hotel = hotelRepository.findById(request.hotelId())
+        Hotel hotel = hotelRepository.findForUpdate(request.hotelId())
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khách sạn"));
 
         if (!hotel.getOwnerId().equals(ownerId))

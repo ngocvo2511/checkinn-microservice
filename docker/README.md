@@ -1366,3 +1366,85 @@ These runners require the verified isolated checkinn-test clone. Existing2 reply
 and3 feedback orphans remain unchanged and need a separate retention decision.
 After verification the five containers started for this batch were stopped;
 their containers/volumes/data remain intact. Restart the clone before rerunning.
+
+## Hotel policy/FAQ consistency (09/11/2026)
+
+See [hotel content checkpoint](../hotel-service/HOTEL_CONTENT_2026-11-09.md), branch
+`fix/hotel-content-consistency` in both repos. No new schema migration is needed.
+Deploy backend validation/parent locking and embedded update support before the
+frontend adapter/forms. Null whole-list replacement is invalid; explicit[] clears.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py hotel-content-final content
+python -X utf8 docker/hotel-content-smoke.py
+```
+
+Actual clone/JPA7 cases and rebuilt hotel native HTTP24 assertions passed, including
+eight-way races per collection. The native runner requires only the verified hotel
+test clone and uses fresh synthetic hotels/categories; it does not write production
+or place data. Final fixtures never copy contacts/licenses/documents from existing
+hotel rows. Unit/package317 executed PASS +14 opt-ins skipped are separate evidence.
+After verification, the five test containers were stopped with volumes/data kept.
+Docker Desktop was restored to its initially-stopped state after checking that no
+containers remained running. Restart Desktop and the clone before rerunning.
+
+## Public catalog RPC contract (09/11/2026)
+
+See [catalog RPC checkpoint](../hotel-service/CATALOG_RPC_2026-11-09.md).
+Current branch `fix/catalog-read-contract` carries the uncommitted content batch
+above plus the new RPC fixes. No schema/proto migration or new frontend deployment
+is required. Only the isolated hotel test stack is needed:
+
+```powershell
+python -X utf8 docker/availability-range-integration.py catalog-media-final catalog
+python -X utf8 docker/catalog-rpc-smoke.py
+```
+
+Hotel344 executed PASS +17 opt-in skipped/JAR success; separate actual PostgreSQL4
+cases and rebuilt-image native gRPC/HTTP20 assertions passed. Room/image reads use
+at most3 SQL statements for1/12 rooms, versus5/38 before fixing N+1. No place,
+provider storage, booking/payment mutation or production database was involved.
+The five test containers and then Docker Desktop were stopped after verification;
+volumes/data were retained. Restart the designated clone before rerunning.
+
+## Amenity writes and mapping compatibility (10/11/2026)
+
+See [amenity write checkpoint](../hotel-service/AMENITY_WRITES_2026-11-10.md).
+Branch `fix/amenity-write-contract` retains the two preceding uncommitted batches.
+No new migration; deploy backend validation/embedded support before frontend.
+
+```powershell
+python -X utf8 docker/availability-range-integration.py amenity-write-green amenity-writes
+python -X utf8 docker/amenity-write-smoke.py
+```
+
+Hotel360 executed PASS +24 opt-ins skipped/JAR success; actual PostgreSQL7 and
+rebuilt hotel HTTP29 assertions passed separately. Identical raw-label replacement
+still creates new IDs without auto-approval and retains existing mapping history,
+as required by the catalog migration. All writes/cleanup use synthetic fixture IDs
+in the verified checkinn-test clone, not production or place data.
+After verification those five test containers were stopped with data/volumes kept.
+Docker Desktop was already running at entry and remains running; no engine or
+machine shutdown occurred. Start the designated clone before rerunning.
+
+
+## Media metadata and draft lifecycle checkpoint — 10/11/2026
+
+See [MEDIA_METADATA_2026-11-10.md](../hotel-service/MEDIA_METADATA_2026-11-10.md)
+and root plan72. On the verified running test overlay, after rebuilding hotel:
+
+```powershell
+python -X utf8 docker/availability-range-integration.py media-metadata-green media-metadata
+python -X utf8 docker/media-metadata-smoke.py
+```
+
+Actual PostgreSQL10/10 and rebuilt native HTTP16/16 PASS; full hotel suite364
+executed PASS +32 skipped/JAR success. Provider upload/delete are MOCKED only in
+the JPA suite and assert no DB transaction during I/O; native checks never invoke
+cloud writes. Local metadata atomicity does not imply distributed cloud atomicity.
+Drafts with any room (even inactive) return409, per the user's explicit rule.
+No schema or data migration. Branches contain prior uncommitted checkpoints.
+
+After these runs the five started test containers were stopped, preserving data
+and volumes; start the designated clone again before rerunning. Docker Desktop
+was already running and remains running. No machine shutdown or commit/push.

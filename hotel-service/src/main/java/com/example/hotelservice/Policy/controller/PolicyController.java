@@ -59,7 +59,7 @@ public class PolicyController {
 	public ResponseEntity<HotelResponse> addPolicy(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable UUID hotelId,
-			@RequestBody PolicyRequest request
+			@jakarta.validation.Valid @RequestBody PolicyRequest request
 	) {
 		UUID ownerId = getOwnerId(jwt.getSubject());
 		log.info("[POLICY_CONTROLLER_ADD] Add policy request received - hotelId: {}, ownerId: {}", hotelId, ownerId);

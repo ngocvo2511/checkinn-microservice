@@ -1,6 +1,5 @@
 package com.example.hotelservice.MediaAsset.service;
 
-import com.example.hotelservice.MediaAsset.dto.request.MediaUploadRequest;
 import com.example.hotelservice.MediaAsset.entity.MediaAsset;
 import com.example.hotelservice.MediaAsset.enums.MediaTargetType;
 import com.example.hotelservice.MediaAsset.repository.MediaAssetRepository;
@@ -19,6 +18,8 @@ public class MediaServiceImpl implements MediaService {
     private final MediaClient mediaClient;
     private final com.example.hotelservice.Hotel.repository.HotelRepository hotels;
     private final com.example.hotelservice.Room.repository.RoomTypeRepository rooms;
+
+    private final MediaMutationService mutations;
 
     private void requireTargetAccess(UUID targetId, MediaTargetType targetType) {
         var authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
@@ -57,16 +58,7 @@ public class MediaServiceImpl implements MediaService {
                 file.getBytes()
         );
 
-        // 2) Tạo record để lưu metadata
-        MediaAsset asset = MediaAsset.builder()
-                .targetId(targetId)
-                .targetType(targetType)
-                .url(url)
-                .isThumbnail(isThumbnail != null ? isThumbnail : false)
-                .sortOrder(sortOrder != null ? sortOrder : 0)
-                .build();
-
-        return repository.save(asset);
+        return mutations.register(targetId, targetType, url, isThumbnail, sortOrder);
     }
 
     @Override
@@ -83,6 +75,11 @@ public class MediaServiceImpl implements MediaService {
         return repository.findByTargetIdAndTargetTypeOrderBySortOrderAsc(targetId, targetType);
     }
 
+    @Override public List<MediaAsset> getPublicRoomMediaByHotel(UUID hotelId) {
+        return repository.findPublicRoomMediaByHotel(hotelId, MediaTargetType.ROOM_TYPE,
+                com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED);
+    }
+
     @Override public List<MediaAsset> getPreviewByTarget(UUID targetId, MediaTargetType targetType) {
         requireTargetAccess(targetId, targetType);
         return repository.findByTargetIdAndTargetTypeOrderBySortOrderAsc(targetId, targetType);
@@ -90,54 +87,17 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public void delete(UUID id) {
-        MediaAsset delete = repository.findById(id)
+        var location = repository.findLocationById(id)
                 .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Media not found"));
-        requireTargetAccess(delete.getTargetId(), delete.getTargetType());
-        UUID targetId = delete.getTargetId();
-        MediaTargetType targetType = delete.getTargetType();
-        Integer deletedOrder = delete.getSortOrder();
-        // 1) Xoá file khỏi MinIO qua media-service
-        if (!mediaClient.deleteByUrl(delete.getUrl())) {
+        requireTargetAccess(location.getTargetId(), location.getTargetType());
+        if (!mediaClient.deleteByUrl(location.getUrl())) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY, "Storage did not acknowledge deletion");
         }
-
-        // 2) Xoá metadata DB
-        repository.delete(delete);
-
-        //3) reorder sau khi xoá
-        List<MediaAsset> assets = repository.findByTargetIdAndTargetType(targetId, targetType);
-
-        for (MediaAsset asset : assets) {
-            if (asset.getSortOrder() > deletedOrder) {
-                asset.setSortOrder(asset.getSortOrder() - 1);
-            }
-        }
-
-        repository.saveAll(assets);
+        mutations.remove(id, location.getTargetId(), location.getTargetType(), location.getUrl());
     }
 
     @Override
     public MediaAsset updateThumbnail(UUID mediaId) {
-
-        MediaAsset selected = repository.findById(mediaId)
-                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Media not found"));
-
-        requireTargetAccess(selected.getTargetId(), selected.getTargetType());
-        UUID targetId = selected.getTargetId();
-        MediaTargetType targetType = selected.getTargetType();
-
-        List<MediaAsset> allAssets = repository.findByTargetIdAndTargetType(targetId, targetType);
-
-        for (MediaAsset asset : allAssets) {
-            if (asset.getId().equals(mediaId)) {
-                asset.setIsThumbnail(true);
-            } else {
-                asset.setIsThumbnail(false);
-            }
-        }
-
-        repository.saveAll(allAssets);
-
-        return selected;
+        return mutations.selectThumbnail(mediaId);
     }
 }

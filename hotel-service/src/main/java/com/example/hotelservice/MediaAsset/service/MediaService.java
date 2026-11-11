@@ -17,6 +17,9 @@ public interface MediaService {
 
     List<MediaAsset> getByTarget(UUID targetId, MediaTargetType targetType);
 
+    /** Public room images for one published hotel, resolved in one guarded query. */
+    List<MediaAsset> getPublicRoomMediaByHotel(UUID hotelId);
+
     List<MediaAsset> getPreviewByTarget(UUID targetId, MediaTargetType targetType);
 
     void delete(UUID mediaId);
