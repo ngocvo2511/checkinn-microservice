@@ -8,6 +8,12 @@ import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler;
+import org.springframework.amqp.rabbit.retry.MessageRecoverer;
+import org.springframework.amqp.rabbit.support.ListenerExecutionFailedException;
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +21,43 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+
+    @Bean
+    public MessageRecoverer notificationMessageRecoverer() {
+        // The default recoverer logs Message.toString(), including body and headers.
+        // Reject to the existing broker DLQ without echoing the payload or SMTP cause.
+        return (message, cause) -> {
+            org.slf4j.LoggerFactory.getLogger(RabbitMQConfig.class)
+                    .warn("[NOTIFICATION_RETRY_EXHAUSTED] Rejecting to dead-letter queue");
+            throw new AmqpRejectAndDontRequeueException("Notification retry exhausted");
+        };
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+            SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory) {
+        var factory = new SimpleRabbitListenerContainerFactory();
+        // Retain Boot's configured AUTO ack, bounded retries, converter and prefetch.
+        configurer.configure(factory, connectionFactory);
+        var strategy = new ConditionalRejectingErrorHandler.DefaultExceptionStrategy() {
+            @Override
+            protected void logFatalException(ListenerExecutionFailedException exception, Throwable cause) {
+                // The handler below records a static failure code; no raw cause/message.
+            }
+        };
+        var handler = new ConditionalRejectingErrorHandler(strategy) {
+            @Override
+            protected void log(Throwable failure) {
+                org.slf4j.LoggerFactory.getLogger(RabbitMQConfig.class)
+                        .warn("[NOTIFICATION_LISTENER_FAILED] Message processing failed");
+            }
+        };
+        // Fatal replays remain quarantined instead of the default x-death discard path,
+        // which also prints the original message. DLQs have no automatic replay binding.
+        handler.setDiscardFatalsWithXDeath(false);
+        factory.setErrorHandler(handler);
+        return factory;
+    }
 
     public static final String EXCHANGE_NAME = "hotel.events";
     public static final String USER_EXCHANGE_NAME = "user.events";

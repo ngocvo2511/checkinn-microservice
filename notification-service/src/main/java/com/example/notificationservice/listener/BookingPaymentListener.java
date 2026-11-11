@@ -21,22 +21,14 @@ public class BookingPaymentListener {
     @RabbitListener(queues = "notification.payment.queue")
     public void handlePaymentCompletedEvent(BookingNotificationEvent event) {
         try {
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Received payment event from RabbitMQ: {}", event);
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Booking ID: {}", event.getBookingId());
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] User Email: {}", event.getUserEmail());
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Hotel: {}", event.getHotelName());
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED] Total Amount: {}", event.getAmount());
-
-            logger.info("[NOTIFICATION_PAYMENT_EMAIL_SEND] Start sending payment notification email for booking #{}", event.getBookingId());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_RECEIVED]");
             emailNotificationService.sendPaymentSuccessNotification(event);
 
-            logger.info("[NOTIFICATION_PAYMENT_EVENT_PROCESSED] Successfully processed payment event for booking #{}", event.getBookingId());
+            logger.info("[NOTIFICATION_PAYMENT_EVENT_PROCESSED]");
 
         } catch (Exception e) {
-            String bookingId = event != null ? event.getBookingId() : "unknown";
-            logger.error("[NOTIFICATION_PAYMENT_EVENT_ERROR] Error processing payment event for booking #{}: {}",
-                    bookingId, e.getMessage(), e);
-            throw new RuntimeException("Failed to process payment notification event", e);
+            logger.error("[NOTIFICATION_PAYMENT_EVENT_ERROR]");
+            throw new IllegalStateException("Payment notification processing failed");
         }
     }
 }
