@@ -20,15 +20,23 @@ public class EventListener {
 
     @RabbitListener(queues = "${app.rabbit.payment-queue:revenue.payment.queue}")
     public void handlePaymentEvent(PaymentEvent event) {
-        logger.info("[REVENUE_PAYMENT_EVENT_RECEIVED] Received PaymentEvent bookingId={}", event.bookingId());
-        ingestionService.savePaymentEvent(event);
-        logger.debug("[REVENUE_PAYMENT_EVENT_HANDLED] Finished handling PaymentEvent bookingId={}", event.bookingId());
+        logger.info("[REVENUE_PAYMENT_EVENT_RECEIVED]");
+        try { ingestionService.savePaymentEvent(event); }
+        catch(RuntimeException failed) {
+            logger.warn("[REVENUE_PAYMENT_INGEST_DEFERRED]");
+            throw new IllegalStateException("Revenue payment ingestion unavailable");
+        }
+        logger.debug("[REVENUE_PAYMENT_EVENT_HANDLED]");
     }
 
     @RabbitListener(queues = "${app.rabbit.booking-queue:revenue.booking.queue}")
     public void handleBookingStatusEvent(BookingStatusEvent event) {
-        logger.info("[REVENUE_BOOKING_STATUS_EVENT_RECEIVED] Received BookingStatusEvent bookingId={}", event.bookingId());
-        ingestionService.saveBookingStatusEvent(event);
-        logger.debug("[REVENUE_BOOKING_STATUS_EVENT_HANDLED] Finished handling BookingStatusEvent bookingId={}", event.bookingId());
+        logger.info("[REVENUE_BOOKING_STATUS_EVENT_RECEIVED]");
+        try { ingestionService.saveBookingStatusEvent(event); }
+        catch(RuntimeException failed) {
+            logger.warn("[REVENUE_BOOKING_INGEST_DEFERRED]");
+            throw new IllegalStateException("Revenue booking ingestion unavailable");
+        }
+        logger.debug("[REVENUE_BOOKING_STATUS_EVENT_HANDLED]");
     }
 }

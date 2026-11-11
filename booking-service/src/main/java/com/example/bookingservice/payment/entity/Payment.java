@@ -55,6 +55,10 @@ public class Payment {
 
     private LocalDateTime paidAt;
 
+    // Proven transaction time; legacy paidAt is a receipt-processing clock and cannot be backfilled.
+    @Column(name = "transaction_occurred_at")
+    private java.time.Instant transactionOccurredAt;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

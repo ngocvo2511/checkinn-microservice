@@ -29,6 +29,7 @@ public class BookingScheduledTask {
 
     private final BookingRepository bookingRepository;
     private final PaymentRepository paymentRepository;
+    private final com.example.bookingservice.messaging.HotelEventPublisher events;
 
     /**
      * Runs every 5 minutes to process bookings that have exceeded their hold duration.
@@ -66,6 +67,7 @@ public class BookingScheduledTask {
                 
                 booking.setStatus(BookingStatus.CANCELLED);
                 bookingRepository.save(booking);
+                events.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
                 
                 // Cancel the latest active payment attempt if the booking hold expires.
                 paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(booking.getId()).ifPresent(payment -> {
@@ -124,6 +126,7 @@ public class BookingScheduledTask {
                 
                 booking.setStatus(BookingStatus.CHECKED_OUT);
                 bookingRepository.save(booking);
+                events.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
                 checkedOutCount++;
                 log.info("Auto-checked-out booking: {} (checkOutDate: {})", 
                          booking.getId(), booking.getCheckOutDate());
@@ -171,6 +174,7 @@ public class BookingScheduledTask {
             if (booking.getCheckInDate() != null && booking.getCheckInDate().isEqual(today)) {
                 booking.setStatus(BookingStatus.CHECKED_IN);
                 bookingRepository.save(booking);
+                events.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
                 checkedInCount++;
                 log.info("Auto-checked-in booking: {} (checkInDate: {})", booking.getId(), booking.getCheckInDate());
             }
@@ -210,6 +214,7 @@ public class BookingScheduledTask {
             if (booking.getCheckInDate() != null && booking.getCheckInDate().isBefore(today)) {
                 booking.setStatus(BookingStatus.NO_SHOW);
                 bookingRepository.save(booking);
+                events.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
                 noShowCount++;
                 log.info("Marked NO_SHOW for booking: {} (checkInDate: {})", booking.getId(), booking.getCheckInDate());
             }

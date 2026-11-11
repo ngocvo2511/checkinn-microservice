@@ -1,101 +1,141 @@
 package com.example.revenueservice.service;
 
-import com.example.revenueservice.entity.BookingStatusRecord;
-import com.example.revenueservice.entity.PaymentRecord;
-import com.example.revenueservice.messaging.event.BookingStatusEvent;
-import com.example.revenueservice.messaging.event.PaymentEvent;
-import com.example.revenueservice.repository.BookingStatusRecordRepository;
-import com.example.revenueservice.repository.PaymentRecordRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.revenueservice.entity.*;
+import com.example.revenueservice.messaging.event.*;
+import com.example.revenueservice.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 
-import java.time.LocalDateTime;
-
+/** Serialized, monotonic legacy-event projection. Ambiguous inputs are durably quarantined. */
 @Service
 public class EventIngestionService {
-
-    private static final Logger logger = LoggerFactory.getLogger(EventIngestionService.class);
-
-    private final PaymentRecordRepository paymentRecordRepository;
-    private final BookingStatusRecordRepository bookingStatusRecordRepository;
-
-    public EventIngestionService(PaymentRecordRepository paymentRecordRepository,
-                                 BookingStatusRecordRepository bookingStatusRecordRepository) {
-        this.paymentRecordRepository = paymentRecordRepository;
-        this.bookingStatusRecordRepository = bookingStatusRecordRepository;
+    private final PaymentRecordRepository payments;
+    private final BookingStatusRecordRepository bookings;
+    private final JdbcTemplate jdbc;
+    private final ObjectMapper json;
+    private final CashTransactionWriter cash;
+    public EventIngestionService(PaymentRecordRepository payments, BookingStatusRecordRepository bookings,
+                                 JdbcTemplate jdbc, ObjectMapper json,CashTransactionWriter cash) {
+        this.payments=payments;this.bookings=bookings;this.jdbc=jdbc;this.json=json;this.cash=cash;
     }
-
-    @Transactional
-    public void savePaymentEvent(PaymentEvent event) {
+    private boolean valid(String booking,String hotel,LocalDate from,LocalDate to,int nights,int rooms,LocalDateTime at) {
+        return booking!=null && !booking.isBlank() && hotel!=null && !hotel.isBlank() && from!=null && to!=null
+                && to.isAfter(from) && ChronoUnit.DAYS.between(from,to)==nights && rooms>0 && at!=null;
+    }
+    private void lock(String kind,String id) {
+        jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(?,0))",rs->{},"revenue:"+kind+":"+id);
+    }
+    private LocalDateTime time(LocalDateTime at) { return at.truncatedTo(ChronoUnit.MICROS); }
+    private void receipt(String kind,String booking,LocalDateTime at,Object event,String disposition,String reason) {
         try {
-            logger.info("[REVENUE_PAYMENT_INGEST_START] Ingesting payment event - bookingId: {}, hotelId: {}, amount: {}",
-                    event.bookingId(), event.hotelId(), event.amount());
-            PaymentRecord record = paymentRecordRepository.findByBookingId(event.bookingId())
-                    .orElse(new PaymentRecord());
-
-            // Set or update all fields
-            record.setBookingId(event.bookingId());
-            record.setCustomerId(event.customerId());
-            record.setHotelId(event.hotelId());
-            record.setRoomTypeId(event.roomTypeId());
-            record.setCheckInDate(event.checkInDate());
-            record.setCheckOutDate(event.checkOutDate());
-            record.setNights(event.nights());
-            record.setRooms(event.rooms());
-            record.setAmount(event.amount());
-            record.setPaymentStatus(event.paymentStatus());
-            record.setPaymentMethod(event.paymentMethod());
-            record.setPaidAt(event.paidAt());
-            record.setEventAt(event.eventAt() != null ? event.eventAt() : LocalDateTime.now());
-
-            // Only set createdAt if it's a new record
-            if (record.getCreatedAt() == null) {
-                record.setCreatedAt(LocalDateTime.now());
-            }
-
-            PaymentRecord saved = paymentRecordRepository.save(record);
-        logger.info("[REVENUE_PAYMENT_INGEST_SUCCESS] PaymentRecord saved - id: {}, bookingId: {}, status: {}",
-            saved.getId(), saved.getBookingId(), saved.getPaymentStatus());
-        } catch (Exception e) {
-        logger.error("[REVENUE_PAYMENT_INGEST_ERROR] Failed to ingest payment event - bookingId: {}, error: {}",
-            event.bookingId(), e.getMessage(), e);
-            throw e;
+            String payload=json.writeValueAsString(event);
+            String hash=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(payload.getBytes(StandardCharsets.UTF_8)));
+            jdbc.update("INSERT INTO revenue_event_receipts(id,kind,booking_id,event_hash,event_at,disposition,reason,payload) VALUES (?,?,?,?,?,?,?,CAST(? AS jsonb)) ON CONFLICT(kind,event_hash) DO NOTHING",
+                    UUID.randomUUID(),kind,booking,hash,at,disposition,reason,payload);
+            org.slf4j.LoggerFactory.getLogger(EventIngestionService.class).info("[REVENUE_EVENT_RECEIPT_STAGED] {} {}",disposition,reason);
+        } catch(JsonProcessingException | java.security.NoSuchAlgorithmException failure) {
+            throw new IllegalStateException("Revenue event encoding failed");
         }
     }
-
+    private List<?> fields(BookingStatusRecord r) {
+        return Arrays.asList(r.getBookingId(),r.getHotelId(),r.getRoomTypeId(),r.getCheckInDate(),r.getCheckOutDate(),r.getNights(),r.getRooms(),r.getBookingStatus());
+    }
+    private List<?> fields(PaymentRecord r) {
+        return Arrays.asList(r.getBookingId(),r.getCustomerId(),r.getHotelId(),r.getRoomTypeId(),r.getCheckInDate(),r.getCheckOutDate(),r.getNights(),r.getRooms(),
+                r.getAmount()==null?null:r.getAmount().stripTrailingZeros(),r.getPaymentStatus(),r.getPaymentMethod(),r.getPaidAt());
+    }
+    private boolean metadata(Long version,UUID id) {
+        return version==null?id==null:version>0 && id!=null;
+    }
+    private int order(Long incoming,Long current,LocalDateTime at,LocalDateTime previous) {
+        if(incoming!=null)return current==null?1:incoming.compareTo(current);
+        return at.compareTo(previous);
+    }
     @Transactional
-    public void saveBookingStatusEvent(BookingStatusEvent event) {
-        try {
-        logger.info("[REVENUE_BOOKING_STATUS_INGEST_START] Ingesting booking status event - bookingId: {}, hotelId: {}, status: {}",
-            event.bookingId(), event.hotelId(), event.bookingStatus());
-            BookingStatusRecord record = bookingStatusRecordRepository.findByBookingId(event.bookingId())
-                    .orElse(new BookingStatusRecord());
-
-            // Set or update all fields
-            record.setBookingId(event.bookingId());
-            record.setHotelId(event.hotelId());
-            record.setRoomTypeId(event.roomTypeId());
-            record.setCheckInDate(event.checkInDate());
-            record.setCheckOutDate(event.checkOutDate());
-            record.setNights(event.nights());
-            record.setRooms(event.rooms());
-            record.setBookingStatus(event.bookingStatus());
-            record.setEventAt(event.eventAt() != null ? event.eventAt() : LocalDateTime.now());
-
-            // Only set createdAt if it's a new record
-            if (record.getCreatedAt() == null) {
-                record.setCreatedAt(LocalDateTime.now());
-            }
-
-            BookingStatusRecord saved = bookingStatusRecordRepository.save(record);
-            logger.info("[REVENUE_BOOKING_STATUS_INGEST_SUCCESS] BookingStatusRecord saved - id: {}, bookingId: {}, status: {}",
-                    saved.getId(), saved.getBookingId(), saved.getBookingStatus());
-        } catch (Exception e) {
-            logger.error("[REVENUE_BOOKING_STATUS_INGEST_ERROR] Failed to ingest booking status event - bookingId: {}, error: {}",
-                    event.bookingId(), e.getMessage(), e);
-            throw e;
+    public void saveBookingStatusEvent(BookingStatusEvent e) {
+        if(e==null || !metadata(e.eventVersion(),e.eventId()) || !valid(e.bookingId(),e.hotelId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.eventAt())
+                || !Set.of("PENDING","PENDING_PAYMENT","CONFIRMED","CHECKED_IN","CHECKED_OUT","CANCELLED","NO_SHOW").contains(e.bookingStatus()==null?"":e.bookingStatus())) {
+            receipt("BOOKING",e==null?null:e.bookingId(),e==null?null:e.eventAt(),e,"REVIEW_REQUIRED","INVALID_SOURCE_EVENT");return;
         }
+        lock("BOOKING",e.bookingId());
+        var current=bookings.findByBookingId(e.bookingId()).orElse(null);
+        var next=new BookingStatusRecord();
+        next.setBookingId(e.bookingId());next.setHotelId(e.hotelId());next.setRoomTypeId(e.roomTypeId());
+        next.setCheckInDate(e.checkInDate());next.setCheckOutDate(e.checkOutDate());next.setNights(e.nights());next.setRooms(e.rooms());next.setBookingStatus(e.bookingStatus());
+        LocalDateTime at=time(e.eventAt());
+        if(current!=null) {
+            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),e.hotelId())) {
+                receipt("BOOKING",e.bookingId(),at,e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
+            }
+            if(current.getEventVersion()!=null && e.eventVersion()==null) {
+                receipt("BOOKING",e.bookingId(),at,e,"REVIEW_REQUIRED","LEGACY_AFTER_VERSIONED_SOURCE");return;
+            }
+            int order=order(e.eventVersion(),current.getEventVersion(),at,current.getEventAt());
+            if(order<0) { receipt("BOOKING",e.bookingId(),at,e,"IGNORED","STALE_SOURCE_EVENT");return; }
+            if(order==0) {
+                boolean same=fields(current).equals(fields(next)) && at.equals(current.getEventAt()) && Objects.equals(e.eventId(),current.getLastEventId());
+                receipt("BOOKING",e.bookingId(),at,e,same?"IGNORED":"REVIEW_REQUIRED",same?"DUPLICATE_SOURCE_EVENT":"CONFLICTING_SOURCE_TIME");return;
+            }
+        }
+        var target=current==null?next:current;
+        target.setRoomTypeId(e.roomTypeId());target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
+        target.setNights(e.nights());target.setRooms(e.rooms());target.setBookingStatus(e.bookingStatus());target.setEventAt(at);
+        target.setEventVersion(e.eventVersion());target.setLastEventId(e.eventId());
+        if(target.getCreatedAt()==null)target.setCreatedAt(LocalDateTime.now());
+        bookings.save(target);
+        receipt("BOOKING",e.bookingId(),at,e,"APPLIED","VALID_NEWER_SOURCE_EVENT");
+    }
+    @Transactional
+    public void savePaymentEvent(PaymentEvent e) {
+        if(e==null || !metadata(e.eventVersion(),e.eventId()) || !valid(e.bookingId(),e.hotelId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.eventAt())
+                || e.customerId()==null || e.customerId().isBlank() || e.amount()==null || e.amount().signum()<0 || e.paymentMethod()==null || e.paymentMethod().isBlank()
+                || !Set.of("PENDING","ONSITE_PENDING","COMPLETED","FAILED","REFUNDED","CANCELLED").contains(e.paymentStatus()==null?"":e.paymentStatus())) {
+            receipt("PAYMENT",e==null?null:e.bookingId(),e==null?null:e.eventAt(),e,"REVIEW_REQUIRED","INVALID_SOURCE_EVENT");return;
+        }
+        lock("PAYMENT",e.bookingId());
+        var current=payments.findByBookingId(e.bookingId()).orElse(null);
+        if(current!=null && (!Objects.equals(current.getHotelId(),e.hotelId()) || !Objects.equals(current.getCustomerId(),e.customerId()))) {
+            receipt("PAYMENT",e.bookingId(),e.eventAt(),e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
+        }
+        cash.preserveLegacyCoverage(e.bookingId());
+        var cashOutcome=cash.record(e);
+        if(cashOutcome==CashTransactionWriter.Outcome.MISSING_TRANSACTION_FACTS || cashOutcome==CashTransactionWriter.Outcome.TRANSACTION_CONFLICT) {
+            receipt("PAYMENT",e.bookingId(),e.eventAt(),e,"REVIEW_REQUIRED",cashOutcome.name());return;
+        }
+        var next=new PaymentRecord();
+        next.setBookingId(e.bookingId());next.setCustomerId(e.customerId());next.setHotelId(e.hotelId());next.setRoomTypeId(e.roomTypeId());
+        next.setCheckInDate(e.checkInDate());next.setCheckOutDate(e.checkOutDate());next.setNights(e.nights());next.setRooms(e.rooms());
+        next.setAmount(e.amount());next.setPaymentStatus(e.paymentStatus());next.setPaymentMethod(e.paymentMethod());
+        next.setPaidAt(e.paidAt()==null?null:time(e.paidAt()));
+        LocalDateTime at=time(e.eventAt());
+        if(current!=null) {
+            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),e.hotelId()) || !Objects.equals(current.getCustomerId(),e.customerId())) {
+                receipt("PAYMENT",e.bookingId(),at,e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
+            }
+            if(current.getEventVersion()!=null && e.eventVersion()==null) {
+                receipt("PAYMENT",e.bookingId(),at,e,"REVIEW_REQUIRED","LEGACY_AFTER_VERSIONED_SOURCE");return;
+            }
+            int order=order(e.eventVersion(),current.getEventVersion(),at,current.getEventAt());
+            if(order<0) { receipt("PAYMENT",e.bookingId(),at,e,"IGNORED","STALE_SOURCE_EVENT");return; }
+            if(order==0) {
+                boolean same=fields(current).equals(fields(next)) && at.equals(current.getEventAt()) && Objects.equals(e.eventId(),current.getLastEventId());
+                receipt("PAYMENT",e.bookingId(),at,e,same?"IGNORED":"REVIEW_REQUIRED",same?"DUPLICATE_SOURCE_EVENT":"CONFLICTING_SOURCE_TIME");return;
+            }
+        }
+        var target=current==null?next:current;
+        target.setRoomTypeId(e.roomTypeId());target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
+        target.setNights(e.nights());target.setRooms(e.rooms());target.setAmount(e.amount());target.setPaymentStatus(e.paymentStatus());target.setPaymentMethod(e.paymentMethod());target.setPaidAt(next.getPaidAt());target.setEventAt(at);
+        target.setEventVersion(e.eventVersion());target.setLastEventId(e.eventId());
+        if(target.getCreatedAt()==null)target.setCreatedAt(LocalDateTime.now());
+        payments.save(target);
+        receipt("PAYMENT",e.bookingId(),at,e,"APPLIED","VALID_NEWER_SOURCE_EVENT");
     }
 }
