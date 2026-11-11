@@ -11,13 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class RegulationCacheProvider implements RegulationProvider {
@@ -27,7 +26,6 @@ public class RegulationCacheProvider implements RegulationProvider {
     private final RegulationRepository regulationRepository;
     private final RegulationSnapshotRepository snapshotRepository;
     private final RegulationEventPublisher eventPublisher;
-    private final Map<String, Regulation> cache = new ConcurrentHashMap<>();
 
     public RegulationCacheProvider(RegulationRepository regulationRepository,
                                    RegulationSnapshotRepository snapshotRepository,
@@ -37,7 +35,7 @@ public class RegulationCacheProvider implements RegulationProvider {
         this.eventPublisher = eventPublisher;
     }
 
-    @PostConstruct
+    @Transactional
     public void initializeCache() {
         refreshCache();
         seedDefaultRegulations();
@@ -45,23 +43,21 @@ public class RegulationCacheProvider implements RegulationProvider {
 
     @Override
     public List<Regulation> getAllRegulations() {
-        return new ArrayList<>(cache.values());
+        return regulationRepository.findAll();
     }
 
     @Override
     public Optional<Regulation> getRegulation(String regulationKey) {
-        return Optional.ofNullable(cache.get(regulationKey));
+        return regulationRepository.findByRegulationKey(regulationKey);
     }
 
     @Override
     @Transactional
     public Regulation saveRegulation(Regulation regulation, String changedBy) {
-        logger.info("[REGULATION_CACHE_SAVE] Saving regulation - key: {}, changedBy: {}, active: {}", regulation.getRegulationKey(), changedBy, regulation.isActive());
         Regulation saved = persist(regulation);
-        cache.put(saved.getRegulationKey(), saved);
         createSnapshot(saved, changedBy);
         publishEvent(saved, changedBy);
-        logger.info("[REGULATION_CACHE_SAVE] Saved regulation - key: {}, version: {}, cacheSize: {}", saved.getRegulationKey(), saved.getVersion(), cache.size());
+        logger.info("[REGULATION_WRITE_STAGED] version={}", saved.getVersion());
         return saved;
     }
 
@@ -73,9 +69,9 @@ public class RegulationCacheProvider implements RegulationProvider {
 
     @Override
     public void refreshCache() {
-        cache.clear();
-        regulationRepository.findAll().forEach(regulation -> cache.put(regulation.getRegulationKey(), regulation));
-        logger.info("[REGULATION_CACHE_REFRESH] Loaded {} regulation entries into local provider cache", cache.size());
+        // Compatibility endpoint: reads already use committed database state across all instances.
+        int count=regulationRepository.findAll().size();
+        logger.info("[REGULATION_REFRESH] entries={}", count);
     }
 
     private Regulation persist(Regulation regulation) {
@@ -83,23 +79,22 @@ public class RegulationCacheProvider implements RegulationProvider {
         Optional<Regulation> existing = regulationRepository.findByRegulationKey(key);
 
         if (existing.isPresent()) {
-            logger.info("[REGULATION_CACHE_PERSIST_UPDATE] Updating existing regulation - key: {}", key);
             Regulation saved = existing.get();
+            if (saved.getVersion() != regulation.getVersion()) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Regulation version has changed");
+            }
             saved.setName(regulation.getName());
             saved.setValue(regulation.getValue());
             saved.setDescription(regulation.getDescription());
             saved.setActive(regulation.isActive());
-            saved.setVersion(saved.getVersion() + 1);
-            return regulationRepository.save(saved);
+            return regulationRepository.saveAndFlush(saved);
         }
 
-        logger.info("[REGULATION_CACHE_PERSIST_CREATE] Creating new regulation - key: {}", key);
         regulation.setVersion(1);
-        return regulationRepository.save(regulation);
+        return regulationRepository.saveAndFlush(regulation);
     }
 
     private void createSnapshot(Regulation regulation, String changedBy) {
-        logger.info("[REGULATION_CACHE_SNAPSHOT] Creating regulation snapshot - key: {}, version: {}, changedBy: {}", regulation.getRegulationKey(), regulation.getVersion(), changedBy);
         RegulationSnapshot snapshot = new RegulationSnapshot(
                 regulation.getRegulationKey(),
                 regulation.getName(),
@@ -112,19 +107,17 @@ public class RegulationCacheProvider implements RegulationProvider {
     }
 
     private String buildSnapshotData(Regulation regulation) {
-        return String.format(
-                "{\"key\":\"%s\",\"name\":\"%s\",\"value\":\"%s\",\"description\":\"%s\",\"active\":%s,\"version\":%d}",
-                regulation.getRegulationKey(),
-                regulation.getName(),
-                regulation.getValue(),
-                regulation.getDescription() == null ? "" : regulation.getDescription().replace("\"", "\\\""),
-                regulation.isActive(),
-                regulation.getVersion()
-        );
+        var data=new java.util.LinkedHashMap<String,Object>();
+        data.put("key",regulation.getRegulationKey());data.put("name",regulation.getName());
+        data.put("value",regulation.getValue());data.put("description",regulation.getDescription());
+        data.put("active",regulation.isActive());data.put("version",regulation.getVersion());
+        try { return new ObjectMapper().writeValueAsString(data); }
+        catch (com.fasterxml.jackson.core.JsonProcessingException invalid) {
+            throw new IllegalStateException("Regulation snapshot encoding failed");
+        }
     }
 
     private void publishEvent(Regulation regulation, String changedBy) {
-        logger.info("[REGULATION_CACHE_EVENT_PUBLISH] Publishing regulation event - key: {}, version: {}, changedBy: {}", regulation.getRegulationKey(), regulation.getVersion(), changedBy);
         RegulationEvent event = new RegulationEvent(
                 regulation.getRegulationKey(),
                 regulation.getName(),
@@ -138,7 +131,7 @@ public class RegulationCacheProvider implements RegulationProvider {
     }
 
     private void seedDefaultRegulations() {
-        if (!cache.isEmpty()) {
+        if (!regulationRepository.findAll().isEmpty()) {
             return;
         }
 

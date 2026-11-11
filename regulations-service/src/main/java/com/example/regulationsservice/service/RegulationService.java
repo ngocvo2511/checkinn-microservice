@@ -38,18 +38,17 @@ public class RegulationService {
     }
 
     public Optional<RegulationDto> findRegulation(String regulationKey) {
-        log.info("[REGULATION_SERVICE_GET] Looking up regulation - key: {}", regulationKey);
+        log.debug("[REGULATION_SERVICE_GET]");
         return regulationProvider.getRegulation(regulationKey)
                 .map(RegulationService::toDto)
                 .map(dto -> {
-                    log.info("[REGULATION_SERVICE_GET] Regulation found - key: {}", regulationKey);
+                    log.debug("[REGULATION_SERVICE_FOUND]");
                     return dto;
                 });
     }
 
     public RegulationDto upsertRegulation(String regulationKey, RegulationDto request, String changedBy) {
-        log.info("[REGULATION_SERVICE_UPSERT] Upserting regulation - key: {}, changedBy: {}, active: {}, version: {}",
-                regulationKey, changedBy, request.isActive(), request.getVersion());
+        log.info("[REGULATION_WRITE_REQUESTED]");
         Regulation regulation = new Regulation(
                 regulationKey,
                 request.getName(),
@@ -60,35 +59,29 @@ public class RegulationService {
         );
 
         Regulation saved = regulationProvider.saveRegulation(regulation, changedBy);
-        log.info("[REGULATION_SERVICE_UPSERT] Regulation upserted - key: {}, version: {}", regulationKey, saved.getVersion());
+        log.info("[REGULATION_WRITE_COMMITTED] version={}", saved.getVersion());
         return toDto(saved);
     }
 
     @Transactional(readOnly = true)
     public List<RegulationSnapshotDto> listSnapshots() {
-        try {
             List<RegulationSnapshotDto> snapshots = regulationProvider.getSnapshots().stream()
                     .map(RegulationService::toSnapshotDto)
                     .collect(Collectors.toList());
             log.info("[REGULATION_SERVICE_SNAPSHOTS] Loaded snapshots - count: {}", snapshots.size());
             return snapshots;
-        } catch (Exception ex) {
-            log.warn("[REGULATION_SERVICE_SNAPSHOTS_ERROR] Unable to load regulation snapshots: {}", ex.getMessage(), ex);
-            return List.of();
-        }
     }
 
     public CommissionRateDto getCommissionRateDto() {
         BigDecimal commissionRate = getRegulationValueAsDecimal(COMMISSION_RATE_KEY);
-        log.info("[REGULATION_SERVICE_TYPED_COMMISSION] Commission rate resolved - value: {}", commissionRate);
+        log.debug("[REGULATION_SERVICE_TYPED_COMMISSION]");
         return new CommissionRateDto(commissionRate);
     }
 
     public PointsConversionDto getPointsConversionRatesDto() {
         BigDecimal earnRate = getRegulationValueAsDecimal(POINTS_EARN_CONVERSION_RATE_KEY);
         BigDecimal redemptionRate = getRegulationValueAsDecimal(POINTS_REDEMPTION_CONVERSION_RATE_KEY);
-        log.info("[REGULATION_SERVICE_TYPED_POINTS] Points conversion rates resolved - earnRate: {}, redemptionRate: {}",
-                earnRate, redemptionRate);
+        log.debug("[REGULATION_SERVICE_TYPED_POINTS]");
         return new PointsConversionDto(earnRate, redemptionRate);
     }
 
@@ -99,7 +92,7 @@ public class RegulationService {
     }
 
     private BigDecimal getRegulationValueAsDecimal(String regulationKey) {
-        log.info("[REGULATION_SERVICE_PARSE] Resolving regulation value as decimal - key: {}", regulationKey);
+        log.debug("[REGULATION_SERVICE_PARSE]");
         return regulationProvider.getRegulation(regulationKey)
                 .filter(Regulation::isActive)
                 .map(Regulation::getValue)
@@ -109,9 +102,9 @@ public class RegulationService {
 
     private BigDecimal parseDecimalValue(String value, String regulationKey) {
         try {
-            return new BigDecimal(value);
+            return new BigDecimal(value.trim());
         } catch (NumberFormatException ex) {
-            throw new IllegalStateException("Regulation value for key '" + regulationKey + "' is not a valid decimal: " + value, ex);
+            throw new IllegalStateException("Regulation value is not a valid decimal");
         }
     }
 

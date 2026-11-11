@@ -5,17 +5,22 @@ import jakarta.validation.constraints.NotBlank;
 public class RegulationDto {
 
     @NotBlank
+    @jakarta.validation.constraints.Size(max=255)
     private String regulationKey;
 
     @NotBlank
+    @jakarta.validation.constraints.Size(max=255)
     private String name;
 
     @NotBlank
     @ValidRegulationValue
+    @jakarta.validation.constraints.Size(max=255)
     private String value;
 
+    @jakarta.validation.constraints.Size(max=2000)
     private String description;
     private boolean active = true;
+    @jakarta.validation.constraints.PositiveOrZero
     private int version;
 
     public RegulationDto() {

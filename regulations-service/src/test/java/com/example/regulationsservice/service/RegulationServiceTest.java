@@ -17,6 +17,14 @@ import static org.mockito.Mockito.when;
 
 class RegulationServiceTest {
 
+    @Test
+    void valueAcceptedWithWhitespaceRemainsReadableThroughTheTypedApi() {
+        var source=org.mockito.Mockito.mock(RegulationProvider.class);
+        when(source.getRegulation("COMMISSION_RATE")).thenReturn(Optional.of(
+                new Regulation("COMMISSION_RATE","Synthetic commission"," 0.10 ",null,true,1)));
+        assertEquals(new BigDecimal("0.10"),new RegulationService(source).getCommissionRateDto().getCommissionRate());
+    }
+
     @Mock
     private RegulationProvider regulationProvider;
 

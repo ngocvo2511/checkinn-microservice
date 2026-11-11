@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/regulations/snapshots", "/api/regulations/snapshots/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/regulations/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/regulations/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/regulations/refresh").hasRole("ADMIN")
@@ -55,7 +56,11 @@ public class SecurityConfig {
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setContentType("application/json");
                             response.setStatus(401);
-                            response.getWriter().write("{\"error\":\"Unauthorized\",\"message\":\"" + authException.getMessage() + "\"}");
+                            response.getWriter().write("{\"status\":401,\"code\":\"UNAUTHENTICATED\",\"message\":\"Authentication required\"}");
+                        })
+                        .accessDeniedHandler((request,response,denied)->{
+                            response.setContentType("application/json");response.setStatus(403);
+                            response.getWriter().write("{\"status\":403,\"code\":\"FORBIDDEN\",\"message\":\"Access denied\"}");
                         })
                 );
 

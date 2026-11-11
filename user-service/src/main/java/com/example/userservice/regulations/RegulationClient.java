@@ -25,13 +25,7 @@ public class RegulationClient {
     public BigDecimal getRedemptionConversionRate() { return rate("POINTS_REDEMPTION_CONVERSION_RATE", false); }
 
     private BigDecimal rate(String key, boolean earn) {
-        String cached = cache.get(key);
-        if (cached != null) {
-            try {
-                BigDecimal rate = new BigDecimal(cached);
-                if (rate.signum() > 0) return rate;
-            } catch (NumberFormatException ignored) { /* Fetch the authoritative value below. */ }
-        }
+        // Event caches are advisory: an old positive rate must not authorize a financial command.
         try {
             PointsResponse response = restTemplate.getForObject(regulationsBaseUrl + "/api/regulations/typed/points", PointsResponse.class);
             BigDecimal rate = response == null ? null : earn ? response.earnConversionRate : response.redemptionConversionRate;

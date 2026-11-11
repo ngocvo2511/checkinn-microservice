@@ -23,7 +23,7 @@ public class RegulationValueValidator implements ConstraintValidator<ValidRegula
             if (decimalValue.compareTo(MIN_VALUE) < 0) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(
-                        "Regulation value cannot be negative: " + value
+                        "Regulation value cannot be negative"
                 ).addConstraintViolation();
                 return false;
             }
@@ -32,7 +32,7 @@ public class RegulationValueValidator implements ConstraintValidator<ValidRegula
             if (decimalValue.compareTo(MAX_VALUE) > 0) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(
-                        "Regulation value cannot exceed " + MAX_VALUE + ": " + value
+                        "Regulation value cannot exceed " + MAX_VALUE
                 ).addConstraintViolation();
                 return false;
             }
@@ -41,7 +41,7 @@ public class RegulationValueValidator implements ConstraintValidator<ValidRegula
         } catch (NumberFormatException ex) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
-                    "Regulation value must be a valid decimal number: " + value
+                    "Regulation value must be a valid decimal number"
             ).addConstraintViolation();
             return false;
         }

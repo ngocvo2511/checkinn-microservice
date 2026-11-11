@@ -46,11 +46,16 @@ public class JwtService {
 
     public boolean validateToken(String token) {
         try {
-            parseToken(token);
+            Claims claims=parseToken(token).getBody();
+            UUID.fromString(claims.getSubject());
+            String role=claims.get("role",String.class);
+            if(role==null || role.isBlank())return false;
             if (tokenRevocationService.isRevoked(token)) {
                 return false;
             }
             return true;
+        } catch (SessionStoreUnavailableException unavailable) {
+            throw unavailable;
         } catch (Exception e) {
             return false;
         }
