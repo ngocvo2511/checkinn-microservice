@@ -36,7 +36,7 @@ public class MediaClient {
             return response.getUrl();
         }
         catch (Exception e) {
-            throw new RuntimeException("Upload media to media-service failed", e);
+            throw dependencyError(e,true);
         }
 
     }
@@ -50,7 +50,7 @@ public class MediaClient {
             DeleteMediaResponse response = authorizedStub().deleteMedia(request);
             return response.getSuccess();
         } catch (Exception e) {
-            throw new RuntimeException("Delete media on media-service failed", e);
+            throw dependencyError(e);
         }
     }
 
@@ -71,7 +71,7 @@ public class MediaClient {
             UploadDocumentResponse response = authorizedStub().uploadPrivateDocument(request);
             return response.getFilePath();
         } catch (Exception e) {
-            throw new RuntimeException("Upload private document to media-service failed", e);
+            throw dependencyError(e,true);
         }
     }
 
@@ -85,7 +85,7 @@ public class MediaClient {
             GetSignedUrlResponse response = authorizedStub().getSignedUrl(request);
             return response.getSignedUrl();
         } catch (Exception e) {
-            throw new RuntimeException("Get signed url from media-service failed", e);
+            throw dependencyError(e);
         }
     }
 
@@ -113,8 +113,22 @@ public class MediaClient {
                     ? new java.util.HashMap<>(response.getSignedUrlsMap())
                     : java.util.Collections.emptyMap();
         } catch (Exception e) {
-            throw new RuntimeException("Get signed urls batch from media-service failed", e);
+            throw dependencyError(e);
         }
     }
+    private org.springframework.web.server.ResponseStatusException dependencyError(Exception error) {
+        return dependencyError(error,false);
+    }
+    private org.springframework.web.server.ResponseStatusException dependencyError(Exception error,boolean userInput) {
+        var code=io.grpc.Status.fromThrowable(error).getCode();
+        var status=switch(code) {
+            case INVALID_ARGUMENT -> userInput?org.springframework.http.HttpStatus.BAD_REQUEST:org.springframework.http.HttpStatus.BAD_GATEWAY;
+            case DEADLINE_EXCEEDED -> org.springframework.http.HttpStatus.GATEWAY_TIMEOUT;
+            case UNAVAILABLE,UNAUTHENTICATED,PERMISSION_DENIED,CANCELLED -> org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
+            default -> org.springframework.http.HttpStatus.BAD_GATEWAY;
+        };
+        return new org.springframework.web.server.ResponseStatusException(status,"Storage operation unavailable");
+    }
+
 }
 

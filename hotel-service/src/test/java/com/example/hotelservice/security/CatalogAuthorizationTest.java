@@ -35,6 +35,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration"})
 @Import(SecurityConfig.class)
 class CatalogAuthorizationTest {
+    @Test void privateDocumentReadRequiresAuthenticationAndUsesThePrincipalNotForgedHeaders() throws Exception {
+        mvc.perform(get("/hotels/"+TARGET+"/documents")).andExpect(status().isUnauthorized());
+        verifyNoInteractions(hotels);
+        mvc.perform(get("/hotels/"+TARGET+"/documents").header("Authorization","Bearer owner").header("X-OWNER-ID",UUID.randomUUID()).header("X-Is-Admin","true"))
+                .andExpect(status().isOk());
+        verify(hotels).getVerificationDocuments(TARGET,ACTOR,false);
+    }
+    @Test void documentAdministratorReadUsesTheVerifiedRole() throws Exception {
+        mvc.perform(get("/hotels/"+TARGET+"/documents").header("Authorization","Bearer admin"))
+                .andExpect(status().isOk());verify(hotels).getVerificationDocuments(TARGET,ACTOR,true);
+    }
+    @Test void documentUploadReturnsTheAcknowledgementConsumedByTheSdk() throws Exception {
+        mvc.perform(multipart("/hotels/"+TARGET+"/documents").file(new org.springframework.mock.web.MockMultipartFile("businessLicense","synthetic.pdf","application/pdf",new byte[]{1}))
+                .header("Authorization","Bearer owner")).andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.message").value("Tải tài liệu xác thực thành công"));
+        verify(hotels).uploadHotelDocuments(eq(TARGET),eq(ACTOR),any(),isNull(),isNull(),isNull());
+    }
     private static final UUID TARGET = UUID.fromString("00000000-0000-0000-0000-000000000011");
     private static final UUID ACTOR = UUID.fromString("00000000-0000-0000-0000-000000000012");
     @Autowired MockMvc mvc;

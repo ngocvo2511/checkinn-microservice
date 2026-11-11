@@ -43,6 +43,37 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class HotelServiceImplTest {
+    @Test void anotherOwnerCannotResolvePrivateDocumentPathsEvenWithAKnownHotelId() {
+        UUID id=UUID.randomUUID();var hotel=Hotel.builder().id(id).ownerId(UUID.randomUUID()).businessLicenseFilePath("synthetic-private-document.pdf").build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        assertThatThrownBy(()->hotelService.getVerificationDocuments(id,UUID.randomUUID(),false)).isInstanceOf(AccessDeniedException.class);
+        verify(mediaClient,never()).getSignedUrls(anyList(),anyInt());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"outage","missing","extra"})
+    void storedDocumentLookupFailureCannotBecomeAnAbsentDocument(String scenario) {
+        UUID hotelId=UUID.randomUUID(),owner=UUID.randomUUID();
+        var hotel=Hotel.builder().id(hotelId).ownerId(owner).businessLicenseFilePath("docs/business.pdf").build();
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        if(scenario.equals("outage"))when(mediaClient.getSignedUrls(anyList(),anyInt())).thenThrow(
+                new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE));
+        else when(mediaClient.getSignedUrls(anyList(),anyInt())).thenReturn(scenario.equals("missing")?Map.of():
+                Map.of("docs/business.pdf","https://signed.invalid/business.pdf","other.pdf","https://signed.invalid/other.pdf"));
+        assertThatThrownBy(()->hotelService.getVerificationDocuments(hotelId,owner,false))
+                .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+    }
+    @Test void documentUploadRetainsDependencyClassificationAndDoesNotSavePathsOnFailure() {
+        UUID id=UUID.randomUUID(),owner=UUID.randomUUID();var hotel=Hotel.builder().id(id).ownerId(owner).build();
+        when(hotelRepository.findById(id)).thenReturn(Optional.of(hotel));
+        when(mediaClient.uploadPrivateDocument(any(),any(),any())).thenThrow(
+                new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE));
+        var file=new org.springframework.mock.web.MockMultipartFile("businessLicense","synthetic.pdf","application/pdf",new byte[]{1});
+        assertThatThrownBy(()->hotelService.uploadHotelDocuments(id,owner,file,null,null,null))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        error->assertThat(error.getStatusCode().value()).isEqualTo(503));
+        verify(hotelRepository,never()).save(any());assertThat(hotel.getBusinessLicenseFilePath()).isNull();
+    }
 
     @Test void bulkCityLookupDeduplicatesStableIdsAndUsesPublishedRepositoryScope() {
         UUID a=UUID.randomUUID(),b=UUID.randomUUID();

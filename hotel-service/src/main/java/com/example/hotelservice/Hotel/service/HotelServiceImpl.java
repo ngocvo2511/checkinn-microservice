@@ -367,7 +367,7 @@ public class HotelServiceImpl implements HotelService {
             MultipartFile ownerIdentityFront,
             MultipartFile ownerIdentityBack
     ) {
-        log.info("[UPLOAD_HOTEL_DOCUMENTS] Uploading documents - hotelId: {}, ownerId: {}", hotelId, ownerId);
+        log.info("[UPLOAD_HOTEL_DOCUMENTS_REQUESTED]");
         Hotel hotel = getById(hotelId);
         if (!hotel.getOwnerId().equals(ownerId)) {
             throw new org.springframework.security.access.AccessDeniedException("Bạn không có quyền cập nhật giấy tờ của khách sạn này.");
@@ -407,19 +407,20 @@ public class HotelServiceImpl implements HotelService {
 
             if (hotel.getApprovedStatus() == HotelApprovalStatus.REJECTED) {
                 hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
-                log.info("[UPLOAD_HOTEL_DOCUMENTS] Hotel was REJECTED, reset status to PENDING for re-review - hotelId: {}", hotelId);
+                log.info("[UPLOAD_HOTEL_DOCUMENTS_DRAFT_RESTORED]");
             }
 
             hotel = hotelRepository.save(hotel);
-            log.info("[UPLOAD_HOTEL_DOCUMENTS] Documents uploaded successfully - hotelId: {}", hotelId);
+            log.info("[UPLOAD_HOTEL_DOCUMENTS_METADATA_STAGED]");
             return hotel;
         } catch (CompletionException ce) {
             Throwable cause = ce.getCause() != null ? ce.getCause() : ce;
-            log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents concurrently - hotelId: {}, error: {}", hotelId, cause.getMessage(), cause);
-            throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + cause.getMessage(), cause);
+            if(cause instanceof org.springframework.web.server.ResponseStatusException classified)throw classified;
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY,"Document upload unavailable");
+        } catch (org.springframework.web.server.ResponseStatusException classified) {
+            throw classified;
         } catch (Exception e) {
-            log.error("[UPLOAD_HOTEL_DOCUMENTS] Failed to upload documents - hotelId: {}, error: {}", hotelId, e.getMessage(), e);
-            throw new RuntimeException("Lỗi khi tải tài liệu xác thực: " + e.getMessage(), e);
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY,"Document upload unavailable");
         }
     }
 
@@ -871,8 +872,8 @@ public class HotelServiceImpl implements HotelService {
     private String uploadDocumentSafe(MultipartFile file, String docPrefix, UUID hotelId) {
         try {
             return uploadDocument(file, docPrefix, hotelId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (java.io.IOException e) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY,"Document input unavailable");
         }
     }
 
@@ -888,12 +889,11 @@ public class HotelServiceImpl implements HotelService {
             return Collections.emptyMap();
         }
 
-        try {
-            return mediaClient.getSignedUrls(paths, SIGNED_URL_EXPIRY_SECONDS);
-        } catch (Exception e) {
-            log.warn("[{}] Failed to generate batch signed urls: {}", logPrefix, e.getMessage());
-            return Collections.emptyMap();
-        }
+        Map<String,String> urls=mediaClient.getSignedUrls(paths,SIGNED_URL_EXPIRY_SECONDS);
+        if(urls==null || !urls.keySet().equals(new java.util.HashSet<>(paths))
+                || urls.values().stream().anyMatch(url->url==null || url.isBlank()))
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_GATEWAY,"Document previews unavailable");
+        return urls;
     }
 
     private String getSignedUrlSafe(Map<String, String> signedUrls, String filePath) {
