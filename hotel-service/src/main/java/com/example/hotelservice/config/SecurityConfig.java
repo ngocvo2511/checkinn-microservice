@@ -61,7 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/medias", "/medias/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/medias/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/medias/**").authenticated()
-                        .requestMatchers("/api/v1/reviews/owner/**", "/api/v1/reviews/check-booking/**").authenticated()
+                        .requestMatchers("/api/v1/reviews/me", "/api/v1/reviews/owner/**", "/api/v1/reviews/check-booking/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/reviews", "/api/v1/reviews/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/reviews/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/reviews/**").authenticated()

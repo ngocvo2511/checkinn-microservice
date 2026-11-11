@@ -14,8 +14,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class ReviewGrpcAuthorizationTest {
+    static final jakarta.validation.ValidatorFactory validation=jakarta.validation.Validation.buildDefaultValidatorFactory();
+    static final com.example.hotelservice.grpc.ReviewRpcPolicy policy=new com.example.hotelservice.grpc.ReviewRpcPolicy(validation.getValidator(),2000);
+    @org.junit.jupiter.api.AfterAll static void closeValidation(){validation.close();}
+
     @Test void suppliedBookingIsCheckedForSignedGuestInsteadOfAnyEarlierStay() {
-        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews);
+        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews,policy);
         UUID actor = UUID.randomUUID(), hotel = UUID.randomUUID(), booking = UUID.randomUUID();
         var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("test").header("alg", "HS256")
                 .subject(actor.toString()).claim("role", "CUSTOMER").build();
@@ -29,7 +33,7 @@ class ReviewGrpcAuthorizationTest {
     }
 
     @Test void unpublishedDetailAndResponseMapToNotFound() {
-        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews);
+        var reviews = mock(ReviewService.class); var endpoint = new ReviewGrpcServiceImpl(reviews,policy);
         when(reviews.getReviewById(any())).thenThrow(new jakarta.persistence.EntityNotFoundException("Review not found"));
         when(reviews.getReviewResponse(any())).thenThrow(new jakarta.persistence.EntityNotFoundException("Review not found"));
         @SuppressWarnings("unchecked") StreamObserver<ReviewResponse> detail = mock(StreamObserver.class);
@@ -42,7 +46,7 @@ class ReviewGrpcAuthorizationTest {
     }
     @Test void createMapsEligibilityFailuresWithoutAcceptingBodyGuest() {
         ReviewService reviews = mock(ReviewService.class);
-        var endpoint = new ReviewGrpcServiceImpl(reviews);
+        var endpoint = new ReviewGrpcServiceImpl(reviews,policy);
         UUID actor = UUID.randomUUID();
         var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("test")
                 .header("alg", "HS256").subject(actor.toString()).claim("role", "CUSTOMER").build();
@@ -65,7 +69,7 @@ class ReviewGrpcAuthorizationTest {
     }
     @Test void anonymousCannotDeleteUsingForgedBodyAdminAndIdentity() {
         ReviewService reviews = mock(ReviewService.class);
-        var endpoint = new ReviewGrpcServiceImpl(reviews);
+        var endpoint = new ReviewGrpcServiceImpl(reviews,policy);
         @SuppressWarnings("unchecked") StreamObserver<Empty> observer = mock(StreamObserver.class);
         endpoint.deleteReview(DeleteReviewRequest.newBuilder().setReviewId(UUID.randomUUID().toString())
                 .setUserId(UUID.randomUUID().toString()).setIsAdmin(true).build(), observer);
@@ -75,7 +79,7 @@ class ReviewGrpcAuthorizationTest {
     }
     @Test void verifiedCustomerCannotEscalateUsingBodyAdmin() {
         ReviewService reviews = mock(ReviewService.class);
-        var endpoint = new ReviewGrpcServiceImpl(reviews);
+        var endpoint = new ReviewGrpcServiceImpl(reviews,policy);
         UUID actor = UUID.randomUUID(), review = UUID.randomUUID();
         var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("test")
                 .header("alg", "HS256").subject(actor.toString()).claim("role", "CUSTOMER").build();

@@ -54,6 +54,7 @@ public interface HotelReviewRepository extends JpaRepository<HotelReview, UUID> 
      * Get reviews by guest
      */
     List<HotelReview> findByGuestId(UUID guestId);
+    Page<HotelReview> findByGuestId(UUID guestId, Pageable pageable);
     Optional<HotelReview> findByBookingIdAndGuestId(UUID bookingId, UUID guestId);
 
     /**

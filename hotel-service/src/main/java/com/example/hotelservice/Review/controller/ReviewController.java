@@ -30,6 +30,11 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @GetMapping("/me")
+    public ResponseEntity<Page<HotelReviewResponse>> getMyReviews(@AuthenticationPrincipal Jwt actor, Pageable pageable) {
+        return ResponseEntity.ok(reviewService.getMyReviews(UUID.fromString(actor.getSubject()), pageable));
+    }
+
     /**
      * Create a new review
      * POST /api/v1/reviews
