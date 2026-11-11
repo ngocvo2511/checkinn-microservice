@@ -79,6 +79,19 @@ public class PaymentController {
                 || ("00".equals(responseCode) && (!"00".equals(transactionStatus) || "0".equals(transactionNo)))) {
             return ResponseEntity.badRequest().build();
         }
+        java.time.Instant transactionAt = null;
+        String payDate = queryParams.get("vnp_PayDate");
+        if (payDate != null) {
+            if (!payDate.matches("[0-9]{14}")) return ResponseEntity.badRequest().build();
+            try {
+                transactionAt = java.time.LocalDateTime.parse(payDate,
+                        java.time.format.DateTimeFormatter.ofPattern("uuuuMMddHHmmss")
+                                .withResolverStyle(java.time.format.ResolverStyle.STRICT))
+                        .toInstant(java.time.ZoneOffset.ofHours(7));
+            } catch (java.time.DateTimeException invalidDate) {
+                return ResponseEntity.badRequest().build();
+            }
+        }
         var payment = paymentRepository.findByVnpayOrderId(orderId).orElse(null);
         if (payment == null) return ResponseEntity.notFound().build();
         if (payment.getMethod() != PaymentMethod.VNPAY || payment.getAmount() == null
@@ -87,7 +100,7 @@ public class PaymentController {
             return ResponseEntity.badRequest().build();
         }
         try {
-            PaymentResponse result = paymentService.processVNPayCallback(orderId, responseCode, transactionNo);
+            PaymentResponse result = paymentService.processVNPayCallback(orderId, responseCode, transactionNo, transactionAt);
             return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

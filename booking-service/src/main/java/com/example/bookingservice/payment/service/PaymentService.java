@@ -89,6 +89,7 @@ public class PaymentService {
         bookingRepository.save(booking);
         payment = paymentRepository.save(payment);
         applicationEvents.publishEvent(new com.example.bookingservice.booking.service.OnsiteReservationService.Requested(booking.getId()));
+        eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
         log.info("[CREATE_PAYMENT] Payment created - paymentId: {}, bookingId: {}, method: {}", payment.getId(), payment.getBookingId(), payment.getMethod());
         return toPaymentResponse(payment);
     }
@@ -145,6 +146,7 @@ public class PaymentService {
         String redirectUrl = vnPayProperties.getPayUrl() + "?" + query + "&vnp_SecureHash=" + secureHash;
 
         paymentRepository.save(payment);
+        eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
         log.info("[INIT_VNPAY] VNPay init completed - bookingId: {}, orderId: {}", bookingId, txnRef);
 
         return VnPayInitResponse.builder()
@@ -155,6 +157,12 @@ public class PaymentService {
 
     @Transactional
     public PaymentResponse processVNPayCallback(String orderId, String responseCode, String transactionId) {
+        return processVNPayCallback(orderId, responseCode, transactionId, null);
+    }
+
+    @Transactional
+    public PaymentResponse processVNPayCallback(String orderId, String responseCode, String transactionId,
+                                               java.time.Instant transactionAt) {
         log.info("[VNPAY_CALLBACK] Received callback - orderId: {}, responseCode: {}, transactionId: {}", orderId, responseCode, transactionId);
         String bookingId = paymentRepository.findBookingIdByVnpayOrderId(orderId)
             .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
@@ -166,6 +174,11 @@ public class PaymentService {
 
         if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
             validateVnPayReplay(payment, responseCode, transactionId);
+            if (transactionAt != null && payment.getTransactionOccurredAt() != null
+                    && !transactionAt.equals(payment.getTransactionOccurredAt())) {
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
+                        "Stored transaction time requires reconciliation");
+            }
             if (payment.getStatus() == PaymentStatus.COMPLETED && "V1_PENDING".equals(lockedBooking.getPaidReservationStatus()))
                 applicationEvents.publishEvent(new com.example.bookingservice.booking.service.PaidReservationService.Requested(lockedBooking.getId()));
             if (payment.getStatus() == PaymentStatus.COMPLETED && pointsSettlementAllowed(lockedBooking)) {
@@ -187,6 +200,7 @@ public class PaymentService {
         if ("00".equals(responseCode)) {
             payment.setStatus(PaymentStatus.COMPLETED);
             payment.setPaidAt(LocalDateTime.now());
+            payment.setTransactionOccurredAt(transactionAt);
             payment.setVnpayResponseCode(responseCode);
             payment.setVnpayTransactionNo(transactionId);
 
@@ -202,7 +216,7 @@ public class PaymentService {
             applicationEvents.publishEvent(new com.example.bookingservice.booking.service.PaidReservationService.Requested(booking.getId()));
 
             PaymentEvent event=buildPaymentEvent(booking,payment,PaymentStatus.COMPLETED.name());
-            com.example.bookingservice.booking.service.OnsiteEvents.afterCommit(booking,() -> eventPublisher.publishPaymentCompleted(event));
+            eventPublisher.publishPaymentCompleted(event);
 
         } else {
             payment.setStatus(PaymentStatus.FAILED);
@@ -213,8 +227,10 @@ public class PaymentService {
             Booking booking = lockedBooking;
             if ((booking.getStatus() == BookingStatus.PENDING || booking.getStatus() == BookingStatus.PENDING_PAYMENT)
                     && (booking.getPaidAmount() == null || booking.getPaidAmount().signum() == 0)) {
+                boolean changed=booking.getStatus()!=BookingStatus.PENDING;
                 booking.setStatus(BookingStatus.PENDING);
                 bookingRepository.save(booking);
+                if(changed) eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
             }
 
             log.info("[VNPAY_CALLBACK] Payment failed for orderId: {}, bookingId: {}, responseCode: {}", orderId, booking.getId(), responseCode);
@@ -282,24 +298,18 @@ public class PaymentService {
         // Mark payment as completed
         payment.setStatus(PaymentStatus.COMPLETED);
         payment.setPaidAt(LocalDateTime.now());
+        payment.setTransactionOccurredAt(java.time.Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS));
         payment = paymentRepository.save(payment);
 
         // Update booking paid amount
         booking.setPaidAmount(booking.getTotalAmount());
-        confirmReservation(booking);
+        if(confirmReservation(booking)) eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
         if (pointsSettlementAllowed(booking)) bookingService.settleLoyaltyPoints(booking);
         bookingRepository.save(booking);
 
         // Publish payment event
         PaymentEvent event = buildPaymentEvent(booking, payment, PaymentStatus.COMPLETED.name());
-        try {
-            log.info("[PUBLISH_EVENT] Publishing payment.completed for hotel-confirmed payment - bookingId: {}", bookingId);
-            com.example.bookingservice.booking.service.OnsiteEvents.afterCommit(booking,
-                    () -> eventPublisher.publishPaymentCompleted(event));
-            log.info("[PUBLISH_EVENT] Published payment.completed for bookingId: {}", bookingId);
-        } catch (Exception e) {
-            log.error("[PUBLISH_EVENT] Failed to publish payment.completed for bookingId: {}: {}", bookingId, e.getMessage(), e);
-        }
+        eventPublisher.publishPaymentCompleted(event);
 
         log.info("Hotel payment confirmed for booking: {}", bookingId);
         return toPaymentResponse(payment);
@@ -324,12 +334,9 @@ public class PaymentService {
     }
 
     private PaymentEvent buildPaymentEvent(Booking booking, Payment payment, String statusLabel) {
-        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
+        int rooms = booking.getItems() == null ? 0 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
-        if (rooms <= 0) {
-            rooms = 1;
-        }
         String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeId()
             : null;
@@ -337,7 +344,7 @@ public class PaymentService {
         // Lấy room type name nếu có
         String roomType = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeName()
-            : "Standard Room";
+            : null;
             
         int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
         int numberOfGuests = (booking.getAdults() != null ? booking.getAdults() : 0) + 
@@ -364,16 +371,16 @@ public class PaymentService {
             .paymentMethod(payment.getMethod().name())
             .paidAt(payment.getPaidAt())
             .eventAt(LocalDateTime.now())
+            .paymentId(payment.getId())
+            .transactionId(!PaymentStatus.COMPLETED.name().equals(statusLabel)?null:payment.getMethod()==PaymentMethod.HOTEL?payment.getId():payment.getVnpayTransactionNo())
+            .transactionAt(!PaymentStatus.COMPLETED.name().equals(statusLabel)?null:payment.getTransactionOccurredAt())
             .build();
     }
 
     private BookingStatusEvent buildBookingStatusEvent(Booking booking, String statusLabel) {
-        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
+        int rooms = booking.getItems() == null ? 0 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
-        if (rooms <= 0) {
-            rooms = 1;
-        }
         String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeId()
             : null;

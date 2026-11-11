@@ -19,6 +19,11 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter converter) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        if(connectionFactory instanceof org.springframework.amqp.rabbit.connection.CachingConnectionFactory caching) {
+            caching.setPublisherConfirmType(org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType.CORRELATED);
+            caching.setPublisherReturns(true);
+        }
+        template.setMandatory(true);
         template.setMessageConverter(converter);
         return template;
     }

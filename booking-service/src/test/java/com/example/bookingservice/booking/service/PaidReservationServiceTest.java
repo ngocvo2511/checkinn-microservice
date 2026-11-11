@@ -19,7 +19,7 @@ class PaidReservationServiceTest {
     final PaymentRepository payments=mock(PaymentRepository.class);
     final HotelAvailabilityClient inventory=mock(HotelAvailabilityClient.class);
     final BookingService bookingService=mock(BookingService.class);
-    final PaidReservationService service=new PaidReservationService(bookings,payments,inventory,bookingService);
+    final PaidReservationService service=new PaidReservationService(bookings,payments,inventory,mock(com.example.bookingservice.messaging.HotelEventPublisher.class),bookingService);
     Booking b; Payment p;
     @BeforeEach void setup() {
         b=Booking.builder().id("booking").holdId("hold").status(BookingStatus.PENDING_PAYMENT)

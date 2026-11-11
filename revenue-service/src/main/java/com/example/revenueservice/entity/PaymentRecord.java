@@ -77,4 +77,9 @@ public class PaymentRecord {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Setter
+    private Long eventVersion;
+    @Setter
+    private UUID lastEventId;
+
 }

@@ -143,7 +143,9 @@ public class BookingService {
             throw holdUnavailable();
         }
 
-        String reservedBookingId = null;
+        var compensation=new BookingCreationCompensation(availabilityClient,loyaltyPointsClient,holdResponse,request.getUserId());
+        if(org.springframework.transaction.support.TransactionSynchronizationManager.isSynchronizationActive())
+            org.springframework.transaction.support.TransactionSynchronizationManager.registerSynchronization(compensation);
         try {
         requireHoldResponse(holdResponse, null);
         // Calculate total amount
@@ -197,7 +199,7 @@ public class BookingService {
             try {
                 if (!creationLock.tryAcquire(booking.getId())) throw new IllegalStateException("Booking creation is already in progress");
                 Instant deadline = Instant.parse(holdResponse.expiresAt()).truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-                reservedBookingId = booking.getId(); // Set before RPC: a timeout may hide a committed hold.
+                compensation.reservedPointsFor(booking.getId()); // Set before RPC: timeout may hide committed points.
                 var quote = loyaltyPointsClient.reserve(new com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO(
                         request.getUserId(), booking.getId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount), deadline));
                 BigDecimal maxDiscount = totalAmount.subtract(voucherDiscount).multiply(MAX_DISCOUNT_PERCENTAGE);
@@ -264,20 +266,7 @@ public class BookingService {
 
         return toBookingResponse(booking);
         } catch (RuntimeException failure) {
-            try {
-                if (holdResponse != null && holdResponse.holdId() != null && !holdResponse.holdId().isBlank()) {
-                    availabilityClient.releaseHold(holdResponse.holdId());
-                }
-            } catch (RuntimeException releaseFailure) {
-                log.warn("Booking failed and hold release needs cleanup (type={})", releaseFailure.getClass().getSimpleName());
-            }
-            if (reservedBookingId != null) {
-                try {
-                    loyaltyPointsClient.refundPoints(request.getUserId(), reservedBookingId);
-                } catch (RuntimeException releaseFailure) {
-                    log.warn("Points hold requires recovery after booking failure (type={})", releaseFailure.getClass().getSimpleName());
-                }
-            }
+            compensation.run();
             throw failure;
         }
     }
@@ -536,35 +525,7 @@ public class BookingService {
     }
 
     private void publishStatusEvent(Booking booking, String statusLabel) {
-        int rooms = booking.getItems() == null ? 1 : booking.getItems().stream()
-                .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
-                .sum();
-        if (rooms <= 0) {
-            rooms = 1;
-        }
-        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
-                ? booking.getItems().get(0).getRoomTypeId()
-                : null;
-        int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
-
-        BookingStatusEvent event = BookingStatusEvent.builder()
-                .bookingId(booking.getId())
-                .hotelId(booking.getHotelId())
-                .roomTypeId(roomTypeId)
-                .checkInDate(booking.getCheckInDate())
-                .checkOutDate(booking.getCheckOutDate())
-                .nights(nights)
-                .rooms(rooms)
-                .bookingStatus(statusLabel)
-                .eventAt(LocalDateTime.now())
-                .build();
-        try {
-            log.debug("[PUBLISH_EVENT] Publishing booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
-            OnsiteEvents.afterCommit(booking, () -> eventPublisher.publishBookingStatus(event));
-            log.debug("[PUBLISH_EVENT] Published booking.status.changed - bookingId: {}, status: {}", booking.getId(), statusLabel);
-        } catch (Exception e) {
-            log.error("[PUBLISH_EVENT] Failed to publish booking.status.changed for bookingId: {}: {}", booking.getId(), e.getMessage(), e);
-        }
+        eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
     }
 
     public void releaseBookingHold(String bookingId) {
