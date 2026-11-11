@@ -45,7 +45,7 @@ public class QuestionController {
     public ResponseEntity<HotelResponse> addQuestion(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID hotelId,
-            @RequestBody QuestionRequest request
+            @jakarta.validation.Valid @RequestBody QuestionRequest request
     ) {
         UUID ownerId = getOwnerId(jwt.getSubject());
         log.info("[QUESTION_CONTROLLER_ADD] Add question request received - hotelId: {}, ownerId: {}", hotelId, ownerId);

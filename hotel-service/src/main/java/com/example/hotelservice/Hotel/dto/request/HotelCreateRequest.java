@@ -25,9 +25,9 @@ public record HotelCreateRequest(
         @NotBlank @jakarta.validation.constraints.Size(max=50) String ownerIdentityNumber,
 
         // ====== Chính sách và tiện ích ======
-        List<PolicyRequest> policies,
-        List<QuestionRequest> questions,
-        List<AmenityRequest> amenityCategories,
+        @jakarta.validation.Valid List<@jakarta.validation.constraints.NotNull PolicyRequest> policies,
+        @jakarta.validation.Valid List<@jakarta.validation.constraints.NotNull QuestionRequest> questions,
+        @jakarta.validation.Valid List<@jakarta.validation.constraints.NotNull AmenityRequest> amenityCategories,
         com.example.hotelservice.Hotel.enums.AccommodationType accommodationType
 ) {}
 

@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RoomTypeRepository extends JpaRepository<RoomType, UUID> {
+    @Query("SELECT r.hotelId FROM RoomType r WHERE r.id = ?1")
+    Optional<UUID> findHotelIdById(UUID id);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT r FROM RoomType r WHERE r.id = ?1")
     Optional<RoomType> findByIdForUpdate(UUID id);

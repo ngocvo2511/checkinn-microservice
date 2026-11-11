@@ -98,6 +98,56 @@ class HotelServiceImplTest {
         verify(hotelRepository,org.mockito.Mockito.times(2)).findByCityIdInAndIsActiveTrueAndApprovedStatus(any(),org.mockito.ArgumentMatchers.eq(HotelApprovalStatus.APPROVED));
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"blank","missing","oversized","null"})
+    void malformedFaqReplacementIsRejectedBeforeReadingOrDeleting(String scenario) {
+        var q=new com.example.hotelservice.Question.dto.QuestionRequest();
+        q.setQuestion(scenario.equals("oversized")?"x".repeat(256):"Synthetic question");
+        q.setAnswer(scenario.equals("blank")?" ":scenario.equals("missing")?null:"Synthetic answer");
+        var rows=scenario.equals("null")?java.util.Arrays.asList((com.example.hotelservice.Question.dto.QuestionRequest)null):List.of(q);
+        assertThatThrownBy(()->hotelService.updateQuestions(UUID.randomUUID(),rows,UUID.randomUUID()))
+                .isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        org.mockito.Mockito.verifyNoInteractions(hotelRepository,questionRepository);
+    }
+    @Test void nullReplacementCannotMeanClearAllFaqs() {
+        UUID id=UUID.randomUUID(),owner=UUID.randomUUID();when(hotelRepository.findById(id)).thenReturn(Optional.of(Hotel.builder().id(id).ownerId(owner).build()));
+        assertThatThrownBy(()->hotelService.updateQuestions(id,null,owner)).isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        verify(questionRepository,never()).deleteAllByHotelId(any());
+    }
+    @Test void blankPolicyCannotBePersistedOutsideRest() {
+        var p=new com.example.hotelservice.Policy.dto.request.PolicyRequest();p.setCategory("Synthetic category");p.setContent(" ");
+        assertThatThrownBy(()->hotelService.addPolicy(UUID.randomUUID(),p,UUID.randomUUID())).isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        org.mockito.Mockito.verifyNoInteractions(hotelRepository,hotelPolicyRepository);
+    }
+    @Test void explicitEmptyReplacementClearsUnderTheParentLock() {
+        UUID id=UUID.randomUUID(),owner=UUID.randomUUID();when(hotelRepository.findById(id)).thenReturn(Optional.of(Hotel.builder().id(id).ownerId(owner).build()));
+        hotelService.updateQuestions(id,List.of(),owner);hotelService.updatePolicies(id,List.of(),owner);
+        verify(hotelRepository,org.mockito.Mockito.times(2)).findForUpdate(id);
+        verify(questionRepository).deleteAllByHotelId(id);verify(hotelPolicyRepository).deleteAllByHotelId(id);
+    }
+    @org.junit.jupiter.params.ParameterizedTest @org.junit.jupiter.params.provider.ValueSource(strings={"blank","oversized","null_category","null_item","blank_item"})
+    void malformedAmenitiesAreRejectedBeforeRepositoryAccess(String kind){
+        var item=new com.example.hotelservice.Amenity.dto.request.AmenityItemRequest();item.setTitle(kind.equals("blank_item")?" ":"Synthetic item");
+        var category=new com.example.hotelservice.Amenity.dto.request.AmenityRequest();category.setTitle(kind.equals("blank")?" ":kind.equals("oversized")?"x".repeat(256):"Synthetic category");
+        category.setAmenities(kind.equals("null_item")?java.util.Arrays.asList((com.example.hotelservice.Amenity.dto.request.AmenityItemRequest)null):List.of(item));
+        var rows=kind.equals("null_category")?java.util.Arrays.asList((com.example.hotelservice.Amenity.dto.request.AmenityRequest)null):List.of(category);
+        assertThatThrownBy(()->hotelService.updateAmenities(UUID.randomUUID(),rows,UUID.randomUUID())).isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        org.mockito.Mockito.verifyNoInteractions(hotelRepository,hotelAmenityRepository,hotelAmenityCategoryRepository);
+    }
+    @Test void nullAmenityReplacementCannotClearStoredData(){
+        UUID id=UUID.randomUUID(),owner=UUID.randomUUID();when(hotelRepository.findById(id)).thenReturn(Optional.of(Hotel.builder().id(id).ownerId(owner).build()));
+        assertThatThrownBy(()->hotelService.updateAmenities(id,null,owner)).isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        verify(hotelAmenityRepository,never()).deleteAllByCategoryHotelId(any());verify(hotelAmenityCategoryRepository,never()).deleteAllByHotelId(any());
+    }
+    @Test void nestedAmenityUpdateValidationRunsBeforeHotelChanges() throws Exception {
+        var request=new ObjectMapper().convertValue(Map.of("name","Synthetic changed name","amenityCategories",List.of(Map.of("title"," ","amenities",List.of()))),com.example.hotelservice.Hotel.dto.request.HotelUpdateRequest.class);
+        assertThatThrownBy(()->hotelService.updateHotel(UUID.randomUUID(),request,UUID.randomUUID())).isInstanceOf(com.example.hotelservice.validation.InputValidation.InvalidInput.class);
+        org.mockito.Mockito.verifyNoInteractions(hotelRepository);
+    }
+    @Test void missingAmenityCategoryDoesNotEchoSubmittedTitle(){
+        UUID id=UUID.randomUUID(),owner=UUID.randomUUID();when(hotelRepository.findById(id)).thenReturn(Optional.of(Hotel.builder().id(id).ownerId(owner).build()));
+        assertThatThrownBy(()->hotelService.removeAmenityCategory(id,"synthetic-private-category-marker",owner)).isInstanceOf(jakarta.persistence.EntityNotFoundException.class).hasMessageNotContaining("synthetic-private");
+    }
     private UserGrpcClient userGrpcClient;
     private MediaClient mediaClient;
     private HotelRepository hotelRepository;
@@ -520,7 +570,7 @@ class HotelServiceImplTest {
         hotel.setOwnerId(ownerId);
         hotel.setApprovedStatus(HotelApprovalStatus.DRAFT);
 
-        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        when(hotelRepository.findForUpdate(hotelId)).thenReturn(Optional.of(hotel));
         when(mediaAssetRepository.findByTargetIdAndTargetType(hotelId, MediaTargetType.HOTEL)).thenReturn(Collections.emptyList());
 
         hotelService.deleteDraftHotel(hotelId, ownerId);
@@ -538,7 +588,7 @@ class HotelServiceImplTest {
         hotel.setOwnerId(ownerId);
         hotel.setApprovedStatus(HotelApprovalStatus.PENDING);
 
-        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        when(hotelRepository.findForUpdate(hotelId)).thenReturn(Optional.of(hotel));
 
         assertThatThrownBy(() -> hotelService.deleteDraftHotel(hotelId, ownerId))
                 .isInstanceOf(IllegalStateException.class);

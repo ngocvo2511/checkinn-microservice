@@ -60,7 +60,7 @@ class RoomTypeServiceImplTest {
         UUID hotelId = UUID.randomUUID();
         UUID actualOwner = UUID.randomUUID();
         UUID otherOwner = UUID.randomUUID();
-        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId, actualOwner)));
+        when(hotelRepository.findForUpdate(hotelId)).thenReturn(Optional.of(hotel(hotelId, actualOwner)));
 
         assertThatThrownBy(() -> roomTypeService.createRoomType(createRequest(hotelId, 2), otherOwner))
                 .isInstanceOf(SecurityException.class);
@@ -72,7 +72,7 @@ class RoomTypeServiceImplTest {
     void createRoomTypeRejectsRoomAmountLowerThanOne() {
         UUID hotelId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
-        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel(hotelId, ownerId)));
+        when(hotelRepository.findForUpdate(hotelId)).thenReturn(Optional.of(hotel(hotelId, ownerId)));
 
         assertThatThrownBy(() -> roomTypeService.createRoomType(createRequest(hotelId, 0), ownerId))
                 .isInstanceOf(IllegalArgumentException.class);
