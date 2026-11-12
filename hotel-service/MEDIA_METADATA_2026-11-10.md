@@ -92,3 +92,16 @@ browser tests passed using Webpack development mode and synthetic APIs. Standard
 typecheck retains the known place-owned showDistance mismatch; no bypass or
 production-build pass. Earlier PostgreSQL/native counts are historical checkpoint
 evidence, not rerun/certified in this review. Logs and IDE files are excluded.
+
+
+## Frontend follow-up — 11/11/2026
+
+On `fix/media-client-write-state`, the sibling frontend now consumes these existing
+contracts with bounded media/draft adapters, validates target-bound ACKs, serializes
+gallery writes and reconciles unknown results through GET /medias/preview. Wizard
+partial uploads stop and open the existing draft instead of replaying prior files.
+No backend production/schema/provider code changes in that follow-up; no fresh
+Maven/native/database run is claimed there. Previous evidence above remains dated.
+Frontend evidence: Node211/211, new media browser13/13; typecheck still has the
+place-owned showDistance baseline. See root PROJECT_STANDARDIZATION_PLAN.md73 and
+frontend tests/MEDIA_CLIENT_2026-11-11.md for compatibility rerun/final scope.
