@@ -49,7 +49,7 @@ git diff --check
 git diff --exit-code -- place-service
 git -C ../checkinn-frontend status --short
 ```
-Log cuối: C:/Users/ACER/IdeaProjects/DA1/BATCH1_2_final-tests.log.
+Log cuối: C:/Users/ACER/IdeaProjects/DA1/checkinn/.local/evidence/batch-1-refund/BATCH1_2_final-tests.log.
 
 PostgreSQL migration harness PASS: replay; bốn concurrent INSERT chỉ một execution; amount âm, REFUNDED ở method MANUAL và PENDING_VERIFICATION thiếu evidence bị chặn; rollback DML; chuyển execution SANDBOX_INTERNAL/REFUNDED hợp lệ. Các lần chạy harness đầu phát hiện conflict từ unique request_id và thiếu evidence check sau mở rộng constraint; sửa harness ON CONFLICT và phục hồi evidence constraint, lần chạy cuối PASS. Container test riêng không host port, được xóa; không chạm database hiện có.
 

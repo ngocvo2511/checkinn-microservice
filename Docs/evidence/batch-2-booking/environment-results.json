@@ -1,0 +1,115 @@
+{
+  "project": "checkinn-booking-smoke",
+  "services": [
+    {
+      "service": "api-gateway",
+      "image_id": "sha256:af9dec571b0474914b10b5f5b1b97ee07892a95b278f7b02450c2979de6f15c4",
+      "healthy": true,
+      "mounts": []
+    },
+    {
+      "service": "auth-service",
+      "image_id": "sha256:92add2b62a90b0b1fcb37ba4065147ef88f41a587d962b45bc65ae31678916e5",
+      "healthy": true,
+      "mounts": []
+    },
+    {
+      "service": "booking-service",
+      "image_id": "sha256:20c75466c21144d88c709e70add82d29206d9c25329a615b95696178b4743098",
+      "healthy": true,
+      "mounts": []
+    },
+    {
+      "service": "eureka-server",
+      "image_id": "sha256:22fe485fa5629f4220462e44b84db5fbba47aedb46385b500e31c71a2d144903",
+      "healthy": true,
+      "mounts": []
+    },
+    {
+      "service": "hotel-service",
+      "image_id": "sha256:24d19046b7f443903873db81a7267e7c7a91149e36b13c046ded343983234a1a",
+      "healthy": true,
+      "mounts": []
+    },
+    {
+      "service": "postgres-smoke",
+      "image_id": "sha256:10a5c69a83035ab5239f5620d708520e8b28f5aa1f2b20143e6024532edadfb5",
+      "healthy": true,
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "checkinn-booking-smoke_booking-smoke-postgres-data",
+          "destination": "/var/lib/postgresql"
+        },
+        {
+          "type": "bind",
+          "name": null,
+          "destination": "/docker-entrypoint-initdb.d/01-booking-smoke-init.sql"
+        }
+      ]
+    },
+    {
+      "service": "rabbitmq",
+      "image_id": "sha256:e582c0bc7766f3342496d8485efb5a1df782b5ce3886ad017e2eaae442311f69",
+      "healthy": true,
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "checkinn-booking-smoke_rabbitmq-data",
+          "destination": "/var/lib/rabbitmq"
+        },
+        {
+          "type": "bind",
+          "name": null,
+          "destination": "/etc/rabbitmq/definitions.json"
+        },
+        {
+          "type": "bind",
+          "name": null,
+          "destination": "/etc/rabbitmq/rabbitmq.conf"
+        },
+        {
+          "type": "bind",
+          "name": null,
+          "destination": "/usr/local/bin/checkinn-rabbitmq-start.sh"
+        }
+      ]
+    },
+    {
+      "service": "redis",
+      "image_id": "sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+      "healthy": true,
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "checkinn-booking-smoke_redis-data",
+          "destination": "/data"
+        }
+      ]
+    },
+    {
+      "service": "user-service",
+      "image_id": "sha256:b957f3ce84a77ac5603596a82bafa9f9b566c634f0d4555fa7277cbe7ba1f65d",
+      "healthy": true,
+      "mounts": []
+    }
+  ],
+  "eureka": {
+    "API-GATEWAY": [
+      "UP"
+    ],
+    "BOOKING-SERVICE": [
+      "UP"
+    ],
+    "AUTH-SERVICE": [
+      "UP"
+    ],
+    "HOTEL-SERVICE": [
+      "UP"
+    ],
+    "USER-SERVICE": [
+      "UP"
+    ]
+  },
+  "refund_enabled": false
+}

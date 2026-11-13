@@ -1,0 +1,55 @@
+{
+  "migration_links_repaired": [
+    {
+      "document": "PROJECT_STANDARDIZATION_PLAN.md",
+      "from": "ACCOMMODATION_TYPE_IMPLEMENTATION_PLAN.md",
+      "to": "../../../ACCOMMODATION_TYPE_IMPLEMENTATION_PLAN.md"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_PLAN.md",
+      "from": "ACCOMMODATION_TYPE_IMPLEMENTATION_PLAN.md#12-kết-quả-triển-khai--04112026-asiasaigon",
+      "to": "../../../ACCOMMODATION_TYPE_IMPLEMENTATION_PLAN.md#12-kết-quả-triển-khai--04112026-asiasaigon"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_booking-initial.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_booking-initial.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_booking-retry.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_booking-retry.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_disabled.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_disabled.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_gateway_evidence.json",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_gateway_evidence.json"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_gateway_postfix.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_gateway_postfix.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_lifecycle_final2.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_lifecycle_final2.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_regression_final.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_regression_final.log"
+    },
+    {
+      "document": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "from": "BATCH1_6_revenue.log",
+      "to": "../../.local/evidence/batch-1-refund/BATCH1_6_revenue.log"
+    }
+  ],
+  "unresolved": []
+}

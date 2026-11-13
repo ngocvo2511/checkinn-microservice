@@ -113,3 +113,7 @@ key.json
 *.swp
 *.swo
 *~
+
+# Local evidence and disposable smoke credentials/state
+.local/
+__pycache__/

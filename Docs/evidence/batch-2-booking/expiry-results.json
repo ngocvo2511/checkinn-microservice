@@ -1,0 +1,43 @@
+[
+  {
+    "case": "Gateway customer registration",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login CUSTOMER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login OWNER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Expiry fixture created through Gateway",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "Actual Hotel expiry scheduler releases original hold without negative counters",
+    "result": "PASS",
+    "counters": [
+      {
+        "date": "2026-12-28",
+        "held": 0,
+        "booked": 0
+      },
+      {
+        "date": "2026-12-29",
+        "held": 0,
+        "booked": 0
+      }
+    ]
+  },
+  {
+    "case": "Cancel after scheduler release is safe and does not double release",
+    "result": "PASS",
+    "http": 204
+  }
+]

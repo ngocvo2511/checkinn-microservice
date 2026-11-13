@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-13 Asia/Saigon",
+  "python_ast_files": 4,
+  "reviewed_candidates": 22,
+  "known_smoke_credential_matches": [],
+  "jwt_or_private_key_matches": [],
+  "canonical_relative_file_links_broken": [],
+  "archive_checksum_files_verified": 27,
+  "place_backend_unchanged": true,
+  "frontend_clean": true,
+  "booking_hotel_revenue_production_source_unchanged": true,
+  "staged_files": [],
+  "backend_head": "332f97a66c02b89abfd04720f73c9cc6d6cca47a",
+  "frontend_head": "d446b9808f8732c9982da2c156979e245742aa7f",
+  "gateway_main_assertions": 42,
+  "expiry_assertions": 6,
+  "sql_assertions": 9
+}

@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13 Asia/Saigon",
+  "backend": {
+    "branch": "feat/refund-reconciliation-workflow",
+    "head": "332f97a66c02b89abfd04720f73c9cc6d6cca47a",
+    "staged": [],
+    "unstaged": [
+      ".idea/compiler.xml",
+      ".idea/encodings.xml"
+    ],
+    "untracked_nonignored": []
+  },
+  "frontend": {
+    "branch": "main",
+    "head": "d446b9808f8732c9982da2c156979e245742aa7f",
+    "staged": [],
+    "unstaged": [],
+    "untracked_nonignored": []
+  },
+  "root_is_repository": false,
+  "initial_ignore_review": "Backend: logs, target, IDE, .env patterns already present. Frontend: build/dependencies/coverage/env patterns already present. .local and __pycache__ added to backend only."
+}

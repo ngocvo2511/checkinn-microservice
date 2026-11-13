@@ -1,0 +1,26 @@
+[
+  {
+    "suite": "AvailabilityRangeIntegrationTest",
+    "exit": 0,
+    "build": "SUCCESS",
+    "totals": [
+      "1",
+      "0",
+      "0",
+      "0"
+    ],
+    "broker": "not used"
+  },
+  {
+    "suite": "BookingEventOutboxIntegrationTest",
+    "exit": 0,
+    "build": "SUCCESS",
+    "totals": [
+      "1",
+      "0",
+      "0",
+      "0"
+    ],
+    "broker": "mock RabbitTemplate"
+  }
+]

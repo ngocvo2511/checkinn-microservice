@@ -1,0 +1,307 @@
+[
+  {
+    "case": "Gateway customer registration",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login CUSTOMER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway customer registration",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login CUSTOMER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login OWNER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login ADMIN",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Fresh SQL stock: total=2, no counters or holds",
+    "result": "PASS"
+  },
+  {
+    "case": "Create through Gateway with CUSTOMER JWT",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "SQL canonical owner price policy expiry and catalog name",
+    "result": "PASS",
+    "total": "250001.00",
+    "status": "PENDING"
+  },
+  {
+    "case": "SQL canonical booking item ignores client nights and names",
+    "result": "PASS"
+  },
+  {
+    "case": "SQL one hold covers two nights; held=1 booked=0",
+    "result": "PASS",
+    "counters": [
+      {
+        "date": "2026-12-28",
+        "held": 1,
+        "booked": 0
+      },
+      {
+        "date": "2026-12-29",
+        "held": 1,
+        "booked": 0
+      }
+    ]
+  },
+  {
+    "case": "Same key retry returns original booking; singleton hold",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "Same key different payload rejected without inventory change",
+    "result": "PASS"
+  },
+  {
+    "case": "Non-owner read and cancel denied",
+    "result": "PASS"
+  },
+  {
+    "case": "Anonymous create denied",
+    "result": "PASS"
+  },
+  {
+    "case": "Forged customer ID denied",
+    "result": "PASS"
+  },
+  {
+    "case": "Concurrent owner cancellation",
+    "result": "PASS",
+    "clients": [
+      {
+        "http": 204,
+        "start_ns": 96091996073600,
+        "end_ns": 96092101602800
+      },
+      {
+        "http": 204,
+        "start_ns": 96091995772400,
+        "end_ns": 96092095970100
+      }
+    ]
+  },
+  {
+    "case": "Cancel retry releases exactly once; counters restored",
+    "result": "PASS",
+    "counters": [
+      {
+        "date": "2026-12-28",
+        "held": 0,
+        "booked": 0
+      },
+      {
+        "date": "2026-12-29",
+        "held": 0,
+        "booked": 0
+      }
+    ]
+  },
+  {
+    "case": "Cancellation policy immutable; unpaid booking creates no refund",
+    "result": "PASS"
+  },
+  {
+    "case": "Concurrent duplicate first create is singleton",
+    "result": "PASS",
+    "clients": [
+      {
+        "http": 201,
+        "start_ns": 96094491638900,
+        "end_ns": 96094750160300
+      },
+      {
+        "http": 201,
+        "start_ns": 96094491275800,
+        "end_ns": 96094764954500
+      }
+    ]
+  },
+  {
+    "case": "ADMIN reviewed cancellation under existing contract",
+    "result": "PASS"
+  },
+  {
+    "case": "Distinct concurrent commands compete for stock=1 without oversell",
+    "result": "PASS",
+    "http": [
+      409,
+      201
+    ],
+    "counters": [
+      {
+        "date": "2026-12-28",
+        "held": 1,
+        "booked": 0
+      },
+      {
+        "date": "2026-12-29",
+        "held": 1,
+        "booked": 0
+      }
+    ]
+  },
+  {
+    "case": "Invalid hotel ID",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Invalid room ID",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Room does not belong to hotel",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Inactive hotel",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Unapproved hotel",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Inactive room",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Capacity exceeded",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Invalid dates",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Tampered positive unit price",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Negative unit price",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400
+    ]
+  },
+  {
+    "case": "Missing inventory configuration",
+    "result": "PASS",
+    "http": 400,
+    "expected": [
+      400,
+      409
+    ]
+  },
+  {
+    "case": "Booking persistence failure after hold compensates known inventory",
+    "result": "PASS",
+    "http": 500,
+    "counters": [
+      {
+        "date": "2026-12-28",
+        "held": 0,
+        "booked": 0
+      },
+      {
+        "date": "2026-12-29",
+        "held": 0,
+        "booked": 0
+      }
+    ]
+  },
+  {
+    "case": "Availability failure rolls back inventory and returns unavailable",
+    "result": "PASS",
+    "http": 503
+  },
+  {
+    "case": "Retry after availability failure succeeds",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "Cancellation release failure preserves retryable booking and stock",
+    "result": "PASS",
+    "http": 503
+  },
+  {
+    "case": "Cancellation retry after partial failure restores inventory",
+    "result": "PASS"
+  },
+  {
+    "case": "Lost HTTP response after commit retries original command",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "Hotel catalog unavailable fails closed before booking mutation",
+    "result": "PASS",
+    "http": 503
+  },
+  {
+    "case": "SQL global inventory invariant: no negative counters or oversell",
+    "result": "PASS"
+  },
+  {
+    "case": "SQL unique booking and hold commands",
+    "result": "PASS"
+  }
+]
