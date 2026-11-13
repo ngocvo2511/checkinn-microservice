@@ -221,6 +221,8 @@ services:
       VNPAY_HASH_SECRET: ${VNPAY_HASH_SECRET:-}
       VNPAY_RETURN_URL: ${VNPAY_RETURN_URL:-http://localhost:3000/booking/payment/return}
       VNPAY_PAY_URL: ${VNPAY_PAY_URL:-https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
+      # Opt-in only: Sandbox Internal Refund remains disabled unless explicitly enabled.
+      REFUND_INTERNAL_ENABLED: ${REFUND_INTERNAL_ENABLED:-false}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}
@@ -240,6 +242,8 @@ services:
       SPRING_DATASOURCE_URL: ${REVENUE_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_revenue}
       SPRING_DATASOURCE_USERNAME: ${REVENUE_DB_USERNAME:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${REVENUE_DB_PASSWORD:-}
+      # Must match booking-service when testing the internal refund event pipeline.
+      REFUND_INTERNAL_ENABLED: ${REFUND_INTERNAL_ENABLED:-false}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}

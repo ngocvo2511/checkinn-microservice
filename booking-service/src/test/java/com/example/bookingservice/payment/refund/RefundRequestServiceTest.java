@@ -51,7 +51,7 @@ class RefundRequestServiceTest {
         verify(requests, never()).save(any());
     }
     @Test void approvalIsAuditedButDoesNotPretendProviderSettlement() {
-        RefundRequest request = new RefundRequest(); request.setStatus(RefundRequest.Status.REQUESTED); request.setAmount(payment.getAmount());
+        RefundRequest request = validRequest();
         when(requests.findByPaymentId("payment-1")).thenReturn(Optional.of(request));
         service.approve("payment-1", "administrator-1");
         assertThat(request.getApprovedBy()).isEqualTo("administrator-1");
@@ -77,11 +77,71 @@ class RefundRequestServiceTest {
         verify(requests, never()).save(any());
     }
     @Test void changedRequestAmountCannotBeApproved() {
-        RefundRequest request = new RefundRequest(); request.setStatus(RefundRequest.Status.REQUESTED); request.setAmount(BigDecimal.ONE);
+        RefundRequest request = validRequest(); request.setAmount(BigDecimal.ONE);
         when(requests.findByPaymentId("payment-1")).thenReturn(Optional.of(request));
         assertThatThrownBy(() -> service.approve("payment-1", "administrator-1"))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         verify(requests, never()).save(any());
+    }
+    private RefundRequest validRequest() {
+        var request = new RefundRequest();
+        request.setId("request-1"); request.setPaymentId(payment.getId()); request.setBookingId(payment.getBookingId());
+        request.setAmount(payment.getAmount()); request.setStatus(RefundRequest.Status.REQUESTED);
+        return request;
+    }
+    private RefundRequest approvedRequest() {
+        var request = validRequest(); request.setStatus(RefundRequest.Status.APPROVED_PENDING_EXECUTION);
+        request.setApprovedBy("administrator-1"); request.setApprovedAt(java.time.Instant.parse("2026-11-12T00:00:00Z"));
+        when(requests.findByPaymentId("payment-1")).thenReturn(Optional.of(request));
+        return request;
+    }
+    @Test void approvedExecutionOnlyValidatesAndPreservesReceiptAndApproval() {
+        var request = approvedRequest();
+        service.validateExecution("payment-1"); service.validateExecution("payment-1");
+        assertThat(request.getApprovedAt()).isEqualTo(java.time.Instant.parse("2026-11-12T00:00:00Z"));
+        assertThat(request.getStatus()).isEqualTo(RefundRequest.Status.APPROVED_PENDING_EXECUTION);
+        verify(requests, never()).save(any()); assertFinancialStateUnchanged();
+    }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"unapproved", "actor", "time", "payment", "booking", "amount", "nullAmount", "active", "insufficient", "notCompleted"})
+    void executionRejectsMissingApprovalOrConflictingFinancialFacts(String fault) {
+        var request = approvedRequest();
+        switch (fault) {
+            case "unapproved" -> request.setStatus(RefundRequest.Status.REQUESTED);
+            case "actor" -> request.setApprovedBy(" ");
+            case "time" -> request.setApprovedAt(null);
+            case "payment" -> request.setPaymentId("other-payment");
+            case "booking" -> request.setBookingId("other-booking");
+            case "amount" -> request.setAmount(BigDecimal.ONE);
+            case "nullAmount" -> request.setAmount(null);
+            case "active" -> booking.setStatus(BookingStatus.CONFIRMED);
+            case "insufficient" -> booking.setPaidAmount(BigDecimal.ZERO);
+            case "notCompleted" -> payment.setStatus(PaymentStatus.PENDING);
+        }
+        assertThatThrownBy(() -> service.validateExecution("payment-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        ex -> assertThat(ex.getStatusCode().value()).isEqualTo(409));
+        verify(requests, never()).save(any()); verify(payments, never()).save(any()); verify(bookings, never()).save(any());
+    }
+    @Test void executionRequiresAnExistingRequest() {
+        assertThatThrownBy(() -> service.validateExecution("payment-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        ex -> assertThat(ex.getStatusCode().value()).isEqualTo(404));
+        assertFinancialStateUnchanged();
+    }
+    @Test void repeatedApprovalPreservesOriginalActorAndTime() {
+        var request = approvedRequest();
+        assertThat(service.approve("payment-1", "administrator-2")).isSameAs(request);
+        assertThat(request.getApprovedBy()).isEqualTo("administrator-1");
+        assertThat(request.getApprovedAt()).isEqualTo(java.time.Instant.parse("2026-11-12T00:00:00Z"));
+        verify(requests, never()).save(any()); assertFinancialStateUnchanged();
+    }
+    @Test void approvalRejectsRequestBoundToAnotherBooking() {
+        var request = validRequest(); request.setBookingId("other-booking");
+        when(requests.findByPaymentId("payment-1")).thenReturn(Optional.of(request));
+        assertThatThrownBy(() -> service.approve("payment-1", "administrator-1"))
+                .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+        verify(requests, never()).save(any()); assertFinancialStateUnchanged();
     }
     private void assertFinancialStateUnchanged() {
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);

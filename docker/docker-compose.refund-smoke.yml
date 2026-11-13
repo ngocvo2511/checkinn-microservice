@@ -1,0 +1,53 @@
+# Fresh, disposable overlay for Batch 1.5. Invoke only with:
+# docker compose -p checkinn-refund-smoke -f docker-compose.yml -f docker-compose.refund-smoke.yml ...
+services:
+  postgres-smoke:
+    image: postgres:18-alpine
+    networks: [checkinn]
+    environment:
+      POSTGRES_USER: smoke_runner
+      POSTGRES_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+    volumes:
+      - refund-smoke-postgres-data:/var/lib/postgresql
+      - ./refund-smoke-init.sql:/docker-entrypoint-initdb.d/01-refund-smoke-init.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U smoke_runner -d postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  user-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_user
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+      # Controlled bootstrap for an empty, named smoke database only.
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      BOOKING_GRPC_ADDRESS: booking-service:9093
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+  booking-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_booking
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      REFUND_INTERNAL_ENABLED: ${REFUND_SMOKE_INTERNAL_ENABLED:-true}
+      LOYALTY_SETTLEMENT_DELAY_MS: "600000"
+      PAID_RESERVATION_DELAY_MS: "600000"
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+  revenue-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_revenue
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      REFUND_INTERNAL_ENABLED: ${REFUND_SMOKE_INTERNAL_ENABLED:-true}
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+volumes:
+  refund-smoke-postgres-data:

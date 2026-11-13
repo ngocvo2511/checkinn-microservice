@@ -68,6 +68,7 @@ class PaymentServiceTest {
     private VnPayProperties vnPayProperties;
     private PaymentCreationPolicyFactory paymentCreationPolicyFactory;
     private PaymentService paymentService;
+    private com.example.bookingservice.payment.refund.RefundRequestService refundRequests;
 
     @BeforeEach
     void setUp() {
@@ -77,6 +78,7 @@ class PaymentServiceTest {
         eventPublisher = mock(HotelEventPublisher.class);
         vnPayProperties = mock(VnPayProperties.class);
         paymentCreationPolicyFactory = mock(PaymentCreationPolicyFactory.class);
+        refundRequests = mock(com.example.bookingservice.payment.refund.RefundRequestService.class);
 
         paymentService = new PaymentService(
                 paymentRepository,
@@ -85,7 +87,8 @@ class PaymentServiceTest {
                 bookingService,
                 eventPublisher,
                 paymentCreationPolicyFactory,
-                mock(org.springframework.context.ApplicationEventPublisher.class)
+                mock(org.springframework.context.ApplicationEventPublisher.class),
+                refundRequests
         );
     }
 
@@ -151,6 +154,8 @@ class PaymentServiceTest {
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> {
             Payment payment = invocation.getArgument(0);
+            // Must be present at the first INSERT because the column is immutable.
+            assertThat(payment.getVnpayCreateDate()).matches("[0-9]{14}");
             if (payment.getId() == null) {
                 payment.setId("payment-1");
             }
@@ -166,6 +171,13 @@ class PaymentServiceTest {
 
         assertThat(response.getOrderId()).isEqualTo("payment-1");
         assertThat(response.getRedirectUrl()).contains("vnp_TxnRef=payment-1");
+        var saved = org.mockito.ArgumentCaptor.forClass(Payment.class);
+        verify(paymentRepository, times(2)).save(saved.capture());
+        assertThat(response.getRedirectUrl()).contains("vnp_CreateDate=" + saved.getValue().getVnpayCreateDate());
+        var originalDate = java.time.LocalDateTime.parse(saved.getValue().getVnpayCreateDate(),
+                java.time.format.DateTimeFormatter.ofPattern("uuuuMMddHHmmss"));
+        assertThat(originalDate).isCloseTo(java.time.LocalDateTime.now(java.time.ZoneId.of("Asia/Ho_Chi_Minh")),
+                org.assertj.core.api.Assertions.within(5, java.time.temporal.ChronoUnit.SECONDS));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
         verify(paymentCreationPolicyFactory).getPolicy(PaymentMethod.VNPAY);
     }
@@ -263,11 +275,23 @@ class PaymentServiceTest {
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
         assertThatThrownBy(() -> paymentService.refundPayment("payment-1"))
-                .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        ex -> assertThat(ex.getStatusCode().value()).isEqualTo(503));
+        verify(refundRequests).validateExecution("payment-1");
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
         verify(paymentRepository, never()).save(any());
         verify(eventPublisher, never()).publishPaymentRefunded(any());
+    }
+
+    @Test void refundCannotBypassApprovalGuardThroughPaymentService() {
+        org.mockito.Mockito.doThrow(new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.CONFLICT, "Approval required"))
+                .when(refundRequests).validateExecution("payment-1");
+        assertThatThrownBy(() -> paymentService.refundPayment("payment-1"))
+                .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
+                        ex -> assertThat(ex.getStatusCode().value()).isEqualTo(409));
+        org.mockito.Mockito.verifyNoInteractions(paymentRepository, bookingRepository, eventPublisher, bookingService);
     }
 
     @org.junit.jupiter.params.ParameterizedTest

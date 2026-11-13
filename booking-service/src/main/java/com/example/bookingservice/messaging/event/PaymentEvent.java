@@ -8,8 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public class PaymentEvent {
+    String executionMode;
+    String currency;
     String bookingId;
     String customerId;
     String hotelId;
