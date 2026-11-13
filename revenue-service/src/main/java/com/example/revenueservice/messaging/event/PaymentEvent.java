@@ -28,5 +28,32 @@ public record PaymentEvent(
         java.util.UUID eventId,
         String paymentId,
         String transactionId,
-        java.time.Instant transactionAt
-) {}
+        java.time.Instant transactionAt,
+        String executionMode,
+        String currency
+) {
+ public PaymentEvent(        String bookingId,
+        String customerId,
+        String hotelId,
+        String hotelName,
+        String roomTypeId,
+        String roomType,
+        String userId,
+        String userName,
+        String userEmail,
+        LocalDate checkInDate,
+        LocalDate checkOutDate,
+        int nights,
+        int rooms,
+        int numberOfGuests,
+        BigDecimal amount,
+        String paymentStatus,
+        String paymentMethod,
+        LocalDateTime paidAt,
+        LocalDateTime eventAt,
+        Long eventVersion,
+        java.util.UUID eventId,
+        String paymentId,
+        String transactionId,
+        java.time.Instant transactionAt) { this(bookingId,customerId,hotelId,hotelName,roomTypeId,roomType,userId,userName,userEmail,checkInDate,checkOutDate,nights,rooms,numberOfGuests,amount,paymentStatus,paymentMethod,paidAt,eventAt,eventVersion,eventId,paymentId,transactionId,transactionAt,null,null); }
+}

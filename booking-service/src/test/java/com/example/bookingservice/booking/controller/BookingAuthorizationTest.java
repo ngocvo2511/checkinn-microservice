@@ -355,4 +355,16 @@ class BookingAuthorizationTest {
             +(userId==null?"":",\"userId\":\""+userId+"\"")+"}";
     }
 
+    @Test void customerCannotRejectRefund() throws Exception {
+        mvc.perform(post("/api/payments/payment-1/refund-request/reject").header("Authorization","Bearer customer")).andExpect(status().isForbidden());
+        verify(refunds,never()).reject(anyString(),anyString());
+    }
+    @Test void adminRejectUsesVerifiedPrincipal() throws Exception {
+        mvc.perform(post("/api/payments/payment-1/refund-request/reject").header("Authorization","Bearer admin")).andExpect(status().isOk());
+        verify(refunds).reject("payment-1",OTHER.toString());
+    }
+    @Test void anonymousCannotExecuteRefundWithForgedAdminHeader() throws Exception {
+        mvc.perform(post("/api/payments/payment-1/refund").header("X-Role","ADMIN").header("X-User-Id",OTHER.toString())).andExpect(status().isUnauthorized());
+        verify(paymentService,never()).refundPayment(anyString());
+    }
 }

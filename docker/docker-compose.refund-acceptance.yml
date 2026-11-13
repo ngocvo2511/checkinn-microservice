@@ -1,0 +1,4 @@
+# Batch 1.6 image isolated from other stacks; append after refund-smoke overlay.
+services:
+  booking-service:
+    image: checkinn/refund-acceptance-booking:batch1.6

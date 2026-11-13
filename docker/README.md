@@ -9,6 +9,60 @@ Latest independent regulation checkpoint, migration and commands:
 REGULATIONS-only additive outbox script before deploying that writer. This
 checkpoint does not implicitly merge the separate booking/revenue review branch.
 
+
+## Sandbox Internal Refund demo (reviewed 2026-11-13)
+
+**DONE — Refund Backend/API Demo Accepted** in [Batch 1.6](../Docs/BATCH1_6_REFUND_FINAL_ACCEPTANCE_2026-11-13.md),
+with [service/DB/broker evidence](../Docs/BATCH1_3_REFUND_INTEGRATION_FINALIZATION_2026-11-12.md).
+This mode records local demo completion; it never calls VNPay Refund API or
+moves real money. Provider refund/query/reconciliation remains unimplemented.
+Do not mix internal demo movements into production cash reports.
+
+| Setting | Meaning / current source |
+|---|---|
+| `refund.internal.enabled` / application env `REFUND_INTERNAL_ENABLED` | Booking producer and Revenue consumer, default **false**; base Compose also defaults false |
+| Smoke-only `REFUND_SMOKE_INTERNAL_ENABLED` | Refund overlay maps it to application env on **both** services; overlay fallback is **true**, deliberately different from the base/application default |
+| Old `refund.sandbox-internal.enabled`, sandbox profile/pay-URL gates | Historical Batch 1.2 only; superseded by Batch 1.3, not current enablement requirements |
+
+For the base Compose demo, inject `REFUND_INTERNAL_ENABLED=true` into both
+Booking and Revenue and recreate those services in the designated isolated
+project. For the Refund smoke overlay, explicitly set the process environment
+`REFUND_SMOKE_INTERNAL_ENABLED=true` before its existing scoped compose command;
+set it to `false` and recreate **both** services for disabled validation. These
+are future operator steps, not operations performed in the documentation batch.
+A disabled producer denies valid execution 503 without mutation; a disabled
+consumer quarantines/reviews internal-mode facts instead of accepting a DEBIT.
+Do not disable the consumer while expecting queued internal events to settle.
+
+Before any runner, verify compose project labels, named volume ownership and
+DB URLs. Use only disposable resources; no developer/shared DB, clone of user
+data, reset of unknown volumes or global prune. The Batch 1.5 runner writes
+fixtures and flips flags; it is not a read-only health probe. Retained Batch 1.6
+resources ended with both flags false; that is historical evidence, not a fresh
+runtime inspection in Batch 1.7. The acceptance image override references the
+separately built `checkinn/refund-acceptance-booking:batch1.6` image.
+
+Bootstrap/migration order and exact reproduction: [Batch 1.5 environment](../Docs/BATCH1_5_REFUND_GATEWAY_ACCEPTANCE_2026-11-13.md#b-isolated-environment),
+[Batch 1.6 fixtures/cleanup](../Docs/BATCH1_6_REFUND_FINAL_ACCEPTANCE_2026-11-13.md).
+Apply prerequisite Booking policy/idempotency/reservation/loyalty/transaction/outbox
+SQL, then `booking-vnpay-create-date-v1-20261112.sql`, manual refund, sandbox refund;
+Revenue source-version/cash/receipt/gap SQL precedes its sandbox-refund SQL.
+These files are not auto-applied merely by being present. Use the existing
+runners/reports for full dependencies; do not run this as an ad hoc production
+migration checklist. Fresh User bootstrap/JPA update is test-only and does not
+certify representative legacy upgrades or production rollout.
+
+`refund-acceptance-smoke.py` covers Gateway barrier concurrency from APPROVED,
+auth/invalid states, post-commit response loss/retry, SQL singleton checks and
+existing hotel/date-scoped Revenue report net=0. `refund-integration.py` creates
+its own disposable PostgreSQL/RabbitMQ and runs opt-in suites; never enable those
+destructive test schemas against an existing DB. `refund-disabled-acceptance.py`
+requires the smoke services already running with flags false. No passwords or
+JWTs belong in reports. Booking creation/cancellation is a **separate** acceptance:
+the Refund smoke stack has no Hotel catalog/availability, so that Gateway lifecycle
+is BLOCKED there; live VNPay checkout, frontend Refund and full-chain E2E are not
+proved by seeded completed payments. No Place service is needed for Refund scope.
+
 ## Standardization regressions (29/10/2026)
 
 After rebuilding the changed booking/hotel images and starting **only the test
@@ -1515,8 +1569,9 @@ An out-of-order refund does not discard the later-arriving older credit movement
 New events carry payment identity, transaction reference and an explicit Instant.
 Completed source receipts derive this Instant in the same process that records the
 receipt. No refund timestamp is inferred from the original payment timestamp. The
-actual refund execution/provider adapter remains unavailable as before: a tested
-consumer contract is not proof that a provider settled a refund.
+provider refund adapter remains unavailable. Opt-in internal demo execution is now
+accepted as described above; a consumer/internal completion is not proof that a
+provider settled a refund.
 
 Report dates are inclusive civil dates in `Asia/Ho_Chi_Minh`; database selection
 uses an Instant start inclusive/end exclusive. UI month/day/negative cash charts

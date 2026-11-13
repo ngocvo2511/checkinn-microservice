@@ -1,0 +1,15 @@
+"""Runs only after refund-gateway-smoke.py has recreated smoke services with the flag false."""
+import importlib.util, pathlib, time, uuid
+spec=importlib.util.spec_from_file_location('s',pathlib.Path(__file__).with_name('refund-gateway-smoke.py')); s=importlib.util.module_from_spec(spec); spec.loader.exec_module(s)
+customer_email=s.sql('checkinn_smoke_user',"SELECT email FROM users WHERE role='CUSTOMER' ORDER BY created_at DESC LIMIT 1").strip()
+admin_email=s.sql('checkinn_smoke_user',"SELECT email FROM users WHERE role='ADMIN' ORDER BY created_at DESC LIMIT 1").strip()
+code,c=s.http('POST','/api/auth/login',{'usernameOrEmail':customer_email,'password':s.PASSWORD}); s.check(code==200,'disabled customer login'); code,a=s.http('POST','/api/auth/login',{'usernameOrEmail':admin_email,'password':s.PASSWORD}); s.check(code==200,'disabled admin login')
+customer,admin=c['token'],a['token']; customer_id=c['userId']; b,p,h,r=map(lambda _:str(uuid.uuid4()),range(4)); amount='1000000.00'
+s.check(s.http('POST','/api/payments/'+str(uuid.uuid4())+'/refund')[0]==401,'anonymous execute denied via gateway')
+s.check(s.http('POST','/api/payments/'+str(uuid.uuid4())+'/refund',None,customer)[0]==403,'customer execute denied via gateway')
+s.sql('checkinn_smoke_booking',f"INSERT INTO bookings(id,user_id,hotel_id,hotel_name,check_in_date,check_out_date,adults,children,status,total_amount,paid_amount,contact_name,contact_email,contact_phone,cancellation_policy_version,check_in_at,free_cancellation_until,created_at,updated_at) VALUES ('{b}','{customer_id}','{h}','Smoke Hotel','2026-12-22','2026-12-23',1,0,'CANCELLED',{amount},{amount},'Smoke','{customer_email}','0900000000','STANDARD_24H_V1',now()+interval '30 days',now()+interval '20 days',now(),now()); INSERT INTO booking_items(id,booking_id,room_type_id,room_type_name,rate_plan_id,check_in_date,check_out_date,quantity,unit_price,nights,subtotal) VALUES ('{uuid.uuid4()}','{b}','{r}','Smoke Room','{r}','2026-12-22','2026-12-23',1,{amount},1,{amount}); INSERT INTO payments(id,booking_id,amount,method,status,transaction_id,vnpay_order_id,vnpay_response_code,vnpay_transaction_no,paid_at,transaction_occurred_at,created_at,updated_at) VALUES ('{p}','{b}',{amount},'VNPAY','COMPLETED','disabled-{uuid.uuid4()}','disabled-{uuid.uuid4()}','00','{str(int(time.time()*1000000))[-15:]}',now(),now(),now(),now())")
+s.check(s.http('POST',f'/api/payments/{p}/refund-request',{'reason':'disabled'},customer)[0]==201,'disabled request')
+s.check(s.http('POST',f'/api/payments/{p}/refund-request/approve',None,admin)[0]==200,'disabled approval')
+s.check(s.http('POST',f'/api/payments/{p}/refund',None,admin)[0]==503,'disabled execute denied')
+s.check(s.sql('checkinn_smoke_booking',f"SELECT status FROM payments WHERE id='{p}'").strip()=='COMPLETED' and s.sql('checkinn_smoke_booking',f"SELECT count(*) FROM booking_event_outbox WHERE booking_id='{b}' AND routing_key='payment.refunded'").strip()=='0','disabled leaves financial state unchanged')
+print('{"result":"PASS","case":"disabled internal refund"}')

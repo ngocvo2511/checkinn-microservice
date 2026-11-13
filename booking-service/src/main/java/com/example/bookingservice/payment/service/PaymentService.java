@@ -41,6 +41,7 @@ public class PaymentService {
     private final HotelEventPublisher eventPublisher;
     private final PaymentCreationPolicyFactory paymentCreationPolicyFactory;
     private final org.springframework.context.ApplicationEventPublisher applicationEvents;
+    private final com.example.bookingservice.payment.refund.RefundRequestService refundRequests;
 
     @Transactional
     public PaymentResponse createPayment(CreatePaymentRequest request) {
@@ -115,6 +116,8 @@ public class PaymentService {
 
         PaymentCreationPolicy creationPolicy = paymentCreationPolicyFactory.getPolicy(PaymentMethod.VNPAY);
         Payment payment = creationPolicy.createPayment(paymentRequest);
+        LocalDateTime now = LocalDateTime.now(java.time.ZoneId.of("Asia/Ho_Chi_Minh"));
+        payment.setVnpayCreateDate(VnPayUtil.getCreateDate(now));
         creationPolicy.updateBookingAfterPaymentCreated(booking);
         if (creationPolicy.shouldPersistBooking()) {
             bookingRepository.save(booking);
@@ -125,7 +128,6 @@ public class PaymentService {
         String txnRef = payment.getId();
         payment.setVnpayOrderId(txnRef);
 
-        LocalDateTime now = LocalDateTime.now();
         Map<String, String> params = new HashMap<>();
         params.put("vnp_Version", vnPayProperties.getVersion());
         params.put("vnp_Command", "pay");
@@ -138,7 +140,7 @@ public class PaymentService {
         params.put("vnp_ReturnUrl", vnPayProperties.getReturnUrl());
         params.put("vnp_IpAddr", clientIp == null ? "127.0.0.1" : clientIp);
         params.put("vnp_Locale", "vn");
-        params.put("vnp_CreateDate", VnPayUtil.getCreateDate(now));
+        params.put("vnp_CreateDate", payment.getVnpayCreateDate());
         params.put("vnp_ExpireDate", VnPayUtil.getExpireDate(now, 15));
 
         String query = VnPayUtil.buildQuery(params);
@@ -172,7 +174,7 @@ public class PaymentService {
         Payment payment = paymentRepository.findByVnpayOrderIdForUpdate(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
 
-        if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED) {
+        if (payment.getStatus() == PaymentStatus.COMPLETED || payment.getStatus() == PaymentStatus.FAILED || payment.getStatus() == PaymentStatus.REFUNDED) {
             validateVnPayReplay(payment, responseCode, transactionId);
             if (transactionAt != null && payment.getTransactionOccurredAt() != null
                     && !transactionAt.equals(payment.getTransactionOccurredAt())) {
@@ -254,20 +256,49 @@ public class PaymentService {
         return toPaymentResponse(payment);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private org.springframework.jdbc.core.JdbcTemplate refundJdbc;
+    @org.springframework.beans.factory.annotation.Value("${refund.internal.enabled:false}")
+    private boolean sandboxRefundEnabled;
+
     @Transactional
     public PaymentResponse refundPayment(String paymentId) {
         log.info("[REFUND_PAYMENT] Request received - paymentId: {}", paymentId);
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new IllegalArgumentException("Payment not found: " + paymentId));
-
-        if (payment.getStatus() != PaymentStatus.COMPLETED) {
-            throw new IllegalArgumentException("Can only refund completed payments");
+        var actor = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (actor == null) actor = com.example.bookingservice.grpc.interceptor.UserContextInterceptor.ACTOR.get();
+        if (sandboxRefundEnabled && (actor == null || !actor.isAuthenticated() || actor.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))))
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN,"ADMIN required");
+        // Lock order matches cancellation and callback. Replay must not call completed-only validation.
+        if (sandboxRefundEnabled) {
+            String bookingId=paymentRepository.findBookingIdById(paymentId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Payment not found"));
+            Booking b=bookingRepository.findByIdForUpdate(bookingId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Booking not found"));
+            Payment p=paymentRepository.findByIdForUpdate(paymentId).orElseThrow();
+            var r=refundRequests.get(paymentId);
+            if (r.getStatus()==com.example.bookingservice.payment.refund.RefundRequest.Status.REFUNDED) {
+                if (!paymentId.equals(r.getPaymentId()) || !bookingId.equals(r.getBookingId()) || r.getAmount()==null || r.getAmount().compareTo(p.getAmount())!=0 || b.getStatus()!=BookingStatus.CANCELLED || p.getStatus()!=PaymentStatus.REFUNDED || !"SANDBOX_INTERNAL".equals(r.getExecutionMode()))
+                    throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,"Refund requires review");
+                return toPaymentResponse(p);
+            }
+            refundRequests.validateExecution(paymentId);
+            var old=refundJdbc.queryForList("SELECT state FROM manual_refund_executions WHERE payment_id=? FOR UPDATE",paymentId);
+            if (!old.isEmpty() && !"PENDING_MANUAL_REFUND".equals(old.getFirst().get("state")))
+                throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,"Existing manual evidence requires review");
+            java.time.Instant completed=java.time.Instant.now().truncatedTo(ChronoUnit.MICROS);
+            refundJdbc.update("INSERT INTO manual_refund_executions(id,request_id,payment_id,booking_id,amount,currency,provider,state,execution_method) VALUES (?,?,?,?,?,'VND',?,'REFUNDED','SANDBOX_INTERNAL') ON CONFLICT(payment_id) DO UPDATE SET state='REFUNDED',execution_method='SANDBOX_INTERNAL',updated_at=now()",
+                java.util.UUID.randomUUID(),r.getId(),paymentId,bookingId,r.getAmount(),p.getMethod().name());
+            refundJdbc.update("INSERT INTO manual_refund_audit(id,execution_id,action,actor_id) SELECT ?,id,'SANDBOX_INTERNAL_REFUNDED',? FROM manual_refund_executions WHERE payment_id=?",java.util.UUID.randomUUID(),actor.getName(),paymentId);
+            r.setStatus(com.example.bookingservice.payment.refund.RefundRequest.Status.REFUNDED);
+            r.setExecutionMode("SANDBOX_INTERNAL");r.setRefundedAt(completed);
+            p.setStatus(PaymentStatus.REFUNDED);
+            b.setPaidAmount(b.getPaidAmount().subtract(r.getAmount()));
+            var event=buildPaymentEvent(b,p,PaymentStatus.REFUNDED.name()).toBuilder()
+                .transactionId("sandbox-refund:"+r.getId()).transactionAt(completed)
+                .executionMode("SANDBOX_INTERNAL").currency("VND").build();
+            eventPublisher.publishPaymentRefunded(event);
+            return toPaymentResponse(p);
         }
-
-        // Financial success requires a verified provider refund result. A database update is not a refund.
-        throw new org.springframework.web.server.ResponseStatusException(
-                org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
-                "Refund execution is unavailable until the provider integration is verified; payment is unchanged");
+        refundRequests.validateExecution(paymentId);
+        throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,"Internal refund disabled; payment unchanged");
     }
 
     @Transactional
@@ -459,6 +490,7 @@ public class PaymentService {
 
     private PaymentResponse toPaymentResponse(Payment payment) {
         return PaymentResponse.builder()
+                .refundExecutionMode(payment.getStatus()==PaymentStatus.REFUNDED ? refundRequests.get(payment.getId()).getExecutionMode() : null)
                 .id(payment.getId())
                 .bookingId(payment.getBookingId())
                 .amount(payment.getAmount())

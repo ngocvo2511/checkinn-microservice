@@ -42,6 +42,9 @@ public class RefundRequestService {
 
     @Transactional
     public RefundRequest approve(String paymentId, String administratorId) {
+        if (administratorId == null || administratorId.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Approval actor is required");
+        }
         Payment payment = lockPayment(paymentId);
         requireCompleted(payment);
         var booking = bookings.findByIdForUpdate(payment.getBookingId()).orElseThrow();
@@ -49,13 +52,52 @@ public class RefundRequestService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cancel the reservation through the reviewed workflow before approving refund");
         }
         RefundRequest request = get(paymentId);
-        if (request.getAmount().compareTo(payment.getAmount()) != 0) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Refund request amount requires reconciliation");
-        }
+        validateRequestIdentity(request, payment);
         if (request.getStatus() == RefundRequest.Status.APPROVED_PENDING_EXECUTION) return request;
+        if (request.getStatus() != RefundRequest.Status.REQUESTED) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Refund request state requires reconciliation");
+        }
         request.setApprovedBy(administratorId); request.setApprovedAt(Instant.now());
         request.setStatus(RefundRequest.Status.APPROVED_PENDING_EXECUTION);
         return requests.save(request); // approval is not provider settlement; paidAmount stays unchanged
+    }
+
+    /** Shared REST/RPC execution precondition; caller retains the booking/payment locks. */
+    @Transactional(propagation = org.springframework.transaction.annotation.Propagation.MANDATORY)
+    public void validateExecution(String paymentId) {
+        Payment payment = lockPayment(paymentId);
+        requireCompleted(payment);
+        var booking = bookings.findByIdForUpdate(payment.getBookingId()).orElseThrow();
+        if (booking.getStatus() != BookingStatus.CANCELLED) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Refund requires a cancelled reservation");
+        }
+        RefundRequest request = get(paymentId);
+        validateRequestIdentity(request, payment);
+        if (request.getStatus() != RefundRequest.Status.APPROVED_PENDING_EXECUTION
+                || request.getApprovedBy() == null || request.getApprovedBy().isBlank()
+                || request.getApprovedAt() == null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Audited ADMIN approval is required before execution");
+        }
+    }
+
+    @Transactional
+    public RefundRequest reject(String paymentId, String actor) {
+        lockPayment(paymentId);
+        var r=get(paymentId);
+        if(r.getStatus()==RefundRequest.Status.REJECTED) return r;
+        if(r.getStatus()!=RefundRequest.Status.REQUESTED)
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Only requested refunds may be rejected");
+        r.setStatus(RefundRequest.Status.REJECTED);
+        r.setApprovedBy(actor);r.setApprovedAt(Instant.now());
+        return requests.save(r);
+    }
+
+    private void validateRequestIdentity(RefundRequest request, Payment payment) {
+        if (!payment.getId().equals(request.getPaymentId())
+                || !payment.getBookingId().equals(request.getBookingId())
+                || request.getAmount() == null || request.getAmount().compareTo(payment.getAmount()) != 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Refund request identity or amount requires reconciliation");
+        }
     }
 
     private Payment lockPayment(String paymentId) {

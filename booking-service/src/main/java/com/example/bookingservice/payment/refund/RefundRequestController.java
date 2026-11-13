@@ -26,4 +26,7 @@ public class RefundRequestController {
     public RefundRequest approve(@PathVariable String paymentId, Authentication actor) {
         return refunds.approve(paymentId, actor.getName());
     }
+    @PostMapping("/reject")
+    @PreAuthorize("@bookingAccess.isAdmin(authentication)")
+    public RefundRequest reject(@PathVariable String paymentId, Authentication actor) { return refunds.reject(paymentId,actor.getName()); }
 }

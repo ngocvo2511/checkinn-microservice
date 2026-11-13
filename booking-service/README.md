@@ -9,7 +9,7 @@ Spring Boot microservice cho quản lý đặt phòng (bookings) và thanh toán
 - Thanh toán tại khách sạn (Hotel Payment)
 - Thanh toán qua VNPay
 - Hủy đặt phòng
-- Hoàn tiền
+- Sandbox Internal Refund (demo opt-in, không chuyển tiền thật qua VNPay)
 
 ## Database Schema
 
@@ -88,14 +88,36 @@ number. No caller of the unsigned RPC was found in either repository.
 - `POST /api/payments/{id}/refund-request/approve`, ADMIN only, requires a
   cancelled reservation and records the approver/time as
   `APPROVED_PENDING_EXECUTION`. It does not claim provider settlement.
-- Legacy `POST /api/payments/{id}/refund` and gRPC refund return unavailable
-  (HTTP 503 / gRPC UNAVAILABLE) until provider refund/query integration is
-  implemented and verified. No production adapter or response is faked.
+- `POST /api/payments/{id}/refund-request/reject`, ADMIN only, changes REQUESTED
+  to REJECTED; rejected requests cannot execute.
+- `POST /api/payments/{id}/refund` executes **Sandbox Internal Refund** when
+  enabled: ADMIN only, approved/cancelled/full completed-payment preconditions.
+  The same ADMIN may approve and execute. Request and Payment become REFUNDED;
+  Booking remains CANCELLED, paidAmount decreases once, original receipt/VNPay
+  metadata stays intact. Retry is idempotent. No VNPay Refund API or actual money
+  movement occurs. Internal execution also uses the existing gRPC service path;
+  Batch 1.6 final Gateway acceptance is HTTP, not a new deployed RPC certification.
+- `refund.internal.enabled` / `REFUND_INTERNAL_ENABLED` defaults **false** on
+  Booking and Revenue; enable both only on isolated demo data. Disabled valid
+  execution returns 503 without financial mutation. Consumer-disabled internal
+  events require review, not a successful DEBIT. Smoke variable mapping and
+  migration prerequisites: [Docker runbook](../docker/README.md#sandbox-internal-refund-demo-reviewed-2026-11-13).
+- Completion emits transactional `payment.refunded`, with
+  `executionMode=SANDBOX_INTERNAL`, `currency=VND`, stable
+  `transactionId=sandbox-refund:<request-id>` and local completion Instant.
+  Revenue retains immutable CREDIT and adds one DEBIT; this is internal demo
+  accounting, not a provider refund reference/time or settlement.
+- Backend/API demo accepted: [Batch 1.6](../Docs/BATCH1_6_REFUND_FINAL_ACCEPTANCE_2026-11-13.md).
+  Frontend Refund UI, real provider execution/query/reconciliation remain absent;
+  live checkout and full booking/payment/cancellation/refund E2E are not verified.
+  Manual evidence/verify endpoints are not required for this demo; legacy verify
+  remains fail closed because no trusted settlement verifier exists.
 - VNPay receipt is recorded independently of stock confirmation. Hold failure
   leaves the booking unconfirmed for reconciliation, prevents another charge
   and prevents automatic unpaid-hold cancellation. Email/UI distinguish money
-  received from room confirmed. Automatic distributed reconciliation/outbox and
-  the legacy onsite-reservation TTL policy remain open in STD-007/029.
+  received from room confirmed. Durable paid/onsite reservation recovery and the source outbox now exist
+  (sections below); provider reconciliation and full deployed crash/multi-instance
+  acceptance remain open in STD-007/029.
 - A verified late VNPay callback still records received money after local payment
   cancellation, without reopening the reservation. Replays do not add money twice;
   earlier receipts are preserved for reconciliation.
@@ -139,8 +161,8 @@ python docker/booking-security-smoke.py # isolated checkinn-test stack only
 - `POST /api/payments` - Tạo thanh toán
 - `GET /api/payments/{id}` - Lấy thông tin thanh toán
 - `GET /api/payments/booking/{bookingId}` - Lấy thanh toán của đặt phòng
-- `POST /api/payments/{id}/refund` - Hoàn tiền
-- `POST /api/payments/vnpay-callback` - VNPay callback
+- `POST /api/payments/{id}/refund` - ADMIN Sandbox Internal Refund (opt-in demo; không chuyển tiền VNPay thật)
+- `GET /api/payments/vnpay/return` - Signed VNPay return (HMAC/merchant/amount verified)
 
 ## Configuration
 

@@ -13,11 +13,15 @@ import java.time.ZoneOffset;
 @RequiredArgsConstructor
 public class CashTransactionWriter {
     private final JdbcTemplate jdbc;
+    @org.springframework.beans.factory.annotation.Value("${refund.internal.enabled:false}") private boolean sandboxEnabled;
     public enum Outcome { RECORDED, LEGACY_PROJECTION_ONLY, MISSING_TRANSACTION_FACTS, TRANSACTION_CONFLICT }
     public void preserveLegacyCoverage(String bookingId) {
         jdbc.update("INSERT INTO revenue_cashflow_gaps(booking_id,hotel_id,source_record_id,reason) SELECT booking_id,hotel_id,id,'LEGACY_HISTORY_NOT_VERIFIED' FROM payment_records WHERE booking_id=? AND event_version IS NULL ON CONFLICT(booking_id) DO NOTHING",bookingId);
     }
     public Outcome record(PaymentEvent e) {
+        if (e.executionMode()!=null && (!sandboxEnabled || !"SANDBOX_INTERNAL".equals(e.executionMode()) || !"VND".equals(e.currency())
+                || !"REFUNDED".equals(e.paymentStatus()) || e.transactionId()==null || !e.transactionId().startsWith("sandbox-refund:")))
+            return Outcome.TRANSACTION_CONFLICT;
         if(e.eventVersion()==null) {
             jdbc.update("INSERT INTO revenue_cashflow_gaps(booking_id,hotel_id,reason) VALUES (?,?,'LEGACY_HISTORY_NOT_VERIFIED') ON CONFLICT(booking_id) DO NOTHING",e.bookingId(),e.hotelId());
             return Outcome.LEGACY_PROJECTION_ONLY;
@@ -34,15 +38,15 @@ public class CashTransactionWriter {
             return Outcome.TRANSACTION_CONFLICT;
         jdbc.update("""
             INSERT INTO revenue_cash_transactions(id,source_event_id,source_version,payment_id,kind,transaction_id,occurred_at,
-                booking_id,customer_id,hotel_id,room_type_id,check_in_date,check_out_date,nights,rooms,amount,payment_method)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING
+                booking_id,customer_id,hotel_id,room_type_id,check_in_date,check_out_date,nights,rooms,amount,payment_method,execution_mode)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING
             """,UUID.randomUUID(),e.eventId(),e.eventVersion(),e.paymentId(),kind,e.transactionId(),OffsetDateTime.ofInstant(e.transactionAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS),ZoneOffset.UTC),
-                e.bookingId(),e.customerId(),e.hotelId(),e.roomTypeId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.amount(),e.paymentMethod());
+                e.bookingId(),e.customerId(),e.hotelId(),e.roomTypeId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.amount(),e.paymentMethod(),e.executionMode());
         // Re-emission with another outbox ID is still the same financial transaction.
         var rows=jdbc.queryForList("SELECT * FROM revenue_cash_transactions WHERE payment_id=? AND kind=?",e.paymentId(),kind);
         if(rows.size()!=1)return Outcome.TRANSACTION_CONFLICT;
         var row=rows.getFirst();
-        boolean same=samePayment(row,e) && Objects.equals(row.get("transaction_id"),e.transactionId())
+        boolean same=Objects.equals(row.get("execution_mode"),e.executionMode()) && samePayment(row,e) && Objects.equals(row.get("transaction_id"),e.transactionId())
                 && ((java.sql.Timestamp)row.get("occurred_at")).toInstant().equals(e.transactionAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS));
         return same?Outcome.RECORDED:Outcome.TRANSACTION_CONFLICT;
     }

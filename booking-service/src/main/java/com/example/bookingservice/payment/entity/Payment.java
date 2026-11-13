@@ -47,6 +47,11 @@ public class Payment {
     @Column(name = "vnpay_order_id")
     private String vnpayOrderId;
 
+    // Exact signed pay request date (GMT+7), required by querydr/refund.
+    // Legacy rows remain NULL; paidAt/transactionOccurredAt are different facts.
+    @Column(name = "vnpay_create_date", length = 14, updatable = false)
+    private String vnpayCreateDate;
+
     @Column(name = "vnpay_response_code")
     private String vnpayResponseCode;
 
