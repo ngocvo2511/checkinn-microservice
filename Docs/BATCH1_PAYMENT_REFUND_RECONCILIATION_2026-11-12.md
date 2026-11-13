@@ -67,7 +67,7 @@ git diff --check
 | Frontend typecheck/build | Không chạy, không phải gate batch backend. |
 | Provider/gateway/production DB | Không chạy. |
 
-Log bên ngoài repository: `C:/Users/ACER/IdeaProjects/DA1/BATCH1_2026-11-12_backend-tests.log` và `BATCH1_2026-11-12_utc-test.log`. Kết quả reactor là nguồn tổng hợp cho lần chạy full regression; không cộng report ApplicationTests cũ hoặc nhầm report test chọn lọc với full suite. Test timezone riêng có thể ghi đè XML cùng class.
+Log bên ngoài repository: `C:/Users/ACER/IdeaProjects/DA1/checkinn/.local/evidence/batch-1-refund/BATCH1_2026-11-12_backend-tests.log` và `BATCH1_2026-11-12_utc-test.log`. Kết quả reactor là nguồn tổng hợp cho lần chạy full regression; không cộng report ApplicationTests cũ hoặc nhầm report test chọn lọc với full suite. Test timezone riêng có thể ghi đè XML cùng class.
 
 ### Ma trận yêu cầu
 

@@ -1,0 +1,57 @@
+# Disposable Batch 2 only; no production migration certification.
+# docker compose -p checkinn-booking-smoke -f docker-compose.yml -f docker-compose.booking-smoke.yml ...
+services:
+  rabbitmq:
+    user: rabbitmq
+  postgres-smoke:
+    image: postgres:18-alpine
+    networks: [checkinn]
+    environment:
+      POSTGRES_USER: smoke_runner
+      POSTGRES_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+    volumes:
+      - booking-smoke-postgres-data:/var/lib/postgresql
+      - ./booking-smoke-init.sql:/docker-entrypoint-initdb.d/01-booking-smoke-init.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U smoke_runner -d postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  user-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_user
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+      # Controlled bootstrap for an empty, named smoke database only.
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      BOOKING_GRPC_ADDRESS: booking-service:9093
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+  booking-service:
+    image: checkinn/booking-smoke-booking:batch2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_booking
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Set by refund-gateway-smoke.py}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      REFUND_INTERNAL_ENABLED: "false"
+      LOYALTY_SETTLEMENT_DELAY_MS: "600000"
+      PAID_RESERVATION_DELAY_MS: "600000"
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+  hotel-service:
+    image: checkinn/booking-smoke-hotel:batch2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-smoke:5432/checkinn_smoke_hotel
+      SPRING_DATASOURCE_USERNAME: smoke_runner
+      SPRING_DATASOURCE_PASSWORD: ${REFUND_SMOKE_POSTGRES_PASSWORD:?Isolated smoke password required}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "false"
+    depends_on:
+      postgres-smoke: {condition: service_healthy}
+
+volumes:
+  booking-smoke-postgres-data:

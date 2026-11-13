@@ -2,6 +2,8 @@
 
 Ngày 13/11/2026, Asia/Saigon.
 
+**Batch 2 archive note:** root logs/JSON named below now reside under `checkinn/.local/evidence/batch-1-refund/` (ignored). Original paths describe execution history; original/new path and SHA-256 are in [workspace manifest](evidence/batch-2-booking/workspace-inventory.json). No raw evidence was rewritten.
+
 **DONE — Refund Backend/API Demo Accepted**
 
 ## A. Initial State

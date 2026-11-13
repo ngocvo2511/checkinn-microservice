@@ -37,7 +37,7 @@ python docker/manual-refund-migration-test.py
 git diff --check
 git diff --exit-code -- place-service
 ```
-Log regression: C:/Users/ACER/IdeaProjects/DA1/BATCH1_1_final-tests.log. Không dùng XML cũ để chứng nhận lần chạy mới.
+Log regression: C:/Users/ACER/IdeaProjects/DA1/checkinn/.local/evidence/batch-1-refund/BATCH1_1_final-tests.log. Không dùng XML cũ để chứng nhận lần chạy mới.
 PostgreSQL postgres:18-alpine dùng container riêng không host port: PASS migration replay; 4 concurrent INSERT với ON CONFLICT tạo đúng 1 execution; amount âm, REFUNDED và pending thiếu evidence bị constraint chặn; rollback giữ pending; evidence đầy đủ lưu PENDING_VERIFICATION. Xóa container test sau chạy. Đây là SQL/constraint tests trên schema tối giản, không phải concurrency service/JPA/gateway acceptance.
 Ba test mới: verification fail closed không chạm database/payment, invalid evidence bị chặn trước state access, thiếu approval không tạo execution. Full regression gồm tests Batch 1, booking cancellation/late callback và revenue hiện hữu. Chưa kiểm service restart/crash thật, concurrent ADMIN HTTP actions, authorization endpoints mới bằng MockMvc, audit rollback failure injection, provider delayed/duplicate/timeout và query orchestration. Các test DB opt-in hiện hữu mặc định bị skip; không claim chúng đã chạy.
 

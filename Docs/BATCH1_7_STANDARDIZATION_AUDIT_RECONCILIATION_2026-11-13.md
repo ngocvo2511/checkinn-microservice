@@ -27,7 +27,7 @@ Không thực hiện real VNPay Refund API/money movement/provider reconciliatio
 
 ## C. Audit Updates
 
-[Audit chính](../../PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md) được chỉnh có chọn lọc:
+[Audit chính](standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md) được chỉnh có chọn lọc:
 
 - A/B: thêm Last reviewed, current dirty-tree note và phân biệt snapshot/test12/11 với source/evidence sau Batch 1.6; risk Refund chia internal demo/provider.
 - C: cập nhật completed sub-scope STD-002/007/021/027/028/029; bổ sung ánh xạ taxonomy. Giữ nguyên32 IDs và parent totals **16 FIXED_VERIFIED, 12 IN_PROGRESS, 3 FIXED_UNVERIFIED, 1 NEEDS_ENVIRONMENT**; không đổi STD-002/007 sang FIXED_VERIFIED.
@@ -37,7 +37,7 @@ Không thực hiện real VNPay Refund API/money movement/provider reconciliatio
 
 ## D. Plan Updates
 
-[PLAN chính](../../PROJECT_STANDARDIZATION_PLAN.md) có cấu trúc checkpoint sẵn nên cần cập nhật: header/checkpoint13/11, chú thích current-vs-historical scope, scope notes ở STD-002/007/028, contextual note cho roadmap gốc và mục74 closure/dependencies/evidence.
+[PLAN chính](standardization/PROJECT_STANDARDIZATION_PLAN.md) có cấu trúc checkpoint sẵn nên cần cập nhật: header/checkpoint13/11, chú thích current-vs-historical scope, scope notes ở STD-002/007/028, contextual note cho roadmap gốc và mục74 closure/dependencies/evidence.
 
 Không rewrite inventory, không xóa acceptance provider/S02/S10/mục18 hoặc hạ yêu cầu production. Giữ policy cancellation/free24h/14:00, không thêm partial refund, second ADMIN hay evidence requirement vào demo. Không tick global Ready READ/WRITE từ một sub-scope. Không biến PLAN thành bản chép báo cáo1.6; trạng thái tổng hợp/priority ở audit, chi tiết test ở report tương ứng.
 
@@ -53,7 +53,7 @@ Không rewrite inventory, không xóa acceptance provider/S02/S10/mục18 hoặc
 
 ## F. Remaining Workstreams
 
-Bảng đầy đủ **Priority / Workstream / Current status / Evidence / Dependencies / Recommended next action** ở [audit G0](../../PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md#g0-remaining-workstream-priorities-13-november-review), tránh duy trì hai bảng dễ lệch. Bao phủ toàn16 open parent findings:
+Bảng đầy đủ **Priority / Workstream / Current status / Evidence / Dependencies / Recommended next action** ở [audit G0](standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md#g0-remaining-workstream-priorities-13-november-review), tránh duy trì hai bảng dễ lệch. Bao phủ toàn16 open parent findings:
 
 - STD-002/007: financial capability provider NOT IMPLEMENTED; Booking lifecycle integration/test gap; internal demo closed.
 - STD-006/021/024: stock/cash/encoding provenance và clean+upgrade manifests; implementation từng phần, chưa có đại diện production evidence.
@@ -85,8 +85,8 @@ Không chạy Docker/database/migrations/Maven/npm/browser trong batch documenta
 
 | Exact workspace path | Attribution / purpose |
 |---|---|
-| `C:/Users/ACER/IdeaProjects/DA1/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md` | Existing root doc; Batch1.7 current scope/status/evidence/priority reconciliation |
-| `C:/Users/ACER/IdeaProjects/DA1/PROJECT_STANDARDIZATION_PLAN.md` | Existing root doc; scope/dependency/checkpoint74, requirements preserved |
+| `C:/Users/ACER/IdeaProjects/DA1/checkinn/Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md` | Existing root doc; Batch1.7 current scope/status/evidence/priority reconciliation |
+| `C:/Users/ACER/IdeaProjects/DA1/checkinn/Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md` | Existing root doc; scope/dependency/checkpoint74, requirements preserved |
 | `C:/Users/ACER/IdeaProjects/DA1/checkinn/booking-service/README.md` | Existing tracked doc; correct Refund API/opt-in semantics |
 | `C:/Users/ACER/IdeaProjects/DA1/checkinn/docker/README.md` | Existing tracked doc; setup/accounting/harness boundaries |
 | `C:/Users/ACER/IdeaProjects/DA1/checkinn/Docs/BATCH1_2_SANDBOX_REFUND_EXECUTION_2026-11-12.md` | Existing untracked report từ Batch1.2; chỉ superseded-config note mới |

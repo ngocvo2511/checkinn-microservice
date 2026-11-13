@@ -1,0 +1,20 @@
+{
+  "command": "mvn.cmd -o -B -ntp -pl booking-service,hotel-service -Dtest=*,!*ApplicationTests -Dsurefire.failIfNoSpecifiedTests=false test",
+  "build": "SUCCESS",
+  "module_totals": [
+    {
+      "reported": 396,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 32,
+      "executed_pass": 364
+    },
+    {
+      "reported": 265,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "executed_pass": 263
+    }
+  ]
+}

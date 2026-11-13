@@ -1,0 +1,44 @@
+[
+  {
+    "case": "Gateway customer registration",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login CUSTOMER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Gateway real JWT login OWNER",
+    "result": "PASS",
+    "http": 200
+  },
+  {
+    "case": "Deadline fixture created through Gateway",
+    "result": "PASS",
+    "http": 201
+  },
+  {
+    "case": "Hotel expiry matches Booking SQL, create response and persisted Gateway readback",
+    "result": "PASS",
+    "booking_sql_timestamp_zone": "Asia/Ho_Chi_Minh (Hibernate JDBC configuration)",
+    "tolerance_ms": 1
+  },
+  {
+    "case": "Policy snapshot is 14:00 Vietnam check-in with 24-hour cancellation deadline",
+    "result": "PASS"
+  },
+  {
+    "case": "Deadline fixture cancelled through Gateway",
+    "result": "PASS"
+  },
+  {
+    "case": "Final SQL global inventory invariant has zero violations",
+    "result": "PASS"
+  },
+  {
+    "case": "No test fault triggers remain in either database",
+    "result": "PASS"
+  }
+]

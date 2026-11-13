@@ -1,0 +1,837 @@
+{
+  "hotel": {
+    "required_tables": [
+      "hotels",
+      "room_types",
+      "room_availability",
+      "room_holds"
+    ],
+    "present_count": 4,
+    "constraints": [
+      {
+        "relation": "hotels",
+        "name": "fks4hjpubog1wqi4qktjpoejarg",
+        "type": "f",
+        "validated": true,
+        "definition": "FOREIGN KEY (city_id) REFERENCES cities(id)"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_accommodation_type_allowed",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((accommodation_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying])::text[])))"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_accommodation_type_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((accommodation_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying])::text[])))"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_address_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL address"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_approved_status_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((approved_status)::text = ANY ((ARRAY['DRAFT'::character varying, 'PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying])::text[])))"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_approved_status_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL approved_status"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_business_license_number_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL business_license_number"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_city_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL city_id"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_is_active_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL is_active"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL name"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_owner_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL owner_id"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_revision_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL revision"
+      },
+      {
+        "relation": "hotels",
+        "name": "hotels_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_booked_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL booked"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL date"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_held_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL held"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_room_type_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL room_type_id"
+      },
+      {
+        "relation": "room_availability",
+        "name": "room_availability_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "relation": "room_availability",
+        "name": "uknw3vl4q1ljvnf0gvpp9qw5dlp",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (room_type_id, date)"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_check_in_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_in_date"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_check_out_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_out_date"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_command_id_unique",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (command_id)"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_hotel_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL hotel_id"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_quantity_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL quantity"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_room_type_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL room_type_id"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_status_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((status)::text = ANY ((ARRAY['HELD'::character varying, 'CONFIRMED'::character varying, 'RELEASED'::character varying])::text[])))"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_status_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "relation": "room_holds",
+        "name": "room_holds_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_base_price_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL base_price"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_capacity_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL capacity"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_hotel_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL hotel_id"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_is_active_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL is_active"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL name"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "room_types",
+        "name": "room_types_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      }
+    ]
+  },
+  "booking": {
+    "required_tables": [
+      "bookings",
+      "booking_items",
+      "payments",
+      "refund_requests",
+      "booking_event_outbox"
+    ],
+    "present_count": 5,
+    "constraints": [
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_attempts_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK ((attempts >= 0))"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_attempts_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL attempts"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_booking_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL booking_id"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_event_version_key",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (event_version)"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_event_version_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL event_version"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_exchange_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL exchange_name"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_next_attempt_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL next_attempt_at"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_payload_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL payload"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_routing_key_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL routing_key"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_state_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((state)::text = ANY ((ARRAY['PENDING'::character varying, 'DELIVERED'::character varying])::text[])))"
+      },
+      {
+        "relation": "booking_event_outbox",
+        "name": "booking_event_outbox_state_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL state"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_booking_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL booking_id"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_check_in_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_in_date"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_check_out_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_out_date"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_nights_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL nights"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_quantity_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL quantity"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_rate_plan_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL rate_plan_id"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_room_type_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL room_type_id"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_room_type_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL room_type_name"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_subtotal_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL subtotal"
+      },
+      {
+        "relation": "booking_items",
+        "name": "booking_items_unit_price_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL unit_price"
+      },
+      {
+        "relation": "booking_items",
+        "name": "fkrw74irmyat5c39cnjkn02u99m",
+        "type": "f",
+        "validated": true,
+        "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_adults_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL adults"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_check_in_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_in_date"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_check_out_date_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL check_out_date"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_children_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL children"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_contact_email_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL contact_email"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_contact_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL contact_name"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_contact_phone_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL contact_phone"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_hotel_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL hotel_id"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_hotel_name_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL hotel_name"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_idempotency_key_hash_unique",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (idempotency_key_hash)"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_paid_amount_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL paid_amount"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_status_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'PENDING_PAYMENT'::character varying, 'CONFIRMED'::character varying, 'CHECKED_IN'::character varying, 'CHECKED_OUT'::character varying, 'CANCELLED'::character varying, 'NO_SHOW'::character varying])::text[])))"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_status_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_total_amount_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL total_amount"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "relation": "bookings",
+        "name": "bookings_user_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL user_id"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_amount_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL amount"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_booking_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL booking_id"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_created_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_method_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((method)::text = ANY ((ARRAY['HOTEL'::character varying, 'VNPAY'::character varying])::text[])))"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_method_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL method"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_status_check",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'ONSITE_PENDING'::character varying, 'COMPLETED'::character varying, 'FAILED'::character varying, 'REFUNDED'::character varying, 'CANCELLED'::character varying])::text[])))"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_status_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "relation": "payments",
+        "name": "payments_updated_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "relation": "payments",
+        "name": "uk_payments_vnpay_order_id",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (vnpay_order_id)"
+      },
+      {
+        "relation": "payments",
+        "name": "uk_payments_vnpay_transaction_no",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (vnpay_transaction_no)"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_amount_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL amount"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_booking_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL booking_id"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_payment_id_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL payment_id"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_pkey",
+        "type": "p",
+        "validated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_reason_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL reason"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_requested_at_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL requested_at"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_requested_by_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL requested_by"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_status_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_requests_version_not_null",
+        "type": "n",
+        "validated": true,
+        "definition": "NOT NULL version"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "refund_status_v12",
+        "type": "c",
+        "validated": true,
+        "definition": "CHECK (((status)::text = ANY ((ARRAY['REQUESTED'::character varying, 'APPROVED_PENDING_EXECUTION'::character varying, 'REJECTED'::character varying, 'REFUNDED'::character varying])::text[])))"
+      },
+      {
+        "relation": "refund_requests",
+        "name": "uk_refund_requests_payment_id",
+        "type": "u",
+        "validated": true,
+        "definition": "UNIQUE (payment_id)"
+      }
+    ]
+  }
+}
