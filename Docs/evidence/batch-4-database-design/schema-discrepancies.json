@@ -1,0 +1,759 @@
+[
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.idempotency_key_hash",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.idempotency_request_hash",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.cancellation_policy_version",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.check_in_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) with time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.free_cancellation_until",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) with time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.loyalty_status",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(24)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.loyalty_next_attempt_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) without time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.loyalty_attempts",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "integer",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.loyalty_last_error",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.onsite_reservation_status",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(24)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.onsite_next_attempt_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) without time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.onsite_attempts",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "integer",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.onsite_last_error",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.paid_reservation_status",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(24)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.paid_reservation_payment_id",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(255)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.paid_reservation_next_attempt_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) without time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.paid_reservation_attempts",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "integer",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.paid_reservation_last_error",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(64)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.inventory_reviewed_by",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(255)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.inventory_review_reason",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(1000)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "bookings.inventory_reviewed_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) with time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "payments.vnpay_create_date",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(14)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "payments.transaction_occurred_at",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "timestamp(6) with time zone",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+      "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "refund_requests",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "docker/sql/booking-event-outbox-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "booking_event_outbox",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "docker/sql/manual-refund-v1-20261112.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "manual_refund_executions",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "booking",
+    "evidence": [
+      "docker/sql/manual-refund-v1-20261112.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "manual_refund_audit",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "cities.hotel_count",
+    "property": "default",
+    "classification": "MODIFY",
+    "actual": "0",
+    "proposed": null,
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "cities.created_at",
+    "property": "type",
+    "classification": "NEEDS_DECISION",
+    "actual": "timestamp without time zone",
+    "proposed": "timestamp(6) with time zone",
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/City/entity/Province.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "provinces.hotel_count",
+    "property": "default",
+    "classification": "MODIFY",
+    "actual": "0",
+    "proposed": null,
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/AccommodationTypeChange.java",
+      "docker/sql/hotel-accommodation-type-20261104.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "hotel_accommodation_type_changes",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "hotels.city_id",
+    "property": "default",
+    "classification": "MODIFY",
+    "actual": "'00000000-0000-0000-0000-000000000000'::uuid",
+    "proposed": null,
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "hotels.accommodation_type",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "varchar(32)",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "hotels.revision",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "bigint",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+      "hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_availability.held",
+    "property": "default",
+    "classification": "MODIFY",
+    "actual": null,
+    "proposed": "0",
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+      "hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_availability.booked",
+    "property": "default",
+    "classification": "MODIFY",
+    "actual": null,
+    "proposed": "0",
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomHold.java",
+      "hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_holds.command_id",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "uuid",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "hotel-service/src/main/java/com/example/hotelservice/Room/entity/RoomType.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_types.description",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "text",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/amenity-catalog-v1-20261106.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "amenity_catalog",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/amenity-catalog-v1-20261106.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "amenity_mapping_requests",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/amenity-catalog-v1-20261106.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "amenity_mapping_request_codes",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/amenity-catalog-v1-20261106.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "amenity_mapping_states",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/hotel-accommodation-type-20261104.sql",
+      "hotel-service/src/main/java/com/example/hotelservice/config/AccommodationSchemaGuard.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "checkinn_feature_migrations",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/room-inventory-review-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_inventory_review_requests",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "hotel",
+    "evidence": [
+      "docker/sql/room-inventory-review-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "room_inventory_review_states",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "regulations",
+    "evidence": [
+      "docker/sql/regulation-event-outbox-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "regulation_event_outbox",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "booking_status_records.event_version",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "bigint",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "booking_status_records.last_event_id",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "uuid",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "payment_records.event_version",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "bigint",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "payment_records.last_event_id",
+    "classification": "ADD",
+    "actual": "ABSENT",
+    "proposed": "uuid",
+    "reason": "current JPA or explicit feature SQL requires column"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "docker/sql/revenue-cash-transactions-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "revenue_cash_transactions",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "docker/sql/revenue-event-receipts-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "revenue_event_receipts",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "revenue",
+    "evidence": [
+      "docker/sql/revenue-history-gaps-v1-20261107.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "revenue_cashflow_gaps",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "user",
+    "evidence": [
+      "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+      "user-service/src/main/resources/db/migration/V3__add_loyalty_commands.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "loyalty_commands",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "user",
+    "evidence": [
+      "user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+      "user-service/src/main/resources/db/migration/V4__add_points_reservations.sql"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "points_reservations",
+    "classification": "ADD",
+    "actual": "ABSENT FROM PROVIDED DUMP",
+    "proposed": "complete table in canonical V1",
+    "reason": "current source/SQL owns feature"
+  },
+  {
+    "service": "user",
+    "evidence": [
+      "user-service/src/main/java/com/example/userservice/model/User.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "users.is_email_verified",
+    "property": "nullable",
+    "classification": "MODIFY",
+    "actual": true,
+    "proposed": false,
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  },
+  {
+    "service": "user",
+    "evidence": [
+      "user-service/src/main/java/com/example/userservice/model/User.java"
+    ],
+    "impact": "current reads/writes/recovery/validation compatibility",
+    "risk": "fresh schema proposal; no legacy backfill or automatic alteration",
+    "object": "users.created_at",
+    "property": "type",
+    "classification": "NEEDS_DECISION",
+    "actual": "timestamp without time zone",
+    "proposed": "timestamp(6) without time zone",
+    "reason": "snapshot differs from current mapping/explicit default; D03 for timezone changes"
+  }
+]

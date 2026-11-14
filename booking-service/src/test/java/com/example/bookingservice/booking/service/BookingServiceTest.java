@@ -1,4 +1,5 @@
 package com.example.bookingservice.booking.service;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.dto.CreateBookingItemRequest;
 import com.example.bookingservice.booking.dto.CreateBookingRequest;
@@ -36,10 +37,10 @@ class BookingServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.ValueSource(booleans={true,false})
     void recoveryReleasesUnpaidOnsiteNoShowFundsButNeverPaidFunds(boolean paid) {
-        var b=Booking.builder().id("booking").userId("guest").status(BookingStatus.NO_SHOW)
+        var b=Booking.builder().id(id("booking")).userId(id("guest")).status(BookingStatus.NO_SHOW)
                 .onsiteReservationStatus("V1_RELEASED").paidAmount(paid ? BigDecimal.TEN : BigDecimal.ZERO).build();
-        when(bookingRepository.findById("booking")).thenReturn(Optional.of(b));
-        assertThat(bookingService.getLoyaltyBookingState("booking","guest")).isEqualTo(paid ? "ACTIVE" : "CANCELLED");
+        when(bookingRepository.findById(id("booking"))).thenReturn(Optional.of(b));
+        assertThat(bookingService.getLoyaltyBookingState(id("booking"),id("guest"))).isEqualTo(paid ? "ACTIVE" : "CANCELLED");
     }
 
     private BookingRepository bookingRepository;
@@ -82,10 +83,10 @@ class BookingServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.ValueSource(booleans = {true, false})
     void inventoryFailureDoesNotMarkThePaymentTransactionForRollback(boolean hasHold) {
-        var booking = Booking.builder().id("booking").holdId(hasHold ? "hold" : null).build();
-        when(bookingRepository.findById("booking")).thenReturn(Optional.of(booking));
+        var booking = Booking.builder().id(id("booking")).holdId(hasHold ? id("hold") : null).build();
+        when(bookingRepository.findById(id("booking"))).thenReturn(Optional.of(booking));
         org.mockito.Mockito.doThrow(new IllegalStateException("Inventory unavailable"))
-                .when(availabilityClient).confirmHold("hold");
+                .when(availabilityClient).confirmHold(id("hold"));
         var transactions = mock(org.springframework.transaction.PlatformTransactionManager.class);
         var participating = new org.springframework.transaction.support.SimpleTransactionStatus(false);
         when(transactions.getTransaction(any())).thenReturn(participating);
@@ -93,7 +94,7 @@ class BookingServiceTest {
         proxy.addAdvice(new org.springframework.transaction.interceptor.TransactionInterceptor(transactions,
                 new org.springframework.transaction.annotation.AnnotationTransactionAttributeSource()));
 
-        assertThatThrownBy(() -> ((BookingService) proxy.getProxy()).confirmBookingHold("booking"))
+        assertThatThrownBy(() -> ((BookingService) proxy.getProxy()).confirmBookingHold(id("booking")))
                 .isInstanceOf(BookingService.HoldConfirmationException.class);
 
         verify(transactions).commit(participating);
@@ -104,7 +105,7 @@ class BookingServiceTest {
 
     @Test
     void databaseFailureStillMarksThePaymentTransactionForRollback() {
-        when(bookingRepository.findById("booking"))
+        when(bookingRepository.findById(id("booking")))
                 .thenThrow(new org.springframework.dao.DataAccessResourceFailureException("Database unavailable"));
         var transactions = mock(org.springframework.transaction.PlatformTransactionManager.class);
         var participating = new org.springframework.transaction.support.SimpleTransactionStatus(false);
@@ -113,7 +114,7 @@ class BookingServiceTest {
         proxy.addAdvice(new org.springframework.transaction.interceptor.TransactionInterceptor(transactions,
                 new org.springframework.transaction.annotation.AnnotationTransactionAttributeSource()));
 
-        assertThatThrownBy(() -> ((BookingService) proxy.getProxy()).confirmBookingHold("booking"))
+        assertThatThrownBy(() -> ((BookingService) proxy.getProxy()).confirmBookingHold(id("booking")))
                 .isInstanceOf(org.springframework.dao.DataAccessResourceFailureException.class);
 
         verify(transactions).rollback(participating);
@@ -122,41 +123,41 @@ class BookingServiceTest {
 
     @Test
     void recoveryDoesNotMistakeAnUncommittedCreationForAMissingBooking() {
-        when(creationLock.tryAcquire("in-flight")).thenReturn(false);
-        assertThat(bookingService.getLoyaltyBookingState("in-flight", "guest")).isEqualTo("UNKNOWN");
+        when(creationLock.tryAcquire(id("in-flight"))).thenReturn(false);
+        assertThat(bookingService.getLoyaltyBookingState(id("in-flight"), id("guest"))).isEqualTo("UNKNOWN");
         verify(bookingRepository, never()).findById(any());
     }
 
     @Test
     void recoveryLookupDoesNotRevealAnotherUsersBookingOrTreatItAsMissing() {
-        var booking = Booking.builder().id("booking").userId("guest").status(BookingStatus.PENDING).build();
-        when(bookingRepository.findById("booking")).thenReturn(Optional.of(booking));
-        assertThat(bookingService.getLoyaltyBookingState("missing", "guest")).isEqualTo("MISSING");
-        assertThat(bookingService.getLoyaltyBookingState("booking", "other")).isEqualTo("UNKNOWN");
+        var booking = Booking.builder().id(id("booking")).userId(id("guest")).status(BookingStatus.PENDING).build();
+        when(bookingRepository.findById(id("booking"))).thenReturn(Optional.of(booking));
+        assertThat(bookingService.getLoyaltyBookingState(id("missing"), id("guest"))).isEqualTo("MISSING");
+        assertThat(bookingService.getLoyaltyBookingState(id("booking"), id("other"))).isEqualTo("UNKNOWN");
         for (BookingStatus status : BookingStatus.values()) {
             booking.setStatus(status);
-            assertThat(bookingService.getLoyaltyBookingState("booking", "guest"))
+            assertThat(bookingService.getLoyaltyBookingState(id("booking"), id("guest")))
                     .isEqualTo(status == BookingStatus.CANCELLED ? "CANCELLED" : "ACTIVE");
         }
     }
 
     @Test
     void reviewEligibilityRequiresMatchingGuestHotelAndCheckedOutBooking() {
-        Booking booking = Booking.builder().id("booking").userId("guest").hotelId("hotel")
+        Booking booking = Booking.builder().id(id("booking")).userId(id("guest")).hotelId(id("hotel"))
                 .status(BookingStatus.CHECKED_OUT).build();
-        when(bookingRepository.findById("booking")).thenReturn(Optional.of(booking));
-        assertThat(bookingService.isReviewEligible("missing", "guest", "hotel")).isFalse();
-        assertThat(bookingService.isReviewEligible("booking", "other", "hotel")).isFalse();
-        assertThat(bookingService.isReviewEligible("booking", "guest", "other")).isFalse();
-        assertThat(bookingService.isReviewEligible("booking", "guest", "hotel")).isTrue();
+        when(bookingRepository.findById(id("booking"))).thenReturn(Optional.of(booking));
+        assertThat(bookingService.isReviewEligible(id("missing"), id("guest"), id("hotel"))).isFalse();
+        assertThat(bookingService.isReviewEligible(id("booking"), id("other"), id("hotel"))).isFalse();
+        assertThat(bookingService.isReviewEligible(id("booking"), id("guest"), id("other"))).isFalse();
+        assertThat(bookingService.isReviewEligible(id("booking"), id("guest"), id("hotel"))).isTrue();
         for (BookingStatus status : BookingStatus.values()) {
             booking.setStatus(status);
-            assertThat(bookingService.isReviewEligible("booking", "guest", "hotel"))
+            assertThat(bookingService.isReviewEligible(id("booking"), id("guest"), id("hotel")))
                     .as("status %s", status).isEqualTo(status == BookingStatus.CHECKED_OUT);
         }
-        assertThat(bookingService.isReviewEligible("", "guest", "hotel")).isFalse();
-        assertThat(bookingService.isReviewEligible("booking", "", "hotel")).isFalse();
-        assertThat(bookingService.isReviewEligible("booking", "guest", "")).isFalse();
+        assertThat(bookingService.isReviewEligible(id(""), id("guest"), id("hotel"))).isFalse();
+        assertThat(bookingService.isReviewEligible(id("booking"), id(""), id("hotel"))).isFalse();
+        assertThat(bookingService.isReviewEligible(id("booking"), id("guest"), id(""))).isFalse();
     }
 
     @Test
@@ -204,11 +205,11 @@ class BookingServiceTest {
         LoyaltyPointsDTO points = new LoyaltyPointsDTO();
         points.setAvailablePoints(1_000L);
 
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", expiresAt));
-        when(catalogClient.getRoom(roomTypeId)).thenReturn(new HotelCatalogClient.Room(roomTypeId, "11111111-1111-4111-8111-111111111111", "Server Room",
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", expiresAt));
+        when(catalogClient.getRoom(roomTypeId)).thenReturn(new HotelCatalogClient.Room(roomTypeId, id("11111111-1111-4111-8111-111111111111"), "Server Room",
                 BigDecimal.valueOf(1_000_000), new HotelCatalogClient.Capacity(2, 0), true, 10));
         when(catalogClient.getHotel("11111111-1111-4111-8111-111111111111")).thenReturn(new HotelCatalogClient.Hotel("11111111-1111-4111-8111-111111111111", "Server Hotel", true, "APPROVED"));
-        when(loyaltyPointsClient.getLoyaltyPoints("user-1")).thenReturn(points);
+        when(loyaltyPointsClient.getLoyaltyPoints(id("user-1"))).thenReturn(points);
         when(loyaltyPointsClient.reserve(any())).thenAnswer(call -> {
             com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO reserve = call.getArgument(0);
             return new com.example.bookingservice.integration.loyalty.PointsReservationDTO(reserve.bookingId(), 500L,
@@ -216,11 +217,11 @@ class BookingServiceTest {
         });
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> {
             Booking booking = invocation.getArgument(0);
-            booking.setId("booking-1");
+            booking.setId(id("booking-1"));
             return booking;
         });
         when(bookingItemRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.empty());
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.empty());
 
         var response = bookingService.createBooking(request);
 
@@ -241,10 +242,10 @@ class BookingServiceTest {
         String room = UUID.randomUUID().toString();
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
         request.setIdempotencyKey(UUID.randomUUID().toString());
-        var existing = Booking.builder().id("accepted").userId(request.getUserId()).items(List.of())
+        var existing = Booking.builder().id(id("accepted")).userId(id(request.getUserId())).items(List.of())
                 .idempotencyRequestHash(BookingIdempotency.requestHash(request)).build();
         when(bookingRepository.findByIdempotencyKeyHash(any())).thenReturn(Optional.of(existing));
-        assertThat(bookingService.createBooking(request).getId()).isEqualTo("accepted");
+        assertThat(bookingService.createBooking(request).getId()).isEqualTo(id("accepted"));
         org.mockito.Mockito.verifyNoInteractions(availabilityClient, catalogClient, eventPublisher);
         verify(bookingRepository, never()).save(any());
     }
@@ -255,7 +256,7 @@ class BookingServiceTest {
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
         request.setIdempotencyKey(UUID.randomUUID().toString());
         when(bookingRepository.findByIdempotencyKeyHash(any())).thenReturn(Optional.of(Booking.builder()
-                .userId(request.getUserId()).idempotencyRequestHash("different-input").build()));
+                .userId(id(request.getUserId())).idempotencyRequestHash("different-input").build()));
         assertThatThrownBy(() -> bookingService.createBooking(request))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
@@ -272,7 +273,7 @@ class BookingServiceTest {
                 var booking = pendingHold();
                 booking.setItems(List.of());
                 booking.setHoldExpiresAt(LocalDateTime.ofInstant(expiry, java.time.ZoneId.systemDefault()));
-                var response = bookingService.getBooking("booking-1");
+                var response = bookingService.getBooking(id("booking-1"));
                 var mapper = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules()
                         .disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                 assertThat(mapper.readTree(mapper.writeValueAsString(response)).get("holdExpiresAt").asText())
@@ -286,8 +287,8 @@ class BookingServiceTest {
     @Test
     void emptyDiscoveryCacheDoesNotBecomeAnInvalidHold() {
         var booking = pendingHold();
-        when(availabilityClient.getHold("hold-1")).thenThrow(new IllegalArgumentException("Service Instance cannot be null"));
-        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+        when(availabilityClient.getHold(id("hold-1"))).thenThrow(new IllegalArgumentException("Service Instance cannot be null"));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
@@ -297,8 +298,8 @@ class BookingServiceTest {
     @Test
     void holdLookupTimeoutIsUnavailableWithoutCancellingOrPublishing() {
         var booking = pendingHold();
-        when(availabilityClient.getHold("hold-1")).thenThrow(new org.springframework.web.client.ResourceAccessException("timeout"));
-        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+        when(availabilityClient.getHold(id("hold-1"))).thenThrow(new org.springframework.web.client.ResourceAccessException("timeout"));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
@@ -312,8 +313,8 @@ class BookingServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(strings = {"invalid-deadline", "2026-11-05T12:00:00"})
     void malformedHoldExpiryDoesNotGrantAnotherFifteenMinutes(String expiry) {
         var booking = pendingHold();
-        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", "HELD", expiry));
-        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+        when(availabilityClient.getHold(id("hold-1"))).thenReturn(new HoldResponse(id("hold-1"), "HELD", expiry));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
@@ -325,8 +326,8 @@ class BookingServiceTest {
     @org.junit.jupiter.params.provider.ValueSource(strings = {"RELEASED", "EXPIRED", "CANCELLED", "CONFIRMED"})
     void authoritativeInactiveHoldBlocksPaymentWithoutPartialCancellation(String status) {
         var booking = pendingHold();
-        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", status, Instant.now().plusSeconds(600).toString()));
-        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+        when(availabilityClient.getHold(id("hold-1"))).thenReturn(new HoldResponse(id("hold-1"), status, Instant.now().plusSeconds(600).toString()));
+        assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
@@ -338,10 +339,10 @@ class BookingServiceTest {
     void missingOrMismatchedOrUnknownHoldResponseFailsClosed() {
         var booking = pendingHold();
         for (var response : java.util.Arrays.asList(null,
-                new HoldResponse("other-hold", "HELD", Instant.now().plusSeconds(600).toString()),
-                new HoldResponse("hold-1", "UNKNOWN", Instant.now().plusSeconds(600).toString()))) {
-            when(availabilityClient.getHold("hold-1")).thenReturn(response);
-            assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+                new HoldResponse(id("other-hold"), "HELD", Instant.now().plusSeconds(600).toString()),
+                new HoldResponse(id("hold-1"), "UNKNOWN", Instant.now().plusSeconds(600).toString()))) {
+            when(availabilityClient.getHold(id("hold-1"))).thenReturn(response);
+            assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                     .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                             e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
         }
@@ -353,8 +354,8 @@ class BookingServiceTest {
     void activeAuthoritativeHoldAllowsPaymentWithoutRewritingItsDeadline() {
         var booking = pendingHold();
         var deadline = booking.getHoldExpiresAt();
-        when(availabilityClient.getHold("hold-1")).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(600).toString()));
-        assertThat(bookingService.ensureActiveHold("booking-1")).isSameAs(booking);
+        when(availabilityClient.getHold(id("hold-1"))).thenReturn(new HoldResponse(id("hold-1"), "HELD", Instant.now().plusSeconds(600).toString()));
+        assertThat(bookingService.ensureActiveHold(id("booking-1"))).isSameAs(booking);
         assertThat(booking.getHoldExpiresAt()).isEqualTo(deadline);
         verify(bookingRepository, never()).save(any());
     }
@@ -365,50 +366,50 @@ class BookingServiceTest {
     void bookingWithoutPointsAlsoRequiresAnActualInventoryDeadline(String expiry) {
         String room = UUID.randomUUID().toString();
         stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", expiry));
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", expiry));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
         assertThatThrownBy(() -> bookingService.createBooking(request))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(503));
         verify(bookingRepository, never()).save(any());
-        verify(availabilityClient).releaseHold("hold-1");
+        verify(availabilityClient).releaseHold(id("hold-1"));
         org.mockito.Mockito.verifyNoInteractions(eventPublisher);
     }
 
     private Booking pendingHold() {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT)
-                .paidAmount(BigDecimal.ZERO).holdId("hold-1")
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING_PAYMENT)
+                .paidAmount(BigDecimal.ZERO).holdId(id("hold-1"))
                 .holdExpiresAt(LocalDateTime.now().plusMinutes(10)).build();
-        when(bookingRepository.findById("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findById(id("booking-1"))).thenReturn(Optional.of(booking));
         return booking;
     }
 
     @Test
     void expiredHoldRejectsPaymentWithoutPublishingARolledBackCancellation() {
         Booking booking = Booking.builder()
-                .id("booking-1")
-                .userId("user-1")
-                .hotelId("11111111-1111-4111-8111-111111111111")
+                .id(id("booking-1"))
+                .userId(id("user-1"))
+                .hotelId(id("11111111-1111-4111-8111-111111111111"))
                 .hotelName("Tripto")
                 .checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2))
                 .status(BookingStatus.PENDING_PAYMENT)
                 .totalAmount(BigDecimal.valueOf(1_000_000))
                 .paidAmount(BigDecimal.ZERO)
-                .holdId("hold-1")
+                .holdId(id("hold-1"))
                 .holdExpiresAt(LocalDateTime.now().minusMinutes(1))
                 .items(List.of())
                 .build();
 
-        when(bookingRepository.findById("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findById(id("booking-1"))).thenReturn(Optional.of(booking));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        assertThatThrownBy(() -> bookingService.ensureActiveHold("booking-1"))
+        assertThatThrownBy(() -> bookingService.ensureActiveHold(id("booking-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         e -> assertThat(e.getStatusCode().value()).isEqualTo(409));
 
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
-        verify(availabilityClient, never()).releaseHold("hold-1");
+        verify(availabilityClient, never()).releaseHold(id("hold-1"));
         verify(bookingRepository, never()).save(any());
         org.mockito.Mockito.verifyNoInteractions(eventPublisher);
     }
@@ -439,16 +440,16 @@ class BookingServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.ValueSource(booleans={false,true})
     void adminReviewCanRetryCancelledInventoryAfterItsReferenceWasReconciled(boolean onsite) {
-        var booking=Booking.builder().id("booking-1").status(BookingStatus.CANCELLED).holdId("reconciled-original-hold")
+        var booking=Booking.builder().id(id("booking-1")).status(BookingStatus.CANCELLED).holdId(id("reconciled-original-hold"))
             .loyaltyStatus("REVERSED").paidAmount(BigDecimal.TEN)
             .paidReservationStatus(onsite?null:"V1_REVIEW_REQUIRED")
             .onsiteReservationStatus(onsite?"V1_REVIEW_REQUIRED":null).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        bookingService.cancelBooking("booking-1","customer");
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        bookingService.cancelBooking(id("booking-1"),id("customer"));
         assertThat(onsite?booking.getOnsiteReservationStatus():booking.getPaidReservationStatus()).isEqualTo("V1_REVIEW_REQUIRED");
-        bookingService.cancelBookingReviewed("booking-1","admin","Original inventory reference verified");
+        bookingService.cancelBookingReviewed(id("booking-1"),id("admin"),"Original inventory reference verified");
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
-        assertThat(booking.getInventoryReviewedBy()).isEqualTo("admin");
+        assertThat(booking.getInventoryReviewedBy()).isEqualTo(id("admin"));
         assertThat(booking.getInventoryReviewReason()).isEqualTo("Original inventory reference verified");
         assertThat(booking.getInventoryReviewedAt()).isNotNull();
         assertThat(onsite?booking.getOnsiteReservationStatus():booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
@@ -457,7 +458,7 @@ class BookingServiceTest {
 
     private CreateBookingRequest baseBookingRequest(List<CreateBookingItemRequest> items) {
         return CreateBookingRequest.builder()
-                .userId("user-1")
+                .userId(wire("user-1"))
                 .hotelId("11111111-1111-4111-8111-111111111111")
                 .hotelName("Tripto Hotel")
                 .checkInDate(LocalDate.now().plusDays(1))
@@ -534,43 +535,43 @@ class BookingServiceTest {
     }
 
     private void stubCatalog(String id, String hotelId, int adults, boolean active) {
-        when(catalogClient.getRoom(id)).thenReturn(new HotelCatalogClient.Room(id, hotelId, "Server Room",
+        when(catalogClient.getRoom(id)).thenReturn(new HotelCatalogClient.Room(id, id(hotelId), "Server Room",
                 new BigDecimal("1000000"), new HotelCatalogClient.Capacity(adults, 0), active, 10));
         when(catalogClient.getHotel("11111111-1111-4111-8111-111111111111")).thenReturn(new HotelCatalogClient.Hotel("11111111-1111-4111-8111-111111111111", "Server Hotel", active, "APPROVED"));
     }
 
     @Test void eligibleCancellationCreatesRefundRequestAndReleasesInventoryOnce() {
         Booking booking = cancellationFixture(true);
-        bookingService.cancelBooking("booking-1", "customer-1");
-        bookingService.cancelBooking("booking-1", "customer-1");
+        bookingService.cancelBooking(id("booking-1"), id("customer-1"));
+        bookingService.cancelBooking(id("booking-1"), id("customer-1"));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
-        verify(availabilityClient).cancelReservation("hold-1");
-        verify(refundRequests).request("payment-1", "customer-1", "BOOKING_CANCELLED_STANDARD_24H");
+        verify(availabilityClient).cancelReservation(id("hold-1"));
+        verify(refundRequests).request(id("payment-1"), id("customer-1"), "BOOKING_CANCELLED_STANDARD_24H");
         verify(paymentRepository, never()).save(any());
     }
     @Test void legacyPaidBookingRequiresReviewInsteadOfRetroactivePolicy() {
         Booking booking = cancellationFixture(true); booking.setCancellationPolicyVersion(null);
-        assertThatThrownBy(() -> bookingService.cancelBooking("booking-1", "customer-1"))
+        assertThatThrownBy(() -> bookingService.cancelBooking(id("booking-1"), id("customer-1")))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         verifyNoCancellationSideEffects();
     }
     @Test void latePaidCancellationRequiresReview() {
         Booking booking = cancellationFixture(true); booking.setFreeCancellationUntil(Instant.now().minusSeconds(1));
-        assertThatThrownBy(() -> bookingService.cancelBooking("booking-1", "customer-1"))
+        assertThatThrownBy(() -> bookingService.cancelBooking(id("booking-1"), id("customer-1")))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         verifyNoCancellationSideEffects();
     }
     @Test void administratorReviewedCancellationCanHandleHotelUnableToSupplyRoom() {
         Booking booking = cancellationFixture(true); booking.setFreeCancellationUntil(Instant.now().minusSeconds(1));
-        bookingService.cancelBookingReviewed("booking-1", "administrator-1", "HOTEL_UNAVAILABLE");
+        bookingService.cancelBookingReviewed(id("booking-1"), id("administrator-1"), "HOTEL_UNAVAILABLE");
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
-        verify(refundRequests).request("payment-1", "administrator-1", "HOTEL_UNAVAILABLE");
+        verify(refundRequests).request(id("payment-1"), id("administrator-1"), "HOTEL_UNAVAILABLE");
     }
     @Test void inventoryFailureDoesNotClaimCancellationSucceeded() {
         Booking booking = cancellationFixture(false);
-        org.mockito.Mockito.doThrow(new IllegalStateException("Inventory unavailable")).when(availabilityClient).cancelReservation("hold-1");
-        assertThatThrownBy(() -> bookingService.cancelBooking("booking-1", "customer-1"))
+        org.mockito.Mockito.doThrow(new IllegalStateException("Inventory unavailable")).when(availabilityClient).cancelReservation(id("hold-1"));
+        assertThatThrownBy(() -> bookingService.cancelBooking(id("booking-1"), id("customer-1")))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING);
         verify(bookingRepository, never()).save(any());
@@ -578,24 +579,24 @@ class BookingServiceTest {
     }
     @Test void genericStatusEndpointCannotBypassPaymentConfirmation() {
         cancellationFixture(false);
-        assertThatThrownBy(() -> bookingService.updateBookingStatus("booking-1", BookingStatus.CONFIRMED))
+        assertThatThrownBy(() -> bookingService.updateBookingStatus(id("booking-1"), BookingStatus.CONFIRMED))
                 .isInstanceOf(IllegalArgumentException.class);
         verify(bookingRepository, never()).save(any());
     }
     @Test void databaseFailureAfterHoldTriggersInventoryCompensation() {
         String room = UUID.randomUUID().toString();
         stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", Instant.now().plusSeconds(900).toString()));
         when(bookingRepository.save(any())).thenThrow(new IllegalStateException("Test database failure"));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalStateException.class)
                 .hasMessage("Test database failure");
-        verify(availabilityClient).releaseHold("hold-1");
+        verify(availabilityClient).releaseHold(id("hold-1"));
         verify(eventPublisher, never()).publishBookingStatus(any());
     }
 
     @Test void settlementQueuesDurableIntentWithoutRemoteEffectsBeforePaymentCommit() {
-        Booking booking = Booking.builder().id("booking-1").userId("customer-1").build();
+        Booking booking = Booking.builder().id(id("booking-1")).userId(id("customer-1")).build();
         bookingService.settleLoyaltyPoints(booking);
         assertThat(booking.getLoyaltyStatus()).isEqualTo("PENDING");
         assertThat(booking.getLoyaltyNextAttemptAt()).isNotNull();
@@ -609,18 +610,18 @@ class BookingServiceTest {
 
     @Test void cancellationReversesRedemptionEvenWithoutLocalEarnMarkerAndRetriesSafely() {
         Booking booking = cancellationFixture(false); booking.setUsedPoints(10L);
-        bookingService.cancelBooking("booking-1", "customer-1");
-        bookingService.cancelBooking("booking-1", "customer-1");
+        bookingService.cancelBooking(id("booking-1"), id("customer-1"));
+        bookingService.cancelBooking(id("booking-1"), id("customer-1"));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
         assertThat(booking.getLoyaltyStatus()).isEqualTo("PENDING");
         org.mockito.Mockito.verifyNoInteractions(loyaltyPointsClient);
-        verify(availabilityClient).cancelReservation("hold-1");
+        verify(availabilityClient).cancelReservation(id("hold-1"));
         verify(eventPublisher).publishBookingStatus(any());
     }
 
     @Test void cancellationPersistsReversalIntentWithoutCallingUnavailableLoyaltyBeforeCommit() {
         Booking booking = cancellationFixture(false);
-        bookingService.cancelBooking("booking-1", "customer-1");
+        bookingService.cancelBooking(id("booking-1"), id("customer-1"));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
         assertThat(booking.getLoyaltyStatus()).isEqualTo("PENDING");
         org.mockito.Mockito.verifyNoInteractions(loyaltyPointsClient);
@@ -629,9 +630,9 @@ class BookingServiceTest {
     @Test void reserveUnknownOutcomeReleasesInventoryAndRequestsPointCompensation() {
         String room = UUID.randomUUID().toString();
         stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", Instant.now().plusSeconds(900).toString()));
         when(bookingRepository.save(any())).thenAnswer(call -> {
-            Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking;
+            Booking booking = call.getArgument(0); booking.setId(id("booking-1")); return booking;
         });
         when(loyaltyPointsClient.reserve(any())).thenThrow(new IllegalStateException("Unavailable"));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000"))));
@@ -639,8 +640,8 @@ class BookingServiceTest {
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOfSatisfying(
                 org.springframework.web.server.ResponseStatusException.class,
                 error -> assertThat(error.getStatusCode().value()).isEqualTo(503));
-        verify(availabilityClient).releaseHold("hold-1");
-        verify(loyaltyPointsClient).refundPoints("user-1", "booking-1");
+        verify(availabilityClient).releaseHold(id("hold-1"));
+        verify(loyaltyPointsClient).refundPoints(id("user-1"), id("booking-1"));
         verify(eventPublisher, never()).publishBookingStatus(any());
     }
 
@@ -649,43 +650,43 @@ class BookingServiceTest {
     void invalidReceiptOrFailureAfterReserveCompensatesBothResources(boolean invalidReceipt) {
         String room = UUID.randomUUID().toString();
         stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", Instant.now().plusSeconds(900).toString()));
-        when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking; });
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", Instant.now().plusSeconds(900).toString()));
+        when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId(id("booking-1")); return booking; });
         when(loyaltyPointsClient.reserve(any())).thenAnswer(call -> {
             com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO request = call.getArgument(0);
-            return new com.example.bookingservice.integration.loyalty.PointsReservationDTO(invalidReceipt ? "wrong-booking" : request.bookingId(),
+            return new com.example.bookingservice.integration.loyalty.PointsReservationDTO(invalidReceipt ? id("wrong-booking") : request.bookingId(),
                     100L, new BigDecimal("50000"), new BigDecimal("500"), request.holdExpiresAt(), "HELD");
         });
         if (!invalidReceipt) when(bookingItemRepository.saveAll(any())).thenThrow(new IllegalStateException("Test database failure"));
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000")))); request.setPointsToUse(100L);
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(RuntimeException.class);
-        verify(loyaltyPointsClient).refundPoints("user-1", "booking-1");
-        verify(availabilityClient).releaseHold("hold-1");
+        verify(loyaltyPointsClient).refundPoints(id("user-1"), id("booking-1"));
+        verify(availabilityClient).releaseHold(id("hold-1"));
         verify(eventPublisher, never()).publishBookingStatus(any());
     }
 
     @Test void pointsReserveRequiresAnActualInventoryDeadlineRatherThanFallbackMinutes() {
         String room = UUID.randomUUID().toString();
         stubCatalog(room, "11111111-1111-4111-8111-111111111111", 2, true);
-        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse("hold-1", "HELD", "invalid-deadline"));
-        when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId("booking-1"); return booking; });
+        when(availabilityClient.holdRooms(any())).thenReturn(new HoldResponse(id("hold-1"), "HELD", "invalid-deadline"));
+        when(bookingRepository.save(any())).thenAnswer(call -> { Booking booking = call.getArgument(0); booking.setId(id("booking-1")); return booking; });
         var request = baseBookingRequest(List.of(item(room, 1, new BigDecimal("1000000")))); request.setPointsToUse(100L);
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         verify(loyaltyPointsClient, never()).reserve(any());
-        verify(availabilityClient).releaseHold("hold-1");
+        verify(availabilityClient).releaseHold(id("hold-1"));
     }
     private Booking cancellationFixture(boolean paid) {
-        Booking booking = Booking.builder().id("booking-1").userId("customer-1").hotelId("11111111-1111-4111-8111-111111111111")
+        Booking booking = Booking.builder().id(id("booking-1")).userId(id("customer-1")).hotelId(id("11111111-1111-4111-8111-111111111111"))
                 .checkInDate(LocalDate.now().plusDays(3)).checkOutDate(LocalDate.now().plusDays(4))
-                .paidAmount(paid ? new BigDecimal("1000000") : BigDecimal.ZERO).holdId("hold-1")
+                .paidAmount(paid ? new BigDecimal("1000000") : BigDecimal.ZERO).holdId(id("hold-1"))
                 .totalAmount(new BigDecimal("1000000")).status(paid ? BookingStatus.CONFIRMED : BookingStatus.PENDING).items(List.of()).build();
         new CancellationPolicy().snapshot(booking, CancellationPolicy.VERSION);
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(bookingRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        var payment = com.example.bookingservice.payment.entity.Payment.builder().id("payment-1").bookingId("booking-1")
+        var payment = com.example.bookingservice.payment.entity.Payment.builder().id(id("payment-1")).bookingId(id("booking-1"))
                 .amount(new BigDecimal("1000000")).status(paid ? com.example.bookingservice.payment.enums.PaymentStatus.COMPLETED
                         : com.example.bookingservice.payment.enums.PaymentStatus.ONSITE_PENDING).build();
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(payment));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.of(payment));
         return booking;
     }
     private void verifyNoCancellationSideEffects() {

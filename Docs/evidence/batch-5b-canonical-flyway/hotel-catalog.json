@@ -1,0 +1,3227 @@
+{
+  "owner": "hotel",
+  "database": "batch5b_hotel_1794592498_33124",
+  "columns": [
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "code",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "created_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "created_by",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "description",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "label",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "revision",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "updated_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_catalog",
+      "column_name": "updated_by",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_category_types",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_category_types",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "column_name": "code",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "column_name": "request_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "amenity_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "note",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "requested_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "requested_by",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "review_reason",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "reviewed_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "reviewed_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "status",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "column_name": "title_snapshot",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "column_name": "amenity_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "column_name": "approved_request_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "column_name": "latest_request_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "column_name": "revision",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "column_name": "applied_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "column_name": "migration_id",
+      "sql_type": "character varying(100)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "hotel_count",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "latitude",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "longitude",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "cities",
+      "column_name": "parent_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "previous_type",
+      "sql_type": "character varying(32)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "rejection_reason",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "requested_type",
+      "sql_type": "character varying(32)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "requester_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "reviewed_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "reviewer_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "column_name": "status",
+      "sql_type": "character varying(20)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenities",
+      "column_name": "category_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenities",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenities",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenities",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenities",
+      "column_name": "title",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "title",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "category_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "content",
+      "sql_type": "text",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_policies",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "answer",
+      "sql_type": "text",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "question",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_questions",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "amenities_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "cleanliness_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "comfort_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "content",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "guest_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "helpful_count",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "location_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "rating",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "staff_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "status",
+      "sql_type": "character varying(20)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "title",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "unhelpful_count",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotel_reviews",
+      "column_name": "value_for_money_rating",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "accommodation_type",
+      "sql_type": "character varying(32)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "address",
+      "sql_type": "jsonb",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "approved_status",
+      "sql_type": "character varying(20)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "business_license_file_path",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "business_license_number",
+      "sql_type": "character varying(50)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "city_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "contact_email",
+      "sql_type": "character varying(100)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "contact_phone",
+      "sql_type": "character varying(20)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "description",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "operation_license_file_path",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "operation_license_number",
+      "sql_type": "character varying(50)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "owner_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "owner_identity_back_path",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "owner_identity_front_path",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "owner_identity_number",
+      "sql_type": "character varying(50)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "rejection_reason",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "revision",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "star_rating",
+      "sql_type": "smallint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "tax_id",
+      "sql_type": "character varying(50)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "hotels",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "is_thumbnail",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "sort_order",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "target_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "target_type",
+      "sql_type": "character varying(20)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "media_assets",
+      "column_name": "url",
+      "sql_type": "character varying(500)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "policy_category_types",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "policy_category_types",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "hotel_count",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "latitude",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "longitude",
+      "sql_type": "double precision",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "provinces",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "feedback_type",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "review_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_feedbacks",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "content",
+      "sql_type": "text",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "owner_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "review_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "review_responses",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "booked",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "held",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_availability",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "command_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "expires_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "quantity",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "status",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_holds",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "previous_quantity",
+      "sql_type": "integer",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "proposed_quantity",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "requested_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "requested_by",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "review_reason",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "reviewed_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "reviewed_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "room_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "source",
+      "sql_type": "character varying(1000)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "column_name": "status",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "column_name": "approved_request_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "column_name": "latest_request_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "column_name": "revision",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "column_name": "room_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "amenities",
+      "sql_type": "jsonb",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "base_price",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "capacity",
+      "sql_type": "jsonb",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "description",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "name",
+      "sql_type": "character varying(100)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "total_rooms",
+      "sql_type": "integer",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "room_types",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_name_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (name)"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_category_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL category_id"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_title_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL title"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_title_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL title"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_hotel_count_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_count"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_name_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (name)"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_hotel_count_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_count"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_name_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (name)"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_previous_type_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((previous_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_requested_type_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((requested_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying, 'SUPERSEDED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((previous_type)::text IS DISTINCT FROM (requested_type)::text))"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_check1",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((((status)::text = ANY ((ARRAY['PENDING'::character varying, 'SUPERSEDED'::character varying])::text[])) AND (reviewed_at IS NULL) AND (reviewer_id IS NULL) AND (rejection_reason IS NULL)) OR (((status)::text = 'APPROVED'::text) AND (reviewed_at IS NOT NULL) AND (reviewer_id IS NOT NULL) AND (rejection_reason IS NULL)) OR (((status)::text = 'REJECTED'::text) AND (reviewed_at IS NOT NULL) AND (reviewer_id IS NOT NULL) AND (rejection_reason IS NOT NULL) AND (length(TRIM(BOTH FROM rejection_reason)) > 0))))"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_requester_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requester_id"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_requested_type_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_type"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_accommodation_type_allowed",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((accommodation_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_approved_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((approved_status)::text = ANY ((ARRAY['DRAFT'::character varying, 'PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_owner_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL owner_id"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_city_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL city_id"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_revision_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_address_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL address"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_business_license_number_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL business_license_number"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_approved_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL approved_status"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_target_type_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((target_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'ROOM_TYPE'::character varying])::text[])))"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_target_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL target_id"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_target_type_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL target_type"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_url_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL url"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_is_thumbnail_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_thumbnail"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_sort_order_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL sort_order"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_category_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL category_id"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_content_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL content"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_name_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (name)"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_question_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL question"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_answer_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL answer"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'PUBLISHED'::character varying, 'REJECTED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_guest_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL guest_id"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_rating_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL rating"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_helpful_count_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL helpful_count"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_unhelpful_count_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL unhelpful_count"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_hotel_id_guest_id_booking_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (hotel_id, guest_id, booking_id)"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_approved_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (approved_request_id) REFERENCES room_inventory_review_requests(id)"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_feedback_type_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((feedback_type)::text = ANY ((ARRAY['HELPFUL'::character varying, 'UNHELPFUL'::character varying])::text[])))"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_review_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL review_id"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_feedback_type_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL feedback_type"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_review_id_user_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (review_id, user_id)"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_review_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL review_id"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_owner_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL owner_id"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_content_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL content"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_review_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (review_id)"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_held_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((held >= 0))"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_booked_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((booked >= 0))"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_room_type_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_type_id"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL date"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_held_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL held"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_booked_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booked"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_room_type_id_date_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (room_type_id, date)"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['HELD'::character varying, 'CONFIRMED'::character varying, 'RELEASED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_quantity_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((quantity > 0))"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((check_out_date > check_in_date))"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_room_type_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_type_id"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_quantity_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_command_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (command_id)"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_base_price_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL base_price"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_capacity_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL capacity"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_code_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((code)::text ~ '^[A-Z][A-Z0-9_]{0,63}$'::text))"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_label_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((length(TRIM(BOTH FROM label)) > 0))"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_code_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL code"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_label_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL label"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL active"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_revision_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_created_by_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_by"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_updated_by_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_by"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (code)"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY (ARRAY[('PENDING'::character varying)::text, ('APPROVED'::character varying)::text, ('REJECTED'::character varying)::text, ('SUPERSEDED'::character varying)::text])))"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_amenity_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amenity_id"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_title_snapshot_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL title_snapshot"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_requested_by_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_by"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_requested_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_at"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_request_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL request_id"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_code_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL code"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (request_id, code)"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_amenity_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amenity_id"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_revision_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (amenity_id)"
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "name": "checkinn_feature_migrations_migration_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL migration_id"
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "name": "checkinn_feature_migrations_applied_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL applied_at"
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "name": "checkinn_feature_migrations_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (migration_id)"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_proposed_quantity_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((proposed_quantity > 0))"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_source_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((length(TRIM(BOTH FROM source)) > 0))"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_latest_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (latest_request_id) REFERENCES room_inventory_review_requests(id)"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY (ARRAY[('PENDING'::character varying)::text, ('APPROVED'::character varying)::text, ('REJECTED'::character varying)::text, ('SUPERSEDED'::character varying)::text])))"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_room_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_id"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_proposed_quantity_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL proposed_quantity"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_source_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL source"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_requested_by_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_by"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_requested_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_at"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_revision_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((revision >= 0))"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_room_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_id"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_revision_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (room_id)"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_category_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (category_id) REFERENCES hotel_amenity_categories(id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_parent_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (parent_id) REFERENCES provinces(id)"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_hotel_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (hotel_id) REFERENCES hotels(id)"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_city_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (city_id) REFERENCES cities(id)"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_category_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (category_id) REFERENCES policy_category_types(id)"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_hotel_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (hotel_id) REFERENCES hotels(id)"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_hotel_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (hotel_id) REFERENCES hotels(id)"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_review_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (review_id) REFERENCES hotel_reviews(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_review_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (review_id) REFERENCES hotel_reviews(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_code_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (code) REFERENCES amenity_catalog(code)"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (request_id) REFERENCES amenity_mapping_requests(id)"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_approved_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (approved_request_id) REFERENCES amenity_mapping_requests(id)"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_latest_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (latest_request_id) REFERENCES amenity_mapping_requests(id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_pkey",
+      "definition": "CREATE UNIQUE INDEX amenity_category_types_pkey ON public.amenity_category_types USING btree (id)"
+    },
+    {
+      "table_name": "amenity_category_types",
+      "name": "amenity_category_types_name_key",
+      "definition": "CREATE UNIQUE INDEX amenity_category_types_name_key ON public.amenity_category_types USING btree (name)"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_amenities_pkey ON public.hotel_amenities USING btree (id)"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "hotel_amenity_categories_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_amenity_categories_pkey ON public.hotel_amenity_categories USING btree (id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_pkey",
+      "definition": "CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_name_key",
+      "definition": "CREATE UNIQUE INDEX cities_name_key ON public.cities USING btree (name)"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_pkey",
+      "definition": "CREATE UNIQUE INDEX provinces_pkey ON public.provinces USING btree (id)"
+    },
+    {
+      "table_name": "provinces",
+      "name": "provinces_name_key",
+      "definition": "CREATE UNIQUE INDEX provinces_name_key ON public.provinces USING btree (name)"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "hotel_accommodation_type_changes_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_accommodation_type_changes_pkey ON public.hotel_accommodation_type_changes USING btree (id)"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_pkey",
+      "definition": "CREATE UNIQUE INDEX hotels_pkey ON public.hotels USING btree (id)"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "media_assets_pkey",
+      "definition": "CREATE UNIQUE INDEX media_assets_pkey ON public.media_assets USING btree (id)"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_policies_pkey ON public.hotel_policies USING btree (id)"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_pkey",
+      "definition": "CREATE UNIQUE INDEX policy_category_types_pkey ON public.policy_category_types USING btree (id)"
+    },
+    {
+      "table_name": "policy_category_types",
+      "name": "policy_category_types_name_key",
+      "definition": "CREATE UNIQUE INDEX policy_category_types_name_key ON public.policy_category_types USING btree (name)"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_questions_pkey ON public.hotel_questions USING btree (id)"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_pkey",
+      "definition": "CREATE UNIQUE INDEX hotel_reviews_pkey ON public.hotel_reviews USING btree (id)"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_hotel_id_guest_id_booking_id_key",
+      "definition": "CREATE UNIQUE INDEX hotel_reviews_hotel_id_guest_id_booking_id_key ON public.hotel_reviews USING btree (hotel_id, guest_id, booking_id)"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_pkey",
+      "definition": "CREATE UNIQUE INDEX review_feedbacks_pkey ON public.review_feedbacks USING btree (id)"
+    },
+    {
+      "table_name": "review_feedbacks",
+      "name": "review_feedbacks_review_id_user_id_key",
+      "definition": "CREATE UNIQUE INDEX review_feedbacks_review_id_user_id_key ON public.review_feedbacks USING btree (review_id, user_id)"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_pkey",
+      "definition": "CREATE UNIQUE INDEX review_responses_pkey ON public.review_responses USING btree (id)"
+    },
+    {
+      "table_name": "review_responses",
+      "name": "review_responses_review_id_key",
+      "definition": "CREATE UNIQUE INDEX review_responses_review_id_key ON public.review_responses USING btree (review_id)"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_pkey",
+      "definition": "CREATE UNIQUE INDEX room_availability_pkey ON public.room_availability USING btree (id)"
+    },
+    {
+      "table_name": "room_availability",
+      "name": "room_availability_room_type_id_date_key",
+      "definition": "CREATE UNIQUE INDEX room_availability_room_type_id_date_key ON public.room_availability USING btree (room_type_id, date)"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_pkey",
+      "definition": "CREATE UNIQUE INDEX room_holds_pkey ON public.room_holds USING btree (id)"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_command_id_key",
+      "definition": "CREATE UNIQUE INDEX room_holds_command_id_key ON public.room_holds USING btree (command_id)"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_pkey",
+      "definition": "CREATE UNIQUE INDEX room_types_pkey ON public.room_types USING btree (id)"
+    },
+    {
+      "table_name": "amenity_catalog",
+      "name": "amenity_catalog_pkey",
+      "definition": "CREATE UNIQUE INDEX amenity_catalog_pkey ON public.amenity_catalog USING btree (code)"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_pkey",
+      "definition": "CREATE UNIQUE INDEX amenity_mapping_requests_pkey ON public.amenity_mapping_requests USING btree (id)"
+    },
+    {
+      "table_name": "amenity_mapping_request_codes",
+      "name": "amenity_mapping_request_codes_pkey",
+      "definition": "CREATE UNIQUE INDEX amenity_mapping_request_codes_pkey ON public.amenity_mapping_request_codes USING btree (request_id, code)"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_pkey",
+      "definition": "CREATE UNIQUE INDEX amenity_mapping_states_pkey ON public.amenity_mapping_states USING btree (amenity_id)"
+    },
+    {
+      "table_name": "checkinn_feature_migrations",
+      "name": "checkinn_feature_migrations_pkey",
+      "definition": "CREATE UNIQUE INDEX checkinn_feature_migrations_pkey ON public.checkinn_feature_migrations USING btree (migration_id)"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_requests_pkey",
+      "definition": "CREATE UNIQUE INDEX room_inventory_review_requests_pkey ON public.room_inventory_review_requests USING btree (id)"
+    },
+    {
+      "table_name": "room_inventory_review_states",
+      "name": "room_inventory_review_states_pkey",
+      "definition": "CREATE UNIQUE INDEX room_inventory_review_states_pkey ON public.room_inventory_review_states USING btree (room_id)"
+    },
+    {
+      "table_name": "hotel_amenities",
+      "name": "hotel_amenities_category",
+      "definition": "CREATE INDEX hotel_amenities_category ON public.hotel_amenities USING btree (category_id)"
+    },
+    {
+      "table_name": "hotel_amenity_categories",
+      "name": "amenity_categories_hotel",
+      "definition": "CREATE INDEX amenity_categories_hotel ON public.hotel_amenity_categories USING btree (hotel_id)"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "accommodation_change_hotel_created",
+      "definition": "CREATE INDEX accommodation_change_hotel_created ON public.hotel_accommodation_type_changes USING btree (hotel_id, created_at DESC)"
+    },
+    {
+      "table_name": "hotel_accommodation_type_changes",
+      "name": "accommodation_change_one_pending",
+      "definition": "CREATE UNIQUE INDEX accommodation_change_one_pending ON public.hotel_accommodation_type_changes USING btree (hotel_id) WHERE ((status)::text = 'PENDING'::text)"
+    },
+    {
+      "table_name": "hotels",
+      "name": "idx_hotels_city_id",
+      "definition": "CREATE INDEX idx_hotels_city_id ON public.hotels USING btree (city_id)"
+    },
+    {
+      "table_name": "hotels",
+      "name": "hotels_owner",
+      "definition": "CREATE INDEX hotels_owner ON public.hotels USING btree (owner_id)"
+    },
+    {
+      "table_name": "media_assets",
+      "name": "idx_media_assets_target",
+      "definition": "CREATE INDEX idx_media_assets_target ON public.media_assets USING btree (target_id, target_type)"
+    },
+    {
+      "table_name": "hotel_policies",
+      "name": "hotel_policies_hotel",
+      "definition": "CREATE INDEX hotel_policies_hotel ON public.hotel_policies USING btree (hotel_id)"
+    },
+    {
+      "table_name": "hotel_questions",
+      "name": "hotel_questions_hotel",
+      "definition": "CREATE INDEX hotel_questions_hotel ON public.hotel_questions USING btree (hotel_id)"
+    },
+    {
+      "table_name": "hotel_reviews",
+      "name": "hotel_reviews_hotel_status_created",
+      "definition": "CREATE INDEX hotel_reviews_hotel_status_created ON public.hotel_reviews USING btree (hotel_id, status, created_at DESC)"
+    },
+    {
+      "table_name": "room_holds",
+      "name": "room_holds_expiry",
+      "definition": "CREATE INDEX room_holds_expiry ON public.room_holds USING btree (expires_at) WHERE ((status)::text = 'HELD'::text)"
+    },
+    {
+      "table_name": "room_types",
+      "name": "room_types_hotel",
+      "definition": "CREATE INDEX room_types_hotel ON public.room_types USING btree (hotel_id)"
+    },
+    {
+      "table_name": "amenity_mapping_requests",
+      "name": "amenity_mapping_requests_pending",
+      "definition": "CREATE INDEX amenity_mapping_requests_pending ON public.amenity_mapping_requests USING btree (status, requested_at, id)"
+    },
+    {
+      "table_name": "amenity_mapping_states",
+      "name": "amenity_mapping_states_hotel",
+      "definition": "CREATE INDEX amenity_mapping_states_hotel ON public.amenity_mapping_states USING btree (hotel_id)"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_queue",
+      "definition": "CREATE INDEX room_inventory_review_queue ON public.room_inventory_review_requests USING btree (status, requested_at, id)"
+    },
+    {
+      "table_name": "room_inventory_review_requests",
+      "name": "room_inventory_review_room",
+      "definition": "CREATE INDEX room_inventory_review_room ON public.room_inventory_review_requests USING btree (room_id, requested_at, id)"
+    }
+  ],
+  "sequences": [],
+  "history": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "description": "canonical schema",
+      "type": "SQL",
+      "script": "V1__canonical_schema.sql",
+      "checksum": 553687447,
+      "success": true
+    }
+  ]
+}

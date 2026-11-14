@@ -1,4 +1,5 @@
 package com.example.bookingservice.payment.service;
+import static com.example.bookingservice.contract.TestIds.*;
 import com.example.bookingservice.booking.entity.*;
 import com.example.bookingservice.booking.enums.*;
 import com.example.bookingservice.booking.repository.*;
@@ -47,13 +48,13 @@ class RefundPostgresTest {
    String id;
    if(restart) id=Files.readString(Path.of("target/refund-payment-id.txt"));
    else {
-    var b=Booking.builder().id(UUID.randomUUID().toString()).userId("guest").hotelId("hotel").hotelName("Demo").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO).totalAmount(BigDecimal.TEN).checkInDate(LocalDate.of(2027,1,10)).checkOutDate(LocalDate.of(2027,1,11)).adults(1).children(0).contactName("Demo").contactEmail("demo@example.test").contactPhone("0").build();
-    var item=BookingItem.builder().booking(b).roomTypeId("room").roomTypeName("Demo").ratePlanId("rate").checkInDate(b.getCheckInDate()).checkOutDate(b.getCheckOutDate()).quantity(1).nights(1).unitPrice(BigDecimal.TEN).subtotal(BigDecimal.TEN).build();b.setItems(List.of(item));
+    var b=Booking.builder().id(UUID.randomUUID()).userId(id("guest")).hotelId(id("hotel")).hotelName("Demo").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO).totalAmount(BigDecimal.TEN).checkInDate(LocalDate.of(2027,1,10)).checkOutDate(LocalDate.of(2027,1,11)).adults(1).children(0).contactName("Demo").contactEmail("demo@example.test").contactPhone("0").build();
+    var item=BookingItem.builder().booking(b).roomTypeId(id("room")).roomTypeName("Demo").ratePlanId("rate").checkInDate(b.getCheckInDate()).checkOutDate(b.getCheckOutDate()).quantity(1).nights(1).unitPrice(BigDecimal.TEN).subtotal(BigDecimal.TEN).build();b.setItems(List.of(item));
     var p=Payment.builder().bookingId(b.getId()).amount(BigDecimal.TEN).method(PaymentMethod.VNPAY).status(PaymentStatus.PENDING).vnpayOrderId("demo-order").build();
-    tx.executeWithoutResult(s->{em.persist(b);em.persist(p);});id=p.getId();
+    tx.executeWithoutResult(s->{em.persist(b);em.persist(p);});id=p.getId().toString();
     app.processVNPayCallback("demo-order","00","123456",Instant.parse("2026-11-12T00:00:00Z"));
     tx.executeWithoutResult(s->em.find(Booking.class,b.getId()).setStatus(BookingStatus.CANCELLED));
-    refunds.request(id,"guest","Reviewed cancellation");refunds.approve(id,"admin");
+    refunds.request(id(id),id("guest"),"Reviewed cancellation");refunds.approve(id(id),id("admin"));
     admin();
     org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken("owner",null,List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_OWNER"))));
     assertThatThrownBy(()->app.refundPayment(p.getId())).isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
@@ -62,7 +63,7 @@ class RefundPostgresTest {
     jdbc.execute("CREATE FUNCTION refund_fault() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'test commit fault'; END $$");
     jdbc.execute("CREATE CONSTRAINT TRIGGER refund_fault AFTER INSERT ON booking_event_outbox DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION refund_fault()");
     final String pid=id;
-    assertThatThrownBy(()->app.refundPayment(pid)).isInstanceOf(RuntimeException.class);
+    assertThatThrownBy(()->app.refundPayment(id(pid))).isInstanceOf(RuntimeException.class);
     assertThat(jdbc.queryForObject("SELECT status FROM payments WHERE id=?",String.class,id)).isEqualTo("COMPLETED");
     assertThat(jdbc.queryForObject("SELECT status FROM refund_requests WHERE payment_id=?",String.class,id)).isEqualTo("APPROVED_PENDING_EXECUTION");
     assertThat(jdbc.queryForObject("SELECT count(*) FROM manual_refund_executions",Integer.class)).isZero();
@@ -71,15 +72,15 @@ class RefundPostgresTest {
     var pool=Executors.newFixedThreadPool(6);try {
      var gate=new CountDownLatch(1);var jobs=new ArrayList<Future<?>>();
      for(int i=0;i<6;i++) { final int action=i; jobs.add(pool.submit(()->{gate.await();admin();try{
-      if(action==0) return refunds.approve(pid,"admin");
-      if(action==1) return refunds.reject(pid,"admin");
-      return app.refundPayment(pid);
+      if(action==0) return refunds.approve(id(pid),id("admin"));
+      if(action==1) return refunds.reject(id(pid),"admin");
+      return app.refundPayment(id(pid));
      }catch(org.springframework.web.server.ResponseStatusException conflict){assertThat(conflict.getStatusCode().value()).isEqualTo(409);return null;}finally{org.springframework.security.core.context.SecurityContextHolder.clearContext();}})); }
      gate.countDown();for(var job:jobs)job.get(30,TimeUnit.SECONDS);
     }finally{pool.shutdownNow();}
     Files.writeString(Path.of("target/refund-payment-id.txt"),id);
    }
-   admin();app.refundPayment(id);app.refundPayment(id);
+   admin();app.refundPayment(id(id));app.refundPayment(id(id));
    assertThat(jdbc.queryForObject("SELECT status FROM payments WHERE id=?",String.class,id)).isEqualTo("REFUNDED");
    assertThat(jdbc.queryForObject("SELECT vnpay_transaction_no FROM payments WHERE id=?",String.class,id)).isEqualTo("123456");
    assertThat(jdbc.queryForObject("SELECT amount FROM payments WHERE id=?",BigDecimal.class,id)).isEqualByComparingTo("10");
@@ -91,7 +92,7 @@ class RefundPostgresTest {
    if(!restart) {
     jdbc.update("INSERT INTO bookings SELECT (jsonb_populate_record(NULL::bookings,to_jsonb(b)||jsonb_build_object('id','pending-booking','paid_amount',10))).* FROM bookings b LIMIT 1");
     jdbc.update("INSERT INTO payments SELECT (jsonb_populate_record(NULL::payments,to_jsonb(p)||jsonb_build_object('id','pending-payment','booking_id','pending-booking','status','COMPLETED','vnpay_order_id','pending-order','vnpay_transaction_no','789'))).* FROM payments p LIMIT 1");
-    refunds.request("pending-payment","guest","Pending recovery fixture");refunds.approve("pending-payment","admin");
+    refunds.request(id("pending-payment"),id("guest"),"Pending recovery fixture");refunds.approve(id("pending-payment"),id("admin"));
    }
    var manual=proxy(new ManualRefundService(refunds,jdbc),tm);
    new ManualRefundRecovery(jdbc,manual).recover();

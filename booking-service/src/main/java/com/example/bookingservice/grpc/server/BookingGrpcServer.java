@@ -1,5 +1,6 @@
 package com.example.bookingservice.grpc.server;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.booking.dto.BookingItemResponse;
 import com.example.bookingservice.booking.dto.BookingResponse;
 import com.example.bookingservice.booking.dto.CreateBookingItemRequest;
@@ -88,7 +89,7 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
             GrpcAccess.require(actor.isAuthenticated() && "user-service".equals(actor.getName())
                     && actor.getAuthorities().stream().anyMatch(a -> "ROLE_USER_SERVICE".equals(a.getAuthority())));
             observer.onNext(com.example.bookingservice.grpc.LoyaltyBookingStateResponse.newBuilder()
-                    .setState(bookingService.getLoyaltyBookingState(request.getBookingId(), request.getUserId())).build());
+                    .setState(bookingService.getLoyaltyBookingState(required(request.getBookingId()), required(request.getUserId()))).build());
             observer.onCompleted();
         } catch (Exception ex) {
             observer.onError(GrpcAccess.error(ex));
@@ -102,7 +103,7 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
             var actor = GrpcAccess.actor();
             GrpcAccess.require(actor.isAuthenticated() && "hotel-service".equals(actor.getName())
                     && actor.getAuthorities().stream().anyMatch(a -> "ROLE_HOTEL_SERVICE".equals(a.getAuthority())));
-            boolean eligible = bookingService.isReviewEligible(request.getBookingId(), request.getGuestId(), request.getHotelId());
+            boolean eligible = bookingService.isReviewEligible(required(request.getBookingId()), required(request.getGuestId()), required(request.getHotelId()));
             observer.onNext(com.example.bookingservice.grpc.ReviewEligibilityResponse.newBuilder().setEligible(eligible).build());
             observer.onCompleted();
         } catch (Exception ex) {
@@ -115,7 +116,7 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
         log.info("[gRPC_GET_BOOKING] Request received - bookingId: {}", request.getId());
         try {
             GrpcAccess.require(access.canRead(GrpcAccess.actor(), request.getId()));
-            BookingResponse booking = bookingService.getBooking(request.getId());
+            BookingResponse booking = bookingService.getBooking(required(request.getId()));
             log.info("[gRPC_GET_BOOKING] Booking found - bookingId: {}, status: {}", booking.getId(), booking.getStatus());
             responseObserver.onNext(toProto(booking));
             responseObserver.onCompleted();
@@ -127,9 +128,9 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
 
     private com.example.bookingservice.grpc.BookingResponse toProto(BookingResponse booking) {
         com.example.bookingservice.grpc.BookingResponse.Builder builder = com.example.bookingservice.grpc.BookingResponse.newBuilder()
-                .setId(booking.getId())
-                .setUserId(booking.getUserId())
-                .setHotelId(booking.getHotelId())
+                .setId(text(booking.getId()))
+                .setUserId(text(booking.getUserId()))
+                .setHotelId(text(booking.getHotelId()))
                 .setHotelName(booking.getHotelName())
                 .setCheckInDate(String.valueOf(booking.getCheckInDate()))
                 .setCheckOutDate(String.valueOf(booking.getCheckOutDate()))
@@ -149,8 +150,8 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
 
         for (BookingItemResponse item : booking.getItems()) {
             builder.addItems(com.example.bookingservice.grpc.BookingItemResponse.newBuilder()
-                    .setId(item.getId())
-                    .setRoomTypeId(item.getRoomTypeId())
+                    .setId(text(item.getId()))
+                    .setRoomTypeId(text(item.getRoomTypeId()))
                     .setRoomTypeName(item.getRoomTypeName())
                     .setRatePlanId(item.getRatePlanId())
                     .setCheckInDate(String.valueOf(item.getCheckInDate()))

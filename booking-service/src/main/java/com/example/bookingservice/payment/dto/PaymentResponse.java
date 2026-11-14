@@ -1,5 +1,6 @@
 package com.example.bookingservice.payment.dto;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 public class PaymentResponse {
     private String refundExecutionMode;
-    private String id;
-    private String bookingId;
+    private UUID id;
+    private UUID bookingId;
     private BigDecimal amount;
     private PaymentMethod method;
     private PaymentStatus status;

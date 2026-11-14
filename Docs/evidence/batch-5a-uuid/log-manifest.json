@@ -1,0 +1,34 @@
+{
+  "legacy-golden.log": {
+    "sha256": "8f98692c8834e6ed1112596c79179ddc21931a7deb5e00f166feb55582792cda",
+    "bytes": 5030
+  },
+  "final-backend.log": {
+    "sha256": "112ce051f55b443c7190c84617256be8c8db312ce0693c14d4f79668d6b2496e",
+    "bytes": 251155
+  },
+  "native-postgres.log": {
+    "sha256": "769c287c210530ebdb64ad51805f154277810b8c314f57b20fbf4530ef1f9375",
+    "bytes": 99212
+  },
+  "native-postgres-final.log": {
+    "sha256": "26fb3fa72df687f4c78b17deaee0e3bb2864a1167eaa0f0df8be12140902ad13",
+    "bytes": 18107
+  },
+  "baseline-tsc.log": {
+    "sha256": "0ddae37a7d2a47edc01556c5a427c6c73a562ed5b9bf0ff8c65cf553a3101f33",
+    "bytes": 415
+  },
+  "final-tsc.log": {
+    "sha256": "0ddae37a7d2a47edc01556c5a427c6c73a562ed5b9bf0ff8c65cf553a3101f33",
+    "bytes": 415
+  },
+  "frontend-regression.log": {
+    "sha256": "8ca6d78dce1a51ce897757daa8f131434542d8ca115d9e696abee3e3d81c6653",
+    "bytes": 60964
+  },
+  "frontend-focused-lint.log": {
+    "sha256": "5e53b8edf36a7d8e112d9bd21e01526291a3769fec038b47793d565743a3b4e8",
+    "bytes": 126
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "changed_preexisting_files": [
+    "checkinn/Docs/database-design/CANONICAL_DATABASE_SCHEMA_V1.md",
+    "checkinn/Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+    "checkinn/Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md",
+    "checkinn/booking-service/pom.xml",
+    "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingItemRepository.java",
+    "checkinn/hotel-service/pom.xml",
+    "checkinn/regulations-service/pom.xml",
+    "checkinn/revenue-service/pom.xml",
+    "checkinn-frontend/components/PlaceCard.tsx"
+  ],
+  "credential_scan": "PASS",
+  "canonical_hash_stability": "PASS",
+  "required_evidence_files": 11
+}

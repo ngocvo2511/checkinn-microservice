@@ -1,0 +1,562 @@
+[
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+    "owner": "user",
+    "table": "loyalty_commands",
+    "mapped_columns": [
+      "command_key",
+      "booking_id",
+      "command_type",
+      "user_id",
+      "input_amount",
+      "input_points",
+      "result_amount",
+      "result_points",
+      "created_at"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/LoyaltyPoints.java",
+    "owner": "user",
+    "table": "loyalty_points",
+    "mapped_columns": [
+      "id",
+      "user_id",
+      "total_points",
+      "used_points",
+      "available_points",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/Otp.java",
+    "owner": "user",
+    "table": "otps",
+    "mapped_columns": [
+      "id",
+      "email",
+      "otp_code",
+      "created_at",
+      "expiry_time",
+      "is_verified",
+      "attempt_count"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+    "owner": "user",
+    "table": "points_reservations",
+    "mapped_columns": [
+      "booking_id",
+      "user_id",
+      "requested_points",
+      "total_amount",
+      "points",
+      "discount_amount",
+      "redemption_rate",
+      "state",
+      "hold_expires_at",
+      "next_check_at",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/PointsTransaction.java",
+    "owner": "user",
+    "table": "points_transactions",
+    "mapped_columns": [
+      "id",
+      "user_id",
+      "transaction_type",
+      "points",
+      "booking_id",
+      "description",
+      "created_at"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/User.java",
+    "owner": "user",
+    "table": "users",
+    "mapped_columns": [
+      "id",
+      "username",
+      "email",
+      "password",
+      "role",
+      "is_email_verified",
+      "is_active",
+      "created_at"
+    ]
+  },
+  {
+    "source": "user-service/src/main/java/com/example/userservice/model/UserProfile.java",
+    "owner": "user",
+    "table": "user_profiles",
+    "mapped_columns": [
+      "id",
+      "full_name",
+      "gender",
+      "birth_date",
+      "phone",
+      "address",
+      "country",
+      "user_id",
+      "loyalty_points_id"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/CategoryType.java",
+    "owner": "hotel",
+    "table": "amenity_category_types",
+    "mapped_columns": [
+      "id",
+      "name"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenity.java",
+    "owner": "hotel",
+    "table": "hotel_amenities",
+    "mapped_columns": [
+      "id",
+      "category_id",
+      "title",
+      "is_active",
+      "created_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenityCategory.java",
+    "owner": "hotel",
+    "table": "hotel_amenity_categories",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "title",
+      "is_active",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java",
+    "owner": "hotel",
+    "table": "cities",
+    "mapped_columns": [
+      "id",
+      "name",
+      "latitude",
+      "longitude",
+      "parent_id",
+      "hotel_count",
+      "created_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/City/entity/Province.java",
+    "owner": "hotel",
+    "table": "provinces",
+    "mapped_columns": [
+      "id",
+      "name",
+      "latitude",
+      "longitude",
+      "hotel_count",
+      "created_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/AccommodationTypeChange.java",
+    "owner": "hotel",
+    "table": "hotel_accommodation_type_changes",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "requester_id",
+      "previous_type",
+      "requested_type",
+      "status",
+      "created_at",
+      "reviewed_at",
+      "reviewer_id",
+      "rejection_reason"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java",
+    "owner": "hotel",
+    "table": "hotels",
+    "mapped_columns": [
+      "id",
+      "owner_id",
+      "city_id",
+      "city_id",
+      "name",
+      "description",
+      "accommodation_type",
+      "revision",
+      "star_rating",
+      "address",
+      "contact_email",
+      "contact_phone",
+      "business_license_number",
+      "tax_id",
+      "operation_license_number",
+      "owner_identity_number",
+      "business_license_file_path",
+      "operation_license_file_path",
+      "owner_identity_front_path",
+      "owner_identity_back_path",
+      "is_active",
+      "approved_status",
+      "rejection_reason",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/entity/MediaAsset.java",
+    "owner": "hotel",
+    "table": "media_assets",
+    "mapped_columns": [
+      "id",
+      "target_id",
+      "target_type",
+      "url",
+      "is_thumbnail",
+      "sort_order",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Policy/entity/HotelPolicy.java",
+    "owner": "hotel",
+    "table": "hotel_policies",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "category_id",
+      "content",
+      "is_active",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Policy/entity/PolicyCategoryType.java",
+    "owner": "hotel",
+    "table": "policy_category_types",
+    "mapped_columns": [
+      "id",
+      "name"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Question/entity/Question.java",
+    "owner": "hotel",
+    "table": "hotel_questions",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "question",
+      "answer",
+      "is_active",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/HotelReview.java",
+    "owner": "hotel",
+    "table": "hotel_reviews",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "guest_id",
+      "booking_id",
+      "rating",
+      "staff_rating",
+      "amenities_rating",
+      "cleanliness_rating",
+      "comfort_rating",
+      "value_for_money_rating",
+      "location_rating",
+      "title",
+      "content",
+      "helpful_count",
+      "unhelpful_count",
+      "status",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewFeedback.java",
+    "owner": "hotel",
+    "table": "review_feedbacks",
+    "mapped_columns": [
+      "id",
+      "review_id",
+      "user_id",
+      "feedback_type",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewResponse.java",
+    "owner": "hotel",
+    "table": "review_responses",
+    "mapped_columns": [
+      "id",
+      "review_id",
+      "owner_id",
+      "content",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+    "owner": "hotel",
+    "table": "room_availability",
+    "mapped_columns": [
+      "id",
+      "room_type_id",
+      "date",
+      "held",
+      "booked",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomHold.java",
+    "owner": "hotel",
+    "table": "room_holds",
+    "mapped_columns": [
+      "id",
+      "command_id",
+      "room_type_id",
+      "hotel_id",
+      "check_in_date",
+      "check_out_date",
+      "quantity",
+      "status",
+      "expires_at",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "hotel-service/src/main/java/com/example/hotelservice/Room/entity/RoomType.java",
+    "owner": "hotel",
+    "table": "room_types",
+    "mapped_columns": [
+      "id",
+      "hotel_id",
+      "name",
+      "description",
+      "base_price",
+      "capacity",
+      "amenities",
+      "is_active",
+      "total_rooms",
+      "created_at",
+      "updated_at",
+      "hotel_id"
+    ]
+  },
+  {
+    "source": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+    "owner": "booking",
+    "table": "bookings",
+    "mapped_columns": [
+      "id",
+      "idempotency_key_hash",
+      "idempotency_request_hash",
+      "user_id",
+      "hotel_id",
+      "hotel_name",
+      "check_in_date",
+      "check_out_date",
+      "adults",
+      "children",
+      "status",
+      "total_amount",
+      "paid_amount",
+      "voucher_code",
+      "voucher_discount",
+      "earned_points",
+      "used_points",
+      "points_discount_amount",
+      "contact_name",
+      "contact_email",
+      "contact_phone",
+      "special_requests",
+      "hold_id",
+      "hold_expires_at",
+      "cancellation_policy_version",
+      "check_in_at",
+      "free_cancellation_until",
+      "loyalty_status",
+      "loyalty_next_attempt_at",
+      "loyalty_attempts",
+      "loyalty_last_error",
+      "onsite_reservation_status",
+      "onsite_next_attempt_at",
+      "onsite_attempts",
+      "onsite_last_error",
+      "paid_reservation_status",
+      "paid_reservation_payment_id",
+      "paid_reservation_next_attempt_at",
+      "paid_reservation_attempts",
+      "paid_reservation_last_error",
+      "inventory_reviewed_by",
+      "inventory_review_reason",
+      "inventory_reviewed_at",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+    "owner": "booking",
+    "table": "booking_items",
+    "mapped_columns": [
+      "id",
+      "booking_id",
+      "room_type_id",
+      "room_type_name",
+      "rate_plan_id",
+      "check_in_date",
+      "check_out_date",
+      "quantity",
+      "unit_price",
+      "nights",
+      "subtotal",
+      "tax_fee",
+      "cancellation_policy",
+      "guest_name"
+    ]
+  },
+  {
+    "source": "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+    "owner": "booking",
+    "table": "payments",
+    "mapped_columns": [
+      "id",
+      "booking_id",
+      "amount",
+      "method",
+      "status",
+      "transaction_id",
+      "vnpay_order_id",
+      "vnpay_create_date",
+      "vnpay_response_code",
+      "vnpay_transaction_no",
+      "paid_at",
+      "transaction_occurred_at",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+    "owner": "booking",
+    "table": "refund_requests",
+    "mapped_columns": [
+      "id",
+      "payment_id",
+      "booking_id",
+      "amount",
+      "reason",
+      "requested_by",
+      "approved_by",
+      "status",
+      "requested_at",
+      "approved_at",
+      "execution_mode",
+      "refunded_at",
+      "version"
+    ]
+  },
+  {
+    "source": "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+    "owner": "revenue",
+    "table": "booking_status_records",
+    "mapped_columns": [
+      "id",
+      "booking_id",
+      "hotel_id",
+      "room_type_id",
+      "check_in_date",
+      "check_out_date",
+      "nights",
+      "rooms",
+      "booking_status",
+      "event_at",
+      "created_at",
+      "event_version",
+      "last_event_id"
+    ]
+  },
+  {
+    "source": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+    "owner": "revenue",
+    "table": "payment_records",
+    "mapped_columns": [
+      "id",
+      "booking_id",
+      "customer_id",
+      "hotel_id",
+      "room_type_id",
+      "check_in_date",
+      "check_out_date",
+      "nights",
+      "rooms",
+      "amount",
+      "payment_status",
+      "payment_method",
+      "paid_at",
+      "event_at",
+      "created_at",
+      "event_version",
+      "last_event_id"
+    ]
+  },
+  {
+    "source": "regulations-service/src/main/java/com/example/regulationsservice/model/Regulation.java",
+    "owner": "regulations",
+    "table": "regulations",
+    "mapped_columns": [
+      "id",
+      "regulation_key",
+      "name",
+      "value",
+      "description",
+      "active",
+      "version",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  {
+    "source": "regulations-service/src/main/java/com/example/regulationsservice/model/RegulationSnapshot.java",
+    "owner": "regulations",
+    "table": "regulation_snapshots",
+    "mapped_columns": [
+      "id",
+      "regulation_key",
+      "regulation_name",
+      "version",
+      "snapshot_data",
+      "applied_at",
+      "source_user"
+    ]
+  }
+]

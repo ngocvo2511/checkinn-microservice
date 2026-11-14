@@ -1,0 +1,13 @@
+{
+  "checkinn": {
+    "branch": "test/booking-hotel-gateway-acceptance",
+    "head": "8ee230b250863164dd47f83af037711a0ea4a0ef",
+    "status": "M .idea/compiler.xml\n M .idea/encodings.xml\n D Docs/BATCH2_PR_REVIEW_2026-11-13.md\n M Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md\n M Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md\n?? Docs/BATCH3_DATABASE_SCHEMA_MIGRATION_STANDARDIZATION_2026-11-13.md\n?? Docs/evidence/batch-3-schema/\n?? docker/docker-compose.schema-smoke.yml\n?? docker/schema-compatibility-probes.py\n?? docker/schema-financial-probes.py\n?? docker/schema-migration-only.py\n?? docker/schema-smoke.py\n?? docker/schema-source-inventory.py\n?? docker/schema-startup-recheck.py\n?? docker/schema-testonly-bootstrap.py"
+  },
+  "checkinn-frontend": {
+    "branch": "main",
+    "head": "d446b9808f8732c9982da2c156979e245742aa7f",
+    "status": ""
+  },
+  "capture_note": "Git values observed before work in first inspection; Batch4 own output directory excluded from delayed serialized capture. Existing changes preserved."
+}

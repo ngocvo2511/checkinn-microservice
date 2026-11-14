@@ -1,0 +1,3850 @@
+[
+  {
+    "path": "user-service/src/main/java/com/example/userservice/config/RabbitMQConfig.java",
+    "sha256": "913dcd060264cab94f4c3dd6a8cdbcf21901db2c25fe283f15274b4838f0ca5a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/config/SecurityConfig.java",
+    "sha256": "4d4721be0322451b712a7b2efa1502572fbbfeb3e7826bfd61c0a41f614a7735",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/controller/LoyaltyPointsController.java",
+    "sha256": "3b24241e8a87e934465b8dcfaf6a10b24c890f087e087f9f2f46f2ded10badb4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/controller/OtpController.java",
+    "sha256": "167b01b9f136d47c2a2c25b8a363d301736ae9a5f27dc7233c6f700d17b724f5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "sha256": "b65811a9311aec76476d906ecb946c8ef31698deed4432a3de7204a14aa41c8e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/ApplyPointsRequest.java",
+    "sha256": "24c2b56dd6290436981576ba236d449acf59d0ea794bd046b45fdb0053221d7d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/ChangePasswordRequest.java",
+    "sha256": "eb920a4f0aa7e29ab294667e58b7840226e36c49570f602132d2748e7e4dfe04",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/LoginRequest.java",
+    "sha256": "09461ad8716c79b3712faa58a8f672be567aff2933abb5098fbd89255e54ee42",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/LoyaltyPointsResponse.java",
+    "sha256": "bb99f5935c25ed651de87e6dded3babb20391c906da5f8cd3f4ea83ae539f977",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/OtpVerificationResponse.java",
+    "sha256": "295b9bb600ca53052e92b1362b748a9a0ca3e6f039ce138be711d3872ad6a31d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/PagedResponse.java",
+    "sha256": "b39bc41ced47b23473567a0759a74e400da04a2913b626cefb40dc6b2d105301",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/PointsQuoteRequest.java",
+    "sha256": "95e5c9bb77db62c78120451e0a40950891521eeb127ffc26108d2f0d1536ecca",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/PointsQuoteResponse.java",
+    "sha256": "6a29c375509afe54a1b7a15d4b7d91c55bee187f5e0545cf3cb2b831d13d6c72",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/PointsReservationResponse.java",
+    "sha256": "9401ea0e60195013e14edc68fe33b6a7e659d315bf0c24b7fff1790f3884de6b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/PointsTransactionResponse.java",
+    "sha256": "4d94cb301e7a6d60e4d00978bbb803e00baa99b1565b81cde67f801fe1a5ce7a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/RegisterRequest.java",
+    "sha256": "2e1d5f7fec33f00e4d1f34dac798d3bc587ed9ab89e2d20a82aff818fed51ea3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/ReservePointsRequest.java",
+    "sha256": "4d646a4fc853318db41b0d22bd665a14efc1a44218e1beff93aeacda81c1702c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/UpdateProfileDto.java",
+    "sha256": "e87b19aa28df9dc0cddaf024fb22cee424bfd734d5bf502bf3bb0f8bbed48376",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/UserDetailResponse.java",
+    "sha256": "0719083912bf10698ca778d6bb9d4b28544565f90efcb9136ceca09d968e4e10",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/UserProfileDto.java",
+    "sha256": "af6b7086144afa373e831b00423779b6f6942c1d0160bb4a97c24da6fca615c1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/UserResponse.java",
+    "sha256": "c21b3f31c5a7bbbdd62fbc581c7908571d37eb40dd44483088ad3f742e0902a6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/dto/VerifyOtpRequest.java",
+    "sha256": "871e9077a2a002f7411e1df114c975e3d594739b819c1966df9ed018f9dc4969",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/exception/GlobalExceptionHandler.java",
+    "sha256": "6ed72c3ceb1232c860e0423a7bc15ccca813defc371634d2e093493a5bdec230",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+    "sha256": "99d25696d8b3155c124b0c0fed906f085d3af3d18c37973148c672e33d866578",
+    "entity": true,
+    "tables": [
+      "loyalty_commands"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/LoyaltyPoints.java",
+    "sha256": "8c433527811d1d7c99feec96b314097a67466576e3903d16c31e71de583ae433",
+    "entity": true,
+    "tables": [
+      "loyalty_points"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/Otp.java",
+    "sha256": "0ccdc65a22abc8df316ed3123319186e6967d103ba0293d483888034075049d6",
+    "entity": true,
+    "tables": [
+      "otps"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/OtpEmailEvent.java",
+    "sha256": "67e3c837e5b714623f2c313f0315098efbea96f72ec17b83367576e95c974f8d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+    "sha256": "ea8bf5a724cfc5b0e04ce99c16443a31ee57fee42f49412cae724ba1eef1d288",
+    "entity": true,
+    "tables": [
+      "points_reservations"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/PointsReservationState.java",
+    "sha256": "77ee1bbca400ffd1299c4c19cabca13ba6ae97afbea5e90e93246c9ab204a543",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/PointsTransaction.java",
+    "sha256": "8b5755b1a93d44242975b50fe87a8c76d112603093d4299335a57f8bf0a4e450",
+    "entity": true,
+    "tables": [
+      "points_transactions"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/Role.java",
+    "sha256": "a73505c194ec531d6504b8f2041edc4cb28c536e17ea7e97b155a7d86feb75ee",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/User.java",
+    "sha256": "4a5f95237ff9b4aa3a64aba1b599dda114fdaea383a47abf6714a4310d6ddfe6",
+    "entity": true,
+    "tables": [
+      "users"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/model/UserProfile.java",
+    "sha256": "85f682c0b9f83d18a46ade2fda1140673428f8c35717ff44584eabe2fd443fde",
+    "entity": true,
+    "tables": [
+      "user_profiles"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/regulations/RegulationClient.java",
+    "sha256": "31e1cde6abe5d6fff5b6de9dfff8abe0f3e12ee9bf2f39d865f60fc64a40e66a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/regulations/RegulationLocalCache.java",
+    "sha256": "669d4f89bc94bd668c7111b474ab2b6104e95fce9f018bfba524d4cb36480c26",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/LoyaltyCommandRepository.java",
+    "sha256": "df9cec254efef2f7f728e7b704f091c733593122b8d672c0983428c11a2e3139",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/LoyaltyPointsRepository.java",
+    "sha256": "dbfcbd9073d432ddf38ff426f25f1552ec4b1065c4b1c1f4df94d877e65a1720",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/OtpRepository.java",
+    "sha256": "36d84f8108080b07548b0d49530860a633052e9c16b74f870c2c01894beea373",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsReservationRepository.java",
+    "sha256": "b29c7eccaf996815990db38792cd848d38a7c5ba98bb56b43221e5ea979a8890",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsTransactionRepository.java",
+    "sha256": "60fa1cf41895e5ed636079deb27185b1fa6d00269f5b7055d1ec31fef9a89d39",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/UserProfileRepository.java",
+    "sha256": "e14b5286bcd5d42fd5b7f10c32f7dc4e70f929d14bf90131a9a11788bab98f38",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/UserRepository.java",
+    "sha256": "bdee2c0e3696091e3ae0437d30c3dc7938bb1455c2e04dbc82a1f932ae1e0ad8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/JwtMdcFilter.java",
+    "sha256": "3109a26362be39c9adf8ca50145ffa93828ef3f78e2188086a3f787f22534bdf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/JwtService.java",
+    "sha256": "03684236a0748c49d5566701fa0cb02b76f656be4c087f5bf262ed2813a62366",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/SessionClaims.java",
+    "sha256": "510b41edf42e0f3445fe17c87cdce5ce60088c321676b21e3c5e054ea9f457cc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/SessionStoreUnavailableException.java",
+    "sha256": "ab8a37016081b2bee4affcaae6c34f6f018e76362dda6b8e9384c2dc6ff0c271",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/TokenRevocationService.java",
+    "sha256": "46323a7eec594849d9cd56861434ad4d204bd48147e76fa0327e9d7140b053ad",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/security/UserRpcAccess.java",
+    "sha256": "243277680703d0cb0a1267da1fc15bcd6626ce7962368d5e568c64c28c3a3232",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/EmailService.java",
+    "sha256": "126b5e61a6e309e585f34e790ba782b4d413c3d4a5092770629adfe93f600926",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyCommandLock.java",
+    "sha256": "78b2e0558672072916f73bc59d03a19bc23ae1bb8be39083bae6d61708967fd5",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyPointsService.java",
+    "sha256": "7f4a09ab51f1155c4b64b698af8ad3724d8fece44ce105432093d4b7df7f1f7a",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "sha256": "1a7911a28f20529757262e997406aecebfabb0cc0a1f956ad74f5317b43fc81a",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/PointsBookingStateClient.java",
+    "sha256": "45ad8c1e989ba71492741db5aee156253b41c1ced48adf9d000d9b2be96d9647",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java",
+    "sha256": "d3559a104517167878290b44fc92b33a816b1467fb2fccfdac149a6448d65d1e",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/UserGrpcService.java",
+    "sha256": "c9aa7d5b82e903099ae37159bfa73f7b1072fbce98a4d4e20d423ffb14d2b268",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/UserService.java",
+    "sha256": "7b0458a1c4eec24162d1f887f4315e6e8ec9ad46a6007d281ca1fc0a2e460981",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/UserServiceApplication.java",
+    "sha256": "b5669854af729ddbbda08b3be9c5884da860c2a582dd0223a3275bf5707f78e9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "user-service/src/main/resources/application.yml",
+    "sha256": "774d490ac21d492cb5e0cf479b41526862471b81b24bb29a842e2343b76fbdcc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/AuthServiceApplication.java",
+    "sha256": "334844c1415afe300a9b8816573f7035a847a2ea0eccf1858ca50e25a2a90f55",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/config/CorsConfig.java",
+    "sha256": "039e9211b30a82c714c64739547c4a37e8bc5a434cea5a518f42ff1cc431a5ac",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "sha256": "99d30b1e85f9166b4283e31ad544aa86c5cc1b58e82c0868e19364472abf1cf5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/dto/AuthResponseDto.java",
+    "sha256": "bf32e0fc457c2ef698eebb3f68398499557a37a37075c696f5f3ce0548708f03",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/dto/LoginRequestDto.java",
+    "sha256": "0ed83213b0295c093a79d7989b6dc6ee3aa79c39a2715e3b7859211edbcb677d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/dto/OtpVerificationResponse.java",
+    "sha256": "735254c29acce9b32f53bd70388e9e552870004f8db8bf8e8170bafd0cfd04b1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/dto/RegisterRequestDto.java",
+    "sha256": "7046f8a86982f68980c9c09825c0736cabd3d59fc26bc694d20cde66e61aac0f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/dto/VerifyOtpRequest.java",
+    "sha256": "616e3c9b3c1a02c4ed5e20ceb51a8dd5bb1fd8cd134cc8c02b3ff6ffd8bfb186",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/exception/GlobalExceptionHandler.java",
+    "sha256": "dbb37b677600907f27b959588b3535c4270d78ae7077155ddc891182b5d81429",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/Jersey3TransportClientFactoriesConfig.java",
+    "sha256": "c0f38847d12ad575c4d44c834b83dec4192514d993ed9dea906a26c5f29de67f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "sha256": "eff810d98832cf1d795ed0d292c54aa54d13499d4d216ac5616bf65f891bebb3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthService.java",
+    "sha256": "4116a795cd44de60bff524611e1b4fda585a2b3d12721dc3540b616b13fe282b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/JwtService.java",
+    "sha256": "4a6d8dd203e4ca0e4464f1f3444de0d683d7da01315a162109612533e699fb5f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "sha256": "a66916e8e52b5587e28b1a97d7b130f6396c1e9abce90fd63c558e707c22704a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/SessionStoreUnavailableException.java",
+    "sha256": "0412d235c514ed851b20e7fca976aee8efdc6d1c0e43ebf5f0c5605f32d5872f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/TokenRevocationService.java",
+    "sha256": "9c75ba39e33474d4207c8a031e8d078c832d2ad6f3af536768d3881c7e764f91",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/java/com/example/authservice/service/UserGrpcClient.java",
+    "sha256": "8381936fb8caef6a8fdb5ac5e53b3c85051c00909736c3dca2b51737714e48e7",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "auth-service/src/main/resources/application.yml",
+    "sha256": "3aa9b8d09cd8e34a1f7c3a06f849f0ce8c3d374b795031bacb8bafeb3838d686",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/controller/AmenityCatalogController.java",
+    "sha256": "acc2329d7ce4c78f4c19f9747b2d78abe44356f31544c1033e147f14851dd6ae",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/controller/AmenityController.java",
+    "sha256": "c9034f3215a78bda0d41587aac2cb734bb0f483d266a06ac7234f67d471c532a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityItemRequest.java",
+    "sha256": "2779b4b7a3d92561db454c2fe1dc02cc4601df65451fb8f5cb0ec75aa0c7c92d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityRequest.java",
+    "sha256": "35e852789c1c60a12059edebe537f1e5c61dbb2ba9b0f63749ee8f8e15686e1d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityUpdateRequest.java",
+    "sha256": "c164f7b757e86224c5eade90a8f8b0018993c0fd88c277921c63d5d09ba4407f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/AmenityItemResponse.java",
+    "sha256": "606cc3909bd1816de2efa0663dc41b9da4454b1e4a1f806063475c4380315ee6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/AmenityResponse.java",
+    "sha256": "1c758007f06cbde124f10e1dab60002060c2bfc41bcc2920235c5468968954d1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/CategoryResponse.java",
+    "sha256": "32c28bad0bdd5384152bc6cd7f43462db47fb6cd8556bce1bea6101c5bce8bbd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/CategoryType.java",
+    "sha256": "fb2051447860e2000e3a788e984846486a44144ea741d3851d720795962a1e74",
+    "entity": true,
+    "tables": [
+      "amenity_category_types"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenity.java",
+    "sha256": "b1a1992b86071be3c9f0ac6251c8cfc6ac24dc9850c264bb738d407b14469c79",
+    "entity": true,
+    "tables": [
+      "hotel_amenities"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenityCategory.java",
+    "sha256": "26b2ae3d794abdd838d9f1294a4ca2b09f8ea7761d3dcbb311ac65fd8db32d8e",
+    "entity": true,
+    "tables": [
+      "hotel_amenity_categories"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/CategoryTypeRepository.java",
+    "sha256": "869d723134fd3d905be631bfe47c8caefb142bbce274bb4fe05830fe3298f9d9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityCategoryRepository.java",
+    "sha256": "51baa1b155c3a5e0a33a19256bbab6799a3b59e15f063642dcbc50b8464e31f4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityRepository.java",
+    "sha256": "a80f47ba2fb81e7c9d5689bd61f7b9b04be10f39d50ea452ae9d128adeb80617",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCatalogService.java",
+    "sha256": "05ce6d9eee77856bf607ebb8eb0b33e94bfce40fc201239209ef8c99d6d91dee",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCategoryService.java",
+    "sha256": "40d0d2d1f0243a4c69f91cfbdc6120cf69a3de71147d6be6129176d905d189fc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/api/ApiErrorBodyAdvice.java",
+    "sha256": "7c81882afa781313c6138c05626cd016e456cbe04b9863c2d8331f8c7cc893e2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/api/ApiErrorSupport.java",
+    "sha256": "38636c16ff4a4a468f061ed8f6f5a438c36ce7e35b02e2ab5b1a74d85ee600e8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/controller/CityController.java",
+    "sha256": "7ed15cb83270df554b99899a377be828ff17aa3fd156ada3ac7c44e74a1b4eb5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/request/CityCreateRequest.java",
+    "sha256": "379f4b6a264a7051c571a0fb2c4ffa4447a112433335c4d8247a34006a049b3a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/request/ProvinceCreateRequest.java",
+    "sha256": "57bb1625a27e06717035d6b59dc1f0713f8df8f952c2136a37f4a06390e614ab",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/response/CityResponse.java",
+    "sha256": "645da76001fa9e41ab44ca3ca74b5305e7098e278afc165b7559ac2931b3d645",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/response/LocationResponse.java",
+    "sha256": "0a379fe9f8e720b4cc17c944f916d6b53306351735b565a25e3f3057d52c25da",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/response/ProvinceResponse.java",
+    "sha256": "4495e8691a90828dbf234d08d9d34fae8d20fe9fc8b85559a0c6839cba533b93",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java",
+    "sha256": "13b0bc5eda83c899127785da3e2c28f4db4485e8daf765407378520771bae3c4",
+    "entity": true,
+    "tables": [
+      "cities"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/entity/Province.java",
+    "sha256": "beaf1ab3bd51302b9d52803ca8461bb3ea753985b90b54e62eeee7799d1ccbb6",
+    "entity": true,
+    "tables": [
+      "provinces"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/enums/CityType.java",
+    "sha256": "50c1935ec4b61c34d23b0564d640c2d7e4e46ae8378ed5d10b5b0b38b3b129d6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/mapper/CityMapper.java",
+    "sha256": "68c8c86fac7f2b11ae8097e1bddab6647732c05b6d281c0617ae4d064ff7421d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/mapper/ProvinceMapper.java",
+    "sha256": "4cc016408d56a96ab2eb4c37bdcbb57e6fbe3d18f314a220955a2c86a2a996a6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/repository/CityRepository.java",
+    "sha256": "49f8ccce4cfec6fa9565cbebd7f0736886b81687aee6b51a1ba1fd06cf5f7c48",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/repository/ProvinceRepository.java",
+    "sha256": "fe53a0253daacfd584f15e2adb5b166d51dba58660324e764f12583525e561a0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/CityService.java",
+    "sha256": "21d41d2f3d997a6b8767924ef4baf1fe530f32e76c3c2c12c46e57d0bb110ff4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/CityServiceImpl.java",
+    "sha256": "edd2c7ac7d9b424f1fee945458ac5039a71bbf33ef9b68af57cc617656b84f70",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/LocationService.java",
+    "sha256": "434681c6ab561ac92653919bb1928273698cb6ad3ed3e78b045d5090fc3e131e",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AccommodationSchemaGuard.java",
+    "sha256": "94d8faddc13dc07c00477665b92ff05b5ec1f9b9bd6692caedc111a511f65569",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "ApplicationRunner"
+      ],
+      [
+        "",
+        "JdbcTemplate"
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AmenitySchemaGuard.java",
+    "sha256": "b61f13ce4de6d2d9c22190e57430d30bbd1505fa2b1f75c969fb0214ea1dfeb3",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "ApplicationRunner"
+      ],
+      [
+        "",
+        "JdbcTemplate"
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/ApiJsonConfig.java",
+    "sha256": "b81f307607b462eab79894ecbc82c6c2309e7f0a2eed29be06079aab42eb3caa",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/HoldExpiryProperties.java",
+    "sha256": "e36ec2b106d1835d82ebf2e7bdb1cb4b5618a72140150fbcb65243047a30eff4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/SecurityConfig.java",
+    "sha256": "59d9051d2f8a6c9d48594c24ba16be882d2f7a45f2bc48cf7b19168d68da04da",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java",
+    "sha256": "6dcdf6fd30acd7a428719605bea6d57d5367e86f0d3df5d7b8db668c94ddb5f3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java",
+    "sha256": "685ecede17d0d17243d3ad1ebd0a49f4573cf56c306c035d1d37e49bb8414247",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/grpc/interceptor/ReviewAuthenticationInterceptor.java",
+    "sha256": "6222af5bac259a3d6f192967c332a35c268430c6606a5e4f9aa7deaa5ff93b8b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/grpc/interceptor/UserContextInterceptor.java",
+    "sha256": "ce2544e4286006e743626eafb5fe24262da9db4ca7bf0b32abd0418630c8b730",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/grpc/ReviewGrpcServiceImpl.java",
+    "sha256": "da9c1abafc60e779742c544176746d9b074db4cae2612e118331c65c9f93c6d5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/grpc/ReviewRpcPolicy.java",
+    "sha256": "166299c451f0897e67e7230c1d0f4aac4dfebcdb6220723bf5996eb97a57188e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/AccommodationTypeController.java",
+    "sha256": "604bcac507f855762fa842737a097305bc93a411aa272e9c2afca3e2ddfdffd1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelContentFailureHandler.java",
+    "sha256": "bfacb86fc39fa37210df7fed02fd6b936d5fa900becaeae8e559c85cff9bfac1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelController.java",
+    "sha256": "facbaa7c8f0d47285e2717fcf110ab6b769a13797ef492811842fb4b0e45e599",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOfferController.java",
+    "sha256": "61a31d205da4cc712910df48a06eeb5860af3d2eb411a8e522ba4e7902373ebc",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOwnershipController.java",
+    "sha256": "1e65067a715cc60f39de5a0a10bec8099495b713ef927a939b80e14bc804b564",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelReportContextController.java",
+    "sha256": "74489f0a5c4c3b013cfae0b73d2e790fa15719af4231a3e2dcf27d09eae4a407",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelAddressDto.java",
+    "sha256": "35a33db673eda17c4efe1f2d1a62ed95a159e12236e35eaa1f22a4b6f9a3f8ad",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelApproveRequest.java",
+    "sha256": "148d5f520d3a0b4f08a9019266e3167fc6bc92ba31231a1a77e7705430fa623b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelCreateRequest.java",
+    "sha256": "37f7907efd184f8b0734ea0c94ec140169607852429843bd00ec6dd7a8cd69ed",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelOfferCriteria.java",
+    "sha256": "d1db7d2501065093cbaf53d6561d4898037cd7bec1cb78e77a7d2c1645e08c79",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelOfferPageCriteria.java",
+    "sha256": "8a3256e63c6c6bada6d73c9e2317de5e9941c8da57a28df8d48ee5801ead0e4c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelUpdateRequest.java",
+    "sha256": "443d657716a92e63394326db78f25f52de74c38889f7aa13d53b2a7423a6f097",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelLegalInfoResponse.java",
+    "sha256": "78a2b31714c2a280ccd8463e9e9c342f7ae858328307959bc39b48f539d00b04",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelListItemResponse.java",
+    "sha256": "94153e40da74b2aeeae32057fb24935e506ded525ecdf1210645b38c607b0d58",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelOfferPageResponse.java",
+    "sha256": "aa3b7afcf47ca80449b63cead875f7a2709f46bd2754c9d64783e196c529e8a3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelOfferResponse.java",
+    "sha256": "885eae70b5e8ff8b356a01b4f60ba05dbabf2ec050ba650321d59b6fd9642d03",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelResponse.java",
+    "sha256": "6035c0c6905e0f5d4d8019d7e6fc129d3b90f52648a8e4ef4303030b5e6955df",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelVerificationDocumentsResponse.java",
+    "sha256": "6eec40e490398d507fca77f93a42f151f9db234c55d59974562db14dae47c379",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/MyHotelShortResponse.java",
+    "sha256": "f27eaf592a2f1ebe7720664a2111344a53fb7c610e4c487266e9c44d17d117b2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/OwnerResponse.java",
+    "sha256": "794b75fbe91c15ec1fd713a0af267fcfc8ec6a4ed0a2c331076386e2715d2098",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/PendingHotelDetailResponse.java",
+    "sha256": "1c8b631eb1ff321945d4652c4158bce81aba01933452863723dd5101a0559873",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/PendingHotelResponse.java",
+    "sha256": "53bd6c4143159e1476ef4ecca746c35413d40646ab708bb08015ec1d8925c425",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/AccommodationTypeChange.java",
+    "sha256": "6b0ed6797afbe39e4d9319c9900ff5f0f6ece8ce80058d81d5e811e5c31b72f4",
+    "entity": true,
+    "tables": [
+      "hotel_accommodation_type_changes"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java",
+    "sha256": "b8f6b2f83a3ac91a98b69b1dc763da4b89c0b43cc3d344a3f9bddd3f836d97ea",
+    "entity": true,
+    "tables": [
+      "hotels"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ],
+      [
+        "Version",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/AccommodationChangeStatus.java",
+    "sha256": "17bed7a66e2dcb1afff0f9ff24c4e0cb21f15ed2e03834cca8ac4e74ae60e4d4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/AccommodationType.java",
+    "sha256": "0dc3542d3fb94d0f81c33846668c4195c9ed964b51b71fc91cbff654c0a67602",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/HotelApprovalStatus.java",
+    "sha256": "a3577b9a58c2245d8692285c35860b922edd64a410b614acced382cb60d17604",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java",
+    "sha256": "1d7fe8a5c45d1179c67fbc6861e700d36f0b92e8cac8d212cc78c5aa31ddcf1f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/AccommodationTypeChangeRepository.java",
+    "sha256": "def88af42acd7d6fb40dfe6d7da2df748998407c74ee749000ec438863805561",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/HotelRepository.java",
+    "sha256": "bb21a7cca3670c097b71b666433ba235068132b36c565d720d06d3c221b3d681",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/AccommodationTypeService.java",
+    "sha256": "109925a6350968c68abcb2bed2df4ae94c47ab3d7697a784aa74b3a662367780",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferCandidates.java",
+    "sha256": "14b007d25a4609ffcac57b77a9967a98b6ad3dbd98023aa856668b833626849d",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferPaging.java",
+    "sha256": "970bf9b6b88f59628e4537b2b2e5ec927f2ec01f11b108fd8a0d087d42cf7917",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java",
+    "sha256": "d489f6886400ada163b345c8c9db2d5e123024d9889ccf2b9a83d434121a3308",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelService.java",
+    "sha256": "ddda0985f61845582d625ce33d4945db37ae1423afa3a92fd2e548ee11d70110",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelServiceImpl.java",
+    "sha256": "5d0707e7092bbbb462f2913c6b8139078a056851580f6f2fc247e9c8b00741c2",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/UserGrpcClient.java",
+    "sha256": "74a501d3ba6ecf6d9b8ab7e87c3d58aa25aca8c9a4962e38c9ba9ef4852ce5fe",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/HotelServiceApplication.java",
+    "sha256": "10f673af56664af6fc52b66b675c8fafaa2bed9a7591026dd8cff42f6d665770",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/controller/MediaAssetController.java",
+    "sha256": "9fdf083d3135d3553fb61a6361591dcff29d5e7a04ce0dab6ffdab44b537f896",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/dto/request/MediaUploadRequest.java",
+    "sha256": "acd102d0cd226af7bfd22b82618011203dee4694b6ec00b783adb048a0b83b9f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/dto/response/MediaAssetResponse.java",
+    "sha256": "3eb0c7b98f7138ac38a79639d1312ef566d6360b7514e002a972d49f351fd176",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/entity/MediaAsset.java",
+    "sha256": "f18c434efd71eb5ae11f39fc8b1beecd1b4eb97e7f7c83c5ac6c3c8894774eda",
+    "entity": true,
+    "tables": [
+      "media_assets"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/enums/MediaTargetType.java",
+    "sha256": "94a105e7b8237ca7b468e0db9deb92f05df9c72226d2cec40da93bef24df7010",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/mapper/MediaAssetMapper.java",
+    "sha256": "2e0c108808e7c7f7fba892769d4b27481da4b24e48aa6ffb701787eae1cbd8d3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/repository/MediaAssetRepository.java",
+    "sha256": "eaca687708811ee5c51cf0e58a0522697b3eb1c7d068869318b654050a066962",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaClient.java",
+    "sha256": "08b4fdf9adc5fe3a3215350b43dab4a648650e9484127a6c4a47e336d8a40037",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaMutationService.java",
+    "sha256": "8ede31ecdde9052b213bb8094a03fd03663e035ca9296206744ecc4ecfa90efe",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaService.java",
+    "sha256": "a71457306ffcf5e152b55d7bf9f6860b9792d6c1874e03aa03b19c6c912b9cec",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaServiceImpl.java",
+    "sha256": "9910483f2184b573c8a22b65bb85f12574f5f647765a49acbf561d7b76f25e98",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/controller/PolicyController.java",
+    "sha256": "f70b358504d644eed5d65396bcc187c5c47304ac0b38c92046a26d3f50f8d9cf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/dto/request/PolicyRequest.java",
+    "sha256": "d2dd578790001da7d00f92c28208b9a5be999797b4f1c66732efdd306bc958e6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/dto/response/PolicyCategoryResponse.java",
+    "sha256": "42bc9bb490e4ec847d2b4bdcb0fe81d9956a2df319f4ed25f271aea412f7b135",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/dto/response/PolicyResponse.java",
+    "sha256": "3a938850cda1f8db7c98316ffdfae1110bbaf0590e2e14519f013053b731a284",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/entity/HotelPolicy.java",
+    "sha256": "dc49558b4c09bf460c3e9a1aa51b273d4dddb3f92595eaab2ef4f08695e886b7",
+    "entity": true,
+    "tables": [
+      "hotel_policies"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/entity/PolicyCategoryType.java",
+    "sha256": "204701dd95d082269410ac1443a19d4c152333b80b34a8aa8006ed584e6c6932",
+    "entity": true,
+    "tables": [
+      "policy_category_types"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+    "sha256": "e003912d656b2c2e9f53b529e0fc20583ee47b99b2f8e5a228a49a866a3d9164",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/PolicyCategoryTypeRepository.java",
+    "sha256": "969c9ee2d0106dc84840881c44ba069936942f0ea93ae4ff9f5d7f0176e3da07",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/service/PolicyCategoryService.java",
+    "sha256": "aaf9ec2654bc68244d32e0332503ea0c12088bf737489cb1c107ccea5132633c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/controller/QuestionController.java",
+    "sha256": "75f70153aa565a67b3d0c3b6b609513daf87e1e170a90a3b1c4c058693f0d5f1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionDto.java",
+    "sha256": "29378bdb0d30857636da449c870a9702aa9aa63c1da19d50ca013bb2fe1429f9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionRequest.java",
+    "sha256": "d14e7b3dfcf8514518779cff16b9dfae1965a14c898d4964f28fdd927d74b39c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionResponse.java",
+    "sha256": "042f3bd64c5813ccd828cef4723e2eb01c0d5779782d50780af90312dda8072b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/entity/Question.java",
+    "sha256": "e86daa58b13a2da7afc5b91e90518f3792ec85900d75801c2b599a8475ac9c02",
+    "entity": true,
+    "tables": [
+      "hotel_questions"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/repository/QuestionRepository.java",
+    "sha256": "49da4b34dfba8123f327fa11be78d1ccf0b1cbf661b7294022ea52d8fe44b38b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewController.java",
+    "sha256": "0b41952220d3aedd203e33c665fc62a3e3aebfc18d367eef3296ba308bdbcf70",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewFailureHandler.java",
+    "sha256": "3bb788646803b4a30e83d267535128e82102a32ebf4c68881a8b63f94971bd57",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewSummaryController.java",
+    "sha256": "530673343751df1a3af5dea40d2bd57f4fb61f370260070b9a23cf6b567a4c23",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewRequest.java",
+    "sha256": "50174c353a5655b32ccaf9f92c813b9fcd97145910eec2ccb714f2a7f54bd18d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewResponseRequest.java",
+    "sha256": "b553f89a95cee28a8621d32f136035b180335496403e5cba6fdb6c50a81a8dcd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/UpdateReviewRequest.java",
+    "sha256": "88754d63fab5db2dbb11dd898596013c0f1c4efce7a84cba5517b5398d30f08a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/HotelReviewResponse.java",
+    "sha256": "91e9832857a2626f59cba4baa74f34c161b8d8eb955ac1e5f174190762aae0cf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/HotelReviewStatsResponse.java",
+    "sha256": "720e5eb5cf110225aff281e375f5e0cd46f079f2228b87115c9f06de2dc68be9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/ReviewResponseResponse.java",
+    "sha256": "adb7d54ca4a0a58ec794547b34c211b826ada64264c4f969ecb373337b24ee45",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/ReviewSummaryResponse.java",
+    "sha256": "078fc91f6a0fc0b8e87a4f78b2888b1521d97710464cea23ec810375505292f0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/HotelReview.java",
+    "sha256": "114f44419676dad730313757f8e5d35f022617a82fc9bda4c8577bdd85619f35",
+    "entity": true,
+    "tables": [
+      "hotel_reviews"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewFeedback.java",
+    "sha256": "a0691d087133d33b80b53dfda6453b8743891122a5e61b76b3af3a6efdb85bc3",
+    "entity": true,
+    "tables": [
+      "review_feedbacks"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewResponse.java",
+    "sha256": "216e3c220fd7b6023fd992ab032fbed827fd34348948cc08f2fcaef9aafef279",
+    "entity": true,
+    "tables": [
+      "review_responses"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/enums/FeedbackType.java",
+    "sha256": "a2173bf2ef25ce75960a71d4c5c317c03c1eb5365d6763f1eb93d13b3ce170a2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/enums/ReviewStatus.java",
+    "sha256": "4c3f640733b40b3e6ab4eeb7e062d0628609ee84504f46091d52be29924a6eb8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/mapper/ReviewMapper.java",
+    "sha256": "066a156f67134134dbc9cbe41f5d79dec79c215dc5778f6b3819c27912d4a153",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/HotelReviewRepository.java",
+    "sha256": "00f8779b4bf3571fff45f86515824d5dc75d7f3d5a058cb3dab8e51f4aee9e7d",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewFeedbackRepository.java",
+    "sha256": "12cadefefb1e22b66766c57ecfe9152149109d1b86efe6c9e5f39afe251a10bb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewResponseRepository.java",
+    "sha256": "5183e7949aa196ab554c9b2b5ca1e2081040867e037d8a26771c051858315c59",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewConflictException.java",
+    "sha256": "c63383353cad806ed5c1d4e5342e9ab4360f14b4cc90109ae8eb31a4c7f48ea8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewEligibilityClient.java",
+    "sha256": "0ca8943ec72791dca7454f0c2d57b285c77323904f092e50902205a9c6f08723",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewService.java",
+    "sha256": "8881162c45afd59fb1e91426b0acd2d25c6553f80173aa79b84f658023bd4b29",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewSummaryService.java",
+    "sha256": "2e38e5bead4831ed2281c9e1052f925c4e4b0283fc311397de2827473e2765fd",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java",
+    "sha256": "67b4a27bb442615c80dc4a22fff9076d78dcd968c1af06a97ee1755f349939c9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/AvailabilityCheckResponse.java",
+    "sha256": "e806625244b6dd9cde289c2a82715690aeda2af86385147d3cf7e97a9f1f0f7c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/HoldRequest.java",
+    "sha256": "6eb9d7019a34e8bbf734cc39bd4f81f44a435d8086722644c8aaad183269c1ea",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/HoldResponse.java",
+    "sha256": "198e653a515312ad491512a571861a0c3a971ac620394aa7cdb0b2ef49fdc712",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+    "sha256": "28d0b8a3e0c45f01ad18ea5a7ecae5052435d6ef715df76114d892c1ee6a4b9c",
+    "entity": true,
+    "tables": [
+      "room_availability"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomHold.java",
+    "sha256": "cf2c6e049784dae6178b7abc261130de9e1b9e2baf34feff69d2a99c141e4b46",
+    "entity": true,
+    "tables": [
+      "room_holds"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/enums/HoldStatus.java",
+    "sha256": "6f5bb761a18910d63d26b86a197839e0419a7b630e790d4d6d285bb27a141911",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomAvailabilityRepository.java",
+    "sha256": "2d9902cd9d2b575373a07efce03d98cb02e60f1a9c67a7f79f1a70258f4fc202",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "sha256": "92b7665fa0c099f017eb5070fc615c32ffca9f1b0abda00915cf6df5e01e4bf7",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "sha256": "b13d08b8bbb8c3d91a5af35e0be915033b9477c547d963e8561abe6736064c2d",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java",
+    "sha256": "88116b0a58bd7ccb010c39c8d975e1672660d035a861f83dd2b0f135f15bdb4c",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InsufficientInventoryException.java",
+    "sha256": "49c99e3d26f43a0c593af2250948817f31f2a1706ebebbb60065c69dcf42e6da",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryInconsistentException.java",
+    "sha256": "857c7da9515205a996257a7d9dcc4bf0b15a1c2f21ff89fc028e5465cd29cb63",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryNotConfiguredException.java",
+    "sha256": "e5bb8849f4a09ab8640a19c791454ec0e0daeb487ebdf13170c3d537e06fc4a1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/controller/RoomInventoryReviewController.java",
+    "sha256": "c822707194ccd0c44c326a603bfb868b66c1b9f38303436c1e11ab9b9153428b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/controller/RoomTypeController.java",
+    "sha256": "5629f54c164b8bfc77ddaf1511a141755f8439732a503c3a1e29dbfae6ebc453",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/CapacityDto.java",
+    "sha256": "e2a03abd08b9aa8e93125dde046270ea91f6fe4ef41d149eb101db78415ceb8b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/RoomTypeCreateRequest.java",
+    "sha256": "69a43ac1d044447dbf687ea42ef6798c09074eeca29dc5f8673ff4c849206ba4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/RoomTypeUpdateRequest.java",
+    "sha256": "1ed17008a2e38c23ca34d210fa9d3d250e7b4b9433a1274f3bc49616a181b755",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/response/RoomTypeListItemResponse.java",
+    "sha256": "add16c920d4bb44946779816bd403cfeafa974e5a26304c3eb52b948e8578073",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/response/RoomTypeResponse.java",
+    "sha256": "4c5019f02a151765fe3e1eac5df99d8d58cb1b541c7040bcda0e9010583855f4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/entity/RoomType.java",
+    "sha256": "27464946742c0922f0a6f72921f6c9dbb5fd60a47ad0aff802a5efa2af5dc775",
+    "entity": true,
+    "tables": [
+      "room_types"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/mapper/RoomTypeMapper.java",
+    "sha256": "f109aecca7730c7b770d134a9c5cc88920ef9731790da9399f9092a5eaccfc12",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "sha256": "2b4346165d9a6172b3ddeca71fd87ea0ee5b756a2d1faff0eb1b35fefdccf435",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+    "sha256": "fd95f4916916d35d7f61a33e0761c1dfce0ef2e4679e692c1dd02afa3f7bab36",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeService.java",
+    "sha256": "fb2d247cda2bdaa31b94618231eaed31434d3f609e848e6a00bfb2b278fa4fb6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+    "sha256": "a341b3fd2a7c0eeea73e92d57e9265ba407db7ea0cc491ddfdad2eb709d5f424",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/security/HotelServiceTokenProvider.java",
+    "sha256": "8ebf7854286636833e109cf69c3cd3773710c733d20df5deb6ae1ca36f3c4fad",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/security/JwtMdcFilter.java",
+    "sha256": "30e7c9df3a204de9f06e5f9ea203a287673bbfcc28c95b962f0ebfdbe3360b3d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/security/SessionClaims.java",
+    "sha256": "fd602a683ed821a52529579e6ac1deb7223acf84b4446cc32cbd8039b6ea7e15",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/security/SessionStoreUnavailableException.java",
+    "sha256": "36979f0ffd6c0345de71a7ec20c1bf8327d3db77e159681d7e6ea611cee7658b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/security/TokenRevocationService.java",
+    "sha256": "cf8feda05cfd4bc311621476b0785f2f448394c524b190f012492cd7351f82ac",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/validation/InputValidation.java",
+    "sha256": "3d9b50e14d4e3d16576a8e4248c93d1461aca9d9c3b01091f04fe7ad154318f6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/resources/application.yml",
+    "sha256": "28cf644a1ebd17f50f7aa269493a5386307f41b8764100c88357d017c5a1c787",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/api/ApiErrorBodyAdvice.java",
+    "sha256": "c88325c3782a832b7fe7647244c8c46874d39888b459f89ba0ed8249bc96b106",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/api/ApiErrorSupport.java",
+    "sha256": "e7437fe11a2641a65481bd280eba683117d7d88555dc5536ca6d13a8ce29b05f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/controller/BookingController.java",
+    "sha256": "fbfa76ec47a71909eb3ad5809e1671bc1f2b0cf50ee89e52526c9a64b094fc6f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/dto/BookingItemResponse.java",
+    "sha256": "fb149f86532868b421ea0dc7c836d6f97ab3875fdb67350069a6c9e4a4a594a9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/dto/BookingResponse.java",
+    "sha256": "7a31510b65f9ba1e2d2cd21eb84237c3784a1666911735bee841d6ad5e7611cc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/dto/CreateBookingItemRequest.java",
+    "sha256": "80852a6517fb4c83c423d3eb15661e4882e96e69eb489cad3ff2c0eec86d5664",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/dto/CreateBookingRequest.java",
+    "sha256": "0d025598473a6bb6cd4212060566588fdb615b206b507367713cec2d4314d70e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+    "sha256": "6e45fb6aad57ed9483d4f08f5069119da72c877be57aa5af0b05b0d6249b9494",
+    "entity": true,
+    "tables": [
+      "bookings"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+    "sha256": "1cd803f5e153d9de4d84422acb47aa87af626329202bb281978019c2423d3f80",
+    "entity": true,
+    "tables": [
+      "booking_items"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/enums/BookingStatus.java",
+    "sha256": "474b1efab4ed9933fbc62748b5e0cf5086898455e00aaec7321c004e88ff6296",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingItemRepository.java",
+    "sha256": "99909137233c4667b33912fb89ffbdf3bf0bb9b227ed39f664e3e4e262e9969e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "sha256": "67a56b62c25f60fe401f87a4d15e6710a55fc87b50d957ef5b0e63995c67ddcb",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingCreationCompensation.java",
+    "sha256": "3395a1f37548a19c42675ae51e0fa2fe79f0cbdf37b3b8f4d37b8f569ae61d22",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingCreationLock.java",
+    "sha256": "e5504386c1ffff978f737ee2362c8f1f5f6b02aa480ddd78960342e00e8b39cc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingIdempotency.java",
+    "sha256": "8faad4c650d684bcb22a276db2549b023347facddcebff9e66aac421fc41bd40",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "sha256": "0d4fae9c5e29292b15a9e4ecaeb6c0936580a0524368f28e1f7a4593b842fa67",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingService.java",
+    "sha256": "dc71eb4a05b64e588d320dbad304d754d67d22c9284b888b7a9f50500d21f187",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/CancellationPolicy.java",
+    "sha256": "eb1b80de874f632f6d33ce40c306bc8fba9a15c179c4b9547618b754833f27fb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+    "sha256": "ac251fb33c43e5026a7ebf16eed9d74478d376f3c217941c64805813920316e4",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementService.java",
+    "sha256": "c6bc22070c28dab1611019e7f13f870ea698dc02cf7f97dd3c6711a47e03867a",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteEvents.java",
+    "sha256": "05486c56036d87dc93db3cf5bff9ada2e1ce36c0bd47a3461e36c5ec23817f23",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+    "sha256": "082b3f0caccf9a25f5da9c7894180de351cd9d1c7b44b9002af5065c46e3f26b",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationService.java",
+    "sha256": "d4b9cc333463599166c67738a096322cf6915eafde93ca08cf7ef2713912897f",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java",
+    "sha256": "99b8728c8c7f8899c7be58abf92e053e4c03ef02ab0f513e9703ba73a4491a64",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Scheduled",
+        ""
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationService.java",
+    "sha256": "f9089c976e5f86d39287bb6ad050aea8470e3218724c0611cf8094727c6d8be4",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/BookingServiceApplication.java",
+    "sha256": "fb5e86749173ff9da7042567986ef9f90074219456acb8f42c36843743beb189",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/ApiJsonConfig.java",
+    "sha256": "caf17874e72ee89cc3905c30be4def1e604edfc74fedef36165541f26a6c0788",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/OnsiteWorkConfig.java",
+    "sha256": "bc4853a29636cd57c3672e8387459d2d4b63daa87623285156000ba40598cf46",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/PaidReservationWorkConfig.java",
+    "sha256": "0f06432bcbf8a896216c1ad67bb1f73de0c60f1f419beb344a548fd0e98b548c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/RabbitConfig.java",
+    "sha256": "4f0d09c8957a25c9dbc59c603eff5af2ff08e48391167d686faa13a137cdd676",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/RestClientConfig.java",
+    "sha256": "095b0a4455bb3676a61582c6b576fb246c3aeb57e93b09c8c46de93d7d09cbdb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/SecurityConfig.java",
+    "sha256": "38753b6db3af902c51f25df01eaa6726edf7c6958aba61d8d2f60ef8bf3260ea",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/config/WebConfig.java",
+    "sha256": "89e76540e3ac666b2363eac3898227b83903c1c3cae90515bbba4aa937f17e3b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/grpc/interceptor/GrpcAccess.java",
+    "sha256": "f9881553a307bfad92230d514b0bc0fb9d768c88a2571b193b63072f71c3980e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/grpc/interceptor/UserContextInterceptor.java",
+    "sha256": "0a0bfb145538074ec1c875ab3e755f07542bb33e9013fff32c418059bae2d7a1",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/grpc/server/BookingGrpcServer.java",
+    "sha256": "853813382cfc0a93a36a82c4a1c1ccd01f657ff57dd029bc411838988741764c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/grpc/server/PaymentGrpcServer.java",
+    "sha256": "12efa89326f5ccc42d7947aaa8b73a3967abe39c099f5e484b589c9358455447",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/hotel/dto/HoldRequest.java",
+    "sha256": "7137577c5308bf964bf1577f71766e9c738ea6d084bacf9a489ed8a9ce3fc859",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/hotel/dto/HoldResponse.java",
+    "sha256": "5318a29bf41f564564cb45704d1f7ff9b8b2fa4e505590d08d3eff39f2aed3eb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelAvailabilityClient.java",
+    "sha256": "c42a0b739d0e1e16d07fc3ce1b40790dfa8141148d163ccc7c471451275f66d7",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java",
+    "sha256": "3f21b8d9e0fa6bb85d4b23b2abc8ed38ac0c7a74b2c4081c21b219b5acd26edf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/ApplyPointsRequestDTO.java",
+    "sha256": "748a5db21a2b4328ddf794dca77988f5bee12fcf5317a358d6af8a060d92bb15",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyFeignConfiguration.java",
+    "sha256": "254df5c3c2d47e827691d8b3e376ea3acec34b42e5ab440914c71f365257fae4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyPointsClient.java",
+    "sha256": "d56d7bf6d88f1dd59bf843aa6ef3d2d56fb9f8a2b486ec28205307e9dc89250f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyPointsDTO.java",
+    "sha256": "683dfad8613a4d21af953a3af7f673b89987ebbc375c52c93ab4186f66eae35a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsQuote.java",
+    "sha256": "4d507080ed10d7dd8bbcc1d5b53e5c1ae6d41ab7d66841383cd6c3ff56362113",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsQuoteRequest.java",
+    "sha256": "cda0220702b39e902a98188ee58f02b52970e641c6b9fdb2b519d638dd011fe9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsReservationDTO.java",
+    "sha256": "c115c853ca97a56faa9cb3df14b6914a29c1ea42f86395566c650a4e0376a356",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/loyalty/ReservePointsRequestDTO.java",
+    "sha256": "576564fe412b63391276164c3b01ef4cbc3e541f08f87d0911c40f7083d9cd3b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventDelivery.java",
+    "sha256": "872aab8efffd9c88bbc8aa6bb3f2ba8276a50d3e686fd4ac1e0180d142f5909b",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java",
+    "sha256": "d2c715d844e6be5de33ef46ebb6dc6f4ab35eef05313168ce82fd5be78d50524",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+    "sha256": "6fefa4e87973c5d25fec8629085877c499f51768dc42c16b9b947e107490ec3b",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingStatusSnapshots.java",
+    "sha256": "3e0c55afdc0962053d21bbe3671ac9d6d4818561fe77b49440a98f40ce5596a4",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/event/BookingStatusEvent.java",
+    "sha256": "4e769ee280f2cd3537d85ed338b89784cb445e5a6703b098191c71ec922f52f0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/event/PaymentEvent.java",
+    "sha256": "fa83df719c90b2b247d23e41e9ab7cd092c959732de024076d487f37bf8a59f8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/HotelEventPublisher.java",
+    "sha256": "1eda89b3d718a37de52de22689316da1dcdf0b21b3374bbde5496e3c60afcd0c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/controller/PaymentController.java",
+    "sha256": "4a77ff26bae71f312da27f37e4a170a95f14a9bf6d019d6273415dfc851ba3e0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/dto/CreatePaymentRequest.java",
+    "sha256": "525c2db1f90d91d7e6a00a75116275cc8852eb747e3f54818a44b7da09a302ce",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/dto/PaymentResponse.java",
+    "sha256": "dd74be73f612985def036be4b52e6a3caf33a3e766869c393c15be2cc85fadd8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/dto/VnPayInitResponse.java",
+    "sha256": "f84de4b8686420a709f812a30b484a193c5301c38997267ad9435b26a7cf8b50",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+    "sha256": "e001637709938af419813d261abe091ca36a27dfd1914f0d7b9e27608abf139f",
+    "entity": true,
+    "tables": [
+      "payments"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/enums/PaymentMethod.java",
+    "sha256": "62a11ec0ae8359d74d6b6cca4454a0f00fe4ef990884fb87bcce9019b478bfb0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/enums/PaymentStatus.java",
+    "sha256": "0e8fd54b995ecd503e63167df24225dbeedc0ceba61fec5a4be75ed70e3b3c91",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundController.java",
+    "sha256": "22fd04b59c979b95194c5e98e742d6b5cbe3e6db45139421e95e43eb82711abf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+    "sha256": "b749ac63749458eb1166b6650c7637bb1ba9019381c86374eedccaa60337816d",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java",
+    "sha256": "4e4a40d01805067cd85908423d8b535ac6c78ac58797ca135dd5819a5c80b319",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundProvider.java",
+    "sha256": "cc64ba3e11878dde1e770e038d101db33ec4b702fbaa953b6f5bbb8dd9ddaf88",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+    "sha256": "bd3818be680a46009ac334c42ef586a1efa272060db1141f23342b4d521ad953",
+    "entity": true,
+    "tables": [
+      "refund_requests"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "Version",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestController.java",
+    "sha256": "df87b38882a8fa677543d2aabf54177ab1592b8bf058ecfdc546cba09ccaff5d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestRepository.java",
+    "sha256": "23fb4633f0597f6ed30f250463c1f3c6448d7a9dd313c300060cf81a759e0995",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestService.java",
+    "sha256": "ec8276d8d8c0ce630937742c4f22255c78db17f421dda8ee2403ddf9cecd013f",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/repository/PaymentRepository.java",
+    "sha256": "d45700a2d2d7426b96c12b15a20d300c0a292f905d9fda0fdc4dc37fe5e75cbc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/factory/HotelPaymentCreationPolicy.java",
+    "sha256": "3d13f91c5de55f0acf1eac67d5d1a4166e2f8a82f3061c895803916ed0fc7571",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/factory/PaymentCreationPolicy.java",
+    "sha256": "7b836d860d6e8640e75951abd590ec0c0c469adfc36f3bd1ba2910f27d82dbda",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/factory/PaymentCreationPolicyFactory.java",
+    "sha256": "15f7c4a205bbd93da6b487c906c62876d5f6d4fe5a9845690d913967d38ac719",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/factory/VnPayPaymentCreationPolicy.java",
+    "sha256": "a2b20f2c7eaba89ea8973125ee8290346bca654ee56c9c3e605a81065b2aa0b3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/PaymentService.java",
+    "sha256": "d9faa877e5187cf82355fabc62354dc43f8c40a63bf6c7b35916fa7e9c3067d1",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/vnpay/VnPayProperties.java",
+    "sha256": "b771459501b24da4ef2b0a6e775f4b2e35f2b59749ce7d3bbccb2a42eede99d7",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/vnpay/VnPayUtil.java",
+    "sha256": "8a540527d035c96e187f5bd21409baa89c44d1b0017daae0826e1fd72a541f03",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/BookingAccess.java",
+    "sha256": "eff81756d145e3eeeb48447443fe1f8f7f6ec7281ed0b512865d7262ca538663",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/JwtFilter.java",
+    "sha256": "fb7554fbff7ee2059236f00b7f9aa67512eb794f33a116c96e797e86e5d7053d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/JwtService.java",
+    "sha256": "9db2e5421ecb1642484c2a483db0356aed0edf4aa406af649ea5f085cd71e914",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/SessionClaims.java",
+    "sha256": "f64f2871afa98f0b22ac87a9e5968822cdb7b5bd27d3f54420a34c3bf60d7758",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/SessionStoreUnavailableException.java",
+    "sha256": "9a5c61c6c5cf6cff760e937ce9db2a9695a099684b841e2c55f0dce1d8e3fdaa",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/TokenRevocationService.java",
+    "sha256": "e5174599973e86ea78beaf347f6286d8a77a13f4e188531a2062f4a9e3d55ac3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/validation/InputValidation.java",
+    "sha256": "5ea68ec590e12909897a5f5decef493631c78f58d2b9527751b52d0e5ba9ca02",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/validation/ValidationAdvice.java",
+    "sha256": "8e1565fad78b5711855ef75867badfac11f3512fa495ae2c5f6f1dca5aa28bde",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "booking-service/src/main/resources/application.yml",
+    "sha256": "8870ebed653b21eafbd5afa65e3a7bb19bf40a9403abccd4fed242e4582939a6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/client/HotelCapacityClient.java",
+    "sha256": "504a7437e896e361378a9b1cf7df7a2a1b3dad0f8bb595a2580b128774e691eb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/client/HotelGrpcClient.java",
+    "sha256": "efcc205bc8f6fcd998fd28e6208426b5f31252973ac6482f20460d1fa0985f80",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/client/HotelInfoClient.java",
+    "sha256": "34573d7dce1e1ba455282491828a4f2c6007f8aae45dd37e07096d724112c658",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/client/InternalHotelReportClient.java",
+    "sha256": "7ef853ec19d51f7f37bebf99e0541e3ce85957666289ee5debcf133a5b4937ce",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/config/RabbitConfig.java",
+    "sha256": "c7904abd0d73eea8ed7105bcaa911f8b1f630f1f3a7abb9aef48c24ca0bd0578",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/config/RestClientConfig.java",
+    "sha256": "5e522b5ec73cddc81c75987f9906df43d50bc88d0b5eaa17009285c627433acd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/controller/RevenueReportController.java",
+    "sha256": "4573c6de60de636aebb1a9ecfb96f839fa86c2c29c925b22ce470f065b674366",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/AdminRevenueResponse.java",
+    "sha256": "db1be1d76ab2821bf88dde762cbd174c6a9ce38655806fab668396bda8b4647d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/AdminSummaryResponse.java",
+    "sha256": "ce190398e1382d7347dfb1d22374f0b0e01fa440682341928faa688f25d21289",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/BookingStatusBreakdown.java",
+    "sha256": "d485dea54681862887ce8964a75f909fb5edd712364a1f2efde9efcd7b6edf44",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/CustomerAnalytics.java",
+    "sha256": "f5289cf0dc717399a96dcef9642a03ffb8005bf9ec131a009f0b9cb3a4ef9e88",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/GroupBy.java",
+    "sha256": "c4d7fb6ab3a06c3a109a201e31f221d3e47c453ac970c2a952d3ba6949f6bd11",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/GrowthMetrics.java",
+    "sha256": "b1660c14c0343f5abac3cecaa110390a18288f5e60a2001a9741bd7317d681cb",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/HotelInfo.java",
+    "sha256": "604c5d90f5311819d4abe5e2d9c9d213aefab332d80b5f27d529e95aae5a0438",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/HotelResponseLite.java",
+    "sha256": "5300217838e03ce5fc7b5f885bad3c9ebe29b20f4e9f5de1ab7d685966cf7404",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/HotelRevenueSeries.java",
+    "sha256": "445fbe00e363fad3216a460f3a323ac6419a214866f06ffeb184fd6b56fbdf49",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/HotelSummaryItem.java",
+    "sha256": "1b065ad2c116962a7fbbc19ea9a4298f436f3026529819d850cceb5faf0bd97e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/OccupancyResponse.java",
+    "sha256": "454f930f815b6e4bbcf3e5e2fe671cdb710ff45776d5fdb0b3457f88428eb3c6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/OwnerRevenueResponse.java",
+    "sha256": "9c8f3be391df32969bb4cb5aa169bb813e7f6b475e2412ff935f8fbcdd8aaf42",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/OwnerSummaryResponse.java",
+    "sha256": "66ecb20c97bc8d079a42f087b4c3587d6ab7e30fbdaad1cbebfb3571e7d9d583",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/RegionalRevenue.java",
+    "sha256": "aaa1b79707a30b385b63fb9b8da942f26185ef0a34bf1c01132274ed7c9ac196",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/RevenuePoint.java",
+    "sha256": "94cf0a19301c51fca17006b6c051e62275871b1344bed558dfb85eafd96ac262",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/RevenueResponse.java",
+    "sha256": "82349be23afb6dffa65f12ad03d30eca37d1022aba4cd59ab92644e60bafb97b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/RoomTypeCapacityResponse.java",
+    "sha256": "e7c8723b961dcc41e591c745d0ed7a7734cd14d43c539b4cd28cabc820faa158",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/RoomTypeRevenue.java",
+    "sha256": "774bc00babe34e6d238ae4dc620d3300575fc6f17bd1233b91406d40f6be52dd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/SummaryResponse.java",
+    "sha256": "c73a507ec891913a53c9bae345b2cfdb1b206de2933ca1a415878c22ddfa62e5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/dto/TopHotelItem.java",
+    "sha256": "7fd4d7444227acd894a14925e8eee48f986ef61040fe9ace7b2255352ed5b22b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+    "sha256": "fe910f6374168d7994ac2084b12e1dfe7ca42f61da2059208eea6602ff0e51ae",
+    "entity": true,
+    "tables": [
+      "booking_status_records"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+    "sha256": "af90d54024a4191feaa1d0fd54e9df18b287216fa9c9c5cf4459b56191def1fc",
+    "entity": true,
+    "tables": [
+      "payment_records"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/exception/ReportExceptionHandler.java",
+    "sha256": "8ae27f369b157293171d0165e338de70f82e15eaf767707292bedbe9131ef44c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/exception/ReportReconciliationRequiredException.java",
+    "sha256": "7e30d7a9520ab192942db1a90533561e8fc687d51ca066fc19681b2137bc2c5a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/messaging/event/BookingStatusEvent.java",
+    "sha256": "addc18308fc7332b0cf5ee40b04007cf454989d37e455b47e668801e3f3ce350",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/messaging/event/PaymentEvent.java",
+    "sha256": "ed70e5b60a2a28619118f327153c365ffc0af07a5c650fc0758488da89bc3be5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/messaging/EventListener.java",
+    "sha256": "dbb40e64e513001905f9327feb190c93a9019fcd61b82c8b1fe42456aa01181d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/regulations/RegulationClient.java",
+    "sha256": "cc0c33c6d096df2f765497aa4cb81e0e5f18c9ce02e031568e1bf872a2ad163f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/regulations/RegulationLocalCache.java",
+    "sha256": "eddc10acdbbc43277e138344b67bb2d578625d90f471f3ffecccef69da2c11a7",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/repository/BookingStatusRecordRepository.java",
+    "sha256": "d5667d79a66f14429ade1a92a311d7debb2c3acb47a2ee19785ae01aa9d97fc1",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/repository/PaymentRecordRepository.java",
+    "sha256": "fb741e99da11a3f358a8974e9816496c7a4aa250073204be3261b2c056754780",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/RevenueServiceApplication.java",
+    "sha256": "c50ac92a161476c996033ab826a095da74df03035c9e541d4e1b2c6400c105a0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/security/SecurityConfig.java",
+    "sha256": "145952acc023d49b561973edbc0de42aec59bcaf31925f5d9b573cbb43298955",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/security/SessionClaims.java",
+    "sha256": "746863466753a09dfea773cec300d0356e826f8afa30ccbe1e05cb3c18a3984d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/security/SessionStoreUnavailableException.java",
+    "sha256": "2e5fe858f51466ac078a4774627d59f53888f8368f22f46b827479789883fb69",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/security/TokenRevocationService.java",
+    "sha256": "9c58ce8fc85dddbc0c77ab2ff7084720d7d5c98a71525989799772a51c48b039",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java",
+    "sha256": "c90a4b48628ac6ededf4bdd766d3294557fba319a7144a338f43f763f4c0a519",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/EventIngestionService.java",
+    "sha256": "8b5184a0d76dd9f50459f72a040cad911a4efc96f8ed4c8e0041ae58bde60b1a",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/RevenueCashFlows.java",
+    "sha256": "639b2a98fffcae361ff79009207917e11998fb0cd6efaf031b9783333fdcb5fe",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/RevenueReportService.java",
+    "sha256": "09ddce526bacbb1564050f670400b8c6c4356ac3ed5f927095b16130aa183628",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/resources/application.yml",
+    "sha256": "56e07747c42b10194e732a54e20b0e2df6b70e50254a6caa4a7614c739e84ecd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/api/RegulationErrorAdvice.java",
+    "sha256": "b1eb596103d21a0901fe37a984179ee6f1e60c1c80e9af7193f6c78d55de2a42",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/config/RabbitMQConfig.java",
+    "sha256": "3f82e238b6f408f091ce0229b3ca63d4296f124ac3e5f76c2a848373fe1b521c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/config/SecurityConfig.java",
+    "sha256": "0959a64edcf4bf747241e28705408af0c90e88686ecfc47324cf93f84e60baa2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/controller/RegulationController.java",
+    "sha256": "023dc2ed5437911c2ecf1d9032a76f40c9ceed945275216f4896bb68f6877106",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/CommissionRateDto.java",
+    "sha256": "9af3ae2ea3981079e914fdfd89d9cfcc126e94731c6a7f5087e84fed3edb60b5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/PointsConversionDto.java",
+    "sha256": "b67140ea2ea51e5ca5c0dc2c38de981503418d53541386b587f0108f8eff0224",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationDto.java",
+    "sha256": "0f36fcd1db7ff15f0dba644a9c4c5bc6290cfc41f32ecb05882c9ad2b101587e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationSnapshotDto.java",
+    "sha256": "e92da7df20e8cdfacabbefd83a9afb23cef6fd5dcc81ddd8bc3286f0f3f5cd5f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationValueValidator.java",
+    "sha256": "2425102ec51d63e5e5ca4ca5627f91d5dc60daa62fb6260b19d263f9084636ee",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/ValidRegulationValue.java",
+    "sha256": "5147c090923818569cfac40f10901ed5f11ffb5f9a90cbc0567ccdc5e8cd4633",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEvent.java",
+    "sha256": "59ff453ea455e68e38f5e6a5097b7fdf263d845117804ce4a5eb7f2833a18763",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventDelivery.java",
+    "sha256": "ea9a32574b9c9ef6e6af8c2d15d507948220b72dc27ed0893f80b6808bf2f7f5",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventPublisher.java",
+    "sha256": "db583f5e834756e9966db300ffa15c740cc00dde7eff097945270041ed769df9",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java",
+    "sha256": "fe64b40e88b5f48443f263e1e27a9eec7262edc7894dd45765ec262016c76f6c",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "JdbcTemplate"
+      ],
+      [
+        "Scheduled",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/model/Regulation.java",
+    "sha256": "5cdb3e298f62bacd42e955910f52bae4acdc97ec6395b470bff894cc37dc991a",
+    "entity": true,
+    "tables": [
+      "regulations"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ],
+      [
+        "Version",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/model/RegulationSnapshot.java",
+    "sha256": "b2f4c32b70bee9c4d6b70e443decfecd82833e161160eb7ed50427d54a9f1531",
+    "entity": true,
+    "tables": [
+      "regulation_snapshots"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/RegulationsServiceApplication.java",
+    "sha256": "f411eef202fa619cd1753e32dea880d7677ce2ba23c078577a4c799294fb55b8",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationRepository.java",
+    "sha256": "e99cb1a771fcdfcaed41b10815b6905dd3d173b449cbc6514359a29517c4fdc5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationSnapshotRepository.java",
+    "sha256": "87af78685c9c1607c43c53ebc5c6995c6f86a5a1ed4237e4b04c8e1fb86d8f23",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/security/JwtFilter.java",
+    "sha256": "395b721d19aae9d36a6ee133d213f0d46453c4eaf470fb30e78934c640c840ea",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/security/JwtService.java",
+    "sha256": "6c7293aadbf1742a3111b853394d391c8aac1e634715e027b266569ee50043e2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/security/SessionClaims.java",
+    "sha256": "0f8519d9abf68d7eb96eb63fed3dda853836bdd2ea6b8b3fd5773d242c41e0d5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/security/SessionStoreUnavailableException.java",
+    "sha256": "b0f0c282a957e243abff68df6b050fc4709a276ce70e671f3b4c695ef88ac594",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/security/TokenRevocationService.java",
+    "sha256": "3241653113dd2ea4922682f330f1a9ef48d66843d820921503c0335e6ada0f17",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationBootstrap.java",
+    "sha256": "2ef8be872304b763385d06a96d078760ea66bc74cfc4a5dedb12dcc15c3aa247",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "",
+        "ApplicationRunner"
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationCacheProvider.java",
+    "sha256": "ad90e241fbf33153949eda307a973991898d52030e7c800c0a00518976e9905d",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationProvider.java",
+    "sha256": "2386434fc2ed07dde0c844c4cd14572b2eec694e4bf37b8fe4a61367c46897cf",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationService.java",
+    "sha256": "a5bb5c1d3d5a51eebf737c837f0740fcee5018a00a7aac0283fa1e5f25015348",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/resources/application.yml",
+    "sha256": "0125d48dcc12ab8e4eb29a155ef4096c84817c744666d00c5eb961c24b06c6ec",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/config/SupabaseStorageConfig.java",
+    "sha256": "897a5643b6d7f3364e04d90ff07f53127d5cf2b701525d9c074a9bc3975bff42",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/grpc/MediaGrpcServiceImpl.java",
+    "sha256": "448edb43fc7561faeb23642b0224f139ae7f6cebe58f171e4c8a8184a1b453f2",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/MediaServiceApplication.java",
+    "sha256": "75ab8a383de1ae210647a9ce83f54a0216de3ce7dba97075994d0fead24793ac",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/security/MediaAuthenticationInterceptor.java",
+    "sha256": "ca045566513f97dadd01c51a9da1208d2880a54cfa8c394f1a09381bc7c591c9",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/security/MediaSecurityConfig.java",
+    "sha256": "2e907545661c96113066aaafa1ffa3c10d8bc5e8bb795e8197c5edb1d9b7b04b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/java/com/example/mediaservice/SupabaseStorageService.java",
+    "sha256": "88bcf97eb5c9e0214f2cdb3ec7b4e4c1ea1c9e7a0ca1431d0885ec7f5960d0e5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "media-service/src/main/resources/application.yml",
+    "sha256": "e06a322f4646f4d0faebccae55229cd7189b6c15741a3ad32c8579967c831fef",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/config/JacksonConfig.java",
+    "sha256": "8e504b12acd33ba8d38145293b64937a44a529b37ba6b2ae31c9f3af71b6c4cd",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/config/RabbitMQConfig.java",
+    "sha256": "c7e7a76c36e7a27b40133a93a6b8642710edbdab8ccfcc36a6c65d2efb391ad6",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/BookingPaymentListener.java",
+    "sha256": "30e24798807b12d2ff6d75313a27534fb1d64e00bbb724f5841b39e3e5ab7e4a",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "sha256": "aa421974cc46c5e3b741385874d8d5b7c16e6f64d0d398ea76dec93a6382851d",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/model/BookingNotificationEvent.java",
+    "sha256": "9642061588acf2cbd3749283cb16a9c697a0b94f1a26128e87351ac8d6be62a0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/NotificationServiceApplication.java",
+    "sha256": "6c75b3a18f435440f86082dd85bcff56d7b4ee4e07c795ab5e37310bea347d3b",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/java/com/example/notificationservice/service/EmailNotificationService.java",
+    "sha256": "8cc4f5282bdd5be9d5c8617a73ad6902e598734292136bd91b69199ab1dfa721",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "notification-service/src/main/resources/application.yml",
+    "sha256": "c778bc393dc8e10f04fefb9959dfe6db5a2a70e30434c85bb11b6c2d5865e7fe",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/controller/PlaceController.java",
+    "sha256": "f88bae5e594d3a249a7ee943f8df0840b1377fb46fc65d681154c5ccc694a55c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/osrm/Coordinate.java",
+    "sha256": "e384f25becbd8d5cff726632d4a87bbf75731551ef5fc3aba573cb2e7c2c0d3f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/osrm/OsrmTableResponse.java",
+    "sha256": "dbffd98618a4a5b5a258f4ae313621694f36c65cfead76ca401508da24ac8749",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/osrm/RoadMetrics.java",
+    "sha256": "a7fb9b8123c54722245a2e2a123272b6fd5ca7eb11bb18433157ebb36b96b5f5",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/response/NearbyPlaceResponse.java",
+    "sha256": "b53861c6eb222c77ba26273ec4eff1fa847fff41db7cee9883d6c61c8afaf228",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/response/PlacePhotoDto.java",
+    "sha256": "61b73110c99a83e3d2c0f2c4bf71fb359269bc69618a5a7469a9decbd7ac80f3",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/dto/response/PlaceReviewDto.java",
+    "sha256": "cb495fd738420eb58cc9d5db19c5db1a8c427b0ddf89321c1d4e6087b0fd76df",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/entity/Place.java",
+    "sha256": "209d9e67b11af460152ab87a6b0c567794186ff7047be29dee6c16b3d09f0c3a",
+    "entity": true,
+    "tables": [
+      "places"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "Enumerated",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/entity/PlacePhoto.java",
+    "sha256": "f7be45af9019564c2f425eaef9d3546b6b4d90bf6cce6e77028c890c35075eda",
+    "entity": true,
+    "tables": [
+      "place_photos"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/entity/PlaceReview.java",
+    "sha256": "bb9a6bdef136f95657a795a20bdc66b2245558638bba721a35c87db221627540",
+    "entity": true,
+    "tables": [
+      "place_reviews"
+    ],
+    "signals": [
+      [
+        "Column",
+        ""
+      ],
+      [
+        "PrePersist",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/enums/PlaceCategory.java",
+    "sha256": "143112960a4250d45670ed47841417b09aaaabe9a37eb318facd7a3ff29448fc",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/PlaceServiceApplication.java",
+    "sha256": "a809ba311169455971e9d95b62df5ebd01cd75c920220d033e73d280760f3701",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/repository/NearbyPlaceProjection.java",
+    "sha256": "233e16a4b68e4edfaaf7200facff8213df9bd108b3f024f992c1082625010b3e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/repository/PlacePhotoRepository.java",
+    "sha256": "d9bc9d7a2ed01db2fd696accc8f7476750236e63b9c4e68f0b98edb1f4f5341f",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/repository/PlaceRepository.java",
+    "sha256": "cfddd9634c858699fd8bcc2f2e782465de34b57a959da35209aa0320e9f77dd6",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Query",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/repository/PlaceReviewRepository.java",
+    "sha256": "58a5b2c20587ca2e3a8ed35027c68480b805e48aa767863b1b421e69fa7507ca",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/service/osrm/OsrmRoutingClient.java",
+    "sha256": "3c5f83025dd46fa18dc8229b0794112e297fc950bfec08366eb55d62c147ce4c",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/service/osrm/RoadDistanceService.java",
+    "sha256": "68bd09c15a384f0c506aed1788ce12c3311a368821971e2d392a3252a1d82e9e",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/service/PlaceService.java",
+    "sha256": "c2d63600e825374a0a2e1d3058b28c30628ce695b3b1c1b2ac5bb1bca525adf0",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  },
+  {
+    "path": "place-service/src/main/java/com/example/placeservice/service/PlaceServiceImpl.java",
+    "sha256": "95f795d166066c737bebfeef94f9b42c6da332ed9cfbeb00e2faf38306ad8ad2",
+    "entity": false,
+    "tables": [],
+    "signals": [
+      [
+        "Transactional",
+        ""
+      ]
+    ]
+  },
+  {
+    "path": "place-service/src/main/resources/application.yml",
+    "sha256": "dcdf6d6e3f79e997b7271682d1f22eb3cc02bd5e0fe2c8853caae7be75598137",
+    "entity": false,
+    "tables": [],
+    "signals": []
+  }
+]

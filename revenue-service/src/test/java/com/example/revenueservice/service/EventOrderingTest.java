@@ -1,4 +1,5 @@
 package com.example.revenueservice.service;
+import static com.example.revenueservice.contract.TestIds.*;
 
 import com.example.revenueservice.entity.*;
 import com.example.revenueservice.messaging.event.*;
@@ -26,7 +27,7 @@ class EventOrderingTest {
     }
     AtomicReference<BookingStatusRecord> bookingState() {
         var state=new AtomicReference<BookingStatusRecord>();
-        when(bookings.findByBookingId(booking)).thenAnswer(i->Optional.ofNullable(state.get()));
+        when(bookings.findByBookingId(id(booking))).thenAnswer(i->Optional.ofNullable(state.get()));
         when(bookings.save(any())).thenAnswer(i->{ state.set(i.getArgument(0));return state.get(); });
         return state;
     }
@@ -54,7 +55,7 @@ class EventOrderingTest {
     }
     @Test void delayedPaymentCannotReplaceNewerRefundProjection() {
         var state=new AtomicReference<PaymentRecord>();
-        when(payments.findByBookingId(booking)).thenAnswer(i->Optional.ofNullable(state.get()));
+        when(payments.findByBookingId(id(booking))).thenAnswer(i->Optional.ofNullable(state.get()));
         when(payments.save(any())).thenAnswer(i->{state.set(i.getArgument(0));return state.get();});
         service.savePaymentEvent(payment("REFUNDED",time.plusMinutes(1)));
         service.savePaymentEvent(payment("COMPLETED",time));

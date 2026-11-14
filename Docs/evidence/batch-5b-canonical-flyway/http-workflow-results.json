@@ -1,0 +1,194 @@
+{
+  "timestamp": "2026-11-13T18:07:38.665989+00:00",
+  "checks": [
+    {
+      "case": "user full application startup",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": {
+          "status": "UP"
+        }
+      }
+    },
+    {
+      "case": "hotel full application startup",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": {
+          "status": "UP"
+        }
+      }
+    },
+    {
+      "case": "booking full application startup",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": {
+          "status": "UP"
+        }
+      }
+    },
+    {
+      "case": "revenue full application startup",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": {
+          "status": "UP"
+        }
+      }
+    },
+    {
+      "case": "regulations full application startup",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": {
+          "status": "UP"
+        }
+      }
+    },
+    {
+      "case": "cancellation policy lookup",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Booking to Hotel hold and User Loyalty reservation",
+      "status": "PASS",
+      "detail": {
+        "code": 201,
+        "body": null
+      }
+    },
+    {
+      "case": "deterministic Booking UUIDv3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "server pricing minus authoritative points quote",
+      "status": "PASS",
+      "detail": 999500.0
+    },
+    {
+      "case": "creation retry returns same booking",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "UUID loyalty reservation persisted",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "one booking item after retry",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "onsite payment attempt creation",
+      "status": "PASS",
+      "detail": {
+        "code": 201,
+        "body": null
+      }
+    },
+    {
+      "case": "Booking to Hotel inventory commit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "onsite payment receipt",
+      "status": "PASS",
+      "detail": {
+        "code": 200,
+        "body": null
+      }
+    },
+    {
+      "case": "duplicate onsite confirmation idempotent",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Payment outbox through real RabbitMQ to Revenue CREDIT",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Booking to Loyalty commit recovery",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "reviewed cancellation",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Booking to Hotel release after cancellation",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "audited refund request",
+      "status": "PASS",
+      "detail": 201
+    },
+    {
+      "case": "refund ADMIN approval",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "concurrent internal demo executions",
+      "status": "PASS",
+      "detail": [
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "case": "duplicate internal execution idempotent",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "Refund through real RabbitMQ to Revenue DEBIT",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "cash ledger balances after refund",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "one execution per payment",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "original payment receipt fields preserved exactly",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Loyalty cancellation recovery",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "case": "Loyalty USE reversal exactly once",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}

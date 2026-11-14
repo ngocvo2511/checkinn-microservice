@@ -1,0 +1,26 @@
+{
+  "scope": "Three isolated local databases, random fresh schemas, PostgreSQL 18, create-only test mappings; not canonical V1 or migration acceptance",
+  "results": [
+    {
+      "service": "user",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "booking",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "revenue",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

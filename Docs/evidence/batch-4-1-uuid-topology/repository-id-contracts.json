@@ -1,0 +1,212 @@
+[
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingItemRepository.java",
+    "entity": "BookingItem",
+    "current_generic_id": "String",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "entity": "Booking",
+    "current_generic_id": "String",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestRepository.java",
+    "entity": "RefundRequest",
+    "current_generic_id": "String",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/repository/PaymentRepository.java",
+    "entity": "Payment",
+    "current_generic_id": "String",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/CategoryTypeRepository.java",
+    "entity": "CategoryType",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityCategoryRepository.java",
+    "entity": "HotelAmenityCategory",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityRepository.java",
+    "entity": "HotelAmenity",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/repository/CityRepository.java",
+    "entity": "City",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/repository/ProvinceRepository.java",
+    "entity": "Province",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/AccommodationTypeChangeRepository.java",
+    "entity": "AccommodationTypeChange",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/HotelRepository.java",
+    "entity": "Hotel",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/repository/MediaAssetRepository.java",
+    "entity": "MediaAsset",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+    "entity": "HotelPolicy",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/repository/PolicyCategoryTypeRepository.java",
+    "entity": "PolicyCategoryType",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/repository/QuestionRepository.java",
+    "entity": "Question",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/HotelReviewRepository.java",
+    "entity": "HotelReview",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewFeedbackRepository.java",
+    "entity": "ReviewFeedback",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewResponseRepository.java",
+    "entity": "ReviewResponse",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomAvailabilityRepository.java",
+    "entity": "RoomAvailability",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "entity": "RoomHold",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "entity": "RoomType",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlacePhotoRepository.java",
+    "entity": "PlacePhoto",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlaceRepository.java",
+    "entity": "Place",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlaceReviewRepository.java",
+    "entity": "PlaceReview",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationRepository.java",
+    "entity": "Regulation",
+    "current_generic_id": "Long",
+    "target_generic_id": "Long"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationSnapshotRepository.java",
+    "entity": "RegulationSnapshot",
+    "current_generic_id": "Long",
+    "target_generic_id": "Long"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/repository/BookingStatusRecordRepository.java",
+    "entity": "BookingStatusRecord",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/repository/PaymentRecordRepository.java",
+    "entity": "PaymentRecord",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/LoyaltyCommandRepository.java",
+    "entity": "LoyaltyCommand",
+    "current_generic_id": "String",
+    "target_generic_id": "String"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/LoyaltyPointsRepository.java",
+    "entity": "LoyaltyPoints",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/OtpRepository.java",
+    "entity": "Otp",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/PointsReservationRepository.java",
+    "entity": "PointsReservation",
+    "current_generic_id": "String",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/PointsTransactionRepository.java",
+    "entity": "PointsTransaction",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/UserProfileRepository.java",
+    "entity": "UserProfile",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/UserRepository.java",
+    "entity": "User",
+    "current_generic_id": "UUID",
+    "target_generic_id": "UUID"
+  }
+]

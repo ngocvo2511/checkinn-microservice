@@ -25,18 +25,18 @@ public class PaymentRecord {
 
     @Setter
     @Column(nullable = false)
-    private String bookingId;
+    private UUID bookingId;
 
     @Setter
     @Column(nullable = false)
-    private  String customerId;
+    private  UUID customerId;
 
     @Setter
     @Column(nullable = false)
-    private String hotelId;
+    private UUID hotelId;
 
     @Setter
-    private String roomTypeId;
+    private UUID roomTypeId;
 
     @Setter
     @Column(nullable = false)

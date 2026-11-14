@@ -1,0 +1,123 @@
+{
+  "date": "2026-11-13",
+  "scope": "STATIC DESIGN ONLY",
+  "checks": [
+    {
+      "check": "unique table keys",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "unique physical column names",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "all 32 in-scope entity tables/columns represented",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "all source hashes unchanged",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "all 68 workspace SQL hashes unchanged",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "snapshot hashes/table/column totals",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "canonical complete counts",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "foreign keys service-local and targets exist",
+      "status": "PASS",
+      "details": []
+    },
+    {
+      "check": "primary keys all app tables",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "no implicit stock default10",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "all per-table specs and ERD nodes",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "all Batch3 test-only app columns accounted for",
+      "status": "PASS",
+      "details": []
+    },
+    {
+      "check": "new documentation local links resolve",
+      "status": "PASS",
+      "details": []
+    },
+    {
+      "check": "tracked backend diffs limited to initial paths and requested docs",
+      "status": "PASS",
+      "details": [
+        ".idea/compiler.xml",
+        ".idea/encodings.xml",
+        "Docs/BATCH2_PR_REVIEW_2026-11-13.md",
+        "Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+        "Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md"
+      ]
+    },
+    {
+      "check": "frontend remains clean",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "no staged files",
+      "status": "PASS",
+      "details": null
+    },
+    {
+      "check": "checkinn git diff --check",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "check": "checkinn-frontend git diff --check",
+      "status": "PASS",
+      "details": ""
+    }
+  ],
+  "counts": {
+    "app_tables": 46,
+    "columns": 458,
+    "entities": 32,
+    "snapshot_tables": 29,
+    "snapshot_columns": 269,
+    "sql_files": 68
+  },
+  "not_executed": [
+    "database connection or mutation",
+    "Flyway SQL migration execution",
+    "JPA validate against new schemas",
+    "application/Maven/frontend tests",
+    "Supabase provisioning/deployment",
+    "Mermaid visual rendering"
+  ],
+  "limitations": [
+    "Source/dump contract comparison not production applied history",
+    "Money/rate/time/delete/ID/target/policy decisions block executable SQL freeze",
+    "Marker coverage and lightweight parsing not general Java/PostgreSQL semantic parsers"
+  ]
+}

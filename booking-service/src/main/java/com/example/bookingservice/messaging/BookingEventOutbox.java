@@ -18,8 +18,8 @@ public class BookingEventOutbox {
     @Value("${app.rabbit.exchange:hotel.events}") private String exchange;
 
     @Transactional(propagation=Propagation.MANDATORY)
-    public void enqueue(String bookingId,String route,Object event) {
-        if(bookingId==null || bookingId.isBlank() || event==null
+    public void enqueue(UUID bookingId,String route,Object event) {
+        if(bookingId==null || event==null
                 || !Set.of("booking.status.changed","payment.completed","payment.refunded").contains(route))
             throw new IllegalArgumentException("Invalid booking event snapshot");
         jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(?,0))",rs->{},"booking-events:"+bookingId);

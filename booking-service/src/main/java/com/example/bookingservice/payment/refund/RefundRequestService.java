@@ -1,5 +1,7 @@
 package com.example.bookingservice.payment.refund;
 
+import static com.example.bookingservice.contract.UuidContract.*;
+import java.util.UUID;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.payment.entity.Payment;
@@ -20,7 +22,7 @@ public class RefundRequestService {
     private final BookingRepository bookings;
 
     @Transactional
-    public RefundRequest request(String paymentId, String actorId, String reason) {
+    public RefundRequest request(UUID paymentId, UUID actorId, String reason) {
         if (reason == null || reason.isBlank() || reason.length() > 1000) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Refund reason must contain 1 to 1000 characters");
         }
@@ -35,14 +37,14 @@ public class RefundRequestService {
         });
     }
 
-    public RefundRequest get(String paymentId) {
+    public RefundRequest get(UUID paymentId) {
         return requests.findByPaymentId(paymentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Refund request not found"));
     }
 
     @Transactional
-    public RefundRequest approve(String paymentId, String administratorId) {
-        if (administratorId == null || administratorId.isBlank()) {
+    public RefundRequest approve(UUID paymentId, UUID administratorId) {
+        if (administratorId == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Approval actor is required");
         }
         Payment payment = lockPayment(paymentId);
@@ -64,7 +66,7 @@ public class RefundRequestService {
 
     /** Shared REST/RPC execution precondition; caller retains the booking/payment locks. */
     @Transactional(propagation = org.springframework.transaction.annotation.Propagation.MANDATORY)
-    public void validateExecution(String paymentId) {
+    public void validateExecution(UUID paymentId) {
         Payment payment = lockPayment(paymentId);
         requireCompleted(payment);
         var booking = bookings.findByIdForUpdate(payment.getBookingId()).orElseThrow();
@@ -74,21 +76,21 @@ public class RefundRequestService {
         RefundRequest request = get(paymentId);
         validateRequestIdentity(request, payment);
         if (request.getStatus() != RefundRequest.Status.APPROVED_PENDING_EXECUTION
-                || request.getApprovedBy() == null || request.getApprovedBy().isBlank()
+                || request.getApprovedBy() == null
                 || request.getApprovedAt() == null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Audited ADMIN approval is required before execution");
         }
     }
 
     @Transactional
-    public RefundRequest reject(String paymentId, String actor) {
+    public RefundRequest reject(UUID paymentId, String actor) {
         lockPayment(paymentId);
         var r=get(paymentId);
         if(r.getStatus()==RefundRequest.Status.REJECTED) return r;
         if(r.getStatus()!=RefundRequest.Status.REQUESTED)
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Only requested refunds may be rejected");
         r.setStatus(RefundRequest.Status.REJECTED);
-        r.setApprovedBy(actor);r.setApprovedAt(Instant.now());
+        r.setApprovedBy(required(actor));r.setApprovedAt(Instant.now());
         return requests.save(r);
     }
 
@@ -100,8 +102,8 @@ public class RefundRequestService {
         }
     }
 
-    private Payment lockPayment(String paymentId) {
-        String bookingId = payments.findBookingIdById(paymentId)
+    private Payment lockPayment(UUID paymentId) {
+        UUID bookingId = payments.findBookingIdById(paymentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found"));
         var booking = bookings.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));

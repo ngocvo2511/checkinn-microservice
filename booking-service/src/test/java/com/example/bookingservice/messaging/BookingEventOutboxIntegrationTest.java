@@ -1,4 +1,5 @@
 package com.example.bookingservice.messaging;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
@@ -48,17 +49,17 @@ class BookingEventOutboxIntegrationTest {
         var pool=Executors.newFixedThreadPool(4);
         try {
             assertThat(jdbc.update("INSERT INTO bookings SELECT (jsonb_populate_record(NULL::bookings,to_jsonb(b)||jsonb_build_object('id',?,'status','PENDING','check_in_date','2027-01-10','check_out_date','2027-01-11'))).* FROM bookings b LIMIT 1",id)).isEqualTo(1);
-            assertThatThrownBy(()->outbox.enqueue(id,"booking.status.changed",Map.of("bookingId",id)))
+            assertThatThrownBy(()->outbox.enqueue(id(id),"booking.status.changed",Map.of("bookingId",id)))
                     .isInstanceOf(org.springframework.transaction.IllegalTransactionStateException.class);
             tx.executeWithoutResult(s->{
                 var booking=em.find(Booking.class,id,jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);booking.setStatus(BookingStatus.CONFIRMED);
-                outbox.enqueue(id,"booking.status.changed",BookingStatusSnapshots.from(booking));s.setRollbackOnly();
+                outbox.enqueue(id(id),"booking.status.changed",BookingStatusSnapshots.from(booking));s.setRollbackOnly();
             });
             assertThat(jdbc.queryForObject("SELECT status FROM bookings WHERE id=?",String.class,id)).isEqualTo("PENDING");
             assertThat(jdbc.queryForObject("SELECT count(*) FROM booking_event_outbox WHERE booking_id=?",Integer.class,id)).isZero();
             jdbc.execute("CREATE FUNCTION "+fault+"() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'Synthetic outbox commit fault'; RETURN NEW; END $$");
             jdbc.execute("CREATE CONSTRAINT TRIGGER "+fault+" AFTER INSERT ON booking_event_outbox DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.booking_id='"+id+"') EXECUTE FUNCTION "+fault+"()");
-            assertThatThrownBy(()->tx.executeWithoutResult(s->{var b=em.find(Booking.class,id);b.setStatus(BookingStatus.CONFIRMED);outbox.enqueue(id,"booking.status.changed",BookingStatusSnapshots.from(b));})).isInstanceOf(RuntimeException.class);
+            assertThatThrownBy(()->tx.executeWithoutResult(s->{var b=em.find(Booking.class,id);b.setStatus(BookingStatus.CONFIRMED);outbox.enqueue(id(id),"booking.status.changed",BookingStatusSnapshots.from(b));})).isInstanceOf(RuntimeException.class);
             assertThat(jdbc.queryForObject("SELECT status FROM bookings WHERE id=?",String.class,id)).isEqualTo("PENDING");
             assertThat(jdbc.queryForObject("SELECT count(*) FROM booking_event_outbox WHERE booking_id=?",Integer.class,id)).isZero();
             jdbc.execute("DROP TRIGGER "+fault+" ON booking_event_outbox");
@@ -66,7 +67,7 @@ class BookingEventOutboxIntegrationTest {
             for(int i=0;i<4;i++) {final int n=i;jobs.add(pool.submit(()->{gate.await();tx.executeWithoutResult(s->{
                 var b=em.find(Booking.class,id,jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
                 b.setStatus(n%2==0?BookingStatus.CONFIRMED:BookingStatus.CANCELLED);
-                outbox.enqueue(id,"booking.status.changed",BookingStatusSnapshots.from(b));
+                outbox.enqueue(id(id),"booking.status.changed",BookingStatusSnapshots.from(b));
             });return null;}));}
             gate.countDown();for(var job:jobs)job.get(30,TimeUnit.SECONDS);
             var events=jdbc.queryForList("SELECT id,event_version,payload::text FROM booking_event_outbox WHERE booking_id=? ORDER BY event_version",id);

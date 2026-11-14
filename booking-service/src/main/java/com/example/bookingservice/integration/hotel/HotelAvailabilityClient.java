@@ -1,5 +1,6 @@
 package com.example.bookingservice.integration.hotel;
 
+import java.util.UUID;
 import com.example.bookingservice.integration.hotel.dto.HoldRequest;
 import com.example.bookingservice.integration.hotel.dto.HoldResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class HotelAvailabilityClient {
         return response;
     }
 
-    public void confirmHold(String holdId) {
+    public void confirmHold(UUID holdId) {
         String url = hotelServiceUrl + "/api/v1/availability/hold/" + holdId + "/confirm";
         log.info("Calling hotel service to confirm hold: url={}, holdId={}", url, holdId);
         try {
@@ -49,17 +50,17 @@ public class HotelAvailabilityClient {
         }
     }
 
-    public void releaseHold(String holdId) {
+    public void releaseHold(UUID holdId) {
         String url = hotelServiceUrl + "/api/v1/availability/hold/" + holdId + "/release";
         restTemplate.exchange(url, HttpMethod.POST, authenticated(null), Void.class);
     }
 
-    public HoldResponse getHold(String holdId) {
+    public HoldResponse getHold(UUID holdId) {
         String url = hotelServiceUrl + "/api/v1/availability/hold/" + holdId;
         return restTemplate.exchange(url, HttpMethod.GET, authenticated(null), HoldResponse.class).getBody();
     }
 
-    public void cancelReservation(String holdId) {
+    public void cancelReservation(UUID holdId) {
         restTemplate.exchange(hotelServiceUrl + "/api/v1/availability/hold/" + holdId + "/cancel",
                 HttpMethod.POST, authenticated(null), Void.class);
     }

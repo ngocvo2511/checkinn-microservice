@@ -1,0 +1,1850 @@
+{
+  "failed_upgrade_probe": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "manual_refund_audit",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "manual_refund_audit",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "action",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "manual_refund_audit",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "actor_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "manual_refund_audit",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "manual_refund_audit",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "manual_refund_executions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "request_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 5,
+        "table_name": "manual_refund_executions",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "currency",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "provider",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "'MANUAL'::character varying",
+        "column_name": "execution_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "state",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "external_reference",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "evidence_reference",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "submitted_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "submitted_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "bookings_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "manual_refund_audit_action_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL action",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_actor_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL actor_id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_execution_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (execution_id) REFERENCES manual_refund_executions(id)",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_execution_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL execution_id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_occurred_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL occurred_at",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_executions_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (amount > 0::numeric)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_booking_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text <> 'PENDING_VERIFICATION'::text OR external_reference IS NOT NULL AND evidence_reference IS NOT NULL AND submitted_by IS NOT NULL AND submitted_at IS NOT NULL)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_currency_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (currency::text = 'VND'::text)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_currency_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL currency",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_execution_method_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (execution_method::text = 'MANUAL'::text)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_execution_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL execution_method",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (payment_id) REFERENCES payments(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_provider_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (request_id) REFERENCES refund_requests(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (request_id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL request_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_state_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text = ANY (ARRAY['PENDING_MANUAL_REFUND'::character varying, 'PENDING_VERIFICATION'::character varying, 'NEEDS_MANUAL_REVIEW'::character varying]::text[]))",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_state_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL state",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "payments_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "payments"
+      },
+      {
+        "conname": "refund_requests_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "refund_requests"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX bookings_pkey ON public.bookings USING btree (id)",
+        "indexname": "bookings_pkey",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_audit_pkey ON public.manual_refund_audit USING btree (id)",
+        "indexname": "manual_refund_audit_pkey",
+        "tablename": "manual_refund_audit"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_payment_id_key ON public.manual_refund_executions USING btree (payment_id)",
+        "indexname": "manual_refund_executions_payment_id_key",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_pkey ON public.manual_refund_executions USING btree (id)",
+        "indexname": "manual_refund_executions_pkey",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_request_id_key ON public.manual_refund_executions USING btree (request_id)",
+        "indexname": "manual_refund_executions_request_id_key",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX payments_pkey ON public.payments USING btree (id)",
+        "indexname": "payments_pkey",
+        "tablename": "payments"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX refund_requests_pkey ON public.refund_requests USING btree (id)",
+        "indexname": "refund_requests_pkey",
+        "tablename": "refund_requests"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "bookings"
+      },
+      {
+        "tablename": "manual_refund_audit"
+      },
+      {
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "tablename": "payments"
+      },
+      {
+        "tablename": "refund_requests"
+      }
+    ]
+  },
+  "financial_probe_v2": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "manual_refund_audit",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "manual_refund_audit",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "action",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "manual_refund_audit",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "actor_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "manual_refund_audit",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "manual_refund_audit",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "manual_refund_executions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "request_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 5,
+        "table_name": "manual_refund_executions",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "currency",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "provider",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "'MANUAL'::character varying",
+        "column_name": "execution_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "state",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "external_reference",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "evidence_reference",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "submitted_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "manual_refund_executions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "submitted_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "manual_refund_executions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_mode",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "refunded_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "refund_requests",
+        "udt_name": "timestamptz"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "bookings_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "manual_refund_audit_action_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL action",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_actor_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL actor_id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_execution_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (execution_id) REFERENCES manual_refund_executions(id)",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_execution_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL execution_id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_occurred_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL occurred_at",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_audit_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "manual_refund_audit"
+      },
+      {
+        "conname": "manual_refund_executions_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (amount > 0::numeric)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_booking_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_currency_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (currency::text = 'VND'::text)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_currency_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL currency",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_execution_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL execution_method",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (payment_id) REFERENCES payments(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_provider_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (request_id) REFERENCES refund_requests(id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (request_id)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_request_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL request_id",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_state_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL state",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "manual_refund_executions_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "refund_demo_complete_v12",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text <> 'REFUNDED'::text OR execution_method::text = 'SANDBOX_INTERNAL'::text)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "refund_execution_method_v12",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (execution_method::text = ANY (ARRAY['MANUAL'::character varying, 'SANDBOX_INTERNAL'::character varying]::text[]))",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "refund_execution_state_v12",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text = ANY (ARRAY['PENDING_MANUAL_REFUND'::character varying, 'PENDING_VERIFICATION'::character varying, 'NEEDS_MANUAL_REVIEW'::character varying, 'REFUNDED'::character varying]::text[]))",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "refund_pending_evidence_v12",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text <> 'PENDING_VERIFICATION'::text OR external_reference IS NOT NULL AND evidence_reference IS NOT NULL AND submitted_by IS NOT NULL AND submitted_at IS NOT NULL)",
+        "table_name": "manual_refund_executions"
+      },
+      {
+        "conname": "payments_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "payments"
+      },
+      {
+        "conname": "refund_requests_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_status_v12",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['REQUESTED'::character varying, 'APPROVED_PENDING_EXECUTION'::character varying, 'REJECTED'::character varying, 'REFUNDED'::character varying]::text[]))",
+        "table_name": "refund_requests"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX bookings_pkey ON public.bookings USING btree (id)",
+        "indexname": "bookings_pkey",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_audit_pkey ON public.manual_refund_audit USING btree (id)",
+        "indexname": "manual_refund_audit_pkey",
+        "tablename": "manual_refund_audit"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_payment_id_key ON public.manual_refund_executions USING btree (payment_id)",
+        "indexname": "manual_refund_executions_payment_id_key",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_pkey ON public.manual_refund_executions USING btree (id)",
+        "indexname": "manual_refund_executions_pkey",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX manual_refund_executions_request_id_key ON public.manual_refund_executions USING btree (request_id)",
+        "indexname": "manual_refund_executions_request_id_key",
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX payments_pkey ON public.payments USING btree (id)",
+        "indexname": "payments_pkey",
+        "tablename": "payments"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX refund_requests_pkey ON public.refund_requests USING btree (id)",
+        "indexname": "refund_requests_pkey",
+        "tablename": "refund_requests"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "bookings"
+      },
+      {
+        "tablename": "manual_refund_audit"
+      },
+      {
+        "tablename": "manual_refund_executions"
+      },
+      {
+        "tablename": "payments"
+      },
+      {
+        "tablename": "refund_requests"
+      }
+    ]
+  },
+  "loyalty_probe": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "command_key",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "loyalty_commands",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "loyalty_commands",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "command_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "loyalty_commands",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "loyalty_commands",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "input_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "loyalty_commands",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "input_points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 6,
+        "table_name": "loyalty_commands",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "result_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "loyalty_commands",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "result_points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 8,
+        "table_name": "loyalty_commands",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "loyalty_commands",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "points_reservations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "points_reservations",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "requested_points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "points_reservations",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "total_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "points_reservations",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 5,
+        "table_name": "points_reservations",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "discount_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "points_reservations",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "redemption_rate",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "points_reservations",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "state",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "points_reservations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hold_expires_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "points_reservations",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "next_check_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "points_reservations",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "points_reservations",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "points_reservations",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "points_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "points_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "points_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "points_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "users",
+        "udt_name": "uuid"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "loyalty_commands_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_booking_type",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (booking_id, command_type)",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_command_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL command_key",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_command_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL command_type",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (command_key)",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_result_points_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL result_points",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_type",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (command_type::text = ANY (ARRAY['EARN'::character varying, 'USE'::character varying, 'CANCEL'::character varying]::text[]))",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "loyalty_commands_user_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL user_id",
+        "table_name": "loyalty_commands"
+      },
+      {
+        "conname": "points_reservations_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_discount_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (discount_amount >= 0::numeric)",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_discount_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL discount_amount",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_hold_expires_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hold_expires_at",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_next_check_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL next_check_at",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (booking_id)",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_points_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (points >= 0)",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_points_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL points",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_redemption_rate_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (redemption_rate > 0::numeric)",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_redemption_rate_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL redemption_rate",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_requested_points_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_points",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_state_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (state::text = ANY (ARRAY['HELD'::character varying, 'COMMITTED'::character varying, 'CANCELLED'::character varying]::text[]))",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_state_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL state",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_total_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL total_amount",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_reservations_user_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL user_id",
+        "table_name": "points_reservations"
+      },
+      {
+        "conname": "points_transactions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "points_transactions"
+      },
+      {
+        "conname": "points_transactions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "points_transactions"
+      },
+      {
+        "conname": "points_transactions_transaction_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL transaction_type",
+        "table_name": "points_transactions"
+      },
+      {
+        "conname": "points_transactions_user_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL user_id",
+        "table_name": "points_transactions"
+      },
+      {
+        "conname": "users_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "users"
+      },
+      {
+        "conname": "users_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "users"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX loyalty_commands_booking_type ON public.loyalty_commands USING btree (booking_id, command_type)",
+        "indexname": "loyalty_commands_booking_type",
+        "tablename": "loyalty_commands"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX loyalty_commands_pkey ON public.loyalty_commands USING btree (command_key)",
+        "indexname": "loyalty_commands_pkey",
+        "tablename": "loyalty_commands"
+      },
+      {
+        "indexdef": "CREATE INDEX points_reservations_held_user ON public.points_reservations USING btree (user_id) WHERE ((state)::text = 'HELD'::text)",
+        "indexname": "points_reservations_held_user",
+        "tablename": "points_reservations"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX points_reservations_pkey ON public.points_reservations USING btree (booking_id)",
+        "indexname": "points_reservations_pkey",
+        "tablename": "points_reservations"
+      },
+      {
+        "indexdef": "CREATE INDEX points_reservations_recovery ON public.points_reservations USING btree (next_check_at) WHERE ((state)::text = 'HELD'::text)",
+        "indexname": "points_reservations_recovery",
+        "tablename": "points_reservations"
+      },
+      {
+        "indexdef": "CREATE INDEX points_transactions_guard_booking ON public.points_transactions USING btree (booking_id, transaction_type)",
+        "indexname": "points_transactions_guard_booking",
+        "tablename": "points_transactions"
+      },
+      {
+        "indexdef": "CREATE INDEX points_transactions_guard_user ON public.points_transactions USING btree (user_id, booking_id, transaction_type)",
+        "indexname": "points_transactions_guard_user",
+        "tablename": "points_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX points_transactions_pkey ON public.points_transactions USING btree (id)",
+        "indexname": "points_transactions_pkey",
+        "tablename": "points_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)",
+        "indexname": "users_pkey",
+        "tablename": "users"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "loyalty_commands"
+      },
+      {
+        "tablename": "points_reservations"
+      },
+      {
+        "tablename": "points_transactions"
+      },
+      {
+        "tablename": "users"
+      }
+    ]
+  }
+}

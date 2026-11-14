@@ -24,5 +24,5 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
     @Query("SELECT pt FROM PointsTransaction pt WHERE pt.userId = :userId ORDER BY pt.createdAt DESC")
     List<PointsTransaction> findByUserIdOrderByCreatedAtDesc(UUID userId);
     
-    List<PointsTransaction> findByBookingId(String bookingId);
+    List<PointsTransaction> findByBookingId(UUID bookingId);
 }

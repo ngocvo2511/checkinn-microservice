@@ -1,5 +1,6 @@
 package com.example.bookingservice.integration.loyalty;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +13,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class ApplyPointsRequestDTO {
-    private String userId;
+    private UUID userId;
     private Long pointsToUse;
-    private String bookingId;
+    private UUID bookingId;
     private String description;
     private BigDecimal expectedDiscountAmount;
 
-    public ApplyPointsRequestDTO(String userId, Long pointsToUse, String bookingId, String description) {
+    public ApplyPointsRequestDTO(UUID userId, Long pointsToUse, UUID bookingId, String description) {
         this(userId, pointsToUse, bookingId, description, null);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.bookingservice.booking.dto;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

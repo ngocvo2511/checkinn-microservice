@@ -1,0 +1,3658 @@
+[
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthFailureBoundaryTest.java",
+    "sha256": "a1b2c1bb53b6c92108c3cee0c0003845aac4f1d7ffa6ed511811a6d822983b12",
+    "id_symbols": [
+      "UUID",
+      "fromCode",
+      "getStatusCode",
+      "id",
+      "otpCode",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthGrpcRevocationTest.java",
+    "sha256": "344102ddee78ac09ed45a272f037f839e843b0d37bbf2ca4bc28bf869206bb7d",
+    "id_symbols": [
+      "UUID",
+      "containsKey",
+      "getCode",
+      "getUserId",
+      "hasKey",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthLogPrivacyTest.java",
+    "sha256": "ccd63739e05d64d60385e807b4692d9770ca8531ed072014b550a1cb6634d7b8",
+    "id_symbols": [
+      "UUID",
+      "getStatusCode",
+      "id",
+      "randomUUID",
+      "setId",
+      "traceId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/AuthServiceTest.java",
+    "sha256": "f649ce233c4deac2ce12ba935a228f61dec80988b86516329f33864f4f1cc528",
+    "id_symbols": [
+      "getStatusCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/SessionTokenIssuanceTest.java",
+    "sha256": "18763686dff06d7898b7a497c03e36378c765980821178a21360cdcafb5ede28",
+    "id_symbols": [
+      "UUID",
+      "getId",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/UserRpcClientTest.java",
+    "sha256": "c0b18a28fd72c1c4b0d657a294486559489a7f76c8241b2bb2fdfdfe788653ab",
+    "id_symbols": [
+      "UUID",
+      "getId",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V2__Add_Hold_Id.sql",
+    "sha256": "e88aaf84998df5452de3d188df3071165c3e95a5c6320c5e72cb67e63e9eb002",
+    "id_symbols": [
+      "hold_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+    "sha256": "7d672b2234cbbcf2ba7cca4a8109574ce22dffaa5b47d5adac384d81c36ac5e0",
+    "id_symbols": [
+      "booking_id",
+      "cancellation_policy_version",
+      "id",
+      "payment_id",
+      "uk_refund_requests_payment_id",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/schema.sql",
+    "sha256": "c3ef7c14e25f241a7ffdc8ebec22e6d77bec475e464534d910a97a1e9a574612",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "hotel_id",
+      "id",
+      "idx_booking_items_booking_id",
+      "idx_booking_items_room_type_id",
+      "idx_bookings_hotel_id",
+      "idx_bookings_user_id",
+      "idx_payments_booking_id",
+      "idx_payments_transaction_id",
+      "rate_plan_id",
+      "room_type_id",
+      "transaction_id",
+      "user_id",
+      "vnpay_order_id",
+      "vnpay_response_code",
+      "voucher_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/controller/BookingAuthorizationTest.java",
+    "sha256": "979d039de50a72374503139790d83b88847632f6e0c03420bb984ca868642ca5",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "extractUserId",
+      "findById",
+      "findByVnpayOrderId",
+      "getTmnCode",
+      "getUserId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "roomTypeId",
+      "userId",
+      "version",
+      "vnp_ResponseCode",
+      "vnp_SecureHash",
+      "vnp_TmnCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingIdempotencyTest.java",
+    "sha256": "65d9fc3c34ad6fff2e69090e10470c00e9f180fc7b95502853ea1665cb4b718b",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "getIdempotencyKey",
+      "hotelId",
+      "idempotencyKey",
+      "keyHash",
+      "randomUUID",
+      "requestHash",
+      "roomTypeId",
+      "setIdempotencyKey",
+      "setUserId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingScheduledTaskTest.java",
+    "sha256": "451d2102173bad48fcd1e08a4faa90bcdb30b3190c74ca7182baa2a89d74ba33",
+    "id_symbols": [
+      "bookingId",
+      "holdId",
+      "hotelId",
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingServiceTest.java",
+    "sha256": "5f95ec42cc860f45e9f2c79d34ac01722097159f0cdd6d92b811914d823222a3",
+    "id_symbols": [
+      "UUID",
+      "ZoneId",
+      "bookingId",
+      "findById",
+      "findByIdempotencyKeyHash",
+      "getCancellationPolicyVersion",
+      "getId",
+      "getRatePlanId",
+      "getStatusCode",
+      "getUserId",
+      "holdId",
+      "hotelId",
+      "id",
+      "idempotencyRequestHash",
+      "randomUUID",
+      "requestHash",
+      "roomTypeId",
+      "setAcceptedCancellationPolicyVersion",
+      "setCancellationPolicyVersion",
+      "setId",
+      "setIdempotencyKey",
+      "setVoucherCode",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/CancellationPolicyTest.java",
+    "sha256": "9a74c39ddae2b12037fc70d0e77a8d4679dafc3b2f771121ff2663cf84dba4d9",
+    "id_symbols": [
+      "getCancellationPolicyVersion"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/LoyaltySettlementServiceTest.java",
+    "sha256": "b5233042352fbdd0fe7f7e5ec781d5e42f2787eecb4e4b8f0c64f9993d4f76ea",
+    "id_symbols": [
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/OnsiteReservationServiceTest.java",
+    "sha256": "1676025b7930789637adb6073d33fb0530d8a0ead7fbbb846e1cfb6fe0875be6",
+    "id_symbols": [
+      "holdId",
+      "id",
+      "setHoldId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/PaidReservationServiceTest.java",
+    "sha256": "e788b2f979d691f51e00c43479a058eb480b07984ad93d6b6e23c5c2f8d137fb",
+    "id_symbols": [
+      "bookingId",
+      "findById",
+      "holdId",
+      "id",
+      "paidReservationPaymentId",
+      "setBookingId",
+      "setHoldId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/grpc/interceptor/UserContextInterceptorTest.java",
+    "sha256": "722dd844da61212954b554838b4a98059776807ca2d9c0535083d08c871ad519",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/grpc/server/GrpcBookingAuthorizationTest.java",
+    "sha256": "9d56871c79932d05d4c00c9dcc255fd409a3b8995fdb7cd6a9aea2599b83fe8c",
+    "id_symbols": [
+      "actor",
+      "getCode",
+      "setBookingId",
+      "setGuestId",
+      "setHotelId",
+      "setId",
+      "setOrderId",
+      "setResponseCode",
+      "setTransactionId",
+      "setUserId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java",
+    "sha256": "71c0fb07b15cac5a0b7428733fa376592fc651f3a3d54a648251d338d75a1614",
+    "id_symbols": [
+      "getStatusCode",
+      "hotelId",
+      "id",
+      "serviceId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/messaging/BookingEventDeliveryTest.java",
+    "sha256": "23d551b9ee8993347f05748778c8b1342cf214a7010e11169731867aedbc1815",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "randomUUID",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/messaging/BookingEventOutboxIntegrationTest.java",
+    "sha256": "51735ddb0145a8bca177872cf6a15c5ec69bd945e109078640d4cae71354b7c5",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "booking_id",
+      "eventId",
+      "event_version",
+      "getId",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/refund/RefundRequestServiceTest.java",
+    "sha256": "aa5b8aa4694c62c783588e09421194a6e93c0f4c966bb1e95f8eb20cdd88c11e",
+    "id_symbols": [
+      "actor",
+      "bookingId",
+      "findBookingIdById",
+      "findByPaymentId",
+      "getBookingId",
+      "getId",
+      "getStatusCode",
+      "id",
+      "setBookingId",
+      "setId",
+      "setPaymentId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/PaymentServiceTest.java",
+    "sha256": "447c6d45ebc5d76cf2e43f11b2c3183ccdd0a1fe5154974f7392bad7d283e4c6",
+    "id_symbols": [
+      "ZoneId",
+      "bookingId",
+      "findBookingIdByVnpayOrderId",
+      "findById",
+      "findByVnpayOrderId",
+      "getId",
+      "getOrderId",
+      "getPaidReservationPaymentId",
+      "getStatusCode",
+      "getTmnCode",
+      "getVersion",
+      "getVnpayResponseCode",
+      "holdId",
+      "hotelId",
+      "id",
+      "setId",
+      "userId",
+      "vnpayOrderId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/RefundPostgresTest.java",
+    "sha256": "1da381bd66f17c6f08fb956dc535656aa9a130315d53632ce889a82c1b5e2bd6",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "booking_id",
+      "eventId",
+      "event_version",
+      "getId",
+      "getStatusCode",
+      "hotelId",
+      "id",
+      "payment_id",
+      "randomUUID",
+      "ratePlanId",
+      "roomTypeId",
+      "routing_key",
+      "userId",
+      "vnpayOrderId",
+      "vnpay_order_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/SandboxRefundTest.java",
+    "sha256": "80ce56cadf7ac37648b65d02eff7804d4c068c57f2009ec03ae825ea4e22a411",
+    "id_symbols": [
+      "bookingId",
+      "findBookingIdById",
+      "getStatusCode",
+      "getTransactionId",
+      "id",
+      "setBookingId",
+      "setId",
+      "setPaymentId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/security/SessionGenerationTest.java",
+    "sha256": "8a7f91ecf71f584abc91d95cc14080ec5ec23f2841e8c066b9791021f18e8c7c",
+    "id_symbols": [
+      "UUID",
+      "hasKey",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/validation/ApiErrorContractTest.java",
+    "sha256": "b4096ca044957a8ff60446207c30116d9b340dadb650e4902cf536dbf123e138",
+    "id_symbols": [
+      "requestId",
+      "unexpectedErrorIsSanitizedAndHasStableCodeAndRequestId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/validation/BookingValidationControllerTest.java",
+    "sha256": "888eb0fc2495deb1463dcc306839beddc6e22f7d19ed3e1d80403a50231444cd",
+    "id_symbols": [
+      "hotelId",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/accommodation-migration-test.py",
+    "sha256": "727a9bc7484f2ef31424526b014bbe50903b6eff919e80f542601a2a4f9cdfce",
+    "id_symbols": [
+      "id",
+      "migration_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/accommodation-type-smoke.py",
+    "sha256": "9f19fc287f4cc234d9ef279ab9c8d90bac9e58488e15336bb69c19eb37b3ee07",
+    "id_symbols": [
+      "UUID",
+      "cityId",
+      "city_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "race_id",
+      "requesterId",
+      "revision",
+      "room_type_id",
+      "taxId",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/amenity-catalog-smoke.py",
+    "sha256": "37484b1c8f7cdab80ba401272eda7c3eed81e97d0c38e8fbd0ba6a882f4f3618",
+    "id_symbols": [
+      "UUID",
+      "_PAID",
+      "actor",
+      "category_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "request_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/amenity-write-smoke.py",
+    "sha256": "b283f3d17defa450923cb7b712bf454552163622d652ef8e1d39e7c4665c1619",
+    "id_symbols": [
+      "actor",
+      "category_id",
+      "city_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "raw_id",
+      "request_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/api-error-smoke.py",
+    "sha256": "3e623111a371653338e696f9a83901eebdbef335d9d980c954ff3e07a9769e8b",
+    "id_symbols": [
+      "actor",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "requestId",
+      "revision",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/auth-session-smoke.py",
+    "sha256": "c409f96ec684c00c74dd5c8f7c6270c601eaf1399bbd37aec7db7ce2eccb9b05",
+    "id_symbols": [
+      "UUID",
+      "http_code",
+      "id",
+      "sub",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/auth-validation-smoke.py",
+    "sha256": "3b89065c86e698ef7325f28044870101066207564d01df582e7056bc001bfbc4",
+    "id_symbols": [
+      "http_code",
+      "jti",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-events-smoke.py",
+    "sha256": "f2b15baf22f563771be7ee9b11e4f0b75dc580b83edcc30e6ad068e7863ae2fa",
+    "id_symbols": [
+      "UUID",
+      "acceptedCancellationPolicyVersion",
+      "actor",
+      "bookingId",
+      "booking_id",
+      "eventId",
+      "eventVersion",
+      "event_version",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "idempotencyKey",
+      "last_event_id",
+      "online_id",
+      "orderId",
+      "ownerId",
+      "owner_id",
+      "roomTypeId",
+      "room_type_id",
+      "routing_key",
+      "user_id",
+      "version",
+      "vnp_ResponseCode",
+      "vnp_SecureHash",
+      "vnp_TmnCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-expiry-smoke.py",
+    "sha256": "2194825b12fca7e379b774ae452652dddd223ea3144595e49934d3c4666d8f39",
+    "id_symbols": [
+      "actor",
+      "hold_id",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-gateway-smoke.py",
+    "sha256": "71bf196a5fc34ffc6d91871269c2c507a2d829dc214738f4484ec500fa64ac0b",
+    "id_symbols": [
+      "acceptedCancellationPolicyVersion",
+      "actor",
+      "booking_id",
+      "cancellation_policy_version",
+      "city_id",
+      "command_id",
+      "hold_id",
+      "hotelId",
+      "hotel_id",
+      "id",
+      "idempotencyKey",
+      "idempotency_key_hash",
+      "image_id",
+      "owner_id",
+      "ratePlanId",
+      "revision",
+      "roomTypeId",
+      "room_type_id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-hold-verification-smoke.py",
+    "sha256": "4fecb965db9ee89d66c90a9fb79e95c90e7b63d53c34c869276a61f7113c4be2",
+    "id_symbols": [
+      "UUID",
+      "acceptedCancellationPolicyVersion",
+      "bookingId",
+      "booking_id",
+      "commandId",
+      "command_id",
+      "holdId",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "idempotencyKey",
+      "idempotency_key_hash",
+      "key_hash",
+      "roomTypeId",
+      "room_type_id",
+      "user_id",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-idempotency-schema-test.py",
+    "sha256": "1a3ca795dbf72d5e9d0fc2950c88054697dffa36b78f14983a9857440e9ddb54",
+    "id_symbols": [
+      "command_id",
+      "id",
+      "idempotency_key_hash",
+      "idempotency_request_hash"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-postgres-integration.py",
+    "sha256": "c33e8719aa953cb31961371ed19aabdec52e62ee46bd92a66eb41e9438a67c85",
+    "id_symbols": [
+      "UUID",
+      "city_id",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "revision",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-security-smoke.py",
+    "sha256": "3cce5a386a1ddc5385d09a05b50d16d17de15404a8d73937b70c3e747ad500db",
+    "id_symbols": [
+      "UUID",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "sub",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-accommodation-bootstrap.sql",
+    "sha256": "fa878f06283cfddfc888be5109be70374b4b45e7f290e4adc1dbc5ef566f9f0f",
+    "id_symbols": [
+      "VALID",
+      "hotel_id",
+      "id",
+      "migration_id",
+      "requester_id",
+      "reviewer_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-init.sql",
+    "sha256": "a5800d72309976fc58c9c0e6bb155447f1e50740aee59ac0cc3009baf5810819",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/booking-sql-assertions.py",
+    "sha256": "259fda5e19346123799144ba0b8ba6df99da592bd970d20aa1d0d8faceab4e7f",
+    "id_symbols": [
+      "actor",
+      "hold_id",
+      "id",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/cancellation-workflow-smoke.py",
+    "sha256": "0548ce963a6578229d88e7db3eb1c706b26508eb24e859d47903a2ce91945117",
+    "id_symbols": [
+      "UUID",
+      "acceptedCancellationPolicyVersion",
+      "administrator_id",
+      "bookingId",
+      "booking_id",
+      "cancellationPolicyVersion",
+      "customer_id",
+      "holdId",
+      "hold_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "legacy_id",
+      "orderId",
+      "payment_id",
+      "points_id",
+      "ratePlanId",
+      "roomTypeId",
+      "room_type_id",
+      "userId",
+      "user_id",
+      "vnp_ResponseCode",
+      "vnp_SecureHash",
+      "vnp_TmnCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/canonical-text-smoke.py",
+    "sha256": "f6203a80287e69e9400ed6f6a5ff306acc62956752d629698fd07c1eddf373e3",
+    "id_symbols": [
+      "category_id",
+      "getHotelById",
+      "getRoomTypeById",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/catalog-rpc-smoke.py",
+    "sha256": "eab5c2cf75e65af7617e499ed8b7b23d77547b5fe0e585908c31e278ae46c2b4",
+    "id_symbols": [
+      "GetHotelById",
+      "GetRoomTypeById",
+      "city_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "roomTypeId",
+      "target_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/catalog-security-smoke.py",
+    "sha256": "cf7c4285f60debb175f43079ba32174e37063cae3ca2d7406d2e42f19826c75e",
+    "id_symbols": [
+      "actor",
+      "http_code",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/hold-concurrency-smoke.py",
+    "sha256": "35eed9b8f2985d939db5c7ec98d70e1fdf7dafd250b37c449f02e2a4c25e1a8a",
+    "id_symbols": [
+      "UUID",
+      "holdId",
+      "id",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/hotel-content-smoke.py",
+    "sha256": "664d1666820a75d4f9b9953886b102a3abfd244997fdffebe6b653749ea60557",
+    "id_symbols": [
+      "actor",
+      "city_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/hotel-publication-smoke.py",
+    "sha256": "02d211f40697ef99f9c036e673a4ddf9de72a651032752663f7ae8c0120efcbb",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "city_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/input-validation-smoke.py",
+    "sha256": "ac21bc270b993a93b01098f88518d3c714d3b5ade275786f3763dc4f4c1377b0",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "booking_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "idempotencyKey",
+      "owner_id",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/integration-smoke.py",
+    "sha256": "e57f508881122b0237793a415bac14e3f39653eabd43ad385773738d321721eb",
+    "id_symbols": [
+      "GetHotelById",
+      "GetUserById",
+      "hotelId",
+      "hotel_id",
+      "id",
+      "notification_id",
+      "otp_code",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/inventory-counter-safety-smoke.py",
+    "sha256": "6a4e797b1dd2c88340b9b6110afc6f86bd106d7b43f5243439c5c3fd7f206883",
+    "id_symbols": [
+      "hold_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "last_error_code",
+      "owner_id",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/inventory-smoke.py",
+    "sha256": "f592ea0ea47d736be5a1015089119f90e24d7363f77f1cb7ede2b745229014d8",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/location-search-smoke.py",
+    "sha256": "f75344d72d38f908c78fc700d34183c40b3fa3a47517cebc8d1500fcf1114bf5",
+    "id_symbols": [
+      "by_id",
+      "cityId",
+      "city_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "parentId",
+      "parent_id",
+      "provinceId",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/loyalty-ledger-audit.py",
+    "sha256": "09932e01dce6e5d17c1c2a0bdd68913c4f5037105c6c068f1888a64a5c6db6c2",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/loyalty-ledger-smoke.py",
+    "sha256": "e6b80fdce7019e09db577b3c0a5d917759f03cb17ddd98390c9ae56fc02b3567",
+    "id_symbols": [
+      "actor",
+      "bookingId",
+      "booking_id",
+      "http_code",
+      "id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/loyalty-preview-smoke.py",
+    "sha256": "f8f29a4ed52996318a8f47d2db408016f624df9b5fd604d76397ac197d2a18b4",
+    "id_symbols": [
+      "actor",
+      "bookingId",
+      "http_code",
+      "id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/manual-refund-migration-test.py",
+    "sha256": "39bc2d83cd2102757671f05d08d62962d313d948fc0c09966dd7fce34d356485",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "payment_id",
+      "request_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/media-metadata-smoke.py",
+    "sha256": "6e0dc1a0829023f6c7d1dcfa0efe44017dcc68fb726e04e16fc028e94bf33749",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "city_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "target_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/notification-delivery-smoke.py",
+    "sha256": "afe22c994f62c294334b29d4e22e8aaa312d86f34cb24ede5b09cf78eee1daa2",
+    "id_symbols": [
+      "bookingId",
+      "mail_ids",
+      "otp_code",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/onsite-reservation-smoke.py",
+    "sha256": "29c0f0783bd15be9d3709d9d59f8449a4fa365498e3d82c65b575c6038f68ebb",
+    "id_symbols": [
+      "UUID",
+      "acceptedCancellationPolicyVersion",
+      "actor",
+      "bookingId",
+      "booking_id",
+      "holdId",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "idempotencyKey",
+      "owner_id",
+      "roomTypeId",
+      "room_type_id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/p0-boundary-smoke.py",
+    "sha256": "11df05ddb1de71d35e01218ed0e3952acc3b87f7938149d5516be1917611c60a",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "ledger_id",
+      "ownerId",
+      "owner_id",
+      "target_id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/paid-reservation-smoke.py",
+    "sha256": "69d5d4298c107b2a574b750c5b388d2a90762f7f1bde672d12e080f8516ee84e",
+    "id_symbols": [
+      "UUID",
+      "acceptedCancellationPolicyVersion",
+      "actor",
+      "bookingId",
+      "booking_id",
+      "holdId",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "idempotencyKey",
+      "orderId",
+      "owner_id",
+      "paid_reservation_payment_id",
+      "roomTypeId",
+      "room_type_id",
+      "user_id",
+      "vnp_ResponseCode",
+      "vnp_SecureHash",
+      "vnp_TmnCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/points-reservation-smoke.py",
+    "sha256": "d3f72634d45eb5c075c7439e0f7e7edf81e71a5a3d6f01f53a4e354b11551b1d",
+    "id_symbols": [
+      "actor",
+      "bookingId",
+      "booking_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/publication-completion-smoke.py",
+    "sha256": "a6bcfa987559b4db4406bb2ea6b555ea87d3673eb1e5e9453c25672ee3e95386",
+    "id_symbols": [
+      "CITY_CENTROID",
+      "GetHotelById",
+      "GetReviewById",
+      "GetRoomTypeById",
+      "UUID",
+      "actor",
+      "bookingId",
+      "cityId",
+      "city_id",
+      "guest_id",
+      "holdId",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "ownerId",
+      "owner_id",
+      "reviewId",
+      "review_id",
+      "roomTypeId",
+      "room_type_id",
+      "targetId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-acceptance-smoke.py",
+    "sha256": "8e8b0d975a181676f41e566b8650e063e0b2a11e8d0f2df78968dd17fe2ba205",
+    "id_symbols": [
+      "booking_id",
+      "customer_id",
+      "execution_id",
+      "hotelId",
+      "hotel_id",
+      "id",
+      "idempotency_key_hash",
+      "payment_id",
+      "routing_key",
+      "source_event_id",
+      "transaction_id",
+      "userId",
+      "user_id",
+      "vnpay_order_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-disabled-acceptance.py",
+    "sha256": "b6c5af367b77b4588cec07babde33e62a2b1c7522ad0dcb574e071cb0ceff5b0",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "payment_id",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-disabled-smoke.py",
+    "sha256": "eef5788c8ceafda3c0bee2b48b0dc623ae05a967ce71c3737df76d6392184a87",
+    "id_symbols": [
+      "booking_id",
+      "cancellation_policy_version",
+      "customer_id",
+      "hotel_id",
+      "id",
+      "rate_plan_id",
+      "room_type_id",
+      "routing_key",
+      "transaction_id",
+      "userId",
+      "user_id",
+      "vnpay_order_id",
+      "vnpay_response_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-final-smoke.py",
+    "sha256": "6986ccee41bde79aa4e3a60b8801c133f89b4780f5f506357467b4906f437abc",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "idempotency_key_hash",
+      "payment_id",
+      "routing_key",
+      "userId",
+      "user_id",
+      "vnpay_order_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-gateway-smoke.py",
+    "sha256": "619946da904944b5f20e9d90be520799715c8e308b1ad0ad2b1c632871f96e94",
+    "id_symbols": [
+      "admin_id",
+      "booking_id",
+      "cancellation_policy_version",
+      "customer_id",
+      "execution_id",
+      "hotel_id",
+      "id",
+      "payment_id",
+      "rate_plan_id",
+      "room_id",
+      "room_type_id",
+      "routing_key",
+      "source_event_id",
+      "source_version",
+      "transaction_id",
+      "userId",
+      "user_id",
+      "vnpay_order_id",
+      "vnpay_response_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-lifecycle-smoke.py",
+    "sha256": "a8a6af13806a7b04979c518e3a79cb603e6a43b5d417cae646651726c5a6929d",
+    "id_symbols": [
+      "acceptedCancellationPolicyVersion",
+      "booking_id",
+      "hotelId",
+      "id",
+      "payment_id",
+      "ratePlanId",
+      "roomTypeId",
+      "vnpay_order_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-prerequisites-migration-test.py",
+    "sha256": "7cc6c998a18cced7a614c6c00a4e7296591b3341b787748d9f0e92fa5a73a5d3",
+    "id_symbols": [
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/refund-smoke-init.sql",
+    "sha256": "f381447f13886a70d379815b719f0cf5f65c52602f6ca3100325bf36c31c3009",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/regulation-consistency-smoke.py",
+    "sha256": "a287aaff905162538b84255b3c70d05a91dfd314bc899e7dc7262346afc94695",
+    "id_symbols": [
+      "actor",
+      "http_code",
+      "id",
+      "message_id",
+      "regulationKey",
+      "regulation_key",
+      "revision",
+      "routing_key",
+      "source_version",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/regulation-session-smoke.py",
+    "sha256": "b9d70328ea8cce2021930a35c0a4eb3681c602a32f578484da420a07578f93d0",
+    "id_symbols": [
+      "actor",
+      "http_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/reset-session-smoke.py",
+    "sha256": "983d8af6fc530e772febf7397ce7f88b11fac2c946b3b8ecf25075fa4e6dfce5",
+    "id_symbols": [
+      "http_code",
+      "id",
+      "jti",
+      "otpCode",
+      "otp_code",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/revenue-broker-smoke.py",
+    "sha256": "e6c1b0185187641e127540812c262e15187d2f199de469546d581e3493ab9832",
+    "id_symbols": [
+      "bookingId",
+      "booking_id",
+      "eventId",
+      "eventVersion",
+      "hotelId",
+      "id",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/revenue-history-gap-smoke.py",
+    "sha256": "63f6f39861e5a7f67dd0735a4d54877154cac96158508ff664d29302965061ca",
+    "id_symbols": [
+      "booking_id",
+      "event_version",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "last_event_id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/review-consistency-smoke.py",
+    "sha256": "23dd85d44c51a8c57e5e143f7880456d5b0b31d9293bcc402301f7bb65e37944",
+    "id_symbols": [
+      "GetReviewById",
+      "UUID",
+      "actor",
+      "bookingId",
+      "guestId",
+      "guest_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "reviewId",
+      "review_id",
+      "review_ids",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/review-eligibility-smoke.py",
+    "sha256": "f689be081e440e1b14a2001054773c097d499610ed5820b2bdd0fb4e43403f41",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "bookingId",
+      "guestId",
+      "guest_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/review-response-smoke.py",
+    "sha256": "8ed30ffb8bc4470a0e84a1fe93339d5f0f1a35a0e3206529a01f8761c70b4107",
+    "id_symbols": [
+      "GetReviewById",
+      "actor",
+      "bookingId",
+      "booking_id",
+      "guestId",
+      "guest_id",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "reviewId",
+      "review_id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/review-security-smoke.py",
+    "sha256": "f5bb99c3027147cf54d22464c16f8f38ae621e9772bb2e1cb3a35e088fc9572a",
+    "id_symbols": [
+      "UUID",
+      "guest_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "reviewId",
+      "review_id",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/review-summary-smoke.py",
+    "sha256": "9f4d321f1358360a73d53e336f35f1145f7f34c0772d3e255ffa67eb714afb45",
+    "id_symbols": [
+      "guest_id",
+      "hotelId",
+      "hotelIds",
+      "hotel_id",
+      "http_code",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/room-description-smoke.py",
+    "sha256": "cff5b894a5246061c801572ccd6bdef1f0858749bd41a9e312ad5f8b470b19a6",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "hotelId",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/room-inventory-review-smoke.py",
+    "sha256": "da08363ba925f1e8b36e8d08277a30d4a95883bb649925a9c9bf45925a08c7fa",
+    "id_symbols": [
+      "UUID",
+      "hotel_id",
+      "http_code",
+      "id",
+      "new_id",
+      "owner_id",
+      "request_id",
+      "revision",
+      "roomTypeId",
+      "room_id",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/room-mutation-concurrency-smoke.py",
+    "sha256": "4a024b875f4dae8ce111b6f401f8ca4e248716b3d54f44b2db8bb4871827cd54",
+    "id_symbols": [
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sandbox-refund-migration-test.py",
+    "sha256": "02ca2dabadcd22817df471fbb26a4312ebd75d9dae4a1381380ad39314f25c3e",
+    "id_symbols": [
+      "booking_id",
+      "id",
+      "payment_id",
+      "request_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/schema-compatibility-probes.py",
+    "sha256": "40c6e7fbb07bb5086d6c83631d27ff524a75e54457b314308b06938aec53a69d",
+    "id_symbols": [
+      "booking_id",
+      "customer_id",
+      "hotel_id",
+      "id",
+      "payment_id",
+      "room_id",
+      "room_type_id",
+      "source_event_id",
+      "source_version",
+      "transaction_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/schema-financial-probes.py",
+    "sha256": "bb9df8a2c0ce33ed8ca37e07694255b742fe46b90d2616649d53fa618d85627d",
+    "id_symbols": [
+      "booking_id",
+      "command_key",
+      "id",
+      "payment_id",
+      "request_id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/schema-smoke.py",
+    "sha256": "2af63d58ce605cb7fc677507ce32234c6e6729727357cbd27ab6d41fa6f33b0f",
+    "id_symbols": [
+      "image_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/schema-startup-recheck.py",
+    "sha256": "f4158329dda89064a6bf2d011e30cf3460c082dd414db4ac024bf699d22ff437",
+    "id_symbols": [
+      "image_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/schema-testonly-bootstrap.py",
+    "sha256": "fbdadcc6461b2290f27ca3069ab6b9a1b4ab9ade76107377e82cc3205271ef51",
+    "id_symbols": [
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/search-offers-smoke.py",
+    "sha256": "87226be0b601be06a2dd9ddb1c0ddc8531a75585251fe04d20f571d49f39edb3",
+    "id_symbols": [
+      "UUID",
+      "category_id",
+      "cityId",
+      "city_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id",
+      "roomTypeId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/search-pagination-smoke.py",
+    "sha256": "3dacd3bcc8486e67cc639899dc680aec891ae1d668309f826821526ce3fbe2ce",
+    "id_symbols": [
+      "UUID",
+      "category_id",
+      "content_ids",
+      "guest_id",
+      "hotel_id",
+      "http_code",
+      "id",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/search-read-baseline.py",
+    "sha256": "9be3dcd85dea0a01503dd2d5d423277152f0f84d9f8567f34fec3c9ad77b7235",
+    "id_symbols": [
+      "hotel_id",
+      "http_code",
+      "id",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/session-store-integration.py",
+    "sha256": "4086e33169f42fa2eece508dd5c7aea4b9fa9d5ff9047d7e71122eff84500a5e",
+    "id_symbols": [
+      "CHECKINN_SESSION_RUN_UUID",
+      "id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/amenity-catalog-v1-20261106.sql",
+    "sha256": "b6eb9267205ffa3835fd914c18addcc47a26dfa865947a7a4f89c4395a0e848f",
+    "id_symbols": [
+      "amenity_id",
+      "approved_request_id",
+      "hotel_id",
+      "id",
+      "latest_request_id",
+      "request_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-event-outbox-v1-20261107.sql",
+    "sha256": "299c0cac1b1eef2f68fe1a888a3eeda69028df33902baa08a102bcf9203cc068",
+    "id_symbols": [
+      "booking_id",
+      "event_version",
+      "id",
+      "routing_key"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-idempotency-20261105.sql",
+    "sha256": "f3b457d1de32cf0fe67c436c63cc1f4c22661863b1b9deee1e0d9cb8860e113c",
+    "id_symbols": [
+      "idempotency_key_hash",
+      "idempotency_request_hash"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/hold-idempotency-20261105.sql",
+    "sha256": "1e8a548e5b9a8ea7bcf1be217bd7dbd9396b5caac2473ebe35a346563e4443e2",
+    "id_symbols": [
+      "command_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/hotel-accommodation-type-20261104.sql",
+    "sha256": "b3ea1f2deca55aea634982e33382be118fee56804b968c3d65c24db6ac653b86",
+    "id_symbols": [
+      "VALID",
+      "hotel_id",
+      "id",
+      "migration_id",
+      "requester_id",
+      "reviewer_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/manual-refund-v1-20261112.sql",
+    "sha256": "c2ef7c12a49a9315694560ab16db962fc0c3f8a3114e517afaadcf18b45d4202",
+    "id_symbols": [
+      "actor_id",
+      "booking_id",
+      "execution_id",
+      "id",
+      "payment_id",
+      "request_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/paid-reservation-v1-20261105.sql",
+    "sha256": "c8b7e59ddf50cccb29352c209e55278e5d3322a683dd43b010b8ad204642eb74",
+    "id_symbols": [
+      "paid_reservation_payment_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/regulation-event-outbox-v1-20261107.sql",
+    "sha256": "8470fab80939c7ecb0977b9b729c70a2a978e5b46c72d81de7dc34f7c183ba8c",
+    "id_symbols": [
+      "id",
+      "regulation_key",
+      "source_version",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-cash-transactions-v1-20261107.sql",
+    "sha256": "60d4089ec9140988cb4e4c3b3370ad658085ca91446fd5d7f2c3e6e5f0684aab",
+    "id_symbols": [
+      "booking_id",
+      "customer_id",
+      "hotel_id",
+      "id",
+      "payment_id",
+      "room_type_id",
+      "source_event_id",
+      "source_version",
+      "transaction_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-event-receipts-v1-20261107.sql",
+    "sha256": "8ab722341c9c6fa65021fd48473ebc5713294f4790fceb18fed56df3eacb74da",
+    "id_symbols": [
+      "booking_id",
+      "event_hash",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-history-gaps-v1-20261107.sql",
+    "sha256": "06eb805995a143244f8f1b56e3ea39e96b4984fc4d305812cc5d3b0d4e21787e",
+    "id_symbols": [
+      "booking_id",
+      "event_version",
+      "hotel_id",
+      "id",
+      "source_record_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-source-versions-v1-20261107.sql",
+    "sha256": "40757c0e49a2f53258cbb68e72eea86fd299048201609687c1f70a72a3734dcc",
+    "id_symbols": [
+      "event_version",
+      "last_event_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/review-response-integrity-20261109.sql",
+    "sha256": "46b177ad3b3b38548541caa478bc611b2f89d5078d40adea7fdde04667142afc",
+    "id_symbols": [
+      "VALID",
+      "id",
+      "review_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/sql/room-inventory-review-v1-20261107.sql",
+    "sha256": "03f28dc2d46df60d5f4d58071cda90a5583cb964106d7dcabf218edbb130b47d",
+    "id_symbols": [
+      "approved_request_id",
+      "hotel_id",
+      "id",
+      "latest_request_id",
+      "revision",
+      "room_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/unknown-room-facts-smoke.py",
+    "sha256": "26008e6265468a589d693f747282da4c3d1b899bd0b83569daf045f4ecff4a52",
+    "id_symbols": [
+      "hotel_id",
+      "http_code",
+      "id",
+      "owner_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/user-otp-boundary-smoke.py",
+    "sha256": "0d442de3fc95bb446fc2051d32666c4a72dfb97591acc740f29da477815b2d2e",
+    "id_symbols": [
+      "UUID",
+      "http_code",
+      "id",
+      "otpCode",
+      "otp_code",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/docker/user-rpc-security-smoke.py",
+    "sha256": "26b77fdb355e28bf359b1eb4522da8f5788632ad7b58c2f825e9b6b742467d4f",
+    "id_symbols": [
+      "GetUserById",
+      "UUID",
+      "http_code",
+      "id",
+      "jti",
+      "otpCode",
+      "otp_code",
+      "owner_id",
+      "password_hash",
+      "redis_key",
+      "sub",
+      "userId",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V1__Create_City_Table.sql",
+    "sha256": "6d7ce3c58b245c7490305fa6df337aa656dbcdef74505e941621677a943ee999",
+    "id_symbols": [
+      "UUID",
+      "city_id",
+      "fk_hotels_city_id",
+      "id",
+      "idx_hotels_city_id",
+      "uk_cities_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V2__City_Add_Type_Parent_HotelCount.sql",
+    "sha256": "8bdd89690706e2d10363e49746a04ef13ea01d53553e4ea6dd7c57b2a2186509",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "parent_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V3__Refactor_To_Provinces_And_Cities.sql",
+    "sha256": "ca05cd4f27f5b16a4b5357c323d45c52ce7e4036639dd4c792dc2101d376857d",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "idx_cities_code",
+      "idx_cities_parent_id",
+      "idx_provinces_code",
+      "parent_id",
+      "uk_provinces_code"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql",
+    "sha256": "c94a51fc7bb84ecc9926bbebfa621210696eb60bbddcf6605e3782a0000c8490",
+    "id_symbols": [
+      "UUID",
+      "hotel_id",
+      "id",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Amenity/service/AmenityCatalogQueryIntegrationTest.java",
+    "sha256": "65b8d2ee2fcc4c47a14509b8cd43ff02f3d271cf18d31f5de4c0c9f31a1f06da",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "amenity_id",
+      "approved_request_id",
+      "category_id",
+      "hotel_id",
+      "id",
+      "randomUUID",
+      "request_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Amenity/service/AmenityCatalogServiceTest.java",
+    "sha256": "dda538875ad605323a34a6e6c5c4fb642e27fe9dea7dd9440ecca90b41023837",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "findById",
+      "foreignOwnerAndCustomerCannotReadOrProposeEvenKnowingIds",
+      "getStatusCode",
+      "hotelId",
+      "id",
+      "ownerId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/City/service/LocationSearchIntegrationTest.java",
+    "sha256": "bf01f36ee8a6d076262e09a755878b7286622fa41f9765dca076eb6b4f7f8fc3",
+    "id_symbols": [
+      "UUID",
+      "cityId",
+      "city_id",
+      "getId",
+      "hotelId",
+      "id",
+      "parentId",
+      "parent_id",
+      "provinceId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelMapperFactsTest.java",
+    "sha256": "58118c88beb419a6b750e208d008fd9403af4af8e0045352ca217cbec0985e59",
+    "id_symbols": [
+      "UUID",
+      "findAllByCategoryHotelId",
+      "findAllByHotelId",
+      "hotelId",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelMapperTextTest.java",
+    "sha256": "db5a5c7bc87ec9da15acdea0a007067e168523013ae8bf766bcc84f1cc1cd9d4",
+    "id_symbols": [
+      "UUID",
+      "cityId",
+      "id",
+      "randomUUID",
+      "taxId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelSearchCandidateMapperTest.java",
+    "sha256": "d8ac4f0aa00cac172a7ff0c2b110217be767210675e81bc3eb2b4d3d094b4f59",
+    "id_symbols": [
+      "UUID",
+      "findAllByCategoryHotelId",
+      "findAllByHotelId",
+      "getId",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/AccommodationTypeServiceTest.java",
+    "sha256": "afc55ea44196979331190230d821a26350357deba6a5524416cc8fe037dd4964",
+    "id_symbols": [
+      "UUID",
+      "findById",
+      "getId",
+      "getStatusCode",
+      "id",
+      "ownerId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/AmenityWriteIntegrationTest.java",
+    "sha256": "d1c49def7c273b6a6813a9bd6092830d96c0aaf23816a276eb37fe78023380ed",
+    "id_symbols": [
+      "UUID",
+      "category_id",
+      "city_id",
+      "containsKey",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID",
+      "rawId",
+      "request_id",
+      "revision"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelContentIntegrationTest.java",
+    "sha256": "22f11c4f0be1dac4a9296f3781f0059739c210d6f1a225ea20e0108fac25a972",
+    "id_symbols": [
+      "UUID",
+      "city_id",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferCandidatesIntegrationTest.java",
+    "sha256": "5ea6e2cac706f74dee3a32d939fc1407cb9ed62abb51487262bce393492a83df",
+    "id_symbols": [
+      "UUID",
+      "category_id",
+      "findAllById",
+      "hotel_id",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferCandidatesTest.java",
+    "sha256": "13d740d105142e862530bf58cc4d36fc2fce7a0e8c942230855678b773b0d0ab",
+    "id_symbols": [
+      "UUID",
+      "getCategoryId",
+      "getHotelId",
+      "getId",
+      "getItemId",
+      "id",
+      "randomUUID",
+      "setHotelId",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferControllerTest.java",
+    "sha256": "5ceec31238d6985b687be3b2f5d5d5726ce50d13c6ca504774e84213b6ea0281",
+    "id_symbols": [
+      "UUID",
+      "findByProvince_Id",
+      "getId",
+      "id",
+      "parentId",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferPagingTest.java",
+    "sha256": "59ad45026ab35a1c920d1fefb8b0fb8e1fe0b3299a58b4d3dd8dcc4bc83ec2fe",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java",
+    "sha256": "fb18781d3514c8b46c2ebd86a417ff0eed8893a89b444e878110312564dd0b52",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "randomUUID",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelServiceImplTest.java",
+    "sha256": "7efee60ec07e2ad5060fbbd603ed7c19017b87647e25450f7198effb69fb6ea3",
+    "id_symbols": [
+      "CITY_CENTROID",
+      "GetUserById",
+      "UUID",
+      "anotherOwnerCannotResolvePrivateDocumentPathsEvenWithAKnownHotelId",
+      "cityId",
+      "deleteAllByCategoryHotelId",
+      "deleteAllByHotelId",
+      "findAllByCategoryHotelId",
+      "findAllByHotelId",
+      "findById",
+      "findByOwnerId",
+      "findByOwnerIdAndCityId",
+      "getCityId",
+      "getStatusCode",
+      "hotelId",
+      "id",
+      "initialApprovalRejectsAnOlderRevision",
+      "otherId",
+      "ownerId",
+      "randomUUID",
+      "revision",
+      "setCityId",
+      "setId",
+      "setOwnerId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/UserGrpcDeadlineTest.java",
+    "sha256": "b01a3fe8e1251122bd104582e612c5d4975143d9deede94b64d71b06749b3d8e",
+    "id_symbols": [
+      "GetUserById",
+      "UUID",
+      "getId",
+      "getStatusCode",
+      "getUserById",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewEligibilityClientTest.java",
+    "sha256": "9d0d63a3f65782741ea59825aab561c507b7f69289e97c803986df732638ee5f",
+    "id_symbols": [
+      "UUID",
+      "getStatusCode",
+      "randomUUID",
+      "setBookingId",
+      "setGuestId",
+      "setHotelId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewResponseIntegrationTest.java",
+    "sha256": "1e5f1b16d1b96b38b45f891001bf4f29312edadf1218c7d941ed7614692f3812",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "getGuestId",
+      "getId",
+      "guest_id",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID",
+      "review_id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewServiceTest.java",
+    "sha256": "954f4627ce17dff34a76369c12932ad64721f59930b2d816035f5e7015f21bf4",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "bookingId",
+      "deleteById",
+      "existsByIdAndOwnerId",
+      "findByBookingIdAndGuestId",
+      "findByHotelIdAndGuestIdAndBookingId",
+      "findById",
+      "findByOwnerId",
+      "findReviewIdById",
+      "getGuestId",
+      "getOwnerId",
+      "getReviewByBookingId",
+      "getReviewById",
+      "getStatusCode",
+      "guestId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "randomUUID",
+      "responseId",
+      "reviewId",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewSummaryServiceTest.java",
+    "sha256": "2ebedf0d7ca47f2bdb69a8ca0fc2d728d6ed17ee499afa20cce9826e99d672ca",
+    "id_symbols": [
+      "UUID",
+      "getHotelId",
+      "hotelId",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java",
+    "sha256": "b23329b5a854f8fb57803c9ddfbe3c26a9693b375cda074d0095a6dfaa40cabc",
+    "id_symbols": [
+      "UUID",
+      "containsKey",
+      "findAllById",
+      "getId",
+      "getRoomTypeId",
+      "id",
+      "randomUUID",
+      "roomTypeId",
+      "setHotelId",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityRangeIntegrationTest.java",
+    "sha256": "71f4f003c739cd2f06e4c50ce394cdbeefbe14b01214a2a5300b0c04e0e7f4b2",
+    "id_symbols": [
+      "UUID",
+      "hotelId",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID",
+      "roomId",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java",
+    "sha256": "434015df244fe257b6776b881f471176b9721ceaf98de096fe3fe5520aa2f458",
+    "id_symbols": [
+      "UUID",
+      "findByCommandId",
+      "findById",
+      "getHotelId",
+      "getId",
+      "holdId",
+      "id",
+      "randomUUID",
+      "roomId",
+      "roomTypeId",
+      "setCommandId",
+      "setHotelId",
+      "setId",
+      "setRoomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilitySnapshotTest.java",
+    "sha256": "6091d21c78114cbe69017d344599829e4a6a4a7be3a455d922a3d8a16cd90d65",
+    "id_symbols": [
+      "UUID",
+      "randomUUID",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/HoldCleanupSchedulerTest.java",
+    "sha256": "0e2f82235c98a0721e735f88b0ca880bba9be29ee33902f25791f1f61a1bdab9",
+    "id_symbols": [
+      "UUID",
+      "getId",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java",
+    "sha256": "2fda58472a0eda5a033dec4cde609ceb47f224cd293683db54cb378d00e78767",
+    "id_symbols": [
+      "UUID",
+      "findById",
+      "getId",
+      "holdId",
+      "hotelId",
+      "id",
+      "randomUUID",
+      "roomId",
+      "setHotelId",
+      "setId",
+      "setRoomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/mapper/RoomDescriptionTest.java",
+    "sha256": "a38e90b066c7256482feae15800b2ebb3da3773e52451eecacfeefd9401356d0",
+    "id_symbols": [
+      "UUID",
+      "hotelId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java",
+    "sha256": "0746a3c2b4fef80b0c3f495b3f9d3a31d7eeedf8459012cc7d8190e06ccc5bd9",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "approved_request_id",
+      "findById",
+      "getStatusCode",
+      "hotelId",
+      "id",
+      "latest_request_id",
+      "randomUUID",
+      "requestId",
+      "revision",
+      "roomId",
+      "room_id",
+      "setHotelId",
+      "setId",
+      "setOwnerId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java",
+    "sha256": "74ece835543ebcd228b6046b75a7cfc1ecee6c25a1711fa2e1f444d98df0d079",
+    "id_symbols": [
+      "UUID",
+      "findByHotelId",
+      "findById",
+      "getPreviewById",
+      "getPublicById",
+      "hotelId",
+      "id",
+      "ownerId",
+      "randomUUID",
+      "roomId",
+      "roomTypeId",
+      "setHotelId",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/exception/ApiErrorContractTest.java",
+    "sha256": "c65d5ed0942733cae013069d5713774bcf81f20b41641b292bd9e3330f076a05",
+    "id_symbols": [
+      "requestId",
+      "unexpectedErrorIsSanitizedAndHasStableCodeAndRequestId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java",
+    "sha256": "b314ea035ad219c16a264c6c9168fb36c3c8c5dd1491c15e60780220241d9c07",
+    "id_symbols": [
+      "UUID",
+      "anonymousCannotMutateHoldByKnowingItsId",
+      "cityId",
+      "getById",
+      "getPreviewById",
+      "ownerId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogMediaIntegrationTest.java",
+    "sha256": "d45c723f09d2aeb117f2be9f5c58b9b53681afe3b6c6077ffb313a5d6921939c",
+    "id_symbols": [
+      "UUID",
+      "city_id",
+      "getCode",
+      "getHotelId",
+      "getId",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID",
+      "setHotelId",
+      "target_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogRpcContractTest.java",
+    "sha256": "006f9e0e8c202ee4cc457d0c9b9091fcad9cd14fdb13fc0ef55b4afd98cb6096",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "getHotelById",
+      "getPublicById",
+      "getPublishedById",
+      "getRoomTypeById",
+      "hotelId",
+      "id",
+      "ownerId",
+      "randomUUID",
+      "setHotelId",
+      "setId",
+      "setRoomTypeId",
+      "targetId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java",
+    "sha256": "d64de25ae16f773c1aa79f8a0fcdaee08f419962260eebcb243a8253eaf72a9e",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "getHotelById",
+      "getPublicById",
+      "getPublishedById",
+      "getRoomTypeById",
+      "id",
+      "randomUUID",
+      "setHotelId",
+      "setRoomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/HotelServiceTokenProviderTest.java",
+    "sha256": "395dd20ec736ad45ee9ea737ea6b08d45246dd53288536b0a5b0d5dc428cc0a8",
+    "id_symbols": [
+      "withSecretKey"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/JwtMdcFilterTest.java",
+    "sha256": "a484f6d6381211a8b4f0d004908b539f9b74832ab111947a0b43a94649cf36b0",
+    "id_symbols": [
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaAuthorizationTest.java",
+    "sha256": "3dbaa5645c59f0b55f753afde3aed779680eefe0a4d83cd82e89a23886394fa5",
+    "id_symbols": [
+      "UUID",
+      "existsByIdAndOwnerId",
+      "findById",
+      "findHotelIdById",
+      "findLocationById",
+      "getTargetId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "randomUUID",
+      "targetId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaClientContractTest.java",
+    "sha256": "15f7f86e15ebf8819f1b9ada8deae8bea864322ec34795c8dde9f11eea9d8953",
+    "id_symbols": [
+      "fromCode",
+      "getStatusCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaMetadataIntegrationTest.java",
+    "sha256": "a57070ac0c0a707ddf78c4d8c69e9c820915847a6dc84d9c2b5d640770c0d20c",
+    "id_symbols": [
+      "UUID",
+      "city_id",
+      "hotel_id",
+      "id",
+      "owner_id",
+      "randomUUID",
+      "target_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewAuthenticationInterceptorTest.java",
+    "sha256": "5fa4fac8427861ad0229cc8a43066910da3afe9257d055460aa688ecb3e71038",
+    "id_symbols": [
+      "UUID",
+      "actorId",
+      "getCode",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewAuthorizationTest.java",
+    "sha256": "345ae9592c13240533f26c52de12ccd60e6a56898da691c305acbeba3477b180",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "getBookingId",
+      "getReviewByBookingId",
+      "getReviewById",
+      "hotelId",
+      "randomUUID",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewGrpcAuthorizationTest.java",
+    "sha256": "377bd411bbb115a891c906a70b8766d786db7a869be7e8c9f8c5147b75a837bc",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "getCode",
+      "getReviewById",
+      "randomUUID",
+      "setBookingId",
+      "setGuestId",
+      "setHotelId",
+      "setReviewId",
+      "setUserId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewRpcBoundaryTest.java",
+    "sha256": "6f1573db6b47d86a859e38f581e55754fae9b3db3836e042a0ced0243368a9c3",
+    "id_symbols": [
+      "UUID",
+      "actor",
+      "getCode",
+      "getReviewById",
+      "id",
+      "randomUUID",
+      "setBookingId",
+      "setHotelId",
+      "setReviewId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/SessionGenerationTest.java",
+    "sha256": "e2b875ea0315bd148abf3641114e58ed494688f715c76e1280504abd9d9599d0",
+    "id_symbols": [
+      "UUID",
+      "hasKey",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/validation/AmenityWriteValidationTest.java",
+    "sha256": "1fa9f1d8e0e18c903e3bcf65007cc5393fb75d5ab7c1a50db75bb6cc474cd88c",
+    "id_symbols": [
+      "cityId",
+      "taxId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/validation/HotelContentValidationTest.java",
+    "sha256": "8a2ae2a21c9135c4dedf4a876228b16cad946af670de342503228c0e40daae88",
+    "id_symbols": [
+      "cityId",
+      "taxId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/MediaGrpcFailureTest.java",
+    "sha256": "6ea0280a927b1971d429181343427137852d1e52605520969a529ab062fbda10",
+    "id_symbols": [
+      "getCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/security/MediaAuthenticationInterceptorTest.java",
+    "sha256": "93c8838da309878d3b865d296a091ccf4a4b77642c1bcf86bf49c283b92219a1",
+    "id_symbols": [
+      "getCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/security/MediaSocketIntegrationTest.java",
+    "sha256": "62d2ca101d263a5dc40a4544e0089a57ddf549e073acde5ebc04a7058d748630",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/NotificationBrokerPrivacyTest.java",
+    "sha256": "2def0c929c5f50eb9510832e6f101cc5012232fef258917c61a01f5fa4b7cef9",
+    "id_symbols": [
+      "assertThatCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/NotificationDeliveryTest.java",
+    "sha256": "7e611e092921af031cd48ed9ce31b2d833887e80952b013fe6421abf04c74bdf",
+    "id_symbols": [
+      "otp_code",
+      "setBookingId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/PaymentNotificationTest.java",
+    "sha256": "d3a377727efd87329881203b064889e00f0bde706fe42ca4fccee33cc9cd5dae",
+    "id_symbols": [
+      "setBookingId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/place-service/src/main/resources/seed_places_all_provinces.sql",
+    "sha256": "82bde8ca103e9237770ea60dd4b436ea1730d3a51dbcaabaccfaf3c37ad82a98",
+    "id_symbols": [
+      "DAVID",
+      "UUID",
+      "fsq_id",
+      "id",
+      "place_id",
+      "v_place_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/PlaceServiceImplTest.java",
+    "sha256": "98daec83679788f13abe6b38d8d9bafa4b63b3004a7b9367dc6920bec6fcf69e",
+    "id_symbols": [
+      "UUID",
+      "cacheKey",
+      "getId",
+      "id",
+      "placeId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/osrm/OsrmRoutingClientTest.java",
+    "sha256": "e82f944c36331d432800940fd57aac6a3d92e0946c1fd2e807cabb8ff8384549",
+    "id_symbols": [
+      "getCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/osrm/RoadDistanceServiceTest.java",
+    "sha256": "33e57a78342774ce158632a276fc3efb4bec0716d46649376f11a29f698502d2",
+    "id_symbols": [
+      "containsKey"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/messaging/RegulationEventDeliveryTest.java",
+    "sha256": "c4ae2ee2c4a2eb9f26fc2bd10ee80c1080c77aa605c37875dbcbd94f2db77502",
+    "id_symbols": [
+      "UUID",
+      "id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/RegulationBoundaryTest.java",
+    "sha256": "553fd383d746954ff8d13a3e517e7115afd8f3b3f5153225bfea9af622ec0c80",
+    "id_symbols": [
+      "UUID",
+      "extractUserId",
+      "regulationKey",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/RegulationSessionBoundaryTest.java",
+    "sha256": "bc5a65da7c44fbcf7fce36e80262b02f1c1af3b4c52046f76cbda562736d90e9",
+    "id_symbols": [
+      "UUID",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/SessionGenerationTest.java",
+    "sha256": "a25aa92b1de7cb930556978ee90eb94001248d9edf47159e8e22b3d5bc1890c4",
+    "id_symbols": [
+      "UUID",
+      "hasKey",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/service/RegulationConsistencyTest.java",
+    "sha256": "1d4ca4a0d4ed5da5333cac3e76d8f6b9bbf6f49e00a8e59236a31802ede037ee",
+    "id_symbols": [
+      "findByRegulationKey"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/service/RegulationTransactionIntegrationTest.java",
+    "sha256": "474f9777bd24ae41672f663de90f074f508bf7eb59f19a572202e4d613c3a2a6",
+    "id_symbols": [
+      "UUID",
+      "getId",
+      "getStatusCode",
+      "getVersion",
+      "id",
+      "randomUUID",
+      "regulation_key",
+      "source_version",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/client/InternalHotelReportClientTest.java",
+    "sha256": "4f9421a9edf02a5b15d1753475b86285fbef90827e030e0cde3efeead599ec61",
+    "id_symbols": [
+      "getHotelById",
+      "id",
+      "ownerId",
+      "withSecretKey"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/security/ReportAuthorizationTest.java",
+    "sha256": "827369e31a1eee8e7e934c48a68f6332df731593d73500229b14eb6e761d3e95",
+    "id_symbols": [
+      "UUID",
+      "hotelId",
+      "ownerId",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/security/SessionGenerationTest.java",
+    "sha256": "b9be381ef56e90986da61e401e50cbacdd6438876822b00aa5e121daabc4240d",
+    "id_symbols": [
+      "UUID",
+      "hasKey",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/CashTransactionIdentityTest.java",
+    "sha256": "3a407a23abb669d8a046881faf3e59842852515db6dac38b72bc04203cd3056b",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "customer_id",
+      "hotel_id",
+      "randomUUID",
+      "room_type_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/EventOrderingTest.java",
+    "sha256": "92508a1082eb5a1c9a03857f71ab90112834f6620fa7471e9bf755dede7731a7",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "findByBookingId",
+      "getEventVersion",
+      "hotelId",
+      "randomUUID",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RefundPipelineTest.java",
+    "sha256": "9d16c5dcf2bcaa8186ba2bc374ec44f9265878af8a1b1ce393e035e44b07a842",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "booking_id",
+      "customer_id",
+      "hotel_id",
+      "id",
+      "paymentId",
+      "payment_id",
+      "randomUUID",
+      "source_event_id",
+      "source_version",
+      "transactionId",
+      "transaction_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueBrokerPrivacyTest.java",
+    "sha256": "08fd46f8abce69fd679c9e140f6abb92872423ddad3efe8939a0400c0dd825f9",
+    "id_symbols": [
+      "assertThatCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueEventOrderingIntegrationTest.java",
+    "sha256": "e93ff801ed5f7ba7758efbdcadabe17681d65ac9e24efbfe2d75ee086035c5b5",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "id",
+      "payment_id",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueReportConsistencyTest.java",
+    "sha256": "9a267ef6e115a8fc47ae28c858f7478769a0983f314e8e215f34ddd15690a909",
+    "id_symbols": [
+      "getHotelById",
+      "setBookingId",
+      "setCustomerId",
+      "setHotelId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V3__add_loyalty_commands.sql",
+    "sha256": "6c356a2b11a0ec2570ccdb0e986218f40f62ec5dbd36428c4cd028e05163efe3",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "command_key",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V4__add_points_reservations.sql",
+    "sha256": "a3c8f99c8fd4adab161dfbdc12b5b920f9a9f453d24959ffa706277aef2d4bc2",
+    "id_symbols": [
+      "UUID",
+      "booking_id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V5__index_legacy_points_guard.sql",
+    "sha256": "13a525855b62f84e27308e827e45cb8e01d9b4356ff3b042db0bb6ee891a6e9c",
+    "id_symbols": [
+      "booking_id",
+      "user_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/regulations/RegulationClientTest.java",
+    "sha256": "ba364c11c8cdf4dcae15e3a0161cb1eb73cc5085b43c22ae0b04619f3898e02d",
+    "id_symbols": [
+      "getStatusCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/LoyaltyAuthorizationTest.java",
+    "sha256": "bc32d66462304c51838c4f3de7c5cf87896cf31deebbaf5504659be3116c5e14",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "randomUUID",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/SessionGenerationRedisIntegrationTest.java",
+    "sha256": "ea7867be85081c04cbece023767d6c24a2219961c3c0a4f79bb28c7e82a136da",
+    "id_symbols": [
+      "CHECKINN_SESSION_RUN_UUID",
+      "UUID",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/SessionGenerationTest.java",
+    "sha256": "ca76113ae1b0d6d983aeaef60bb54778b87889855c09a78e737a5cd5c5556ca2",
+    "id_symbols": [
+      "UUID",
+      "hasKey",
+      "randomUUID",
+      "sub"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/UserRpcAccessTest.java",
+    "sha256": "25028c92be7d5e0704904f2430cfc15c3ccaba2668e677aecfcd63c4ffb416f7",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "getId",
+      "getUserById",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/LoyaltyPointsServiceTest.java",
+    "sha256": "28364c6c2b29127ef3dbf2aa57b3f2e7cf8dd886d98dbdf1a80956b0fbcb6d2a",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "doesNotContainKey",
+      "findAllByUserId",
+      "findByBookingId",
+      "findById",
+      "findByUserId",
+      "getBookingId",
+      "getCommandKey",
+      "getStatusCode",
+      "getUserId",
+      "id",
+      "randomUUID",
+      "sumHeldByUserId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/OtpVerificationPolicyTest.java",
+    "sha256": "a1e6bef34a47d9c43d3b3f09819defda0012f606b531c64e57aab75ae944f35c",
+    "id_symbols": [
+      "otpCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PasswordResetSessionStoreIntegrationTest.java",
+    "sha256": "c0eb4d5e9c43f215d3052265cb4528a3818d2685960459e04038753c5076751e",
+    "id_symbols": [
+      "CHECKINN_SESSION_RUN_UUID",
+      "UUID",
+      "id",
+      "otp_code",
+      "randomUUID"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PointsBookingStateClientTest.java",
+    "sha256": "c2bf66684b3755da910135d98e1709ad59835ce7e675313471c25eb3663d5b8a",
+    "id_symbols": [
+      "UUID",
+      "randomUUID",
+      "setBookingId",
+      "setUserId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PointsReservationRecoveryTest.java",
+    "sha256": "618f4b3e57c3cd8120bc88656de67056f5a6cc2af00261bf479385ffca5ba77e",
+    "id_symbols": [
+      "UUID",
+      "bookingId",
+      "randomUUID",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserOtpBoundaryTest.java",
+    "sha256": "4f20dc4ce1ffa454deb474f7cb7cb94042aeddcb10aef7c6020a1466d8a995d3",
+    "id_symbols": [
+      "getStatusCode",
+      "otpCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserRpcFailureBoundaryTest.java",
+    "sha256": "cef9d2482056da21b3c9ef646be16c036374bd2ad433cb840c32c6ab34caa722",
+    "id_symbols": [
+      "UUID",
+      "getCode",
+      "getId",
+      "getUserById",
+      "id",
+      "randomUUID",
+      "setId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserServiceLogPrivacyTest.java",
+    "sha256": "527fe06d912ed3f7285a68cc0b2fb70350874dcb7858be635305da7136faf11b",
+    "id_symbols": [
+      "UUID",
+      "findById",
+      "findByUserId",
+      "id",
+      "randomUUID",
+      "traceId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/accommodation-type.test.mjs",
+    "sha256": "2442c3bed5cf0f1ac627619f6d7a3ab9b8a1baea6a67a6045bd5f7cc3d955219",
+    "id_symbols": [
+      "cityId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/amenity-write.test.mjs",
+    "sha256": "76de8d8909f4dd2c4e572f652de96293b724655cd05c820478144542a8bf2fc4",
+    "id_symbols": [
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/api-errors.test.mjs",
+    "sha256": "1eb7c6f4c04d4a89267184466478f0938f99caed60d94685aed1dde7e14c3174",
+    "id_symbols": [
+      "id",
+      "requestId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/auth-session.test.mjs",
+    "sha256": "fffeee4bec3119d3ee29137160f8d5cb9793483939a2be962bbe84f3e6e59567",
+    "id_symbols": [
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/accommodation-type.spec.ts",
+    "sha256": "c8eb033b207927d2f5562ee25383c62c920afe8fcdad608bcdb5acbedc329c4f",
+    "id_symbols": [
+      "cityId",
+      "getByTestId",
+      "hotelId",
+      "hotelIds",
+      "id",
+      "ownerId",
+      "revision",
+      "roomTypeId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/amenity-catalog.spec.ts",
+    "sha256": "ba606adbd15f091f7fccde307e10d2583ad37c5848711c2d19e090d5d773b8bd",
+    "id_symbols": [
+      "WIFI_PAID",
+      "amenity_id",
+      "cityId",
+      "hotelId",
+      "hotelIds",
+      "hotel_id",
+      "id",
+      "ownerId",
+      "revision",
+      "roomTypeId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/amenity-write.spec.ts",
+    "sha256": "251255ee8e70d3d26424d9e788efc1efea054b88e9f1d4e5469947d0a68d71e1",
+    "id_symbols": [
+      "cityId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/auth-backend.mjs",
+    "sha256": "0f011df804dd4be1f0d90bd9cb89e5100f27df22e59f247b837c1325851b9691",
+    "id_symbols": [
+      "statusCode",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/auth-session.spec.ts",
+    "sha256": "a311c80221fd99165b7aee5888a36f703c352f28b61149451a19ff9ab3094c0a",
+    "id_symbols": [
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/canonical-text.spec.ts",
+    "sha256": "d0ab7d4d92524e62449eb6603eafae539a94c3a9ab17896a8418dfd414613504",
+    "id_symbols": [
+      "hotelId",
+      "id",
+      "roomId",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/document-boundary.spec.ts",
+    "sha256": "85fa213bc2464db1613639d379fe36c8b81434be6b9c46f5231fbcf09aa397f3",
+    "id_symbols": [
+      "cityId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "taxId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/hotel-content.spec.ts",
+    "sha256": "ee7d83672fda2d9d27f5db90b138a9b0245a289955876fedf0b6d7c945618a50",
+    "id_symbols": [
+      "cityId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/hotel-preview.spec.ts",
+    "sha256": "f1b2a083365d194fb965045edb599de41348fba539a9c1bf09eb1e6d9aeeb8a2",
+    "id_symbols": [
+      "CITY_CENTROID",
+      "cityId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/inventory-review.spec.ts",
+    "sha256": "8c5341f6880a949fb39c77cd0bd4b31e654b27486427f29f04f26f8758bdc90d",
+    "id_symbols": [
+      "actor",
+      "hotelId",
+      "hotel_id",
+      "id",
+      "revision",
+      "room_id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/media-write.spec.ts",
+    "sha256": "57581087e8bd79dd728cc830a0f9bad1dd3d6749f396cfc72f698f0ecb15a27a",
+    "id_symbols": [
+      "cityId",
+      "hotelId",
+      "id",
+      "ownerId",
+      "revision",
+      "roomId",
+      "targetId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/new-room-facts.spec.ts",
+    "sha256": "693682d54644238617d5cdb08efccff5020d1aaa70306ae210b20b4dcded2faf",
+    "id_symbols": [
+      "hotelId",
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/offer-fixtures.ts",
+    "sha256": "e8d635db38f3e857033bc8fc62466523ac36ddb1b8d4d25810bcd5bd5e6388d5",
+    "id_symbols": [
+      "hotelId",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/onsite-reservation.spec.ts",
+    "sha256": "0be26d9e6dff6bf1e723a2ff97885cabf19670870353a1c5305d15ddb93a9152",
+    "id_symbols": [
+      "bookingId",
+      "hotelId",
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/paid-reservation.spec.ts",
+    "sha256": "f7e42118176b87868babc8c1677b05a25807b8919a867497c8eff700ab604fe6",
+    "id_symbols": [
+      "bookingId",
+      "id",
+      "userId",
+      "vnp_SecureHash",
+      "vnpayResponseCode"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/payment-hold.spec.ts",
+    "sha256": "b9abdb92b087b2b111579ca0e68ee58ce69881113e4cc08a52865ac3764f2a5d",
+    "id_symbols": [
+      "bookingId",
+      "id",
+      "sub",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/points-preview.spec.ts",
+    "sha256": "43c0f8c3d75d03d1e0ec6f2f006c5a32091d3dd5024470f6643acc62f77ef063",
+    "id_symbols": [
+      "hotelId",
+      "id",
+      "idempotencyKey",
+      "roomId",
+      "sub",
+      "userId",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/regulation-consistency.spec.ts",
+    "sha256": "9c65d9e96e7c6eca70ae4cdefa6ba7e0d477ce6b3586fa47cd024c548bed6efd",
+    "id_symbols": [
+      "regulationKey",
+      "userId",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/revenue-consistency.spec.ts",
+    "sha256": "53e54bff207c76032b541d9af295137d4fae5d77f6bd4357156f50b3fd3fb19b",
+    "id_symbols": [
+      "actor",
+      "hotelId",
+      "timezoneId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/review-history.spec.ts",
+    "sha256": "acb0f57e4878bfc6f819a318a01cf4bc9410e95b26492afc794bc0cdc18accb9",
+    "id_symbols": [
+      "guestId",
+      "hotelId",
+      "id",
+      "sub",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-errors.spec.ts",
+    "sha256": "320df27f84ba01dae73ec45a703fd076e48daa6ed3ab1843d4b823f5d26594d3",
+    "id_symbols": [
+      "cityId",
+      "getByTestId",
+      "hotelId",
+      "hotelIds",
+      "id",
+      "provinceId",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-lifecycle.spec.ts",
+    "sha256": "a9c9d51e1b081058bbfe01dd358718da274ce76017baa2163f7cc571d5f4f1a3",
+    "id_symbols": [
+      "cityId",
+      "getByTestId",
+      "hotelId",
+      "hotelIds",
+      "id",
+      "provinceId",
+      "roomTypeId",
+      "timezoneId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-pagination.spec.ts",
+    "sha256": "75d21ebe50efb0f4a3c8df65f554891a8eb8c88c7ea4814d7768635b02bc6d89",
+    "id_symbols": [
+      "getByTestId",
+      "hotelId",
+      "id",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-review-summaries.spec.ts",
+    "sha256": "cbd4250440205e599c498ae6b6c613b68093fb4ea42e62dfe85c73f1f04b2756",
+    "id_symbols": [
+      "hotelId",
+      "hotelIds",
+      "id",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/unknown-room-facts.spec.ts",
+    "sha256": "88fee1b4b892040bf157b4884c3994538cddb4383c29bb148724b47231177b73",
+    "id_symbols": [
+      "hotelId",
+      "id",
+      "roomId",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/canonical-text.test.mjs",
+    "sha256": "fcdab570a906825984db0c1f8b857332d4c22f0887c97c2cc9b689e1772d11a1",
+    "id_symbols": [
+      "getHotelById",
+      "getRoomTypeById",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/document-boundary.test.mjs",
+    "sha256": "9eac91ceb503cf2dc4f27b02aa92a966dae7a44c3fe1de67fb22b4b4518fa105",
+    "id_symbols": [
+      "hotelId",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/hotel-content.test.mjs",
+    "sha256": "afcd68ebc8472a129127c94af3217da5c7043a34e890454b175281a41c40e749",
+    "id_symbols": [
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/hotel-publication.test.mjs",
+    "sha256": "18f758720fea575626d7f2348f7932ed0489343cae2532f5a969da69bf5075d2",
+    "id_symbols": [
+      "CITY_CENTROID",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/inventory-review.test.mjs",
+    "sha256": "47c673a955ccc7d1f9c9d206c9eef682ed13fc1e9ef8f3fb8d1c74f9bea3c038",
+    "id_symbols": [
+      "actor",
+      "hotel_id",
+      "id",
+      "revision",
+      "room_id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/media-state.test.mjs",
+    "sha256": "b0f64bac8c3f9f1d196c44cd64b9de14d45bf4d65453286ddb9457ccfb52619a",
+    "id_symbols": [
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/media-write.test.mjs",
+    "sha256": "b36bb50ea3249abdc5f7cdf420fc8b69cf71d0c9221eea11a5fb1ffa566168fb",
+    "id_symbols": [
+      "id",
+      "targetId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/payment-state.test.mjs",
+    "sha256": "6c3531cc47d322865df3c0cd6449bc0bede7d5d22c87e83b491360fd5d8ce322",
+    "id_symbols": [
+      "hotelId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/points-quote.test.mjs",
+    "sha256": "ccfb0949fd108a21829b50c2d02b14933b4e074c7f924b1f53b1210449dca164",
+    "id_symbols": [
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/regulation-consistency.test.mjs",
+    "sha256": "47df77e5868ee2f1c5aa6f888d3fdd71cb0f99ab04b353f5df1ba50d7df38621",
+    "id_symbols": [
+      "regulationKey",
+      "version"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/revenue-consistency.test.mjs",
+    "sha256": "139cef5d894756c665dd644042a9dbd252d90894724e8417e237970170609b12",
+    "id_symbols": [
+      "reportMonthKey"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-auth.test.mjs",
+    "sha256": "f1d30e776f7b1407eb1680d751267c41433a9ad763b93cfa7acacd2028859bd1",
+    "id_symbols": [
+      "bookingId",
+      "hotelId",
+      "id"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-consistency.test.mjs",
+    "sha256": "ebe66071db67aae2af48050353b21f3f1be8a36b3dc5af34454a46eeda81d218",
+    "id_symbols": [
+      "getReviewByBookingId",
+      "id",
+      "userId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-summaries.test.mjs",
+    "sha256": "f89709a7b9f4101d1f25b4000354902f441210d5ce2e52bdeea5c62786bd0cc1",
+    "id_symbols": [
+      "hotelId",
+      "hotelIds"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-errors.test.mjs",
+    "sha256": "3338ab4f9834fe91187fc3a2266e58abb571c5978095546a4a6bdeeede16827c",
+    "id_symbols": [
+      "cityId",
+      "getHotelById",
+      "getRoomTypeById",
+      "id",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-filters.test.mjs",
+    "sha256": "ae8636e876dff1a4d0b79705917e91d5e0fe0242097944a35b4cc397c2f54a76",
+    "id_symbols": [
+      "WIFI_PAID",
+      "cityId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-pagination.test.mjs",
+    "sha256": "db4a0d52ceec6b7e34d56fa3462869845cc928849a2cbc26458573a73e27cc9b",
+    "id_symbols": [
+      "cityId",
+      "hotelId",
+      "id",
+      "roomTypeId"
+    ],
+    "scope": "test/seed/harness/historical SQL; not rewritten",
+    "risk": "non-UUID fixture aliases must be separated from valid domain UUID fixtures; malformed tests remain negative"
+  }
+]

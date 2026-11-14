@@ -26,7 +26,7 @@ public class PointsTransaction {
     @Column(nullable = false)
     private Long points;  // Số điểm được cộng/trừ
 
-    private String bookingId;  // ID của booking liên quan
+    private UUID bookingId;  // ID của booking liên quan
 
     @Column(nullable = false, length = 500)
     private String description;  // Mô tả giao dịch

@@ -1,4 +1,5 @@
 package com.example.userservice.service;
+import static com.example.userservice.contract.TestIds.*;
 
 import com.example.userservice.dto.ApplyPointsRequest;
 import com.example.userservice.model.*;
@@ -21,7 +22,7 @@ class LoyaltyPointsServiceTest {
     final RegulationClient rates = mock(RegulationClient.class);
     final List<PointsTransaction> rows = new ArrayList<>();
     final Map<String, LoyaltyCommand> receipts = new HashMap<>();
-    final Map<String, PointsReservation> holds = new HashMap<>();
+    final Map<UUID, PointsReservation> holds = new HashMap<>();
     final PointsReservationRepository reservations = mock(PointsReservationRepository.class);
     final LoyaltyPoints account = LoyaltyPoints.builder().id(UUID.randomUUID()).userId(user)
             .totalPoints(1000L).usedPoints(0L).availablePoints(1000L).build();
@@ -46,9 +47,9 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test void earnReplayDoesNotAwardAgainEvenWhenRateChanges() {
-        service.earnPoints(user, "booking", new BigDecimal("10000"));
+        service.earnPoints(user, id("booking"), new BigDecimal("10000"));
         when(rates.getEarnConversionRate()).thenReturn(new BigDecimal("1000"));
-        var replay = service.earnPoints(user, "booking", new BigDecimal("10000.00"));
+        var replay = service.earnPoints(user, id("booking"), new BigDecimal("10000.00"));
         assertThat(replay.getTotalPoints()).isEqualTo(1100L);
         assertThat(replay.getAwardedPoints()).isEqualTo(100L);
         assertThat(rows).hasSize(1);
@@ -75,17 +76,17 @@ class LoyaltyPointsServiceTest {
     }
 
     PointsReservation held(String booking, long points) {
-        var hold = PointsReservation.builder().bookingId(booking).userId(user).requestedPoints(points)
+        var hold = PointsReservation.builder().bookingId(id(booking)).userId(user).requestedPoints(points)
                 .totalAmount(new BigDecimal("1000000")).points(points).discountAmount(BigDecimal.valueOf(points * 500))
                 .redemptionRate(new BigDecimal("500")).state(PointsReservationState.HELD)
                 .holdExpiresAt(java.time.Instant.now().plusSeconds(300)).nextCheckAt(java.time.Instant.now().plusSeconds(300)).build();
-        holds.put(booking, hold);
+        holds.put(id(booking), hold);
         return hold;
     }
 
     @Test void reserveBindsQuoteAndCannotBeDuplicatedOrOverbooked() {
         var deadline = java.time.Instant.now().plusSeconds(300);
-        var request = new com.example.userservice.dto.ReservePointsRequest(user, "first", 600L, new BigDecimal("1000000"), deadline);
+        var request = new com.example.userservice.dto.ReservePointsRequest(user, id("first"), 600L, new BigDecimal("1000000"), deadline);
         var reserved = service.reserve(request);
         assertThat(reserved.pointsToUse()).isEqualTo(600L);
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(400L);
@@ -94,14 +95,14 @@ class LoyaltyPointsServiceTest {
         assertThat(holds).hasSize(1);
         assertThat(rows).isEmpty();
         doReturn(new BigDecimal("500")).when(rates).getRedemptionConversionRate();
-        assertThatThrownBy(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, "second", 600L,
+        assertThatThrownBy(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, id("second"), 600L,
                 new BigDecimal("1000000"), deadline))).isInstanceOf(IllegalArgumentException.class);
-        conflict(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, "first", 601L,
+        conflict(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, id("first"), 601L,
                 new BigDecimal("1000000"), deadline)));
     }
 
     @Test void reservedRateSnapshotSurvivesRateChangeAndOutageThroughPaymentAndReplay() {
-        var request = new com.example.userservice.dto.ReservePointsRequest(user, "versioned", 900L,
+        var request = new com.example.userservice.dto.ReservePointsRequest(user, id("versioned"), 900L,
                 new BigDecimal("1000000"), java.time.Instant.now().plusSeconds(300));
         when(rates.getRedemptionConversionRate()).thenReturn(new BigDecimal("700"));
         var quote = service.reserve(request);
@@ -127,7 +128,7 @@ class LoyaltyPointsServiceTest {
         assertThat(service.getLoyaltyPoints(user).getReservedPoints()).isZero();
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(400L);
         assertThat(rows).hasSize(1);
-        service.reconcileReservation("booking", user, "MISSING");
+        service.reconcileReservation(id("booking"), user, "MISSING");
         assertThat(account.getUsedPoints()).isEqualTo(600L);
         assertThat(receipts).doesNotContainKey("booking|CANCEL");
     }
@@ -136,49 +137,49 @@ class LoyaltyPointsServiceTest {
         held("booking", 600);
         var request = use("booking", 600); request.setExpectedDiscountAmount(new BigDecimal("300001"));
         conflict(() -> service.usePoints(request));
-        conflict(() -> service.earnPoints(user, "booking", BigDecimal.TEN));
+        conflict(() -> service.earnPoints(user, id("booking"), BigDecimal.TEN));
         assertThat(account.getUsedPoints()).isZero();
         assertThat(service.getLoyaltyPoints(user).getReservedPoints()).isEqualTo(600L);
     }
 
     @Test void cancelHeldPointsReleasesWithoutCreatingAUseEntryAndBlocksLateReserve() {
         var held = held("booking", 600);
-        service.refundPoints(user, "booking");
-        service.refundPoints(user, "booking");
+        service.refundPoints(user, id("booking"));
+        service.refundPoints(user, id("booking"));
         assertThat(held.getState()).isEqualTo(PointsReservationState.CANCELLED);
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(1000L);
         assertThat(rows).isEmpty();
-        conflict(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, "booking", 600L,
+        conflict(() -> service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, id("booking"), 600L,
                 new BigDecimal("1000000"), held.getHoldExpiresAt())));
     }
 
     @Test void expiredHoldRequiresAuthoritativeMissingOrCancelledBookingBeforeRelease() {
         var held = held("booking", 600);
         held.setHoldExpiresAt(java.time.Instant.now().minusSeconds(10));
-        service.reconcileReservation("booking", user, "ACTIVE");
-        service.reconcileReservation("booking", user, "UNKNOWN");
+        service.reconcileReservation(id("booking"), user, "ACTIVE");
+        service.reconcileReservation(id("booking"), user, "UNKNOWN");
         assertThat(held.getState()).isEqualTo(PointsReservationState.HELD);
         assertThat(held.getNextCheckAt()).isAfter(java.time.Instant.now());
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(400L);
-        service.reconcileReservation("booking", user, "MISSING");
+        service.reconcileReservation(id("booking"), user, "MISSING");
         assertThat(held.getState()).isEqualTo(PointsReservationState.CANCELLED);
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(1000L);
     }
 
     @Test void existingReservationRemainsHonouredIfAnotherEarningReversalCreatesDebt() {
         account.setTotalPoints(0L);
-        service.earnPoints(user, "earned-here", new BigDecimal("2000"));
-        service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, "held-elsewhere", 15L,
+        service.earnPoints(user, id("earned-here"), new BigDecimal("2000"));
+        service.reserve(new com.example.userservice.dto.ReservePointsRequest(user, id("held-elsewhere"), 15L,
                 new BigDecimal("1000000"), java.time.Instant.now().plusSeconds(300)));
-        service.refundPoints(user, "earned-here");
+        service.refundPoints(user, id("earned-here"));
         var request = use("held-elsewhere", 15); request.setExpectedDiscountAmount(new BigDecimal("7500"));
         assertThat(service.usePoints(request)).isEqualByComparingTo("7500");
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(-15L);
     }
 
     @Test void changedEarnPayloadCannotReuseCommand() {
-        service.earnPoints(user, "booking", new BigDecimal("10000"));
-        conflict(() -> service.earnPoints(user, "booking", new BigDecimal("10001")));
+        service.earnPoints(user, id("booking"), new BigDecimal("10000"));
+        conflict(() -> service.earnPoints(user, id("booking"), new BigDecimal("10001")));
         assertThat(account.getTotalPoints()).isEqualTo(1100L);
     }
 
@@ -192,34 +193,34 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test void cancellationReversesEarnAndUseOnlyOnceAndBlocksLateCommands() {
-        service.earnPoints(user, "booking", new BigDecimal("2000"));
+        service.earnPoints(user, id("booking"), new BigDecimal("2000"));
         service.usePoints(use("booking", 10));
-        service.refundPoints(user, "booking");
-        service.refundPoints(user, "booking");
+        service.refundPoints(user, id("booking"));
+        service.refundPoints(user, id("booking"));
         assertThat(account.getTotalPoints()).isEqualTo(1000L);
         assertThat(account.getUsedPoints()).isZero();
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(1000L);
-        conflict(() -> service.earnPoints(user, "booking", new BigDecimal("2000")));
+        conflict(() -> service.earnPoints(user, id("booking"), new BigDecimal("2000")));
         conflict(() -> service.usePoints(use("booking", 10)));
     }
 
     @Test void cancellationBeforeAnyAwardLeavesATombstone() {
-        service.refundPoints(user, "booking");
-        conflict(() -> service.earnPoints(user, "booking", new BigDecimal("2000")));
+        service.refundPoints(user, id("booking"));
+        conflict(() -> service.earnPoints(user, id("booking"), new BigDecimal("2000")));
         assertThat(account.getTotalPoints()).isEqualTo(1000L);
     }
 
     @Test void crossUserCommandCannotReverseAnotherUsersLedger() {
-        rows.add(PointsTransaction.builder().bookingId("booking").userId(UUID.randomUUID())
+        rows.add(PointsTransaction.builder().bookingId(id("booking")).userId(UUID.randomUUID())
                 .transactionType("EARN").points(20L).build());
-        conflict(() -> service.refundPoints(user, "booking"));
+        conflict(() -> service.refundPoints(user, id("booking")));
         assertThat(account.getTotalPoints()).isEqualTo(1000L);
     }
 
     @Test void ambiguousLegacyLedgerRequiresReconciliation() {
-        for (int i = 0; i < 2; i++) rows.add(PointsTransaction.builder().bookingId("booking").userId(user)
+        for (int i = 0; i < 2; i++) rows.add(PointsTransaction.builder().bookingId(id("booking")).userId(user)
                 .transactionType("EARN").points(20L).build());
-        conflict(() -> service.refundPoints(user, "booking"));
+        conflict(() -> service.refundPoints(user, id("booking")));
         assertThat(account.getTotalPoints()).isEqualTo(1000L);
     }
 
@@ -229,8 +230,8 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test void invalidCommandInputDoesNotWrite() {
-        assertThatThrownBy(() -> service.earnPoints(user, "", BigDecimal.TEN)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> service.earnPoints(user, "booking", new BigDecimal("-1"))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> service.earnPoints(user, null, BigDecimal.TEN)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> service.earnPoints(user, id("booking"), new BigDecimal("-1"))).isInstanceOf(IllegalArgumentException.class);
         verify(accounts, never()).save(any());
         verify(ledger, never()).save(any());
     }
@@ -259,18 +260,18 @@ class LoyaltyPointsServiceTest {
     }
 
     @Test void zeroEarningStillHasAnImmutableCommandReceipt() {
-        service.earnPoints(user, "small", BigDecimal.ONE);
+        service.earnPoints(user, id("small"), BigDecimal.ONE);
         when(rates.getEarnConversionRate()).thenReturn(new BigDecimal("0.1"));
-        assertThat(service.earnPoints(user, "small", BigDecimal.ONE).getAwardedPoints()).isZero();
+        assertThat(service.earnPoints(user, id("small"), BigDecimal.ONE).getAwardedPoints()).isZero();
         assertThat(account.getTotalPoints()).isEqualTo(1000L);
         assertThat(rows).hasSize(1);
     }
 
     @Test void reversalPreservesDebtForPointsAlreadySpentElsewhere() {
         account.setTotalPoints(0L);
-        service.earnPoints(user, "earned-here", new BigDecimal("2000"));
+        service.earnPoints(user, id("earned-here"), new BigDecimal("2000"));
         service.usePoints(use("spent-elsewhere", 15));
-        service.refundPoints(user, "earned-here");
+        service.refundPoints(user, id("earned-here"));
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(-15L);
         assertThatThrownBy(() -> service.usePoints(use("another-booking", 1))).isInstanceOf(IllegalArgumentException.class);
     }
@@ -285,26 +286,26 @@ class LoyaltyPointsServiceTest {
         when(ledger.hasAmbiguousEarningOrUse(user)).thenReturn(true);
         conflict(() -> service.quote(new com.example.userservice.dto.PointsQuoteRequest(user, 1L, new BigDecimal("10000"))));
         conflict(() -> service.usePoints(use("new", 1)));
-        conflict(() -> service.earnPoints(user, "new", new BigDecimal("10000")));
+        conflict(() -> service.earnPoints(user, id("new"), new BigDecimal("10000")));
         assertThat(service.getLoyaltyPoints(user).getAvailablePoints()).isEqualTo(1000L);
         assertThat(rows).isEmpty();
         verify(accounts, never()).save(any());
     }
 
     @Test void existingReceiptsAndBackedHoldsRemainUsableWhenLegacyAccountNeedsReview() {
-        service.earnPoints(user, "receipted", new BigDecimal("100"));
+        service.earnPoints(user, id("receipted"), new BigDecimal("100"));
         held("backed", 10);
         when(ledger.hasAmbiguousEarningOrUse(user)).thenReturn(true);
-        assertThat(service.earnPoints(user, "receipted", new BigDecimal("100")).getAwardedPoints()).isEqualTo(1L);
+        assertThat(service.earnPoints(user, id("receipted"), new BigDecimal("100")).getAwardedPoints()).isEqualTo(1L);
         var request = use("backed", 10); request.setExpectedDiscountAmount(new BigDecimal("5000"));
         assertThat(service.usePoints(request)).isEqualByComparingTo("5000");
-        service.refundPoints(user, "backed");
+        service.refundPoints(user, id("backed"));
         assertThat(account.getUsedPoints()).isZero();
         assertThat(account.getTotalPoints()).isEqualTo(1001L);
     }
 
     ApplyPointsRequest use(String booking, long points) {
-        return ApplyPointsRequest.builder().userId(user).bookingId(booking).pointsToUse(points).build();
+        return ApplyPointsRequest.builder().userId(user).bookingId(id(booking)).pointsToUse(points).build();
     }
     void conflict(Runnable action) {
         assertThatThrownBy(action::run).isInstanceOfSatisfying(ResponseStatusException.class,

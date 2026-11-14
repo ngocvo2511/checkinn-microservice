@@ -1,0 +1,2825 @@
+[
+  {
+    "path": "C:\\Users\\ACER\\IdeaProjects\\DA1\\database-schema-snapshots\\checkinn_booking_schema.sql",
+    "sha256": "c1e041f04b9e1d392dda31e3817050775e48b8fe3b3b3b63b067742f760a40a5",
+    "tables": {
+      "public.booking_items": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "cancellation_policy",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "check_in_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "check_out_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "guest_name",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "nights",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "quantity",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "rate_plan_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "room_type_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "room_type_name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "subtotal",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "tax_fee",
+            "type": "numeric(38,2)",
+            "nullable": true,
+            "default": null,
+            "definition": "numeric(38,2)"
+          },
+          {
+            "name": "unit_price",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "booking_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          }
+        ],
+        "constraints": [
+          "booking_items_pkey PRIMARY KEY (id)",
+          "fkrw74irmyat5c39cnjkn02u99m FOREIGN KEY (booking_id) REFERENCES public.bookings(id)"
+        ],
+        "indexes": []
+      },
+      "public.bookings": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "adults",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "check_in_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "check_out_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "children",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "contact_email",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "contact_name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "contact_phone",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "hotel_name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "paid_amount",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "special_requests",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "status",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "total_amount",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "user_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "voucher_code",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "voucher_discount",
+            "type": "numeric(38,2)",
+            "nullable": true,
+            "default": null,
+            "definition": "numeric(38,2)"
+          },
+          {
+            "name": "hold_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "hold_expires_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": true,
+            "default": null,
+            "definition": "timestamp(6) without time zone"
+          },
+          {
+            "name": "earned_points",
+            "type": "bigint",
+            "nullable": true,
+            "default": null,
+            "definition": "bigint"
+          },
+          {
+            "name": "points_discount_amount",
+            "type": "numeric(38,2)",
+            "nullable": true,
+            "default": null,
+            "definition": "numeric(38,2)"
+          },
+          {
+            "name": "used_points",
+            "type": "bigint",
+            "nullable": true,
+            "default": null,
+            "definition": "bigint"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT bookings_status_check CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'PENDING_PAYMENT'::character varying, 'CONFIRMED'::character varying, 'CHECKED_IN'::character varying, 'CHECKED_OUT'::character varying, 'CANCELLED'::character varying, 'NO_SHOW'::character varying])::text[])))",
+          "bookings_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.payments": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "amount",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "booking_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "method",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "paid_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": true,
+            "default": null,
+            "definition": "timestamp(6) without time zone"
+          },
+          {
+            "name": "status",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "transaction_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "vnpay_order_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "vnpay_response_code",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "vnpay_transaction_no",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT payments_method_check CHECK (((method)::text = ANY ((ARRAY['HOTEL'::character varying, 'VNPAY'::character varying])::text[])))",
+          "CONSTRAINT payments_status_check CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'ONSITE_PENDING'::character varying, 'COMPLETED'::character varying, 'FAILED'::character varying, 'REFUNDED'::character varying, 'CANCELLED'::character varying])::text[])))",
+          "payments_pkey PRIMARY KEY (id)",
+          "uk_payments_vnpay_order_id UNIQUE (vnpay_order_id)"
+        ],
+        "indexes": []
+      }
+    },
+    "objects": [
+      {
+        "name": "booking_items",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "bookings",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "payments",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "booking_items booking_items_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "bookings bookings_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "payments payments_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "payments uk_payments_vnpay_order_id",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "booking_items fkrw74irmyat5c39cnjkn02u99m",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      }
+    ],
+    "data_statements": false,
+    "sensitive_pattern": false,
+    "ownership_statements": 3,
+    "database_identity": [],
+    "identity_sequences": [],
+    "special_object_counts": {
+      "extensions": 0,
+      "enum_types": 0,
+      "functions": 0,
+      "triggers": 0,
+      "views": 0,
+      "materialized_views": 0,
+      "grants": 0
+    }
+  },
+  {
+    "path": "C:\\Users\\ACER\\IdeaProjects\\DA1\\database-schema-snapshots\\checkinn_hotel_schema.sql",
+    "sha256": "59a9bc1b8f96338a2f424080e9d1a783e28c13ba6be945b2f23c8e998c0abbf8",
+    "tables": {
+      "public.amenity_category_types": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          }
+        ],
+        "constraints": [
+          "amenity_category_types_pkey PRIMARY KEY (id)",
+          "uk5dhxp2q56g7chrf0pfdxe0hts UNIQUE (name)"
+        ],
+        "indexes": []
+      },
+      "public.cities": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "latitude",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "longitude",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp without time zone NOT NULL"
+          },
+          {
+            "name": "parent_id",
+            "type": "uuid",
+            "nullable": true,
+            "default": null,
+            "definition": "uuid"
+          },
+          {
+            "name": "hotel_count",
+            "type": "integer",
+            "nullable": false,
+            "default": "0",
+            "definition": "integer DEFAULT 0 NOT NULL"
+          }
+        ],
+        "constraints": [
+          "cities_pkey PRIMARY KEY (id)",
+          "uk_cities_name UNIQUE (name)",
+          "fktphlk2hf0r6v1ebeyb23memif FOREIGN KEY (parent_id) REFERENCES public.provinces(id)"
+        ],
+        "indexes": [
+          "CREATE INDEX idx_cities_name ON public.cities USING btree (name);"
+        ]
+      },
+      "public.hotel_amenities": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "title",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "category_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "hotel_amenities_pkey PRIMARY KEY (id)",
+          "fkl7yyfhnep65fgiia7pkbs255w FOREIGN KEY (category_id) REFERENCES public.hotel_amenity_categories(id)"
+        ],
+        "indexes": []
+      },
+      "public.hotel_amenity_categories": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "title",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          }
+        ],
+        "constraints": [
+          "hotel_amenity_categories_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.hotel_policies": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "content",
+            "type": "text",
+            "nullable": false,
+            "default": null,
+            "definition": "text NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "category_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "hotel_policies_pkey PRIMARY KEY (id)",
+          "fk8v4llyrp0cq76bsr6vqy7a99 FOREIGN KEY (category_id) REFERENCES public.policy_category_types(id)",
+          "fkeu2fa5r51by4qqp414we57nc9 FOREIGN KEY (hotel_id) REFERENCES public.hotels(id)"
+        ],
+        "indexes": []
+      },
+      "public.hotel_questions": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "answer",
+            "type": "text",
+            "nullable": false,
+            "default": null,
+            "definition": "text NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "question",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "hotel_questions_pkey PRIMARY KEY (id)",
+          "fk8fcsjjooyxb0a1in8o1q1hw86 FOREIGN KEY (hotel_id) REFERENCES public.hotels(id)"
+        ],
+        "indexes": []
+      },
+      "public.hotel_reviews": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "amenities_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "booking_id",
+            "type": "uuid",
+            "nullable": true,
+            "default": null,
+            "definition": "uuid"
+          },
+          {
+            "name": "cleanliness_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "comfort_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "content",
+            "type": "text",
+            "nullable": true,
+            "default": null,
+            "definition": "text"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "guest_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "helpful_count",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "location_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "rating",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "staff_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "status",
+            "type": "character varying(20)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(20) NOT NULL"
+          },
+          {
+            "name": "title",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "unhelpful_count",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "value_for_money_rating",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT hotel_reviews_status_check CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'PUBLISHED'::character varying, 'REJECTED'::character varying])::text[])))",
+          "hotel_reviews_pkey PRIMARY KEY (id)",
+          "uk3yo71l210cgneb12xxs1t91b8 UNIQUE (hotel_id, guest_id, booking_id)"
+        ],
+        "indexes": []
+      },
+      "public.hotels": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "address",
+            "type": "jsonb",
+            "nullable": false,
+            "default": null,
+            "definition": "jsonb NOT NULL"
+          },
+          {
+            "name": "approved_status",
+            "type": "character varying(20)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(20) NOT NULL"
+          },
+          {
+            "name": "business_license_number",
+            "type": "character varying(50)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(50) NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "nullable": true,
+            "default": null,
+            "definition": "text"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "operation_license_number",
+            "type": "character varying(50)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(50)"
+          },
+          {
+            "name": "owner_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "owner_identity_number",
+            "type": "character varying(50)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(50)"
+          },
+          {
+            "name": "star_rating",
+            "type": "smallint",
+            "nullable": true,
+            "default": null,
+            "definition": "smallint"
+          },
+          {
+            "name": "tax_id",
+            "type": "character varying(50)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(50)"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "city_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": "'00000000-0000-0000-0000-000000000000'::uuid",
+            "definition": "uuid DEFAULT '00000000-0000-0000-0000-000000000000'::uuid NOT NULL"
+          },
+          {
+            "name": "contact_email",
+            "type": "character varying(100)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(100)"
+          },
+          {
+            "name": "contact_phone",
+            "type": "character varying(20)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(20)"
+          },
+          {
+            "name": "business_license_file_path",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "operation_license_file_path",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "owner_identity_back_path",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "owner_identity_front_path",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "rejection_reason",
+            "type": "text",
+            "nullable": true,
+            "default": null,
+            "definition": "text"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT hotels_approved_status_check CHECK (((approved_status)::text = ANY ((ARRAY['PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying])::text[])))",
+          "hotels_pkey PRIMARY KEY (id)",
+          "fk_hotels_city_id FOREIGN KEY (city_id) REFERENCES public.cities(id)"
+        ],
+        "indexes": [
+          "CREATE INDEX idx_hotels_city_id ON public.hotels USING btree (city_id);"
+        ]
+      },
+      "public.media_assets": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "is_thumbnail",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "sort_order",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "target_type",
+            "type": "character varying(20)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(20) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "url",
+            "type": "character varying(500)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(500) NOT NULL"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT media_assets_target_type_check CHECK (((target_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'ROOM_TYPE'::character varying])::text[])))",
+          "CONSTRAINT media_assets_target_type_chk CHECK (((target_type)::text = ANY ((ARRAY['HOTEL'::character varying, 'ROOM_TYPE'::character varying])::text[])))",
+          "media_assets_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": [
+          "CREATE INDEX idx_media_assets_hotel ON public.media_assets USING btree (target_id) WHERE ((target_type)::text = 'HOTEL'::text);",
+          "CREATE INDEX idx_media_assets_roomtype ON public.media_assets USING btree (target_id) WHERE ((target_type)::text = 'ROOM_TYPE'::text);",
+          "CREATE INDEX idx_media_assets_target ON public.media_assets USING btree (target_id, target_type);"
+        ]
+      },
+      "public.policy_category_types": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          }
+        ],
+        "constraints": [
+          "policy_category_types_pkey PRIMARY KEY (id)",
+          "ukapt0ht47b8dy5pf23nvrmsiuj UNIQUE (name)"
+        ],
+        "indexes": []
+      },
+      "public.provinces": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "latitude",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "longitude",
+            "type": "double precision",
+            "nullable": true,
+            "default": null,
+            "definition": "double precision"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "hotel_count",
+            "type": "integer",
+            "nullable": false,
+            "default": "0",
+            "definition": "integer DEFAULT 0 NOT NULL"
+          }
+        ],
+        "constraints": [
+          "provinces_pkey PRIMARY KEY (id)",
+          "ukl256wnwfdobq071mcq7rckr9y UNIQUE (name)"
+        ],
+        "indexes": [
+          "CREATE INDEX idx_provinces_name ON public.provinces USING btree (name);"
+        ]
+      },
+      "public.review_feedbacks": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "feedback_type",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "review_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": true,
+            "default": null,
+            "definition": "timestamp(6) without time zone"
+          },
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT review_feedbacks_feedback_type_check CHECK (((feedback_type)::text = ANY ((ARRAY['HELPFUL'::character varying, 'UNHELPFUL'::character varying])::text[])))",
+          "review_feedbacks_pkey PRIMARY KEY (id)",
+          "ukeqr0oll0lr2pmm3cn8k6shsss UNIQUE (review_id, user_id)"
+        ],
+        "indexes": []
+      },
+      "public.review_responses": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "content",
+            "type": "text",
+            "nullable": false,
+            "default": null,
+            "definition": "text NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "owner_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "review_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          }
+        ],
+        "constraints": [
+          "review_responses_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.room_availability": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "booked",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "held",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "room_type_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          }
+        ],
+        "constraints": [
+          "room_availability_pkey PRIMARY KEY (id)",
+          "uknw3vl4q1ljvnf0gvpp9qw5dlp UNIQUE (room_type_id, date)"
+        ],
+        "indexes": []
+      },
+      "public.room_holds": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "check_in_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "check_out_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "quantity",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "room_type_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "status",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "expires_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": true,
+            "default": null,
+            "definition": "timestamp(6) with time zone"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT room_holds_status_check CHECK (((status)::text = ANY ((ARRAY['HELD'::character varying, 'CONFIRMED'::character varying, 'RELEASED'::character varying])::text[])))",
+          "room_holds_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.room_types": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "amenities",
+            "type": "jsonb",
+            "nullable": true,
+            "default": null,
+            "definition": "jsonb"
+          },
+          {
+            "name": "base_price",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "capacity",
+            "type": "jsonb",
+            "nullable": false,
+            "default": null,
+            "definition": "jsonb NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "name",
+            "type": "character varying(100)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(100) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) with time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) with time zone NOT NULL"
+          },
+          {
+            "name": "total_rooms",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "definition": "integer"
+          }
+        ],
+        "constraints": [
+          "room_types_pkey PRIMARY KEY (id)",
+          "fk42cc0t2sr43om89u1loqh7arj FOREIGN KEY (hotel_id) REFERENCES public.hotels(id)"
+        ],
+        "indexes": []
+      }
+    },
+    "objects": [
+      {
+        "name": "amenity_category_types",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "cities",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_amenities",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_amenity_categories",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_policies",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_questions",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_reviews",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotels",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "media_assets",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "policy_category_types",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "provinces",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "review_feedbacks",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "review_responses",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_availability",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_holds",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_types",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "amenity_category_types amenity_category_types_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "cities cities_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_amenities hotel_amenities_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_amenity_categories hotel_amenity_categories_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_policies hotel_policies_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_questions hotel_questions_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_reviews hotel_reviews_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotels hotels_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "media_assets media_assets_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "policy_category_types policy_category_types_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "provinces provinces_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "review_feedbacks review_feedbacks_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "review_responses review_responses_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_availability room_availability_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_holds room_holds_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_types room_types_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_reviews uk3yo71l210cgneb12xxs1t91b8",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "amenity_category_types uk5dhxp2q56g7chrf0pfdxe0hts",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "cities uk_cities_name",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "policy_category_types ukapt0ht47b8dy5pf23nvrmsiuj",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "review_feedbacks ukeqr0oll0lr2pmm3cn8k6shsss",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "provinces ukl256wnwfdobq071mcq7rckr9y",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_availability uknw3vl4q1ljvnf0gvpp9qw5dlp",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_cities_name",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_hotels_city_id",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_media_assets_hotel",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_media_assets_roomtype",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_media_assets_target",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "idx_provinces_name",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "room_types fk42cc0t2sr43om89u1loqh7arj",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_questions fk8fcsjjooyxb0a1in8o1q1hw86",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_policies fk8v4llyrp0cq76bsr6vqy7a99",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotels fk_hotels_city_id",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_policies fkeu2fa5r51by4qqp414we57nc9",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "hotel_amenities fkl7yyfhnep65fgiia7pkbs255w",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "cities fktphlk2hf0r6v1ebeyb23memif",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      }
+    ],
+    "data_statements": false,
+    "sensitive_pattern": false,
+    "ownership_statements": 16,
+    "database_identity": [],
+    "identity_sequences": [],
+    "special_object_counts": {
+      "extensions": 0,
+      "enum_types": 0,
+      "functions": 0,
+      "triggers": 0,
+      "views": 0,
+      "materialized_views": 0,
+      "grants": 0
+    }
+  },
+  {
+    "path": "C:\\Users\\ACER\\IdeaProjects\\DA1\\database-schema-snapshots\\checkinn_regulations_schema.sql",
+    "sha256": "cef144ee4d7065445294149a7ab8d826e35ec4ab8a4f52efeaf22c0f8a35d921",
+    "tables": {
+      "public.regulation_snapshots": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "applied_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "regulation_key",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "regulation_name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "snapshot_data",
+            "type": "text",
+            "nullable": false,
+            "default": null,
+            "definition": "text NOT NULL"
+          },
+          {
+            "name": "source_user",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          }
+        ],
+        "constraints": [
+          "regulation_snapshots_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.regulations": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "description",
+            "type": "character varying(2000)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(2000)"
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "regulation_key",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "value",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          }
+        ],
+        "constraints": [
+          "regulations_pkey PRIMARY KEY (id)",
+          "ukpeayty49ty0779rjkgcd2dcam UNIQUE (regulation_key)"
+        ],
+        "indexes": []
+      }
+    },
+    "objects": [
+      {
+        "name": "regulation_snapshots",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulation_snapshots_id_seq",
+        "type": "SEQUENCE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulations",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulations_id_seq",
+        "type": "SEQUENCE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulation_snapshots regulation_snapshots_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulations regulations_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "regulations ukpeayty49ty0779rjkgcd2dcam",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      }
+    ],
+    "data_statements": false,
+    "sensitive_pattern": false,
+    "ownership_statements": 2,
+    "database_identity": [],
+    "identity_sequences": [
+      {
+        "table": "public.regulation_snapshots",
+        "column": "id",
+        "generation": "BY DEFAULT",
+        "options": "SEQUENCE NAME public.regulation_snapshots_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1"
+      },
+      {
+        "table": "public.regulations",
+        "column": "id",
+        "generation": "BY DEFAULT",
+        "options": "SEQUENCE NAME public.regulations_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1"
+      }
+    ],
+    "special_object_counts": {
+      "extensions": 0,
+      "enum_types": 0,
+      "functions": 0,
+      "triggers": 0,
+      "views": 0,
+      "materialized_views": 0,
+      "grants": 0
+    }
+  },
+  {
+    "path": "C:\\Users\\ACER\\IdeaProjects\\DA1\\database-schema-snapshots\\checkinn_revenue_schema.sql",
+    "sha256": "3cbb2e8f4879952c43251cbeed471a3e537bbde5847ddeb79bf1f6ceb22955be",
+    "tables": {
+      "public.booking_status_records": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "booking_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "booking_status",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "check_in_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "check_out_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "event_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "nights",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "room_type_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "rooms",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          }
+        ],
+        "constraints": [
+          "booking_status_records_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.payment_records": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "amount",
+            "type": "numeric(38,2)",
+            "nullable": false,
+            "default": null,
+            "definition": "numeric(38,2) NOT NULL"
+          },
+          {
+            "name": "booking_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "check_in_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "check_out_date",
+            "type": "date",
+            "nullable": false,
+            "default": null,
+            "definition": "date NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "customer_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "event_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "hotel_id",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "nights",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "paid_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": true,
+            "default": null,
+            "definition": "timestamp(6) without time zone"
+          },
+          {
+            "name": "payment_method",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "payment_status",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "room_type_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "rooms",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          }
+        ],
+        "constraints": [
+          "payment_records_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      }
+    },
+    "objects": [
+      {
+        "name": "booking_status_records",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "payment_records",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "booking_status_records booking_status_records_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "payment_records payment_records_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      }
+    ],
+    "data_statements": false,
+    "sensitive_pattern": false,
+    "ownership_statements": 2,
+    "database_identity": [],
+    "identity_sequences": [],
+    "special_object_counts": {
+      "extensions": 0,
+      "enum_types": 0,
+      "functions": 0,
+      "triggers": 0,
+      "views": 0,
+      "materialized_views": 0,
+      "grants": 0
+    }
+  },
+  {
+    "path": "C:\\Users\\ACER\\IdeaProjects\\DA1\\database-schema-snapshots\\checkinn_user_schema.sql",
+    "sha256": "d7109b3a616c315c8973fdd45bcdc69f5eafe05e8bad38e2b74dab1cc4365e9f",
+    "tables": {
+      "public.flyway_schema_history": {
+        "columns": [
+          {
+            "name": "installed_rank",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "version",
+            "type": "character varying(50)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(50)"
+          },
+          {
+            "name": "description",
+            "type": "character varying(200)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(200) NOT NULL"
+          },
+          {
+            "name": "type",
+            "type": "character varying(20)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(20) NOT NULL"
+          },
+          {
+            "name": "script",
+            "type": "character varying(1000)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(1000) NOT NULL"
+          },
+          {
+            "name": "checksum",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "definition": "integer"
+          },
+          {
+            "name": "installed_by",
+            "type": "character varying(100)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(100) NOT NULL"
+          },
+          {
+            "name": "installed_on",
+            "type": "timestamp without time zone",
+            "nullable": false,
+            "default": "now()",
+            "definition": "timestamp without time zone DEFAULT now() NOT NULL"
+          },
+          {
+            "name": "execution_time",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "success",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          }
+        ],
+        "constraints": [
+          "flyway_schema_history_pk PRIMARY KEY (installed_rank)"
+        ],
+        "indexes": [
+          "CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success);"
+        ]
+      },
+      "public.loyalty_points": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "available_points",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "total_points",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "used_points",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "loyalty_points_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.otps": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "attempt_count",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "definition": "integer NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "email",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "expiry_time",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "is_verified",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "otp_code",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          }
+        ],
+        "constraints": [
+          "otps_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.points_transactions": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "booking_id",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp(6) without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp(6) without time zone NOT NULL"
+          },
+          {
+            "name": "description",
+            "type": "character varying(500)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(500) NOT NULL"
+          },
+          {
+            "name": "points",
+            "type": "bigint",
+            "nullable": false,
+            "default": null,
+            "definition": "bigint NOT NULL"
+          },
+          {
+            "name": "transaction_type",
+            "type": "character varying(255)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(255) NOT NULL"
+          },
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          }
+        ],
+        "constraints": [
+          "points_transactions_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      },
+      "public.user_profiles": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "address",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "birth_date",
+            "type": "date",
+            "nullable": true,
+            "default": null,
+            "definition": "date"
+          },
+          {
+            "name": "country",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "full_name",
+            "type": "character varying(100)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(100) NOT NULL"
+          },
+          {
+            "name": "gender",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "phone",
+            "type": "character varying(255)",
+            "nullable": true,
+            "default": null,
+            "definition": "character varying(255)"
+          },
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "loyalty_points_id",
+            "type": "uuid",
+            "nullable": true,
+            "default": null,
+            "definition": "uuid"
+          }
+        ],
+        "constraints": [
+          "uk11c876xr2cyxrng024by01jyu UNIQUE (loyalty_points_id)",
+          "uke5h89rk3ijvdmaiig4srogdc6 UNIQUE (user_id)",
+          "user_profiles_pkey PRIMARY KEY (id)",
+          "fk1ljvfxr3xbbxvey38092p36uc FOREIGN KEY (loyalty_points_id) REFERENCES public.loyalty_points(id)",
+          "fkjcad5nfve11khsnpwj1mv8frj FOREIGN KEY (user_id) REFERENCES public.users(id)"
+        ],
+        "indexes": []
+      },
+      "public.users": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "definition": "uuid NOT NULL"
+          },
+          {
+            "name": "email",
+            "type": "character varying(254)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(254) NOT NULL"
+          },
+          {
+            "name": "password",
+            "type": "character varying(100)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(100) NOT NULL"
+          },
+          {
+            "name": "role",
+            "type": "character varying(20)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(20) NOT NULL"
+          },
+          {
+            "name": "username",
+            "type": "character varying(50)",
+            "nullable": false,
+            "default": null,
+            "definition": "character varying(50) NOT NULL"
+          },
+          {
+            "name": "is_email_verified",
+            "type": "boolean",
+            "nullable": true,
+            "default": null,
+            "definition": "boolean"
+          },
+          {
+            "name": "is_active",
+            "type": "boolean",
+            "nullable": false,
+            "default": null,
+            "definition": "boolean NOT NULL"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone",
+            "nullable": false,
+            "default": null,
+            "definition": "timestamp without time zone NOT NULL"
+          }
+        ],
+        "constraints": [
+          "CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['ADMIN'::character varying, 'STAFF'::character varying, 'CUSTOMER'::character varying, 'OWNER'::character varying])::text[])))",
+          "uk6dotkott2kjsp8vw4d0m25fb7 UNIQUE (email)",
+          "ukr43af9ap4edm43mmtq01oddj6 UNIQUE (username)",
+          "users_pkey PRIMARY KEY (id)"
+        ],
+        "indexes": []
+      }
+    },
+    "objects": [
+      {
+        "name": "flyway_schema_history",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "loyalty_points",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "otps",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "points_transactions",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "users",
+        "type": "TABLE",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "flyway_schema_history flyway_schema_history_pk",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "loyalty_points loyalty_points_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "otps otps_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "points_transactions points_transactions_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles uk11c876xr2cyxrng024by01jyu",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "users uk6dotkott2kjsp8vw4d0m25fb7",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles uke5h89rk3ijvdmaiig4srogdc6",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "users ukr43af9ap4edm43mmtq01oddj6",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles user_profiles_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "users users_pkey",
+        "type": "CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "flyway_schema_history_s_idx",
+        "type": "INDEX",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles fk1ljvfxr3xbbxvey38092p36uc",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      },
+      {
+        "name": "user_profiles fkjcad5nfve11khsnpwj1mv8frj",
+        "type": "FK CONSTRAINT",
+        "schema": "public",
+        "owner": "postgres"
+      }
+    ],
+    "data_statements": false,
+    "sensitive_pattern": false,
+    "ownership_statements": 6,
+    "database_identity": [],
+    "identity_sequences": [],
+    "special_object_counts": {
+      "extensions": 0,
+      "enum_types": 0,
+      "functions": 0,
+      "triggers": 0,
+      "views": 0,
+      "materialized_views": 0,
+      "grants": 0
+    }
+  }
+]

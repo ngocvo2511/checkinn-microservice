@@ -1,4 +1,5 @@
 package com.example.bookingservice.grpc.server;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.service.BookingService;
 import com.example.bookingservice.grpc.GetBookingRequest;
@@ -19,18 +20,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class GrpcBookingAuthorizationTest {
+    @Test void authenticatedMalformedRequiredUuidIsInvalidArgumentWithoutLookup() {
+        var actor = new UsernamePasswordAuthenticationToken("hotel-service", null, List.of(new SimpleGrantedAuthority("ROLE_HOTEL_SERVICE")));
+        StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> response = mock(StreamObserver.class);
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
+            .checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest.newBuilder()
+                .setBookingId("1-1-1-1-1").setGuestId(wire("guest")).setHotelId(wire("hotel")).build(), response));
+        verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.INVALID_ARGUMENT));
+        verifyNoInteractions(bookings);
+    }
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource({"user-service,USER_SERVICE,true", "user-service,ADMIN,false",
             "other-service,USER_SERVICE,false", "hotel-service,HOTEL_SERVICE,false", "administrator,ADMIN,false", "guest,CUSTOMER,false"})
     void pointsRecoveryLookupRequiresExactUserServiceIdentity(String subject, String role, boolean allowed) {
         var actor = new UsernamePasswordAuthenticationToken(subject, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
         StreamObserver<com.example.bookingservice.grpc.LoyaltyBookingStateResponse> response = mock(StreamObserver.class);
-        when(bookings.getLoyaltyBookingState("booking", "guest")).thenReturn("ACTIVE");
+        when(bookings.getLoyaltyBookingState(id("booking"), id("guest"))).thenReturn("ACTIVE");
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
                 .getLoyaltyBookingState(com.example.bookingservice.grpc.LoyaltyBookingStateRequest.newBuilder()
-                        .setBookingId("booking").setUserId("guest").build(), response));
+                        .setBookingId(wire("booking")).setUserId(wire("guest")).build(), response));
         if (allowed) {
-            verify(bookings).getLoyaltyBookingState("booking", "guest");
+            verify(bookings).getLoyaltyBookingState(id("booking"), id("guest"));
             verify(response).onNext(argThat(value -> value.getState().equals("ACTIVE")));
             verify(response).onCompleted();
         } else {
@@ -45,7 +55,7 @@ class GrpcBookingAuthorizationTest {
     private final StreamObserver<com.example.bookingservice.grpc.BookingResponse> observer = mock(StreamObserver.class);
 
     @Test void directBookingRpcWithoutVerifiedContextDoesNotReadData() {
-        new BookingGrpcServer(bookings, access).getBooking(GetBookingRequest.newBuilder().setId("booking-1").build(), observer);
+        new BookingGrpcServer(bookings, access).getBooking(GetBookingRequest.newBuilder().setId(wire("booking-1")).build(), observer);
         verify(observer).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.UNAUTHENTICATED));
         verifyNoInteractions(bookings);
     }
@@ -56,12 +66,12 @@ class GrpcBookingAuthorizationTest {
     void eligibilityRpcRequiresExactHotelServiceIdentity(String subject, String role, boolean allowed) {
         var actor = new UsernamePasswordAuthenticationToken(subject, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
         StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> response = mock(StreamObserver.class);
-        when(bookings.isReviewEligible("booking", "guest", "hotel")).thenReturn(true);
+        when(bookings.isReviewEligible(id("booking"), id("guest"), id("hotel"))).thenReturn(true);
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
                 .checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest.newBuilder()
-                        .setBookingId("booking").setGuestId("guest").setHotelId("hotel").build(), response));
+                        .setBookingId(wire("booking")).setGuestId(wire("guest")).setHotelId(wire("hotel")).build(), response));
         if (allowed) {
-            verify(bookings).isReviewEligible("booking", "guest", "hotel");
+            verify(bookings).isReviewEligible(id("booking"), id("guest"), id("hotel"));
             verify(response).onNext(argThat(com.example.bookingservice.grpc.ReviewEligibilityResponse::getEligible));
             verify(response).onCompleted();
         } else {
@@ -81,8 +91,8 @@ class GrpcBookingAuthorizationTest {
     @Test void authenticatedCrossBookingRpcDoesNotReadData() {
         var actor = new UsernamePasswordAuthenticationToken("other", null, List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER")));
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() ->
-                new BookingGrpcServer(bookings, access).getBooking(GetBookingRequest.newBuilder().setId("booking-1").build(), observer));
-        verify(access).canRead(actor, "booking-1");
+                new BookingGrpcServer(bookings, access).getBooking(GetBookingRequest.newBuilder().setId(wire("booking-1")).build(), observer));
+        verify(access).canRead(actor, wire("booking-1"));
         verify(observer).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
         verifyNoInteractions(bookings);
     }
@@ -97,10 +107,10 @@ class GrpcBookingAuthorizationTest {
     }
     @Test void ownerCannotExecuteRefundOverGrpc() {
         var actor = new UsernamePasswordAuthenticationToken("owner", null, List.of(new SimpleGrantedAuthority("ROLE_OWNER")));
-        when(access.canReadPayment(actor, "payment-1")).thenReturn(true);
+        when(access.canReadPayment(actor, wire("payment-1"))).thenReturn(true);
         StreamObserver<com.example.bookingservice.grpc.PaymentResponse> response = mock(StreamObserver.class);
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new PaymentGrpcServer(payments, access)
-                .refundPayment(com.example.bookingservice.grpc.RefundPaymentRequest.newBuilder().setId("payment-1").build(), response));
+                .refundPayment(com.example.bookingservice.grpc.RefundPaymentRequest.newBuilder().setId(wire("payment-1")).build(), response));
         verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
         verifyNoInteractions(payments);
     }
@@ -108,10 +118,10 @@ class GrpcBookingAuthorizationTest {
         var actor = new UsernamePasswordAuthenticationToken("administrator", null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
         when(access.isAdmin(actor)).thenReturn(true);
         doThrow(new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE))
-                .when(payments).refundPayment("payment-1");
+                .when(payments).refundPayment(id("payment-1"));
         StreamObserver<com.example.bookingservice.grpc.PaymentResponse> response = mock(StreamObserver.class);
         Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new PaymentGrpcServer(payments, access)
-                .refundPayment(com.example.bookingservice.grpc.RefundPaymentRequest.newBuilder().setId("payment-1").build(), response));
+                .refundPayment(com.example.bookingservice.grpc.RefundPaymentRequest.newBuilder().setId(wire("payment-1")).build(), response));
         verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.UNAVAILABLE));
     }
 }

@@ -1,5 +1,7 @@
 # PROJECT STANDARDIZATION PLAN
 
+> Current: Batch5B local canonical acceptance DONE (14/11/2026); see appended checkpoint. Older statuses are dated history. Supabase/Batch6 not executed.
+
 **Dự án:** Hệ thống Đặt phòng Khách sạn dựa trên Kiến trúc Microservices Tích hợp Trợ lý Du lịch Thông minh
 **Ngày khảo sát ban đầu:** 26/10/2026; **cập nhật hiện tại:** 13/11/2026 — Asia/Saigon
 
@@ -3706,3 +3708,56 @@ Các scopes trên map STD-011/012/018/024/026/028/030; không coi7 parent STD ho
 - **Source/protected scope:** không cần sửa production source; chỉ thêm harness/test-only bootstrap/docs/ignore. Place backend/frontend/showDistance và Refund business workflow không đổi; Refund closure mục74 nguyên vẹn, không VNPay Refund API.
 - **Issue status:** bổ sung evidence STD-005/006/007/008/009/021/027/028 trong audit; không tự đóng parent STD-006/007/021/027/028. Overall standardization PARTIAL/IN_PROGRESS. G1 isolated unpaid lifecycle accepted, không phải production WRITE authorization.
 - **Next dependency:** G2 reproducible service schema/applied-history manifest, clean/representative legacy upgrade diff, stock/data provenance; không guessed backfill hoặc tự động mở Place/provider. G4 broader deployment và G1b provider yêu cầu scope riêng.
+
+
+## 76. 13/11/2026 — Batch 3: schema/migration history & legacy-data verification
+
+- **Audit/verification DONE; overall database standardization PARTIAL / IN_PROGRESS.** [Báo cáo Batch3](../BATCH3_DATABASE_SCHEMA_MIGRATION_STANDARDIZATION_2026-11-13.md), [schema/history/catalog evidence](../evidence/batch-3-schema/README.md). Production applied history NOT VERIFIED; không production/developer/shared DB access.
+- **STD-021:** source/ownership/SHA inventory, fresh SQL-only failures của 5 services, test-only JPA+explicit SQL startup5 PASS; cash source-derived subset clean/upgrade MATCH. Full representative legacy upgrade NOT VERIFIED; User missing V1, Hotel V2 syntax/V5 duplicate, Booking baseline users FK/UUID mismatch. Existing migration history không rewrite; không đổi global ddl-auto.
+- **STD-006:** review rules/counter constraints được kiểm thử, review migration không mutate synthetic NULL/10/invalid stock. Root historical SQL actively backfills10 là risk, application history UNKNOWN; actual physical provenance cần OWNER source/ADMIN review. Không auto-backfill/approve/repair.
+- **STD-024:** fresh mapper/regulation serializer + PostgreSQL text/JSON shapes synthetic PASS; real historical corpus/native JPA all shapes/media provider NOT VERIFIED. Giữ selected fixes và adapters, không historical JSON conversion hoặc tự đánh dấu historical-data acceptance DONE.
+- **STD-007/029:** cash/refund/loyalty uniqueness/FK/check/rollback probes PASS trong disposable; không historical cash/status repair, provider settlement hoặc fresh broker recovery claim. **STD-027/028:** fresh5 startup checks +26 Maven tests +24 PostgreSQL assertions; no full deployment/Gateway/frontend/Place suite acceptance; migration-only5 FAIL giữ riêng.
+- **Next workstream:** G2 follow-up, owner-confirmed sanitized applied history + full source/release baseline per service, clean-vs-upgrade diff và versioned remediation; không guessed historical stock/cash repair. G4 broader deployment và G1b provider giữ scope riêng. Batch1–2 history và parent status/counts không thay bởi bounded tests.
+- Place/backend/frontend/showDistance không đổi; Booking/Refund semantics giữ nguyên. No stage/commit/push/PR; existing IDE edits và deleted Batch2 review document giữ nguyên.
+
+
+## Batch 4 checkpoint — 13/11/2026: Canonical Database Design
+
+- **Design DONE; migration/deployment NOT DONE.** [Batch4 report](../BATCH4_CANONICAL_DATABASE_DESIGN_2026-11-13.md), [canonical schema V1](../database-design/CANONICAL_DATABASE_SCHEMA_V1.md), [ERD](../database-design/ERD.md), [Supabase architecture](../database-design/SUPABASE_DATABASE_ARCHITECTURE.md), [Batch5 implementation plan](../database-design/MIGRATION_IMPLEMENTATION_PLAN.md), [reviewed evidence](../evidence/batch-4-database-design/README.md).
+- Năm supplied pgAdmin/pg_dump18 snapshots: 29 tables (including User Flyway history), 269 columns, 7 explicit secondary indexes; no COPY/INSERT. Source/SQL design: 46 app tables / 458 columns, 32 non-Place JPA entities, 32 repository interfaces, SQL/JDBC/outbox/audit coverage. Dump export database identity/applied history UNKNOWN; no Place snapshot, protected read-only.
+- **Topology recommendation:** one Supabase project/database + user_service/hotel_service/booking_service/revenue_service/regulations_service, per-service roles/history. Auth no own database; Media metadata stays Hotel; no cross-service FK; Place outside migration scope. Environment/network/role/pool acceptance pending, not deployed.
+- **STD-021 IN_PROGRESS:** complete design and discrepancy review exist; new exclusive canonical V1 chain proposed, original migrations/history preserved. No SQL-only V1/JPA validate/runtime acceptance executed in Batch4. D01–D06/D09 type/rate/time/delete/ID/target/seed decisions must resolve before Batch5 SQL freeze; retention/recovery D07 and cutover D08 before live rollout.
+- **STD-006 OPEN:** explicit nullable stock/no default10 and OWNER-source/ADMIN-review audit design kept. Physical stock provenance is not supplied by schema dump, no automatic backfill/approve/counter repair. Booking/Refund/Revenue/Loyalty accepted semantics unchanged; no provider refund design added.
+- **Next scope Batch5:** resolve design decisions, implement five fresh canonical Flyway chains/profiles/roles in isolated new target, clean/replay/catalog/JPA/query/guard/role/workflow/restore gates, then review concrete cutover. No legacy DB deletion or silent migration of old histories.
+- No production source/config/migration/credentials/DB changes; Place backend/frontend/shared contracts unchanged; no stage/commit/push/merge/PR. Pre-existing Batch3/IDE/deletion changes retained. Earlier acceptance/status history remains scoped to its original checkpoint.
+
+
+## Batch 4.1 checkpoint — 13/11/2026: UUID contracts / Five Supabase projects
+
+- **DESIGN REVISION DONE; UUID migration/SQL/Supabase deployment NOT DONE.** [Report](../BATCH4_1_UUID_AND_SUPABASE_ARCHITECTURE_REVISION_2026-11-13.md), [ID standard](../database-design/ID_STANDARDIZATION_CONTRACT.md), [167 persisted contracts](../evidence/batch-4-1-uuid-topology/id-contract-inventory.md), [38-column impact matrix](../evidence/batch-4-1-uuid-topology/id-migration-impact-matrix.md).
+- **Current topology decision, confirmed by user:** five existing independent Supabase projects/owner databases for User+Loyalty, Hotel, Booking+Payment/Refund, Revenue, Regulations. **Supersedes Batch4 one-project/five-schema recommendation.** Namespace proposal public per owner database, gated by Data API/grants/RLS/app-role security tests; no connection/config/deployment assumption, no Auth project, Place excluded.
+- Four Booking/Item/Payment/Refund String entity PKs +34 typed references proposed UUID, pending U01 user design approval before implementation. User/Hotel/event UUIDs kept; Booking/hold deterministic UUIDv3 generators kept, v4 default only for random entity IDs. Loyalty/Revenue/HotelReview target booking UUID consistent; JSON/protobuf strings and tag numbers preserved.
+- Exceptions kept: Regulations/snapshot BIGINT identities, structured loyalty command/hash/business/provider/catalog/composite keys, mixed SYSTEM_RECOVERY/system audit actors and raw invalid-event receipt booking TEXT. ratePlanId String alias U04; no false all-identifiers-UUID claim or automatic legacy casts.
+- **STD-021 IN_PROGRESS:** canonical model/spec/ERD/architecture/plan revised with current-versus-target provenance, proposal statuses and independent histories. Next **Batch5A** only after design approval (code/contracts/tests), **Batch5B** fresh five local DBs/canonical Flyway V1/JPA validate/runtime gates, **Batch6** five-project staging/deployment/cutover only after concrete acceptance. Historical migrations never scanned alongside fresh V1 or rewritten.
+- **STD-006 OPEN:** stock provenance/counter/inventory policy unchanged; no NULL→10/default/repair. Money/rate/time/delete/seed/backup/cutover gates remain; no policy/provider refund expansion. Place/city identity dataset compatibility flagged without modifying Place.
+- Static checks/evidence scope in report; no runtime UUID implementation, migration, Supabase access or application test execution. Java/frontend/proto/runtime config/legacy SQL/credentials/DBs unchanged; existing changes preserved; no stage/commit/push/merge/PR.
+
+
+## Batch 5A implementation checkpoint — 13/11/2026
+
+U01 approved38 conversions implemented in source (User3 / Booking21 / Revenue14); U03 approved fresh databases without demo import; U04 approved ratePlanId String. U02 evidence: golden legacy/new PASS, eight backend builds PASS (901 tests,39 existing skips), three isolated PostgreSQL contract tests PASS, frontend regression211 PASS. JSON/protobuf strings, Booking/hold UUIDv3 recipes, hashes, provider refs, raw Revenue receipts and domain policies retained.
+
+**Batch5A PARTIAL:** frontend tsc retains baseline protected Place showDistance error; no Place/frontend edits allowed. Full broker/Gateway/multi-node/restart and canonical migration acceptance NOT RUN. Current source mapping is UUID; actual supplied snapshot types and historical migrations remain unchanged. Never start new code against old VARCHAR schema. Native create-only synthetic tests are not canonical Flyway V1/JPA validate acceptance.
+
+Current model preserves batch4_1_* provenance; current source/binding status supersedes earlier pending-U01 language. Historical reports/inventories remain as-of Batch4.1; this checkpoint records the approved implementation. Five independent Supabase projects unchanged. STD-021 IN_PROGRESS, STD-006 OPEN; Batch5B/6 not started. No current DB/Supabase/runtime-config/history/Place or Git index/commit mutations. [Batch5A report](../BATCH5A_UUID_CONTRACT_IMPLEMENTATION_2026-11-13.md), [evidence](../evidence/batch-5a-uuid/implementation-inventory.md).
+
+
+## Batch 5B implementation checkpoint — 14/11/2026
+
+**DONE for local canonical acceptance; Supabase/Batch6 NOT STARTED.** Five standalone canonical V1 chains/service db/canonical,46 tables/458 columns, five independent PostgreSQL databases/public histories. Bootstrap/rerun/catalog/Hibernate5/5 PASS;32 repositories/guards; runtime roles deny DDL/history/cross-service CONNECT. Guarded external job, opt-in runtime canonical validates/disables Flyway/SQL init; legacy defaults/migrations retained.
+
+D01 historical unbounded Loyalty input/result/reservation total/discount and Revenue cash NUMERIC retained; bounded money38,2 unchanged. D02 exact rate; D03 Instant/timestamptz vs LocalDateTime/timestamp/date retained, JVM/JDBC/sessionUTC tested; D04 logical Room–Hotel/no cascade; D09 Java sole seed owner. Earlier proposal/model provenance stays historical design, executed local facts are recorded separately in5B evidence.
+
+901 backend regressions executed/47 opt-in skips,8 packages PASS;5 canonical native tests PASS. Actual5 apps UP/restart5/5 with owned RabbitMQ/Redis; positive-points Booking/Hotel/User/Payment/refund/Revenue/concurrency/broker-outage/outbox/replay PASS. Place showDistance fixed minimally, tsc PASS,3 component+211 regressions PASS, lint0 errors/2 existing warnings. Minimal repository parameter correction findByRoomTypeId(UUID).
+
+STD-021 local canonical gate complete; hosted deployment/managed security/backup/cutover and vendor PG/Flyway version certification future gates. STD-006 stock provenance OPEN/no default10/import. Full Gateway/provider/SMTP/Media/multi-node/all skipped opt-ins NOT VERIFIED. No Supabase connection/automatic Batch6. [Report](../BATCH5B_CANONICAL_FLYWAY_IMPLEMENTATION_2026-11-14.md), [evidence](../evidence/batch-5b-canonical-flyway/REPRODUCE.md).

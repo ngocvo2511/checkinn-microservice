@@ -16,7 +16,7 @@ public class PointsTransactionResponse {
     private UUID userId;
     private String transactionType;  // EARN, USE
     private Long points;
-    private String bookingId;
+    private @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using=com.example.userservice.contract.UuidContract.Deserializer.class) UUID bookingId;
     private String description;
     private LocalDateTime createdAt;
 }

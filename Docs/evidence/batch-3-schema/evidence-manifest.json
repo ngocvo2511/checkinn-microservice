@@ -1,0 +1,176 @@
+[
+  {
+    "file": "applied-history-manifest.md",
+    "bytes": 2581,
+    "sha256": "6349d0a9a487fa0005feb769da3370629266e130ceb88d80622fd9a8084cf069",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "applied-history.json",
+    "bytes": 34142,
+    "sha256": "22638bff58c02a319ea0e6b30c0d6b5a84c4e8a64a7435bc1c7a9759861bad82",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "clean-schema-manifest.json",
+    "bytes": 178568,
+    "sha256": "928695ae4ca5d8648e63bce27d60a3de068ec0341e561cbee6ac9c1d94149ccb",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "compatibility-results.json",
+    "bytes": 2247,
+    "sha256": "0349fd1998b04246bbff19d15b67b8630690182816713c25ca53de88e764c82e",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "docker-initial-ownership.json",
+    "bytes": 5705,
+    "sha256": "0da11d5fc2144f91ab66c231c0ceca72ca494d267d98e072086beaebc6d08e5c",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "encoding-compatibility-review.md",
+    "bytes": 1696,
+    "sha256": "d334219f2b03240c059bc33a36a8feb245b4ad8c06d421220faaa95a88dc0e69",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "environment.json",
+    "bytes": 413,
+    "sha256": "5b079530956c66db11732af686cf344407a6e5364c6c44a7e5bf661c6884d880",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "final-verification.json",
+    "bytes": 549,
+    "sha256": "c8377c139f13875e7043c3284c6dad4282e14e743110fea89072ac36eb6dd72a",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "financial-constraint-results.json",
+    "bytes": 754,
+    "sha256": "0ef07bc7ce3abf67e0115beed13e4e6b96c02ea62209dec06b3aa0e9fdb3a8a0",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "financial-probe-schema-manifest.json",
+    "bytes": 60498,
+    "sha256": "2ace2e8169e0d5c5cdb678ecaa5b82e989cc01b537df9508a4dd4ebd0a276a51",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "financial-schema-review.md",
+    "bytes": 2942,
+    "sha256": "a272d77110cefc250c3ef339f41a3607d3b3cd4b4fdf2d39adcf7d40ba4e6e1e",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "initial-state.json",
+    "bytes": 814,
+    "sha256": "e8ecbe7637c8acab410dd48fed4990f2a133872eb214e030383980a3b14560d2",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "inventory-provenance-review.md",
+    "bytes": 2127,
+    "sha256": "a189f97ce4cbf8dc2902feef534948cf066b66d802a87bfe6b621fc24b3c65c2",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "jpa-vs-explicit-schema-diff.json",
+    "bytes": 261066,
+    "sha256": "f10267844966438bcfaff4c0dcd4947a0a496dd655087327a9f15dcdc3edfed6",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "legacy-probe-schema-manifest.json",
+    "bytes": 64229,
+    "sha256": "8ee9f6dece2aec6f16667a04bee2131e7304c0d6a0d7160c0ba4d3a832947fa5",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "migration-only-results.json",
+    "bytes": 2255,
+    "sha256": "3ec6483bb10d6293703f387a8adfd541558dcacab7bb76f51170d212e803e816",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "migration-only-schema-manifest.json",
+    "bytes": 5151,
+    "sha256": "004647f476d26b3ef1ed8ed4244add891660c24193afc93eeadfc66079ab9b90",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "migration-strategy.md",
+    "bytes": 1723,
+    "sha256": "61894f393a3de4d4800ece8c49b940b2ea98e6a22d8d89c7c29bb01737ac8614",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "README.md",
+    "bytes": 2120,
+    "sha256": "fce08dc498de8503bdefbe595d2b899f04070910835b0eb8ba9afa61f53b3bee",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "regression-results.json",
+    "bytes": 349,
+    "sha256": "05c4ddf5ce8fd58e6b55ecb955d1292a7cd4eb427b2fed6e1edc37fa441ca27d",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "REPRODUCE.md",
+    "bytes": 2653,
+    "sha256": "ac57f2bd27c7e76ca22e26c1635fae65f44c6d15772bff126a5235a714fd53fe",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "schema-diff-report.md",
+    "bytes": 2508,
+    "sha256": "d3671db24cfdd2e13d183a056ea3e80bab8ae27f4698d1bc3a8b4c813f77b7a5",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "schema-source-manifest.md",
+    "bytes": 42580,
+    "sha256": "6bd750594ea7ba5a6ee0f9383082fff44f44d60f766ccd87b9dcc27180485b4b",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "schema-sources.json",
+    "bytes": 136303,
+    "sha256": "6c6b270fdddf6235dd8d75994f2f9f85e11050ed98776b14326fb03e2b64f539",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "service-schema-ownership.md",
+    "bytes": 2883,
+    "sha256": "9fe601c5679e92d6c8658cee40d85bf800fa30d672cb34aa64331dc9218e0152",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "startup-recheck-results.json",
+    "bytes": 1697,
+    "sha256": "cb37d8877efa9cc069bda37609905b28bcdec5cb3daa4820e4bd42b46e19e8ec",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "test-applied-history.json",
+    "bytes": 5647,
+    "sha256": "c25cb203531abcecb1a831d3ab54d31d9d76c2ffd4bcb61b436a53bb8ccb22f4",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "testonly-final-schema-manifest.json",
+    "bytes": 310266,
+    "sha256": "635a49dd32aca716b5b4f5460dafb6ef61145cbc9ae0d6dd0338df3907796877",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  },
+  {
+    "file": "user-flyway-history.json",
+    "bytes": 1100,
+    "sha256": "4ce9d40b774408d753754324bb04d8f822fb37d6b00fcb75db8f4af70b94fe15",
+    "classification": "reviewed schema metadata / synthetic aggregate results / documentation; no real customer rows"
+  }
+]

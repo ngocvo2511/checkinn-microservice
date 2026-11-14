@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity @Table(name = "points_reservations")
 @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
 public class PointsReservation {
-    @Id @Column(length = 128) private String bookingId;
+    @Id @Column(length = 128) private UUID bookingId;
     @Column(nullable = false) private UUID userId;
     @Column(nullable = false) private Long requestedPoints;
     @Column(nullable = false) private BigDecimal totalAmount;

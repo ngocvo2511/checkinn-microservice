@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.controller;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.booking.dto.BookingResponse;
 import com.example.bookingservice.booking.dto.CreateBookingRequest;
 import com.example.bookingservice.booking.enums.BookingStatus;
@@ -33,9 +34,9 @@ public class BookingController {
     public record CancellationReview(@jakarta.validation.constraints.NotBlank @jakarta.validation.constraints.Size(max = 1000) String reason) {}
     @PostMapping("/{id}/cancel-reviewed")
     @PreAuthorize("@bookingAccess.isAdmin(authentication)")
-    public ResponseEntity<Void> cancelReviewed(@PathVariable String id, @jakarta.validation.Valid @RequestBody CancellationReview review, Authentication actor) {
+    public ResponseEntity<Void> cancelReviewed(@PathVariable java.util.UUID id, @jakarta.validation.Valid @RequestBody CancellationReview review, Authentication actor) {
         try {
-            bookingService.cancelBookingReviewed(id, actor.getName(), review.reason());
+            bookingService.cancelBookingReviewed(id, required(actor.getName()), review.reason());
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
@@ -72,7 +73,7 @@ public class BookingController {
 
     @GetMapping("/{id}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #id)")
-    public ResponseEntity<BookingResponse> getBooking(@PathVariable String id) {
+    public ResponseEntity<BookingResponse> getBooking(@PathVariable java.util.UUID id) {
         try {
             log.info("[GET_BOOKING] Request received - bookingId: {}", id);
             BookingResponse booking = bookingService.getBooking(id);
@@ -86,7 +87,7 @@ public class BookingController {
 
     @GetMapping("/user/{userId}")
     @PreAuthorize("@bookingAccess.canListUser(authentication, #userId)")
-    public ResponseEntity<List<BookingResponse>> getUserBookings(@PathVariable String userId) {
+    public ResponseEntity<List<BookingResponse>> getUserBookings(@PathVariable java.util.UUID userId) {
         log.info("[GET_USER_BOOKINGS] Request received - userId: {}", userId);
         List<BookingResponse> bookings = bookingService.getUserBookings(userId);
         log.info("[GET_USER_BOOKINGS] Returning {} bookings for userId: {}", bookings.size(), userId);
@@ -95,7 +96,7 @@ public class BookingController {
 
     @GetMapping("/hotel/{hotelId}")
     @PreAuthorize("@bookingAccess.canManageHotel(authentication, #hotelId)")
-    public ResponseEntity<List<BookingResponse>> getHotelBookings(@PathVariable String hotelId) {
+    public ResponseEntity<List<BookingResponse>> getHotelBookings(@PathVariable java.util.UUID hotelId) {
         log.info("[GET_HOTEL_BOOKINGS] Request received - hotelId: {}", hotelId);
         List<BookingResponse> bookings = bookingService.getHotelBookings(hotelId);
         log.info("[GET_HOTEL_BOOKINGS] Returning {} bookings for hotelId: {}", bookings.size(), hotelId);
@@ -105,7 +106,7 @@ public class BookingController {
     @PutMapping("/{id}/status")
     @PreAuthorize("@bookingAccess.canManage(authentication, #id)")
     public ResponseEntity<BookingResponse> updateBookingStatus(
-            @PathVariable String id,
+            @PathVariable java.util.UUID id,
             @RequestParam BookingStatus status) {
         try {
             log.info("[UPDATE_BOOKING_STATUS] Request received - bookingId: {}, status: {}", id, status);
@@ -120,10 +121,10 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #id)")
-    public ResponseEntity<Void> cancelBooking(@PathVariable String id, Authentication actor) {
+    public ResponseEntity<Void> cancelBooking(@PathVariable java.util.UUID id, Authentication actor) {
         try {
             log.info("[CANCEL_BOOKING] Request received - bookingId: {}", id);
-            bookingService.cancelBooking(id, actor.getName());
+            bookingService.cancelBooking(id, required(actor.getName()));
             log.info("[CANCEL_BOOKING] Cancelled - bookingId: {}", id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {

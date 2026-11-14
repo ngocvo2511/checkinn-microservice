@@ -1,0 +1,390 @@
+[
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingItemRepository.java",
+    "sha256": "99909137233c4667b33912fb89ffbdf3bf0bb9b227ed39f664e3e4e262e9969e",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByBookingId",
+      "findByRoomTypeId"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "sha256": "67a56b62c25f60fe401f87a4d15e6710a55fc87b50d957ef5b0e63995c67ddcb",
+    "native_query": true,
+    "query_annotations": 7,
+    "derived_methods": [
+      "findDuePaidReservations",
+      "findDueOnsite",
+      "findByIdempotencyKeyHash",
+      "findDueLoyalty",
+      "findByIdForUpdate",
+      "findIdsByStatus",
+      "findByUserId",
+      "findByHotelId",
+      "findByStatus",
+      "findByCheckInDateBetween",
+      "countBookingsCreatedToday"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestRepository.java",
+    "sha256": "23fb4633f0597f6ed30f250463c1f3c6448d7a9dd313c300060cf81a759e0995",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByPaymentId"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/repository/PaymentRepository.java",
+    "sha256": "d45700a2d2d7426b96c12b15a20d300c0a292f905d9fda0fdc4dc37fe5e75cbc",
+    "native_query": false,
+    "query_annotations": 4,
+    "derived_methods": [
+      "findBookingIdByVnpayOrderId",
+      "findBookingIdById",
+      "findByIdForUpdate",
+      "findByVnpayOrderIdForUpdate",
+      "findFirstByBookingIdOrderByCreatedAtDesc",
+      "findFirstByBookingIdAndStatusOrderByCreatedAtDesc",
+      "findByStatus",
+      "findByTransactionId",
+      "findByVnpayOrderId",
+      "findByVnpayTransactionNo"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/CategoryTypeRepository.java",
+    "sha256": "869d723134fd3d905be631bfe47c8caefb142bbce274bb4fe05830fe3298f9d9",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findAllSorted",
+      "findAll"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityCategoryRepository.java",
+    "sha256": "51baa1b155c3a5e0a33a19256bbab6799a3b59e15f063642dcbc50b8464e31f4",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findAllByHotelId",
+      "findByTitle",
+      "findByHotelIdAndTitle",
+      "deleteAllByHotelId"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityRepository.java",
+    "sha256": "a80f47ba2fb81e7c9d5689bd61f7b9b04be10f39d50ea452ae9d128adeb80617",
+    "native_query": false,
+    "query_annotations": 1,
+    "derived_methods": [
+      "findCandidateFacets",
+      "findAllByCategoryHotelId",
+      "deleteAllByCategoryHotelId",
+      "deleteAllByCategory"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/repository/CityRepository.java",
+    "sha256": "49f8ccce4cfec6fa9565cbebd7f0736886b81687aee6b51a1ba1fd06cf5f7c48",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByNameContainingIgnoreCase",
+      "findByProvince_Id",
+      "findByName",
+      "existsByName"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/repository/ProvinceRepository.java",
+    "sha256": "fe53a0253daacfd584f15e2adb5b166d51dba58660324e764f12583525e561a0",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByNameContainingIgnoreCase",
+      "findByName",
+      "existsByName"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/AccommodationTypeChangeRepository.java",
+    "sha256": "def88af42acd7d6fb40dfe6d7da2df748998407c74ee749000ec438863805561",
+    "native_query": false,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findByHotelIdAndStatus",
+      "findByHotelIdOrderByCreatedAtDesc",
+      "findByStatusOrderByCreatedAtAsc",
+      "findForUpdate"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/HotelRepository.java",
+    "sha256": "bb21a7cca3670c097b71b666433ba235068132b36c565d720d06d3c221b3d681",
+    "native_query": false,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findForUpdate",
+      "findByIsActiveTrueAndApprovedStatus",
+      "findByCityIdAndIsActiveTrueAndApprovedStatus",
+      "findByCityIdInAndIsActiveTrueAndApprovedStatus",
+      "findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus",
+      "findByOwnerId",
+      "findByApprovedStatus",
+      "findByCityId",
+      "findByNameContainingIgnoreCase",
+      "findByOwnerIdAndCityId",
+      "existsByIdAndOwnerId"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/repository/MediaAssetRepository.java",
+    "sha256": "eaca687708811ee5c51cf0e58a0522697b3eb1c7d068869318b654050a066962",
+    "native_query": false,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findLocationById",
+      "findPublicRoomMediaByHotel",
+      "findByTargetIdAndTargetTypeOrderBySortOrderAsc",
+      "findByTargetIdAndTargetType",
+      "findFirstByTargetIdAndTargetTypeAndIsThumbnailTrue"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+    "sha256": "e003912d656b2c2e9f53b529e0fc20583ee47b99b2f8e5a228a49a866a3d9164",
+    "native_query": false,
+    "query_annotations": 1,
+    "derived_methods": [
+      "findAllByHotelId",
+      "deleteAllByHotelId",
+      "findByIdAndHotelId"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/PolicyCategoryTypeRepository.java",
+    "sha256": "969c9ee2d0106dc84840881c44ba069936942f0ea93ae4ff9f5d7f0176e3da07",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findAllSorted",
+      "findAll",
+      "findByName"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Question/repository/QuestionRepository.java",
+    "sha256": "49da4b34dfba8123f327fa11be78d1ccf0b1cbf661b7294022ea52d8fe44b38b",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findAllByHotelId",
+      "deleteAllByHotelId",
+      "findByIdAndHotelId"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/HotelReviewRepository.java",
+    "sha256": "00f8779b4bf3571fff45f86515824d5dc75d7f3d5a058cb3dab8e51f4aee9e7d",
+    "native_query": false,
+    "query_annotations": 3,
+    "derived_methods": [
+      "summarizePublished",
+      "findByIdForUpdate",
+      "findByHotelIdAndStatus",
+      "findByHotelIdAndStatusOrderByCreatedAtDesc",
+      "findByGuestId",
+      "findByGuestId",
+      "findByBookingIdAndGuestId",
+      "findByHotelIdAndGuestIdAndBookingId",
+      "existsByHotelIdAndGuestId",
+      "findByHotelIdInAndStatusOrderByCreatedAtDesc",
+      "countByHotelIdAndStatus",
+      "findByStatus"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewFeedbackRepository.java",
+    "sha256": "12cadefefb1e22b66766c57ecfe9152149109d1b86efe6c9e5f39afe251a10bb",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByReviewIdAndUserId",
+      "countByReviewIdAndFeedbackType"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewResponseRepository.java",
+    "sha256": "5183e7949aa196ab554c9b2b5ca1e2081040867e037d8a26771c051858315c59",
+    "native_query": false,
+    "query_annotations": 1,
+    "derived_methods": [
+      "findByReviewId",
+      "findReviewIdById",
+      "findByOwnerId",
+      "findByReviewIdIn",
+      "existsByReviewId"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomAvailabilityRepository.java",
+    "sha256": "2d9902cd9d2b575373a07efce03d98cb02e60f1a9c67a7f79f1a70258f4fc202",
+    "native_query": false,
+    "query_annotations": 3,
+    "derived_methods": [
+      "findByRoomTypeIdAndDate",
+      "findByRoomTypeIdAndDateReadOnly",
+      "findLoadForStay",
+      "findPeakOccupiedForRooms"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "sha256": "92b7665fa0c099f017eb5070fc615c32ffca9f1b0abda00915cf6df5e01e4bf7",
+    "native_query": true,
+    "query_annotations": 3,
+    "derived_methods": [
+      "findByCommandId",
+      "findByIdForUpdate",
+      "findByIdAndStatus",
+      "findExpiredHolds"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "sha256": "2b4346165d9a6172b3ddeca71fd87ea0ee5b756a2d1faff0eb1b35fefdccf435",
+    "native_query": false,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findHotelIdById",
+      "findByIdForUpdate",
+      "findByHotelId",
+      "findByHotelIdInAndIsActiveTrue",
+      "existsByIdAndHotelId"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationRepository.java",
+    "sha256": "e99cb1a771fcdfcaed41b10815b6905dd3d173b449cbc6514359a29517c4fdc5",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByRegulationKey"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationSnapshotRepository.java",
+    "sha256": "87af78685c9c1607c43c53ebc5c6995c6f86a5a1ed4237e4b04c8e1fb86d8f23",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findTop50ByOrderByAppliedAtDesc",
+      "findAllByRegulationKeyOrderByAppliedAtDesc"
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/repository/BookingStatusRecordRepository.java",
+    "sha256": "d5667d79a66f14429ade1a92a311d7debb2c3acb47a2ee19785ae01aa9d97fc1",
+    "native_query": false,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findByBookingId",
+      "findByHotelIdAndEventAtBetween",
+      "findByEventAtBetween",
+      "findActiveBookings",
+      "findActiveBookingsByHotel"
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/repository/PaymentRecordRepository.java",
+    "sha256": "fb741e99da11a3f358a8974e9816496c7a4aa250073204be3261b2c056754780",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByBookingId",
+      "findByHotelIdAndEventAtBetween",
+      "findByEventAtBetween"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/LoyaltyCommandRepository.java",
+    "sha256": "df9cec254efef2f7f728e7b704f091c733593122b8d672c0983428c11a2e3139",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": []
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/LoyaltyPointsRepository.java",
+    "sha256": "dbfcbd9073d432ddf38ff426f25f1552ec4b1065c4b1c1f4df94d877e65a1720",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByUserId",
+      "findAllByUserId"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/OtpRepository.java",
+    "sha256": "36d84f8108080b07548b0d49530860a633052e9c16b74f870c2c01894beea373",
+    "native_query": false,
+    "query_annotations": 1,
+    "derived_methods": [
+      "findByEmailAndIsVerifiedFalse",
+      "findByEmail",
+      "deleteByEmail",
+      "findAllForUpdate"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsReservationRepository.java",
+    "sha256": "b29c7eccaf996815990db38792cd848d38a7c5ba98bb56b43221e5ea979a8890",
+    "native_query": false,
+    "query_annotations": 1,
+    "derived_methods": [
+      "sum",
+      "sumHeldByUserId",
+      "findTop20ByStateAndNextCheckAtLessThanEqualOrderByNextCheckAtAsc"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsTransactionRepository.java",
+    "sha256": "60fa1cf41895e5ed636079deb27185b1fa6d00269f5b7055d1ec31fef9a89d39",
+    "native_query": true,
+    "query_annotations": 2,
+    "derived_methods": [
+      "findByUserIdOrderByCreatedAtDesc",
+      "findByBookingId"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/UserProfileRepository.java",
+    "sha256": "e14b5286bcd5d42fd5b7f10c32f7dc4e70f929d14bf90131a9a11788bab98f38",
+    "native_query": false,
+    "query_annotations": 0,
+    "derived_methods": [
+      "findByUserId"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/UserRepository.java",
+    "sha256": "bdee2c0e3696091e3ae0437d30c3dc7938bb1455c2e04dbc82a1f932ae1e0ad8",
+    "native_query": false,
+    "query_annotations": 4,
+    "derived_methods": [
+      "findByIdForUpdate",
+      "findByEmailForUpdate",
+      "findIdentityForUpdate",
+      "findByUsername",
+      "findByEmail",
+      "existsByUsername",
+      "existsByEmail",
+      "findByEmailOrUsername"
+    ]
+  }
+]

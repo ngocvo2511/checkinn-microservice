@@ -1,5 +1,6 @@
 package com.example.bookingservice.messaging;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.messaging.event.BookingStatusEvent;
 import com.example.bookingservice.messaging.event.PaymentEvent;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class HotelEventPublisher {
     private final BookingEventOutbox outbox;
-    public void publishPaymentCompleted(PaymentEvent event) { outbox.enqueue(event.getBookingId(),"payment.completed",event); }
-    public void publishPaymentRefunded(PaymentEvent event) { outbox.enqueue(event.getBookingId(),"payment.refunded",event); }
-    public void publishBookingStatus(BookingStatusEvent event) { outbox.enqueue(event.getBookingId(),"booking.status.changed",event); }
+    public void publishPaymentCompleted(PaymentEvent event) { outbox.enqueue(required(event.getBookingId()),"payment.completed",event); }
+    public void publishPaymentRefunded(PaymentEvent event) { outbox.enqueue(required(event.getBookingId()),"payment.refunded",event); }
+    public void publishBookingStatus(BookingStatusEvent event) { outbox.enqueue(required(event.getBookingId()),"booking.status.changed",event); }
 }

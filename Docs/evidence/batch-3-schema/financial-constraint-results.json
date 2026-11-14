@@ -1,0 +1,42 @@
+[
+  {
+    "status": "PASS",
+    "test": "refund-negative-amount"
+  },
+  {
+    "status": "PASS",
+    "test": "refund-without-evidence"
+  },
+  {
+    "status": "PASS",
+    "test": "refund-duplicate-payment"
+  },
+  {
+    "status": "PASS",
+    "test": "refund-rollback"
+  },
+  {
+    "status": "PASS",
+    "test": "loyalty-existing-ledger-preserved"
+  },
+  {
+    "status": "PASS",
+    "test": "loyalty-command-dedup"
+  },
+  {
+    "status": "PASS",
+    "test": "loyalty-guard-indexes"
+  },
+  {
+    "status": "PASS",
+    "test": "refund-orphan-fk"
+  },
+  {
+    "status": "PASS",
+    "test": "incompatible-legacy-upgrade-rejected"
+  },
+  {
+    "status": "PASS",
+    "test": "failed-migration-ddl-and-data-rollback"
+  }
+]

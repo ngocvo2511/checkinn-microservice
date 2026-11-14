@@ -1,0 +1,1072 @@
+{
+  "owner": "user",
+  "database": "batch5b_user_1794592498_33124",
+  "columns": [
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "command_key",
+      "sql_type": "character varying(160)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "command_type",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "input_amount",
+      "sql_type": "numeric",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "input_points",
+      "sql_type": "bigint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "result_amount",
+      "sql_type": "numeric",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "result_points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_commands",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "available_points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "total_points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "used_points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "loyalty_points",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "attempt_count",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "email",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "expiry_time",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "is_verified",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "otps",
+      "column_name": "otp_code",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "discount_amount",
+      "sql_type": "numeric",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "hold_expires_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "next_check_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "redemption_rate",
+      "sql_type": "numeric",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "requested_points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "state",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "total_amount",
+      "sql_type": "numeric",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_reservations",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "description",
+      "sql_type": "character varying(500)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "points",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "transaction_type",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "points_transactions",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "address",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "birth_date",
+      "sql_type": "date",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "country",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "full_name",
+      "sql_type": "character varying(100)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "gender",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "loyalty_points_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "phone",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "user_profiles",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "email",
+      "sql_type": "character varying(254)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "is_active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "is_email_verified",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "password",
+      "sql_type": "character varying(100)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "role",
+      "sql_type": "character varying(20)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "users",
+      "column_name": "username",
+      "sql_type": "character varying(50)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_command_type_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((command_type)::text = ANY (ARRAY[('EARN'::character varying)::text, ('USE'::character varying)::text, ('CANCEL'::character varying)::text])))"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_command_key_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL command_key"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_command_type_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL command_type"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_result_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL result_points"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (command_key)"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_booking_id_command_type_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (booking_id, command_type)"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_total_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL total_points"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_used_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL used_points"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_available_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL available_points"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_email_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_otp_code_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL otp_code"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_expiry_time_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL expiry_time"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_is_verified_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_verified"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_attempt_count_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL attempt_count"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_discount_amount_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((discount_amount >= (0)::numeric))"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_points_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((points >= 0))"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_redemption_rate_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((redemption_rate > (0)::numeric))"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_state_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((state)::text = ANY ((ARRAY['HELD'::character varying, 'COMMITTED'::character varying, 'CANCELLED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_requested_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_points"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_total_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL total_amount"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL points"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_discount_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL discount_amount"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_redemption_rate_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL redemption_rate"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_state_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_hold_expires_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hold_expires_at"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_next_check_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL next_check_at"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (booking_id)"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_transaction_type_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL transaction_type"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_points_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL points"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_description_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((role)::text = ANY ((ARRAY['ADMIN'::character varying, 'STAFF'::character varying, 'CUSTOMER'::character varying, 'OWNER'::character varying])::text[])))"
+    },
+    {
+      "table_name": "users",
+      "name": "users_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "users",
+      "name": "users_username_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL username"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "users",
+      "name": "users_password_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL password"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL role"
+    },
+    {
+      "table_name": "users",
+      "name": "users_is_email_verified_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_email_verified"
+    },
+    {
+      "table_name": "users",
+      "name": "users_is_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "users",
+      "name": "users_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "users",
+      "name": "users_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_username_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (username)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_full_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL full_name"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_loyalty_points_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (loyalty_points_id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_user_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (user_id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_loyalty_points_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (loyalty_points_id) REFERENCES loyalty_points(id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_user_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_pkey",
+      "definition": "CREATE UNIQUE INDEX loyalty_commands_pkey ON public.loyalty_commands USING btree (command_key)"
+    },
+    {
+      "table_name": "loyalty_commands",
+      "name": "loyalty_commands_booking_id_command_type_key",
+      "definition": "CREATE UNIQUE INDEX loyalty_commands_booking_id_command_type_key ON public.loyalty_commands USING btree (booking_id, command_type)"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_pkey",
+      "definition": "CREATE UNIQUE INDEX loyalty_points_pkey ON public.loyalty_points USING btree (id)"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_pkey",
+      "definition": "CREATE UNIQUE INDEX otps_pkey ON public.otps USING btree (id)"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_pkey",
+      "definition": "CREATE UNIQUE INDEX points_reservations_pkey ON public.points_reservations USING btree (booking_id)"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_pkey",
+      "definition": "CREATE UNIQUE INDEX points_transactions_pkey ON public.points_transactions USING btree (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_pkey",
+      "definition": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_key",
+      "definition": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_username_key",
+      "definition": "CREATE UNIQUE INDEX users_username_key ON public.users USING btree (username)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_pkey",
+      "definition": "CREATE UNIQUE INDEX user_profiles_pkey ON public.user_profiles USING btree (id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_loyalty_points_id_key",
+      "definition": "CREATE UNIQUE INDEX user_profiles_loyalty_points_id_key ON public.user_profiles USING btree (loyalty_points_id)"
+    },
+    {
+      "table_name": "user_profiles",
+      "name": "user_profiles_user_id_key",
+      "definition": "CREATE UNIQUE INDEX user_profiles_user_id_key ON public.user_profiles USING btree (user_id)"
+    },
+    {
+      "table_name": "loyalty_points",
+      "name": "loyalty_points_user",
+      "definition": "CREATE INDEX loyalty_points_user ON public.loyalty_points USING btree (user_id)"
+    },
+    {
+      "table_name": "otps",
+      "name": "otps_email_created",
+      "definition": "CREATE INDEX otps_email_created ON public.otps USING btree (email, created_at DESC)"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_held_user",
+      "definition": "CREATE INDEX points_reservations_held_user ON public.points_reservations USING btree (user_id) WHERE ((state)::text = 'HELD'::text)"
+    },
+    {
+      "table_name": "points_reservations",
+      "name": "points_reservations_recovery",
+      "definition": "CREATE INDEX points_reservations_recovery ON public.points_reservations USING btree (next_check_at) WHERE ((state)::text = 'HELD'::text)"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_guard_booking",
+      "definition": "CREATE INDEX points_transactions_guard_booking ON public.points_transactions USING btree (booking_id, transaction_type)"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_guard_user",
+      "definition": "CREATE INDEX points_transactions_guard_user ON public.points_transactions USING btree (user_id, booking_id, transaction_type)"
+    },
+    {
+      "table_name": "points_transactions",
+      "name": "points_transactions_user_created",
+      "definition": "CREATE INDEX points_transactions_user_created ON public.points_transactions USING btree (user_id, created_at DESC)"
+    }
+  ],
+  "sequences": [],
+  "history": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "description": "canonical schema",
+      "type": "SQL",
+      "script": "V1__canonical_schema.sql",
+      "checksum": -1791626366,
+      "success": true
+    }
+  ]
+}

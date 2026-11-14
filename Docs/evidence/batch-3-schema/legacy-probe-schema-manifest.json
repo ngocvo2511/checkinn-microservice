@@ -1,0 +1,1974 @@
+{
+  "cash_before_upgrade": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_event_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "kind",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "customer_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 14,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 15,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "recorded_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "revenue_cash_transactions_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (amount > 0::numeric)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_customer_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL customer_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (kind::text = ANY (ARRAY['CREDIT'::character varying, 'DEBIT'::character varying]::text[]))",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL kind",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (nights > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_occurred_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL occurred_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_kind_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id, kind)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_method",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_recorded_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL recorded_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (rooms > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rooms",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (source_event_id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_event_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_version",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_transaction_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL transaction_id",
+        "table_name": "revenue_cash_transactions"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE INDEX revenue_cash_period ON public.revenue_cash_transactions USING btree (occurred_at, hotel_id)",
+        "indexname": "revenue_cash_period",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_payment_id_kind_key ON public.revenue_cash_transactions USING btree (payment_id, kind)",
+        "indexname": "revenue_cash_transactions_payment_id_kind_key",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_pkey ON public.revenue_cash_transactions USING btree (id)",
+        "indexname": "revenue_cash_transactions_pkey",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_source_event_id_key ON public.revenue_cash_transactions USING btree (source_event_id)",
+        "indexname": "revenue_cash_transactions_source_event_id_key",
+        "tablename": "revenue_cash_transactions"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "revenue_cash_transactions"
+      }
+    ]
+  },
+  "cash_clean_v2": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_event_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "kind",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "customer_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 14,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 15,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "recorded_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_mode",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 19,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "revenue_cash_transactions_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (amount > 0::numeric)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_customer_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL customer_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (kind::text = ANY (ARRAY['CREDIT'::character varying, 'DEBIT'::character varying]::text[]))",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL kind",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (nights > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_occurred_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL occurred_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_kind_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id, kind)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_method",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_recorded_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL recorded_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (rooms > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rooms",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (source_event_id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_event_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_version",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_transaction_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL transaction_id",
+        "table_name": "revenue_cash_transactions"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE INDEX revenue_cash_period ON public.revenue_cash_transactions USING btree (occurred_at, hotel_id)",
+        "indexname": "revenue_cash_period",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_payment_id_kind_key ON public.revenue_cash_transactions USING btree (payment_id, kind)",
+        "indexname": "revenue_cash_transactions_payment_id_kind_key",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_pkey ON public.revenue_cash_transactions USING btree (id)",
+        "indexname": "revenue_cash_transactions_pkey",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_source_event_id_key ON public.revenue_cash_transactions USING btree (source_event_id)",
+        "indexname": "revenue_cash_transactions_source_event_id_key",
+        "tablename": "revenue_cash_transactions"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "revenue_cash_transactions"
+      }
+    ]
+  },
+  "cash_upgrade_v2": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_event_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "kind",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "customer_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 14,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 15,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "recorded_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_mode",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 19,
+        "table_name": "revenue_cash_transactions",
+        "udt_name": "varchar"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "revenue_cash_transactions_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (amount > 0::numeric)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_customer_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL customer_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (kind::text = ANY (ARRAY['CREDIT'::character varying, 'DEBIT'::character varying]::text[]))",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_kind_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL kind",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (nights > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_occurred_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL occurred_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_kind_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id, kind)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_payment_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_method",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_recorded_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL recorded_at",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (rooms > 0)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_rooms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rooms",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_key",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (source_event_id)",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_event_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_event_id",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_source_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source_version",
+        "table_name": "revenue_cash_transactions"
+      },
+      {
+        "conname": "revenue_cash_transactions_transaction_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL transaction_id",
+        "table_name": "revenue_cash_transactions"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE INDEX revenue_cash_period ON public.revenue_cash_transactions USING btree (occurred_at, hotel_id)",
+        "indexname": "revenue_cash_period",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_payment_id_kind_key ON public.revenue_cash_transactions USING btree (payment_id, kind)",
+        "indexname": "revenue_cash_transactions_payment_id_kind_key",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_pkey ON public.revenue_cash_transactions USING btree (id)",
+        "indexname": "revenue_cash_transactions_pkey",
+        "tablename": "revenue_cash_transactions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX revenue_cash_transactions_source_event_id_key ON public.revenue_cash_transactions USING btree (source_event_id)",
+        "indexname": "revenue_cash_transactions_source_event_id_key",
+        "tablename": "revenue_cash_transactions"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "revenue_cash_transactions"
+      }
+    ]
+  },
+  "hotel_v2_partial_failure": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "code",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "latitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "longitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "cities",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": "'PROVINCE'::character varying",
+        "column_name": "type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "parent_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": "0",
+        "column_name": "hotel_count",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 9,
+        "table_name": "cities",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotels",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": "'00000000-0000-0000-0000-000000000000'::uuid",
+        "column_name": "city_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotels",
+        "udt_name": "uuid"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "cities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_hotel_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_count",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL type",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_code",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (code)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_name",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "fk_hotels_city_id",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (city_id) REFERENCES cities(id)",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_city_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL city_id",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotels"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)",
+        "indexname": "cities_pkey",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE INDEX idx_cities_name ON public.cities USING btree (name)",
+        "indexname": "idx_cities_name",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_code ON public.cities USING btree (code)",
+        "indexname": "uk_cities_code",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_name ON public.cities USING btree (name)",
+        "indexname": "uk_cities_name",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotels_pkey ON public.hotels USING btree (id)",
+        "indexname": "hotels_pkey",
+        "tablename": "hotels"
+      },
+      {
+        "indexdef": "CREATE INDEX idx_hotels_city_id ON public.hotels USING btree (city_id)",
+        "indexname": "idx_hotels_city_id",
+        "tablename": "hotels"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "cities"
+      },
+      {
+        "tablename": "hotels"
+      }
+    ]
+  },
+  "inventory_probe_v2": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "previous_quantity",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 4,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "proposed_quantity",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 5,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "source",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "requested_by",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "requested_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "reviewed_by",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "reviewed_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "review_reason",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "room_inventory_review_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_inventory_review_states",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": "0",
+        "column_name": "revision",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 2,
+        "table_name": "room_inventory_review_states",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "latest_request_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "room_inventory_review_states",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "approved_request_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "room_inventory_review_states",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_types",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "total_rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 2,
+        "table_name": "room_types",
+        "udt_name": "int4"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "room_inventory_review_requests_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_proposed_quantity_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (proposed_quantity > 0)",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_proposed_quantity_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL proposed_quantity",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_requested_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_at",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_requested_by_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_by",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_room_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_id",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_source_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (length(TRIM(BOTH FROM source)) > 0)",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_source_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying, 'SUPERSEDED'::character varying]::text[]))",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_requests_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "room_inventory_review_requests"
+      },
+      {
+        "conname": "room_inventory_review_states_approved_request_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (approved_request_id) REFERENCES room_inventory_review_requests(id)",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_inventory_review_states_latest_request_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (latest_request_id) REFERENCES room_inventory_review_requests(id)",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_inventory_review_states_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (room_id)",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_inventory_review_states_revision_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (revision >= 0)",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_inventory_review_states_revision_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL revision",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_inventory_review_states_room_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_id",
+        "table_name": "room_inventory_review_states"
+      },
+      {
+        "conname": "room_types_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "room_types"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE INDEX room_inventory_review_queue ON public.room_inventory_review_requests USING btree (status, requested_at, id)",
+        "indexname": "room_inventory_review_queue",
+        "tablename": "room_inventory_review_requests"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_inventory_review_requests_pkey ON public.room_inventory_review_requests USING btree (id)",
+        "indexname": "room_inventory_review_requests_pkey",
+        "tablename": "room_inventory_review_requests"
+      },
+      {
+        "indexdef": "CREATE INDEX room_inventory_review_room ON public.room_inventory_review_requests USING btree (room_id, requested_at, id)",
+        "indexname": "room_inventory_review_room",
+        "tablename": "room_inventory_review_requests"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_inventory_review_states_pkey ON public.room_inventory_review_states USING btree (room_id)",
+        "indexname": "room_inventory_review_states_pkey",
+        "tablename": "room_inventory_review_states"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_types_pkey ON public.room_types USING btree (id)",
+        "indexname": "room_types_pkey",
+        "tablename": "room_types"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "room_inventory_review_requests"
+      },
+      {
+        "tablename": "room_inventory_review_states"
+      },
+      {
+        "tablename": "room_types"
+      }
+    ]
+  }
+}

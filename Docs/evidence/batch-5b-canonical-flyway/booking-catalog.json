@@ -1,0 +1,1884 @@
+{
+  "owner": "booking",
+  "database": "batch5b_booking_1794592498_33124",
+  "columns": [
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "attempts",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "created_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "delivered_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "event_version",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "exchange_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "last_error",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "next_attempt_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "payload",
+      "sql_type": "jsonb",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "routing_key",
+      "sql_type": "character varying(128)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "column_name": "state",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": "'PENDING'::character varying",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "cancellation_policy",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "guest_name",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "nights",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "quantity",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "rate_plan_id",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "room_type_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "subtotal",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "tax_fee",
+      "sql_type": "numeric(38,2)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_items",
+      "column_name": "unit_price",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "adults",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "cancellation_policy_version",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "check_in_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "children",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "contact_email",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "contact_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "contact_phone",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "earned_points",
+      "sql_type": "bigint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "free_cancellation_until",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "hold_expires_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "hold_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "hotel_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "idempotency_key_hash",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "idempotency_request_hash",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "inventory_review_reason",
+      "sql_type": "character varying(1000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "inventory_reviewed_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "inventory_reviewed_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "loyalty_attempts",
+      "sql_type": "integer",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "loyalty_last_error",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "loyalty_next_attempt_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "loyalty_status",
+      "sql_type": "character varying(24)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "onsite_attempts",
+      "sql_type": "integer",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "onsite_last_error",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "onsite_next_attempt_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "onsite_reservation_status",
+      "sql_type": "character varying(24)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_reservation_attempts",
+      "sql_type": "integer",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_reservation_last_error",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_reservation_next_attempt_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_reservation_payment_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "paid_reservation_status",
+      "sql_type": "character varying(24)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "points_discount_amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "special_requests",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "status",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "total_amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "used_points",
+      "sql_type": "bigint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "user_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "voucher_code",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "bookings",
+      "column_name": "voucher_discount",
+      "sql_type": "numeric(38,2)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "column_name": "action",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "column_name": "actor_id",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "column_name": "execution_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "column_name": "occurred_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "created_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "currency",
+      "sql_type": "character varying(3)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "evidence_reference",
+      "sql_type": "character varying(200)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "execution_method",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": "'MANUAL'::character varying",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "external_reference",
+      "sql_type": "character varying(200)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "payment_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "provider",
+      "sql_type": "character varying(32)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "request_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "state",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "submitted_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "submitted_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "column_name": "updated_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "method",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "paid_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "status",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "transaction_id",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "transaction_occurred_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "vnpay_create_date",
+      "sql_type": "character varying(14)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "vnpay_order_id",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "vnpay_response_code",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payments",
+      "column_name": "vnpay_transaction_no",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "approved_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "approved_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "execution_mode",
+      "sql_type": "character varying(32)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "payment_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "reason",
+      "sql_type": "character varying(1000)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "refunded_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "requested_at",
+      "sql_type": "timestamp(6) with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "requested_by",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "status",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "refund_requests",
+      "column_name": "version",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "bookings",
+      "name": "bookings_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'PENDING_PAYMENT'::character varying, 'CONFIRMED'::character varying, 'CHECKED_IN'::character varying, 'CHECKED_OUT'::character varying, 'CANCELLED'::character varying, 'NO_SHOW'::character varying])::text[])))"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((check_out_date > check_in_date))"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check1",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((adults >= 0) AND (children >= 0)))"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check2",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((total_amount >= (0)::numeric) AND (paid_amount >= (0)::numeric)))"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_user_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_hotel_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_name"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_adults_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL adults"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_children_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL children"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_total_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL total_amount"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_paid_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL paid_amount"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_contact_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL contact_name"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_contact_email_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL contact_email"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_contact_phone_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL contact_phone"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_idempotency_key_hash_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (idempotency_key_hash)"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((quantity > 0) AND (nights > 0)))"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_check1",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((check_out_date > check_in_date))"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_check2",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((unit_price >= (0)::numeric) AND (subtotal >= (0)::numeric)))"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_room_type_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_type_id"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_room_type_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL room_type_name"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_rate_plan_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL rate_plan_id"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_quantity_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL quantity"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_unit_price_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL unit_price"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_nights_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL nights"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_subtotal_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL subtotal"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_method_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((method)::text = ANY ((ARRAY['HOTEL'::character varying, 'VNPAY'::character varying])::text[])))"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['PENDING'::character varying, 'ONSITE_PENDING'::character varying, 'COMPLETED'::character varying, 'FAILED'::character varying, 'REFUNDED'::character varying, 'CANCELLED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_amount_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((amount >= (0)::numeric))"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amount"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_method_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL method"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_vnpay_order_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (vnpay_order_id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_vnpay_transaction_no_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (vnpay_transaction_no)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_status_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((status)::text = ANY ((ARRAY['REQUESTED'::character varying, 'APPROVED_PENDING_EXECUTION'::character varying, 'REJECTED'::character varying, 'REFUNDED'::character varying])::text[])))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_payment_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (payment_id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_request_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (request_id)"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_amount_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((amount > (0)::numeric))"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_payment_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_id"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amount"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_reason_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_requested_by_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_by"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL status"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_requested_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL requested_at"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL version"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_payment_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (payment_id)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_attempts_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((attempts >= 0))"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_state_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((state)::text = ANY (ARRAY[('PENDING'::character varying)::text, ('DELIVERED'::character varying)::text])))"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_event_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL event_version"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_exchange_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL exchange_name"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_routing_key_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL routing_key"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_payload_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_state_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_attempts_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL attempts"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_next_attempt_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL next_attempt_at"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_event_version_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (event_version)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_amount_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((amount > (0)::numeric))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_currency_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((currency)::text = 'VND'::text))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((((state)::text <> 'REFUNDED'::text) OR ((execution_method)::text = 'SANDBOX_INTERNAL'::text)))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_execution_method_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((execution_method)::text = ANY (ARRAY[('MANUAL'::character varying)::text, ('SANDBOX_INTERNAL'::character varying)::text])))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_state_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((state)::text = ANY (ARRAY[('PENDING_MANUAL_REFUND'::character varying)::text, ('PENDING_VERIFICATION'::character varying)::text, ('NEEDS_MANUAL_REVIEW'::character varying)::text, ('REFUNDED'::character varying)::text])))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_check1",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((((state)::text <> 'PENDING_VERIFICATION'::text) OR ((external_reference IS NOT NULL) AND (evidence_reference IS NOT NULL) AND (submitted_by IS NOT NULL) AND (submitted_at IS NOT NULL))))"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_request_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL request_id"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_payment_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_id"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amount"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_currency_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL currency"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_provider_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL provider"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_execution_method_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL execution_method"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_state_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_execution_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL execution_id"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_action_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL action"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_actor_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL actor_id"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_occurred_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL occurred_at"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_booking_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_payment_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (payment_id) REFERENCES payments(id)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_booking_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_booking_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_payment_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (payment_id) REFERENCES payments(id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_request_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (request_id) REFERENCES refund_requests(id)"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_execution_id_fkey",
+      "kind": "f",
+      "validated": true,
+      "definition": "FOREIGN KEY (execution_id) REFERENCES manual_refund_executions(id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "bookings",
+      "name": "bookings_pkey",
+      "definition": "CREATE UNIQUE INDEX bookings_pkey ON public.bookings USING btree (id)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_idempotency_key_hash_key",
+      "definition": "CREATE UNIQUE INDEX bookings_idempotency_key_hash_key ON public.bookings USING btree (idempotency_key_hash)"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_pkey",
+      "definition": "CREATE UNIQUE INDEX booking_items_pkey ON public.booking_items USING btree (id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_pkey",
+      "definition": "CREATE UNIQUE INDEX payments_pkey ON public.payments USING btree (id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_vnpay_order_id_key",
+      "definition": "CREATE UNIQUE INDEX payments_vnpay_order_id_key ON public.payments USING btree (vnpay_order_id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_vnpay_transaction_no_key",
+      "definition": "CREATE UNIQUE INDEX payments_vnpay_transaction_no_key ON public.payments USING btree (vnpay_transaction_no)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_pkey",
+      "definition": "CREATE UNIQUE INDEX refund_requests_pkey ON public.refund_requests USING btree (id)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_payment_id_key",
+      "definition": "CREATE UNIQUE INDEX refund_requests_payment_id_key ON public.refund_requests USING btree (payment_id)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_pkey",
+      "definition": "CREATE UNIQUE INDEX booking_event_outbox_pkey ON public.booking_event_outbox USING btree (id)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_outbox_event_version_key",
+      "definition": "CREATE UNIQUE INDEX booking_event_outbox_event_version_key ON public.booking_event_outbox USING btree (event_version)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_pkey",
+      "definition": "CREATE UNIQUE INDEX manual_refund_executions_pkey ON public.manual_refund_executions USING btree (id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_payment_id_key",
+      "definition": "CREATE UNIQUE INDEX manual_refund_executions_payment_id_key ON public.manual_refund_executions USING btree (payment_id)"
+    },
+    {
+      "table_name": "manual_refund_executions",
+      "name": "manual_refund_executions_request_id_key",
+      "definition": "CREATE UNIQUE INDEX manual_refund_executions_request_id_key ON public.manual_refund_executions USING btree (request_id)"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_pkey",
+      "definition": "CREATE UNIQUE INDEX manual_refund_audit_pkey ON public.manual_refund_audit USING btree (id)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_loyalty_due",
+      "definition": "CREATE INDEX bookings_loyalty_due ON public.bookings USING btree (loyalty_status, loyalty_next_attempt_at)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_onsite_due",
+      "definition": "CREATE INDEX bookings_onsite_due ON public.bookings USING btree (onsite_reservation_status, onsite_next_attempt_at)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_paid_reservation_due",
+      "definition": "CREATE INDEX bookings_paid_reservation_due ON public.bookings USING btree (paid_reservation_status, paid_reservation_next_attempt_at)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_user",
+      "definition": "CREATE INDEX bookings_user ON public.bookings USING btree (user_id)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_hotel",
+      "definition": "CREATE INDEX bookings_hotel ON public.bookings USING btree (hotel_id)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_status",
+      "definition": "CREATE INDEX bookings_status ON public.bookings USING btree (status)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_created",
+      "definition": "CREATE INDEX bookings_created ON public.bookings USING btree (created_at)"
+    },
+    {
+      "table_name": "bookings",
+      "name": "bookings_check_in",
+      "definition": "CREATE INDEX bookings_check_in ON public.bookings USING btree (check_in_date)"
+    },
+    {
+      "table_name": "booking_items",
+      "name": "booking_items_booking",
+      "definition": "CREATE INDEX booking_items_booking ON public.booking_items USING btree (booking_id)"
+    },
+    {
+      "table_name": "payments",
+      "name": "payments_booking_created",
+      "definition": "CREATE INDEX payments_booking_created ON public.payments USING btree (booking_id, created_at DESC)"
+    },
+    {
+      "table_name": "refund_requests",
+      "name": "refund_requests_recovery",
+      "definition": "CREATE INDEX refund_requests_recovery ON public.refund_requests USING btree (approved_at) WHERE ((status)::text = 'APPROVED_PENDING_EXECUTION'::text)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_due",
+      "definition": "CREATE INDEX booking_event_due ON public.booking_event_outbox USING btree (state, next_attempt_at, event_version)"
+    },
+    {
+      "table_name": "booking_event_outbox",
+      "name": "booking_event_stream_pending",
+      "definition": "CREATE INDEX booking_event_stream_pending ON public.booking_event_outbox USING btree (booking_id, event_version) WHERE ((state)::text = 'PENDING'::text)"
+    },
+    {
+      "table_name": "manual_refund_audit",
+      "name": "manual_refund_audit_execution",
+      "definition": "CREATE INDEX manual_refund_audit_execution ON public.manual_refund_audit USING btree (execution_id, occurred_at)"
+    }
+  ],
+  "sequences": [
+    {
+      "sequencename": "booking_event_outbox_version_seq",
+      "sequenceowner": "batch5b_booking_migrator",
+      "data_type": "bigint",
+      "start_value": 1,
+      "increment_by": 1
+    }
+  ],
+  "history": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "description": "canonical schema",
+      "type": "SQL",
+      "script": "V1__canonical_schema.sql",
+      "checksum": 862784435,
+      "success": true
+    }
+  ]
+}

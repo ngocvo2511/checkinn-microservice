@@ -1,5 +1,7 @@
 package com.example.bookingservice.payment.service;
 
+import static com.example.bookingservice.contract.UuidContract.*;
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
@@ -96,7 +98,7 @@ public class PaymentService {
     }
 
     @Transactional
-    public VnPayInitResponse initVnPayPayment(String bookingId, String clientIp) {
+    public VnPayInitResponse initVnPayPayment(UUID bookingId, String clientIp) {
         log.info("[INIT_VNPAY] Request received - bookingId: {}, clientIp: {}", bookingId, clientIp);
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
             .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -125,7 +127,7 @@ public class PaymentService {
         payment = paymentRepository.save(payment);
 
         // Build VNPay params
-        String txnRef = payment.getId();
+        String txnRef = text(payment.getId());
         payment.setVnpayOrderId(txnRef);
 
         Map<String, String> params = new HashMap<>();
@@ -166,7 +168,7 @@ public class PaymentService {
     public PaymentResponse processVNPayCallback(String orderId, String responseCode, String transactionId,
                                                java.time.Instant transactionAt) {
         log.info("[VNPAY_CALLBACK] Received callback - orderId: {}, responseCode: {}, transactionId: {}", orderId, responseCode, transactionId);
-        String bookingId = paymentRepository.findBookingIdByVnpayOrderId(orderId)
+        UUID bookingId = paymentRepository.findBookingIdByVnpayOrderId(orderId)
             .orElseThrow(() -> new IllegalArgumentException("Payment not found for order: " + orderId));
         // All mutations acquire booking before payment to avoid lock-order inversions with cancellation/refund.
         Booking lockedBooking = bookingRepository.findByIdForUpdate(bookingId)
@@ -244,13 +246,13 @@ public class PaymentService {
         return toPaymentResponse(payment);
     }
 
-    public PaymentResponse getPayment(String paymentId) {
+    public PaymentResponse getPayment(UUID paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found: " + paymentId));
         return toPaymentResponse(payment);
     }
 
-    public PaymentResponse getPaymentByBookingId(String bookingId) {
+    public PaymentResponse getPaymentByBookingId(UUID bookingId) {
         Payment payment = paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
         return toPaymentResponse(payment);
@@ -262,7 +264,7 @@ public class PaymentService {
     private boolean sandboxRefundEnabled;
 
     @Transactional
-    public PaymentResponse refundPayment(String paymentId) {
+    public PaymentResponse refundPayment(UUID paymentId) {
         log.info("[REFUND_PAYMENT] Request received - paymentId: {}", paymentId);
         var actor = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
         if (actor == null) actor = com.example.bookingservice.grpc.interceptor.UserContextInterceptor.ACTOR.get();
@@ -270,7 +272,7 @@ public class PaymentService {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN,"ADMIN required");
         // Lock order matches cancellation and callback. Replay must not call completed-only validation.
         if (sandboxRefundEnabled) {
-            String bookingId=paymentRepository.findBookingIdById(paymentId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Payment not found"));
+            UUID bookingId=paymentRepository.findBookingIdById(paymentId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Payment not found"));
             Booking b=bookingRepository.findByIdForUpdate(bookingId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Booking not found"));
             Payment p=paymentRepository.findByIdForUpdate(paymentId).orElseThrow();
             var r=refundRequests.get(paymentId);
@@ -302,7 +304,7 @@ public class PaymentService {
     }
 
     @Transactional
-    public PaymentResponse confirmHotelPayment(String bookingId) {
+    public PaymentResponse confirmHotelPayment(UUID bookingId) {
         log.info("[CONFIRM_HOTEL_PAYMENT] Request received - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -368,7 +370,7 @@ public class PaymentService {
         int rooms = booking.getItems() == null ? 0 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
-        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
+        UUID roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeId()
             : null;
         
@@ -382,13 +384,13 @@ public class PaymentService {
                              (booking.getChildren() != null ? booking.getChildren() : 0);
         
         return PaymentEvent.builder()
-            .bookingId(booking.getId())
-            .customerId(booking.getUserId())
-            .hotelId(booking.getHotelId())
+            .bookingId(text(booking.getId()))
+            .customerId(text(booking.getUserId()))
+            .hotelId(text(booking.getHotelId()))
             .hotelName(booking.getHotelName())
-            .roomTypeId(roomTypeId)
+            .roomTypeId(text(roomTypeId))
             .roomType(roomType)
-            .userId(booking.getUserId())
+            .userId(text(booking.getUserId()))
             .userName(booking.getContactName())
             .userEmail(booking.getContactEmail())
             .checkInDate(booking.getCheckInDate())
@@ -402,8 +404,8 @@ public class PaymentService {
             .paymentMethod(payment.getMethod().name())
             .paidAt(payment.getPaidAt())
             .eventAt(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .transactionId(!PaymentStatus.COMPLETED.name().equals(statusLabel)?null:payment.getMethod()==PaymentMethod.HOTEL?payment.getId():payment.getVnpayTransactionNo())
+            .paymentId(text(payment.getId()))
+            .transactionId(!PaymentStatus.COMPLETED.name().equals(statusLabel)?null:payment.getMethod()==PaymentMethod.HOTEL?text(payment.getId()):payment.getVnpayTransactionNo())
             .transactionAt(!PaymentStatus.COMPLETED.name().equals(statusLabel)?null:payment.getTransactionOccurredAt())
             .build();
     }
@@ -412,14 +414,14 @@ public class PaymentService {
         int rooms = booking.getItems() == null ? 0 : booking.getItems().stream()
             .mapToInt(item -> item.getQuantity() == null ? 0 : item.getQuantity())
             .sum();
-        String roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
+        UUID roomTypeId = booking.getItems() != null && !booking.getItems().isEmpty()
             ? booking.getItems().get(0).getRoomTypeId()
             : null;
         int nights = (int) ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
         return BookingStatusEvent.builder()
-            .bookingId(booking.getId())
-            .hotelId(booking.getHotelId())
-            .roomTypeId(roomTypeId)
+            .bookingId(text(booking.getId()))
+            .hotelId(text(booking.getHotelId()))
+            .roomTypeId(text(roomTypeId))
             .checkInDate(booking.getCheckInDate())
             .checkOutDate(booking.getCheckOutDate())
             .nights(nights)

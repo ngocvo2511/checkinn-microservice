@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.entity;
 
+import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ import java.math.BigDecimal;
 public class Booking {
 
     @Id
-    private String id;
+    private UUID id;
 
     @Column(length = 64, updatable = false)
     private String idempotencyKeyHash;
@@ -33,10 +34,10 @@ public class Booking {
     private String idempotencyRequestHash;
 
     @Column(nullable = false)
-    private String userId;
+    private UUID userId;
 
     @Column(nullable = false)
-    private String hotelId;
+    private UUID hotelId;
 
     @Column(nullable = false)
     private String hotelName;
@@ -85,7 +86,7 @@ public class Booking {
     private String specialRequests;
 
     @Column(name = "hold_id")
-    private String holdId;
+    private UUID holdId;
 
     @Column(name = "hold_expires_at")
     private LocalDateTime holdExpiresAt;
@@ -117,13 +118,13 @@ public class Booking {
     // Only new verified provider receipts opt in; legacy paid rows require explicit review.
     @Column(length = 24)
     private String paidReservationStatus;
-    private String paidReservationPaymentId;
+    private UUID paidReservationPaymentId;
     private LocalDateTime paidReservationNextAttemptAt;
     private Integer paidReservationAttempts;
     @Column(length = 64)
     private String paidReservationLastError;
 
-    private String inventoryReviewedBy;
+    private UUID inventoryReviewedBy;
     @Column(length = 1000)
     private String inventoryReviewReason;
     private java.time.Instant inventoryReviewedAt;
@@ -139,7 +140,7 @@ public class Booking {
 
     @PrePersist
     protected void onCreate() {
-        if (id == null) id = java.util.UUID.randomUUID().toString();
+        if (id == null) id = java.util.UUID.randomUUID();
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
         if (status == null) {

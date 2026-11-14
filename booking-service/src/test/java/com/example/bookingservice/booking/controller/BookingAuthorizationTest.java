@@ -1,4 +1,5 @@
 package com.example.bookingservice.booking.controller;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.dto.BookingResponse;
 import com.example.bookingservice.booking.entity.Booking;
@@ -38,6 +39,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration"})
 @Import({SecurityConfig.class, JwtFilter.class, BookingAccess.class, com.example.bookingservice.booking.service.CancellationPolicy.class})
 class BookingAuthorizationTest {
+    @Test void uppercaseUuidPathUsesTypedLookupAndCanonicalJson() throws Exception {
+        mvc.perform(get("/api/bookings/"+wire("booking-1").toUpperCase(java.util.Locale.ROOT)).header("Authorization","Bearer customer"))
+            .andExpect(status().isOk())
+            .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.id").value(wire("booking-1")));
+        verify(service).getBooking(id("booking-1"));
+    }
     private static final UUID CUSTOMER = UUID.fromString("00000000-0000-0000-0000-000000000001");
     private static final UUID OTHER = UUID.fromString("00000000-0000-0000-0000-000000000002");
     @Autowired MockMvc mvc;
@@ -61,23 +68,23 @@ class BookingAuthorizationTest {
         when(jwt.extractRole(anyString())).thenReturn("CUSTOMER");
         when(jwt.extractRole("owner")).thenReturn("OWNER");
         when(jwt.extractRole("admin")).thenReturn("ADMIN");
-        when(bookings.findById("booking-1")).thenReturn(Optional.of(Booking.builder()
-                .id("booking-1").userId(CUSTOMER.toString()).hotelId("hotel-1").build()));
-        when(service.getBooking("booking-1")).thenReturn(BookingResponse.builder().id("booking-1").build());
-        when(service.getUserBookings(anyString())).thenReturn(List.of());
-        when(service.getHotelBookings(anyString())).thenReturn(List.of());
-        when(payments.findById("payment-1")).thenReturn(Optional.of(Payment.builder()
-                .id("payment-1").bookingId("booking-1").build()));
+        when(bookings.findById(id("booking-1"))).thenReturn(Optional.of(Booking.builder()
+                .id(id("booking-1")).userId(id(CUSTOMER.toString())).hotelId(id("hotel-1")).build()));
+        when(service.getBooking(id("booking-1"))).thenReturn(BookingResponse.builder().id(id("booking-1")).build());
+        when(service.getUserBookings(any(java.util.UUID.class))).thenReturn(List.of());
+        when(service.getHotelBookings(any(java.util.UUID.class))).thenReturn(List.of());
+        when(payments.findById(id("payment-1"))).thenReturn(Optional.of(Payment.builder()
+                .id(id("payment-1")).bookingId(id("booking-1")).build()));
         when(vnPayProperties.getHashSecret()).thenReturn("test-only-vnpay-signature-key");
         when(vnPayProperties.getTmnCode()).thenReturn("TEST_MERCHANT");
         when(payments.findByVnpayOrderId("payment-1")).thenReturn(Optional.of(Payment.builder()
-                .id("payment-1").bookingId("booking-1").amount(new java.math.BigDecimal("1000000"))
+                .id(id("payment-1")).bookingId(id("booking-1")).amount(new java.math.BigDecimal("1000000"))
                 .method(com.example.bookingservice.payment.enums.PaymentMethod.VNPAY).build()));
-        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1"))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", OTHER.toString())));
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq(wire("hotel-1")))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", OTHER.toString())));
     }
 
     @Test void anonymousCannotReadBooking() throws Exception {
-        mvc.perform(get("/api/bookings/booking-1")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/bookings/" + wire("booking-1"))).andExpect(status().isUnauthorized());
         verifyNoInteractions(service);
     }
     @Test void storedHttpSessionCannotReplaceVerifiedBearer() throws Exception {
@@ -90,11 +97,11 @@ class BookingAuthorizationTest {
         verifyNoInteractions(service);
     }
     @Test void customerCanReadOwnBooking() throws Exception {
-        mvc.perform(get("/api/bookings/booking-1").header("Authorization", "Bearer customer"))
+        mvc.perform(get("/api/bookings/" + wire("booking-1")).header("Authorization", "Bearer customer"))
                 .andExpect(status().isOk());
     }
     @Test void customerCannotReadAnotherBookingEvenWithForgedHeaders() throws Exception {
-        mvc.perform(get("/api/bookings/booking-1").header("Authorization", "Bearer other")
+        mvc.perform(get("/api/bookings/" + wire("booking-1")).header("Authorization", "Bearer other")
                         .header("X-User-Id", CUSTOMER).header("X-Is-Admin", "true"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
@@ -109,38 +116,38 @@ class BookingAuthorizationTest {
                 .andExpect(status().isOk());
     }
     @Test void customerCannotCancelAnotherBooking() throws Exception {
-        mvc.perform(delete("/api/bookings/booking-1").header("Authorization", "Bearer other"))
+        mvc.perform(delete("/api/bookings/" + wire("booking-1")).header("Authorization", "Bearer other"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
     @Test void customerCanCancelOwnBooking() throws Exception {
-        mvc.perform(delete("/api/bookings/booking-1").header("Authorization", "Bearer customer"))
+        mvc.perform(delete("/api/bookings/" + wire("booking-1")).header("Authorization", "Bearer customer"))
                 .andExpect(status().isNoContent());
-        verify(service).cancelBooking("booking-1", CUSTOMER.toString());
+        verify(service).cancelBooking(id("booking-1"), id(CUSTOMER.toString()));
     }
     @Test void customerCannotSetBookingStatus() throws Exception {
-        mvc.perform(put("/api/bookings/booking-1/status").param("status", "CONFIRMED")
+        mvc.perform(put("/api/bookings/" + wire("booking-1") + "/status").param("status", "CONFIRMED")
                         .header("Authorization", "Bearer customer"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
     @Test void customerCannotListHotelBookings() throws Exception {
-        mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer customer"))
+        mvc.perform(get("/api/bookings/hotel/" + wire("hotel-1")).header("Authorization", "Bearer customer"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
     @Test void hotelOwnerCanListOwnHotelBookings() throws Exception {
-        mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer owner"))
+        mvc.perform(get("/api/bookings/hotel/" + wire("hotel-1")).header("Authorization", "Bearer owner"))
                 .andExpect(status().isOk());
     }
     @Test void unrelatedOwnerCannotListHotelBookings() throws Exception {
-        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1"))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", CUSTOMER.toString())));
-        mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer owner"))
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq(wire("hotel-1")))).thenReturn(org.springframework.http.ResponseEntity.ok(Map.of("ownerId", CUSTOMER.toString())));
+        mvc.perform(get("/api/bookings/hotel/" + wire("hotel-1")).header("Authorization", "Bearer owner"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
     @Test void administratorCanReadBooking() throws Exception {
-        mvc.perform(get("/api/bookings/booking-1").header("Authorization", "Bearer admin"))
+        mvc.perform(get("/api/bookings/" + wire("booking-1")).header("Authorization", "Bearer admin"))
                 .andExpect(status().isOk());
     }
     @Test void createCannotImpersonateAnotherUser() throws Exception {
@@ -156,41 +163,41 @@ class BookingAuthorizationTest {
 
     @Test void createUsesPrincipalWhenUserIdIsOmitted() throws Exception {
         when(service.createBooking(any())).thenAnswer(invocation -> BookingResponse.builder()
-                .id("new-booking").userId(invocation.<com.example.bookingservice.booking.dto.CreateBookingRequest>getArgument(0).getUserId()).build());
+                .id(id("new-booking")).userId(id(invocation.<com.example.bookingservice.booking.dto.CreateBookingRequest>getArgument(0).getUserId())).build());
         mvc.perform(post("/api/bookings").header("Authorization", "Bearer customer")
                         .contentType("application/json").content(validBookingBody(null)))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.userId").value(CUSTOMER.toString()));
     }
 
     @Test void anonymousCannotReadPayment() throws Exception {
-        mvc.perform(get("/api/payments/payment-1")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/payments/" + wire("payment-1"))).andExpect(status().isUnauthorized());
         verifyNoInteractions(paymentService);
     }
     @Test void customerCannotReadAnotherPayment() throws Exception {
-        mvc.perform(get("/api/payments/payment-1").header("Authorization", "Bearer other"))
+        mvc.perform(get("/api/payments/" + wire("payment-1")).header("Authorization", "Bearer other"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
     @Test void customerCanReadOwnPayment() throws Exception {
-        mvc.perform(get("/api/payments/payment-1").header("Authorization", "Bearer customer"))
+        mvc.perform(get("/api/payments/" + wire("payment-1")).header("Authorization", "Bearer customer"))
                 .andExpect(status().isOk());
-        verify(paymentService).getPayment("payment-1");
+        verify(paymentService).getPayment(id("payment-1"));
     }
     @Test void customerCannotPayForAnotherBooking() throws Exception {
         mvc.perform(post("/api/payments").header("Authorization", "Bearer other")
-                        .contentType("application/json").content("{\"bookingId\":\"booking-1\",\"amount\":1,\"method\":\"HOTEL\"}"))
+                        .contentType("application/json").content("{\"bookingId\":\""+wire("booking-1")+"\",\"amount\":1,\"method\":\"HOTEL\"}"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
     @Test void customerCannotConfirmOnsitePayment() throws Exception {
-        mvc.perform(post("/api/payments/booking-1/confirm").header("Authorization", "Bearer customer"))
+        mvc.perform(post("/api/payments/" + wire("booking-1") + "/confirm").header("Authorization", "Bearer customer"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
     @Test void ownerCanConfirmPaymentForOwnHotel() throws Exception {
-        mvc.perform(post("/api/payments/booking-1/confirm").header("Authorization", "Bearer owner"))
+        mvc.perform(post("/api/payments/" + wire("booking-1") + "/confirm").header("Authorization", "Bearer owner"))
                 .andExpect(status().isOk());
-        verify(paymentService).confirmHotelPayment("booking-1");
+        verify(paymentService).confirmHotelPayment(id("booking-1"));
     }
     @Test void invalidProviderSignatureIsRejectedWithoutUserAuthentication() throws Exception {
         mvc.perform(get("/api/payments/vnpay/return").param("vnp_SecureHash", "invalid"))
@@ -199,49 +206,49 @@ class BookingAuthorizationTest {
     }
 
     @Test void customerCannotRefundAnotherPayment() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund").header("Authorization", "Bearer other"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund").header("Authorization", "Bearer other"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
 
     @Test void missingBookingReturnsNotFound() throws Exception {
-        mvc.perform(get("/api/bookings/missing").header("Authorization", "Bearer customer"))
+        mvc.perform(get("/api/bookings/" + wire("missing")).header("Authorization", "Bearer customer"))
                 .andExpect(status().isNotFound());
         verifyNoInteractions(service);
     }
 
     @Test void ownershipLookupFailureDoesNotGrantOwnerAccess() throws Exception {
-        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq("hotel-1")))
+        when(hotel.exchange(anyString(), eq(org.springframework.http.HttpMethod.GET), any(org.springframework.http.HttpEntity.class), eq(Map.class), eq(wire("hotel-1"))))
                 .thenThrow(new org.springframework.web.client.ResourceAccessException("test outage"));
-        mvc.perform(get("/api/bookings/hotel/hotel-1").header("Authorization", "Bearer owner"))
+        mvc.perform(get("/api/bookings/hotel/" + wire("hotel-1")).header("Authorization", "Bearer owner"))
                 .andExpect(status().isServiceUnavailable());
         verifyNoInteractions(service);
     }
 
     @Test void hotelOwnerCanUpdateStayStatus() throws Exception {
-        when(service.updateBookingStatus(anyString(), any())).thenReturn(BookingResponse.builder().id("booking-1").build());
-        mvc.perform(put("/api/bookings/booking-1/status").param("status", "CHECKED_IN")
+        when(service.updateBookingStatus(any(java.util.UUID.class), any())).thenReturn(BookingResponse.builder().id(id("booking-1")).build());
+        mvc.perform(put("/api/bookings/" + wire("booking-1") + "/status").param("status", "CHECKED_IN")
                         .header("Authorization", "Bearer owner"))
                 .andExpect(status().isOk());
-        verify(service).updateBookingStatus("booking-1", com.example.bookingservice.booking.enums.BookingStatus.CHECKED_IN);
+        verify(service).updateBookingStatus(id("booking-1"), com.example.bookingservice.booking.enums.BookingStatus.CHECKED_IN);
     }
 
     @Test void customerCannotExecuteRefundEvenForOwnPayment() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund").header("Authorization", "Bearer customer"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund").header("Authorization", "Bearer customer"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
 
     @Test void hotelOwnerCannotExecuteRefund() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund").header("Authorization", "Bearer owner"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund").header("Authorization", "Bearer owner"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(paymentService);
     }
 
     @Test void administratorCanReachRefundExecution() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund").header("Authorization", "Bearer admin"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund").header("Authorization", "Bearer admin"))
                 .andExpect(status().isOk());
-        verify(paymentService).refundPayment("payment-1");
+        verify(paymentService).refundPayment(id("payment-1"));
     }
 
     @Test void signedCallbackWithWrongAmountDoesNotProcessPayment() throws Exception {
@@ -284,33 +291,33 @@ class BookingAuthorizationTest {
     }
 
     @Test void customerCanRequestOwnRefundWithoutExecutingIt() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request").header("Authorization", "Bearer customer")
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request").header("Authorization", "Bearer customer")
                         .contentType("application/json").content("{\"reason\":\"Customer request\",\"amount\":1,\"requestedBy\":\"forged\"}"))
                 .andExpect(status().isCreated());
-        verify(refunds).request("payment-1", CUSTOMER.toString(), "Customer request");
+        verify(refunds).request(id("payment-1"), id(CUSTOMER.toString()), "Customer request");
         verifyNoInteractions(paymentService);
     }
     @Test void crossCustomerCannotRequestRefund() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request").header("Authorization", "Bearer other")
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request").header("Authorization", "Bearer other")
                         .contentType("application/json").content("{\"reason\":\"Request\"}"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(refunds);
     }
     @Test void ownerCanRequestRefundButCannotApproveIt() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request").header("Authorization", "Bearer owner")
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request").header("Authorization", "Bearer owner")
                         .contentType("application/json").content("{\"reason\":\"Hotel cannot supply room\"}"))
                 .andExpect(status().isCreated());
-        mvc.perform(post("/api/payments/payment-1/refund-request/approve").header("Authorization", "Bearer owner"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request/approve").header("Authorization", "Bearer owner"))
                 .andExpect(status().isForbidden());
-        verify(refunds, never()).approve(anyString(), anyString());
+        verify(refunds, never()).approve(any(java.util.UUID.class), any(java.util.UUID.class));
     }
     @Test void administratorCanApproveRefundRequest() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request/approve").header("Authorization", "Bearer admin"))
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request/approve").header("Authorization", "Bearer admin"))
                 .andExpect(status().isOk());
-        verify(refunds).approve("payment-1", OTHER.toString());
+        verify(refunds).approve(id("payment-1"), id(OTHER.toString()));
     }
     @Test void customerCannotUseReviewedCancellationEndpoint() throws Exception {
-        mvc.perform(post("/api/bookings/booking-1/cancel-reviewed").header("Authorization", "Bearer customer")
+        mvc.perform(post("/api/bookings/" + wire("booking-1") + "/cancel-reviewed").header("Authorization", "Bearer customer")
                         .contentType("application/json").content("{\"reason\":\"Late cancellation\"}"))
                 .andExpect(status().isForbidden());
         verifyNoInteractions(service);
@@ -326,7 +333,7 @@ class BookingAuthorizationTest {
                 .andExpect(status().isServiceUnavailable());
     }
     @Test void reviewedCancellationRequiresAReasonBeforeServiceMutation() throws Exception {
-        mvc.perform(post("/api/bookings/booking-1/cancel-reviewed").header("Authorization", "Bearer admin")
+        mvc.perform(post("/api/bookings/" + wire("booking-1") + "/cancel-reviewed").header("Authorization", "Bearer admin")
                         .contentType("application/json").content("{\"reason\":\" \"}"))
                 .andExpect(status().isBadRequest());
         verifyNoInteractions(service);
@@ -356,15 +363,15 @@ class BookingAuthorizationTest {
     }
 
     @Test void customerCannotRejectRefund() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request/reject").header("Authorization","Bearer customer")).andExpect(status().isForbidden());
-        verify(refunds,never()).reject(anyString(),anyString());
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request/reject").header("Authorization","Bearer customer")).andExpect(status().isForbidden());
+        verify(refunds,never()).reject(any(java.util.UUID.class),anyString());
     }
     @Test void adminRejectUsesVerifiedPrincipal() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund-request/reject").header("Authorization","Bearer admin")).andExpect(status().isOk());
-        verify(refunds).reject("payment-1",OTHER.toString());
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund-request/reject").header("Authorization","Bearer admin")).andExpect(status().isOk());
+        verify(refunds).reject(id("payment-1"),OTHER.toString());
     }
     @Test void anonymousCannotExecuteRefundWithForgedAdminHeader() throws Exception {
-        mvc.perform(post("/api/payments/payment-1/refund").header("X-Role","ADMIN").header("X-User-Id",OTHER.toString())).andExpect(status().isUnauthorized());
-        verify(paymentService,never()).refundPayment(anyString());
+        mvc.perform(post("/api/payments/" + wire("payment-1") + "/refund").header("X-Role","ADMIN").header("X-User-Id",OTHER.toString())).andExpect(status().isUnauthorized());
+        verify(paymentService,never()).refundPayment(any(java.util.UUID.class));
     }
 }

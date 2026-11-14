@@ -1,0 +1,177 @@
+[
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/hold-idempotency-20261105.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/amenity-catalog-v1-20261106.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/booking-smoke-accommodation-bootstrap.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/hotel-draft-approval-upgrade.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/room-inventory-review-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/room-description-20261105.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_hotel",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/review-response-integrity-20261109.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/booking-idempotency-20261105.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/onsite-reservation-v1-20261105.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/paid-reservation-v1-20261105.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/loyalty-settlement-upgrade.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/booking-transaction-time-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/booking-event-outbox-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/manual-refund-v1-20261112.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/sandbox-internal-refund-v1-20261112.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/booking-vnpay-create-date-v1-20261112.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_booking",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/inventory-review-audit-20261106.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_revenue_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/revenue-event-receipts-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_revenue_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/revenue-source-versions-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_revenue_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/revenue-history-gaps-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_revenue_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_revenue_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/revenue-sandbox-refund-v1-20261112.sql",
+    "status": "HISTORY_CONFIRMED"
+  },
+  {
+    "database": "current_regulations_service",
+    "error": null,
+    "scope": "Batch3 TEST_ONLY; production UNKNOWN",
+    "source": "docker/sql/regulation-event-outbox-v1-20261107.sql",
+    "status": "HISTORY_CONFIRMED"
+  }
+]

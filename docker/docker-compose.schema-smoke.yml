@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: schema_runner
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - schema-data:/var/lib/postgresql
+    networks: [schema]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U schema_runner -d postgres']
+      interval: 2s
+      retries: 30
+volumes:
+  schema-data:
+networks:
+  schema:
+    internal: true

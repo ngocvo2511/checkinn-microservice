@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
@@ -26,7 +27,7 @@ public class LoyaltySettlementService {
 
     /** Runs only against committed source state. All writers lock booking before points. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void process(String bookingId) {
+    public void process(UUID bookingId) {
         Booking booking = bookings.findByIdForUpdate(bookingId).orElse(null);
         if (booking == null || !"PENDING".equals(booking.getLoyaltyStatus())
                 || booking.getLoyaltyNextAttemptAt() == null || booking.getLoyaltyNextAttemptAt().isAfter(LocalDateTime.now())) return;
@@ -82,7 +83,7 @@ public class LoyaltySettlementService {
 
     /** The previous processing transaction may have failed at commit, after its method returned. */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void deferAfterFailure(String bookingId) {
+    public void deferAfterFailure(UUID bookingId) {
         bookings.findByIdForUpdate(bookingId).filter(booking -> "PENDING".equals(booking.getLoyaltyStatus()))
                 .ifPresent(booking -> {
                     booking.setLoyaltyAttempts(Math.addExact(booking.getLoyaltyAttempts() == null ? 0 : booking.getLoyaltyAttempts(), 1));

@@ -1,0 +1,26 @@
+# Runtime only: run the guarded canonical migration job before starting this profile.
+spring:
+  datasource:
+    url: ${CANONICAL_DB_URL}
+    username: ${CANONICAL_APP_USER}
+    password: ${CANONICAL_APP_PASSWORD}
+    hikari:
+      connection-init-sql: SET TIME ZONE 'UTC'
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: public
+        jdbc:
+          time_zone: UTC
+  sql:
+    init:
+      mode: never
+  flyway:
+    enabled: false
+    locations: classpath:db/canonical
+    baseline-on-migrate: false
+    clean-disabled: true
+    out-of-order: false
+    validate-on-migrate: true

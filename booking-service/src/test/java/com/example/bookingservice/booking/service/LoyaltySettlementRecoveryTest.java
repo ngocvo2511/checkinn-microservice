@@ -1,4 +1,5 @@
 package com.example.bookingservice.booking.service;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.repository.BookingRepository;
 import org.junit.jupiter.api.Test;
@@ -10,11 +11,11 @@ class LoyaltySettlementRecoveryTest {
     @Test void failedCompletionCommitDoesNotStarveNextCandidate() {
         var bookings = mock(BookingRepository.class);
         var settlement = mock(LoyaltySettlementService.class);
-        when(bookings.findDueLoyalty(any(), any())).thenReturn(List.of("commit-failed", "next"));
-        doThrow(new IllegalStateException("commit failed")).when(settlement).process("commit-failed");
+        when(bookings.findDueLoyalty(any(), any())).thenReturn(List.of(id("commit-failed"),id("next")));
+        doThrow(new IllegalStateException("commit failed")).when(settlement).process(id("commit-failed"));
         new LoyaltySettlementRecovery(bookings, settlement).recover();
-        verify(settlement).process("commit-failed");
-        verify(settlement).deferAfterFailure("commit-failed");
-        verify(settlement).process("next");
+        verify(settlement).process(id("commit-failed"));
+        verify(settlement).deferAfterFailure(id("commit-failed"));
+        verify(settlement).process(id("next"));
     }
 }

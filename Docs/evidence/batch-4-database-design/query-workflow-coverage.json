@@ -1,0 +1,1582 @@
+[
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventDelivery.java",
+    "signals": [
+      {
+        "line": 26,
+        "kind": "transaction",
+        "text": "@Transactional(propagation=Propagation.REQUIRES_NEW)"
+      },
+      {
+        "line": 28,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT * FROM booking_event_outbox WHERE id=? AND state='PENDING' AND next_attempt_at<=now() FOR UPDATE SKIP LOCKED\",id);"
+      },
+      {
+        "line": 47,
+        "kind": "query/guard",
+        "text": "if(delivered)jdbc.update(\"UPDATE booking_event_outbox SET state='DELIVERED',delivered_at=now(),attempts=?,last_error=NULL WHERE id=?\",attempts,id);"
+      },
+      {
+        "line": 49,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE booking_event_outbox SET attempts=?,next_attempt_at=now()+(? * interval '1 second'),last_error=? WHERE id=?\",attempts,retrySeconds,failure,id);"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java",
+    "signals": [
+      {
+        "line": 20,
+        "kind": "transaction",
+        "text": "@Transactional(propagation=Propagation.MANDATORY)"
+      },
+      {
+        "line": 25,
+        "kind": "query/guard",
+        "text": "jdbc.query(\"SELECT pg_advisory_xact_lock(hashtextextended(?,0))\",rs->{},\"booking-events:\"+bookingId);"
+      },
+      {
+        "line": 26,
+        "kind": "query/guard",
+        "text": "Long version=jdbc.queryForObject(\"SELECT nextval('booking_event_outbox_version_seq')\",Long.class);"
+      },
+      {
+        "line": 29,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO booking_event_outbox(id,booking_id,event_version,exchange_name,routing_key,payload) VALUES (?,?,?,?,?,CAST(? AS jsonb))\","
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+    "signals": [
+      {
+        "line": 14,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString=\"${events.outbox.delay-ms:1000}\",initialDelayString=\"${events.outbox.initial-delay-ms:10000}\")"
+      },
+      {
+        "line": 17,
+        "kind": "query/guard",
+        "text": "var ids=jdbc.queryForList(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+    "signals": [
+      {
+        "line": 12,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString=\"${refund.manual.recovery-delay-ms:60000}\",initialDelayString=\"${refund.manual.recovery-initial-delay-ms:60000}\")"
+      },
+      {
+        "line": 14,
+        "kind": "query/guard",
+        "text": "for(String id:jdbc.queryForList(\"SELECT r.payment_id FROM refund_requests r LEFT JOIN manual_refund_executions e ON e.payment_id=r.payment_id WHERE r.status='APPROVED_PENDING_EXECUTION' AND e.id IS NULL ORDER BY r.approved_at LIMIT 20\",String.class)) {"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java",
+    "signals": [
+      {
+        "line": 18,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 22,
+        "kind": "query/guard",
+        "text": "int inserted = jdbc.update(\"\"\""
+      },
+      {
+        "line": 33,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 44,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE manual_refund_executions SET state='PENDING_VERIFICATION',external_reference=?,evidence_reference=?,submitted_by=?,submitted_at=now(),updated_at=now() WHERE payment_id=?\","
+      },
+      {
+        "line": 51,
+        "kind": "query/guard",
+        "text": "return jdbc.queryForList(\"SELECT id,payment_id,booking_id,state,created_at,updated_at FROM manual_refund_executions WHERE state IN ('PENDING_MANUAL_REFUND','PENDING_VERIFICATION','NEEDS_MANUAL_REVIEW') ORDER BY created_at,id LIMIT 100\");"
+      },
+      {
+        "line": 59,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT * FROM manual_refund_executions WHERE payment_id=? FOR UPDATE\",paymentId);"
+      },
+      {
+        "line": 64,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO manual_refund_audit(id,execution_id,action,actor_id) VALUES (?,?,?,?)\",UUID.randomUUID(),row.get(\"id\"),action,actor);"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestService.java",
+    "signals": [
+      {
+        "line": 22,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 43,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 66,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = org.springframework.transaction.annotation.Propagation.MANDATORY)"
+      },
+      {
+        "line": 83,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/PaymentService.java",
+    "signals": [
+      {
+        "line": 46,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 98,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 160,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 165,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 264,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 304,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "signals": [
+      {
+        "line": 16,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT b.id FROM Booking b WHERE b.paidReservationStatus = 'V1_PENDING' AND b.paidReservationNextAttemptAt <= ?1 ORDER BY b.paidReservationNextAttemptAt, b.id\")"
+      },
+      {
+        "line": 18,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT b.id FROM Booking b WHERE b.onsiteReservationStatus = 'V1_PENDING' AND b.onsiteNextAttemptAt <= ?1 ORDER BY b.onsiteNextAttemptAt, b.id\")"
+      },
+      {
+        "line": 22,
+        "kind": "native",
+        "text": "@Query(value = \"select cast(pg_advisory_xact_lock(hashtextextended(cast(?1 as text), 0)) as text)\", nativeQuery = true)"
+      },
+      {
+        "line": 24,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT b.id FROM Booking b WHERE b.loyaltyStatus = 'PENDING' AND b.loyaltyNextAttemptAt <= ?1 ORDER BY b.loyaltyNextAttemptAt, b.id\")"
+      },
+      {
+        "line": 27,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT b FROM Booking b WHERE b.id = ?1\")"
+      },
+      {
+        "line": 29,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT b.id FROM Booking b WHERE b.status = ?1\")"
+      },
+      {
+        "line": 36,
+        "kind": "query/guard",
+        "text": "@Query(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "signals": [
+      {
+        "line": 43,
+        "kind": "scheduled",
+        "text": "@Scheduled(cron = \"0 */5 * * * *\") // Every 5 minutes"
+      },
+      {
+        "line": 44,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 97,
+        "kind": "scheduled",
+        "text": "@Scheduled(cron = \"0 0 0 * * *\") // Every day at midnight"
+      },
+      {
+        "line": 98,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 145,
+        "kind": "scheduled",
+        "text": "@Scheduled(cron = \"0 */15 14-23 * * *\") // Every 15 minutes from 14:00 to 23:45"
+      },
+      {
+        "line": 146,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 191,
+        "kind": "scheduled",
+        "text": "@Scheduled(cron = \"0 0 2 * * *\") // Every day at 2 AM"
+      },
+      {
+        "line": 192,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingService.java",
+    "signals": [
+      {
+        "line": 54,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 66,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 76,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 330,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 339,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 349,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 359,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 387,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 392,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 480,
+        "kind": "transaction",
+        "text": "@Transactional(noRollbackFor = HoldConfirmationException.class)"
+      },
+      {
+        "line": 545,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+    "signals": [
+      {
+        "line": 18,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString = \"${loyalty.settlement.delay-ms:5000}\", initialDelayString = \"${loyalty.settlement.initial-delay-ms:30000}\")"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementService.java",
+    "signals": [
+      {
+        "line": 28,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      },
+      {
+        "line": 84,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+    "signals": [
+      {
+        "line": 25,
+        "kind": "transaction",
+        "text": "@TransactionalEventListener"
+      },
+      {
+        "line": 33,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString = \"${onsite.reservation.delay-ms:1000}\", initialDelayString = \"${onsite.reservation.initial-delay-ms:10000}\")"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationService.java",
+    "signals": [
+      {
+        "line": 29,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      },
+      {
+        "line": 67,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java",
+    "signals": [
+      {
+        "line": 25,
+        "kind": "transaction",
+        "text": "@TransactionalEventListener"
+      },
+      {
+        "line": 33,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString = \"${paid.reservation.delay-ms:1000}\", initialDelayString = \"${paid.reservation.initial-delay-ms:10000}\")"
+      }
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationService.java",
+    "signals": [
+      {
+        "line": 29,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      },
+      {
+        "line": 69,
+        "kind": "transaction",
+        "text": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AccommodationSchemaGuard.java",
+    "signals": [
+      {
+        "line": 5,
+        "kind": "query/guard",
+        "text": "import org.springframework.boot.ApplicationRunner;"
+      },
+      {
+        "line": 11,
+        "kind": "query/guard",
+        "text": "public class AccommodationSchemaGuard implements ApplicationRunner {"
+      },
+      {
+        "line": 14,
+        "kind": "query/guard",
+        "text": "Boolean valid = jdbc.queryForObject(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AmenitySchemaGuard.java",
+    "signals": [
+      {
+        "line": 5,
+        "kind": "query/guard",
+        "text": "import org.springframework.boot.ApplicationRunner;"
+      },
+      {
+        "line": 12,
+        "kind": "query/guard",
+        "text": "public class AmenitySchemaGuard implements ApplicationRunner {"
+      },
+      {
+        "line": 16,
+        "kind": "query/guard",
+        "text": "jdbc.execute(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "signals": [
+      {
+        "line": 14,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT r.hotelId FROM RoomType r WHERE r.id = ?1\")"
+      },
+      {
+        "line": 18,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT r FROM RoomType r WHERE r.id = ?1\")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+    "signals": [
+      {
+        "line": 21,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 50,
+        "kind": "query/guard",
+        "text": "var values=jdbc.queryForList(\"SELECT * FROM room_inventory_review_states WHERE room_id=?\",room);"
+      },
+      {
+        "line": 54,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT r.*,s.revision FROM room_inventory_review_requests r JOIN room_inventory_review_states s ON s.room_id=r.room_id WHERE r.id=?\",id);"
+      },
+      {
+        "line": 64,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true, isolation=org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 76,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO room_inventory_review_states(room_id) VALUES (?) ON CONFLICT DO NOTHING\",id);"
+      },
+      {
+        "line": 79,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE room_inventory_review_requests SET status='SUPERSEDED' WHERE id=? AND status='PENDING'\",state.get(\"latest_request_id\"));"
+      },
+      {
+        "line": 81,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO room_inventory_review_requests(id,room_id,hotel_id,previous_quantity,proposed_quantity,source,requested_by,status) VALUES (?,?,?,?,?,?,?,'PENDING')\","
+      },
+      {
+        "line": 83,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE room_inventory_review_states SET latest_request_id=?,revision=revision+1 WHERE room_id=?\",requestId,id);"
+      },
+      {
+        "line": 89,
+        "kind": "query/guard",
+        "text": "var targets=jdbc.queryForList(\"SELECT room_id FROM room_inventory_review_requests WHERE id=?\",UUID.class,id);"
+      },
+      {
+        "line": 98,
+        "kind": "query/guard",
+        "text": "var load=jdbc.queryForMap(\"SELECT COALESCE(MAX(held::bigint+booked::bigint),0) peak, \""
+      },
+      {
+        "line": 103,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE room_inventory_review_states SET approved_request_id=? WHERE room_id=?\",id,room.getId());"
+      },
+      {
+        "line": 105,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE room_inventory_review_requests SET status=?,reviewed_by=?,reviewed_at=now(),review_reason=? WHERE id=?\","
+      },
+      {
+        "line": 107,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE room_inventory_review_states SET revision=revision+1 WHERE room_id=?\",room.getId());"
+      },
+      {
+        "line": 110,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 113,
+        "kind": "query/guard",
+        "text": "return jdbc.queryForList(\"SELECT id FROM room_inventory_review_requests \"+(history?\"\":\"WHERE status='PENDING' \")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+    "signals": [
+      {
+        "line": 30,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 74,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 105,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      },
+      {
+        "line": 112,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomAvailabilityRepository.java",
+    "signals": [
+      {
+        "line": 22,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT ra FROM RoomAvailability ra WHERE ra.roomTypeId = :roomTypeId AND ra.date = :date\")"
+      },
+      {
+        "line": 32,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT COALESCE(MAX(CAST(ra.held AS long) + CAST(ra.booked AS long)), 0) AS peakOccupied, \""
+      },
+      {
+        "line": 43,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT ra.roomTypeId AS roomTypeId, MAX(CAST(ra.held AS long) + CAST(ra.booked AS long)) AS peakOccupied, \""
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "signals": [
+      {
+        "line": 18,
+        "kind": "native",
+        "text": "@Query(value = \"select cast(pg_advisory_xact_lock(hashtextextended(cast(?1 as text), 0)) as text)\", nativeQuery = true)"
+      },
+      {
+        "line": 24,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT h FROM RoomHold h WHERE h.id = ?1\")"
+      },
+      {
+        "line": 28,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT h FROM RoomHold h WHERE h.status = 'HELD' AND h.expiresAt < ?1\")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "signals": [
+      {
+        "line": 46,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 52,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 63,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 97,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 154,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 194,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 203,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 210,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 303,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java",
+    "signals": [
+      {
+        "line": 18,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelay = 60000, initialDelay = 60000)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/repository/HotelReviewRepository.java",
+    "signals": [
+      {
+        "line": 25,
+        "kind": "query/guard",
+        "text": "@Query(\"\"\""
+      },
+      {
+        "line": 36,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT r FROM HotelReview r WHERE r.id = ?1\")"
+      },
+      {
+        "line": 87,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT AVG(r.rating) FROM HotelReview r WHERE r.hotelId = :hotelId AND r.status = :status\")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewService.java",
+    "signals": [
+      {
+        "line": 35,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 46,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 106,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 114,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 131,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 139,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 210,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 218,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 459,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 469,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 478,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 505,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 513,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 541,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewSummaryService.java",
+    "signals": [
+      {
+        "line": 21,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+    "signals": [
+      {
+        "line": 13,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT p FROM HotelPolicy p JOIN FETCH p.category WHERE p.hotel.id = :hotelId\")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaMutationService.java",
+    "signals": [
+      {
+        "line": 46,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 58,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 72,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOfferController.java",
+    "signals": [
+      {
+        "line": 46,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true,isolation=Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 77,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/AccommodationTypeChangeRepository.java",
+    "signals": [
+      {
+        "line": 11,
+        "kind": "query/guard",
+        "text": "@Query(\"select c.hotelId from AccommodationTypeChange c where c.id=:id\")"
+      },
+      {
+        "line": 14,
+        "kind": "query/guard",
+        "text": "@Query(\"select c from AccommodationTypeChange c where c.id=:id\")"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/AccommodationTypeService.java",
+    "signals": [
+      {
+        "line": 43,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 47,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 53,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 55,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferCandidates.java",
+    "signals": [
+      {
+        "line": 32,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true,isolation=org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelServiceImpl.java",
+    "signals": [
+      {
+        "line": 78,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 164,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 213,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 229,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 254,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 364,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 462,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 521,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      },
+      {
+        "line": 534,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      },
+      {
+        "line": 545,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      },
+      {
+        "line": 557,
+        "kind": "transaction",
+        "text": "@Override @Transactional"
+      },
+      {
+        "line": 570,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 610,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 642,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 656,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 679,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 710,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 735,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 748,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 766,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 793,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 814,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 827,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/CityServiceImpl.java",
+    "signals": [
+      {
+        "line": 25,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 61,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 89,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/LocationService.java",
+    "signals": [
+      {
+        "line": 66,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCatalogService.java",
+    "signals": [
+      {
+        "line": 19,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 43,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 46,
+        "kind": "query/guard",
+        "text": "return jdbc.query(\"SELECT code,label,description,active,revision FROM amenity_catalog \" + (includeInactive ? \"\" : \"WHERE active \") + \"ORDER BY code\","
+      },
+      {
+        "line": 54,
+        "kind": "query/guard",
+        "text": "changed=jdbc.update(\"INSERT INTO amenity_catalog(code,label,description,active,created_by,updated_by) VALUES (?,?,?,?,?,?) ON CONFLICT(code) DO NOTHING\","
+      },
+      {
+        "line": 57,
+        "kind": "query/guard",
+        "text": "changed=jdbc.update(\"UPDATE amenity_catalog SET label=?,description=?,active=?,revision=revision+1,updated_by=?,updated_at=now() WHERE code=? AND revision=?\","
+      },
+      {
+        "line": 66,
+        "kind": "query/guard",
+        "text": "if(code==null || !code.matches(\"[A-Z][A-Z0-9_]{0,63}\") || !Boolean.TRUE.equals(jdbc.queryForObject(\"SELECT EXISTS(SELECT 1 FROM amenity_catalog WHERE code=? AND active)\",Boolean.class,code)))"
+      },
+      {
+        "line": 71,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT a.id,a.title FROM hotel_amenities a JOIN hotel_amenity_categories c ON c.id=a.category_id WHERE a.id=? AND c.hotel_id=?\",amenityId,hotelId);"
+      },
+      {
+        "line": 76,
+        "kind": "query/guard",
+        "text": "return jdbc.queryForMap(\"SELECT * FROM amenity_mapping_states WHERE amenity_id=?\",amenityId);"
+      },
+      {
+        "line": 87,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO amenity_mapping_states(amenity_id,hotel_id) VALUES (?,?) ON CONFLICT DO NOTHING\",amenityId,hotelId);"
+      },
+      {
+        "line": 89,
+        "kind": "query/guard",
+        "text": "if(state.get(\"latest_request_id\")!=null) jdbc.update(\"UPDATE amenity_mapping_requests SET status='SUPERSEDED' WHERE id=? AND status='PENDING'\",state.get(\"latest_request_id\"));"
+      },
+      {
+        "line": 91,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO amenity_mapping_requests(id,hotel_id,amenity_id,title_snapshot,requested_by,note,status) VALUES (?,?,?,?,?,?,'PENDING')\",id,hotelId,amenityId,title,actor.id(),input.note());"
+      },
+      {
+        "line": 92,
+        "kind": "query/guard",
+        "text": "for(String code:input.codes()) jdbc.update(\"INSERT INTO amenity_mapping_request_codes(request_id,code) VALUES (?,?)\",id,code);"
+      },
+      {
+        "line": 93,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE amenity_mapping_states SET latest_request_id=?,revision=revision+1 WHERE amenity_id=?\",id,amenityId);"
+      },
+      {
+        "line": 97,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT r.*,s.revision FROM amenity_mapping_requests r JOIN amenity_mapping_states s ON s.amenity_id=r.amenity_id WHERE r.id=?\",id);"
+      },
+      {
+        "line": 99,
+        "kind": "query/guard",
+        "text": "var row=rows.getFirst(); row.put(\"codes\",jdbc.queryForList(\"SELECT code FROM amenity_mapping_request_codes WHERE request_id=? ORDER BY code\",String.class,id));"
+      },
+      {
+        "line": 104,
+        "kind": "query/guard",
+        "text": "var hotelIds=jdbc.queryForList(\"SELECT hotel_id FROM amenity_mapping_requests WHERE id=?\",UUID.class,id);"
+      },
+      {
+        "line": 112,
+        "kind": "query/guard",
+        "text": "validateCodes(jdbc.queryForList(\"SELECT code FROM amenity_mapping_request_codes WHERE request_id=?\",String.class,id));"
+      },
+      {
+        "line": 113,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE amenity_mapping_states SET approved_request_id=? WHERE amenity_id=?\",id,amenityId);"
+      },
+      {
+        "line": 115,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE amenity_mapping_requests SET status=?,reviewed_by=?,reviewed_at=now(),review_reason=? WHERE id=?\",input.approve()?\"APPROVED\":\"REJECTED\",actor.id(),input.reason().trim(),id);"
+      },
+      {
+        "line": 116,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"UPDATE amenity_mapping_states SET revision=revision+1 WHERE amenity_id=?\",amenityId);"
+      },
+      {
+        "line": 119,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 122,
+        "kind": "query/guard",
+        "text": "var ids=jdbc.queryForList(\"SELECT id FROM amenity_mapping_requests WHERE status='PENDING' ORDER BY requested_at,id LIMIT 50 OFFSET ?\",UUID.class,page*50);"
+      },
+      {
+        "line": 125,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 128,
+        "kind": "query/guard",
+        "text": "return jdbc.queryForList(\"SELECT id FROM amenity_mapping_requests ORDER BY requested_at DESC,id LIMIT 50 OFFSET ?\",UUID.class,page*50)"
+      },
+      {
+        "line": 131,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 134,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT a.id,a.title,COALESCE(s.revision,0) revision,s.latest_request_id FROM hotel_amenities a JOIN hotel_amenity_categories c ON c.id=a.category_id LEFT JOIN amenity_mapping_states s ON s.amenity_id=a.id WHERE c.hotel_id=? ORDER BY c.title,a.title,a.id\",hotelId);"
+      },
+      {
+        "line": 142,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly=true)"
+      },
+      {
+        "line": 145,
+        "kind": "query/guard",
+        "text": "jdbc.query(\"\"\""
+      },
+      {
+        "line": 172,
+        "kind": "query/guard",
+        "text": "jdbc.query(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventDelivery.java",
+    "signals": [
+      {
+        "line": 26,
+        "kind": "transaction",
+        "text": "@Transactional(propagation=Propagation.REQUIRES_NEW)"
+      },
+      {
+        "line": 28,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT * FROM regulation_event_outbox WHERE id=? AND state='PENDING' AND next_attempt_at<=now() FOR UPDATE SKIP LOCKED\",id);"
+      },
+      {
+        "line": 46,
+        "kind": "query/guard",
+        "text": "if(delivered)jdbc.update(\"UPDATE regulation_event_outbox SET state='DELIVERED',delivered_at=now(),attempts=?,last_error=NULL WHERE id=?\",attempts,id);"
+      },
+      {
+        "line": 47,
+        "kind": "query/guard",
+        "text": "else jdbc.update(\"UPDATE regulation_event_outbox SET attempts=?,next_attempt_at=now()+(? * interval '1 second'),last_error=? WHERE id=?\",attempts,retrySeconds,failure,id);"
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventPublisher.java",
+    "signals": [
+      {
+        "line": 24,
+        "kind": "transaction",
+        "text": "@Transactional(propagation=Propagation.MANDATORY)"
+      },
+      {
+        "line": 27,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO regulation_event_outbox(id,regulation_key,source_version,exchange_name,payload) VALUES (?,?,?,?,CAST(? AS jsonb))\","
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java",
+    "signals": [
+      {
+        "line": 14,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString=\"${events.outbox.delay-ms:1000}\",initialDelayString=\"${events.outbox.initial-delay-ms:10000}\")"
+      },
+      {
+        "line": 17,
+        "kind": "query/guard",
+        "text": "var ids=jdbc.queryForList(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationBootstrap.java",
+    "signals": [
+      {
+        "line": 4,
+        "kind": "query/guard",
+        "text": "import org.springframework.boot.ApplicationRunner;"
+      },
+      {
+        "line": 9,
+        "kind": "query/guard",
+        "text": "public class RegulationBootstrap implements ApplicationRunner {"
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationCacheProvider.java",
+    "signals": [
+      {
+        "line": 38,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 55,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 65,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationService.java",
+    "signals": [
+      {
+        "line": 66,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/repository/BookingStatusRecordRepository.java",
+    "signals": [
+      {
+        "line": 19,
+        "kind": "query/guard",
+        "text": "@Query(\"\"\""
+      },
+      {
+        "line": 30,
+        "kind": "query/guard",
+        "text": "@Query(\"\"\""
+      }
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java",
+    "signals": [
+      {
+        "line": 19,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO revenue_cashflow_gaps(booking_id,hotel_id,source_record_id,reason) SELECT booking_id,hotel_id,id,'LEGACY_HISTORY_NOT_VERIFIED' FROM payment_records WHERE booking_id=? AND event_version IS NULL ON CONFLICT(booking_id) DO NOTHING\",bookingId);"
+      },
+      {
+        "line": 26,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO revenue_cashflow_gaps(booking_id,hotel_id,reason) VALUES (?,?,'LEGACY_HISTORY_NOT_VERIFIED') ON CONFLICT(booking_id) DO NOTHING\",e.bookingId(),e.hotelId());"
+      },
+      {
+        "line": 35,
+        "kind": "query/guard",
+        "text": "jdbc.query(\"SELECT pg_advisory_xact_lock(hashtextextended(?,0))\",rs->{},\"revenue:cash-payment:\"+e.paymentId());"
+      },
+      {
+        "line": 36,
+        "kind": "query/guard",
+        "text": "var opposite=jdbc.queryForList(\"SELECT * FROM revenue_cash_transactions WHERE payment_id=? AND kind<>?\",e.paymentId(),kind);"
+      },
+      {
+        "line": 39,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"\"\""
+      },
+      {
+        "line": 46,
+        "kind": "query/guard",
+        "text": "var rows=jdbc.queryForList(\"SELECT * FROM revenue_cash_transactions WHERE payment_id=? AND kind=?\",e.paymentId(),kind);"
+      }
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/EventIngestionService.java",
+    "signals": [
+      {
+        "line": 34,
+        "kind": "query/guard",
+        "text": "jdbc.query(\"SELECT pg_advisory_xact_lock(hashtextextended(?,0))\",rs->{},\"revenue:\"+kind+\":\"+id);"
+      },
+      {
+        "line": 41,
+        "kind": "query/guard",
+        "text": "jdbc.update(\"INSERT INTO revenue_event_receipts(id,kind,booking_id,event_hash,event_at,disposition,reason,payload) VALUES (?,?,?,?,?,?,?,CAST(? AS jsonb)) ON CONFLICT(kind,event_hash) DO NOTHING\","
+      },
+      {
+        "line": 62,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 96,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/RevenueCashFlows.java",
+    "signals": [
+      {
+        "line": 25,
+        "kind": "query/guard",
+        "text": "var ids=jdbc.queryForList(\"SELECT hotel_id FROM payment_records UNION SELECT hotel_id FROM revenue_cash_transactions UNION SELECT hotel_id FROM revenue_cashflow_gaps UNION SELECT payload->>'hotelId' FROM revenue_event_receipts WHERE kind='PAYMENT' AND disposition='REVIEW_REQUIRED'\",String.class);"
+      },
+      {
+        "line": 34,
+        "kind": "query/guard",
+        "text": "if(Boolean.TRUE.equals(jdbc.queryForObject(\"SELECT EXISTS(SELECT 1 FROM revenue_cashflow_gaps WHERE resolved_at IS NULL\"+clause+\")\",Boolean.class,scope)))"
+      },
+      {
+        "line": 36,
+        "kind": "query/guard",
+        "text": "if(Boolean.TRUE.equals(jdbc.queryForObject(\"SELECT EXISTS(SELECT 1 FROM payment_records WHERE event_version IS NULL\"+clause+\")\",Boolean.class,scope)))"
+      },
+      {
+        "line": 39,
+        "kind": "query/guard",
+        "text": "if(Boolean.TRUE.equals(jdbc.queryForObject(\"SELECT EXISTS(SELECT 1 FROM revenue_event_receipts WHERE kind='PAYMENT' AND disposition='REVIEW_REQUIRED'\"+reviews+\")\",Boolean.class,scope)))"
+      },
+      {
+        "line": 45,
+        "kind": "query/guard",
+        "text": "return jdbc.query(\"SELECT * FROM revenue_cash_transactions WHERE occurred_at>=? AND occurred_at<?\"+clause+\" ORDER BY occurred_at,id\",(r,n)->{"
+      }
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/RevenueReportService.java",
+    "signals": [
+      {
+        "line": 69,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 94,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 126,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 204,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 235,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 356,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 405,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 433,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsReservationRepository.java",
+    "signals": [
+      {
+        "line": 12,
+        "kind": "query/guard",
+        "text": "@Query(\"select coalesce(sum(r.points), 0) from PointsReservation r where r.userId = ?1 and r.state = com.example.userservice.model.PointsReservationState.HELD\")"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/repository/PointsTransactionRepository.java",
+    "signals": [
+      {
+        "line": 13,
+        "kind": "query/guard",
+        "text": "@Query(value = \"\"\""
+      },
+      {
+        "line": 21,
+        "kind": "native",
+        "text": "\"\"\", nativeQuery = true)"
+      },
+      {
+        "line": 24,
+        "kind": "query/guard",
+        "text": "@Query(\"SELECT pt FROM PointsTransaction pt WHERE pt.userId = :userId ORDER BY pt.createdAt DESC\")"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyCommandLock.java",
+    "signals": [
+      {
+        "line": 21,
+        "kind": "query/guard",
+        "text": "jdbc.execute((ConnectionCallback<Void>) connection -> {"
+      },
+      {
+        "line": 26,
+        "kind": "query/guard",
+        "text": "try (var lock = connection.prepareStatement(\"SELECT pg_advisory_xact_lock(hashtextextended(?, 0))\")) {"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyPointsService.java",
+    "signals": [
+      {
+        "line": 41,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 58,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 93,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 127,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 177,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)"
+      },
+      {
+        "line": 183,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 189,
+        "kind": "transaction",
+        "text": "@Transactional(readOnly = true)"
+      },
+      {
+        "line": 194,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 225,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "signals": [
+      {
+        "line": 27,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 82,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 106,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java",
+    "signals": [
+      {
+        "line": 17,
+        "kind": "scheduled",
+        "text": "@Scheduled(fixedDelayString = \"${points.recovery.delay-ms:30000}\", initialDelayString = \"${points.recovery.initial-delay-ms:30000}\")"
+      }
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/UserService.java",
+    "signals": [
+      {
+        "line": 96,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 216,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 234,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 242,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 330,
+        "kind": "transaction",
+        "text": "@Transactional"
+      },
+      {
+        "line": 340,
+        "kind": "transaction",
+        "text": "@Transactional"
+      }
+    ]
+  }
+]

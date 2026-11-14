@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import java.util.UUID;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public class BookingCreationLock {
     private final EntityManager entityManager;
 
-    public boolean tryAcquire(String bookingId) {
+    public boolean tryAcquire(UUID bookingId) {
         return Boolean.TRUE.equals(entityManager.createNativeQuery(
                 "select pg_try_advisory_xact_lock(hashtextextended(cast(:key as text), 0))")
                 .setParameter("key", "points-booking-create:" + bookingId).getSingleResult());

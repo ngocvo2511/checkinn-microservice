@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-11-13T18:09:54.997957+00:00",
+  "checks": [
+    {
+      "case": "Regulation write commits while broker is unavailable",
+      "status": "PASS"
+    },
+    {
+      "case": "Snapshot and source transaction committed once",
+      "status": "PASS"
+    },
+    {
+      "case": "Outbox survives broker outage as PENDING",
+      "status": "PASS"
+    },
+    {
+      "case": "user full application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "hotel full application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "booking full application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "revenue full application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "regulations full application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "Pending outbox delivered after process and broker restart",
+      "status": "PASS"
+    },
+    {
+      "case": "Java bootstrap does not duplicate policies after restart",
+      "status": "PASS"
+    },
+    {
+      "case": "Duplicate event routed through isolated RabbitMQ",
+      "status": "PASS"
+    },
+    {
+      "case": "Duplicate event routed through isolated RabbitMQ",
+      "status": "PASS"
+    },
+    {
+      "case": "Duplicate event after restart creates no second DEBIT",
+      "status": "PASS"
+    },
+    {
+      "case": "Refund execution retained exactly once after restart",
+      "status": "PASS"
+    }
+  ]
+}

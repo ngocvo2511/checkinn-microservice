@@ -13,7 +13,7 @@ import java.util.UUID;
 public class LoyaltyCommandLock {
     private final JdbcTemplate jdbc;
 
-    public void acquire(String bookingId, UUID userId) {
+    public void acquire(UUID bookingId, UUID userId) {
         if (!TransactionSynchronizationManager.isActualTransactionActive()) {
             throw new IllegalStateException("Loyalty command requires a database transaction");
         }

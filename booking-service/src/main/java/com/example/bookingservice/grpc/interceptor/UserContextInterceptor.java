@@ -1,5 +1,7 @@
 package com.example.bookingservice.grpc.interceptor;
 
+import java.util.UUID;
+
 import com.example.bookingservice.security.JwtService;
 import io.grpc.*;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;

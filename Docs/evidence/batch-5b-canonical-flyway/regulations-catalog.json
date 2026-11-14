@@ -1,0 +1,524 @@
+{
+  "owner": "regulations",
+  "database": "batch5b_regulations_1794592498_33124",
+  "columns": [
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "attempts",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": "0",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "created_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "delivered_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "exchange_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "last_error",
+      "sql_type": "character varying(64)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "next_attempt_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "payload",
+      "sql_type": "jsonb",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "regulation_key",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "source_version",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "column_name": "state",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": "'PENDING'::character varying",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "applied_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "id",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": "d"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "regulation_key",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "regulation_name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "snapshot_data",
+      "sql_type": "text",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "source_user",
+      "sql_type": "character varying(255)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "column_name": "version",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "active",
+      "sql_type": "boolean",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "description",
+      "sql_type": "character varying(2000)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "id",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": "d"
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "name",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "regulation_key",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "updated_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "value",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "regulations",
+      "column_name": "version",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "regulations",
+      "name": "regulations_version_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((version > 0))"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_regulation_key_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL regulation_key"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL name"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_value_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL value"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_active_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL active"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL version"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_updated_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_regulation_key_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (regulation_key)"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_version_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((version > 0))"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_regulation_key_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL regulation_key"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_regulation_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL regulation_name"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL version"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_snapshot_data_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL snapshot_data"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_applied_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL applied_at"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_attempts_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((attempts >= 0))"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_source_version_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((source_version > 0))"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_state_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((state)::text = ANY (ARRAY[('PENDING'::character varying)::text, ('DELIVERED'::character varying)::text])))"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_regulation_key_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL regulation_key"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_source_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL source_version"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_exchange_name_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL exchange_name"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_payload_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_state_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL state"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_attempts_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL attempts"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_next_attempt_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL next_attempt_at"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_regulation_key_source_version_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (regulation_key, source_version)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "regulations",
+      "name": "regulations_pkey",
+      "definition": "CREATE UNIQUE INDEX regulations_pkey ON public.regulations USING btree (id)"
+    },
+    {
+      "table_name": "regulations",
+      "name": "regulations_regulation_key_key",
+      "definition": "CREATE UNIQUE INDEX regulations_regulation_key_key ON public.regulations USING btree (regulation_key)"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_pkey",
+      "definition": "CREATE UNIQUE INDEX regulation_snapshots_pkey ON public.regulation_snapshots USING btree (id)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_pkey",
+      "definition": "CREATE UNIQUE INDEX regulation_event_outbox_pkey ON public.regulation_event_outbox USING btree (id)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_outbox_regulation_key_source_version_key",
+      "definition": "CREATE UNIQUE INDEX regulation_event_outbox_regulation_key_source_version_key ON public.regulation_event_outbox USING btree (regulation_key, source_version)"
+    },
+    {
+      "table_name": "regulation_snapshots",
+      "name": "regulation_snapshots_applied",
+      "definition": "CREATE INDEX regulation_snapshots_applied ON public.regulation_snapshots USING btree (applied_at DESC)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_due",
+      "definition": "CREATE INDEX regulation_event_due ON public.regulation_event_outbox USING btree (state, next_attempt_at)"
+    },
+    {
+      "table_name": "regulation_event_outbox",
+      "name": "regulation_event_pending",
+      "definition": "CREATE INDEX regulation_event_pending ON public.regulation_event_outbox USING btree (regulation_key, source_version) WHERE ((state)::text = 'PENDING'::text)"
+    }
+  ],
+  "sequences": [
+    {
+      "sequencename": "regulations_id_seq",
+      "sequenceowner": "batch5b_regulations_migrator",
+      "data_type": "bigint",
+      "start_value": 1,
+      "increment_by": 1
+    },
+    {
+      "sequencename": "regulation_snapshots_id_seq",
+      "sequenceowner": "batch5b_regulations_migrator",
+      "data_type": "bigint",
+      "start_value": 1,
+      "increment_by": 1
+    }
+  ],
+  "history": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "description": "canonical schema",
+      "type": "SQL",
+      "script": "V1__canonical_schema.sql",
+      "checksum": 1209581507,
+      "success": true
+    }
+  ]
+}

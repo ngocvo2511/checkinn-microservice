@@ -24,8 +24,8 @@ public final class BookingIdempotency {
         return UUID.nameUUIDFromBytes(("booking-hold-v1:" + keyHash).getBytes(StandardCharsets.UTF_8));
     }
 
-    public static String bookingId(String keyHash) {
-        return UUID.nameUUIDFromBytes(("booking-id-v1:" + keyHash).getBytes(StandardCharsets.UTF_8)).toString();
+    public static UUID bookingId(String keyHash) {
+        return UUID.nameUUIDFromBytes(("booking-id-v1:" + keyHash).getBytes(StandardCharsets.UTF_8));
     }
 
     public static String requestHash(CreateBookingRequest r) {
