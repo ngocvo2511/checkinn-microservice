@@ -21,6 +21,8 @@ message UploadMediaRequest {
 
 message UploadMediaResponse {
   string url = 1;
+  // Storage object name to pass to DeleteMedia (e.g. "social/{uuid}_photo.jpg"). Added for travel-social-service.
+  string object_name = 2;
 }
 
 message DeleteMediaRequest {

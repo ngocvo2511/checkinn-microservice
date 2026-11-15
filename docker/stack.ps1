@@ -64,7 +64,7 @@ if ($Action -eq 'Up' -and $Scope -in @('App', 'Full')) {
     if ([string]::IsNullOrWhiteSpace($secret) -or $secret.Length -lt 32) {
         throw 'Set a separate SECRET_KEY of at least 32 ASCII characters in docker/.env.test.'
     }
-    foreach ($service in @('user-service', 'hotel-service', 'booking-service', 'revenue-service', 'regulations-service')) {
+    foreach ($service in @('user-service', 'hotel-service', 'booking-service', 'revenue-service', 'regulations-service', 'place-service', 'travel-social-service')) {
         $serviceEnv = $config.services.$service.environment
         if ([string]::IsNullOrWhiteSpace($serviceEnv.SPRING_DATASOURCE_PASSWORD)) {
             throw "Configure TEST_POSTGRES_PASSWORD in docker/.env.test for $service."

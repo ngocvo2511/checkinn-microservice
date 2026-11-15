@@ -112,6 +112,7 @@ services:
     ports: ["127.0.0.1:${GATEWAY_PORT:-8080}:8080"]
     depends_on:
       eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}  # RequestRateLimiter for /api/social/**
 
   config-server:
     <<: *java
@@ -270,6 +271,44 @@ services:
       redis: {condition: service_healthy}
       rabbitmq: {condition: service_healthy}
 
+  place-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: place-service}
+    image: checkinn/place-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8087"
+      SPRING_DATASOURCE_URL: ${PLACE_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_place}
+      SPRING_DATASOURCE_USERNAME: ${PLACE_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${PLACE_DB_PASSWORD:-}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+
+  travel-social-service:
+    <<: *java
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args: {SERVICE: travel-social-service}
+    image: checkinn/travel-social-service:local
+    profiles: [app]
+    environment:
+      <<: *java-env
+      SERVER_PORT: "8089"
+      SPRING_DATASOURCE_URL: ${SOCIAL_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_social}
+      SPRING_DATASOURCE_USERNAME: ${SOCIAL_DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${SOCIAL_DB_PASSWORD:-}
+      PLACE_SERVICE_URL: ${PLACE_SERVICE_URL:-http://place-service:8087}
+    depends_on:
+      eureka-server: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      place-service: {condition: service_healthy}
+
   notification-service:
     <<: *java
     build:
@@ -303,6 +342,7 @@ services:
       context: ../../checkinn-frontend
       args:
         NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+        NEXT_PUBLIC_COMMUNITY_ENABLED: ${NEXT_PUBLIC_COMMUNITY_ENABLED:-false}
     image: checkinn/frontend:local
     init: true
     restart: unless-stopped

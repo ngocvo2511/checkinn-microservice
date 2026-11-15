@@ -76,6 +76,42 @@ services:
     depends_on:
       postgres-test: {condition: service_healthy}
 
+  place-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_place
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  social-db-init:
+    image: postgres:18-alpine
+    profiles: [app]
+    restart: "no"
+    networks: [checkinn]
+    environment:
+      PGPASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+    entrypoint:
+      - sh
+      - -c
+      - >-
+        psql -h postgres-test -U checkinn_test -d postgres -tAc
+        "SELECT 1 FROM pg_database WHERE datname = 'checkinn_social'" | grep -q 1
+        || createdb -h postgres-test -U checkinn_test checkinn_social
+    depends_on:
+      postgres-test: {condition: service_healthy}
+
+  travel-social-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_social
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
+      SOCIAL_CLEANUP_DELAY_MS: "60000"
+      SOCIAL_CLEANUP_INITIAL_DELAY_MS: "30000"
+    depends_on:
+      postgres-test: {condition: service_healthy}
+      social-db-init: {condition: service_completed_successfully}
+
   notification-service:
     environment:
       SPRING_MAIL_HOST: mailpit

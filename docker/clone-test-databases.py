@@ -17,7 +17,7 @@ PG_BIN = Path(os.environ.get('CHECKINN_PG_BIN', 'C:/Program Files/PostgreSQL/18/
 TEST = ['docker', 'compose', '-p', 'checkinn-test', '--project-directory', str(ROOT),
         '--env-file', str(ROOT / '.env.test'),
         '-f', str(ROOT / 'docker-compose.yml'), '-f', str(ROOT / 'docker-compose.test.yml')]
-NAMES = ('user', 'hotel', 'booking', 'revenue', 'regulations')
+NAMES = ('user', 'hotel', 'booking', 'revenue', 'regulations', 'place')
 
 
 def capture(command, **kwargs):
@@ -123,7 +123,7 @@ def main():
                           'rows_per_table': before['rows_per_table'], 'dump': dump.name}
         (snapshots / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
         print(f'PASS {name}: live pg_dump restored; table/row counts and column metadata match.', flush=True)
-    print(f'PASS all 5 clones verified. Private snapshots: {snapshots}', flush=True)
+    print(f'PASS all {len(NAMES)} clones verified. Private snapshots: {snapshots}', flush=True)
 
 
 if __name__ == '__main__':

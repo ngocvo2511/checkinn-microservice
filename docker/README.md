@@ -146,6 +146,46 @@ JWTs belong in reports. Booking creation/cancellation is a **separate** acceptan
 the Refund smoke stack has no Hotel catalog/availability, so that Gateway lifecycle
 is BLOCKED there; live VNPay checkout, frontend Refund and full-chain E2E are not
 proved by seeded completed payments. No Place service is needed for Refund scope.
+## travel-social-service (12/11/2026)
+
+`travel-social-service` (HTTP 8089, no gRPC server) serves community posts under `/api/social/**`.
+It joins the `app` profile, so `-Scope App` now builds and starts it.
+
+- **Database.** It owns `checkinn_social`; Flyway creates the schema (`ddl-auto: validate`).
+  - Test overlay: the one-shot `social-db-init` container creates the empty database inside
+    `postgres-test` if it is missing. Nothing is cloned, because there is no source database.
+  - `.env` stack: create the empty database once on the host (`createdb checkinn_social`) and set
+    `SOCIAL_DB_*`. `stack.ps1` refuses `Up -Scope App` while `SOCIAL_DB_PASSWORD` is blank.
+- **place-service runs in Compose** (`app` profile, port 8087, database `checkinn_place` via
+  `PLACE_DB_*`; the test overlay points it at `postgres-test`). travel-social-service waits for it to
+  be healthy and reaches it at `PLACE_SERVICE_URL`, default `http://place-service:8087`, and only
+  reads from it. To use a place-service running on the host instead, set
+  `PLACE_SERVICE_URL=http://host.docker.internal:8087`. When place-service is unreachable, posts
+  without a place still work and publishing with a place returns 503.
+- **Rate limits** for `/api/social/**` mutations are applied by `api-gateway` in Redis, so the
+  gateway now waits for Redis to be healthy. The gateway's discovery locator excludes
+  travel-social-service, so `/travel-social-service/**` is not routed and cannot skip the limits.
+- **Photos** go through `media-service`, which stores them under `social/` in the public bucket.
+
+Rebuild order when these contracts change: `media-service` and `user-service` first, then
+`travel-social-service`, then `api-gateway`.
+
+```powershell
+./stack.ps1 -Test -Action Build -Scope App
+./stack.ps1 -Test -Action Up -Scope App
+python docker/travel-social-smoke.py   # from the backend root; test overlay only
+```
+
+The smoke script covers publish, feed, pagination, search, like, comment, report, moderation,
+soft delete and the gateway rate limit. It uploads no photos, and it reports the place-review
+cases as `SKIP` when place-service is not reachable through the gateway.
+
+**Release and rollback.** The frontend hides every community route and entry point unless it is
+built with `NEXT_PUBLIC_COMMUNITY_ENABLED=true` (default `false`, a build argument of the
+`frontend` service). To release: deploy the backend first, run the smoke script, then rebuild the
+frontend with the flag on. To roll back: rebuild the frontend with the flag off, then remove the
+`travel-social-*` routes from `api-gateway` and stop `travel-social-service`. Keep the
+`checkinn_social` database; its migrations are additive and nothing else reads it.
 
 ## Standardization regressions (29/10/2026)
 
@@ -334,6 +374,7 @@ Không module nào có Dockerfile trước thay đổi này. Một Dockerfile d�
 | notification-service | Không có HTTP listener (YAML có port 8086) | — | AMQP worker, SMTP; không có Web/Eureka client dependency |
 | revenue-service | 8088 | — | PostgreSQL `checkinn_revenue`, RabbitMQ, hotel/regulations |
 | regulations-service | 8091 | — | PostgreSQL `checkinn_regulations`, Redis, RabbitMQ |
+| travel-social-service | 8089 | — | PostgreSQL `checkinn_social`, Redis, user-service REST, media gRPC, place-service REST (`PLACE_SERVICE_URL`) |
 | frontend (profile web) | 3000 | — | Next.js 16 / React 19, Gateway, NextAuth; Google OAuth tùy chọn |
 | redis / rabbitmq | 6379 / 5672 | — | Named volumes; RabbitMQ management 15672 |
 
