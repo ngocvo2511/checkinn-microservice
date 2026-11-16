@@ -1,0 +1,828 @@
+[
+  {
+    "source_field": "user.loyalty_commands.booking_id",
+    "target_field": "user.loyalty_commands.booking_id uuid / booking.bookings.id",
+    "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+    "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+    "api_endpoint": "/api/loyalty-points: earn/use/reserve/commit/cancel and booking transactions; booking.proto LoyaltyBookingStateRequest",
+    "event": "No new Loyalty event invented; command RPC/recovery boundary",
+    "repository": "LoyaltyCommandRepository(String key), PointsReservationRepository(UUID proposed PK), PointsTransactionRepository(UUID entity id)",
+    "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans",
+    "frontend_dependency": "lib/api/booking.ts points client; app/api/loyalty-points/[userId] routes; session user.id string",
+    "test_impact": "Loyalty idempotency/reservation/reversal/recovery + legacy ambiguity fixtures",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run LOYALTY gates before deploy",
+    "source": [
+      {
+        "path": "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+        "symbol": "loyalty_commands.bookingId"
+      },
+      {
+        "path": "user-service/src/main/resources/db/migration/V3__add_loyalty_commands.sql",
+        "symbol": "loyalty_commands.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "user.points_reservations.booking_id",
+    "target_field": "user.points_reservations.booking_id uuid / booking.bookings.id",
+    "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+    "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+    "api_endpoint": "/api/loyalty-points: earn/use/reserve/commit/cancel and booking transactions; booking.proto LoyaltyBookingStateRequest",
+    "event": "No new Loyalty event invented; command RPC/recovery boundary",
+    "repository": "LoyaltyCommandRepository(String key), PointsReservationRepository(UUID proposed PK), PointsTransactionRepository(UUID entity id)",
+    "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans",
+    "frontend_dependency": "lib/api/booking.ts points client; app/api/loyalty-points/[userId] routes; session user.id string",
+    "test_impact": "Loyalty idempotency/reservation/reversal/recovery + legacy ambiguity fixtures",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run LOYALTY gates before deploy",
+    "source": [
+      {
+        "path": "user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+        "symbol": "points_reservations.bookingId"
+      },
+      {
+        "path": "user-service/src/main/resources/db/migration/V4__add_points_reservations.sql",
+        "symbol": "points_reservations.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "user.points_transactions.booking_id",
+    "target_field": "user.points_transactions.booking_id uuid / booking.bookings.id",
+    "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+    "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+    "api_endpoint": "/api/loyalty-points: earn/use/reserve/commit/cancel and booking transactions; booking.proto LoyaltyBookingStateRequest",
+    "event": "No new Loyalty event invented; command RPC/recovery boundary",
+    "repository": "LoyaltyCommandRepository(String key), PointsReservationRepository(UUID proposed PK), PointsTransactionRepository(UUID entity id)",
+    "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans",
+    "frontend_dependency": "lib/api/booking.ts points client; app/api/loyalty-points/[userId] routes; session user.id string",
+    "test_impact": "Loyalty idempotency/reservation/reversal/recovery + legacy ambiguity fixtures",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run LOYALTY gates before deploy",
+    "source": [
+      {
+        "path": "user-service/src/main/java/com/example/userservice/model/PointsTransaction.java",
+        "symbol": "points_transactions.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.id",
+    "target_field": "booking.bookings.id uuid / booking.bookings.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.user_id",
+    "target_field": "booking.bookings.user_id uuid / user.users.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.user_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.userId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.hotel_id",
+    "target_field": "booking.bookings.hotel_id uuid / hotel.hotels.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.hotel_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.hotelId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.hold_id",
+    "target_field": "booking.bookings.hold_id uuid / hotel.room_holds.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.hold_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.holdId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.paid_reservation_payment_id",
+    "target_field": "booking.bookings.paid_reservation_payment_id uuid / booking.payments.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.paid_reservation_payment_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.paidReservationPaymentId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.bookings.inventory_reviewed_by",
+    "target_field": "booking.bookings.inventory_reviewed_by uuid / user.users.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "bookings.inventory_reviewed_by equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+        "symbol": "bookings.inventoryReviewedBy"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.booking_items.id",
+    "target_field": "booking.booking_items.id uuid / booking.booking_items.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "booking_items.id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+        "symbol": "booking_items.id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.booking_items.booking_id",
+    "target_field": "booking.booking_items.booking_id uuid / booking.bookings.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "booking_items.booking_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current Booking mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+        "symbol": "booking_items.booking"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.booking_items.room_type_id",
+    "target_field": "booking.booking_items.room_type_id uuid / hotel.room_types.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "booking_items.room_type_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+        "symbol": "booking_items.roomTypeId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.payments.id",
+    "target_field": "booking.payments.id uuid / booking.payments.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "payments.id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+        "symbol": "payments.id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.payments.booking_id",
+    "target_field": "booking.payments.booking_id uuid / booking.bookings.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "payments.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+        "symbol": "payments.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.refund_requests.id",
+    "target_field": "booking.refund_requests.id uuid / booking.refund_requests.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "refund_requests.id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+        "symbol": "refund_requests.id"
+      },
+      {
+        "path": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+        "symbol": "refund_requests.id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.refund_requests.payment_id",
+    "target_field": "booking.refund_requests.payment_id uuid / booking.payments.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "refund_requests.payment_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+        "symbol": "refund_requests.paymentId"
+      },
+      {
+        "path": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+        "symbol": "refund_requests.paymentId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.refund_requests.booking_id",
+    "target_field": "booking.refund_requests.booking_id uuid / booking.bookings.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "refund_requests.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+        "symbol": "refund_requests.bookingId"
+      },
+      {
+        "path": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+        "symbol": "refund_requests.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.refund_requests.requested_by",
+    "target_field": "booking.refund_requests.requested_by uuid / user.users.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "refund_requests.requested_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+        "symbol": "refund_requests.requestedBy"
+      },
+      {
+        "path": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+        "symbol": "refund_requests.requestedBy"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.refund_requests.approved_by",
+    "target_field": "booking.refund_requests.approved_by uuid / user.users.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "refund_requests.approved_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+        "symbol": "refund_requests.approvedBy"
+      },
+      {
+        "path": "booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+        "symbol": "refund_requests.approvedBy"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.booking_status_records.booking_id",
+    "target_field": "revenue.booking_status_records.booking_id uuid / booking.bookings.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "booking_status_records.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+        "symbol": "booking_status_records.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.booking_status_records.hotel_id",
+    "target_field": "revenue.booking_status_records.hotel_id uuid / hotel.hotels.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "booking_status_records.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+        "symbol": "booking_status_records.hotelId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.booking_status_records.room_type_id",
+    "target_field": "revenue.booking_status_records.room_type_id uuid / hotel.room_types.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "booking_status_records.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+        "symbol": "booking_status_records.roomTypeId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.payment_records.booking_id",
+    "target_field": "revenue.payment_records.booking_id uuid / booking.bookings.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "payment_records.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+        "symbol": "payment_records.bookingId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.payment_records.customer_id",
+    "target_field": "revenue.payment_records.customer_id uuid / user.users.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "payment_records.customer_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+        "symbol": "payment_records.customerId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.payment_records.hotel_id",
+    "target_field": "revenue.payment_records.hotel_id uuid / hotel.hotels.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "payment_records.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+        "symbol": "payment_records.hotelId"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.payment_records.room_type_id",
+    "target_field": "revenue.payment_records.room_type_id uuid / hotel.room_types.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "payment_records.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current String mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+        "symbol": "payment_records.roomTypeId"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.booking_event_outbox.booking_id",
+    "target_field": "booking.booking_event_outbox.booking_id uuid / booking.bookings.id",
+    "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+    "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+    "api_endpoint": "/api/bookings, /{id}, /{id}/cancel-reviewed, /user/{userId}, /hotel/{hotelId}; booking.proto Get/Create/Eligibility",
+    "event": "booking.status.changed + PaymentEvent derived snapshots; booking_event_outbox stream booking_id",
+    "repository": "BookingRepository/BookingItemRepository UUID keys + param/return types, due job ID lists",
+    "query": "booking_event_outbox.booking_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged",
+    "frontend_dependency": "lib/api/booking.ts, lib/booking/creation-command.ts, booking/[id], history/payment, reviews/new/history",
+    "test_impact": "Canonical quote/ownership/idempotency/lost-response/compensation/expiry/hold/paid-onsite-loyalty recovery; v3/v4 IDs",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run BOOKING gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/booking-event-outbox-v1-20261107.sql",
+        "symbol": "booking_event_outbox.booking_id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.manual_refund_executions.request_id",
+    "target_field": "booking.manual_refund_executions.request_id uuid / booking.refund_requests.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "manual_refund_executions.request_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/manual-refund-v1-20261112.sql",
+        "symbol": "manual_refund_executions.request_id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.manual_refund_executions.payment_id",
+    "target_field": "booking.manual_refund_executions.payment_id uuid / booking.payments.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "manual_refund_executions.payment_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/manual-refund-v1-20261112.sql",
+        "symbol": "manual_refund_executions.payment_id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.manual_refund_executions.booking_id",
+    "target_field": "booking.manual_refund_executions.booking_id uuid / booking.bookings.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "manual_refund_executions.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/manual-refund-v1-20261112.sql",
+        "symbol": "manual_refund_executions.booking_id"
+      }
+    ]
+  },
+  {
+    "source_field": "booking.manual_refund_executions.submitted_by",
+    "target_field": "booking.manual_refund_executions.submitted_by uuid / user.users.id",
+    "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+    "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+    "api_endpoint": "/api/payments/{id}, /booking/{bookingId}, /{id}/refund, /{paymentId}/refund-request[/approve|/reject]; ManualRefundController start/evidence",
+    "event": "payment.completed/payment.refunded; payment.proto string IDs/tags unchanged, provider callback orderId untouched",
+    "repository": "PaymentRepository and RefundRequestRepository UUID keys/params/lock lookup; ManualRefund JDBC",
+    "query": "manual_refund_executions.submitted_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String",
+    "frontend_dependency": "lib/api/booking.ts PaymentResponse; app/booking/payment/{return,hotel-confirm}/page.tsx; no new refund UI presumed",
+    "test_impact": "Callback/retry/original receipt, approval ownership/locks, sandbox exactly once outbox/DEBIT/audit, manual evidence/system actor exception",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run PAYMENT_REFUND gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/manual-refund-v1-20261112.sql",
+        "symbol": "manual_refund_executions.submitted_by"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cash_transactions.payment_id",
+    "target_field": "revenue.revenue_cash_transactions.payment_id uuid / booking.payments.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cash_transactions.payment_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+        "symbol": "revenue_cash_transactions.payment_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cash_transactions.booking_id",
+    "target_field": "revenue.revenue_cash_transactions.booking_id uuid / booking.bookings.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cash_transactions.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+        "symbol": "revenue_cash_transactions.booking_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cash_transactions.customer_id",
+    "target_field": "revenue.revenue_cash_transactions.customer_id uuid / user.users.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cash_transactions.customer_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+        "symbol": "revenue_cash_transactions.customer_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cash_transactions.hotel_id",
+    "target_field": "revenue.revenue_cash_transactions.hotel_id uuid / hotel.hotels.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cash_transactions.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+        "symbol": "revenue_cash_transactions.hotel_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cash_transactions.room_type_id",
+    "target_field": "revenue.revenue_cash_transactions.room_type_id uuid / hotel.room_types.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cash_transactions.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-cash-transactions-v1-20261107.sql",
+        "symbol": "revenue_cash_transactions.room_type_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cashflow_gaps.booking_id",
+    "target_field": "revenue.revenue_cashflow_gaps.booking_id uuid / booking.bookings.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cashflow_gaps.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-history-gaps-v1-20261107.sql",
+        "symbol": "revenue_cashflow_gaps.booking_id"
+      }
+    ]
+  },
+  {
+    "source_field": "revenue.revenue_cashflow_gaps.hotel_id",
+    "target_field": "revenue.revenue_cashflow_gaps.hotel_id uuid / hotel.hotels.id",
+    "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+    "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+    "api_endpoint": "Revenue reporting endpoints consume ledger; source Booking/Payment APIs IDs",
+    "event": "hotel.events: booking.status.changed, payment.completed, payment.refunded; userId/customerId aliases retained",
+    "repository": "PaymentRecordRepository/BookingStatusRecordRepository UUID local PK; JDBC accepted cash/gap refs",
+    "query": "revenue_cashflow_gaps.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind",
+    "frontend_dependency": "lib/api/revenue.ts, app/host/revenue/page.tsx; report hotel/customer/booking strings",
+    "test_impact": "Event ordering/dedup/quarantine, same payment CREDIT/DEBIT, invalid raw receipt IDs retained, reports/gaps/reconciliation",
+    "migration_dependency": "Approve U01 → coordinated5A code/adapters/fixtures → fresh owner DB5B V1 → five-project staging6; no old-varchar runtime mix",
+    "risk": "UUID-varchar SQL operators/binds, String.equals(UUID), lexical/hash normalization, invalid legacy/cached IDs; no policy/financial effect permitted",
+    "required_steps": "Update current JDBC_SQL_OWNED (no JPA field) mapping/associated key and typed params/binds/readback; keep same wire strings; validate required/nullable; run REVENUE gates before deploy",
+    "source": [
+      {
+        "path": "docker/sql/revenue-history-gaps-v1-20261107.sql",
+        "symbol": "revenue_cashflow_gaps.hotel_id"
+      }
+    ]
+  }
+]

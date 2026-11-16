@@ -1,0 +1,259 @@
+{
+  "status": "PARTIAL",
+  "scope": "Core local development passed; real VNPay Sandbox and Storage acceptance explicitly requested, currently blocked at external providers",
+  "timestampUtc": "2026-11-15T21:56:32.776366+00:00",
+  "doneConditions": {
+    "1": "PASS",
+    "2": "PASS",
+    "3": "PASS",
+    "4": "PASS",
+    "5": "PASS",
+    "6": "PASS",
+    "7": "PASS",
+    "8": "PASS",
+    "9": "PASS",
+    "10": "PASS",
+    "11": "PASS",
+    "12": "PASS",
+    "13": "PASS",
+    "14": "PASS",
+    "15": "PASS",
+    "16": "PASS"
+  },
+  "canonicalDatabases": 5,
+  "businessTables": 46,
+  "flywayHistoryRowsPerProject": 1,
+  "jpaEntities": 32,
+  "healthyLocalProcesses": 11,
+  "businessAcceptanceChecks": {
+    "auth-catalog-hosted-results.json": 34,
+    "booking-payment-refund-revenue-hosted-results.json": 30,
+    "extended-hosted-results.json": 15,
+    "payment-callback-hosted-results.json": 26,
+    "restart-outbox-hosted-results.json": 12
+  },
+  "businessAcceptanceChecksTotal": 117,
+  "actualCrossProjectLoginRejections": 5,
+  "postmigrationPermissionDeniedProbes": 30,
+  "hikariPoolMaxPerService": 2,
+  "backendRegression": {
+    "executedPass": 848,
+    "optionalSkipped": 47,
+    "failures": 0,
+    "errors": 0,
+    "excludedDefaultLocalContext": "Unconfigured ApplicationTests excluded; actual hosted full startup/restart is separate PASS; initial attempted default-context authentication failure retained"
+  },
+  "frontendRegressionPass": 214,
+  "frontendTypecheck": "PASS",
+  "protectedSqlAndBaseConfigsUnchanged": 30,
+  "legacyDatabaseDdlDmlExecuted": false,
+  "syntheticHostedBusinessDataCreatedAndRetained": false,
+  "realPaymentOrRefundProviderCalled": false,
+  "externalSmtpEmailSent": false,
+  "migrationApprovalsDisabled": true,
+  "optionalNotRun": [
+    "Real VNPay sandbox merchant/provider integration (no supplied provider credentials)",
+    "Supabase Storage uploads/previews (no supplied storage credentials)",
+    "Provider-wide network outage/load/production backup restore drill"
+  ],
+  "retainedLimitations": [
+    "Runtime inherits managed PUBLIC database TEMP; persistent public DDL/history access denied",
+    "Pooler API reports null/default numeric limits; actual SQL max60/reserved3/role cap4, max2 pool and bounded recovery tested",
+    "Existing conflicting VNPay callback receipt uses HTTP404 contract; business rules unchanged",
+    "STD-006 legacy stock provenance remains OPEN; only explicit synthetic stock2 used"
+  ],
+  "sourceArtifacts": [
+    {
+      "path": "tools/supabase-runner/acceptance_runtime.py",
+      "sha256": "c854e253aea4afc0f4d12ff5516592c28e0d3483a6b4adeaa838ff34bc70c226"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-auth-catalog-acceptance.py",
+      "sha256": "c90b53b852d51c2f2b1221eab39ccf0ab47c431b82f89c17270f2fe6d19c74f0"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-booking-acceptance.py",
+      "sha256": "2410f205ce49031b4b530541708d96b3532aa1fb5c2fedbde8ca8449ca9bd133"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-cross-project-acceptance.py",
+      "sha256": "d3afcb657fb0f308e1112b50b19bbbd6b89b72657b225f0233b693e27c930239"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-extended-acceptance.py",
+      "sha256": "ea5046d67913dde4dbba17128387d3983a1d6de8a0a4e0b21dbef824c4b728d1"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-payment-callback-acceptance.py",
+      "sha256": "2f81f6e727646b621abef4a2c7237ddb186149d34f43aabf4a4c7861cb0a8fcb"
+    },
+    {
+      "path": "tools/supabase-runner/hosted-restart-acceptance.py",
+      "sha256": "e57876a354104ac05630e2d312572a8f3b7ab8fc615812fceebe08ae1430ef3a"
+    },
+    {
+      "path": "tools/supabase-runner/prepare-batch-readonly.py",
+      "sha256": "318e885e06b0dc7b2c77e6d9152f3837f25ed7de7e69981813ce8d2a7af1a56d"
+    },
+    {
+      "path": "tools/supabase-runner/prepare-remaining-role-setup.py",
+      "sha256": "e2eeafd71b2857a9e43ae0d793df6fa3fea9c285964bfd2f935ea2de992ea80a"
+    },
+    {
+      "path": "tools/supabase-runner/prepare-role-review.py",
+      "sha256": "c4c453f13d2ed43c28ac179f143ae83cc619975b956947ecb010b4b2783f895a"
+    },
+    {
+      "path": "tools/supabase-runner/prepare-user-role-action.py",
+      "sha256": "703d44b8fce94304fe9933709e47c6ed703fc91c5ad421811e5b730173f5da71"
+    },
+    {
+      "path": "tools/supabase-runner/provider_config.py",
+      "sha256": "364bdb80fa3134c8bdef9ce91d436a173e6df368eb62119ae14b711de3637927"
+    },
+    {
+      "path": "tools/supabase-runner/run-local-stack.py",
+      "sha256": "0ca32fea88802c99fc8cbfd1d3addcbfc3dd49ee6631154c46c708f0152510d1"
+    },
+    {
+      "path": "tools/supabase-runner/run-preflight.py",
+      "sha256": "288a423fb48343a2cb4d4959c8c9ff16d54ba6679b77246b7cc0163cfd37b29b"
+    },
+    {
+      "path": "tools/supabase-runner/test-local.py",
+      "sha256": "7908b70b85ce1743bcaa969b1e3d8837ed222e53cdbe05a720df8453c38fdc62"
+    },
+    {
+      "path": "tools/supabase-runner/test_provider_config.py",
+      "sha256": "58f23c3216f064563539208f4fc4ee75246767e1fe8e8c8fecd5fa12afcf3515"
+    },
+    {
+      "path": "tools/supabase-runner/acceptance/java/CrossProjectLoginProbe.java",
+      "sha256": "03158e2ca18819b03377881116b020d6fe7ebc49cdd31ac4b27e5ca0a27e88da"
+    },
+    {
+      "path": "tools/supabase-runner/acceptance/java/HostedAcceptanceSql.java",
+      "sha256": "c75e806dc4dcd3608b4d99c3b969837ab34b375d28e660d8ea8b0e4abc191121"
+    },
+    {
+      "path": "tools/supabase-runner/acceptance/java/HostedPoolProbe.java",
+      "sha256": "6a163934690050396e0664eafcfb7d32ff9a9b3d706866cca7c993c9f313efa8"
+    },
+    {
+      "path": "tools/supabase-runner/acceptance/java/OwnedRabbitReplay.java",
+      "sha256": "9beb99f4750de01575319dd35f0ec3173f671db3dfc13a1ee698ab10787a8c10"
+    }
+  ],
+  "applicationLeftRunningForUser": true,
+  "finalStaticChecks": {
+    "acceptanceJavaCompilation": "PASS",
+    "pythonSyntax": "PASS",
+    "completedAcceptanceWritesBlocked": "PASS",
+    "publicArtifactsCredentialScan": "PASS",
+    "finalReportLinks": "PASS",
+    "protected30Hashes": "PASS",
+    "gitDiffWhitespace": "PASS",
+    "stagedFiles": 0,
+    "frontendClean": true,
+    "privateEnvStateManifestIgnored": true
+  },
+  "coreAcceptanceStatus": "DONE",
+  "providerAcceptance": {
+    "source": "user explicitly selected docker/.env provider credentials",
+    "vnpayMode": "sandbox",
+    "sandboxEndpointVerified": true,
+    "storageMode": "disabled-pending-readonly-provider-check",
+    "databaseCredentialsImported": false,
+    "sandboxDns": "PASS",
+    "storageDns": "DNS_LOOKUP_FAILED",
+    "storageKeyRole": "service_role",
+    "storageKeyNotExpired": true,
+    "status": "BLOCKED_EXTERNAL_PROVIDERS",
+    "vnpayProviderStatus": "NEW_MERCHANT_BLOCKED_WEBSITE_NOT_APPROVED_CODE71",
+    "storageProviderStatus": "BLOCKED_DNS_NXDOMAIN",
+    "sourceCredentialsPresent": true,
+    "providerPaymentSubmitted": false,
+    "storageUploadSent": false,
+    "providerConfigTests": {
+      "tests": 8,
+      "status": "PASS"
+    },
+    "mediaRegression": {
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "status": "PASS"
+    },
+    "storageControlDns": "Core Hotel API resolves; configured Storage hostname NXDOMAIN in system and independent DNS",
+    "storageProjectControlPlane": "403 with current three scoped PATs, project state not independently determined",
+    "sandboxVisibleMessage": "Website n\u00e0y ch\u01b0a \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
+    "sandboxErrorCode": "71",
+    "mediaBuild": "PASS",
+    "temporaryCheckoutBridgeStopped": true,
+    "failedUnpaidBookingCancelledNormally": true,
+    "providerProbeRevenueCashRows": 0,
+    "latestMerchantRecheck": {
+      "checkedAtUtc": "2026-11-16T07:12:18.476344+00:00",
+      "source": "user-updated docker/.env",
+      "newMerchantLoaded": true,
+      "checkoutHmacMatchesConfiguredSecret": true,
+      "providerErrorCode": "71",
+      "visibleMessage": "Website n\u00e0y ch\u01b0a \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
+      "trace": "ODXO7ycYqa",
+      "bankFormReached": false,
+      "paymentSubmitted": false,
+      "syntheticBookingCancelledNormally": true
+    }
+  },
+  "providerFollowupCheckedAtUtc": "2026-11-16T05:24:48.003855+00:00",
+  "providerChangedSource": [
+    "media-service/src/main/java/com/example/mediaservice/SupabaseStorageService.java",
+    "media-service/src/test/java/com/example/mediaservice/StorageBoundaryTest.java"
+  ],
+  "providerRuntimeAll11Healthy": true,
+  "searchNavigationFollowup": {
+    "date": "2026-11-16",
+    "before": {
+      "bundler": "Turbopack",
+      "searchRoute": "HTTP timeout after 14.23 seconds",
+      "homepageHttp": 200,
+      "log": "Compiling /search without completion; failed RSC payload"
+    },
+    "change": {
+      "file": "tools/supabase-runner/run-local-stack.py",
+      "frontendDevBundler": "explicit --webpack",
+      "applicationSearchOrDatabaseCodeChanged": false
+    },
+    "after": {
+      "coldSearchHttp": 200,
+      "coldSearchSeconds": 4.55,
+      "actualBrowserHomeSearchForm": "PASS",
+      "checkIn": "2026-11-20",
+      "checkOut": "2026-11-21",
+      "rooms": 1,
+      "adults": 2,
+      "children": 0,
+      "queryParametersPreserved": true,
+      "renderedSyntheticHotelResults": 2,
+      "navigationHttp": 200,
+      "navigationSeconds": 0.176
+    },
+    "frontendSourceChanged": false,
+    "productionBuildClaimed": false
+  },
+  "currentRuntime": {
+    "mode": "Docker Compose",
+    "selectedEnvironment": "Supabase",
+    "observedState": "stopped before configuration cleanup",
+    "containersStartedDuringCleanup": false
+  },
+  "fixtureCleanup": {
+    "status": "PASS",
+    "deletedDatabaseRows": 192,
+    "evidence": "Docs/evidence/batch-6b-supabase-local-integration/fixture-cleanup-2026-11-16.json"
+  },
+  "configurationConsolidation": {
+    "status": "PASS",
+    "evidence": "Docs/evidence/batch-6b-supabase-local-integration/config-consolidation-2026-11-16.json"
+  }
+}

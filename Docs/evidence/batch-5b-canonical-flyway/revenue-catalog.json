@@ -1,0 +1,1077 @@
+{
+  "owner": "revenue",
+  "database": "batch5b_revenue_1794592498_33124",
+  "columns": [
+    {
+      "table_name": "booking_status_records",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "booking_status",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "event_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "event_version",
+      "sql_type": "bigint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "last_event_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "nights",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "booking_status_records",
+      "column_name": "rooms",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "amount",
+      "sql_type": "numeric(38,2)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "created_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "customer_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "event_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "event_version",
+      "sql_type": "bigint",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "last_event_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "nights",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "paid_at",
+      "sql_type": "timestamp(6) without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "payment_method",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "payment_status",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "payment_records",
+      "column_name": "rooms",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "amount",
+      "sql_type": "numeric",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "check_in_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "check_out_date",
+      "sql_type": "date",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "customer_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "execution_mode",
+      "sql_type": "character varying(32)",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "kind",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "nights",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "occurred_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "payment_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "payment_method",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "recorded_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "room_type_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "rooms",
+      "sql_type": "integer",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "source_event_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "source_version",
+      "sql_type": "bigint",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "column_name": "transaction_id",
+      "sql_type": "character varying(255)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "booking_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "detected_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "hotel_id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "reason",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "resolution_evidence",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "resolved_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "resolved_by",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "column_name": "source_record_id",
+      "sql_type": "uuid",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "booking_id",
+      "sql_type": "text",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "disposition",
+      "sql_type": "character varying(32)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "event_at",
+      "sql_type": "timestamp without time zone",
+      "nullable": true,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "event_hash",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "id",
+      "sql_type": "uuid",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "kind",
+      "sql_type": "character varying(16)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "payload",
+      "sql_type": "jsonb",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "reason",
+      "sql_type": "character varying(64)",
+      "nullable": false,
+      "default_expression": null,
+      "identity_kind": ""
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "column_name": "received_at",
+      "sql_type": "timestamp with time zone",
+      "nullable": false,
+      "default_expression": "now()",
+      "identity_kind": ""
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_nights_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL nights"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_rooms_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL rooms"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_booking_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_status"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_event_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL event_at"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_customer_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL customer_id"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_nights_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL nights"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_rooms_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL rooms"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amount"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_payment_status_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_status"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_payment_method_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_method"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_event_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL event_at"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_created_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_amount_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((amount > (0)::numeric))"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_kind_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((kind)::text = ANY (ARRAY[('CREDIT'::character varying)::text, ('DEBIT'::character varying)::text])))"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_nights_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((nights > 0))"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_rooms_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK ((rooms > 0))"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_source_event_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL source_event_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_source_version_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL source_version"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_payment_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_kind_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_transaction_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL transaction_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_occurred_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL occurred_at"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_customer_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL customer_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_check_in_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_in_date"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_check_out_date_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL check_out_date"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_nights_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL nights"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_rooms_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL rooms"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_amount_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL amount"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_payment_method_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payment_method"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_recorded_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL recorded_at"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_payment_id_kind_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (payment_id, kind)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_source_event_id_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (source_event_id)"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_disposition_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((disposition)::text = ANY (ARRAY[('APPLIED'::character varying)::text, ('IGNORED'::character varying)::text, ('REVIEW_REQUIRED'::character varying)::text])))"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_kind_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((kind)::text = ANY (ARRAY[('BOOKING'::character varying)::text, ('PAYMENT'::character varying)::text])))"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL id"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_kind_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_event_hash_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL event_hash"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_disposition_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL disposition"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_reason_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_payload_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_received_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL received_at"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_kind_event_hash_key",
+      "kind": "u",
+      "validated": true,
+      "definition": "UNIQUE (kind, event_hash)"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_check",
+      "kind": "c",
+      "validated": true,
+      "definition": "CHECK (((resolved_at IS NULL) OR ((resolved_by IS NOT NULL) AND (resolution_evidence IS NOT NULL) AND (length(TRIM(BOTH FROM resolution_evidence)) > 0))))"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_booking_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL booking_id"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_hotel_id_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL hotel_id"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_reason_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_detected_at_not_null",
+      "kind": "n",
+      "validated": true,
+      "definition": "NOT NULL detected_at"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_pkey",
+      "kind": "p",
+      "validated": true,
+      "definition": "PRIMARY KEY (booking_id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "booking_status_records",
+      "name": "booking_status_records_pkey",
+      "definition": "CREATE UNIQUE INDEX booking_status_records_pkey ON public.booking_status_records USING btree (id)"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "payment_records_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_records_pkey ON public.payment_records USING btree (id)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_pkey",
+      "definition": "CREATE UNIQUE INDEX revenue_cash_transactions_pkey ON public.revenue_cash_transactions USING btree (id)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_payment_id_kind_key",
+      "definition": "CREATE UNIQUE INDEX revenue_cash_transactions_payment_id_kind_key ON public.revenue_cash_transactions USING btree (payment_id, kind)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_transactions_source_event_id_key",
+      "definition": "CREATE UNIQUE INDEX revenue_cash_transactions_source_event_id_key ON public.revenue_cash_transactions USING btree (source_event_id)"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX revenue_event_receipts_pkey ON public.revenue_event_receipts USING btree (id)"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_receipts_kind_event_hash_key",
+      "definition": "CREATE UNIQUE INDEX revenue_event_receipts_kind_event_hash_key ON public.revenue_event_receipts USING btree (kind, event_hash)"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_pkey",
+      "definition": "CREATE UNIQUE INDEX revenue_cashflow_gaps_pkey ON public.revenue_cashflow_gaps USING btree (booking_id)"
+    },
+    {
+      "table_name": "booking_status_records",
+      "name": "revenue_status_booking_unique",
+      "definition": "CREATE UNIQUE INDEX revenue_status_booking_unique ON public.booking_status_records USING btree (booking_id)"
+    },
+    {
+      "table_name": "payment_records",
+      "name": "revenue_payment_booking_unique",
+      "definition": "CREATE UNIQUE INDEX revenue_payment_booking_unique ON public.payment_records USING btree (booking_id)"
+    },
+    {
+      "table_name": "revenue_cash_transactions",
+      "name": "revenue_cash_period",
+      "definition": "CREATE INDEX revenue_cash_period ON public.revenue_cash_transactions USING btree (occurred_at, hotel_id)"
+    },
+    {
+      "table_name": "revenue_event_receipts",
+      "name": "revenue_event_review_queue",
+      "definition": "CREATE INDEX revenue_event_review_queue ON public.revenue_event_receipts USING btree (disposition, received_at, id)"
+    },
+    {
+      "table_name": "revenue_cashflow_gaps",
+      "name": "revenue_cashflow_gaps_scope",
+      "definition": "CREATE INDEX revenue_cashflow_gaps_scope ON public.revenue_cashflow_gaps USING btree (hotel_id) WHERE (resolved_at IS NULL)"
+    }
+  ],
+  "sequences": [],
+  "history": [
+    {
+      "installed_rank": 1,
+      "version": "1",
+      "description": "canonical schema",
+      "type": "SQL",
+      "script": "V1__canonical_schema.sql",
+      "checksum": -286582751,
+      "success": true
+    }
+  ]
+}

@@ -1,3 +1,4 @@
 package com.example.bookingservice.integration.hotel.dto;
 
-public record HoldResponse(String holdId, String status, String expiresAt) {}
+import java.util.UUID;
+public record HoldResponse(UUID holdId, String status, String expiresAt) {}

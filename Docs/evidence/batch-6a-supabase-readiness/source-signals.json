@@ -1,0 +1,434 @@
+[
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 81,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 84,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 87,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 94,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 97,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 100,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 107,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 112,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 118,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 125,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 132,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 143,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 152,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "line": 159,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "line": 63,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "line": 81,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "line": 84,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "line": 87,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "line": 90,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 34,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 37,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 40,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 59,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 63,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "line": 66,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/TokenRevocationService.java",
+    "line": 47,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "auth-service/src/main/java/com/example/authservice/service/TokenRevocationService.java",
+    "line": 53,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "line": 23,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "line": 44,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "line": 98,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "line": 146,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "line": 192,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+    "line": 19,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+    "line": 34,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java",
+    "line": 34,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelAvailabilityClient.java",
+    "line": 35,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java",
+    "line": 25,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+    "line": 14,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+    "line": 14,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/JwtFilter.java",
+    "line": 50,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/JwtFilter.java",
+    "line": 57,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "booking-service/src/main/java/com/example/bookingservice/security/JwtFilter.java",
+    "line": 83,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "docker/points-reservation-smoke.py",
+    "line": 156,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "docker/room-mutation-concurrency-smoke.py",
+    "line": 29,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "docker/room-mutation-concurrency-smoke.py",
+    "line": 32,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "docker/room-mutation-concurrency-smoke.py",
+    "line": 51,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "line": 18,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java",
+    "line": 18,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/BookingPaymentListener.java",
+    "line": 21,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "line": 18,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "line": 25,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "line": 29,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "line": 31,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "line": 35,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java",
+    "line": 14,
+    "category": "scheduler"
+  },
+  {
+    "repo": "checkinn",
+    "path": "revenue-service/src/main/java/com/example/revenueservice/messaging/EventListener.java",
+    "line": 21,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "revenue-service/src/main/java/com/example/revenueservice/messaging/EventListener.java",
+    "line": 32,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "revenue-service/src/main/java/com/example/revenueservice/regulations/RegulationLocalCache.java",
+    "line": 30,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java",
+    "line": 37,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/EventIngestionService.java",
+    "line": 35,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "line": 165,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "line": 167,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "line": 172,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "line": 175,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/regulations/RegulationLocalCache.java",
+    "line": 30,
+    "category": "consumer"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/EmailService.java",
+    "line": 33,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/EmailService.java",
+    "line": 35,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyCommandLock.java",
+    "line": 26,
+    "category": "advisory-lock"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "line": 50,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "line": 75,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "line": 77,
+    "category": "log-sensitive-candidate"
+  },
+  {
+    "repo": "checkinn",
+    "path": "user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java",
+    "line": 17,
+    "category": "scheduler"
+  }
+]

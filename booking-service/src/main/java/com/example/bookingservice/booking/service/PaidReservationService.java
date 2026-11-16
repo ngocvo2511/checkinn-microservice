@@ -1,5 +1,7 @@
 package com.example.bookingservice.booking.service;
 
+import static com.example.bookingservice.contract.UuidContract.*;
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
@@ -24,15 +26,15 @@ public class PaidReservationService {
     private final HotelAvailabilityClient inventory;
     private final com.example.bookingservice.messaging.HotelEventPublisher events;
     private final BookingService bookingService;
-    public record Requested(String bookingId) {}
+    public record Requested(UUID bookingId) {}
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public BookingStatusEvent process(String id) {
+    public BookingStatusEvent process(UUID id) {
         Booking b=bookings.findByIdForUpdate(id).orElse(null);
         if (b==null || !"V1_PENDING".equals(b.getPaidReservationStatus()) || b.getPaidReservationNextAttemptAt()==null
                 || b.getPaidReservationNextAttemptAt().isAfter(LocalDateTime.now())) return null;
         b.setPaidReservationAttempts(Math.addExact(b.getPaidReservationAttempts()==null?0:b.getPaidReservationAttempts(),1));
-        if (b.getHoldId()==null || b.getHoldId().isBlank()) {review(b,"MISSING_HOLD");return null;}
+        if (b.getHoldId()==null) {review(b,"MISSING_HOLD");return null;}
         boolean cancelled=b.getStatus()==BookingStatus.CANCELLED;
         if (!cancelled) {
             var payment=b.getPaidReservationPaymentId()==null?null:payments.findById(b.getPaidReservationPaymentId()).orElse(null);
@@ -67,7 +69,7 @@ public class PaidReservationService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void defer(String id) {
+    public void defer(UUID id) {
         bookings.findByIdForUpdate(id).filter(b -> "V1_PENDING".equals(b.getPaidReservationStatus())).ifPresent(b -> {
             retry(b);b.setPaidReservationLastError("LOCAL_TRANSACTION_FAILED");
         });
@@ -75,8 +77,8 @@ public class PaidReservationService {
     private void retry(Booking b) {b.setPaidReservationNextAttemptAt(LocalDateTime.now().plusSeconds(5));b.setPaidReservationLastError("INVENTORY_UNAVAILABLE");}
     private void review(Booking b,String code) {b.setPaidReservationStatus("V1_REVIEW_REQUIRED");b.setPaidReservationNextAttemptAt(null);b.setPaidReservationLastError(code);}
     private BookingStatusEvent event(Booking b) {
-        return BookingStatusEvent.builder().bookingId(b.getId()).hotelId(b.getHotelId())
-            .roomTypeId(b.getItems()==null || b.getItems().isEmpty()?null:b.getItems().get(0).getRoomTypeId())
+        return BookingStatusEvent.builder().bookingId(text(b.getId())).hotelId(text(b.getHotelId()))
+            .roomTypeId(b.getItems()==null || b.getItems().isEmpty()?null:text(b.getItems().get(0).getRoomTypeId()))
             .rooms(b.getItems()==null?0:b.getItems().stream().mapToInt(i -> i.getQuantity()).sum())
             .checkInDate(b.getCheckInDate()).checkOutDate(b.getCheckOutDate())
             .nights((int)ChronoUnit.DAYS.between(b.getCheckInDate(),b.getCheckOutDate()))

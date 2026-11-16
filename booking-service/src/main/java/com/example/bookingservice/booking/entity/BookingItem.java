@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.entity;
 
+import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +19,14 @@ public class BookingItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
     @Column(nullable = false)
-    private String roomTypeId;
+    private UUID roomTypeId;
 
     @Column(nullable = false)
     private String roomTypeName;

@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "Four exact generated SQL scripts on fresh isolated PostgreSQL17.11 with non-superuser postgres admin and six exact managed callback fixtures. Native password prompts replaced ONLY in local copies with synthetic passwords; actual interactive prompts not automated.",
+  "results": [
+    {
+      "owner": "hotel",
+      "sqlEquivalentSetup": "PASS",
+      "bothDedicatedLogins": "PASS",
+      "existingRolesRejected": "PASS",
+      "scriptSha256": "a201a23478670b496c1810a123d28c0a7d23efe9caa6a42b2f74221f4eeb3f2a"
+    },
+    {
+      "owner": "booking",
+      "sqlEquivalentSetup": "PASS",
+      "bothDedicatedLogins": "PASS",
+      "existingRolesRejected": "PASS",
+      "scriptSha256": "4c04105808e295d60b34657a8e9c3e20d47d8320bcf03120df228845886b2931"
+    },
+    {
+      "owner": "revenue",
+      "sqlEquivalentSetup": "PASS",
+      "bothDedicatedLogins": "PASS",
+      "existingRolesRejected": "PASS",
+      "scriptSha256": "96266462d0689ba362e00d14e5e65ba12e2fc23a90b88e85a349de0814459cb8"
+    },
+    {
+      "owner": "regulations",
+      "sqlEquivalentSetup": "PASS",
+      "bothDedicatedLogins": "PASS",
+      "existingRolesRejected": "PASS",
+      "scriptSha256": "c666d8d1f34d9a54fcea9c88ad0aa5a6692880dc3f3b1d38dc45cc19e5f7af88"
+    }
+  ],
+  "hosted": false,
+  "activeHostedResultFilesWritten": false,
+  "clusterStopped": true
+}

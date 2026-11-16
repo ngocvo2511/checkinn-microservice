@@ -26,13 +26,13 @@ public class PointsBookingStateClient {
         bookings = BookingGrpcServiceGrpc.newBlockingStub(channel);
     }
 
-    public String getState(String bookingId, UUID userId) {
+    public String getState(UUID bookingId, UUID userId) {
         Metadata headers = new Metadata();
         headers.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), "Bearer " + tokens.generatePointsRecoveryToken());
         try {
             String state = bookings.withInterceptors(MetadataUtils.newAttachHeadersInterceptor(headers))
                     .withDeadlineAfter(3, TimeUnit.SECONDS).getLoyaltyBookingState(LoyaltyBookingStateRequest.newBuilder()
-                            .setBookingId(bookingId).setUserId(userId.toString()).build()).getState();
+                            .setBookingId(bookingId.toString()).setUserId(userId.toString()).build()).getState();
             return Set.of("MISSING", "CANCELLED", "ACTIVE").contains(state) ? state : "UNKNOWN";
         } catch (StatusRuntimeException ex) {
             log.warn("Points booking lookup unavailable (grpc={})", ex.getStatus().getCode());

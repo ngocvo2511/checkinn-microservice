@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.dto;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class BookingResponse {
-    private String id;
-    private String userId;
-    private String hotelId;
+    private UUID id;
+    private UUID userId;
+    private UUID hotelId;
     private String hotelName;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -40,7 +41,7 @@ public class BookingResponse {
     private String paymentMethod; // HOTEL, VNPAY - lấy từ Payment entity
     private String onsiteReservationStatus;
     private String paidReservationStatus;
-    private String holdId;
+    private UUID holdId;
     private java.time.Instant holdExpiresAt;
     private String cancellationPolicyVersion;
     private java.time.Instant checkInAt;

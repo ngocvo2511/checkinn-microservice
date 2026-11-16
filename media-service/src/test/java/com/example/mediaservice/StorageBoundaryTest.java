@@ -16,10 +16,11 @@ import static org.assertj.core.api.Assertions.*;
 class StorageBoundaryTest {
     HttpServer server;SupabaseStorageService storage;String base;
     volatile String response="{}";volatile int status=200,bodyDelayMillis;volatile boolean legacyBatch;
+    volatile String receivedAuthorization,receivedApiKey;
     final AtomicInteger calls=new AtomicInteger();
     @BeforeEach void start() throws Exception {
         server=HttpServer.create(new InetSocketAddress("127.0.0.1",0),0);
-        server.createContext("/",exchange->{calls.incrementAndGet();exchange.getRequestBody().readAllBytes();
+        server.createContext("/",exchange->{calls.incrementAndGet();receivedAuthorization=exchange.getRequestHeaders().getFirst("Authorization");receivedApiKey=exchange.getRequestHeaders().getFirst("apikey");exchange.getRequestBody().readAllBytes();
             boolean missingBatch=legacyBatch && exchange.getRequestURI().getPath().equals("/storage/v1/object/sign/private");
             String body=missingBatch?"{}":legacyBatch?"{\"signedURL\":\""+exchange.getRequestURI().getRawPath().substring("/storage/v1".length())+"?token=synthetic\"}":response;
             byte[] bytes=body.getBytes(StandardCharsets.UTF_8);exchange.getResponseHeaders().set("Content-Type","application/json");
@@ -31,6 +32,18 @@ class StorageBoundaryTest {
         storage=new SupabaseStorageService(base,"public","private","synthetic-local-storage-test-key");
     }
     @AfterEach void stop() {server.stop(0);}
+    @Test void opaqueServerSecretUsesApiKeyWithoutInvalidJwtBearer() throws Exception {
+        storage=new SupabaseStorageService(base,"public","private","sb_secret_synthetic_test");
+        storage.uploadMedia(new byte[]{1},"synthetic.png","image/png");
+        assertThat(receivedApiKey).isEqualTo("sb_secret_synthetic_test");
+        assertThat(receivedAuthorization).isNull();
+    }
+    @Test void legacyServiceRoleJwtRetainsBearerAndApiKey() throws Exception {
+        storage=new SupabaseStorageService(base,"public","private","eyJ.synthetic.test");
+        storage.uploadPrivateDocument(new byte[]{1},"synthetic.pdf","application/pdf");
+        assertThat(receivedApiKey).isEqualTo("eyJ.synthetic.test");
+        assertThat(receivedAuthorization).isEqualTo("Bearer eyJ.synthetic.test");
+    }
     @Test void signedUrlMustIdentifyTheRequestedPrivateObject() {
         response="{\"signedURL\":\"/object/sign/private/another-person.pdf?token=synthetic\"}";
         assertThatThrownBy(()->storage.createSignedUrl("identity.pdf",300)).isInstanceOf(java.io.IOException.class);

@@ -1,0 +1,390 @@
+{
+  "date": "2026-11-13",
+  "scope": "STATIC DESIGN ONLY; no runtime/database/Supabase tests",
+  "checks": [
+    {
+      "check": "JSON syntax: all new/revised evidence",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "same46 owner tables /458 columns",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "current mapping/source annotations/nullability/default/business fields preserved",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "exact38 approved-required target type proposals",
+      "status": "PASS",
+      "detail": [
+        [
+          "user",
+          "loyalty_commands",
+          "booking_id"
+        ],
+        [
+          "user",
+          "points_reservations",
+          "booking_id"
+        ],
+        [
+          "user",
+          "points_transactions",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "user_id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "hotel_id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "hold_id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "paid_reservation_payment_id"
+        ],
+        [
+          "booking",
+          "bookings",
+          "inventory_reviewed_by"
+        ],
+        [
+          "booking",
+          "booking_items",
+          "id"
+        ],
+        [
+          "booking",
+          "booking_items",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "booking_items",
+          "room_type_id"
+        ],
+        [
+          "booking",
+          "payments",
+          "id"
+        ],
+        [
+          "booking",
+          "payments",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "refund_requests",
+          "id"
+        ],
+        [
+          "booking",
+          "refund_requests",
+          "payment_id"
+        ],
+        [
+          "booking",
+          "refund_requests",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "refund_requests",
+          "requested_by"
+        ],
+        [
+          "booking",
+          "refund_requests",
+          "approved_by"
+        ],
+        [
+          "revenue",
+          "booking_status_records",
+          "booking_id"
+        ],
+        [
+          "revenue",
+          "booking_status_records",
+          "hotel_id"
+        ],
+        [
+          "revenue",
+          "booking_status_records",
+          "room_type_id"
+        ],
+        [
+          "revenue",
+          "payment_records",
+          "booking_id"
+        ],
+        [
+          "revenue",
+          "payment_records",
+          "customer_id"
+        ],
+        [
+          "revenue",
+          "payment_records",
+          "hotel_id"
+        ],
+        [
+          "revenue",
+          "payment_records",
+          "room_type_id"
+        ],
+        [
+          "booking",
+          "booking_event_outbox",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "manual_refund_executions",
+          "request_id"
+        ],
+        [
+          "booking",
+          "manual_refund_executions",
+          "payment_id"
+        ],
+        [
+          "booking",
+          "manual_refund_executions",
+          "booking_id"
+        ],
+        [
+          "booking",
+          "manual_refund_executions",
+          "submitted_by"
+        ],
+        [
+          "revenue",
+          "revenue_cash_transactions",
+          "payment_id"
+        ],
+        [
+          "revenue",
+          "revenue_cash_transactions",
+          "booking_id"
+        ],
+        [
+          "revenue",
+          "revenue_cash_transactions",
+          "customer_id"
+        ],
+        [
+          "revenue",
+          "revenue_cash_transactions",
+          "hotel_id"
+        ],
+        [
+          "revenue",
+          "revenue_cash_transactions",
+          "room_type_id"
+        ],
+        [
+          "revenue",
+          "revenue_cashflow_gaps",
+          "booking_id"
+        ],
+        [
+          "revenue",
+          "revenue_cashflow_gaps",
+          "hotel_id"
+        ]
+      ]
+    },
+    {
+      "check": "all conversions explicitly unapproved and migration_required",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "167 persisted ID contracts and38 matrix rows exact",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "source provenance per table unchanged",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "constraints/indexes semantically same except owner-schema→public",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "physical FK target/type matches inside same project DB",
+      "status": "PASS",
+      "detail": {
+        "edges_checked": 26,
+        "errors": []
+      }
+    },
+    {
+      "check": "logical/polymorphic references match owner keys or explicit exception",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Booking consumers UUID incl Loyalty/HotelReview/accepted Revenue",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "raw invalid receipt and system actors remain String/TEXT",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Regulations BIGINT identity and amenity code composite exception",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "no v4-only policy; deterministic v3 explicitly preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "five independent project ownership/public target metadata",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all per-column spec/ERD types match revised JSON",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "explicit5A approval /5B fiveDB /6 existingSupabase phases",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "architecture supersedes shared project; public security/SSL/independent pools",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all905 code/source/proto/frontend/fixture hashes preserved",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "only allowed existing design/docs changed from1237-file initial SHA",
+      "status": "PASS",
+      "detail": [
+        "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md",
+        "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+        "checkinn/Docs/evidence/batch-4-database-design/README.md",
+        "checkinn/Docs/evidence/batch-4-database-design/canonical-model.json",
+        "checkinn/Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md",
+        "checkinn/Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+        "checkinn/Docs/database-design/ERD.md",
+        "checkinn/Docs/database-design/CANONICAL_DATABASE_SCHEMA_V1.md",
+        "checkinn/Docs/BATCH4_CANONICAL_DATABASE_DESIGN_2026-11-13.md"
+      ]
+    },
+    {
+      "check": "all captured frontend and Place files unchanged",
+      "status": "PASS",
+      "detail": 252
+    },
+    {
+      "check": "PROJECT_STANDARDIZATION_PLAN.md initial bytes preserved before appended checkpoint",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md initial bytes preserved before appended checkpoint",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Docs/BATCH4_CANONICAL_DATABASE_DESIGN_2026-11-13.md historical body preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Docs/evidence/batch-4-database-design/README.md historical body preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "new/revised documentation local links resolve",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "checkinn git diff --check",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "checkinn no staged files",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "checkinn-frontend git diff --check",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "checkinn-frontend no staged files",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "frontend remains Git clean",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "both branch/HEAD unchanged",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "counts": {
+    "persisted_contracts": 167,
+    "proposed_columns": 38,
+    "app_tables": 46,
+    "columns": 458,
+    "source_files": 905,
+    "protobuf_declarations": 124
+  },
+  "not_run": [
+    "Java/TypeScript implementation/runtime tests",
+    "Flyway/JPA/native SQL execution",
+    "Database/Supabase access",
+    "Mermaid rendering",
+    "Actual demo-ID data validity inspection"
+  ],
+  "limitations": [
+    "Lightweight source/proto/TS lexical inventory, not complete language parser",
+    "Wire string compatibility does not prove hash/JDBC/rolling compatibility",
+    "Five existing projects user-confirmed; endpoint/security/roles/plan/version/backup unverified"
+  ]
+}

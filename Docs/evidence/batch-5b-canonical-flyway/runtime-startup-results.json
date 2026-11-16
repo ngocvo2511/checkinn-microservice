@@ -1,0 +1,42 @@
+[
+  {
+    "owner": "user",
+    "port": 55820,
+    "status": 200,
+    "health": {
+      "status": "UP"
+    }
+  },
+  {
+    "owner": "hotel",
+    "port": 55821,
+    "status": 200,
+    "health": {
+      "status": "UP"
+    }
+  },
+  {
+    "owner": "booking",
+    "port": 55822,
+    "status": 200,
+    "health": {
+      "status": "UP"
+    }
+  },
+  {
+    "owner": "revenue",
+    "port": 55823,
+    "status": 200,
+    "health": {
+      "status": "UP"
+    }
+  },
+  {
+    "owner": "regulations",
+    "port": 55824,
+    "status": 200,
+    "health": {
+      "status": "UP"
+    }
+  }
+]

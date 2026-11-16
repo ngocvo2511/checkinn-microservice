@@ -1,0 +1,18 @@
+{
+  "version": "vn-34-provinces-2026-11-16",
+  "provinceSource": "https://baochinhphu.vn/nghi-quyet-cua-quoc-hoi-ve-sap-xep-don-vi-hanh-chinh-cap-tinh-102250612191145158.htm",
+  "destinationSource": "https://vietnam.travel/vi/place-to-go/",
+  "semantics": "Province is a current provincial-level unit; City is an application travel destination, not a claim about current administrative rank. Coordinates are intentionally unset pending a verified geospatial dataset.",
+  "provinces": [
+    "Hà Nội", "Hải Phòng", "Huế", "Đà Nẵng", "TP. Hồ Chí Minh", "Cần Thơ",
+    "Cao Bằng", "Điện Biên", "Hà Tĩnh", "Lai Châu", "Lạng Sơn", "Nghệ An", "Quảng Ninh", "Thanh Hóa", "Sơn La",
+    "Tuyên Quang", "Lào Cai", "Thái Nguyên", "Phú Thọ", "Bắc Ninh", "Hưng Yên", "Ninh Bình", "Quảng Trị", "Quảng Ngãi", "Gia Lai", "Khánh Hòa", "Lâm Đồng", "Đắk Lắk", "Đồng Nai", "Tây Ninh", "Vĩnh Long", "Đồng Tháp", "Cà Mau", "An Giang"
+  ],
+  "cities": [
+    ["Hà Nội", "Hà Nội"], ["TP. Hồ Chí Minh", "TP. Hồ Chí Minh"], ["Hải Phòng", "Hải Phòng"], ["Huế", "Huế"], ["Đà Nẵng", "Đà Nẵng"], ["Cần Thơ", "Cần Thơ"],
+    ["Hạ Long", "Quảng Ninh"], ["Cát Bà", "Hải Phòng"], ["Sa Pa", "Lào Cai"], ["Hà Giang", "Tuyên Quang"], ["Đồng Văn", "Tuyên Quang"], ["Mộc Châu", "Sơn La"], ["Mai Châu", "Phú Thọ"], ["Ninh Bình", "Ninh Bình"], ["Tam Đảo", "Phú Thọ"],
+    ["Sầm Sơn", "Thanh Hóa"], ["Cửa Lò", "Nghệ An"], ["Phong Nha", "Quảng Trị"], ["Đồng Hới", "Quảng Trị"], ["Hội An", "Đà Nẵng"], ["Quy Nhơn", "Gia Lai"], ["Nha Trang", "Khánh Hòa"], ["Cam Ranh", "Khánh Hòa"],
+    ["Đà Lạt", "Lâm Đồng"], ["Phan Thiết", "Lâm Đồng"], ["Mũi Né", "Lâm Đồng"], ["Phan Rang", "Khánh Hòa"], ["Phú Quốc", "An Giang"], ["Vũng Tàu", "TP. Hồ Chí Minh"], ["Côn Đảo", "TP. Hồ Chí Minh"],
+    ["Châu Đốc", "An Giang"], ["Long Xuyên", "An Giang"], ["Hà Tiên", "An Giang"], ["Rạch Giá", "An Giang"], ["Buôn Ma Thuột", "Đắk Lắk"], ["Pleiku", "Gia Lai"], ["Kon Tum", "Quảng Ngãi"], ["Bến Tre", "Vĩnh Long"], ["Mỹ Tho", "Đồng Tháp"], ["Cà Mau", "Cà Mau"]
+  ]
+}

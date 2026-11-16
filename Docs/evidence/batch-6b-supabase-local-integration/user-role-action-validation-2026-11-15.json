@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "scope": "Exact prepared User role action, fresh owned local PostgreSQL17.11; postgres fixture NOSUPERUSER CREATEROLE CREATEDB BYPASSRLS; supplied6 function definitions/ACL metadata reproduced locally",
+  "actionSha256": "f00c98a168e76c3a09ba47b270ed62fe89bb31eb79b6a5a9521c92e26f30d0d3",
+  "hosted": false,
+  "privateOutput": ".local\\user-action-test-49ffedd3ac89477ab190b8521e092cf7\\user.provision-nologin-roles.review-output.log",
+  "localDataPreserved": true
+}

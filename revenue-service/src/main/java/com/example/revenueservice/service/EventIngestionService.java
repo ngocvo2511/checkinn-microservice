@@ -1,5 +1,6 @@
 package com.example.revenueservice.service;
 
+import static com.example.revenueservice.contract.UuidContract.*;
 import com.example.revenueservice.entity.*;
 import com.example.revenueservice.messaging.event.*;
 import com.example.revenueservice.repository.*;
@@ -27,11 +28,11 @@ public class EventIngestionService {
         this.payments=payments;this.bookings=bookings;this.jdbc=jdbc;this.json=json;this.cash=cash;
     }
     private boolean valid(String booking,String hotel,LocalDate from,LocalDate to,int nights,int rooms,LocalDateTime at) {
-        return booking!=null && !booking.isBlank() && hotel!=null && !hotel.isBlank() && from!=null && to!=null
+        return com.example.revenueservice.contract.UuidContract.valid(booking) && com.example.revenueservice.contract.UuidContract.valid(hotel) && from!=null && to!=null
                 && to.isAfter(from) && ChronoUnit.DAYS.between(from,to)==nights && rooms>0 && at!=null;
     }
     private void lock(String kind,String id) {
-        jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(?,0))",rs->{},"revenue:"+kind+":"+id);
+        jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(?,0))",rs->{},"revenue:"+kind+":"+required(id));
     }
     private LocalDateTime time(LocalDateTime at) { return at.truncatedTo(ChronoUnit.MICROS); }
     private void receipt(String kind,String booking,LocalDateTime at,Object event,String disposition,String reason) {
@@ -62,17 +63,18 @@ public class EventIngestionService {
     @Transactional
     public void saveBookingStatusEvent(BookingStatusEvent e) {
         if(e==null || !metadata(e.eventVersion(),e.eventId()) || !valid(e.bookingId(),e.hotelId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.eventAt())
+                || (e.roomTypeId()!=null && !com.example.revenueservice.contract.UuidContract.valid(e.roomTypeId()))
                 || !Set.of("PENDING","PENDING_PAYMENT","CONFIRMED","CHECKED_IN","CHECKED_OUT","CANCELLED","NO_SHOW").contains(e.bookingStatus()==null?"":e.bookingStatus())) {
             receipt("BOOKING",e==null?null:e.bookingId(),e==null?null:e.eventAt(),e,"REVIEW_REQUIRED","INVALID_SOURCE_EVENT");return;
         }
         lock("BOOKING",e.bookingId());
-        var current=bookings.findByBookingId(e.bookingId()).orElse(null);
+        var current=bookings.findByBookingId(required(e.bookingId())).orElse(null);
         var next=new BookingStatusRecord();
-        next.setBookingId(e.bookingId());next.setHotelId(e.hotelId());next.setRoomTypeId(e.roomTypeId());
+        next.setBookingId(optional(e.bookingId()));next.setHotelId(optional(e.hotelId()));next.setRoomTypeId(optional(e.roomTypeId()));
         next.setCheckInDate(e.checkInDate());next.setCheckOutDate(e.checkOutDate());next.setNights(e.nights());next.setRooms(e.rooms());next.setBookingStatus(e.bookingStatus());
         LocalDateTime at=time(e.eventAt());
         if(current!=null) {
-            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),e.hotelId())) {
+            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),optional(e.hotelId()))) {
                 receipt("BOOKING",e.bookingId(),at,e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
             }
             if(current.getEventVersion()!=null && e.eventVersion()==null) {
@@ -86,7 +88,7 @@ public class EventIngestionService {
             }
         }
         var target=current==null?next:current;
-        target.setRoomTypeId(e.roomTypeId());target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
+        target.setRoomTypeId(optional(e.roomTypeId()));target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
         target.setNights(e.nights());target.setRooms(e.rooms());target.setBookingStatus(e.bookingStatus());target.setEventAt(at);
         target.setEventVersion(e.eventVersion());target.setLastEventId(e.eventId());
         if(target.getCreatedAt()==null)target.setCreatedAt(LocalDateTime.now());
@@ -96,13 +98,13 @@ public class EventIngestionService {
     @Transactional
     public void savePaymentEvent(PaymentEvent e) {
         if(e==null || !metadata(e.eventVersion(),e.eventId()) || !valid(e.bookingId(),e.hotelId(),e.checkInDate(),e.checkOutDate(),e.nights(),e.rooms(),e.eventAt())
-                || e.customerId()==null || e.customerId().isBlank() || e.amount()==null || e.amount().signum()<0 || e.paymentMethod()==null || e.paymentMethod().isBlank()
+                || !com.example.revenueservice.contract.UuidContract.valid(e.customerId()) || (e.roomTypeId()!=null && !com.example.revenueservice.contract.UuidContract.valid(e.roomTypeId())) || e.amount()==null || e.amount().signum()<0 || e.paymentMethod()==null || e.paymentMethod().isBlank()
                 || !Set.of("PENDING","ONSITE_PENDING","COMPLETED","FAILED","REFUNDED","CANCELLED").contains(e.paymentStatus()==null?"":e.paymentStatus())) {
             receipt("PAYMENT",e==null?null:e.bookingId(),e==null?null:e.eventAt(),e,"REVIEW_REQUIRED","INVALID_SOURCE_EVENT");return;
         }
         lock("PAYMENT",e.bookingId());
-        var current=payments.findByBookingId(e.bookingId()).orElse(null);
-        if(current!=null && (!Objects.equals(current.getHotelId(),e.hotelId()) || !Objects.equals(current.getCustomerId(),e.customerId()))) {
+        var current=payments.findByBookingId(required(e.bookingId())).orElse(null);
+        if(current!=null && (!Objects.equals(current.getHotelId(),optional(e.hotelId())) || !Objects.equals(current.getCustomerId(),optional(e.customerId())))) {
             receipt("PAYMENT",e.bookingId(),e.eventAt(),e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
         }
         cash.preserveLegacyCoverage(e.bookingId());
@@ -111,13 +113,13 @@ public class EventIngestionService {
             receipt("PAYMENT",e.bookingId(),e.eventAt(),e,"REVIEW_REQUIRED",cashOutcome.name());return;
         }
         var next=new PaymentRecord();
-        next.setBookingId(e.bookingId());next.setCustomerId(e.customerId());next.setHotelId(e.hotelId());next.setRoomTypeId(e.roomTypeId());
+        next.setBookingId(optional(e.bookingId()));next.setCustomerId(optional(e.customerId()));next.setHotelId(optional(e.hotelId()));next.setRoomTypeId(optional(e.roomTypeId()));
         next.setCheckInDate(e.checkInDate());next.setCheckOutDate(e.checkOutDate());next.setNights(e.nights());next.setRooms(e.rooms());
         next.setAmount(e.amount());next.setPaymentStatus(e.paymentStatus());next.setPaymentMethod(e.paymentMethod());
         next.setPaidAt(e.paidAt()==null?null:time(e.paidAt()));
         LocalDateTime at=time(e.eventAt());
         if(current!=null) {
-            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),e.hotelId()) || !Objects.equals(current.getCustomerId(),e.customerId())) {
+            if(current.getEventAt()==null || !Objects.equals(current.getHotelId(),optional(e.hotelId())) || !Objects.equals(current.getCustomerId(),optional(e.customerId()))) {
                 receipt("PAYMENT",e.bookingId(),at,e,"REVIEW_REQUIRED","SOURCE_IDENTITY_OR_TIME_CONFLICT");return;
             }
             if(current.getEventVersion()!=null && e.eventVersion()==null) {
@@ -131,7 +133,7 @@ public class EventIngestionService {
             }
         }
         var target=current==null?next:current;
-        target.setRoomTypeId(e.roomTypeId());target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
+        target.setRoomTypeId(optional(e.roomTypeId()));target.setCheckInDate(e.checkInDate());target.setCheckOutDate(e.checkOutDate());
         target.setNights(e.nights());target.setRooms(e.rooms());target.setAmount(e.amount());target.setPaymentStatus(e.paymentStatus());target.setPaymentMethod(e.paymentMethod());target.setPaidAt(next.getPaidAt());target.setEventAt(at);
         target.setEventVersion(e.eventVersion());target.setLastEventId(e.eventId());
         if(target.getCreatedAt()==null)target.setCreatedAt(LocalDateTime.now());

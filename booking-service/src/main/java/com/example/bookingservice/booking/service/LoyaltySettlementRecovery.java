@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import java.util.UUID;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class LoyaltySettlementRecovery {
 
     @Scheduled(fixedDelayString = "${loyalty.settlement.delay-ms:5000}", initialDelayString = "${loyalty.settlement.initial-delay-ms:30000}")
     public void recover() {
-        for (String id : bookings.findDueLoyalty(LocalDateTime.now(), PageRequest.of(0, 20))) {
+        for (UUID id : bookings.findDueLoyalty(LocalDateTime.now(), PageRequest.of(0, 20))) {
             try { settlement.process(id); }
             catch (RuntimeException ex) {
                 try { settlement.deferAfterFailure(id); }

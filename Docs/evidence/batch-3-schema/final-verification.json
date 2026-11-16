@@ -1,0 +1,18 @@
+{
+  "place_unchanged": true,
+  "frontend_clean": true,
+  "staged_files": [],
+  "source_hashes_checked": 131,
+  "source_hash_mismatches": [],
+  "new_evidence_links_missing": [],
+  "allowed_mutation_target": "checkinn-schema-smoke PostgreSQL only",
+  "production_shared_access": "NONE",
+  "preexisting_edits_preserved": [
+    ".idea/compiler.xml",
+    ".idea/encodings.xml",
+    "Docs/BATCH2_PR_REVIEW_2026-11-13.md (deleted)"
+  ],
+  "python_harness_compilation": "PASS",
+  "git_diff_check": "PASS",
+  "raw_logs_git_ignored": true
+}

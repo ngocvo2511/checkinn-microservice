@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.booking.dto.BookingItemResponse;
 import com.example.bookingservice.booking.dto.BookingResponse;
 import com.example.bookingservice.booking.dto.CreateBookingRequest;
@@ -52,8 +53,8 @@ public class BookingService {
     private static final BigDecimal MAX_DISCOUNT_PERCENTAGE = new BigDecimal("0.5");
 
     @Transactional(readOnly = true)
-    public String getLoyaltyBookingState(String bookingId, String userId) {
-        if (bookingId == null || bookingId.isBlank() || userId == null || userId.isBlank()) return "UNKNOWN";
+    public String getLoyaltyBookingState(UUID bookingId, UUID userId) {
+        if (bookingId == null || userId == null) return "UNKNOWN";
         if (!creationLock.tryAcquire(bookingId)) return "UNKNOWN";
         return bookingRepository.findById(bookingId).map(booking -> {
             if (!userId.equals(booking.getUserId())) return "UNKNOWN";
@@ -64,9 +65,9 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isReviewEligible(String bookingId, String guestId, String hotelId) {
-        if (bookingId == null || bookingId.isBlank() || guestId == null || guestId.isBlank()
-                || hotelId == null || hotelId.isBlank()) return false;
+    public boolean isReviewEligible(UUID bookingId, UUID guestId, UUID hotelId) {
+        if (bookingId == null || guestId == null
+                || hotelId == null) return false;
         return bookingRepository.findById(bookingId)
                 .filter(booking -> guestId.equals(booking.getUserId()) && hotelId.equals(booking.getHotelId())
                         && booking.getStatus() == BookingStatus.CHECKED_OUT)
@@ -83,7 +84,7 @@ public class BookingService {
             bookingRepository.lockCreationCommand(keyHash);
             Booking accepted = bookingRepository.findByIdempotencyKeyHash(keyHash).orElse(null);
             if (accepted != null) {
-                if (!request.getUserId().equals(accepted.getUserId()) || !requestHash.equals(accepted.getIdempotencyRequestHash())) {
+                if (!required(request.getUserId()).equals(accepted.getUserId()) || !requestHash.equals(accepted.getIdempotencyRequestHash())) {
                     throw holdConflict("Idempotency key was already used for different booking input");
                 }
                 return toBookingResponse(accepted);
@@ -101,9 +102,9 @@ public class BookingService {
 
         // Enforce same room type for multiple rooms
         if (request.getItems().size() > 1) {
-            String firstRoomTypeId = request.getItems().get(0).getRoomTypeId();
+            UUID firstRoomTypeId = required(request.getItems().get(0).getRoomTypeId());
             boolean allSameRoomType = request.getItems().stream()
-                    .allMatch(item -> item.getRoomTypeId().equals(firstRoomTypeId));
+                    .allMatch(item -> required(item.getRoomTypeId()).equals(firstRoomTypeId));
 
             if (!allSameRoomType) {
                 throw new IllegalArgumentException("All items must have the same room type");
@@ -115,13 +116,13 @@ public class BookingService {
         validateCatalogOffer(request, catalogRoom, catalogHotel);
 
         // Hold rooms before creating booking
-        String roomTypeId = request.getItems().get(0).getRoomTypeId();
+        UUID roomTypeId = required(request.getItems().get(0).getRoomTypeId());
         int totalQuantity = request.getItems().stream()
                 .mapToInt(item -> item.getQuantity())
                 .sum();
 
         HoldRequest holdRequest = new HoldRequest(
-                UUID.fromString(roomTypeId),
+                roomTypeId,
                 request.getCheckInDate(),
                 request.getCheckOutDate(),
                 totalQuantity,
@@ -143,7 +144,7 @@ public class BookingService {
             throw holdUnavailable();
         }
 
-        var compensation=new BookingCreationCompensation(availabilityClient,loyaltyPointsClient,holdResponse,request.getUserId());
+        var compensation=new BookingCreationCompensation(availabilityClient,loyaltyPointsClient,holdResponse,required(request.getUserId()));
         if(org.springframework.transaction.support.TransactionSynchronizationManager.isSynchronizationActive())
             org.springframework.transaction.support.TransactionSynchronizationManager.registerSynchronization(compensation);
         try {
@@ -171,8 +172,8 @@ public class BookingService {
                 .id(keyHash == null ? null : BookingIdempotency.bookingId(keyHash))
                 .idempotencyKeyHash(keyHash)
                 .idempotencyRequestHash(requestHash)
-                .userId(request.getUserId())
-                .hotelId(request.getHotelId())
+                .userId(required(request.getUserId()))
+                .hotelId(required(request.getHotelId()))
                 .hotelName(catalogHotel.name())
                 .checkInDate(request.getCheckInDate())
                 .checkOutDate(request.getCheckOutDate())
@@ -201,7 +202,7 @@ public class BookingService {
                 Instant deadline = Instant.parse(holdResponse.expiresAt()).truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
                 compensation.reservedPointsFor(booking.getId()); // Set before RPC: timeout may hide committed points.
                 var quote = loyaltyPointsClient.reserve(new com.example.bookingservice.integration.loyalty.ReservePointsRequestDTO(
-                        request.getUserId(), booking.getId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount), deadline));
+                        required(request.getUserId()), booking.getId(), request.getPointsToUse(), totalAmount.subtract(voucherDiscount), deadline));
                 BigDecimal maxDiscount = totalAmount.subtract(voucherDiscount).multiply(MAX_DISCOUNT_PERCENTAGE);
                 if (quote == null || !booking.getId().equals(quote.bookingId()) || !"HELD".equals(quote.state())
                         || !deadline.equals(quote.holdExpiresAt()) || quote.redemptionRate() == null || quote.redemptionRate().signum() <= 0
@@ -238,7 +239,7 @@ public class BookingService {
 
                     return BookingItem.builder()
                             .booking(bookingRef)
-                            .roomTypeId(itemRequest.getRoomTypeId())
+                            .roomTypeId(required(itemRequest.getRoomTypeId()))
                             .roomTypeName(catalogRoom.name())
                             .ratePlanId(catalogRoom.id())
                             .checkInDate(itemRequest.getCheckInDate())
@@ -304,9 +305,9 @@ public class BookingService {
     }
 
     private void validateCatalogOffer(CreateBookingRequest request, HotelCatalogClient.Room room, HotelCatalogClient.Hotel hotel) {
-        if (room == null || hotel == null || !request.getHotelId().equals(room.hotelId())
-                || !request.getHotelId().equals(hotel.id())
-                || !request.getItems().get(0).getRoomTypeId().equals(room.id())
+        if (room == null || hotel == null || !required(request.getHotelId()).equals(room.hotelId())
+                || !required(request.getHotelId()).equals(optional(hotel.id()))
+                || !required(request.getItems().get(0).getRoomTypeId()).equals(optional(room.id()))
                 || !Boolean.TRUE.equals(room.isActive()) || !Boolean.TRUE.equals(hotel.isActive())
                 || !"APPROVED".equals(hotel.approvedStatus())
                 || room.basePrice() == null || room.basePrice().signum() <= 0) {
@@ -328,7 +329,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public BookingResponse getBooking(String bookingId) {
+    public BookingResponse getBooking(UUID bookingId) {
         log.debug("[GET_BOOKING] Fetching booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -337,7 +338,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingResponse> getUserBookings(String userId) {
+    public List<BookingResponse> getUserBookings(UUID userId) {
         log.debug("[GET_USER_BOOKINGS] Fetching bookings for userId: {}", userId);
         List<BookingResponse> responses = bookingRepository.findByUserId(userId).stream()
                 .map(this::toBookingResponse)
@@ -347,7 +348,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingResponse> getHotelBookings(String hotelId) {
+    public List<BookingResponse> getHotelBookings(UUID hotelId) {
         log.debug("[GET_HOTEL_BOOKINGS] Fetching bookings for hotelId: {}", hotelId);
         List<BookingResponse> responses = bookingRepository.findByHotelId(hotelId).stream()
                 .map(this::toBookingResponse)
@@ -357,7 +358,7 @@ public class BookingService {
     }
 
     @Transactional
-    public BookingResponse updateBookingStatus(String bookingId, BookingStatus status) {
+    public BookingResponse updateBookingStatus(UUID bookingId, BookingStatus status) {
         log.debug("[UPDATE_BOOKING_STATUS] Updating booking status - bookingId: {}, status: {}", bookingId, status);
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -385,17 +386,17 @@ public class BookingService {
     }
 
     @Transactional
-    public void cancelBooking(String bookingId, String actorId) {
+    public void cancelBooking(UUID bookingId, UUID actorId) {
         cancelBookingInternal(bookingId, actorId, false, "BOOKING_CANCELLED_STANDARD_24H");
     }
 
     @Transactional
-    public void cancelBookingReviewed(String bookingId, String actorId, String reason) {
+    public void cancelBookingReviewed(UUID bookingId, UUID actorId, String reason) {
         if (reason == null || reason.isBlank() || reason.length() > 1000) throw new IllegalArgumentException("A review reason is required");
         cancelBookingInternal(bookingId, actorId, true, reason);
     }
 
-    private void cancelBookingInternal(String bookingId, String actorId, boolean reviewed, String reason) {
+    private void cancelBookingInternal(UUID bookingId, UUID actorId, boolean reviewed, String reason) {
         log.debug("[CANCEL_BOOKING] Cancelling booking - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findByIdForUpdate(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -455,11 +456,11 @@ public class BookingService {
     }
 
     /** Existing ADMIN-only reviewed workflow may retry the same reconciled reference, never guess a new hold. */
-    private void retryCancelledInventoryAfterReview(Booking booking, String actorId, String reason) {
+    private void retryCancelledInventoryAfterReview(Booking booking, UUID actorId, String reason) {
         boolean paidReview="V1_REVIEW_REQUIRED".equals(booking.getPaidReservationStatus());
         boolean onsiteReview="V1_REVIEW_REQUIRED".equals(booking.getOnsiteReservationStatus());
         if (!paidReview && !onsiteReview) return;
-        if (booking.getHoldId()==null || booking.getHoldId().isBlank())
+        if (booking.getHoldId()==null)
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT,
                     "Original inventory reference must be reconciled before retry");
         booking.setInventoryReviewedBy(actorId);booking.setInventoryReviewReason(reason.strip());booking.setInventoryReviewedAt(Instant.now());
@@ -478,7 +479,7 @@ public class BookingService {
 
     // Inventory failure must not mark the caller's payment receipt transaction rollback-only.
     @Transactional(noRollbackFor = HoldConfirmationException.class)
-    public void confirmBookingHold(String bookingId) {
+    public void confirmBookingHold(UUID bookingId) {
         log.debug("[CONFIRM_BOOKING_HOLD] Confirming booking hold for booking: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -528,7 +529,7 @@ public class BookingService {
         eventPublisher.publishBookingStatus(com.example.bookingservice.messaging.BookingStatusSnapshots.from(booking));
     }
 
-    public void releaseBookingHold(String bookingId) {
+    public void releaseBookingHold(UUID bookingId) {
         log.info("[RELEASE_BOOKING_HOLD] Releasing booking hold - bookingId: {}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
@@ -543,10 +544,10 @@ public class BookingService {
      * Never emit a cancellation before throwing from a transaction that will roll back.
      */
     @Transactional(readOnly = true)
-    public Booking ensureActiveHold(String bookingId) {
+    public Booking ensureActiveHold(UUID bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking not found: " + bookingId));
-        if (booking.getHoldId() == null || booking.getHoldId().isBlank()) {
+        if (booking.getHoldId() == null) {
             throw holdConflict("Booking has no inventory hold; reconciliation required");
         }
         if (booking.getHoldExpiresAt() != null && !booking.getHoldExpiresAt().isAfter(LocalDateTime.now())) {
@@ -567,8 +568,8 @@ public class BookingService {
         return booking;
     }
 
-    private void requireHoldResponse(HoldResponse hold, String expectedId) {
-        if (hold == null || hold.holdId() == null || hold.holdId().isBlank()
+    private void requireHoldResponse(HoldResponse hold, UUID expectedId) {
+        if (hold == null || hold.holdId() == null
                 || (expectedId != null && !expectedId.equals(hold.holdId())) || hold.status() == null) {
             throw holdUnavailable();
         }
@@ -620,7 +621,7 @@ public class BookingService {
                         .build())
                 .collect(Collectors.toList());
 
-        String holdId = booking.getHoldId();
+        UUID holdId = booking.getHoldId();
         // Existing timestamp storage keeps the deployment's local clock convention.
         // The wire value must carry an offset so browsers do not reinterpret it in their own zone.
         Instant holdExpiresAt = booking.getHoldExpiresAt() == null ? null

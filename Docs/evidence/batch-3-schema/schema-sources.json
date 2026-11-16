@@ -1,0 +1,3326 @@
+[
+  {
+    "path": "checkinn/admin-server/src/main/resources/application.yml",
+    "sha256": "402fc4af48178a5d40fa590f2cb9b7aac5994efb98c01bc197308904ab73b66b",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/api-gateway/src/main/resources/application.yml",
+    "sha256": "e81fbae16309ce14e629f6b0139810a92eeb914af7dc10f6e5661b4ac2f70cd2",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/resources/application.yml",
+    "sha256": "3aa9b8d09cd8e34a1f7c3a06f849f0ce8c3d374b795031bacb8bafeb3838d686",
+    "service": "auth",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+    "sha256": "6e45fb6aad57ed9483d4f08f5069119da72c877be57aa5af0b05b0d6249b9494",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+    "sha256": "1cd803f5e153d9de4d84422acb47aa87af626329202bb281978019c2423d3f80",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "booking_items"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+    "sha256": "e001637709938af419813d261abe091ca36a27dfd1914f0d7b9e27608abf139f",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+    "sha256": "bd3818be680a46009ac334c42ef586a1efa272060db1141f23342b4d521ad953",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "refund_requests"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/application.yml",
+    "sha256": "8870ebed653b21eafbd5afa65e3a7bb19bf40a9403abccd4fed242e4582939a6",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "properties"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V2__Add_Hold_Id.sql",
+    "sha256": "e88aaf84998df5452de3d188df3071165c3e95a5c6320c5e72cb67e63e9eb002",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V2",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+    "sha256": "7d672b2234cbbcf2ba7cca4a8109574ce22dffaa5b47d5adac384d81c36ac5e0",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings",
+      "payments",
+      "refund_requests"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V3",
+    "required_predecessor_objects": [
+      "bookings",
+      "payments"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/schema.sql",
+    "sha256": "c3ef7c14e25f241a7ffdc8ebec22e6d77bec475e464534d910a97a1e9a574612",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "booking_items",
+      "bookings",
+      "payments",
+      "users"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings",
+      "users"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/config-server/src/main/resources/application.properties",
+    "sha256": "8f66d5b9e87ff3a740b3af35b9ded45052e54f95e82707a7d11b0de318af8512",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/config-server/src/main/resources/application.yml",
+    "sha256": "67f5ef5af9b004367e9a7fba92da0a8f62b6ad03ba58846dfb7032f4d0ba6f7b",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/accommodation-migration-test.py",
+    "sha256": "727a9bc7484f2ef31424526b014bbe50903b6eff919e80f542601a2a4f9cdfce",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-accommodation-bootstrap.sql",
+    "sha256": "fa878f06283cfddfc888be5109be70374b4b45e7f290e4adc1dbc5ef566f9f0f",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "checkinn_feature_migrations",
+      "hotel_accommodation_type_changes",
+      "hotels"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotels"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-init.sql",
+    "sha256": "a5800d72309976fc58c9c0e6bb155447f1e50740aee59ac0cc3009baf5810819",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "points_transactions",
+      "users"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/config/application.yml",
+    "sha256": "f7171eff2c9a4735cfdb2dc841ecb289cf72b60fe954539f0fd7873b56963f31",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.booking-smoke.yml",
+    "sha256": "f608c73cba1f0372a30d4ccb64609ce53ddc6458dc554db6b877f74302181753",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "BOOKING_GRPC_ADDRESS",
+      "REFUND_INTERNAL_ENABLED",
+      "SPRING_JPA_SHOW_SQL"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.refund-acceptance.yml",
+    "sha256": "8b068929ced4f96fe9b28e443be1db89dbe2cc46b887d05b195594fbdb91aca3",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.refund-smoke.yml",
+    "sha256": "90100f4ebc15fef49edc0b439ca52fb20b9afd00099eba31877a6dec448ae783",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "BOOKING_GRPC_ADDRESS",
+      "REFUND_INTERNAL_ENABLED"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.schema-smoke.yml",
+    "sha256": "e31bac23a7610490d3ba427d75bc30f5e71c54c37ce1eed020c25e8b8d8b17a5",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.test.yml",
+    "sha256": "bda58f2eea484c0b34146064acd635dd62fa7963b3931e9fbdffd4e6739bf165",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/docker-compose.yml",
+    "sha256": "5932086bc3a9c120068bc601c55ef2c78ae578412e4ddb5a7e1e19ee797c4946",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/manual-refund-migration-test.py",
+    "sha256": "39bc2d83cd2102757671f05d08d62962d313d948fc0c09966dd7fce34d356485",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "manual_refund_executions"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/refund-prerequisites-migration-test.py",
+    "sha256": "7cc6c998a18cced7a614c6c00a4e7296591b3341b787748d9f0e92fa5a73a5d3",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/refund-smoke-init.sql",
+    "sha256": "f381447f13886a70d379815b719f0cf5f65c52602f6ca3100325bf36c31c3009",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "points_transactions",
+      "users"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sandbox-refund-migration-test.py",
+    "sha256": "02ca2dabadcd22817df471fbb26a4312ebd75d9dae4a1381380ad39314f25c3e",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "manual_refund_executions"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-compatibility-probes.py",
+    "sha256": "40c6e7fbb07bb5086d6c83631d27ff524a75e54457b314308b06938aec53a69d",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "revenue_cash_transactions"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows",
+      "unsupported PostgreSQL syntax"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-financial-probes.py",
+    "sha256": "bb9df8a2c0ce33ed8ca37e07694255b742fe46b90d2616649d53fa618d85627d",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "manual_refund_executions"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-migration-only.py",
+    "sha256": "2fb4089522fb51abfe22c9bbe2b58d7c61791a99a49623652eed31c4bfa151cc",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-smoke.py",
+    "sha256": "2af63d58ce605cb7fc677507ce32234c6e6729727357cbd27ab6d41fa6f33b0f",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-source-inventory.py",
+    "sha256": "a2b067b797437fd0e8090445022a535488d521fbc1473784ce9d1ea444641321",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present",
+      "ACTIVE NULL-to-10 stock backfill; DO NOT EXECUTE",
+      "unsupported PostgreSQL syntax"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-startup-recheck.py",
+    "sha256": "f4158329dda89064a6bf2d011e30cf3460c082dd414db4ac024bf699d22ff437",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/schema-testonly-bootstrap.py",
+    "sha256": "fbdadcc6461b2290f27ca3069ab6b9a1b4ab9ade76107377e82cc3205271ef51",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "harness",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/amenity-catalog-v1-20261106.sql",
+    "sha256": "b6eb9267205ffa3835fd914c18addcc47a26dfa865947a7a4f89c4395a0e848f",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "amenity_catalog",
+      "amenity_mapping_request_codes",
+      "amenity_mapping_requests",
+      "amenity_mapping_states"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "amenity_catalog",
+      "amenity_mapping_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-event-outbox-v1-20261107.sql",
+    "sha256": "299c0cac1b1eef2f68fe1a888a3eeda69028df33902baa08a102bcf9203cc068",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "booking_event_outbox"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-idempotency-20261105.sql",
+    "sha256": "f3b457d1de32cf0fe67c436c63cc1f4c22661863b1b9deee1e0d9cb8860e113c",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-transaction-time-v1-20261107.sql",
+    "sha256": "8f6ba20b87599aa17f6f8e139f54f9989d4eef7abf0c3a74514fb17822ceef7f",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "payments"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "payments"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-vnpay-create-date-v1-20261112.sql",
+    "sha256": "418f5fc93a14102612fda9e105b35a8617d29a9984e88862ef1b31200cb3f207",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "payments"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "payments"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/hold-idempotency-20261105.sql",
+    "sha256": "1e8a548e5b9a8ea7bcf1be217bd7dbd9396b5caac2473ebe35a346563e4443e2",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_holds"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "room_holds"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/hotel-accommodation-type-20261104.sql",
+    "sha256": "b3ea1f2deca55aea634982e33382be118fee56804b968c3d65c24db6ac653b86",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "checkinn_feature_migrations",
+      "hotel_accommodation_type_changes",
+      "hotels"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotels"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/hotel-draft-approval-upgrade.sql",
+    "sha256": "379bec9ea3e24564da0478ba7c00050f1a2025684583039aa02bc7143582f72c",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotels"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotels"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/inventory-review-audit-20261106.sql",
+    "sha256": "0ffe04ae7aa2bbe4bf11e375bb98e819964eea3e652b4df70d9168ac2f608310",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/loyalty-settlement-upgrade.sql",
+    "sha256": "efdb8221aaf010fd0b41f68c4e1cdffd83cfcc9332a5997300656e4266d06330",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/manual-refund-v1-20261112.sql",
+    "sha256": "c2ef7c12a49a9315694560ab16db962fc0c3f8a3114e517afaadcf18b45d4202",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings",
+      "manual_refund_audit",
+      "manual_refund_executions",
+      "payments",
+      "refund_requests"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings",
+      "manual_refund_executions",
+      "payments",
+      "refund_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/onsite-reservation-v1-20261105.sql",
+    "sha256": "2c400b26c2c5ea76e1ce00900adf5b96a68b419d80dcf9b6b2c98a7e094f34f8",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/paid-reservation-v1-20261105.sql",
+    "sha256": "c8b7e59ddf50cccb29352c209e55278e5d3322a683dd43b010b8ad204642eb74",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/regulation-event-outbox-v1-20261107.sql",
+    "sha256": "8470fab80939c7ecb0977b9b729c70a2a978e5b46c72d81de7dc34f7c183ba8c",
+    "service": "regulations",
+    "database": "checkinn_regulations",
+    "objects": [
+      "regulation_event_outbox"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-cash-transactions-v1-20261107.sql",
+    "sha256": "60d4089ec9140988cb4e4c3b3370ad658085ca91446fd5d7f2c3e6e5f0684aab",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_cash_transactions"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-event-receipts-v1-20261107.sql",
+    "sha256": "8ab722341c9c6fa65021fd48473ebc5713294f4790fceb18fed56df3eacb74da",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_event_receipts"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-history-gaps-v1-20261107.sql",
+    "sha256": "06eb805995a143244f8f1b56e3ea39e96b4984fc4d305812cc5d3b0d4e21787e",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_cashflow_gaps"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "revenue_cashflow_gaps"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-sandbox-refund-v1-20261112.sql",
+    "sha256": "a6492c33b114cce6c60bdb2e3a77d5f8e137a334b4f1352973c7eaed9e00a458",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_cash_transactions"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "revenue_cash_transactions"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-source-versions-v1-20261107.sql",
+    "sha256": "40757c0e49a2f53258cbb68e72eea86fd299048201609687c1f70a72a3734dcc",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "booking_status_records",
+      "payment_records"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "booking_status_records",
+      "payment_records"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/review-response-integrity-20261109.sql",
+    "sha256": "46b177ad3b3b38548541caa478bc611b2f89d5078d40adea7fdde04667142afc",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_reviews",
+      "review_feedbacks",
+      "review_responses"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotel_reviews",
+      "review_feedbacks",
+      "review_responses"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/room-description-20261105.sql",
+    "sha256": "e9b7766de5c168e5244b7823d412a530a1d00e99d0775ca0659d89fd34aa3d36",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_types"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "room_types"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/room-inventory-review-v1-20261107.sql",
+    "sha256": "03f28dc2d46df60d5f4d58071cda90a5583cb964106d7dcabf218edbb130b47d",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_inventory_review_requests",
+      "room_inventory_review_states"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "room_inventory_review_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/docker/sql/sandbox-internal-refund-v1-20261112.sql",
+    "sha256": "d6b6ce8b5c8bb54b588b4ca4fa868b8597186e70d5902ed8c167e0522c25e2ea",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "manual_refund_executions",
+      "refund_requests"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "manual_refund_executions",
+      "refund_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/eureka-server/src/main/resources/application.yml",
+    "sha256": "f81684aa64321c378840814e90fdac2b027690d67d1a818024ee8b2f3a663404",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/CategoryType.java",
+    "sha256": "fb2051447860e2000e3a788e984846486a44144ea741d3851d720795962a1e74",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "amenity_category_types"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenity.java",
+    "sha256": "b1a1992b86071be3c9f0ac6251c8cfc6ac24dc9850c264bb738d407b14469c79",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_amenities"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenityCategory.java",
+    "sha256": "26b2ae3d794abdd838d9f1294a4ca2b09f8ea7761d3dcbb311ac65fd8db32d8e",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_amenity_categories"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "void"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java",
+    "sha256": "13b0bc5eda83c899127785da3e2c28f4db4485e8daf765407378520771bae3c4",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "cities"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/entity/Province.java",
+    "sha256": "beaf1ab3bd51302b9d52803ca8461bb3ea753985b90b54e62eeee7799d1ccbb6",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "provinces"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/AccommodationTypeChange.java",
+    "sha256": "6b0ed6797afbe39e4d9319c9900ff5f0f6ece8ce80058d81d5e811e5c31b72f4",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_accommodation_type_changes"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java",
+    "sha256": "b8f6b2f83a3ac91a98b69b1dc763da4b89c0b43cc3d344a3f9bddd3f836d97ea",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotels"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/entity/MediaAsset.java",
+    "sha256": "f18c434efd71eb5ae11f39fc8b1beecd1b4eb97e7f7c83c5ac6c3c8894774eda",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "media_assets"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/entity/HotelPolicy.java",
+    "sha256": "dc49558b4c09bf460c3e9a1aa51b273d4dddb3f92595eaab2ef4f08695e886b7",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_policies"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "void"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/entity/PolicyCategoryType.java",
+    "sha256": "204701dd95d082269410ac1443a19d4c152333b80b34a8aa8006ed584e6c6932",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "policy_category_types"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/entity/Question.java",
+    "sha256": "e86daa58b13a2da7afc5b91e90518f3792ec85900d75801c2b599a8475ac9c02",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_questions"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "void"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/HotelReview.java",
+    "sha256": "114f44419676dad730313757f8e5d35f022617a82fc9bda4c8577bdd85619f35",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_reviews"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewFeedback.java",
+    "sha256": "a0691d087133d33b80b53dfda6453b8743891122a5e61b76b3af3a6efdb85bc3",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewResponse.java",
+    "sha256": "216e3c220fd7b6023fd992ab032fbed827fd34348948cc08f2fcaef9aafef279",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "review_responses"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+    "sha256": "28d0b8a3e0c45f01ad18ea5a7ecae5052435d6ef715df76114d892c1ee6a4b9c",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_availability"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomHold.java",
+    "sha256": "cf2c6e049784dae6178b7abc261130de9e1b9e2baf34feff69d2a99c141e4b46",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_holds"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/entity/RoomType.java",
+    "sha256": "27464946742c0922f0a6f72921f6c9dbb5fd60a47ad0aff802a5efa2af5dc775",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_types"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/application.yml",
+    "sha256": "28cf644a1ebd17f50f7aa269493a5386307f41b8764100c88357d017c5a1c787",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "show"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V1__Create_City_Table.sql",
+    "sha256": "6d7ce3c58b245c7490305fa6df337aa656dbcdef74505e941621677a943ee999",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "cities",
+      "hotels"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V1",
+    "required_predecessor_objects": [
+      "cities",
+      "hotels"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V2__City_Add_Type_Parent_HotelCount.sql",
+    "sha256": "8bdd89690706e2d10363e49746a04ef13ea01d53553e4ea6dd7c57b2a2186509",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "cities"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V2",
+    "required_predecessor_objects": [
+      "cities"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows",
+      "unsupported PostgreSQL syntax"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V3__Refactor_To_Provinces_And_Cities.sql",
+    "sha256": "ca05cd4f27f5b16a4b5357c323d45c52ce7e4036639dd4c792dc2101d376857d",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "cities",
+      "hotel_count",
+      "province",
+      "provinces"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V3",
+    "required_predecessor_objects": [
+      "cities",
+      "hotel_count",
+      "province",
+      "provinces"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present",
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql",
+    "sha256": "c94a51fc7bb84ecc9926bbebfa621210696eb60bbddcf6605e3782a0000c8490",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_availability",
+      "room_holds"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V4",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V5__Add_Hold_Expiry.sql",
+    "sha256": "0b12e826abd69b967296c4f0b46f1ab7887f0d72600d44f193d55ed42d0dae82",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_holds"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V5",
+    "required_predecessor_objects": [
+      "room_holds"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/media-service/src/main/resources/application.yml",
+    "sha256": "e06a322f4646f4d0faebccae55229cd7189b6c15741a3ad32c8579967c831fef",
+    "service": "media",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/monitoring/docker-compose.yml",
+    "sha256": "350af62ce56d146eef886fcc2742d04c8fb072c73e5ab8b40aa2a32fa65c7be0",
+    "service": "multiple/none",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/resources/application.yml",
+    "sha256": "c778bc393dc8e10f04fefb9959dfe6db5a2a70e30434c85bb11b6c2d5865e7fe",
+    "service": "notification",
+    "database": "checkinn_notification",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/Place.java",
+    "sha256": "209d9e67b11af460152ab87a6b0c567794186ff7047be29dee6c16b3d09f0c3a",
+    "service": "place",
+    "database": "checkinn_place",
+    "objects": [
+      "places"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "public"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/PlacePhoto.java",
+    "sha256": "f7be45af9019564c2f425eaef9d3546b6b4d90bf6cce6e77028c890c35075eda",
+    "service": "place",
+    "database": "checkinn_place",
+    "objects": [
+      "place_photos"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/PlaceReview.java",
+    "sha256": "bb9a6bdef136f95657a795a20bdc66b2245558638bba721a35c87db221627540",
+    "service": "place",
+    "database": "checkinn_place",
+    "objects": [
+      "place_reviews"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/place-service/src/main/resources/application.yml",
+    "sha256": "dcdf6d6e3f79e997b7271682d1f22eb3cc02bd5e0fe2c8853caae7be75598137",
+    "service": "place",
+    "database": "checkinn_place",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "show"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/place-service/src/main/resources/seed_places_all_provinces.sql",
+    "sha256": "82bde8ca103e9237770ea60dd4b436ea1730d3a51dbcaabaccfaf3c37ad82a98",
+    "service": "place",
+    "database": "checkinn_place",
+    "objects": [
+      "SET"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "SET"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present",
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/model/Regulation.java",
+    "sha256": "5cdb3e298f62bacd42e955910f52bae4acdc97ec6395b470bff894cc37dc991a",
+    "service": "regulations",
+    "database": "checkinn_regulations",
+    "objects": [
+      "regulations"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/model/RegulationSnapshot.java",
+    "sha256": "b2f4c32b70bee9c4d6b70e443decfecd82833e161160eb7ed50427d54a9f1531",
+    "service": "regulations",
+    "database": "checkinn_regulations",
+    "objects": [
+      "regulation_snapshots"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/resources/application.yml",
+    "sha256": "0125d48dcc12ab8e4eb29a155ef4096c84817c744666d00c5eb961c24b06c6ec",
+    "service": "regulations",
+    "database": "checkinn_regulations",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "show"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+    "sha256": "fe910f6374168d7994ac2084b12e1dfe7ca42f61da2059208eea6602ff0e51ae",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "booking_status_records"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+    "sha256": "af90d54024a4191feaa1d0fd54e9df18b287216fa9c9c5cf4459b56191def1fc",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "payment_records"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/resources/application.yml",
+    "sha256": "56e07747c42b10194e732a54e20b0e2df6b70e50254a6caa4a7614c739e84ecd",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "show"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+    "sha256": "99d25696d8b3155c124b0c0fed906f085d3af3d18c37973148c672e33d866578",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "loyalty_commands"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/LoyaltyPoints.java",
+    "sha256": "8c433527811d1d7c99feec96b314097a67466576e3903d16c31e71de583ae433",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "loyalty_points"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "protected"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/Otp.java",
+    "sha256": "0ccdc65a22abc8df316ed3123319186e6967d103ba0293d483888034075049d6",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "otps"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+    "sha256": "ea8bf5a724cfc5b0e04ce99c16443a31ee57fee42f49412cae724ba1eef1d288",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "points_reservations"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "void"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/PointsTransaction.java",
+    "sha256": "8b5755b1a93d44242975b50fe87a8c76d112603093d4299335a57f8bf0a4e450",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "points_transactions"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/User.java",
+    "sha256": "4a5f95237ff9b4aa3a64aba1b599dda114fdaea383a47abf6714a4310d6ddfe6",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "users"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/UserProfile.java",
+    "sha256": "85f682c0b9f83d18a46ade2fda1140673428f8c35717ff44584eabe2fd443fde",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "user_profiles"
+    ],
+    "type": "entity",
+    "mechanism": "Hibernate entity mapping",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/application.yml",
+    "sha256": "774d490ac21d492cb5e0cf479b41526862471b81b24bb29a842e2343b76fbdcc",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [],
+    "type": "configuration",
+    "mechanism": "configuration / harness; inspect before execution",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "mapping/configuration",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V2__add_user_columns.sql",
+    "sha256": "c314d9efc330bcc405f7633780f5b92bdf9cb8d861db3e24c1ff9749184fc8b6",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "users"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V2",
+    "required_predecessor_objects": [
+      "users"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V3__add_loyalty_commands.sql",
+    "sha256": "6c356a2b11a0ec2570ccdb0e986218f40f62ec5dbd36428c4cd028e05163efe3",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "loyalty_commands"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V3",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V4__add_points_reservations.sql",
+    "sha256": "a3c8f99c8fd4adab161dfbdc12b5b920f9a9f453d24959ffa706277aef2d4bc2",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [
+      "points_reservations"
+    ],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V4",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V5__index_legacy_points_guard.sql",
+    "sha256": "13a525855b62f84e27308e827e45cb8e01d9b4356ff3b042db0bb6ee891a6e9c",
+    "service": "user",
+    "database": "checkinn_user",
+    "objects": [],
+    "type": "SQL",
+    "mechanism": "Flyway (User only); SQL files not automatically Flyway elsewhere",
+    "ordering": "V5",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "fix_database.sql",
+    "sha256": "551f6c604e6f42081b06316f25bd5eba420b88673cce0731361c0582a2d0cd65",
+    "service": "UNKNOWN",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/booking-event-outbox-v1-20261107.sql",
+    "sha256": "ecfdf433be277df2dcf78406da443c3e3da1f80ca08db4a544b52fb1eb601285",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "booking_event_outbox"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/booking-transaction-time-v1-20261107.sql",
+    "sha256": "fdde6dbd6f2284d9584d0d0c8944cf844b25b7ec7c3ce5b392ce65e3b9551b1f",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "payments"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "payments"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/revenue-cash-transactions-v1-20261107.sql",
+    "sha256": "3571abce0c7ed6951fbf07e764e3375b8229e076145d9c78f0ac132267bf222a",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_cash_transactions"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/revenue-event-receipts-v1-20261107.sql",
+    "sha256": "cffc574334347327968c33296e7a65e0f8a26758e9f72ca5eeee588cffea94b2",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_event_receipts"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/revenue-history-gaps-v1-20261107.sql",
+    "sha256": "e1214a5530279962e01a07573045100cd54605437e7be14515190c32dfb27b70",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "revenue_cashflow_gaps"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "revenue_cashflow_gaps"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-events-snapshot/checkinn/untracked/docker/sql/revenue-source-versions-v1-20261107.sql",
+    "sha256": "dfd634a7fc378528874de1225c85cbc2329aa38c57d9f3e558fcb25664e8c389",
+    "service": "revenue",
+    "database": "checkinn_revenue",
+    "objects": [
+      "booking_status_records",
+      "payment_records"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "booking_status_records",
+      "payment_records"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-snapshot-20261107/checkinn/untracked/docker/sql/amenity-catalog-v1-20261106.sql",
+    "sha256": "fec51be0b39a77e9f712a88703b1098407954f7b8e6ef17de454e5a55b54b6bc",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "amenity_catalog",
+      "amenity_mapping_request_codes",
+      "amenity_mapping_requests",
+      "amenity_mapping_states"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "amenity_catalog",
+      "amenity_mapping_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-snapshot-20261107/checkinn/untracked/docker/sql/inventory-review-audit-20261106.sql",
+    "sha256": "0ffe04ae7aa2bbe4bf11e375bb98e819964eea3e652b4df70d9168ac2f608310",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-snapshot-20261107/checkinn/untracked/docker/sql/paid-reservation-v1-20261105.sql",
+    "sha256": "c8b7e59ddf50cccb29352c209e55278e5d3322a683dd43b010b8ad204642eb74",
+    "service": "booking",
+    "database": "checkinn_booking",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "logs/review-snapshot-20261107/checkinn/untracked/docker/sql/room-inventory-review-v1-20261107.sql",
+    "sha256": "f905a1852d4635aa4d7d45eadc8585578cbc43d2fdbebf1e707ad668bceb1c8b",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "room_inventory_review_requests",
+      "room_inventory_review_states"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "room_inventory_review_requests"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT",
+      "TEST_ONLY"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_amenity_category_types.sql",
+    "sha256": "75e1866317b08a711d21b3d93c7dc5ebdfba57137aa47f239cc213ecbe8bd947",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_detailed_ratings.sql",
+    "sha256": "79c90a26748dce13546f1c7f39749f595928b02b299f73a36b0ace32356d50a3",
+    "service": "UNKNOWN",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [
+      "hotel_reviews",
+      "the"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotel_reviews",
+      "the"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present",
+      "DML may rewrite existing rows",
+      "unsupported PostgreSQL syntax"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_hold_expires_at.sql",
+    "sha256": "b9933599e9efc4d02ca174537132ae190546c03ef09cd3a5c3447b5d18239566",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "bookings"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "bookings"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_hotel_amenities.sql",
+    "sha256": "e20d12fc7c2afb2edc057addaa5e6938c24fd37fa69743fc0503c6a8e872e445",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_hotel_reviews.sql",
+    "sha256": "5e1125026f6c6bba642630f9b8462f88cbe880f04502c92fb810de5d475ed0e5",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "OR",
+      "hotel",
+      "hotel_reviews",
+      "hotels",
+      "review_responses",
+      "stats",
+      "users"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "OR",
+      "hotel",
+      "hotel_reviews",
+      "hotels",
+      "stats",
+      "users"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_onsite_pending_status.sql",
+    "sha256": "ccc552ebd4422549908b7c2cf0a7b6739e40c6c9c6add26301c8b89a11c80fa6",
+    "service": "UNKNOWN",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [
+      "payments"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "payments"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_policy_categories.sql",
+    "sha256": "1d2e4b0ff88f313dfd3c97ba9bf16b7bd8a6564fc0ddd7dcb5debf89d2eb3117",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_policies",
+      "policy_category_types"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotel_policies"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_review_feedbacks.sql",
+    "sha256": "862f0300e6d383fc079a8a328e4aeb4b8bea54977e0a54e099840bcbec973da0",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "hotel_reviews",
+      "review_feedbacks"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "hotel_reviews"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "baseline prerequisites / schema equivalence require verification"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_add_total_rooms.sql",
+    "sha256": "eb4145cfba2358bc0d504268f2513a1b182d824c9a1ce7801fc3ecec43be145a",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "existing",
+      "room_types"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "existing",
+      "room_types"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows",
+      "ACTIVE NULL-to-10 stock backfill; DO NOT EXECUTE"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_drop_code_column.sql",
+    "sha256": "3a4add7cd636bb9ec7bb809506de8f9554f88a100a2964a274eed46eedb7375a",
+    "service": "UNKNOWN",
+    "database": "UNKNOWN / see ownership review",
+    "objects": [
+      "cities",
+      "provinces"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "cities",
+      "provinces"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_fix_review_content_length.sql",
+    "sha256": "d6238cd833cc3f5a5f5e3b1fe7dce25d6721531c93972b15ea9e325ebf8bee5d",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "content",
+      "hotel_reviews"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "content",
+      "hotel_reviews"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "migration_media_assets_polymorphic.sql",
+    "sha256": "7a6d557f3e479c3084807c7cf034dfd81f77bc254eabbc14b47242613759318a",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "media_assets"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "media_assets"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "destructive statements present",
+      "unsupported PostgreSQL syntax"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  },
+  {
+    "path": "sample_hotel_data.sql",
+    "sha256": "c456380f79d81acabb32468a0b18f4b7c3dedd39bcfe72a0cfe2cee571b9e6f7",
+    "service": "hotel",
+    "database": "checkinn_hotel",
+    "objects": [
+      "cities",
+      "hotel",
+      "provinces"
+    ],
+    "type": "SQL",
+    "mechanism": "explicit/manual psql; no global authoritative ordering",
+    "ordering": "explicit prerequisites; no source-wide order",
+    "required_predecessor_objects": [
+      "cities",
+      "hotel",
+      "provinces"
+    ],
+    "replay": "NOT VERIFIED; IF NOT EXISTS is not proof of whole-script replay",
+    "change_kind": "DDL+DML",
+    "data_assumptions": "target relation/column/type and existing rows must satisfy constraints; see SQL",
+    "potential_conflicts": [
+      "DML may rewrite existing rows"
+    ],
+    "status": [
+      "SOURCE_PRESENT"
+    ],
+    "applied_evidence": "see applied-history-manifest; file existence is not application evidence",
+    "production_applied_history": "UNKNOWN"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "passed": true,
+    "owner": "user",
+    "database": "batch5b_user_1794644270_2824",
+    "log": "user-acceptance-1794644270_2824.log",
+    "port": 55486,
+    "exit_code": 0,
+    "timestamp": "2026-11-14T08:18:53.562962+00:00",
+    "command": "mvn.cmd -o -B -ntp -pl user-service -Dtest=CanonicalPostgresAcceptanceTest test"
+  },
+  {
+    "passed": true,
+    "owner": "hotel",
+    "database": "batch5b_hotel_1794644270_2824",
+    "log": "hotel-acceptance-1794644270_2824.log",
+    "port": 55486,
+    "exit_code": 0,
+    "timestamp": "2026-11-14T08:20:13.012920+00:00",
+    "command": "mvn.cmd -o -B -ntp -pl hotel-service -Dtest=CanonicalPostgresAcceptanceTest test"
+  },
+  {
+    "passed": true,
+    "owner": "booking",
+    "database": "batch5b_booking_1794644388_13580",
+    "log": "booking-acceptance-1794644388_13580.log",
+    "port": 55486,
+    "exit_code": 0,
+    "timestamp": "2026-11-14T08:20:47.093261+00:00",
+    "command": "mvn.cmd -o -B -ntp -pl booking-service -Dtest=CanonicalPostgresAcceptanceTest test"
+  },
+  {
+    "passed": true,
+    "owner": "revenue",
+    "database": "batch5b_revenue_1794644388_13580",
+    "log": "revenue-acceptance-1794644388_13580.log",
+    "port": 55486,
+    "exit_code": 0,
+    "timestamp": "2026-11-14T08:21:33.136466+00:00",
+    "command": "mvn.cmd -o -B -ntp -pl revenue-service -Dtest=CanonicalPostgresAcceptanceTest test"
+  },
+  {
+    "passed": true,
+    "owner": "regulations",
+    "database": "batch5b_regulations_1794644388_13580",
+    "log": "regulations-acceptance-1794644388_13580.log",
+    "port": 55486,
+    "exit_code": 0,
+    "timestamp": "2026-11-14T08:21:52.037817+00:00",
+    "command": "mvn.cmd -o -B -ntp -pl regulations-service -Dtest=CanonicalPostgresAcceptanceTest test"
+  }
+]

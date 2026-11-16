@@ -1,4 +1,6 @@
 # ATTRIBUTE-DRIVEN DESIGN DOCUMENT
+
+> Checkpoint 16/11/2026: năm Supabase PostgreSQL projects độc lập đã được xác minh cho backend chạy local (46 business tables; Flyway/Hibernate/startup/core workflows PASS). Overall Batch 6B PARTIAL: VNPay Sandbox code71 và Supabase Storage NXDOMAIN còn BLOCKED; các mô tả Storage bên dưới là kiến trúc/capability, chưa phải actual upload acceptance. Daily Supabase dùng `docker/.env`, local Test dùng `docker/.env.test`; backend cloud deployment và production recovery vẫn là scope tương lai. Xem [báo cáo tổng kết](BATCH6B_FINAL_COMPLETION_REPORT_2026-11-16.md).
 ## Tripto Hotel Booking System
 
 **Prepared by:**

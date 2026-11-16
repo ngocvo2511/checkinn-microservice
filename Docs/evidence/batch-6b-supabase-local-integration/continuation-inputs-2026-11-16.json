@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-16",
+  "requiredDocuments": [
+    {
+      "file": "Docs/BATCH6B_SUPABASE_LOCAL_DATABASE_INTEGRATION_2026-11-14.md",
+      "sha256": "669727f6fd9aef1cec2f01bfd8a868eece87078386e34feedf921bdbe563a306",
+      "lines": 94
+    },
+    {
+      "file": "Docs/BATCH6A_SUPABASE_READINESS_SECURITY_AUDIT_2026-11-14.md",
+      "sha256": "147c019e58e97e13f10dd419a4c40023dc90be1d4dde1cdcc6582e93a393a2e2",
+      "lines": 52
+    },
+    {
+      "file": "Docs/BATCH5B_CANONICAL_FLYWAY_IMPLEMENTATION_2026-11-14.md",
+      "sha256": "de85bd53af85335fb6d40f4c56b3acd33ea13db5aec5156cb53b265552e4b7b4",
+      "lines": 59
+    },
+    {
+      "file": "Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md",
+      "sha256": "efbe5b6fea220966dd2f25369f5ea767534eee2c332c255dfc6c858bbd3bba4c",
+      "lines": 145
+    },
+    {
+      "file": "Docs/database-design/CANONICAL_DATABASE_SCHEMA_V1.md",
+      "sha256": "c29a3c7d5f4d2baadc1e6586049045a0dd310361c795f41174a5636fef43ffaa",
+      "lines": 1638
+    },
+    {
+      "file": "Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+      "sha256": "cbe408b5b592a987168f68e26eae7c03ddce74d21452155ec072b9e17b672bb6",
+      "lines": 138
+    },
+    {
+      "file": "Docs/evidence/batch-6b-supabase-local-integration/reproduction-guide.md",
+      "sha256": "786ff9159c0b8242ebb0056094c7d8209e9614488fb07f6535204d692ba6250a",
+      "lines": 59
+    },
+    {
+      "file": "Docs/evidence/batch-6b-supabase-local-integration/connection-configuration.md",
+      "sha256": "758e63f3e797a0480106fcf00f131174a99a538c6c94593c65ea1d21a42a1662",
+      "lines": 8
+    },
+    {
+      "file": "Docs/evidence/batch-6b-supabase-local-integration/security-verification.md",
+      "sha256": "664515bcdf7ff95b26c9c8a3cc864c8cf3acd492f03405ece8f4bc13b30dc5ec",
+      "lines": 13
+    },
+    {
+      "file": "Docs/evidence/batch-6b-supabase-local-integration/remaining-risks.md",
+      "sha256": "29184f74286a34e83de2b16883934b73b2c297c2341adef17bae147f8a41a93a",
+      "lines": 14
+    }
+  ],
+  "profileStaticChecks": [
+    {
+      "owner": "user",
+      "validate": true,
+      "sqlNever": true,
+      "flywayDisabled": true,
+      "baselineDisabled": true,
+      "cleanDisabled": true
+    },
+    {
+      "owner": "hotel",
+      "validate": true,
+      "sqlNever": true,
+      "flywayDisabled": true,
+      "baselineDisabled": true,
+      "cleanDisabled": true
+    },
+    {
+      "owner": "booking",
+      "validate": true,
+      "sqlNever": true,
+      "flywayDisabled": true,
+      "baselineDisabled": true,
+      "cleanDisabled": true
+    },
+    {
+      "owner": "revenue",
+      "validate": true,
+      "sqlNever": true,
+      "flywayDisabled": true,
+      "baselineDisabled": true,
+      "cleanDisabled": true
+    },
+    {
+      "owner": "regulations",
+      "validate": true,
+      "sqlNever": true,
+      "flywayDisabled": true,
+      "baselineDisabled": true,
+      "cleanDisabled": true
+    }
+  ],
+  "localCaCertificates": [
+    {
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "validOn20261116": true
+    },
+    {
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "validOn20261116": true
+    },
+    {
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "validOn20261116": true
+    },
+    {
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "validOn20261116": true
+    },
+    {
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "validOn20261116": true
+    }
+  ],
+  "liveTlsHostnameAndTrust": "NOT VERIFIED"
+}

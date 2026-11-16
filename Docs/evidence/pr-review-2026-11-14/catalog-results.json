@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-11-14T08:22:17.053777+00:00",
+  "results": [
+    {
+      "owner": "user",
+      "database": "batch5b_user_1794644270_2824",
+      "tables": 7,
+      "columns": 59,
+      "constraints": 69,
+      "indexes": 19,
+      "sequences": 0,
+      "errors": [],
+      "status": "PASS"
+    },
+    {
+      "owner": "hotel",
+      "database": "batch5b_hotel_1794644270_2824",
+      "tables": 24,
+      "columns": 188,
+      "constraints": 208,
+      "indexes": 49,
+      "sequences": 0,
+      "errors": [],
+      "status": "PASS"
+    },
+    {
+      "owner": "booking",
+      "database": "batch5b_booking_1794644388_13580",
+      "tables": 7,
+      "columns": 118,
+      "constraints": 110,
+      "indexes": 28,
+      "sequences": 1,
+      "errors": [],
+      "status": "PASS"
+    },
+    {
+      "owner": "revenue",
+      "database": "batch5b_revenue_1794644388_13580",
+      "tables": 5,
+      "columns": 66,
+      "constraints": 66,
+      "indexes": 13,
+      "sequences": 0,
+      "errors": [],
+      "status": "PASS"
+    },
+    {
+      "owner": "regulations",
+      "database": "batch5b_regulations_1794644388_13580",
+      "tables": 3,
+      "columns": 27,
+      "constraints": 33,
+      "indexes": 8,
+      "sequences": 2,
+      "errors": [],
+      "status": "PASS"
+    }
+  ]
+}

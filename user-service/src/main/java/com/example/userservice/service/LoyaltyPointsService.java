@@ -91,7 +91,7 @@ public class LoyaltyPointsService {
     }
 
     @Transactional
-    public LoyaltyPointsResponse earnPoints(UUID userId, String bookingId, BigDecimal totalAmount) {
+    public LoyaltyPointsResponse earnPoints(UUID userId, UUID bookingId, BigDecimal totalAmount) {
         validateCommand(userId, bookingId);
         if (totalAmount == null || totalAmount.signum() < 0) throw new IllegalArgumentException("Amount must be nonnegative");
         commandLock.acquire(bookingId, userId);
@@ -128,7 +128,7 @@ public class LoyaltyPointsService {
     public BigDecimal usePoints(ApplyPointsRequest request) {
         if (request == null) throw new IllegalArgumentException("Points request required");
         UUID userId = request.getUserId();
-        String bookingId = request.getBookingId();
+        UUID bookingId = request.getBookingId();
         validateCommand(userId, bookingId);
         Long points = request.getPointsToUse();
         if (points == null || points <= 0) throw new IllegalArgumentException("Points to use must be greater than 0");
@@ -187,12 +187,12 @@ public class LoyaltyPointsService {
     }
 
     @Transactional(readOnly = true)
-    public List<PointsTransactionResponse> getBookingTransactionHistory(String bookingId) {
+    public List<PointsTransactionResponse> getBookingTransactionHistory(UUID bookingId) {
         return pointsTransactionRepository.findByBookingId(bookingId).stream().map(this::mapTransactionToResponse).toList();
     }
 
     @Transactional
-    public void refundPoints(UUID userId, String bookingId) {
+    public void refundPoints(UUID userId, UUID bookingId) {
         validateCommand(userId, bookingId);
         commandLock.acquire(bookingId, userId);
         var previous = commands.findById(key(bookingId, "CANCEL"));
@@ -223,7 +223,7 @@ public class LoyaltyPointsService {
 
     /** The booking lookup runs outside this transaction; never wait on booking while holding a points lock. */
     @Transactional
-    public void reconcileReservation(String bookingId, UUID userId, String observedBookingState) {
+    public void reconcileReservation(UUID bookingId, UUID userId, String observedBookingState) {
         validateCommand(userId, bookingId);
         commandLock.acquire(bookingId, userId);
         var held = reservations.findById(bookingId).orElse(null);
@@ -239,7 +239,7 @@ public class LoyaltyPointsService {
         }
     }
 
-    private void cancelReservation(UUID userId, String bookingId) {
+    private void cancelReservation(UUID userId, UUID bookingId) {
         reservations.findById(bookingId).ifPresent(held -> {
             if (!userId.equals(held.getUserId())) throw conflict("Reservation belongs to another user");
             held.setState(PointsReservationState.CANCELLED);
@@ -263,20 +263,20 @@ public class LoyaltyPointsService {
         }
     }
 
-    private void validateCommand(UUID userId, String bookingId) {
-        if (userId == null || bookingId == null || bookingId.isBlank() || bookingId.length() > 128) {
-            throw new IllegalArgumentException("User and booking (up to 128 characters) required");
+    private void validateCommand(UUID userId, UUID bookingId) {
+        if (userId == null || bookingId == null) {
+            throw new IllegalArgumentException("User and booking UUID required");
         }
     }
 
-    private void requireNotCancelled(UUID userId, String bookingId) {
+    private void requireNotCancelled(UUID userId, UUID bookingId) {
         commands.findById(key(bookingId, "CANCEL")).ifPresent(previous -> {
             requireSameInput(previous, userId, null, null);
             throw conflict("Booking points have been cancelled");
         });
     }
 
-    private List<PointsTransaction> history(UUID userId, String bookingId) {
+    private List<PointsTransaction> history(UUID userId, UUID bookingId) {
         var rows = pointsTransactionRepository.findByBookingId(bookingId);
         if (rows.stream().anyMatch(row -> !userId.equals(row.getUserId()) || row.getPoints() == null
                 || row.getPoints() < 0 || !Set.of("EARN", "USE").contains(row.getTransactionType()))
@@ -314,14 +314,14 @@ public class LoyaltyPointsService {
         }
     }
 
-    private String key(String bookingId, String type) { return bookingId + "|" + type; }
+    private String key(UUID bookingId, String type) { return bookingId + "|" + type; }
 
-    private void receipt(UUID userId, String bookingId, String type, BigDecimal amount, Long points, long result, BigDecimal discount) {
+    private void receipt(UUID userId, UUID bookingId, String type, BigDecimal amount, Long points, long result, BigDecimal discount) {
         commands.save(LoyaltyCommand.builder().commandKey(key(bookingId, type)).bookingId(bookingId).commandType(type)
                 .userId(userId).inputAmount(amount).inputPoints(points).resultPoints(result).resultAmount(discount).build());
     }
 
-    private void append(UUID userId, String bookingId, String type, long points, String description) {
+    private void append(UUID userId, UUID bookingId, String type, long points, String description) {
         pointsTransactionRepository.save(PointsTransaction.builder().userId(userId).bookingId(bookingId)
                 .transactionType(type).points(points).description(description).build());
     }

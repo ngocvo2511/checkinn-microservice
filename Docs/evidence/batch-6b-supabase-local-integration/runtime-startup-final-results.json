@@ -1,0 +1,79 @@
+{
+  "services": [
+    {
+      "service": "eureka",
+      "port": 8761,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "notification",
+      "port": null,
+      "httpStatus": null,
+      "healthy": true,
+      "probe": "headless RabbitMQ consumers"
+    },
+    {
+      "service": "media",
+      "port": 8085,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "auth",
+      "port": 8081,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "gateway",
+      "port": 8080,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "frontend",
+      "port": 3000,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "regulations",
+      "port": 8091,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "user",
+      "port": 8082,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "hotel",
+      "port": 8083,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "booking",
+      "port": 8084,
+      "httpStatus": 200,
+      "healthy": true
+    },
+    {
+      "service": "revenue",
+      "port": 8088,
+      "httpStatus": 200,
+      "healthy": true
+    }
+  ],
+  "localDependencies": [
+    "fresh isolated RabbitMQ",
+    "fresh isolated Redis",
+    "Mailpit local SMTP sink"
+  ],
+  "fullCoreRestart": "PASS",
+  "cloudBackendDeployed": false,
+  "storageUploadProvider": "NOT CONFIGURED / NOT RUN"
+}

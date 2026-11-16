@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import java.util.UUID;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.messaging.HotelEventPublisher;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +33,9 @@ public class PaidReservationRecovery {
 
     @Scheduled(fixedDelayString = "${paid.reservation.delay-ms:1000}", initialDelayString = "${paid.reservation.initial-delay-ms:10000}")
     public void recover() {
-        for (String id : bookings.findDuePaidReservations(LocalDateTime.now(), PageRequest.of(0, 20))) attempt(id);
+        for (UUID id : bookings.findDuePaidReservations(LocalDateTime.now(), PageRequest.of(0, 20))) attempt(id);
     }
-    private void attempt(String id) {
+    private void attempt(UUID id) {
         try {
             reservations.process(id); // source state and outbox snapshot commit atomically
         } catch (RuntimeException ex) {

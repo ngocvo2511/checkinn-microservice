@@ -1,4 +1,5 @@
 package com.example.bookingservice.booking.service;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
@@ -21,49 +22,49 @@ class OnsiteReservationServiceTest {
     final OnsiteReservationService service = new OnsiteReservationService(bookings, payments, inventory, mock(com.example.bookingservice.messaging.HotelEventPublisher.class));
     Booking b;
     @BeforeEach void setup() {
-        b = Booking.builder().id("booking").holdId("hold").status(BookingStatus.PENDING_PAYMENT)
+        b = Booking.builder().id(id("booking")).holdId(id("hold")).status(BookingStatus.PENDING_PAYMENT)
                 .paidAmount(BigDecimal.ZERO).totalAmount(BigDecimal.TEN).onsiteReservationStatus("V1_PENDING")
                 .onsiteNextAttemptAt(LocalDateTime.now().minusSeconds(1)).checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2)).items(List.of()).build();
-        when(bookings.findByIdForUpdate("booking")).thenReturn(Optional.of(b));
-        when(payments.findFirstByBookingIdOrderByCreatedAtDesc("booking")).thenReturn(Optional.of(Payment.builder()
+        when(bookings.findByIdForUpdate(id("booking"))).thenReturn(Optional.of(b));
+        when(payments.findFirstByBookingIdOrderByCreatedAtDesc(id("booking"))).thenReturn(Optional.of(Payment.builder()
                 .method(PaymentMethod.HOTEL).status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build()));
     }
     @Test void confirmsStockWithoutReceivingMoneyOrSettlingLoyalty() {
-        var event = service.process("booking");
+        var event = service.process(id("booking"));
         assertThat(b.getStatus()).isEqualTo(BookingStatus.CONFIRMED);
         assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_CONFIRMED");
         assertThat(b.getPaidAmount()).isEqualByComparingTo(BigDecimal.ZERO);
         assertThat(b.getLoyaltyStatus()).isNull();
         assertThat(event.getBookingStatus()).isEqualTo("CONFIRMED");
-        service.process("booking"); verify(inventory, times(1)).confirmHold("hold");
+        service.process(id("booking")); verify(inventory, times(1)).confirmHold(id("hold"));
     }
     @Test void unknownOutcomeKeepsDurableIntentAndNeverFalselyConfirmsOrCancels() {
-        doThrow(new org.springframework.web.client.ResourceAccessException("timeout")).when(inventory).confirmHold("hold");
-        assertThat(service.process("booking")).isNull();
+        doThrow(new org.springframework.web.client.ResourceAccessException("timeout")).when(inventory).confirmHold(id("hold"));
+        assertThat(service.process(id("booking"))).isNull();
         assertThat(b.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
         assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_PENDING");
         assertThat(b.getOnsiteNextAttemptAt()).isAfter(LocalDateTime.now());
     }
     @Test void terminalHoldRequiresReviewWithoutDiscardingAcceptedPaymentChoice() {
-        doThrow(new org.springframework.web.client.HttpClientErrorException(org.springframework.http.HttpStatus.CONFLICT)).when(inventory).confirmHold("hold");
-        service.process("booking");
+        doThrow(new org.springframework.web.client.HttpClientErrorException(org.springframework.http.HttpStatus.CONFLICT)).when(inventory).confirmHold(id("hold"));
+        service.process(id("booking"));
         assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_REVIEW_REQUIRED");
         assertThat(b.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
     }
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.EnumSource(value=BookingStatus.class,names={"CANCELLED","NO_SHOW"})
     void cancellationWinsOverQueuedConfirmationAndReleaseIsIdempotent(BookingStatus terminal) {
-        b.setStatus(terminal); assertThat(service.process("booking")).isNull(); service.process("booking");
-        verify(inventory, times(1)).cancelReservation("hold"); verify(inventory, never()).confirmHold(any());
+        b.setStatus(terminal); assertThat(service.process(id("booking"))).isNull(); service.process(id("booking"));
+        verify(inventory, times(1)).cancelReservation(id("hold")); verify(inventory, never()).confirmHold(any());
         assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_RELEASED");
     }
     @Test void legacyRowsAreNeverAutomaticallyPromoted() {
-        b.setOnsiteReservationStatus(null); assertThat(service.process("booking")).isNull();
+        b.setOnsiteReservationStatus(null); assertThat(service.process(id("booking"))).isNull();
         verifyNoInteractions(inventory, payments);
     }
     @Test void missingHoldOrInconsistentAmountCannotClaimReservation() {
-        b.setHoldId(null); service.process("booking"); assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_REVIEW_REQUIRED");
+        b.setHoldId(null); service.process(id("booking")); assertThat(b.getOnsiteReservationStatus()).isEqualTo("V1_REVIEW_REQUIRED");
         verifyNoInteractions(inventory);
     }
 }

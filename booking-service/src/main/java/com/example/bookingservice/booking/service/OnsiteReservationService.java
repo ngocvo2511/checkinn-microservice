@@ -1,5 +1,7 @@
 package com.example.bookingservice.booking.service;
 
+import static com.example.bookingservice.contract.UuidContract.*;
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
@@ -24,15 +26,15 @@ public class OnsiteReservationService {
     private final HotelAvailabilityClient inventory;
     private final com.example.bookingservice.messaging.HotelEventPublisher events;
 
-    public record Requested(String bookingId) {}
+    public record Requested(UUID bookingId) {}
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public BookingStatusEvent process(String id) {
+    public BookingStatusEvent process(UUID id) {
         Booking b = bookings.findByIdForUpdate(id).orElse(null);
         if (b == null || !"V1_PENDING".equals(b.getOnsiteReservationStatus())
                 || b.getOnsiteNextAttemptAt() == null || b.getOnsiteNextAttemptAt().isAfter(LocalDateTime.now())) return null;
         b.setOnsiteAttempts(Math.addExact(b.getOnsiteAttempts() == null ? 0 : b.getOnsiteAttempts(), 1));
-        if (b.getHoldId() == null || b.getHoldId().isBlank()) { review(b, "MISSING_HOLD"); return null; }
+        if (b.getHoldId() == null) { review(b, "MISSING_HOLD"); return null; }
         try {
             if (b.getStatus() == BookingStatus.CANCELLED || b.getStatus() == BookingStatus.NO_SHOW) {
                 inventory.cancelReservation(b.getHoldId());
@@ -65,7 +67,7 @@ public class OnsiteReservationService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void defer(String id) {
+    public void defer(UUID id) {
         bookings.findByIdForUpdate(id).filter(b -> "V1_PENDING".equals(b.getOnsiteReservationStatus())).ifPresent(b -> { retry(b); b.setOnsiteLastError("LOCAL_TRANSACTION_FAILED"); });
     }
 
@@ -77,8 +79,8 @@ public class OnsiteReservationService {
         b.setOnsiteReservationStatus("V1_REVIEW_REQUIRED"); b.setOnsiteLastError(code); b.setOnsiteNextAttemptAt(null);
     }
     private BookingStatusEvent event(Booking b) {
-        return BookingStatusEvent.builder().bookingId(b.getId()).hotelId(b.getHotelId())
-                .roomTypeId(b.getItems() == null || b.getItems().isEmpty() ? null : b.getItems().get(0).getRoomTypeId())
+        return BookingStatusEvent.builder().bookingId(text(b.getId())).hotelId(text(b.getHotelId()))
+                .roomTypeId(b.getItems() == null || b.getItems().isEmpty() ? null : text(b.getItems().get(0).getRoomTypeId()))
                 .rooms(b.getItems() == null ? 0 : b.getItems().stream().mapToInt(i -> i.getQuantity()).sum())
                 .checkInDate(b.getCheckInDate()).checkOutDate(b.getCheckOutDate())
                 .nights((int) ChronoUnit.DAYS.between(b.getCheckInDate(), b.getCheckOutDate()))

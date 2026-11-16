@@ -1,0 +1,44 @@
+{
+  "backend": {
+    "branch": "feat/canonical-uuid-schema",
+    "head": "909e73d6021d076479bb6533badb9a029c5a9c2a",
+    "status": "M .idea/compiler.xml\n M .idea/encodings.xml\n M Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md\n M Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md\n M Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md\n M Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md\n?? Docs/BATCH6A_SUPABASE_READINESS_SECURITY_AUDIT_2026-11-14.md\n?? Docs/evidence/batch-6a-supabase-readiness/"
+  },
+  "frontend": {
+    "branch": "fix/place-card-distance-visibility",
+    "head": "a10f82b7d84d941e77a2c5ae44aa2a899ab0a547",
+    "status": ""
+  },
+  "protected": {
+    "booking-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql": "1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2",
+    "booking-service\\src\\main\\resources\\db\\migration\\V2__Add_Hold_Id.sql": "e88aaf84998df5452de3d188df3071165c3e95a5c6320c5e72cb67e63e9eb002",
+    "booking-service\\src\\main\\resources\\db\\migration\\V3__Cancellation_Policy_And_Refund_Requests.sql": "7d672b2234cbbcf2ba7cca4a8109574ce22dffaa5b47d5adac384d81c36ac5e0",
+    "booking-service\\src\\main\\resources\\db\\security\\runtime-grants.sql": "1e04f3a1eaa682a0a92cd9f2f183c314699feff6cab6e124feb5b87b32fe1387",
+    "hotel-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql": "0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a",
+    "hotel-service\\src\\main\\resources\\db\\migration\\V1__Create_City_Table.sql": "6d7ce3c58b245c7490305fa6df337aa656dbcdef74505e941621677a943ee999",
+    "hotel-service\\src\\main\\resources\\db\\migration\\V2__City_Add_Type_Parent_HotelCount.sql": "8bdd89690706e2d10363e49746a04ef13ea01d53553e4ea6dd7c57b2a2186509",
+    "hotel-service\\src\\main\\resources\\db\\migration\\V3__Refactor_To_Provinces_And_Cities.sql": "ca05cd4f27f5b16a4b5357c323d45c52ce7e4036639dd4c792dc2101d376857d",
+    "hotel-service\\src\\main\\resources\\db\\migration\\V4__Room_Availability.sql": "c94a51fc7bb84ecc9926bbebfa621210696eb60bbddcf6605e3782a0000c8490",
+    "hotel-service\\src\\main\\resources\\db\\migration\\V5__Add_Hold_Expiry.sql": "0b12e826abd69b967296c4f0b46f1ab7887f0d72600d44f193d55ed42d0dae82",
+    "hotel-service\\src\\main\\resources\\db\\security\\runtime-grants.sql": "3b66307e6845440ccbe030bead5ce304c9d9024b8a52899a09a9b20c47894614",
+    "regulations-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql": "f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac",
+    "regulations-service\\src\\main\\resources\\db\\security\\runtime-grants.sql": "cd158d435c1505669eb2b9e61436cc5c1fa4937bfcfb33d1e9ded1421a424b1f",
+    "revenue-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql": "bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223",
+    "revenue-service\\src\\main\\resources\\db\\security\\runtime-grants.sql": "35eb845812cc3b4f55107d0d2f800c5879d2d39226a4cd55aef0d07a63a65ef3",
+    "user-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql": "ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d",
+    "user-service\\src\\main\\resources\\db\\migration\\V2__add_user_columns.sql": "c314d9efc330bcc405f7633780f5b92bdf9cb8d861db3e24c1ff9749184fc8b6",
+    "user-service\\src\\main\\resources\\db\\migration\\V3__add_loyalty_commands.sql": "6c356a2b11a0ec2570ccdb0e986218f40f62ec5dbd36428c4cd028e05163efe3",
+    "user-service\\src\\main\\resources\\db\\migration\\V4__add_points_reservations.sql": "a3c8f99c8fd4adab161dfbdc12b5b920f9a9f453d24959ffa706277aef2d4bc2",
+    "user-service\\src\\main\\resources\\db\\migration\\V5__index_legacy_points_guard.sql": "13a525855b62f84e27308e827e45cb8e01d9b4356ff3b042db0bb6ee891a6e9c",
+    "user-service\\src\\main\\resources\\db\\security\\runtime-grants.sql": "e415bbe0231eefe576b2358d305c53f9dbfeb8b3da2f904c3abee3724cdb8290",
+    "auth-service\\src\\main\\resources\\application.yml": "3aa9b8d09cd8e34a1f7c3a06f849f0ce8c3d374b795031bacb8bafeb3838d686",
+    "booking-service\\src\\main\\resources\\application.yml": "8870ebed653b21eafbd5afa65e3a7bb19bf40a9403abccd4fed242e4582939a6",
+    "hotel-service\\src\\main\\resources\\application.yml": "28cf644a1ebd17f50f7aa269493a5386307f41b8764100c88357d017c5a1c787",
+    "media-service\\src\\main\\resources\\application.yml": "e06a322f4646f4d0faebccae55229cd7189b6c15741a3ad32c8579967c831fef",
+    "notification-service\\src\\main\\resources\\application.yml": "c778bc393dc8e10f04fefb9959dfe6db5a2a70e30434c85bb11b6c2d5865e7fe",
+    "place-service\\src\\main\\resources\\application.yml": "dcdf6d6e3f79e997b7271682d1f22eb3cc02bd5e0fe2c8853caae7be75598137",
+    "regulations-service\\src\\main\\resources\\application.yml": "0125d48dcc12ab8e4eb29a155ef4096c84817c744666d00c5eb961c24b06c6ec",
+    "revenue-service\\src\\main\\resources\\application.yml": "56e07747c42b10194e732a54e20b0e2df6b70e50254a6caa4a7614c739e84ecd",
+    "user-service\\src\\main\\resources\\application.yml": "774d490ac21d492cb5e0cf479b41526862471b81b24bb29a842e2343b76fbdcc"
+  }
+}

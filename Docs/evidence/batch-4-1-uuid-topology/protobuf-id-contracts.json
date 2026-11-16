@@ -1,0 +1,1242 @@
+[
+  {
+    "path": "checkinn/auth-service/src/main/proto/auth.proto",
+    "message": "AuthLoginResponse",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 18,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/proto/auth.proto",
+    "message": "ValidateTokenResponse",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/proto/user.proto",
+    "message": "GetUserRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/proto/user.proto",
+    "message": "UserResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 34,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 19,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 20,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "guestId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 31,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 39,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 40,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 50,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "idempotencyKey",
+    "wire_type": "string",
+    "field_number": 14,
+    "line": 52,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 56,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 58,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "GetBookingRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 69,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 73,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 74,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 75,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 84,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 96,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 97,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 4,
+    "line": 99,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "CreatePaymentRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 18,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "GetPaymentRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 23,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "GetPaymentByBookingRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 24,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "RefundPaymentRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 25,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "VNPayCallbackRequest",
+    "field": "orderId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 28,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "VNPayCallbackRequest",
+    "field": "responseCode",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "VNPayCallbackRequest",
+    "field": "transactionId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "PaymentResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 34,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "PaymentResponse",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 35,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "PaymentResponse",
+    "field": "transactionId",
+    "wire_type": "string",
+    "field_number": 6,
+    "line": 39,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "PaymentResponse",
+    "field": "vnpayOrderId",
+    "wire_type": "string",
+    "field_number": 7,
+    "line": 40,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "message": "PaymentResponse",
+    "field": "vnpayResponseCode",
+    "wire_type": "string",
+    "field_number": 8,
+    "line": 41,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 19,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 20,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "guestId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 31,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 39,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 40,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 50,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 55,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 57,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "GetBookingRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 68,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 72,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 73,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 74,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 83,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 95,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 96,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 4,
+    "line": 98,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "GetRoomTypesByHotelRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 33,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "GetRoomTypeByIdRequest",
+    "field": "room_type_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 37,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 46,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdResponse",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 47,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeDto",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 76,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeDto",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 77,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeBasic",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 88,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "message": "MediaAsset",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 109,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "GetHotelReviewsRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 60,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "GetReviewByIdRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 66,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "GetReviewStatsRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 70,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CreateReviewRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 74,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CreateReviewRequest",
+    "field": "guest_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 75,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CreateReviewRequest",
+    "field": "booking_id",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 76,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "UpdateReviewRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 83,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "UpdateReviewRequest",
+    "field": "guest_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 84,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "DeleteReviewRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 91,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "DeleteReviewRequest",
+    "field": "user_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 92,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "AddReviewResponseRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 97,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "AddReviewResponseRequest",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 98,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "UpdateReviewResponseRequest",
+    "field": "response_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 103,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "UpdateReviewResponseRequest",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 104,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "DeleteReviewResponseRequest",
+    "field": "response_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 109,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "DeleteReviewResponseRequest",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 110,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "GetReviewResponseRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 114,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "MarkReviewHelpfulRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 118,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "MarkReviewUnhelpfulRequest",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 122,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CheckUserReviewExistsRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 126,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CheckUserReviewExistsRequest",
+    "field": "guest_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 127,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CheckUserReviewExistsRequest",
+    "field": "booking_id",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 128,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 142,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponse",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 143,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponse",
+    "field": "guest_id",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 144,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponse",
+    "field": "booking_id",
+    "wire_type": "string",
+    "field_number": 4,
+    "line": 145,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponseDto",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 161,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponseDto",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 162,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewResponseDto",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 163,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "ReviewStatsResponse",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 172,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "message": "CheckUserReviewExistsResponse",
+    "field": "review_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 185,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/user.proto",
+    "message": "GetUserRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 27,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/user.proto",
+    "message": "UserResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 31,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "GetRoomTypesByHotelRequest",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 33,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "GetRoomTypeByIdRequest",
+    "field": "room_type_id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 37,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 46,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "GetHotelByIdResponse",
+    "field": "owner_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 47,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeDto",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 76,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeDto",
+    "field": "hotel_id",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 77,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "RoomTypeBasic",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 87,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "message": "MediaAsset",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 107,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 19,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "LoyaltyBookingStateRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 20,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "bookingId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 29,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "guestId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "ReviewEligibilityRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 31,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 39,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 40,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "CreateBookingRequest",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 50,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 55,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "CreateBookingItemRequest",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 57,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "GetBookingRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 68,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 72,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "userId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 73,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "hotelId",
+    "wire_type": "string",
+    "field_number": 3,
+    "line": 74,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingResponse",
+    "field": "voucherCode",
+    "wire_type": "string",
+    "field_number": 12,
+    "line": 83,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 95,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "roomTypeId",
+    "wire_type": "string",
+    "field_number": 2,
+    "line": 96,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "message": "BookingItemResponse",
+    "field": "ratePlanId",
+    "wire_type": "string",
+    "field_number": 4,
+    "line": 98,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/user.proto",
+    "message": "GetUserRequest",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 30,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/user.proto",
+    "message": "UserResponse",
+    "field": "id",
+    "wire_type": "string",
+    "field_number": 1,
+    "line": 34,
+    "target_wire_type": "string",
+    "decision": "KEEP wire tag/type; entity UUID semantics validated at boundary, external/business exceptions classified in contract"
+  }
+]

@@ -1,0 +1,203 @@
+{
+  "migration_final_booking": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  },
+  "migration_final_hotel": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "code",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "latitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "longitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "cities",
+        "udt_name": "timestamp"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "cities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_code",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (code)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_name",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "cities"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)",
+        "indexname": "cities_pkey",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_code ON public.cities USING btree (code)",
+        "indexname": "uk_cities_code",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_name ON public.cities USING btree (name)",
+        "indexname": "uk_cities_name",
+        "tablename": "cities"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "cities"
+      }
+    ]
+  },
+  "migration_final_regulations": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  },
+  "migration_final_revenue": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  },
+  "migration_final_user": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  }
+}

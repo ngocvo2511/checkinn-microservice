@@ -1,0 +1,43 @@
+[
+  {
+    "errors": [],
+    "image_id": "sha256:24d19046b7f443903873db81a7267e7c7a91149e36b13c046ded343983234a1a",
+    "scope": "JPA/startup guard only; no broker/Redis/Gateway; existing image source correspondence NOT VERIFIED",
+    "service": "hotel",
+    "status": "PASS"
+  },
+  {
+    "errors": [],
+    "image_id": "sha256:20c75466c21144d88c709e70add82d29206d9c25329a615b95696178b4743098",
+    "scope": "JPA/startup guard only; no broker/Redis/Gateway; existing image source correspondence NOT VERIFIED",
+    "service": "booking",
+    "status": "PASS"
+  },
+  {
+    "errors": [
+      "Caused by: java.net.UnknownHostException: no-broker"
+    ],
+    "image_id": "sha256:b957f3ce84a77ac5603596a82bafa9f9b566c634f0d4555fa7277cbe7ba1f65d",
+    "scope": "JPA/startup guard only; no broker/Redis/Gateway; existing image source correspondence NOT VERIFIED",
+    "service": "user",
+    "status": "PASS"
+  },
+  {
+    "errors": [
+      "Caused by: java.net.UnknownHostException: no-broker",
+      "Caused by: java.net.UnknownHostException: no-broker",
+      "Caused by: java.net.UnknownHostException: no-broker"
+    ],
+    "image_id": "sha256:82de09ec047e1a09644d4cb0bb31108ce4bb0eabcef61b22908516f20ca476b8",
+    "scope": "JPA/startup guard only; no broker/Redis/Gateway; existing image source correspondence NOT VERIFIED",
+    "service": "revenue",
+    "status": "PASS"
+  },
+  {
+    "errors": [],
+    "image_id": "sha256:959359ff608ae30f38e440b00e4a8b345d5eea5dcbdc605d200d19b21a246ca2",
+    "scope": "JPA/startup guard only; no broker/Redis/Gateway; existing image source correspondence NOT VERIFIED",
+    "service": "regulations",
+    "status": "PASS"
+  }
+]

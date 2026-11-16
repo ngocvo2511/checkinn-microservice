@@ -1,0 +1,46 @@
+{
+  "tests": [
+    {
+      "sourceOwner": "user",
+      "targetOwner": "regulations",
+      "status": "PASS",
+      "safeOutput": [
+        "user TO regulations CROSS_PROJECT_RUNTIME_LOGIN_REJECTED"
+      ]
+    },
+    {
+      "sourceOwner": "regulations",
+      "targetOwner": "hotel",
+      "status": "PASS",
+      "safeOutput": [
+        "regulations TO hotel CROSS_PROJECT_RUNTIME_LOGIN_REJECTED"
+      ]
+    },
+    {
+      "sourceOwner": "hotel",
+      "targetOwner": "booking",
+      "status": "PASS",
+      "safeOutput": [
+        "hotel TO booking CROSS_PROJECT_RUNTIME_LOGIN_REJECTED"
+      ]
+    },
+    {
+      "sourceOwner": "booking",
+      "targetOwner": "revenue",
+      "status": "PASS",
+      "safeOutput": [
+        "booking TO revenue CROSS_PROJECT_RUNTIME_LOGIN_REJECTED"
+      ]
+    },
+    {
+      "sourceOwner": "revenue",
+      "targetOwner": "user",
+      "status": "PASS",
+      "safeOutput": [
+        "revenue TO user CROSS_PROJECT_RUNTIME_LOGIN_REJECTED"
+      ]
+    }
+  ],
+  "foreignConnectionStatementExecuted": false,
+  "targetRoleAbsenceVerifiedWithAuthenticatedReadOnlyQuery": true
+}

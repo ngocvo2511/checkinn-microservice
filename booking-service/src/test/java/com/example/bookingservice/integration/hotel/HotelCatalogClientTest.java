@@ -1,4 +1,5 @@
 package com.example.bookingservice.integration.hotel;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ class HotelCatalogClientTest {
         var client = new HotelCatalogClient(rest);
         ReflectionTestUtils.setField(client, "hotelServiceUrl", "http://hotel.test");
         server.expect(requestTo("http://hotel.test/api/v1/room-1")).andRespond(withSuccess(
-                "{\"id\":\"room-1\",\"hotelId\":\"hotel-1\",\"basePrice\":1000000,\"isActive\":true,\"totalRooms\":2,\"capacity\":{\"adults\":2,\"children\":1},\"mediaAssets\":[]}", MediaType.APPLICATION_JSON));
+                "{\"id\":\"room-1\",\"hotelId\":\""+wire("hotel-1")+"\",\"basePrice\":1000000,\"isActive\":true,\"totalRooms\":2,\"capacity\":{\"adults\":2,\"children\":1},\"mediaAssets\":[]}", MediaType.APPLICATION_JSON));
         var room = client.getRoom("room-1");
         assertThat(room.basePrice()).isEqualByComparingTo("1000000");
         assertThat(room.capacity().adults()).isEqualTo(2);

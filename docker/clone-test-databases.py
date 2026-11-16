@@ -14,10 +14,8 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PG_BIN = Path(os.environ.get('CHECKINN_PG_BIN', 'C:/Program Files/PostgreSQL/18/bin'))
-BASE = ['docker', 'compose', '--project-directory', str(ROOT), '--env-file', str(ROOT / '.env'),
-        '-f', str(ROOT / 'docker-compose.yml')]
 TEST = ['docker', 'compose', '-p', 'checkinn-test', '--project-directory', str(ROOT),
-        '--env-file', str(ROOT / '.env'), '--env-file', str(ROOT / '.env.test'),
+        '--env-file', str(ROOT / '.env.test'),
         '-f', str(ROOT / 'docker-compose.yml'), '-f', str(ROOT / 'docker-compose.test.yml')]
 NAMES = ('user', 'hotel', 'booking', 'revenue', 'regulations')
 
@@ -46,17 +44,33 @@ def inventory(query):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--source-env', type=Path, required=True,
+                        help='Explicit legacy local-source env; the main Supabase .env is not a clone source')
     parser.add_argument('--resume', action='store_true', help='Verify and reuse a partial clone before any app container was created')
     args = parser.parse_args()
-    if not (ROOT / '.env').is_file():
-        raise RuntimeError('Configure source database credentials in .env first.')
+    if args.source_env.resolve() == (ROOT / '.env').resolve():
+        raise RuntimeError('docker/.env is the Supabase runtime; specify a separate local-only source file.')
+    source_values={}
+    for line in args.source_env.read_text(encoding='utf-8-sig').splitlines():
+        if '=' in line and not line.lstrip().startswith('#'):
+            key,value=line.split('=',1)
+            if len(value)>1 and value[0]==value[-1] and value[0] in ('"',"'"):value=value[1:-1]
+            source_values[key.strip()]=value
+    config={'services':{}}
+    for name in NAMES:
+        prefix=name.upper()+'_DB_'
+        source={key:source_values[prefix+suffix] for key,suffix in
+                [('SPRING_DATASOURCE_URL','URL'),('SPRING_DATASOURCE_USERNAME','USERNAME'),('SPRING_DATASOURCE_PASSWORD','PASSWORD')]}
+        parsed=urlsplit(source['SPRING_DATASOURCE_URL'].removeprefix('jdbc:'))
+        if parsed.scheme!='postgresql' or parsed.hostname not in ('localhost','127.0.0.1','host.docker.internal'):
+            raise RuntimeError('Clone source must be explicitly local; refused before any Docker/database operation.')
+        config['services'][name+'-service']={'environment':source}
     if not (ROOT / '.env.test').exists():
         (ROOT / '.env.test').write_text('# Local test credentials; never commit.\nTEST_POSTGRES_PASSWORD='
                                       + secrets.token_urlsafe(36) + '\nNEXTAUTH_SECRET='
                                       + secrets.token_urlsafe(48) + '\n')
     if not (PG_BIN / 'pg_dump.exe').is_file():
         raise RuntimeError('Set CHECKINN_PG_BIN to the PostgreSQL 18 bin directory.')
-    config = json.loads(capture(BASE + ['--profile', 'app', 'config', '--format', 'json']))
     resolved_test = json.loads(capture(TEST + ['--profile', 'app', 'config', '--format', 'json']))
     for name in NAMES:
         env = resolved_test['services'][name + '-service']['environment']

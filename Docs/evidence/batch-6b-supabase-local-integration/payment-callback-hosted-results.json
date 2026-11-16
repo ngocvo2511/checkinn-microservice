@@ -1,0 +1,129 @@
+{
+  "hostedDatabase": true,
+  "callbackTransport": "local HTTP only",
+  "merchant": "ephemeral fake test key",
+  "vnPayProviderContacted": false,
+  "realRefundProviderCalled": false,
+  "checks": [
+    {
+      "case": "callback fixture Booking creation",
+      "status": "PASS",
+      "httpStatus": 201
+    },
+    {
+      "case": "VNPay attempt initialization without navigating provider URL",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "redirect targets sandbox only; URL not requested",
+      "status": "PASS"
+    },
+    {
+      "case": "payment attempt UUIDv4",
+      "status": "PASS"
+    },
+    {
+      "case": "signed failed callback preserves failed attempt for retry",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "VNPay attempt initialization without navigating provider URL",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "redirect targets sandbox only; URL not requested",
+      "status": "PASS"
+    },
+    {
+      "case": "payment attempt UUIDv4",
+      "status": "PASS"
+    },
+    {
+      "case": "retry creates a distinct payment attempt",
+      "status": "PASS"
+    },
+    {
+      "case": "invalid callback signature rejected",
+      "status": "PASS",
+      "httpStatus": 400
+    },
+    {
+      "case": "signed callback amount mismatch rejected",
+      "status": "PASS",
+      "httpStatus": 400
+    },
+    {
+      "case": "signed successful callback completes hosted payment",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "identical signed callback is idempotent",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "conflicting receipt rejected with existing HTTP404 callback contract",
+      "status": "PASS",
+      "httpStatus": 404
+    },
+    {
+      "case": "original failed attempt remains preserved after retry",
+      "status": "PASS"
+    },
+    {
+      "case": "callback replay produces exactly one Revenue CREDIT",
+      "status": "PASS"
+    },
+    {
+      "case": "paid callback Booking reviewed cancellation",
+      "status": "PASS",
+      "httpStatus": 204
+    },
+    {
+      "case": "refund rejection fixture request",
+      "status": "PASS",
+      "httpStatus": 201
+    },
+    {
+      "case": "ADMIN refund rejection",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "rejected refund cannot execute internal transfer",
+      "status": "PASS",
+      "httpStatus": 409
+    },
+    {
+      "case": "rejected refund creates no execution",
+      "status": "PASS"
+    },
+    {
+      "case": "callback payment receipt survives rejected refund exactly",
+      "status": "PASS"
+    },
+    {
+      "case": "callback fixture Booking creation",
+      "status": "PASS",
+      "httpStatus": 201
+    },
+    {
+      "case": "expired inventory hold cannot start a payment",
+      "status": "PASS",
+      "httpStatus": 409
+    },
+    {
+      "case": "expired attempt creates no payment rows",
+      "status": "PASS"
+    },
+    {
+      "case": "expired synthetic Booking cancelled through normal API",
+      "status": "PASS",
+      "httpStatus": 204
+    }
+  ]
+}

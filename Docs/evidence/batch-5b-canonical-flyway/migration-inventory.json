@@ -1,0 +1,108 @@
+[
+  {
+    "owner": "user",
+    "path": "user-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d",
+    "tables": [
+      "loyalty_commands",
+      "loyalty_points",
+      "otps",
+      "points_reservations",
+      "points_transactions",
+      "users",
+      "user_profiles"
+    ],
+    "business_columns": 59,
+    "runtime_profile": "user-service/src/main/resources/application-canonical.yml",
+    "location": "classpath:db/canonical",
+    "runtime_flyway": false,
+    "migration_baseline_on_migrate": false
+  },
+  {
+    "owner": "hotel",
+    "path": "hotel-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a",
+    "tables": [
+      "amenity_category_types",
+      "hotel_amenities",
+      "hotel_amenity_categories",
+      "cities",
+      "provinces",
+      "hotel_accommodation_type_changes",
+      "hotels",
+      "media_assets",
+      "hotel_policies",
+      "policy_category_types",
+      "hotel_questions",
+      "hotel_reviews",
+      "review_feedbacks",
+      "review_responses",
+      "room_availability",
+      "room_holds",
+      "room_types",
+      "amenity_catalog",
+      "amenity_mapping_requests",
+      "amenity_mapping_request_codes",
+      "amenity_mapping_states",
+      "checkinn_feature_migrations",
+      "room_inventory_review_requests",
+      "room_inventory_review_states"
+    ],
+    "business_columns": 188,
+    "runtime_profile": "hotel-service/src/main/resources/application-canonical.yml",
+    "location": "classpath:db/canonical",
+    "runtime_flyway": false,
+    "migration_baseline_on_migrate": false
+  },
+  {
+    "owner": "booking",
+    "path": "booking-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2",
+    "tables": [
+      "bookings",
+      "booking_items",
+      "payments",
+      "refund_requests",
+      "booking_event_outbox",
+      "manual_refund_executions",
+      "manual_refund_audit"
+    ],
+    "business_columns": 118,
+    "runtime_profile": "booking-service/src/main/resources/application-canonical.yml",
+    "location": "classpath:db/canonical",
+    "runtime_flyway": false,
+    "migration_baseline_on_migrate": false
+  },
+  {
+    "owner": "revenue",
+    "path": "revenue-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223",
+    "tables": [
+      "booking_status_records",
+      "payment_records",
+      "revenue_cash_transactions",
+      "revenue_event_receipts",
+      "revenue_cashflow_gaps"
+    ],
+    "business_columns": 66,
+    "runtime_profile": "revenue-service/src/main/resources/application-canonical.yml",
+    "location": "classpath:db/canonical",
+    "runtime_flyway": false,
+    "migration_baseline_on_migrate": false
+  },
+  {
+    "owner": "regulations",
+    "path": "regulations-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac",
+    "tables": [
+      "regulations",
+      "regulation_snapshots",
+      "regulation_event_outbox"
+    ],
+    "business_columns": 27,
+    "runtime_profile": "regulations-service/src/main/resources/application-canonical.yml",
+    "location": "classpath:db/canonical",
+    "runtime_flyway": false,
+    "migration_baseline_on_migrate": false
+  }
+]

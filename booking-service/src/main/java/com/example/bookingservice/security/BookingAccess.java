@@ -1,5 +1,6 @@
 package com.example.bookingservice.security;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.repository.BookingRepository;
 import com.example.bookingservice.payment.repository.PaymentRepository;
@@ -31,7 +32,7 @@ public class BookingAccess {
     }
 
     public boolean isSelf(Authentication actor, String userId) {
-        return actor != null && actor.isAuthenticated() && actor.getName().equals(userId);
+        return actor != null && actor.isAuthenticated() && valid(actor.getName()) && required(actor.getName()).equals(required(userId));
     }
 
     public boolean canCreate(Authentication actor, String requestedUserId) {
@@ -72,16 +73,25 @@ public class BookingAccess {
     }
 
     public boolean canReadPayment(Authentication actor, String paymentId) {
-        String bookingId = payments.findById(paymentId)
+        java.util.UUID bookingId = payments.findById(required(paymentId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found"))
                 .getBookingId();
         return canRead(actor, bookingId);
     }
 
     private Booking requireBooking(String bookingId) {
-        return bookings.findById(bookingId)
+        return bookings.findById(required(bookingId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));
     }
+
+    // REST typed values and String protobuf boundary share the same authorization decisions.
+    public boolean isSelf(Authentication a, java.util.UUID id) { return isSelf(a, text(id)); }
+    public boolean canListUser(Authentication a, java.util.UUID id) { return canListUser(a, text(id)); }
+    public boolean canManageHotel(Authentication a, java.util.UUID id) { return canManageHotel(a, text(id)); }
+    public boolean canRead(Authentication a, java.util.UUID id) { return canRead(a, text(id)); }
+    public boolean canManage(Authentication a, java.util.UUID id) { return canManage(a, text(id)); }
+    public boolean canPay(Authentication a, java.util.UUID id) { return canPay(a, text(id)); }
+    public boolean canReadPayment(Authentication a, java.util.UUID id) { return canReadPayment(a, text(id)); }
 
     private boolean hasRole(Authentication actor, String role) {
         return actor != null && actor.isAuthenticated() && actor.getAuthorities().stream()

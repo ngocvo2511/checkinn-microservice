@@ -1,0 +1,71 @@
+# Operator-reviewed private mapping. Copy into ignored .local, then populate.
+environment=supabase-dev
+
+# user-service; all actual project fields intentionally blank.
+user.project=
+user.organizationId=
+user.mode=
+user.host=
+user.login=
+user.sqlUser=
+user.runtimeRole=
+user.serverMajor=
+user.caSha256=
+user.inventorySha256=
+user.v1Sha256=ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d
+
+# hotel-service; all actual project fields intentionally blank.
+hotel.project=
+hotel.organizationId=
+hotel.mode=
+hotel.host=
+hotel.login=
+hotel.sqlUser=
+hotel.runtimeRole=
+hotel.serverMajor=
+hotel.caSha256=
+hotel.inventorySha256=
+hotel.v1Sha256=0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a
+
+# booking-service; all actual project fields intentionally blank.
+booking.project=
+booking.organizationId=
+booking.mode=
+booking.host=
+booking.login=
+booking.sqlUser=
+booking.runtimeRole=
+booking.serverMajor=
+booking.caSha256=
+booking.inventorySha256=
+booking.v1Sha256=1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2
+
+# revenue-service; all actual project fields intentionally blank.
+revenue.project=
+revenue.organizationId=
+revenue.mode=
+revenue.host=
+revenue.login=
+revenue.sqlUser=
+revenue.runtimeRole=
+revenue.serverMajor=
+revenue.caSha256=
+revenue.inventorySha256=
+revenue.v1Sha256=bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223
+
+# regulations-service; all actual project fields intentionally blank.
+regulations.project=
+regulations.organizationId=
+regulations.mode=
+regulations.host=
+regulations.login=
+regulations.sqlUser=
+regulations.runtimeRole=
+regulations.serverMajor=
+regulations.caSha256=
+regulations.inventorySha256=
+regulations.v1Sha256=f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac
+
+# Optional ONLY after exact owner/project/function review; leave commented until reviewed.
+# user.eventTriggerReviewFile=
+# user.eventTriggerReviewSha256=

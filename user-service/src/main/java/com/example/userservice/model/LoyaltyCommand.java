@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
 public class LoyaltyCommand {
     @Id @Column(length = 160) private String commandKey;
-    @Column(nullable = false, length = 128) private String bookingId;
+    @Column(nullable = false, length = 128) private UUID bookingId;
     @Column(nullable = false, length = 16) private String commandType;
     @Column(nullable = false) private UUID userId;
     private BigDecimal inputAmount;

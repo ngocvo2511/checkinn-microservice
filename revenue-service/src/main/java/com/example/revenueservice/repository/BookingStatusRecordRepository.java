@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface BookingStatusRecordRepository extends JpaRepository<BookingStatusRecord, UUID> {
-    Optional<BookingStatusRecord> findByBookingId(String bookingId);
-    List<BookingStatusRecord> findByHotelIdAndEventAtBetween(String hotelId, LocalDateTime from, LocalDateTime to);
+    Optional<BookingStatusRecord> findByBookingId(UUID bookingId);
+    List<BookingStatusRecord> findByHotelIdAndEventAtBetween(UUID hotelId, LocalDateTime from, LocalDateTime to);
     List<BookingStatusRecord> findByEventAtBetween(LocalDateTime from, LocalDateTime to);
     @Query("""
     SELECT b FROM BookingStatusRecord b
@@ -36,7 +36,7 @@ public interface BookingStatusRecordRepository extends JpaRepository<BookingStat
       AND b.bookingStatus IN ('CONFIRMED','CHECKED_IN','CHECKED_OUT')
     """)
     List<BookingStatusRecord> findActiveBookingsByHotel(
-            String hotelId,
+            UUID hotelId,
             LocalDate from,
             LocalDate to
     );

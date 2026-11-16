@@ -1,0 +1,16 @@
+# NOT AN APPROVAL. Create only after the user approves the exact reviewed project/service/DDL.
+operation=canonical-v1
+environment=supabase-dev
+service=
+project=
+manifestSha256=
+v1Sha256=
+inventorySha256=
+approvedBy=
+expiresAt=
+mappingApproved=false
+migrationApproved=false
+securityReviewed=false
+dataApiDisabledOrPublicUnexposed=false
+exclusiveDdlWindow=false
+appsStopped=false

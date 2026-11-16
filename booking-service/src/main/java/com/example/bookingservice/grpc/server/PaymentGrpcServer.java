@@ -1,5 +1,6 @@
 package com.example.bookingservice.grpc.server;
 
+import static com.example.bookingservice.contract.UuidContract.*;
 import com.example.bookingservice.payment.dto.CreatePaymentRequest;
 import com.example.bookingservice.payment.dto.PaymentResponse;
 import com.example.bookingservice.payment.enums.PaymentMethod;
@@ -29,7 +30,7 @@ public class PaymentGrpcServer extends PaymentGrpcServiceGrpc.PaymentGrpcService
         try {
             GrpcAccess.require(access.canPay(GrpcAccess.actor(), request.getBookingId()));
             CreatePaymentRequest create = CreatePaymentRequest.builder()
-                    .bookingId(request.getBookingId())
+                    .bookingId(required(request.getBookingId()))
                     .amount(BigDecimal.valueOf(request.getAmount()))
                     .method(PaymentMethod.valueOf(request.getMethod()))
                     .build();
@@ -45,7 +46,7 @@ public class PaymentGrpcServer extends PaymentGrpcServiceGrpc.PaymentGrpcService
     public void getPayment(com.example.bookingservice.grpc.GetPaymentRequest request, StreamObserver<com.example.bookingservice.grpc.PaymentResponse> responseObserver) {
         try {
             GrpcAccess.require(access.canReadPayment(GrpcAccess.actor(), request.getId()));
-            PaymentResponse payment = paymentService.getPayment(request.getId());
+            PaymentResponse payment = paymentService.getPayment(required(request.getId()));
             responseObserver.onNext(toProto(payment));
             responseObserver.onCompleted();
         } catch (Exception ex) {
@@ -57,7 +58,7 @@ public class PaymentGrpcServer extends PaymentGrpcServiceGrpc.PaymentGrpcService
     public void getPaymentByBooking(com.example.bookingservice.grpc.GetPaymentByBookingRequest request, StreamObserver<com.example.bookingservice.grpc.PaymentResponse> responseObserver) {
         try {
             GrpcAccess.require(access.canRead(GrpcAccess.actor(), request.getBookingId()));
-            PaymentResponse payment = paymentService.getPaymentByBookingId(request.getBookingId());
+            PaymentResponse payment = paymentService.getPaymentByBookingId(required(request.getBookingId()));
             responseObserver.onNext(toProto(payment));
             responseObserver.onCompleted();
         } catch (Exception ex) {
@@ -69,7 +70,7 @@ public class PaymentGrpcServer extends PaymentGrpcServiceGrpc.PaymentGrpcService
     public void refundPayment(com.example.bookingservice.grpc.RefundPaymentRequest request, StreamObserver<com.example.bookingservice.grpc.PaymentResponse> responseObserver) {
         try {
             GrpcAccess.require(access.isAdmin(GrpcAccess.actor()));
-            PaymentResponse payment = paymentService.refundPayment(request.getId());
+            PaymentResponse payment = paymentService.refundPayment(required(request.getId()));
             responseObserver.onNext(toProto(payment));
             responseObserver.onCompleted();
         } catch (Exception ex) {
@@ -87,8 +88,8 @@ public class PaymentGrpcServer extends PaymentGrpcServiceGrpc.PaymentGrpcService
 
     private com.example.bookingservice.grpc.PaymentResponse toProto(PaymentResponse payment) {
         return com.example.bookingservice.grpc.PaymentResponse.newBuilder()
-                .setId(payment.getId())
-                .setBookingId(payment.getBookingId())
+                .setId(text(payment.getId()))
+                .setBookingId(text(payment.getBookingId()))
                 .setAmount(payment.getAmount().doubleValue())
                 .setMethod(payment.getMethod().name())
                 .setStatus(payment.getStatus().name())

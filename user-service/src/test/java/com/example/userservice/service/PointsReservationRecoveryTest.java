@@ -1,4 +1,5 @@
 package com.example.userservice.service;
+import static com.example.userservice.contract.TestIds.*;
 
 import com.example.userservice.model.*;
 import com.example.userservice.repository.PointsReservationRepository;
@@ -15,12 +16,12 @@ class PointsReservationRecoveryTest {
         var service = mock(LoyaltyPointsService.class);
         UUID user = UUID.randomUUID();
         when(repo.findTop20ByStateAndNextCheckAtLessThanEqualOrderByNextCheckAtAsc(any(), any())).thenReturn(List.of(
-                PointsReservation.builder().bookingId("first").userId(user).build(),
-                PointsReservation.builder().bookingId("second").userId(user).build()));
-        when(client.getState("first", user)).thenThrow(new IllegalStateException("Unavailable"));
-        when(client.getState("second", user)).thenReturn("CANCELLED");
+                PointsReservation.builder().bookingId(id("first")).userId(user).build(),
+                PointsReservation.builder().bookingId(id("second")).userId(user).build()));
+        when(client.getState(id("first"), user)).thenThrow(new IllegalStateException("Unavailable"));
+        when(client.getState(id("second"), user)).thenReturn("CANCELLED");
         new PointsReservationRecovery(repo, client, service).recover();
-        verify(service, never()).reconcileReservation(eq("first"), any(), any());
-        verify(service).reconcileReservation("second", user, "CANCELLED");
+        verify(service, never()).reconcileReservation(eq(id("first")), any(), any());
+        verify(service).reconcileReservation(id("second"), user, "CANCELLED");
     }
 }

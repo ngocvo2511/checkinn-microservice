@@ -1,0 +1,686 @@
+[
+  {
+    "field": "user.loyalty_commands.booking_id",
+    "source": [
+      "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+      "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+      "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java": "7d30e97bd922b04b1744ad418e9214befe57af5e03b543058ac33cf657f261b4"
+    }
+  },
+  {
+    "field": "user.points_reservations.booking_id",
+    "source": [
+      "user-service/src/main/java/com/example/userservice/model/PointsReservation.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+      "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+      "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "user-service/src/main/java/com/example/userservice/model/PointsReservation.java": "3966487fb2d1e8c57b2054704ac328405a45340eeb67cbb286352585c19536c9"
+    }
+  },
+  {
+    "field": "user.points_transactions.booking_id",
+    "source": [
+      "user-service/src/main/java/com/example/userservice/model/PointsTransaction.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking LoyaltyPointsClient + BookingState recovery; User LoyaltyPointsService",
+      "consumer": "User command/ledger/reservation repositories; Booking getLoyaltyBookingState RPC",
+      "query": "booking_id equality, command key bookingUUID|TYPE, receipt lookup, held/recovery scans"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "user-service/src/main/java/com/example/userservice/model/PointsTransaction.java": "1e5e5b0b9d1d635c7d3c59faa920ae159fd5956f1d3891ea863e29b0469643f9"
+    }
+  },
+  {
+    "field": "booking.bookings.id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID id",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.bookings.user_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.user_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID userId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.bookings.hotel_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.hotel_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID hotelId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.bookings.hold_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.hold_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID holdId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.bookings.paid_reservation_payment_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.paid_reservation_payment_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID paidReservationPaymentId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.bookings.inventory_reviewed_by",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "bookings.inventory_reviewed_by equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID inventoryReviewedBy",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java": "d6e48e215bc35c79ef07b8117f3d435403501fec4ef20fef8cfb57cfbefce91f"
+    }
+  },
+  {
+    "field": "booking.booking_items.id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "booking_items.id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID id",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java": "ff2620595fda6bc9ae64aca1f13d67521e1def71d5e40ade520537b93f967189"
+    }
+  },
+  {
+    "field": "booking.booking_items.booking_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": true,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "booking_items.booking_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private Booking booking",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java": "ff2620595fda6bc9ae64aca1f13d67521e1def71d5e40ade520537b93f967189"
+    }
+  },
+  {
+    "field": "booking.booking_items.room_type_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "booking_items.room_type_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "private UUID roomTypeId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java": "ff2620595fda6bc9ae64aca1f13d67521e1def71d5e40ade520537b93f967189"
+    }
+  },
+  {
+    "field": "booking.payments.id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "payments.id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID id",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java": "eb5f7372824e64c2ba42464d5d97b53254bafc06ba308a4c7d19de3361d82dd0"
+    }
+  },
+  {
+    "field": "booking.payments.booking_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "payments.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java": "eb5f7372824e64c2ba42464d5d97b53254bafc06ba308a4c7d19de3361d82dd0"
+    }
+  },
+  {
+    "field": "booking.refund_requests.id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "refund_requests.id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID id",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java": "79833b034757345af99dd77049522703fe72d8076ed9ef52820fdf608fa81e1c"
+    }
+  },
+  {
+    "field": "booking.refund_requests.payment_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "refund_requests.payment_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID paymentId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java": "79833b034757345af99dd77049522703fe72d8076ed9ef52820fdf608fa81e1c"
+    }
+  },
+  {
+    "field": "booking.refund_requests.booking_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "refund_requests.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java": "79833b034757345af99dd77049522703fe72d8076ed9ef52820fdf608fa81e1c"
+    }
+  },
+  {
+    "field": "booking.refund_requests.requested_by",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "refund_requests.requested_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID requestedBy",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java": "79833b034757345af99dd77049522703fe72d8076ed9ef52820fdf608fa81e1c"
+    }
+  },
+  {
+    "field": "booking.refund_requests.approved_by",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "refund_requests.approved_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "private UUID approvedBy",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java": "79833b034757345af99dd77049522703fe72d8076ed9ef52820fdf608fa81e1c"
+    }
+  },
+  {
+    "field": "revenue.booking_status_records.booking_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "booking_status_records.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java": "32833b0f7e06be5ced8ce8d8e907528db419af0c07d6d7f2144e5fd882eea35a"
+    }
+  },
+  {
+    "field": "revenue.booking_status_records.hotel_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "booking_status_records.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID hotelId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java": "32833b0f7e06be5ced8ce8d8e907528db419af0c07d6d7f2144e5fd882eea35a"
+    }
+  },
+  {
+    "field": "revenue.booking_status_records.room_type_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "booking_status_records.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID roomTypeId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java": "32833b0f7e06be5ced8ce8d8e907528db419af0c07d6d7f2144e5fd882eea35a"
+    }
+  },
+  {
+    "field": "revenue.payment_records.booking_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "payment_records.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID bookingId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java": "52952a094db044c6de7ed8f6fed82e85802e12dc6a257431430167178fa509ac"
+    }
+  },
+  {
+    "field": "revenue.payment_records.customer_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "payment_records.customer_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private  UUID customerId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java": "52952a094db044c6de7ed8f6fed82e85802e12dc6a257431430167178fa509ac"
+    }
+  },
+  {
+    "field": "revenue.payment_records.hotel_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "payment_records.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID hotelId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java": "52952a094db044c6de7ed8f6fed82e85802e12dc6a257431430167178fa509ac"
+    }
+  },
+  {
+    "field": "revenue.payment_records.room_type_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "payment_records.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "private UUID roomTypeId",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java": "52952a094db044c6de7ed8f6fed82e85802e12dc6a257431430167178fa509ac"
+    }
+  },
+  {
+    "field": "booking.booking_event_outbox.booking_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "BookingController/BookingService/BookingIdempotency, server catalog snapshots and principal",
+      "consumer": "BookingRepository/BookingItemRepository, Hotel hold/review eligibility, User points/recovery, Revenue/Notification",
+      "query": "booking_event_outbox.booking_id equality/JPQL/locks/aggregate hydration or outbox enqueue; keyHash/requestHash recipes unchanged"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java": "a42fedd7c0d187ef4a71ae216def2c19e1230f3c110e506f0acd770873daf3ed"
+    }
+  },
+  {
+    "field": "booking.manual_refund_executions.request_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "manual_refund_executions.request_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java": "902f03d7b8f70c72a63a63a93551297e6a68b3ce5105856ac030404b197dec1c"
+    }
+  },
+  {
+    "field": "booking.manual_refund_executions.payment_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "manual_refund_executions.payment_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java": "902f03d7b8f70c72a63a63a93551297e6a68b3ce5105856ac030404b197dec1c"
+    }
+  },
+  {
+    "field": "booking.manual_refund_executions.booking_id",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "manual_refund_executions.booking_id predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java": "902f03d7b8f70c72a63a63a93551297e6a68b3ce5105856ac030404b197dec1c"
+    }
+  },
+  {
+    "field": "booking.manual_refund_executions.submitted_by",
+    "source": [
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "PaymentService + RefundRequestService + ManualRefundService; authenticated principal for human actor fields",
+      "consumer": "BookingAccess/PaymentRepository/RefundRequestRepository, sandbox JDBC execution/audit, Revenue/Notification events",
+      "query": "manual_refund_executions.submitted_by predicate/FK/insert/conflict; setObject UUID and typed scalar projections, provider unique queries remain String"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java": "902f03d7b8f70c72a63a63a93551297e6a68b3ce5105856ac030404b197dec1c"
+    }
+  },
+  {
+    "field": "revenue.revenue_cash_transactions.payment_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cash_transactions.payment_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cash_transactions.booking_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cash_transactions.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cash_transactions.customer_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cash_transactions.customer_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cash_transactions.hotel_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cash_transactions.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cash_transactions.room_type_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cash_transactions.room_type_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cashflow_gaps.booking_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cashflow_gaps.booking_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  },
+  {
+    "field": "revenue.revenue_cashflow_gaps.hotel_id",
+    "source": [
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java"
+    ],
+    "target": "UUID; native uuid binding",
+    "association_preserved": false,
+    "database_migration_applied": false,
+    "impact": {
+      "producer": "Booking HotelEventPublisher/BookingEventOutbox PaymentEvent/BookingStatusEvent",
+      "consumer": "Revenue event listeners → EventIngestionService/CashTransactionWriter/RevenueCashFlows",
+      "query": "revenue_cashflow_gaps.hotel_id equality, ON CONFLICT booking/payment kind, ingestion/cash advisory lock keys, owner/report scope; typed bind"
+    },
+    "verified_declaration": "SQL/JDBC-owned; UUID arguments reviewed in linked writer",
+    "source_sha256": {
+      "revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java": "043052c80189b0f735a7240d3b225968c583d9213d9d5e4adb9aa76df75de173"
+    }
+  }
+]

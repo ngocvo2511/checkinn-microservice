@@ -1,0 +1,3622 @@
+[
+  {
+    "path": "checkinn/admin-server/src/main/java/com/example/adminserver/AdminServerApplication.java",
+    "sha256": "6fb70254e7f25fa474fa844a4cc9c649fc70e8c5d7ea3875aa1acb9cf3c24dda"
+  },
+  {
+    "path": "checkinn/admin-server/src/test/java/com/example/adminserver/AdminServerApplicationTests.java",
+    "sha256": "5dfa7eb52973f3abad0f5a0096ca97a240a796201d5467952fd5ecd68bdb6245"
+  },
+  {
+    "path": "checkinn/api-gateway/src/main/java/com/example/apigateway/ApiGatewayApplication.java",
+    "sha256": "85d4fca728e25e2934c123ecbeed530aee7d5fc0473c7b868477fb1dc32251d8"
+  },
+  {
+    "path": "checkinn/api-gateway/src/main/java/com/example/apigateway/config/GatewayCorsConfig.java",
+    "sha256": "d6e3797fd75964325a6a86286347297031167c196d5f03e5d07a969e23eaad58"
+  },
+  {
+    "path": "checkinn/api-gateway/src/main/java/com/example/apigateway/config/SecurityConfig.java",
+    "sha256": "4a72fd11c1b86a111283084682e4d32c4b21dcd3aa6b3687707c01250b67b037"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/AuthServiceApplication.java",
+    "sha256": "334844c1415afe300a9b8816573f7035a847a2ea0eccf1858ca50e25a2a90f55"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/Jersey3TransportClientFactoriesConfig.java",
+    "sha256": "c0f38847d12ad575c4d44c834b83dec4192514d993ed9dea906a26c5f29de67f"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/config/CorsConfig.java",
+    "sha256": "039e9211b30a82c714c64739547c4a37e8bc5a434cea5a518f42ff1cc431a5ac"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/controller/AuthController.java",
+    "sha256": "99d30b1e85f9166b4283e31ad544aa86c5cc1b58e82c0868e19364472abf1cf5"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/dto/AuthResponseDto.java",
+    "sha256": "bf32e0fc457c2ef698eebb3f68398499557a37a37075c696f5f3ce0548708f03"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/dto/LoginRequestDto.java",
+    "sha256": "0ed83213b0295c093a79d7989b6dc6ee3aa79c39a2715e3b7859211edbcb677d"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/dto/OtpVerificationResponse.java",
+    "sha256": "735254c29acce9b32f53bd70388e9e552870004f8db8bf8e8170bafd0cfd04b1"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/dto/RegisterRequestDto.java",
+    "sha256": "7046f8a86982f68980c9c09825c0736cabd3d59fc26bc694d20cde66e61aac0f"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/dto/VerifyOtpRequest.java",
+    "sha256": "616e3c9b3c1a02c4ed5e20ceb51a8dd5bb1fd8cd134cc8c02b3ff6ffd8bfb186"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/exception/GlobalExceptionHandler.java",
+    "sha256": "dbb37b677600907f27b959588b3535c4270d78ae7077155ddc891182b5d81429"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/AuthGrpcService.java",
+    "sha256": "eff810d98832cf1d795ed0d292c54aa54d13499d4d216ac5616bf65f891bebb3"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/AuthService.java",
+    "sha256": "4116a795cd44de60bff524611e1b4fda585a2b3d12721dc3540b616b13fe282b"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/JwtService.java",
+    "sha256": "4a6d8dd203e4ca0e4464f1f3444de0d683d7da01315a162109612533e699fb5f"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/OtpService.java",
+    "sha256": "a66916e8e52b5587e28b1a97d7b130f6396c1e9abce90fd63c558e707c22704a"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/SessionStoreUnavailableException.java",
+    "sha256": "0412d235c514ed851b20e7fca976aee8efdc6d1c0e43ebf5f0c5605f32d5872f"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/TokenRevocationService.java",
+    "sha256": "9c75ba39e33474d4207c8a031e8d078c832d2ad6f3af536768d3881c7e764f91"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/java/com/example/authservice/service/UserGrpcClient.java",
+    "sha256": "8381936fb8caef6a8fdb5ac5e53b3c85051c00909736c3dca2b51737714e48e7"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/proto/auth.proto",
+    "sha256": "cc52bcf5c315ba9d48addcb184cc0c5a905c3d1e7e4086e87100efcaf243e485"
+  },
+  {
+    "path": "checkinn/auth-service/src/main/proto/user.proto",
+    "sha256": "2391f8cedc6d2087cf9f07a7120223a28df93885ca850977a247d408a2c42925"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/AuthServiceApplicationTests.java",
+    "sha256": "4fc037b1ae77894553ba33d0965309e06b5676960867ea404d0f6f56c6d83d28"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthFailureBoundaryTest.java",
+    "sha256": "a1b2c1bb53b6c92108c3cee0c0003845aac4f1d7ffa6ed511811a6d822983b12"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthGrpcRevocationTest.java",
+    "sha256": "344102ddee78ac09ed45a272f037f839e843b0d37bbf2ca4bc28bf869206bb7d"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/security/AuthLogPrivacyTest.java",
+    "sha256": "ccd63739e05d64d60385e807b4692d9770ca8531ed072014b550a1cb6634d7b8"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/AuthServiceTest.java",
+    "sha256": "f649ce233c4deac2ce12ba935a228f61dec80988b86516329f33864f4f1cc528"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/OtpHttpDeadlineTest.java",
+    "sha256": "57604425eec90e7c62c1ca16aa687265eec4e988a6b87e3afb36598731a72fce"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/SessionTokenIssuanceTest.java",
+    "sha256": "18763686dff06d7898b7a497c03e36378c765980821178a21360cdcafb5ede28"
+  },
+  {
+    "path": "checkinn/auth-service/src/test/java/com/example/authservice/service/UserRpcClientTest.java",
+    "sha256": "c0b18a28fd72c1c4b0d657a294486559489a7f76c8241b2bb2fdfdfe788653ab"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/BookingServiceApplication.java",
+    "sha256": "fb5e86749173ff9da7042567986ef9f90074219456acb8f42c36843743beb189"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/api/ApiErrorBodyAdvice.java",
+    "sha256": "c88325c3782a832b7fe7647244c8c46874d39888b459f89ba0ed8249bc96b106"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/api/ApiErrorSupport.java",
+    "sha256": "e7437fe11a2641a65481bd280eba683117d7d88555dc5536ca6d13a8ce29b05f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/controller/BookingController.java",
+    "sha256": "fbfa76ec47a71909eb3ad5809e1671bc1f2b0cf50ee89e52526c9a64b094fc6f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/dto/BookingItemResponse.java",
+    "sha256": "fb149f86532868b421ea0dc7c836d6f97ab3875fdb67350069a6c9e4a4a594a9"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/dto/BookingResponse.java",
+    "sha256": "7a31510b65f9ba1e2d2cd21eb84237c3784a1666911735bee841d6ad5e7611cc"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/dto/CreateBookingItemRequest.java",
+    "sha256": "80852a6517fb4c83c423d3eb15661e4882e96e69eb489cad3ff2c0eec86d5664"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/dto/CreateBookingRequest.java",
+    "sha256": "0d025598473a6bb6cd4212060566588fdb615b206b507367713cec2d4314d70e"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/entity/Booking.java",
+    "sha256": "6e45fb6aad57ed9483d4f08f5069119da72c877be57aa5af0b05b0d6249b9494"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/entity/BookingItem.java",
+    "sha256": "1cd803f5e153d9de4d84422acb47aa87af626329202bb281978019c2423d3f80"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/enums/BookingStatus.java",
+    "sha256": "474b1efab4ed9933fbc62748b5e0cf5086898455e00aaec7321c004e88ff6296"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingItemRepository.java",
+    "sha256": "99909137233c4667b33912fb89ffbdf3bf0bb9b227ed39f664e3e4e262e9969e"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/repository/BookingRepository.java",
+    "sha256": "67a56b62c25f60fe401f87a4d15e6710a55fc87b50d957ef5b0e63995c67ddcb"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/BookingCreationCompensation.java",
+    "sha256": "3395a1f37548a19c42675ae51e0fa2fe79f0cbdf37b3b8f4d37b8f569ae61d22"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/BookingCreationLock.java",
+    "sha256": "e5504386c1ffff978f737ee2362c8f1f5f6b02aa480ddd78960342e00e8b39cc"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/BookingIdempotency.java",
+    "sha256": "8faad4c650d684bcb22a276db2549b023347facddcebff9e66aac421fc41bd40"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "sha256": "0d4fae9c5e29292b15a9e4ecaeb6c0936580a0524368f28e1f7a4593b842fa67"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/BookingService.java",
+    "sha256": "dc71eb4a05b64e588d320dbad304d754d67d22c9284b888b7a9f50500d21f187"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/CancellationPolicy.java",
+    "sha256": "eb1b80de874f632f6d33ce40c306bc8fba9a15c179c4b9547618b754833f27fb"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+    "sha256": "ac251fb33c43e5026a7ebf16eed9d74478d376f3c217941c64805813920316e4"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementService.java",
+    "sha256": "c6bc22070c28dab1611019e7f13f870ea698dc02cf7f97dd3c6711a47e03867a"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteEvents.java",
+    "sha256": "05486c56036d87dc93db3cf5bff9ada2e1ce36c0bd47a3461e36c5ec23817f23"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+    "sha256": "082b3f0caccf9a25f5da9c7894180de351cd9d1c7b44b9002af5065c46e3f26b"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationService.java",
+    "sha256": "d4b9cc333463599166c67738a096322cf6915eafde93ca08cf7ef2713912897f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java",
+    "sha256": "99b8728c8c7f8899c7be58abf92e053e4c03ef02ab0f513e9703ba73a4491a64"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationService.java",
+    "sha256": "f9089c976e5f86d39287bb6ad050aea8470e3218724c0611cf8094727c6d8be4"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/ApiJsonConfig.java",
+    "sha256": "caf17874e72ee89cc3905c30be4def1e604edfc74fedef36165541f26a6c0788"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/OnsiteWorkConfig.java",
+    "sha256": "bc4853a29636cd57c3672e8387459d2d4b63daa87623285156000ba40598cf46"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/PaidReservationWorkConfig.java",
+    "sha256": "0f06432bcbf8a896216c1ad67bb1f73de0c60f1f419beb344a548fd0e98b548c"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/RabbitConfig.java",
+    "sha256": "4f0d09c8957a25c9dbc59c603eff5af2ff08e48391167d686faa13a137cdd676"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/RestClientConfig.java",
+    "sha256": "095b0a4455bb3676a61582c6b576fb246c3aeb57e93b09c8c46de93d7d09cbdb"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/SecurityConfig.java",
+    "sha256": "38753b6db3af902c51f25df01eaa6726edf7c6958aba61d8d2f60ef8bf3260ea"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/config/WebConfig.java",
+    "sha256": "89e76540e3ac666b2363eac3898227b83903c1c3cae90515bbba4aa937f17e3b"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/grpc/interceptor/GrpcAccess.java",
+    "sha256": "f9881553a307bfad92230d514b0bc0fb9d768c88a2571b193b63072f71c3980e"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/grpc/interceptor/UserContextInterceptor.java",
+    "sha256": "0a0bfb145538074ec1c875ab3e755f07542bb33e9013fff32c418059bae2d7a1"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/grpc/server/BookingGrpcServer.java",
+    "sha256": "853813382cfc0a93a36a82c4a1c1ccd01f657ff57dd029bc411838988741764c"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/grpc/server/PaymentGrpcServer.java",
+    "sha256": "12efa89326f5ccc42d7947aaa8b73a3967abe39c099f5e484b589c9358455447"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelAvailabilityClient.java",
+    "sha256": "c42a0b739d0e1e16d07fc3ce1b40790dfa8141148d163ccc7c471451275f66d7"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java",
+    "sha256": "3f21b8d9e0fa6bb85d4b23b2abc8ed38ac0c7a74b2c4081c21b219b5acd26edf"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/hotel/dto/HoldRequest.java",
+    "sha256": "7137577c5308bf964bf1577f71766e9c738ea6d084bacf9a489ed8a9ce3fc859"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/hotel/dto/HoldResponse.java",
+    "sha256": "5318a29bf41f564564cb45704d1f7ff9b8b2fa4e505590d08d3eff39f2aed3eb"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/ApplyPointsRequestDTO.java",
+    "sha256": "748a5db21a2b4328ddf794dca77988f5bee12fcf5317a358d6af8a060d92bb15"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyFeignConfiguration.java",
+    "sha256": "254df5c3c2d47e827691d8b3e376ea3acec34b42e5ab440914c71f365257fae4"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyPointsClient.java",
+    "sha256": "d56d7bf6d88f1dd59bf843aa6ef3d2d56fb9f8a2b486ec28205307e9dc89250f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/LoyaltyPointsDTO.java",
+    "sha256": "683dfad8613a4d21af953a3af7f673b89987ebbc375c52c93ab4186f66eae35a"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsQuote.java",
+    "sha256": "4d507080ed10d7dd8bbcc1d5b53e5c1ae6d41ab7d66841383cd6c3ff56362113"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsQuoteRequest.java",
+    "sha256": "cda0220702b39e902a98188ee58f02b52970e641c6b9fdb2b519d638dd011fe9"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/PointsReservationDTO.java",
+    "sha256": "c115c853ca97a56faa9cb3df14b6914a29c1ea42f86395566c650a4e0376a356"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/loyalty/ReservePointsRequestDTO.java",
+    "sha256": "576564fe412b63391276164c3b01ef4cbc3e541f08f87d0911c40f7083d9cd3b"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventDelivery.java",
+    "sha256": "872aab8efffd9c88bbc8aa6bb3f2ba8276a50d3e686fd4ac1e0180d142f5909b"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java",
+    "sha256": "d2c715d844e6be5de33ef46ebb6dc6f4ab35eef05313168ce82fd5be78d50524"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+    "sha256": "6fefa4e87973c5d25fec8629085877c499f51768dc42c16b9b947e107490ec3b"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/BookingStatusSnapshots.java",
+    "sha256": "3e0c55afdc0962053d21bbe3671ac9d6d4818561fe77b49440a98f40ce5596a4"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/HotelEventPublisher.java",
+    "sha256": "1eda89b3d718a37de52de22689316da1dcdf0b21b3374bbde5496e3c60afcd0c"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/event/BookingStatusEvent.java",
+    "sha256": "4e769ee280f2cd3537d85ed338b89784cb445e5a6703b098191c71ec922f52f0"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/messaging/event/PaymentEvent.java",
+    "sha256": "fa83df719c90b2b247d23e41e9ab7cd092c959732de024076d487f37bf8a59f8"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/controller/PaymentController.java",
+    "sha256": "4a77ff26bae71f312da27f37e4a170a95f14a9bf6d019d6273415dfc851ba3e0"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/dto/CreatePaymentRequest.java",
+    "sha256": "525c2db1f90d91d7e6a00a75116275cc8852eb747e3f54818a44b7da09a302ce"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/dto/PaymentResponse.java",
+    "sha256": "dd74be73f612985def036be4b52e6a3caf33a3e766869c393c15be2cc85fadd8"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/dto/VnPayInitResponse.java",
+    "sha256": "f84de4b8686420a709f812a30b484a193c5301c38997267ad9435b26a7cf8b50"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/entity/Payment.java",
+    "sha256": "e001637709938af419813d261abe091ca36a27dfd1914f0d7b9e27608abf139f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/enums/PaymentMethod.java",
+    "sha256": "62a11ec0ae8359d74d6b6cca4454a0f00fe4ef990884fb87bcce9019b478bfb0"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/enums/PaymentStatus.java",
+    "sha256": "0e8fd54b995ecd503e63167df24225dbeedc0ceba61fec5a4be75ed70e3b3c91"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundController.java",
+    "sha256": "22fd04b59c979b95194c5e98e742d6b5cbe3e6db45139421e95e43eb82711abf"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+    "sha256": "b749ac63749458eb1166b6650c7637bb1ba9019381c86374eedccaa60337816d"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java",
+    "sha256": "4e4a40d01805067cd85908423d8b535ac6c78ac58797ca135dd5819a5c80b319"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundProvider.java",
+    "sha256": "cc64ba3e11878dde1e770e038d101db33ec4b702fbaa953b6f5bbb8dd9ddaf88"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequest.java",
+    "sha256": "bd3818be680a46009ac334c42ef586a1efa272060db1141f23342b4d521ad953"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestController.java",
+    "sha256": "df87b38882a8fa677543d2aabf54177ab1592b8bf058ecfdc546cba09ccaff5d"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestRepository.java",
+    "sha256": "23fb4633f0597f6ed30f250463c1f3c6448d7a9dd313c300060cf81a759e0995"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestService.java",
+    "sha256": "ec8276d8d8c0ce630937742c4f22255c78db17f421dda8ee2403ddf9cecd013f"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/repository/PaymentRepository.java",
+    "sha256": "d45700a2d2d7426b96c12b15a20d300c0a292f905d9fda0fdc4dc37fe5e75cbc"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/service/PaymentService.java",
+    "sha256": "d9faa877e5187cf82355fabc62354dc43f8c40a63bf6c7b35916fa7e9c3067d1"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/service/factory/HotelPaymentCreationPolicy.java",
+    "sha256": "3d13f91c5de55f0acf1eac67d5d1a4166e2f8a82f3061c895803916ed0fc7571"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/service/factory/PaymentCreationPolicy.java",
+    "sha256": "7b836d860d6e8640e75951abd590ec0c0c469adfc36f3bd1ba2910f27d82dbda"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/service/factory/PaymentCreationPolicyFactory.java",
+    "sha256": "15f7c4a205bbd93da6b487c906c62876d5f6d4fe5a9845690d913967d38ac719"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/service/factory/VnPayPaymentCreationPolicy.java",
+    "sha256": "a2b20f2c7eaba89ea8973125ee8290346bca654ee56c9c3e605a81065b2aa0b3"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/vnpay/VnPayProperties.java",
+    "sha256": "b771459501b24da4ef2b0a6e775f4b2e35f2b59749ce7d3bbccb2a42eede99d7"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/payment/vnpay/VnPayUtil.java",
+    "sha256": "8a540527d035c96e187f5bd21409baa89c44d1b0017daae0826e1fd72a541f03"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/BookingAccess.java",
+    "sha256": "eff81756d145e3eeeb48447443fe1f8f7f6ec7281ed0b512865d7262ca538663"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/JwtFilter.java",
+    "sha256": "fb7554fbff7ee2059236f00b7f9aa67512eb794f33a116c96e797e86e5d7053d"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/JwtService.java",
+    "sha256": "9db2e5421ecb1642484c2a483db0356aed0edf4aa406af649ea5f085cd71e914"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/SessionClaims.java",
+    "sha256": "f64f2871afa98f0b22ac87a9e5968822cdb7b5bd27d3f54420a34c3bf60d7758"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/SessionStoreUnavailableException.java",
+    "sha256": "9a5c61c6c5cf6cff760e937ce9db2a9695a099684b841e2c55f0dce1d8e3fdaa"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/security/TokenRevocationService.java",
+    "sha256": "e5174599973e86ea78beaf347f6286d8a77a13f4e188531a2062f4a9e3d55ac3"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/validation/InputValidation.java",
+    "sha256": "5ea68ec590e12909897a5f5decef493631c78f58d2b9527751b52d0e5ba9ca02"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/java/com/example/bookingservice/validation/ValidationAdvice.java",
+    "sha256": "8e1565fad78b5711855ef75867badfac11f3512fa495ae2c5f6f1dca5aa28bde"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/booking.proto",
+    "sha256": "d9603cdbd85300edf7e6bee0a077fbf0d8d7001d215b8d5f3f4b555dcfaddacf"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/proto/payment.proto",
+    "sha256": "d6520d3b9d178a4be9a75e043c7171a78d0fb2404d73997b4aa9c6e97e809459"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V2__Add_Hold_Id.sql",
+    "sha256": "e88aaf84998df5452de3d188df3071165c3e95a5c6320c5e72cb67e63e9eb002"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/db/migration/V3__Cancellation_Policy_And_Refund_Requests.sql",
+    "sha256": "7d672b2234cbbcf2ba7cca4a8109574ce22dffaa5b47d5adac384d81c36ac5e0"
+  },
+  {
+    "path": "checkinn/booking-service/src/main/resources/schema.sql",
+    "sha256": "c3ef7c14e25f241a7ffdc8ebec22e6d77bec475e464534d910a97a1e9a574612"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/controller/BookingAuthorizationTest.java",
+    "sha256": "979d039de50a72374503139790d83b88847632f6e0c03420bb984ca868642ca5"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingCreationCompensationTest.java",
+    "sha256": "769d10e215ce91a85d32990c3f9b93306d0e624fdb92fc3a6c6c583df665a24b"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingIdempotencyTest.java",
+    "sha256": "65d9fc3c34ad6fff2e69090e10470c00e9f180fc7b95502853ea1665cb4b718b"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingScheduledTaskTest.java",
+    "sha256": "451d2102173bad48fcd1e08a4faa90bcdb30b3190c74ca7182baa2a89d74ba33"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/BookingServiceTest.java",
+    "sha256": "5f95ec42cc860f45e9f2c79d34ac01722097159f0cdd6d92b811914d823222a3"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/CancellationPolicyTest.java",
+    "sha256": "9a74c39ddae2b12037fc70d0e77a8d4679dafc3b2f771121ff2663cf84dba4d9"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/LoyaltySettlementRecoveryTest.java",
+    "sha256": "e8d334fd30cdbec082ae72b1a8bb192df9efca09abfe2b14030a33b38ecc0b24"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/LoyaltySettlementServiceTest.java",
+    "sha256": "b5233042352fbdd0fe7f7e5ec781d5e42f2787eecb4e4b8f0c64f9993d4f76ea"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/OnsiteEventsTest.java",
+    "sha256": "0c7203c8a3abe94c15e7ac53d026769c3ffb48c64730cd40b78357162f329e09"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/OnsiteReservationRecoveryTest.java",
+    "sha256": "31e0af49c041a24daed8253e58e1cb729aee501776bf2f7dff2cd2f5cc5f18f9"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/OnsiteReservationServiceTest.java",
+    "sha256": "1676025b7930789637adb6073d33fb0530d8a0ead7fbbb846e1cfb6fe0875be6"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/PaidReservationRecoveryTest.java",
+    "sha256": "9f0fffb687b924fbe13f29dd350792319a50075005bf4f881540a136159512ae"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/booking/service/PaidReservationServiceTest.java",
+    "sha256": "e788b2f979d691f51e00c43479a058eb480b07984ad93d6b6e23c5c2f8d137fb"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/grpc/interceptor/UserContextInterceptorTest.java",
+    "sha256": "722dd844da61212954b554838b4a98059776807ca2d9c0535083d08c871ad519"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/grpc/server/GrpcBookingAuthorizationTest.java",
+    "sha256": "9d56871c79932d05d4c00c9dcc255fd409a3b8995fdb7cd6a9aea2599b83fe8c"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java",
+    "sha256": "71c0fb07b15cac5a0b7428733fa376592fc651f3a3d54a648251d338d75a1614"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/integration/loyalty/LoyaltyFeignConfigurationTest.java",
+    "sha256": "ea5bdf37c77a70a09220041d880f997d9f814ce753d5d81653d76655c7e2f510"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/messaging/BookingEventDeliveryTest.java",
+    "sha256": "23d551b9ee8993347f05748778c8b1342cf214a7010e11169731867aedbc1815"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/messaging/BookingEventOutboxIntegrationTest.java",
+    "sha256": "51735ddb0145a8bca177872cf6a15c5ec69bd945e109078640d4cae71354b7c5"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/messaging/BookingPublisherConfigurationTest.java",
+    "sha256": "f153eadaf5432f46a7235674c39d3fdeb9b62a376baf184eaf26d36656e29b10"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/refund/ManualRefundServiceTest.java",
+    "sha256": "69cbdd580ab3e9deb4832d2d23be060ac1ea473830727e2542eb41b71c8cff30"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/refund/RefundRequestServiceTest.java",
+    "sha256": "aa5b8aa4694c62c783588e09421194a6e93c0f4c966bb1e95f8eb20cdd88c11e"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/PaymentServiceTest.java",
+    "sha256": "447c6d45ebc5d76cf2e43f11b2c3183ccdd0a1fe5154974f7392bad7d283e4c6"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/RefundPostgresTest.java",
+    "sha256": "1da381bd66f17c6f08fb956dc535656aa9a130315d53632ce889a82c1b5e2bd6"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/payment/service/SandboxRefundTest.java",
+    "sha256": "80ce56cadf7ac37648b65d02eff7804d4c068c57f2009ec03ae825ea4e22a411"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/security/SessionGenerationTest.java",
+    "sha256": "8a7f91ecf71f584abc91d95cc14080ec5ec23f2841e8c066b9791021f18e8c7c"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/validation/ApiErrorContractTest.java",
+    "sha256": "b4096ca044957a8ff60446207c30116d9b340dadb650e4902cf536dbf123e138"
+  },
+  {
+    "path": "checkinn/booking-service/src/test/java/com/example/bookingservice/validation/BookingValidationControllerTest.java",
+    "sha256": "888eb0fc2495deb1463dcc306839beddc6e22f7d19ed3e1d80403a50231444cd"
+  },
+  {
+    "path": "checkinn/config-server/src/main/java/com/example/configserver/ConfigServerApplication.java",
+    "sha256": "44d7ff2f222d4915e3f61fed3fced34c5a8f49ad5a4bd3386597a7410e593ff7"
+  },
+  {
+    "path": "checkinn/config-server/src/test/java/com/example/configserver/ConfigServerApplicationTests.java",
+    "sha256": "6db98f47db7477bbb428d9b89a30b899c9affdb368ed4cac88f518018bf98e9c"
+  },
+  {
+    "path": "checkinn/docker/TestTransportForward.java",
+    "sha256": "621d37a4da5580303885b081aa47e28c6c802767576ce5af3e0699cec98a4b8f"
+  },
+  {
+    "path": "checkinn/docker/accommodation-migration-test.py",
+    "sha256": "727a9bc7484f2ef31424526b014bbe50903b6eff919e80f542601a2a4f9cdfce"
+  },
+  {
+    "path": "checkinn/docker/accommodation-type-smoke.py",
+    "sha256": "9f19fc287f4cc234d9ef279ab9c8d90bac9e58488e15336bb69c19eb37b3ee07"
+  },
+  {
+    "path": "checkinn/docker/amenity-catalog-smoke.py",
+    "sha256": "37484b1c8f7cdab80ba401272eda7c3eed81e97d0c38e8fbd0ba6a882f4f3618"
+  },
+  {
+    "path": "checkinn/docker/amenity-write-smoke.py",
+    "sha256": "b283f3d17defa450923cb7b712bf454552163622d652ef8e1d39e7c4665c1619"
+  },
+  {
+    "path": "checkinn/docker/api-error-smoke.py",
+    "sha256": "3e623111a371653338e696f9a83901eebdbef335d9d980c954ff3e07a9769e8b"
+  },
+  {
+    "path": "checkinn/docker/auth-session-smoke.py",
+    "sha256": "c409f96ec684c00c74dd5c8f7c6270c601eaf1399bbd37aec7db7ce2eccb9b05"
+  },
+  {
+    "path": "checkinn/docker/auth-validation-smoke.py",
+    "sha256": "3b89065c86e698ef7325f28044870101066207564d01df582e7056bc001bfbc4"
+  },
+  {
+    "path": "checkinn/docker/availability-range-integration.py",
+    "sha256": "f3cd5b6024144116695f62d50962d7de4641b5f56ff9f2c08914da407af3a787"
+  },
+  {
+    "path": "checkinn/docker/booking-events-smoke.py",
+    "sha256": "f2b15baf22f563771be7ee9b11e4f0b75dc580b83edcc30e6ad068e7863ae2fa"
+  },
+  {
+    "path": "checkinn/docker/booking-expiry-smoke.py",
+    "sha256": "2194825b12fca7e379b774ae452652dddd223ea3144595e49934d3c4666d8f39"
+  },
+  {
+    "path": "checkinn/docker/booking-gateway-smoke.py",
+    "sha256": "71bf196a5fc34ffc6d91871269c2c507a2d829dc214738f4484ec500fa64ac0b"
+  },
+  {
+    "path": "checkinn/docker/booking-hold-verification-smoke.py",
+    "sha256": "4fecb965db9ee89d66c90a9fb79e95c90e7b63d53c34c869276a61f7113c4be2"
+  },
+  {
+    "path": "checkinn/docker/booking-idempotency-schema-test.py",
+    "sha256": "1a3ca795dbf72d5e9d0fc2950c88054697dffa36b78f14983a9857440e9ddb54"
+  },
+  {
+    "path": "checkinn/docker/booking-postgres-integration.py",
+    "sha256": "c33e8719aa953cb31961371ed19aabdec52e62ee46bd92a66eb41e9438a67c85"
+  },
+  {
+    "path": "checkinn/docker/booking-security-smoke.py",
+    "sha256": "3cce5a386a1ddc5385d09a05b50d16d17de15404a8d73937b70c3e747ad500db"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-accommodation-bootstrap.sql",
+    "sha256": "fa878f06283cfddfc888be5109be70374b4b45e7f290e4adc1dbc5ef566f9f0f"
+  },
+  {
+    "path": "checkinn/docker/booking-smoke-init.sql",
+    "sha256": "a5800d72309976fc58c9c0e6bb155447f1e50740aee59ac0cc3009baf5810819"
+  },
+  {
+    "path": "checkinn/docker/booking-sql-assertions.py",
+    "sha256": "259fda5e19346123799144ba0b8ba6df99da592bd970d20aa1d0d8faceab4e7f"
+  },
+  {
+    "path": "checkinn/docker/cancellation-workflow-smoke.py",
+    "sha256": "0548ce963a6578229d88e7db3eb1c706b26508eb24e859d47903a2ce91945117"
+  },
+  {
+    "path": "checkinn/docker/canonical-text-smoke.py",
+    "sha256": "f6203a80287e69e9400ed6f6a5ff306acc62956752d629698fd07c1eddf373e3"
+  },
+  {
+    "path": "checkinn/docker/catalog-rpc-smoke.py",
+    "sha256": "eab5c2cf75e65af7617e499ed8b7b23d77547b5fe0e585908c31e278ae46c2b4"
+  },
+  {
+    "path": "checkinn/docker/catalog-security-smoke.py",
+    "sha256": "cf7c4285f60debb175f43079ba32174e37063cae3ca2d7406d2e42f19826c75e"
+  },
+  {
+    "path": "checkinn/docker/clone-test-databases.py",
+    "sha256": "a9c05761ccd722b91551ef44f40c07953fabdcbd0b0437ea8b3a4ccfa653f441"
+  },
+  {
+    "path": "checkinn/docker/hold-concurrency-smoke.py",
+    "sha256": "35eed9b8f2985d939db5c7ec98d70e1fdf7dafd250b37c449f02e2a4c25e1a8a"
+  },
+  {
+    "path": "checkinn/docker/hotel-content-smoke.py",
+    "sha256": "664d1666820a75d4f9b9953886b102a3abfd244997fdffebe6b653749ea60557"
+  },
+  {
+    "path": "checkinn/docker/hotel-publication-smoke.py",
+    "sha256": "02d211f40697ef99f9c036e673a4ddf9de72a651032752663f7ae8c0120efcbb"
+  },
+  {
+    "path": "checkinn/docker/input-validation-smoke.py",
+    "sha256": "ac21bc270b993a93b01098f88518d3c714d3b5ade275786f3763dc4f4c1377b0"
+  },
+  {
+    "path": "checkinn/docker/integration-smoke.py",
+    "sha256": "e57f508881122b0237793a415bac14e3f39653eabd43ad385773738d321721eb"
+  },
+  {
+    "path": "checkinn/docker/inventory-counter-safety-smoke.py",
+    "sha256": "6a4e797b1dd2c88340b9b6110afc6f86bd106d7b43f5243439c5c3fd7f206883"
+  },
+  {
+    "path": "checkinn/docker/inventory-smoke.py",
+    "sha256": "f592ea0ea47d736be5a1015089119f90e24d7363f77f1cb7ede2b745229014d8"
+  },
+  {
+    "path": "checkinn/docker/location-search-smoke.py",
+    "sha256": "f75344d72d38f908c78fc700d34183c40b3fa3a47517cebc8d1500fcf1114bf5"
+  },
+  {
+    "path": "checkinn/docker/loyalty-ledger-audit.py",
+    "sha256": "09932e01dce6e5d17c1c2a0bdd68913c4f5037105c6c068f1888a64a5c6db6c2"
+  },
+  {
+    "path": "checkinn/docker/loyalty-ledger-smoke.py",
+    "sha256": "e6b80fdce7019e09db577b3c0a5d917759f03cb17ddd98390c9ae56fc02b3567"
+  },
+  {
+    "path": "checkinn/docker/loyalty-preview-smoke.py",
+    "sha256": "f8f29a4ed52996318a8f47d2db408016f624df9b5fd604d76397ac197d2a18b4"
+  },
+  {
+    "path": "checkinn/docker/manual-refund-migration-test.py",
+    "sha256": "39bc2d83cd2102757671f05d08d62962d313d948fc0c09966dd7fce34d356485"
+  },
+  {
+    "path": "checkinn/docker/media-metadata-smoke.py",
+    "sha256": "6e0dc1a0829023f6c7d1dcfa0efe44017dcc68fb726e04e16fc028e94bf33749"
+  },
+  {
+    "path": "checkinn/docker/notification-delivery-smoke.py",
+    "sha256": "afe22c994f62c294334b29d4e22e8aaa312d86f34cb24ede5b09cf78eee1daa2"
+  },
+  {
+    "path": "checkinn/docker/onsite-reservation-smoke.py",
+    "sha256": "29c0f0783bd15be9d3709d9d59f8449a4fa365498e3d82c65b575c6038f68ebb"
+  },
+  {
+    "path": "checkinn/docker/p0-boundary-smoke.py",
+    "sha256": "11df05ddb1de71d35e01218ed0e3952acc3b87f7938149d5516be1917611c60a"
+  },
+  {
+    "path": "checkinn/docker/paid-reservation-smoke.py",
+    "sha256": "69d5d4298c107b2a574b750c5b388d2a90762f7f1bde672d12e080f8516ee84e"
+  },
+  {
+    "path": "checkinn/docker/points-reservation-smoke.py",
+    "sha256": "d3f72634d45eb5c075c7439e0f7e7edf81e71a5a3d6f01f53a4e354b11551b1d"
+  },
+  {
+    "path": "checkinn/docker/publication-completion-smoke.py",
+    "sha256": "a6bcfa987559b4db4406bb2ea6b555ea87d3673eb1e5e9453c25672ee3e95386"
+  },
+  {
+    "path": "checkinn/docker/refund-acceptance-smoke.py",
+    "sha256": "8e8b0d975a181676f41e566b8650e063e0b2a11e8d0f2df78968dd17fe2ba205"
+  },
+  {
+    "path": "checkinn/docker/refund-disabled-acceptance.py",
+    "sha256": "b6c5af367b77b4588cec07babde33e62a2b1c7522ad0dcb574e071cb0ceff5b0"
+  },
+  {
+    "path": "checkinn/docker/refund-disabled-smoke.py",
+    "sha256": "eef5788c8ceafda3c0bee2b48b0dc623ae05a967ce71c3737df76d6392184a87"
+  },
+  {
+    "path": "checkinn/docker/refund-final-smoke.py",
+    "sha256": "6986ccee41bde79aa4e3a60b8801c133f89b4780f5f506357467b4906f437abc"
+  },
+  {
+    "path": "checkinn/docker/refund-gateway-smoke.py",
+    "sha256": "619946da904944b5f20e9d90be520799715c8e308b1ad0ad2b1c632871f96e94"
+  },
+  {
+    "path": "checkinn/docker/refund-integration.py",
+    "sha256": "d78ea328ccb0f5e9de9a6038990e93fb029cf1e8f55f7e49d539420bf6a518bd"
+  },
+  {
+    "path": "checkinn/docker/refund-lifecycle-smoke.py",
+    "sha256": "a8a6af13806a7b04979c518e3a79cb603e6a43b5d417cae646651726c5a6929d"
+  },
+  {
+    "path": "checkinn/docker/refund-prerequisites-migration-test.py",
+    "sha256": "7cc6c998a18cced7a614c6c00a4e7296591b3341b787748d9f0e92fa5a73a5d3"
+  },
+  {
+    "path": "checkinn/docker/refund-smoke-init.sql",
+    "sha256": "f381447f13886a70d379815b719f0cf5f65c52602f6ca3100325bf36c31c3009"
+  },
+  {
+    "path": "checkinn/docker/regulation-consistency-smoke.py",
+    "sha256": "a287aaff905162538b84255b3c70d05a91dfd314bc899e7dc7262346afc94695"
+  },
+  {
+    "path": "checkinn/docker/regulation-session-smoke.py",
+    "sha256": "b9d70328ea8cce2021930a35c0a4eb3681c602a32f578484da420a07578f93d0"
+  },
+  {
+    "path": "checkinn/docker/reset-session-smoke.py",
+    "sha256": "983d8af6fc530e772febf7397ce7f88b11fac2c946b3b8ecf25075fa4e6dfce5"
+  },
+  {
+    "path": "checkinn/docker/revenue-broker-smoke.py",
+    "sha256": "e6c1b0185187641e127540812c262e15187d2f199de469546d581e3493ab9832"
+  },
+  {
+    "path": "checkinn/docker/revenue-history-gap-smoke.py",
+    "sha256": "63f6f39861e5a7f67dd0735a4d54877154cac96158508ff664d29302965061ca"
+  },
+  {
+    "path": "checkinn/docker/review-consistency-smoke.py",
+    "sha256": "23dd85d44c51a8c57e5e143f7880456d5b0b31d9293bcc402301f7bb65e37944"
+  },
+  {
+    "path": "checkinn/docker/review-eligibility-smoke.py",
+    "sha256": "f689be081e440e1b14a2001054773c097d499610ed5820b2bdd0fb4e43403f41"
+  },
+  {
+    "path": "checkinn/docker/review-response-smoke.py",
+    "sha256": "8ed30ffb8bc4470a0e84a1fe93339d5f0f1a35a0e3206529a01f8761c70b4107"
+  },
+  {
+    "path": "checkinn/docker/review-security-smoke.py",
+    "sha256": "f5bb99c3027147cf54d22464c16f8f38ae621e9772bb2e1cb3a35e088fc9572a"
+  },
+  {
+    "path": "checkinn/docker/review-summary-smoke.py",
+    "sha256": "9f4d321f1358360a73d53e336f35f1145f7f34c0772d3e255ffa67eb714afb45"
+  },
+  {
+    "path": "checkinn/docker/room-description-smoke.py",
+    "sha256": "cff5b894a5246061c801572ccd6bdef1f0858749bd41a9e312ad5f8b470b19a6"
+  },
+  {
+    "path": "checkinn/docker/room-inventory-review-smoke.py",
+    "sha256": "da08363ba925f1e8b36e8d08277a30d4a95883bb649925a9c9bf45925a08c7fa"
+  },
+  {
+    "path": "checkinn/docker/room-mutation-concurrency-smoke.py",
+    "sha256": "4a024b875f4dae8ce111b6f401f8ca4e248716b3d54f44b2db8bb4871827cd54"
+  },
+  {
+    "path": "checkinn/docker/sandbox-refund-migration-test.py",
+    "sha256": "02ca2dabadcd22817df471fbb26a4312ebd75d9dae4a1381380ad39314f25c3e"
+  },
+  {
+    "path": "checkinn/docker/schema-compatibility-probes.py",
+    "sha256": "40c6e7fbb07bb5086d6c83631d27ff524a75e54457b314308b06938aec53a69d"
+  },
+  {
+    "path": "checkinn/docker/schema-financial-probes.py",
+    "sha256": "bb9df8a2c0ce33ed8ca37e07694255b742fe46b90d2616649d53fa618d85627d"
+  },
+  {
+    "path": "checkinn/docker/schema-migration-only.py",
+    "sha256": "2fb4089522fb51abfe22c9bbe2b58d7c61791a99a49623652eed31c4bfa151cc"
+  },
+  {
+    "path": "checkinn/docker/schema-smoke.py",
+    "sha256": "2af63d58ce605cb7fc677507ce32234c6e6729727357cbd27ab6d41fa6f33b0f"
+  },
+  {
+    "path": "checkinn/docker/schema-source-inventory.py",
+    "sha256": "a2b067b797437fd0e8090445022a535488d521fbc1473784ce9d1ea444641321"
+  },
+  {
+    "path": "checkinn/docker/schema-startup-recheck.py",
+    "sha256": "f4158329dda89064a6bf2d011e30cf3460c082dd414db4ac024bf699d22ff437"
+  },
+  {
+    "path": "checkinn/docker/schema-testonly-bootstrap.py",
+    "sha256": "fbdadcc6461b2290f27ca3069ab6b9a1b4ab9ade76107377e82cc3205271ef51"
+  },
+  {
+    "path": "checkinn/docker/search-offers-smoke.py",
+    "sha256": "87226be0b601be06a2dd9ddb1c0ddc8531a75585251fe04d20f571d49f39edb3"
+  },
+  {
+    "path": "checkinn/docker/search-pagination-smoke.py",
+    "sha256": "3dacd3bcc8486e67cc639899dc680aec891ae1d668309f826821526ce3fbe2ce"
+  },
+  {
+    "path": "checkinn/docker/search-read-baseline.py",
+    "sha256": "9be3dcd85dea0a01503dd2d5d423277152f0f84d9f8567f34fec3c9ad77b7235"
+  },
+  {
+    "path": "checkinn/docker/session-store-integration.py",
+    "sha256": "4086e33169f42fa2eece508dd5c7aea4b9fa9d5ff9047d7e71122eff84500a5e"
+  },
+  {
+    "path": "checkinn/docker/sql/amenity-catalog-v1-20261106.sql",
+    "sha256": "b6eb9267205ffa3835fd914c18addcc47a26dfa865947a7a4f89c4395a0e848f"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-event-outbox-v1-20261107.sql",
+    "sha256": "299c0cac1b1eef2f68fe1a888a3eeda69028df33902baa08a102bcf9203cc068"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-idempotency-20261105.sql",
+    "sha256": "f3b457d1de32cf0fe67c436c63cc1f4c22661863b1b9deee1e0d9cb8860e113c"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-transaction-time-v1-20261107.sql",
+    "sha256": "8f6ba20b87599aa17f6f8e139f54f9989d4eef7abf0c3a74514fb17822ceef7f"
+  },
+  {
+    "path": "checkinn/docker/sql/booking-vnpay-create-date-v1-20261112.sql",
+    "sha256": "418f5fc93a14102612fda9e105b35a8617d29a9984e88862ef1b31200cb3f207"
+  },
+  {
+    "path": "checkinn/docker/sql/hold-idempotency-20261105.sql",
+    "sha256": "1e8a548e5b9a8ea7bcf1be217bd7dbd9396b5caac2473ebe35a346563e4443e2"
+  },
+  {
+    "path": "checkinn/docker/sql/hotel-accommodation-type-20261104.sql",
+    "sha256": "b3ea1f2deca55aea634982e33382be118fee56804b968c3d65c24db6ac653b86"
+  },
+  {
+    "path": "checkinn/docker/sql/hotel-draft-approval-upgrade.sql",
+    "sha256": "379bec9ea3e24564da0478ba7c00050f1a2025684583039aa02bc7143582f72c"
+  },
+  {
+    "path": "checkinn/docker/sql/inventory-review-audit-20261106.sql",
+    "sha256": "0ffe04ae7aa2bbe4bf11e375bb98e819964eea3e652b4df70d9168ac2f608310"
+  },
+  {
+    "path": "checkinn/docker/sql/loyalty-settlement-upgrade.sql",
+    "sha256": "efdb8221aaf010fd0b41f68c4e1cdffd83cfcc9332a5997300656e4266d06330"
+  },
+  {
+    "path": "checkinn/docker/sql/manual-refund-v1-20261112.sql",
+    "sha256": "c2ef7c12a49a9315694560ab16db962fc0c3f8a3114e517afaadcf18b45d4202"
+  },
+  {
+    "path": "checkinn/docker/sql/onsite-reservation-v1-20261105.sql",
+    "sha256": "2c400b26c2c5ea76e1ce00900adf5b96a68b419d80dcf9b6b2c98a7e094f34f8"
+  },
+  {
+    "path": "checkinn/docker/sql/paid-reservation-v1-20261105.sql",
+    "sha256": "c8b7e59ddf50cccb29352c209e55278e5d3322a683dd43b010b8ad204642eb74"
+  },
+  {
+    "path": "checkinn/docker/sql/regulation-event-outbox-v1-20261107.sql",
+    "sha256": "8470fab80939c7ecb0977b9b729c70a2a978e5b46c72d81de7dc34f7c183ba8c"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-cash-transactions-v1-20261107.sql",
+    "sha256": "60d4089ec9140988cb4e4c3b3370ad658085ca91446fd5d7f2c3e6e5f0684aab"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-event-receipts-v1-20261107.sql",
+    "sha256": "8ab722341c9c6fa65021fd48473ebc5713294f4790fceb18fed56df3eacb74da"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-history-gaps-v1-20261107.sql",
+    "sha256": "06eb805995a143244f8f1b56e3ea39e96b4984fc4d305812cc5d3b0d4e21787e"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-sandbox-refund-v1-20261112.sql",
+    "sha256": "a6492c33b114cce6c60bdb2e3a77d5f8e137a334b4f1352973c7eaed9e00a458"
+  },
+  {
+    "path": "checkinn/docker/sql/revenue-source-versions-v1-20261107.sql",
+    "sha256": "40757c0e49a2f53258cbb68e72eea86fd299048201609687c1f70a72a3734dcc"
+  },
+  {
+    "path": "checkinn/docker/sql/review-response-integrity-20261109.sql",
+    "sha256": "46b177ad3b3b38548541caa478bc611b2f89d5078d40adea7fdde04667142afc"
+  },
+  {
+    "path": "checkinn/docker/sql/room-description-20261105.sql",
+    "sha256": "e9b7766de5c168e5244b7823d412a530a1d00e99d0775ca0659d89fd34aa3d36"
+  },
+  {
+    "path": "checkinn/docker/sql/room-inventory-review-v1-20261107.sql",
+    "sha256": "03f28dc2d46df60d5f4d58071cda90a5583cb964106d7dcabf218edbb130b47d"
+  },
+  {
+    "path": "checkinn/docker/sql/sandbox-internal-refund-v1-20261112.sql",
+    "sha256": "d6b6ce8b5c8bb54b588b4ca4fa868b8597186e70d5902ed8c167e0522c25e2ea"
+  },
+  {
+    "path": "checkinn/docker/unknown-room-facts-smoke.py",
+    "sha256": "26008e6265468a589d693f747282da4c3d1b899bd0b83569daf045f4ecff4a52"
+  },
+  {
+    "path": "checkinn/docker/user-otp-boundary-smoke.py",
+    "sha256": "0d442de3fc95bb446fc2051d32666c4a72dfb97591acc740f29da477815b2d2e"
+  },
+  {
+    "path": "checkinn/docker/user-rpc-security-smoke.py",
+    "sha256": "26b77fdb355e28bf359b1eb4522da8f5788632ad7b58c2f825e9b6b742467d4f"
+  },
+  {
+    "path": "checkinn/eureka-server/src/main/java/com/example/eurekaserver/EurekaServerApplication.java",
+    "sha256": "e0a0f9a44f13a7d60fe786fbb9ff5b3146bffe7125b53eb1adc5ceab29ea5896"
+  },
+  {
+    "path": "checkinn/eureka-server/src/test/java/com/example/eurekaserver/EurekaServerApplicationTests.java",
+    "sha256": "090b9fbd5864df2a7b22a48fa1ba2af3dc47618d184e69056adf81106f5b2b5b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/controller/AmenityCatalogController.java",
+    "sha256": "acc2329d7ce4c78f4c19f9747b2d78abe44356f31544c1033e147f14851dd6ae"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/controller/AmenityController.java",
+    "sha256": "c9034f3215a78bda0d41587aac2cb734bb0f483d266a06ac7234f67d471c532a"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityItemRequest.java",
+    "sha256": "2779b4b7a3d92561db454c2fe1dc02cc4601df65451fb8f5cb0ec75aa0c7c92d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityRequest.java",
+    "sha256": "35e852789c1c60a12059edebe537f1e5c61dbb2ba9b0f63749ee8f8e15686e1d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/request/AmenityUpdateRequest.java",
+    "sha256": "c164f7b757e86224c5eade90a8f8b0018993c0fd88c277921c63d5d09ba4407f"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/AmenityItemResponse.java",
+    "sha256": "606cc3909bd1816de2efa0663dc41b9da4454b1e4a1f806063475c4380315ee6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/AmenityResponse.java",
+    "sha256": "1c758007f06cbde124f10e1dab60002060c2bfc41bcc2920235c5468968954d1"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/dto/response/CategoryResponse.java",
+    "sha256": "32c28bad0bdd5384152bc6cd7f43462db47fb6cd8556bce1bea6101c5bce8bbd"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/CategoryType.java",
+    "sha256": "fb2051447860e2000e3a788e984846486a44144ea741d3851d720795962a1e74"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenity.java",
+    "sha256": "b1a1992b86071be3c9f0ac6251c8cfc6ac24dc9850c264bb738d407b14469c79"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/entity/HotelAmenityCategory.java",
+    "sha256": "26b2ae3d794abdd838d9f1294a4ca2b09f8ea7761d3dcbb311ac65fd8db32d8e"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/CategoryTypeRepository.java",
+    "sha256": "869d723134fd3d905be631bfe47c8caefb142bbce274bb4fe05830fe3298f9d9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityCategoryRepository.java",
+    "sha256": "51baa1b155c3a5e0a33a19256bbab6799a3b59e15f063642dcbc50b8464e31f4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityRepository.java",
+    "sha256": "a80f47ba2fb81e7c9d5689bd61f7b9b04be10f39d50ea452ae9d128adeb80617"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCatalogService.java",
+    "sha256": "05ce6d9eee77856bf607ebb8eb0b33e94bfce40fc201239209ef8c99d6d91dee"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCategoryService.java",
+    "sha256": "40d0d2d1f0243a4c69f91cfbdc6120cf69a3de71147d6be6129176d905d189fc"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/controller/CityController.java",
+    "sha256": "7ed15cb83270df554b99899a377be828ff17aa3fd156ada3ac7c44e74a1b4eb5"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/dto/request/CityCreateRequest.java",
+    "sha256": "379f4b6a264a7051c571a0fb2c4ffa4447a112433335c4d8247a34006a049b3a"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/dto/request/ProvinceCreateRequest.java",
+    "sha256": "57bb1625a27e06717035d6b59dc1f0713f8df8f952c2136a37f4a06390e614ab"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/dto/response/CityResponse.java",
+    "sha256": "645da76001fa9e41ab44ca3ca74b5305e7098e278afc165b7559ac2931b3d645"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/dto/response/LocationResponse.java",
+    "sha256": "0a379fe9f8e720b4cc17c944f916d6b53306351735b565a25e3f3057d52c25da"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/dto/response/ProvinceResponse.java",
+    "sha256": "4495e8691a90828dbf234d08d9d34fae8d20fe9fc8b85559a0c6839cba533b93"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/entity/City.java",
+    "sha256": "13b0bc5eda83c899127785da3e2c28f4db4485e8daf765407378520771bae3c4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/entity/Province.java",
+    "sha256": "beaf1ab3bd51302b9d52803ca8461bb3ea753985b90b54e62eeee7799d1ccbb6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/enums/CityType.java",
+    "sha256": "50c1935ec4b61c34d23b0564d640c2d7e4e46ae8378ed5d10b5b0b38b3b129d6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/mapper/CityMapper.java",
+    "sha256": "68c8c86fac7f2b11ae8097e1bddab6647732c05b6d281c0617ae4d064ff7421d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/mapper/ProvinceMapper.java",
+    "sha256": "4cc016408d56a96ab2eb4c37bdcbb57e6fbe3d18f314a220955a2c86a2a996a6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/repository/CityRepository.java",
+    "sha256": "49f8ccce4cfec6fa9565cbebd7f0736886b81687aee6b51a1ba1fd06cf5f7c48"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/repository/ProvinceRepository.java",
+    "sha256": "fe53a0253daacfd584f15e2adb5b166d51dba58660324e764f12583525e561a0"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/service/CityService.java",
+    "sha256": "21d41d2f3d997a6b8767924ef4baf1fe530f32e76c3c2c12c46e57d0bb110ff4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/service/CityServiceImpl.java",
+    "sha256": "edd2c7ac7d9b424f1fee945458ac5039a71bbf33ef9b68af57cc617656b84f70"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/City/service/LocationService.java",
+    "sha256": "434681c6ab561ac92653919bb1928273698cb6ad3ed3e78b045d5090fc3e131e"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/AccommodationTypeController.java",
+    "sha256": "604bcac507f855762fa842737a097305bc93a411aa272e9c2afca3e2ddfdffd1"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelContentFailureHandler.java",
+    "sha256": "bfacb86fc39fa37210df7fed02fd6b936d5fa900becaeae8e559c85cff9bfac1"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelController.java",
+    "sha256": "facbaa7c8f0d47285e2717fcf110ab6b769a13797ef492811842fb4b0e45e599"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOfferController.java",
+    "sha256": "61a31d205da4cc712910df48a06eeb5860af3d2eb411a8e522ba4e7902373ebc"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOwnershipController.java",
+    "sha256": "1e65067a715cc60f39de5a0a10bec8099495b713ef927a939b80e14bc804b564"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelReportContextController.java",
+    "sha256": "74489f0a5c4c3b013cfae0b73d2e790fa15719af4231a3e2dcf27d09eae4a407"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelAddressDto.java",
+    "sha256": "35a33db673eda17c4efe1f2d1a62ed95a159e12236e35eaa1f22a4b6f9a3f8ad"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelApproveRequest.java",
+    "sha256": "148d5f520d3a0b4f08a9019266e3167fc6bc92ba31231a1a77e7705430fa623b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelCreateRequest.java",
+    "sha256": "37f7907efd184f8b0734ea0c94ec140169607852429843bd00ec6dd7a8cd69ed"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelOfferCriteria.java",
+    "sha256": "d1db7d2501065093cbaf53d6561d4898037cd7bec1cb78e77a7d2c1645e08c79"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelOfferPageCriteria.java",
+    "sha256": "8a3256e63c6c6bada6d73c9e2317de5e9941c8da57a28df8d48ee5801ead0e4c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelUpdateRequest.java",
+    "sha256": "443d657716a92e63394326db78f25f52de74c38889f7aa13d53b2a7423a6f097"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelLegalInfoResponse.java",
+    "sha256": "78a2b31714c2a280ccd8463e9e9c342f7ae858328307959bc39b48f539d00b04"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelListItemResponse.java",
+    "sha256": "94153e40da74b2aeeae32057fb24935e506ded525ecdf1210645b38c607b0d58"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelOfferPageResponse.java",
+    "sha256": "aa3b7afcf47ca80449b63cead875f7a2709f46bd2754c9d64783e196c529e8a3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelOfferResponse.java",
+    "sha256": "885eae70b5e8ff8b356a01b4f60ba05dbabf2ec050ba650321d59b6fd9642d03"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelResponse.java",
+    "sha256": "6035c0c6905e0f5d4d8019d7e6fc129d3b90f52648a8e4ef4303030b5e6955df"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/HotelVerificationDocumentsResponse.java",
+    "sha256": "6eec40e490398d507fca77f93a42f151f9db234c55d59974562db14dae47c379"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/MyHotelShortResponse.java",
+    "sha256": "f27eaf592a2f1ebe7720664a2111344a53fb7c610e4c487266e9c44d17d117b2"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/OwnerResponse.java",
+    "sha256": "794b75fbe91c15ec1fd713a0af267fcfc8ec6a4ed0a2c331076386e2715d2098"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/PendingHotelDetailResponse.java",
+    "sha256": "1c8b631eb1ff321945d4652c4158bce81aba01933452863723dd5101a0559873"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/response/PendingHotelResponse.java",
+    "sha256": "53bd6c4143159e1476ef4ecca746c35413d40646ab708bb08015ec1d8925c425"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/AccommodationTypeChange.java",
+    "sha256": "6b0ed6797afbe39e4d9319c9900ff5f0f6ece8ce80058d81d5e811e5c31b72f4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java",
+    "sha256": "b8f6b2f83a3ac91a98b69b1dc763da4b89c0b43cc3d344a3f9bddd3f836d97ea"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/AccommodationChangeStatus.java",
+    "sha256": "17bed7a66e2dcb1afff0f9ff24c4e0cb21f15ed2e03834cca8ac4e74ae60e4d4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/AccommodationType.java",
+    "sha256": "0dc3542d3fb94d0f81c33846668c4195c9ed964b51b71fc91cbff654c0a67602"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/enums/HotelApprovalStatus.java",
+    "sha256": "a3577b9a58c2245d8692285c35860b922edd64a410b614acced382cb60d17604"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java",
+    "sha256": "1d7fe8a5c45d1179c67fbc6861e700d36f0b92e8cac8d212cc78c5aa31ddcf1f"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/AccommodationTypeChangeRepository.java",
+    "sha256": "def88af42acd7d6fb40dfe6d7da2df748998407c74ee749000ec438863805561"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/repository/HotelRepository.java",
+    "sha256": "bb21a7cca3670c097b71b666433ba235068132b36c565d720d06d3c221b3d681"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/AccommodationTypeService.java",
+    "sha256": "109925a6350968c68abcb2bed2df4ae94c47ab3d7697a784aa74b3a662367780"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferCandidates.java",
+    "sha256": "14b007d25a4609ffcac57b77a9967a98b6ad3dbd98023aa856668b833626849d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferPaging.java",
+    "sha256": "970bf9b6b88f59628e4537b2b2e5ec927f2ec01f11b108fd8a0d087d42cf7917"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java",
+    "sha256": "d489f6886400ada163b345c8c9db2d5e123024d9889ccf2b9a83d434121a3308"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelService.java",
+    "sha256": "ddda0985f61845582d625ce33d4945db37ae1423afa3a92fd2e548ee11d70110"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelServiceImpl.java",
+    "sha256": "5d0707e7092bbbb462f2913c6b8139078a056851580f6f2fc247e9c8b00741c2"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/UserGrpcClient.java",
+    "sha256": "74a501d3ba6ecf6d9b8ab7e87c3d58aa25aca8c9a4962e38c9ba9ef4852ce5fe"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/HotelServiceApplication.java",
+    "sha256": "10f673af56664af6fc52b66b675c8fafaa2bed9a7591026dd8cff42f6d665770"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/controller/MediaAssetController.java",
+    "sha256": "9fdf083d3135d3553fb61a6361591dcff29d5e7a04ce0dab6ffdab44b537f896"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/dto/request/MediaUploadRequest.java",
+    "sha256": "acd102d0cd226af7bfd22b82618011203dee4694b6ec00b783adb048a0b83b9f"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/dto/response/MediaAssetResponse.java",
+    "sha256": "3eb0c7b98f7138ac38a79639d1312ef566d6360b7514e002a972d49f351fd176"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/entity/MediaAsset.java",
+    "sha256": "f18c434efd71eb5ae11f39fc8b1beecd1b4eb97e7f7c83c5ac6c3c8894774eda"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/enums/MediaTargetType.java",
+    "sha256": "94a105e7b8237ca7b468e0db9deb92f05df9c72226d2cec40da93bef24df7010"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/mapper/MediaAssetMapper.java",
+    "sha256": "2e0c108808e7c7f7fba892769d4b27481da4b24e48aa6ffb701787eae1cbd8d3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/repository/MediaAssetRepository.java",
+    "sha256": "eaca687708811ee5c51cf0e58a0522697b3eb1c7d068869318b654050a066962"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaClient.java",
+    "sha256": "08b4fdf9adc5fe3a3215350b43dab4a648650e9484127a6c4a47e336d8a40037"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaMutationService.java",
+    "sha256": "8ede31ecdde9052b213bb8094a03fd03663e035ca9296206744ecc4ecfa90efe"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaService.java",
+    "sha256": "a71457306ffcf5e152b55d7bf9f6860b9792d6c1874e03aa03b19c6c912b9cec"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaServiceImpl.java",
+    "sha256": "9910483f2184b573c8a22b65bb85f12574f5f647765a49acbf561d7b76f25e98"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/controller/PolicyController.java",
+    "sha256": "f70b358504d644eed5d65396bcc187c5c47304ac0b38c92046a26d3f50f8d9cf"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/dto/request/PolicyRequest.java",
+    "sha256": "d2dd578790001da7d00f92c28208b9a5be999797b4f1c66732efdd306bc958e6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/dto/response/PolicyCategoryResponse.java",
+    "sha256": "42bc9bb490e4ec847d2b4bdcb0fe81d9956a2df319f4ed25f271aea412f7b135"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/dto/response/PolicyResponse.java",
+    "sha256": "3a938850cda1f8db7c98316ffdfae1110bbaf0590e2e14519f013053b731a284"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/entity/HotelPolicy.java",
+    "sha256": "dc49558b4c09bf460c3e9a1aa51b273d4dddb3f92595eaab2ef4f08695e886b7"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/entity/PolicyCategoryType.java",
+    "sha256": "204701dd95d082269410ac1443a19d4c152333b80b34a8aa8006ed584e6c6932"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+    "sha256": "e003912d656b2c2e9f53b529e0fc20583ee47b99b2f8e5a228a49a866a3d9164"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/repository/PolicyCategoryTypeRepository.java",
+    "sha256": "969c9ee2d0106dc84840881c44ba069936942f0ea93ae4ff9f5d7f0176e3da07"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Policy/service/PolicyCategoryService.java",
+    "sha256": "aaf9ec2654bc68244d32e0332503ea0c12088bf737489cb1c107ccea5132633c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/controller/QuestionController.java",
+    "sha256": "75f70153aa565a67b3d0c3b6b609513daf87e1e170a90a3b1c4c058693f0d5f1"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionDto.java",
+    "sha256": "29378bdb0d30857636da449c870a9702aa9aa63c1da19d50ca013bb2fe1429f9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionRequest.java",
+    "sha256": "d14e7b3dfcf8514518779cff16b9dfae1965a14c898d4964f28fdd927d74b39c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/dto/QuestionResponse.java",
+    "sha256": "042f3bd64c5813ccd828cef4723e2eb01c0d5779782d50780af90312dda8072b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/entity/Question.java",
+    "sha256": "e86daa58b13a2da7afc5b91e90518f3792ec85900d75801c2b599a8475ac9c02"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Question/repository/QuestionRepository.java",
+    "sha256": "49da4b34dfba8123f327fa11be78d1ccf0b1cbf661b7294022ea52d8fe44b38b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewController.java",
+    "sha256": "0b41952220d3aedd203e33c665fc62a3e3aebfc18d367eef3296ba308bdbcf70"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewFailureHandler.java",
+    "sha256": "3bb788646803b4a30e83d267535128e82102a32ebf4c68881a8b63f94971bd57"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/controller/ReviewSummaryController.java",
+    "sha256": "530673343751df1a3af5dea40d2bd57f4fb61f370260070b9a23cf6b567a4c23"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewRequest.java",
+    "sha256": "50174c353a5655b32ccaf9f92c813b9fcd97145910eec2ccb714f2a7f54bd18d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewResponseRequest.java",
+    "sha256": "b553f89a95cee28a8621d32f136035b180335496403e5cba6fdb6c50a81a8dcd"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/UpdateReviewRequest.java",
+    "sha256": "88754d63fab5db2dbb11dd898596013c0f1c4efce7a84cba5517b5398d30f08a"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/HotelReviewResponse.java",
+    "sha256": "91e9832857a2626f59cba4baa74f34c161b8d8eb955ac1e5f174190762aae0cf"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/HotelReviewStatsResponse.java",
+    "sha256": "720e5eb5cf110225aff281e375f5e0cd46f079f2228b87115c9f06de2dc68be9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/ReviewResponseResponse.java",
+    "sha256": "adb7d54ca4a0a58ec794547b34c211b826ada64264c4f969ecb373337b24ee45"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/dto/response/ReviewSummaryResponse.java",
+    "sha256": "078fc91f6a0fc0b8e87a4f78b2888b1521d97710464cea23ec810375505292f0"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/HotelReview.java",
+    "sha256": "114f44419676dad730313757f8e5d35f022617a82fc9bda4c8577bdd85619f35"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewFeedback.java",
+    "sha256": "a0691d087133d33b80b53dfda6453b8743891122a5e61b76b3af3a6efdb85bc3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/entity/ReviewResponse.java",
+    "sha256": "216e3c220fd7b6023fd992ab032fbed827fd34348948cc08f2fcaef9aafef279"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/enums/FeedbackType.java",
+    "sha256": "a2173bf2ef25ce75960a71d4c5c317c03c1eb5365d6763f1eb93d13b3ce170a2"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/enums/ReviewStatus.java",
+    "sha256": "4c3f640733b40b3e6ab4eeb7e062d0628609ee84504f46091d52be29924a6eb8"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/mapper/ReviewMapper.java",
+    "sha256": "066a156f67134134dbc9cbe41f5d79dec79c215dc5778f6b3819c27912d4a153"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/HotelReviewRepository.java",
+    "sha256": "00f8779b4bf3571fff45f86515824d5dc75d7f3d5a058cb3dab8e51f4aee9e7d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewFeedbackRepository.java",
+    "sha256": "12cadefefb1e22b66766c57ecfe9152149109d1b86efe6c9e5f39afe251a10bb"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/repository/ReviewResponseRepository.java",
+    "sha256": "5183e7949aa196ab554c9b2b5ca1e2081040867e037d8a26771c051858315c59"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewConflictException.java",
+    "sha256": "c63383353cad806ed5c1d4e5342e9ab4360f14b4cc90109ae8eb31a4c7f48ea8"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewEligibilityClient.java",
+    "sha256": "0ca8943ec72791dca7454f0c2d57b285c77323904f092e50902205a9c6f08723"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewService.java",
+    "sha256": "8881162c45afd59fb1e91426b0acd2d25c6553f80173aa79b84f658023bd4b29"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewSummaryService.java",
+    "sha256": "2e38e5bead4831ed2281c9e1052f925c4e4b0283fc311397de2827473e2765fd"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java",
+    "sha256": "67b4a27bb442615c80dc4a22fff9076d78dcd968c1af06a97ee1755f349939c9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/AvailabilityCheckResponse.java",
+    "sha256": "e806625244b6dd9cde289c2a82715690aeda2af86385147d3cf7e97a9f1f0f7c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/HoldRequest.java",
+    "sha256": "6eb9d7019a34e8bbf734cc39bd4f81f44a435d8086722644c8aaad183269c1ea"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/dto/HoldResponse.java",
+    "sha256": "198e653a515312ad491512a571861a0c3a971ac620394aa7cdb0b2ef49fdc712"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomAvailability.java",
+    "sha256": "28d0b8a3e0c45f01ad18ea5a7ecae5052435d6ef715df76114d892c1ee6a4b9c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/entity/RoomHold.java",
+    "sha256": "cf2c6e049784dae6178b7abc261130de9e1b9e2baf34feff69d2a99c141e4b46"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/enums/HoldStatus.java",
+    "sha256": "6f5bb761a18910d63d26b86a197839e0419a7b630e790d4d6d285bb27a141911"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomAvailabilityRepository.java",
+    "sha256": "2d9902cd9d2b575373a07efce03d98cb02e60f1a9c67a7f79f1a70258f4fc202"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/repository/RoomHoldRepository.java",
+    "sha256": "92b7665fa0c099f017eb5070fc615c32ffca9f1b0abda00915cf6df5e01e4bf7"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "sha256": "b13d08b8bbb8c3d91a5af35e0be915033b9477c547d963e8561abe6736064c2d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java",
+    "sha256": "88116b0a58bd7ccb010c39c8d975e1672660d035a861f83dd2b0f135f15bdb4c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InsufficientInventoryException.java",
+    "sha256": "49c99e3d26f43a0c593af2250948817f31f2a1706ebebbb60065c69dcf42e6da"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryInconsistentException.java",
+    "sha256": "857c7da9515205a996257a7d9dcc4bf0b15a1c2f21ff89fc028e5465cd29cb63"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryNotConfiguredException.java",
+    "sha256": "e5bb8849f4a09ab8640a19c791454ec0e0daeb487ebdf13170c3d537e06fc4a1"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/controller/RoomInventoryReviewController.java",
+    "sha256": "c822707194ccd0c44c326a603bfb868b66c1b9f38303436c1e11ab9b9153428b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/controller/RoomTypeController.java",
+    "sha256": "5629f54c164b8bfc77ddaf1511a141755f8439732a503c3a1e29dbfae6ebc453"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/CapacityDto.java",
+    "sha256": "e2a03abd08b9aa8e93125dde046270ea91f6fe4ef41d149eb101db78415ceb8b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/RoomTypeCreateRequest.java",
+    "sha256": "69a43ac1d044447dbf687ea42ef6798c09074eeca29dc5f8673ff4c849206ba4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/RoomTypeUpdateRequest.java",
+    "sha256": "1ed17008a2e38c23ca34d210fa9d3d250e7b4b9433a1274f3bc49616a181b755"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/dto/response/RoomTypeListItemResponse.java",
+    "sha256": "add16c920d4bb44946779816bd403cfeafa974e5a26304c3eb52b948e8578073"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/dto/response/RoomTypeResponse.java",
+    "sha256": "4c5019f02a151765fe3e1eac5df99d8d58cb1b541c7040bcda0e9010583855f4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/entity/RoomType.java",
+    "sha256": "27464946742c0922f0a6f72921f6c9dbb5fd60a47ad0aff802a5efa2af5dc775"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/mapper/RoomTypeMapper.java",
+    "sha256": "f109aecca7730c7b770d134a9c5cc88920ef9731790da9399f9092a5eaccfc12"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "sha256": "2b4346165d9a6172b3ddeca71fd87ea0ee5b756a2d1faff0eb1b35fefdccf435"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+    "sha256": "fd95f4916916d35d7f61a33e0761c1dfce0ef2e4679e692c1dd02afa3f7bab36"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeService.java",
+    "sha256": "fb2d247cda2bdaa31b94618231eaed31434d3f609e848e6a00bfb2b278fa4fb6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+    "sha256": "a341b3fd2a7c0eeea73e92d57e9265ba407db7ea0cc491ddfdad2eb709d5f424"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/api/ApiErrorBodyAdvice.java",
+    "sha256": "7c81882afa781313c6138c05626cd016e456cbe04b9863c2d8331f8c7cc893e2"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/api/ApiErrorSupport.java",
+    "sha256": "38636c16ff4a4a468f061ed8f6f5a438c36ce7e35b02e2ab5b1a74d85ee600e8"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/config/AccommodationSchemaGuard.java",
+    "sha256": "94d8faddc13dc07c00477665b92ff05b5ec1f9b9bd6692caedc111a511f65569"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/config/AmenitySchemaGuard.java",
+    "sha256": "b61f13ce4de6d2d9c22190e57430d30bbd1505fa2b1f75c969fb0214ea1dfeb3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/config/ApiJsonConfig.java",
+    "sha256": "b81f307607b462eab79894ecbc82c6c2309e7f0a2eed29be06079aab42eb3caa"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/config/HoldExpiryProperties.java",
+    "sha256": "e36ec2b106d1835d82ebf2e7bdb1cb4b5618a72140150fbcb65243047a30eff4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/config/SecurityConfig.java",
+    "sha256": "59d9051d2f8a6c9d48594c24ba16be882d2f7a45f2bc48cf7b19168d68da04da"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java",
+    "sha256": "6dcdf6fd30acd7a428719605bea6d57d5367e86f0d3df5d7b8db668c94ddb5f3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java",
+    "sha256": "685ecede17d0d17243d3ad1ebd0a49f4573cf56c306c035d1d37e49bb8414247"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/ReviewGrpcServiceImpl.java",
+    "sha256": "da9c1abafc60e779742c544176746d9b074db4cae2612e118331c65c9f93c6d5"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/ReviewRpcPolicy.java",
+    "sha256": "166299c451f0897e67e7230c1d0f4aac4dfebcdb6220723bf5996eb97a57188e"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/interceptor/ReviewAuthenticationInterceptor.java",
+    "sha256": "6222af5bac259a3d6f192967c332a35c268430c6606a5e4f9aa7deaa5ff93b8b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/interceptor/UserContextInterceptor.java",
+    "sha256": "ce2544e4286006e743626eafb5fe24262da9db4ca7bf0b32abd0418630c8b730"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/security/HotelServiceTokenProvider.java",
+    "sha256": "8ebf7854286636833e109cf69c3cd3773710c733d20df5deb6ae1ca36f3c4fad"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/security/JwtMdcFilter.java",
+    "sha256": "30e7c9df3a204de9f06e5f9ea203a287673bbfcc28c95b962f0ebfdbe3360b3d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/security/SessionClaims.java",
+    "sha256": "fd602a683ed821a52529579e6ac1deb7223acf84b4446cc32cbd8039b6ea7e15"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/security/SessionStoreUnavailableException.java",
+    "sha256": "36979f0ffd6c0345de71a7ec20c1bf8327d3db77e159681d7e6ea611cee7658b"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/security/TokenRevocationService.java",
+    "sha256": "cf8feda05cfd4bc311621476b0785f2f448394c524b190f012492cd7351f82ac"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/java/com/example/hotelservice/validation/InputValidation.java",
+    "sha256": "3d9b50e14d4e3d16576a8e4248c93d1461aca9d9c3b01091f04fe7ad154318f6"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/booking.proto",
+    "sha256": "822036ac253a5202e83c2c909b99e2d3604cf4636ec75ae9a87f44517dc5cf73"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/hotel.proto",
+    "sha256": "119e8be95d2fb3435151eb32ff0c5fc6ac512beaa7459c96041d342f20c78ae4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/media.proto",
+    "sha256": "662bab1d2256b9ff0e93ab8ae20e857f3ee008fa7d3d45f9f816d504afbfe58c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/review.proto",
+    "sha256": "a7a1e57ab2b439edc30240bb614c5efaa7f9f8d3bcf4e2255b545b9b1349f972"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/proto/user.proto",
+    "sha256": "9f3fe509b605763d5e27b4a11076bde8c6deec8f5193224877ba9815b998a976"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V1__Create_City_Table.sql",
+    "sha256": "6d7ce3c58b245c7490305fa6df337aa656dbcdef74505e941621677a943ee999"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V2__City_Add_Type_Parent_HotelCount.sql",
+    "sha256": "8bdd89690706e2d10363e49746a04ef13ea01d53553e4ea6dd7c57b2a2186509"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V3__Refactor_To_Provinces_And_Cities.sql",
+    "sha256": "ca05cd4f27f5b16a4b5357c323d45c52ce7e4036639dd4c792dc2101d376857d"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V4__Room_Availability.sql",
+    "sha256": "c94a51fc7bb84ecc9926bbebfa621210696eb60bbddcf6605e3782a0000c8490"
+  },
+  {
+    "path": "checkinn/hotel-service/src/main/resources/db/migration/V5__Add_Hold_Expiry.sql",
+    "sha256": "0b12e826abd69b967296c4f0b46f1ab7887f0d72600d44f193d55ed42d0dae82"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Amenity/service/AmenityCatalogQueryIntegrationTest.java",
+    "sha256": "65b8d2ee2fcc4c47a14509b8cd43ff02f3d271cf18d31f5de4c0c9f31a1f06da"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Amenity/service/AmenityCatalogServiceTest.java",
+    "sha256": "dda538875ad605323a34a6e6c5c4fb642e27fe9dea7dd9440ecca90b41023837"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/City/service/LocationSearchIntegrationTest.java",
+    "sha256": "bf01f36ee8a6d076262e09a755878b7286622fa41f9765dca076eb6b4f7f8fc3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelMapperFactsTest.java",
+    "sha256": "58118c88beb419a6b750e208d008fd9403af4af8e0045352ca217cbec0985e59"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelMapperTextTest.java",
+    "sha256": "db5a5c7bc87ec9da15acdea0a007067e168523013ae8bf766bcc84f1cc1cd9d4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelSearchCandidateMapperTest.java",
+    "sha256": "d8ac4f0aa00cac172a7ff0c2b110217be767210675e81bc3eb2b4d3d094b4f59"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/AccommodationTypeServiceTest.java",
+    "sha256": "afc55ea44196979331190230d821a26350357deba6a5524416cc8fe037dd4964"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/AmenityWriteIntegrationTest.java",
+    "sha256": "d1c49def7c273b6a6813a9bd6092830d96c0aaf23816a276eb37fe78023380ed"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelContentIntegrationTest.java",
+    "sha256": "22f11c4f0be1dac4a9296f3781f0059739c210d6f1a225ea20e0108fac25a972"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferCandidatesIntegrationTest.java",
+    "sha256": "5ea6e2cac706f74dee3a32d939fc1407cb9ed62abb51487262bce393492a83df"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferCandidatesTest.java",
+    "sha256": "13d740d105142e862530bf58cc4d36fc2fce7a0e8c942230855678b773b0d0ab"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferControllerTest.java",
+    "sha256": "5ceec31238d6985b687be3b2f5d5d5726ce50d13c6ca504774e84213b6ea0281"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferPagingTest.java",
+    "sha256": "59ad45026ab35a1c920d1fefb8b0fb8e1fe0b3299a58b4d3dd8dcc4bc83ec2fe"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java",
+    "sha256": "fb18781d3514c8b46c2ebd86a417ff0eed8893a89b444e878110312564dd0b52"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelServiceImplTest.java",
+    "sha256": "7efee60ec07e2ad5060fbbd603ed7c19017b87647e25450f7198effb69fb6ea3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/UserGrpcDeadlineTest.java",
+    "sha256": "b01a3fe8e1251122bd104582e612c5d4975143d9deede94b64d71b06749b3d8e"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/HotelServiceApplicationTests.java",
+    "sha256": "9cce1f715f922fc4cbcd461f38b6859c653a614de85cdfbbd23d51fba73c9a56"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewEligibilityClientTest.java",
+    "sha256": "9d0d63a3f65782741ea59825aab561c507b7f69289e97c803986df732638ee5f"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewResponseIntegrationTest.java",
+    "sha256": "1e5f1b16d1b96b38b45f891001bf4f29312edadf1218c7d941ed7614692f3812"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewServiceTest.java",
+    "sha256": "954f4627ce17dff34a76369c12932ad64721f59930b2d816035f5e7015f21bf4"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Review/service/ReviewSummaryServiceTest.java",
+    "sha256": "2ebedf0d7ca47f2bdb69a8ca0fc2d728d6ed17ee499afa20cce9826e99d672ca"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java",
+    "sha256": "b23329b5a854f8fb57803c9ddfbe3c26a9693b375cda074d0095a6dfaa40cabc"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityRangeIntegrationTest.java",
+    "sha256": "71f4f003c739cd2f06e4c50ce394cdbeefbe14b01214a2a5300b0c04e0e7f4b2"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java",
+    "sha256": "434015df244fe257b6776b881f471176b9721ceaf98de096fe3fe5520aa2f458"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilitySnapshotTest.java",
+    "sha256": "6091d21c78114cbe69017d344599829e4a6a4a7be3a455d922a3d8a16cd90d65"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/HoldCleanupSchedulerTest.java",
+    "sha256": "0e2f82235c98a0721e735f88b0ca880bba9be29ee33902f25791f1f61a1bdab9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java",
+    "sha256": "2fda58472a0eda5a033dec4cde609ceb47f224cd293683db54cb378d00e78767"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/mapper/RoomDescriptionTest.java",
+    "sha256": "a38e90b066c7256482feae15800b2ebb3da3773e52451eecacfeefd9401356d0"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java",
+    "sha256": "0746a3c2b4fef80b0c3f495b3f9d3a31d7eeedf8459012cc7d8190e06ccc5bd9"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java",
+    "sha256": "74ece835543ebcd228b6046b75a7cfc1ecee6c25a1711fa2e1f444d98df0d079"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/exception/ApiErrorContractTest.java",
+    "sha256": "c65d5ed0942733cae013069d5713774bcf81f20b41641b292bd9e3330f076a05"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java",
+    "sha256": "b314ea035ad219c16a264c6c9168fb36c3c8c5dd1491c15e60780220241d9c07"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogMediaIntegrationTest.java",
+    "sha256": "d45c723f09d2aeb117f2be9f5c58b9b53681afe3b6c6077ffb313a5d6921939c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogRpcContractTest.java",
+    "sha256": "006f9e0e8c202ee4cc457d0c9b9091fcad9cd14fdb13fc0ef55b4afd98cb6096"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java",
+    "sha256": "d64de25ae16f773c1aa79f8a0fcdaee08f419962260eebcb243a8253eaf72a9e"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/HotelServiceTokenProviderTest.java",
+    "sha256": "395dd20ec736ad45ee9ea737ea6b08d45246dd53288536b0a5b0d5dc428cc0a8"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/JwtMdcFilterTest.java",
+    "sha256": "a484f6d6381211a8b4f0d004908b539f9b74832ab111947a0b43a94649cf36b0"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaAuthorizationTest.java",
+    "sha256": "3dbaa5645c59f0b55f753afde3aed779680eefe0a4d83cd82e89a23886394fa5"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaClientContractTest.java",
+    "sha256": "15f7f86e15ebf8819f1b9ada8deae8bea864322ec34795c8dde9f11eea9d8953"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/MediaMetadataIntegrationTest.java",
+    "sha256": "a57070ac0c0a707ddf78c4d8c69e9c820915847a6dc84d9c2b5d640770c0d20c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewAuthenticationInterceptorTest.java",
+    "sha256": "5fa4fac8427861ad0229cc8a43066910da3afe9257d055460aa688ecb3e71038"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewAuthorizationTest.java",
+    "sha256": "345ae9592c13240533f26c52de12ccd60e6a56898da691c305acbeba3477b180"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewGrpcAuthorizationTest.java",
+    "sha256": "377bd411bbb115a891c906a70b8766d786db7a869be7e8c9f8c5147b75a837bc"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/ReviewRpcBoundaryTest.java",
+    "sha256": "6f1573db6b47d86a859e38f581e55754fae9b3db3836e042a0ced0243368a9c3"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/SessionGenerationTest.java",
+    "sha256": "e2b875ea0315bd148abf3641114e58ed494688f715c76e1280504abd9d9599d0"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/validation/AmenityWriteValidationTest.java",
+    "sha256": "1fa9f1d8e0e18c903e3bcf65007cc5393fb75d5ab7c1a50db75bb6cc474cd88c"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/validation/CatalogValidationTest.java",
+    "sha256": "a4354bcb202afbce7234f196ca007b66701c91fb5c21152a772be243ac057310"
+  },
+  {
+    "path": "checkinn/hotel-service/src/test/java/com/example/hotelservice/validation/HotelContentValidationTest.java",
+    "sha256": "8a2ae2a21c9135c4dedf4a876228b16cad946af670de342503228c0e40daae88"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/MediaServiceApplication.java",
+    "sha256": "75ab8a383de1ae210647a9ce83f54a0216de3ce7dba97075994d0fead24793ac"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/SupabaseStorageService.java",
+    "sha256": "88bcf97eb5c9e0214f2cdb3ec7b4e4c1ea1c9e7a0ca1431d0885ec7f5960d0e5"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/config/SupabaseStorageConfig.java",
+    "sha256": "897a5643b6d7f3364e04d90ff07f53127d5cf2b701525d9c074a9bc3975bff42"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/grpc/MediaGrpcServiceImpl.java",
+    "sha256": "448edb43fc7561faeb23642b0224f139ae7f6cebe58f171e4c8a8184a1b453f2"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/security/MediaAuthenticationInterceptor.java",
+    "sha256": "ca045566513f97dadd01c51a9da1208d2880a54cfa8c394f1a09381bc7c591c9"
+  },
+  {
+    "path": "checkinn/media-service/src/main/java/com/example/mediaservice/security/MediaSecurityConfig.java",
+    "sha256": "2e907545661c96113066aaafa1ffa3c10d8bc5e8bb795e8197c5edb1d9b7b04b"
+  },
+  {
+    "path": "checkinn/media-service/src/main/proto/media.proto",
+    "sha256": "662bab1d2256b9ff0e93ab8ae20e857f3ee008fa7d3d45f9f816d504afbfe58c"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/MediaGrpcFailureTest.java",
+    "sha256": "6ea0280a927b1971d429181343427137852d1e52605520969a529ab062fbda10"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/MediaServiceApplicationTests.java",
+    "sha256": "80cf6d5c97739eaaeaa6f6b5d3b6b49c4ac558c9d529bb3e3f9164d1b22be028"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/StorageBoundaryTest.java",
+    "sha256": "8e630ca70bee4e7826db9bfca675bba775aef5de0650849886569f36d75822d1"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/security/MediaAuthenticationInterceptorTest.java",
+    "sha256": "93c8838da309878d3b865d296a091ccf4a4b77642c1bcf86bf49c283b92219a1"
+  },
+  {
+    "path": "checkinn/media-service/src/test/java/com/example/mediaservice/security/MediaSocketIntegrationTest.java",
+    "sha256": "62d2ca101d263a5dc40a4544e0089a57ddf549e073acde5ebc04a7058d748630"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/NotificationServiceApplication.java",
+    "sha256": "6c75b3a18f435440f86082dd85bcff56d7b4ee4e07c795ab5e37310bea347d3b"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/config/JacksonConfig.java",
+    "sha256": "8e504b12acd33ba8d38145293b64937a44a529b37ba6b2ae31c9f3af71b6c4cd"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/config/RabbitMQConfig.java",
+    "sha256": "c7e7a76c36e7a27b40133a93a6b8642710edbdab8ccfcc36a6c65d2efb391ad6"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/listener/BookingPaymentListener.java",
+    "sha256": "30e24798807b12d2ff6d75313a27534fb1d64e00bbb724f5841b39e3e5ab7e4a"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/listener/OtpEmailListener.java",
+    "sha256": "aa421974cc46c5e3b741385874d8d5b7c16e6f64d0d398ea76dec93a6382851d"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/model/BookingNotificationEvent.java",
+    "sha256": "9642061588acf2cbd3749283cb16a9c697a0b94f1a26128e87351ac8d6be62a0"
+  },
+  {
+    "path": "checkinn/notification-service/src/main/java/com/example/notificationservice/service/EmailNotificationService.java",
+    "sha256": "8cc4f5282bdd5be9d5c8617a73ad6902e598734292136bd91b69199ab1dfa721"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/NotificationServiceApplicationTests.java",
+    "sha256": "173506e7492266b175c632d769efd97d6f6f81f7d7b4961f7dc889e27f75f970"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/NotificationBrokerPrivacyTest.java",
+    "sha256": "2def0c929c5f50eb9510832e6f101cc5012232fef258917c61a01f5fa4b7cef9"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/NotificationDeliveryTest.java",
+    "sha256": "7e611e092921af031cd48ed9ce31b2d833887e80952b013fe6421abf04c74bdf"
+  },
+  {
+    "path": "checkinn/notification-service/src/test/java/com/example/notificationservice/service/PaymentNotificationTest.java",
+    "sha256": "d3a377727efd87329881203b064889e00f0bde706fe42ca4fccee33cc9cd5dae"
+  },
+  {
+    "path": "checkinn/performance/booking-hold-concurrency.k6.js",
+    "sha256": "239d9d4ec85b030baae8b4a2d85e574f92b54a9fc603feafaf4a6e010c1cb93d"
+  },
+  {
+    "path": "checkinn/performance/login-latency.k6.js",
+    "sha256": "a326fe03055ae22b75e57abf73c9d0a2b505a23ea4fc3b923c9bcb2699e77665"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/PlaceServiceApplication.java",
+    "sha256": "a809ba311169455971e9d95b62df5ebd01cd75c920220d033e73d280760f3701"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/controller/PlaceController.java",
+    "sha256": "f88bae5e594d3a249a7ee943f8df0840b1377fb46fc65d681154c5ccc694a55c"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/osrm/Coordinate.java",
+    "sha256": "e384f25becbd8d5cff726632d4a87bbf75731551ef5fc3aba573cb2e7c2c0d3f"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/osrm/OsrmTableResponse.java",
+    "sha256": "dbffd98618a4a5b5a258f4ae313621694f36c65cfead76ca401508da24ac8749"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/osrm/RoadMetrics.java",
+    "sha256": "a7fb9b8123c54722245a2e2a123272b6fd5ca7eb11bb18433157ebb36b96b5f5"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/response/NearbyPlaceResponse.java",
+    "sha256": "b53861c6eb222c77ba26273ec4eff1fa847fff41db7cee9883d6c61c8afaf228"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/response/PlacePhotoDto.java",
+    "sha256": "61b73110c99a83e3d2c0f2c4bf71fb359269bc69618a5a7469a9decbd7ac80f3"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/dto/response/PlaceReviewDto.java",
+    "sha256": "cb495fd738420eb58cc9d5db19c5db1a8c427b0ddf89321c1d4e6087b0fd76df"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/Place.java",
+    "sha256": "209d9e67b11af460152ab87a6b0c567794186ff7047be29dee6c16b3d09f0c3a"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/PlacePhoto.java",
+    "sha256": "f7be45af9019564c2f425eaef9d3546b6b4d90bf6cce6e77028c890c35075eda"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/entity/PlaceReview.java",
+    "sha256": "bb9a6bdef136f95657a795a20bdc66b2245558638bba721a35c87db221627540"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/enums/PlaceCategory.java",
+    "sha256": "143112960a4250d45670ed47841417b09aaaabe9a37eb318facd7a3ff29448fc"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/NearbyPlaceProjection.java",
+    "sha256": "233e16a4b68e4edfaaf7200facff8213df9bd108b3f024f992c1082625010b3e"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlacePhotoRepository.java",
+    "sha256": "d9bc9d7a2ed01db2fd696accc8f7476750236e63b9c4e68f0b98edb1f4f5341f"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlaceRepository.java",
+    "sha256": "cfddd9634c858699fd8bcc2f2e782465de34b57a959da35209aa0320e9f77dd6"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/repository/PlaceReviewRepository.java",
+    "sha256": "58a5b2c20587ca2e3a8ed35027c68480b805e48aa767863b1b421e69fa7507ca"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/service/PlaceService.java",
+    "sha256": "c2d63600e825374a0a2e1d3058b28c30628ce695b3b1c1b2ac5bb1bca525adf0"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/service/PlaceServiceImpl.java",
+    "sha256": "95f795d166066c737bebfeef94f9b42c6da332ed9cfbeb00e2faf38306ad8ad2"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/service/osrm/OsrmRoutingClient.java",
+    "sha256": "3c5f83025dd46fa18dc8229b0794112e297fc950bfec08366eb55d62c147ce4c"
+  },
+  {
+    "path": "checkinn/place-service/src/main/java/com/example/placeservice/service/osrm/RoadDistanceService.java",
+    "sha256": "68bd09c15a384f0c506aed1788ce12c3311a368821971e2d392a3252a1d82e9e"
+  },
+  {
+    "path": "checkinn/place-service/src/main/resources/seed_places_all_provinces.sql",
+    "sha256": "82bde8ca103e9237770ea60dd4b436ea1730d3a51dbcaabaccfaf3c37ad82a98"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/PlaceServiceImplTest.java",
+    "sha256": "98daec83679788f13abe6b38d8d9bafa4b63b3004a7b9367dc6920bec6fcf69e"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/osrm/OsrmRoutingClientTest.java",
+    "sha256": "e82f944c36331d432800940fd57aac6a3d92e0946c1fd2e807cabb8ff8384549"
+  },
+  {
+    "path": "checkinn/place-service/src/test/java/com/example/placeservice/service/osrm/RoadDistanceServiceTest.java",
+    "sha256": "33e57a78342774ce158632a276fc3efb4bec0716d46649376f11a29f698502d2"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/RegulationsServiceApplication.java",
+    "sha256": "f411eef202fa619cd1753e32dea880d7677ce2ba23c078577a4c799294fb55b8"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/api/RegulationErrorAdvice.java",
+    "sha256": "b1eb596103d21a0901fe37a984179ee6f1e60c1c80e9af7193f6c78d55de2a42"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/config/RabbitMQConfig.java",
+    "sha256": "3f82e238b6f408f091ce0229b3ca63d4296f124ac3e5f76c2a848373fe1b521c"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/config/SecurityConfig.java",
+    "sha256": "0959a64edcf4bf747241e28705408af0c90e88686ecfc47324cf93f84e60baa2"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/controller/RegulationController.java",
+    "sha256": "023dc2ed5437911c2ecf1d9032a76f40c9ceed945275216f4896bb68f6877106"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/CommissionRateDto.java",
+    "sha256": "9af3ae2ea3981079e914fdfd89d9cfcc126e94731c6a7f5087e84fed3edb60b5"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/PointsConversionDto.java",
+    "sha256": "b67140ea2ea51e5ca5c0dc2c38de981503418d53541386b587f0108f8eff0224"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationDto.java",
+    "sha256": "0f36fcd1db7ff15f0dba644a9c4c5bc6290cfc41f32ecb05882c9ad2b101587e"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationSnapshotDto.java",
+    "sha256": "e92da7df20e8cdfacabbefd83a9afb23cef6fd5dcc81ddd8bc3286f0f3f5cd5f"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationValueValidator.java",
+    "sha256": "2425102ec51d63e5e5ca4ca5627f91d5dc60daa62fb6260b19d263f9084636ee"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/dto/ValidRegulationValue.java",
+    "sha256": "5147c090923818569cfac40f10901ed5f11ffb5f9a90cbc0567ccdc5e8cd4633"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEvent.java",
+    "sha256": "59ff453ea455e68e38f5e6a5097b7fdf263d845117804ce4a5eb7f2833a18763"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventDelivery.java",
+    "sha256": "ea9a32574b9c9ef6e6af8c2d15d507948220b72dc27ed0893f80b6808bf2f7f5"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventPublisher.java",
+    "sha256": "db583f5e834756e9966db300ffa15c740cc00dde7eff097945270041ed769df9"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java",
+    "sha256": "fe64b40e88b5f48443f263e1e27a9eec7262edc7894dd45765ec262016c76f6c"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/model/Regulation.java",
+    "sha256": "5cdb3e298f62bacd42e955910f52bae4acdc97ec6395b470bff894cc37dc991a"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/model/RegulationSnapshot.java",
+    "sha256": "b2f4c32b70bee9c4d6b70e443decfecd82833e161160eb7ed50427d54a9f1531"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationRepository.java",
+    "sha256": "e99cb1a771fcdfcaed41b10815b6905dd3d173b449cbc6514359a29517c4fdc5"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/repository/RegulationSnapshotRepository.java",
+    "sha256": "87af78685c9c1607c43c53ebc5c6995c6f86a5a1ed4237e4b04c8e1fb86d8f23"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/security/JwtFilter.java",
+    "sha256": "395b721d19aae9d36a6ee133d213f0d46453c4eaf470fb30e78934c640c840ea"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/security/JwtService.java",
+    "sha256": "6c7293aadbf1742a3111b853394d391c8aac1e634715e027b266569ee50043e2"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/security/SessionClaims.java",
+    "sha256": "0f8519d9abf68d7eb96eb63fed3dda853836bdd2ea6b8b3fd5773d242c41e0d5"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/security/SessionStoreUnavailableException.java",
+    "sha256": "b0f0c282a957e243abff68df6b050fc4709a276ce70e671f3b4c695ef88ac594"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/security/TokenRevocationService.java",
+    "sha256": "3241653113dd2ea4922682f330f1a9ef48d66843d820921503c0335e6ada0f17"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/service/RegulationBootstrap.java",
+    "sha256": "2ef8be872304b763385d06a96d078760ea66bc74cfc4a5dedb12dcc15c3aa247"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/service/RegulationCacheProvider.java",
+    "sha256": "ad90e241fbf33153949eda307a973991898d52030e7c800c0a00518976e9905d"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/service/RegulationProvider.java",
+    "sha256": "2386434fc2ed07dde0c844c4cd14572b2eec694e4bf37b8fe4a61367c46897cf"
+  },
+  {
+    "path": "checkinn/regulations-service/src/main/java/com/example/regulationsservice/service/RegulationService.java",
+    "sha256": "a5bb5c1d3d5a51eebf737c837f0740fcee5018a00a7aac0283fa1e5f25015348"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/messaging/RegulationEventDeliveryTest.java",
+    "sha256": "c4ae2ee2c4a2eb9f26fc2bd10ee80c1080c77aa605c37875dbcbd94f2db77502"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/RegulationBoundaryTest.java",
+    "sha256": "553fd383d746954ff8d13a3e517e7115afd8f3b3f5153225bfea9af622ec0c80"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/RegulationSessionBoundaryTest.java",
+    "sha256": "bc5a65da7c44fbcf7fce36e80262b02f1c1af3b4c52046f76cbda562736d90e9"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/security/SessionGenerationTest.java",
+    "sha256": "a25aa92b1de7cb930556978ee90eb94001248d9edf47159e8e22b3d5bc1890c4"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/service/RegulationConsistencyTest.java",
+    "sha256": "1d4ca4a0d4ed5da5333cac3e76d8f6b9bbf6f49e00a8e59236a31802ede037ee"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/service/RegulationServiceTest.java",
+    "sha256": "7f1e213f785706dff4e268bfce98886b5cdafc38c31067d5e5382ab79759ca7a"
+  },
+  {
+    "path": "checkinn/regulations-service/src/test/java/com/example/regulationsservice/service/RegulationTransactionIntegrationTest.java",
+    "sha256": "474f9777bd24ae41672f663de90f074f508bf7eb59f19a572202e4d613c3a2a6"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/RevenueServiceApplication.java",
+    "sha256": "c50ac92a161476c996033ab826a095da74df03035c9e541d4e1b2c6400c105a0"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/client/HotelCapacityClient.java",
+    "sha256": "504a7437e896e361378a9b1cf7df7a2a1b3dad0f8bb595a2580b128774e691eb"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/client/HotelGrpcClient.java",
+    "sha256": "efcc205bc8f6fcd998fd28e6208426b5f31252973ac6482f20460d1fa0985f80"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/client/HotelInfoClient.java",
+    "sha256": "34573d7dce1e1ba455282491828a4f2c6007f8aae45dd37e07096d724112c658"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/client/InternalHotelReportClient.java",
+    "sha256": "7ef853ec19d51f7f37bebf99e0541e3ce85957666289ee5debcf133a5b4937ce"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/config/RabbitConfig.java",
+    "sha256": "c7904abd0d73eea8ed7105bcaa911f8b1f630f1f3a7abb9aef48c24ca0bd0578"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/config/RestClientConfig.java",
+    "sha256": "5e522b5ec73cddc81c75987f9906df43d50bc88d0b5eaa17009285c627433acd"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/controller/RevenueReportController.java",
+    "sha256": "4573c6de60de636aebb1a9ecfb96f839fa86c2c29c925b22ce470f065b674366"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/AdminRevenueResponse.java",
+    "sha256": "db1be1d76ab2821bf88dde762cbd174c6a9ce38655806fab668396bda8b4647d"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/AdminSummaryResponse.java",
+    "sha256": "ce190398e1382d7347dfb1d22374f0b0e01fa440682341928faa688f25d21289"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/BookingStatusBreakdown.java",
+    "sha256": "d485dea54681862887ce8964a75f909fb5edd712364a1f2efde9efcd7b6edf44"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/CustomerAnalytics.java",
+    "sha256": "f5289cf0dc717399a96dcef9642a03ffb8005bf9ec131a009f0b9cb3a4ef9e88"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/GroupBy.java",
+    "sha256": "c4d7fb6ab3a06c3a109a201e31f221d3e47c453ac970c2a952d3ba6949f6bd11"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/GrowthMetrics.java",
+    "sha256": "b1660c14c0343f5abac3cecaa110390a18288f5e60a2001a9741bd7317d681cb"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/HotelInfo.java",
+    "sha256": "604c5d90f5311819d4abe5e2d9c9d213aefab332d80b5f27d529e95aae5a0438"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/HotelResponseLite.java",
+    "sha256": "5300217838e03ce5fc7b5f885bad3c9ebe29b20f4e9f5de1ab7d685966cf7404"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/HotelRevenueSeries.java",
+    "sha256": "445fbe00e363fad3216a460f3a323ac6419a214866f06ffeb184fd6b56fbdf49"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/HotelSummaryItem.java",
+    "sha256": "1b065ad2c116962a7fbbc19ea9a4298f436f3026529819d850cceb5faf0bd97e"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/OccupancyResponse.java",
+    "sha256": "454f930f815b6e4bbcf3e5e2fe671cdb710ff45776d5fdb0b3457f88428eb3c6"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/OwnerRevenueResponse.java",
+    "sha256": "9c8f3be391df32969bb4cb5aa169bb813e7f6b475e2412ff935f8fbcdd8aaf42"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/OwnerSummaryResponse.java",
+    "sha256": "66ecb20c97bc8d079a42f087b4c3587d6ab7e30fbdaad1cbebfb3571e7d9d583"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/RegionalRevenue.java",
+    "sha256": "aaa1b79707a30b385b63fb9b8da942f26185ef0a34bf1c01132274ed7c9ac196"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/RevenuePoint.java",
+    "sha256": "94cf0a19301c51fca17006b6c051e62275871b1344bed558dfb85eafd96ac262"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/RevenueResponse.java",
+    "sha256": "82349be23afb6dffa65f12ad03d30eca37d1022aba4cd59ab92644e60bafb97b"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/RoomTypeCapacityResponse.java",
+    "sha256": "e7c8723b961dcc41e591c745d0ed7a7734cd14d43c539b4cd28cabc820faa158"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/RoomTypeRevenue.java",
+    "sha256": "774bc00babe34e6d238ae4dc620d3300575fc6f17bd1233b91406d40f6be52dd"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/SummaryResponse.java",
+    "sha256": "c73a507ec891913a53c9bae345b2cfdb1b206de2933ca1a415878c22ddfa62e5"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/dto/TopHotelItem.java",
+    "sha256": "7fd4d7444227acd894a14925e8eee48f986ef61040fe9ace7b2255352ed5b22b"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/entity/BookingStatusRecord.java",
+    "sha256": "fe910f6374168d7994ac2084b12e1dfe7ca42f61da2059208eea6602ff0e51ae"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/entity/PaymentRecord.java",
+    "sha256": "af90d54024a4191feaa1d0fd54e9df18b287216fa9c9c5cf4459b56191def1fc"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/exception/ReportExceptionHandler.java",
+    "sha256": "8ae27f369b157293171d0165e338de70f82e15eaf767707292bedbe9131ef44c"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/exception/ReportReconciliationRequiredException.java",
+    "sha256": "7e30d7a9520ab192942db1a90533561e8fc687d51ca066fc19681b2137bc2c5a"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/messaging/EventListener.java",
+    "sha256": "dbb40e64e513001905f9327feb190c93a9019fcd61b82c8b1fe42456aa01181d"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/messaging/event/BookingStatusEvent.java",
+    "sha256": "addc18308fc7332b0cf5ee40b04007cf454989d37e455b47e668801e3f3ce350"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/messaging/event/PaymentEvent.java",
+    "sha256": "ed70e5b60a2a28619118f327153c365ffc0af07a5c650fc0758488da89bc3be5"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/regulations/RegulationClient.java",
+    "sha256": "cc0c33c6d096df2f765497aa4cb81e0e5f18c9ce02e031568e1bf872a2ad163f"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/regulations/RegulationLocalCache.java",
+    "sha256": "eddc10acdbbc43277e138344b67bb2d578625d90f471f3ffecccef69da2c11a7"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/repository/BookingStatusRecordRepository.java",
+    "sha256": "d5667d79a66f14429ade1a92a311d7debb2c3acb47a2ee19785ae01aa9d97fc1"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/repository/PaymentRecordRepository.java",
+    "sha256": "fb741e99da11a3f358a8974e9816496c7a4aa250073204be3261b2c056754780"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/security/SecurityConfig.java",
+    "sha256": "145952acc023d49b561973edbc0de42aec59bcaf31925f5d9b573cbb43298955"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/security/SessionClaims.java",
+    "sha256": "746863466753a09dfea773cec300d0356e826f8afa30ccbe1e05cb3c18a3984d"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/security/SessionStoreUnavailableException.java",
+    "sha256": "2e5fe858f51466ac078a4774627d59f53888f8368f22f46b827479789883fb69"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/security/TokenRevocationService.java",
+    "sha256": "9c58ce8fc85dddbc0c77ab2ff7084720d7d5c98a71525989799772a51c48b039"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/service/CashTransactionWriter.java",
+    "sha256": "c90a4b48628ac6ededf4bdd766d3294557fba319a7144a338f43f763f4c0a519"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/service/EventIngestionService.java",
+    "sha256": "8b5184a0d76dd9f50459f72a040cad911a4efc96f8ed4c8e0041ae58bde60b1a"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/service/RevenueCashFlows.java",
+    "sha256": "639b2a98fffcae361ff79009207917e11998fb0cd6efaf031b9783333fdcb5fe"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/java/com/example/revenueservice/service/RevenueReportService.java",
+    "sha256": "09ddce526bacbb1564050f670400b8c6c4356ac3ed5f927095b16130aa183628"
+  },
+  {
+    "path": "checkinn/revenue-service/src/main/proto/hotel.proto",
+    "sha256": "845f9f35d0b0212b33ae8d664f429bf44aa373762c723c7988da507e60bac72f"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/RevenueServiceApplicationTests.java",
+    "sha256": "909e5cec8d96b74e048e74cd7690712d27473eda39da334947f2dcf9ba500580"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/client/InternalHotelReportClientTest.java",
+    "sha256": "4f9421a9edf02a5b15d1753475b86285fbef90827e030e0cde3efeead599ec61"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/security/ReportAuthorizationTest.java",
+    "sha256": "827369e31a1eee8e7e934c48a68f6332df731593d73500229b14eb6e761d3e95"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/security/SessionGenerationTest.java",
+    "sha256": "b9be381ef56e90986da61e401e50cbacdd6438876822b00aa5e121daabc4240d"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/CashTransactionIdentityTest.java",
+    "sha256": "3a407a23abb669d8a046881faf3e59842852515db6dac38b72bc04203cd3056b"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/CommissionBoundaryTest.java",
+    "sha256": "f3f1750a6e986292e33c0676662569419ab82ac625bff882ddbfc06e970232f1"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/EventOrderingTest.java",
+    "sha256": "92508a1082eb5a1c9a03857f71ab90112834f6620fa7471e9bf755dede7731a7"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RefundPipelineTest.java",
+    "sha256": "9d16c5dcf2bcaa8186ba2bc374ec44f9265878af8a1b1ce393e035e44b07a842"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueBrokerPrivacyTest.java",
+    "sha256": "08fd46f8abce69fd679c9e140f6abb92872423ddad3efe8939a0400c0dd825f9"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueEventOrderingIntegrationTest.java",
+    "sha256": "e93ff801ed5f7ba7758efbdcadabe17681d65ac9e24efbfe2d75ee086035c5b5"
+  },
+  {
+    "path": "checkinn/revenue-service/src/test/java/com/example/revenueservice/service/RevenueReportConsistencyTest.java",
+    "sha256": "9a267ef6e115a8fc47ae28c858f7478769a0983f314e8e215f34ddd15690a909"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/UserServiceApplication.java",
+    "sha256": "b5669854af729ddbbda08b3be9c5884da860c2a582dd0223a3275bf5707f78e9"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/config/RabbitMQConfig.java",
+    "sha256": "913dcd060264cab94f4c3dd6a8cdbcf21901db2c25fe283f15274b4838f0ca5a"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/config/SecurityConfig.java",
+    "sha256": "4d4721be0322451b712a7b2efa1502572fbbfeb3e7826bfd61c0a41f614a7735"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/controller/LoyaltyPointsController.java",
+    "sha256": "3b24241e8a87e934465b8dcfaf6a10b24c890f087e087f9f2f46f2ded10badb4"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/controller/OtpController.java",
+    "sha256": "167b01b9f136d47c2a2c25b8a363d301736ae9a5f27dc7233c6f700d17b724f5"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/controller/UserController.java",
+    "sha256": "b65811a9311aec76476d906ecb946c8ef31698deed4432a3de7204a14aa41c8e"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/ApplyPointsRequest.java",
+    "sha256": "24c2b56dd6290436981576ba236d449acf59d0ea794bd046b45fdb0053221d7d"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/ChangePasswordRequest.java",
+    "sha256": "eb920a4f0aa7e29ab294667e58b7840226e36c49570f602132d2748e7e4dfe04"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/LoginRequest.java",
+    "sha256": "09461ad8716c79b3712faa58a8f672be567aff2933abb5098fbd89255e54ee42"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/LoyaltyPointsResponse.java",
+    "sha256": "bb99f5935c25ed651de87e6dded3babb20391c906da5f8cd3f4ea83ae539f977"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/OtpVerificationResponse.java",
+    "sha256": "295b9bb600ca53052e92b1362b748a9a0ca3e6f039ce138be711d3872ad6a31d"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/PagedResponse.java",
+    "sha256": "b39bc41ced47b23473567a0759a74e400da04a2913b626cefb40dc6b2d105301"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/PointsQuoteRequest.java",
+    "sha256": "95e5c9bb77db62c78120451e0a40950891521eeb127ffc26108d2f0d1536ecca"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/PointsQuoteResponse.java",
+    "sha256": "6a29c375509afe54a1b7a15d4b7d91c55bee187f5e0545cf3cb2b831d13d6c72"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/PointsReservationResponse.java",
+    "sha256": "9401ea0e60195013e14edc68fe33b6a7e659d315bf0c24b7fff1790f3884de6b"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/PointsTransactionResponse.java",
+    "sha256": "4d94cb301e7a6d60e4d00978bbb803e00baa99b1565b81cde67f801fe1a5ce7a"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/RegisterRequest.java",
+    "sha256": "2e1d5f7fec33f00e4d1f34dac798d3bc587ed9ab89e2d20a82aff818fed51ea3"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/ReservePointsRequest.java",
+    "sha256": "4d646a4fc853318db41b0d22bd665a14efc1a44218e1beff93aeacda81c1702c"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/UpdateProfileDto.java",
+    "sha256": "e87b19aa28df9dc0cddaf024fb22cee424bfd734d5bf502bf3bb0f8bbed48376"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/UserDetailResponse.java",
+    "sha256": "0719083912bf10698ca778d6bb9d4b28544565f90efcb9136ceca09d968e4e10"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/UserProfileDto.java",
+    "sha256": "af6b7086144afa373e831b00423779b6f6942c1d0160bb4a97c24da6fca615c1"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/UserResponse.java",
+    "sha256": "c21b3f31c5a7bbbdd62fbc581c7908571d37eb40dd44483088ad3f742e0902a6"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/dto/VerifyOtpRequest.java",
+    "sha256": "871e9077a2a002f7411e1df114c975e3d594739b819c1966df9ed018f9dc4969"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/exception/GlobalExceptionHandler.java",
+    "sha256": "6ed72c3ceb1232c860e0423a7bc15ccca813defc371634d2e093493a5bdec230"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/LoyaltyCommand.java",
+    "sha256": "99d25696d8b3155c124b0c0fed906f085d3af3d18c37973148c672e33d866578"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/LoyaltyPoints.java",
+    "sha256": "8c433527811d1d7c99feec96b314097a67466576e3903d16c31e71de583ae433"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/Otp.java",
+    "sha256": "0ccdc65a22abc8df316ed3123319186e6967d103ba0293d483888034075049d6"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/OtpEmailEvent.java",
+    "sha256": "67e3c837e5b714623f2c313f0315098efbea96f72ec17b83367576e95c974f8d"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/PointsReservation.java",
+    "sha256": "ea8bf5a724cfc5b0e04ce99c16443a31ee57fee42f49412cae724ba1eef1d288"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/PointsReservationState.java",
+    "sha256": "77ee1bbca400ffd1299c4c19cabca13ba6ae97afbea5e90e93246c9ab204a543"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/PointsTransaction.java",
+    "sha256": "8b5755b1a93d44242975b50fe87a8c76d112603093d4299335a57f8bf0a4e450"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/Role.java",
+    "sha256": "a73505c194ec531d6504b8f2041edc4cb28c536e17ea7e97b155a7d86feb75ee"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/User.java",
+    "sha256": "4a5f95237ff9b4aa3a64aba1b599dda114fdaea383a47abf6714a4310d6ddfe6"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/model/UserProfile.java",
+    "sha256": "85f682c0b9f83d18a46ade2fda1140673428f8c35717ff44584eabe2fd443fde"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/regulations/RegulationClient.java",
+    "sha256": "31e1cde6abe5d6fff5b6de9dfff8abe0f3e12ee9bf2f39d865f60fc64a40e66a"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/regulations/RegulationLocalCache.java",
+    "sha256": "669d4f89bc94bd668c7111b474ab2b6104e95fce9f018bfba524d4cb36480c26"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/LoyaltyCommandRepository.java",
+    "sha256": "df9cec254efef2f7f728e7b704f091c733593122b8d672c0983428c11a2e3139"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/LoyaltyPointsRepository.java",
+    "sha256": "dbfcbd9073d432ddf38ff426f25f1552ec4b1065c4b1c1f4df94d877e65a1720"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/OtpRepository.java",
+    "sha256": "36d84f8108080b07548b0d49530860a633052e9c16b74f870c2c01894beea373"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/PointsReservationRepository.java",
+    "sha256": "b29c7eccaf996815990db38792cd848d38a7c5ba98bb56b43221e5ea979a8890"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/PointsTransactionRepository.java",
+    "sha256": "60fa1cf41895e5ed636079deb27185b1fa6d00269f5b7055d1ec31fef9a89d39"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/UserProfileRepository.java",
+    "sha256": "e14b5286bcd5d42fd5b7f10c32f7dc4e70f929d14bf90131a9a11788bab98f38"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/repository/UserRepository.java",
+    "sha256": "bdee2c0e3696091e3ae0437d30c3dc7938bb1455c2e04dbc82a1f932ae1e0ad8"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/JwtMdcFilter.java",
+    "sha256": "3109a26362be39c9adf8ca50145ffa93828ef3f78e2188086a3f787f22534bdf"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/JwtService.java",
+    "sha256": "03684236a0748c49d5566701fa0cb02b76f656be4c087f5bf262ed2813a62366"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/SessionClaims.java",
+    "sha256": "510b41edf42e0f3445fe17c87cdce5ce60088c321676b21e3c5e054ea9f457cc"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/SessionStoreUnavailableException.java",
+    "sha256": "ab8a37016081b2bee4affcaae6c34f6f018e76362dda6b8e9384c2dc6ff0c271"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/TokenRevocationService.java",
+    "sha256": "46323a7eec594849d9cd56861434ad4d204bd48147e76fa0327e9d7140b053ad"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/security/UserRpcAccess.java",
+    "sha256": "243277680703d0cb0a1267da1fc15bcd6626ce7962368d5e568c64c28c3a3232"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/EmailService.java",
+    "sha256": "126b5e61a6e309e585f34e790ba782b4d413c3d4a5092770629adfe93f600926"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/LoyaltyCommandLock.java",
+    "sha256": "78b2e0558672072916f73bc59d03a19bc23ae1bb8be39083bae6d61708967fd5"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/LoyaltyPointsService.java",
+    "sha256": "7f4a09ab51f1155c4b64b698af8ad3724d8fece44ce105432093d4b7df7f1f7a"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "sha256": "1a7911a28f20529757262e997406aecebfabb0cc0a1f956ad74f5317b43fc81a"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/PointsBookingStateClient.java",
+    "sha256": "45ad8c1e989ba71492741db5aee156253b41c1ced48adf9d000d9b2be96d9647"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java",
+    "sha256": "d3559a104517167878290b44fc92b33a816b1467fb2fccfdac149a6448d65d1e"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/UserGrpcService.java",
+    "sha256": "c9aa7d5b82e903099ae37159bfa73f7b1072fbce98a4d4e20d423ffb14d2b268"
+  },
+  {
+    "path": "checkinn/user-service/src/main/java/com/example/userservice/service/UserService.java",
+    "sha256": "7b0458a1c4eec24162d1f887f4315e6e8ec9ad46a6007d281ca1fc0a2e460981"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/booking.proto",
+    "sha256": "822036ac253a5202e83c2c909b99e2d3604cf4636ec75ae9a87f44517dc5cf73"
+  },
+  {
+    "path": "checkinn/user-service/src/main/proto/user.proto",
+    "sha256": "2391f8cedc6d2087cf9f07a7120223a28df93885ca850977a247d408a2c42925"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V2__add_user_columns.sql",
+    "sha256": "c314d9efc330bcc405f7633780f5b92bdf9cb8d861db3e24c1ff9749184fc8b6"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V3__add_loyalty_commands.sql",
+    "sha256": "6c356a2b11a0ec2570ccdb0e986218f40f62ec5dbd36428c4cd028e05163efe3"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V4__add_points_reservations.sql",
+    "sha256": "a3c8f99c8fd4adab161dfbdc12b5b920f9a9f453d24959ffa706277aef2d4bc2"
+  },
+  {
+    "path": "checkinn/user-service/src/main/resources/db/migration/V5__index_legacy_points_guard.sql",
+    "sha256": "13a525855b62f84e27308e827e45cb8e01d9b4356ff3b042db0bb6ee891a6e9c"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/UserServiceApplicationTests.java",
+    "sha256": "fb89eafda30c90a2d6f17416f143110238889fc9b191ba8c2dd15095fd826796"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/regulations/RegulationClientTest.java",
+    "sha256": "ba364c11c8cdf4dcae15e3a0161cb1eb73cc5085b43c22ae0b04619f3898e02d"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/LoyaltyAuthorizationTest.java",
+    "sha256": "bc32d66462304c51838c4f3de7c5cf87896cf31deebbaf5504659be3116c5e14"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/SessionGenerationRedisIntegrationTest.java",
+    "sha256": "ea7867be85081c04cbece023767d6c24a2219961c3c0a4f79bb28c7e82a136da"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/SessionGenerationTest.java",
+    "sha256": "ca76113ae1b0d6d983aeaef60bb54778b87889855c09a78e737a5cd5c5556ca2"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/security/UserRpcAccessTest.java",
+    "sha256": "25028c92be7d5e0704904f2430cfc15c3ccaba2668e677aecfcd63c4ffb416f7"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/LoyaltyPointsServiceTest.java",
+    "sha256": "28364c6c2b29127ef3dbf2aa57b3f2e7cf8dd886d98dbdf1a80956b0fbcb6d2a"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/OtpVerificationPolicyTest.java",
+    "sha256": "a1e6bef34a47d9c43d3b3f09819defda0012f606b531c64e57aab75ae944f35c"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PasswordResetProofTest.java",
+    "sha256": "d8af59de22dff3449e9f67f2469369b482cea3605b23de8492e063387029131e"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PasswordResetSessionStoreIntegrationTest.java",
+    "sha256": "c0eb4d5e9c43f215d3052265cb4528a3818d2685960459e04038753c5076751e"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PointsBookingStateClientTest.java",
+    "sha256": "c2bf66684b3755da910135d98e1709ad59835ce7e675313471c25eb3663d5b8a"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/PointsReservationRecoveryTest.java",
+    "sha256": "618f4b3e57c3cd8120bc88656de67056f5a6cc2af00261bf479385ffca5ba77e"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserOtpBoundaryTest.java",
+    "sha256": "4f20dc4ce1ffa454deb474f7cb7cb94042aeddcb10aef7c6020a1466d8a995d3"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserRpcFailureBoundaryTest.java",
+    "sha256": "cef9d2482056da21b3c9ef646be16c036374bd2ad433cb840c32c6ab34caa722"
+  },
+  {
+    "path": "checkinn/user-service/src/test/java/com/example/userservice/service/UserServiceLogPrivacyTest.java",
+    "sha256": "527fe06d912ed3f7285a68cc0b2fb70350874dcb7858be635305da7136faf11b"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/accommodation-types/[id]/page.tsx",
+    "sha256": "a1f0aa4013825bdbd1c48a277b8b0d14f01839c4057b96baad3e1053c3175f3d"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/amenities/page.tsx",
+    "sha256": "38356e32358b39aeab876b1ea3da155002d1dc503ee1a6fc3e279f1faeb33db8"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/bookings/page.tsx",
+    "sha256": "07796fce2a4c5974d741f7868e17d5a0db7628fb37523bcb2ae043e58dca1e48"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/dashboard/page.tsx",
+    "sha256": "134e1006945282dd574997c741fa30b1e0345c72b87e8df3d9e92de8ae2fe150"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/hotels/page.tsx",
+    "sha256": "c3b3f69da27431238e2544b51edb8f76b38bb87207d082ca86d2d25450e10063"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/inventory-reviews/page.tsx",
+    "sha256": "bbbd41a0fa96c12894b8135dead96bb73fcc20da7adafeef4566b1999f9d2562"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/layout.tsx",
+    "sha256": "496f5e333c1543eb2f3046223b02a98b870d8e4c55bf57f78223226a48249067"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/page.tsx",
+    "sha256": "95583079832d8b215f00f7ad6f6b477c50b19b53834cc68f0b5954470b966f15"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/pending/[id]/page.tsx",
+    "sha256": "1f15a7af56975e8cf5384b2e69ce80fe59c86e1fefca5870abe8ecf90861562e"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/pending/page.tsx",
+    "sha256": "196a693c83380f10dd8bab54d841e317aaf7c53cd40bf64a7550e8425820f564"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/reports/page.tsx",
+    "sha256": "52f536e67317fddcd82fc43c0e2ca44f22e91921c74e332f58dd9b2b85ad9ebd"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/settings/page.tsx",
+    "sha256": "8c4d28af44e4df9b0a61e43325a62920e01f4ff7ce60259288850ab4e8879dcc"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/users/[userId]/page.tsx",
+    "sha256": "8ac0f7bbf204865c42c85abcb5886541f951f86c5e554e4c6225e1e4016c3063"
+  },
+  {
+    "path": "checkinn-frontend/app/admin/users/page.tsx",
+    "sha256": "b421a8a5b71f7a2f0547305d10ef0f5dec9f64a80ea2808c5f16bd83b8e84978"
+  },
+  {
+    "path": "checkinn-frontend/app/api/auth/[...nextauth]/route.ts",
+    "sha256": "784a543027a2cbe048bf467b2438d727d0f743d2730d68d2f30848ff55f58f0f"
+  },
+  {
+    "path": "checkinn-frontend/app/api/loyalty-points/[userId]/quote/route.ts",
+    "sha256": "430263f87ee210b88507b6be230fc8e8cf172a2306eb93a6e8f1a24f4bf2e1a4"
+  },
+  {
+    "path": "checkinn-frontend/app/api/loyalty-points/[userId]/route.ts",
+    "sha256": "071cdc1cf1066bb016f680a940ff27be4805b342d029c0ff02b65669de51a522"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/[id]/page.tsx",
+    "sha256": "3c866eee2981d5322b164baed5a9061c76200b445789a77e3bfc473ffa1a9415"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/history/page.tsx",
+    "sha256": "33e3ec30499a02fcca51adbd7aadeaccc4db41afd621d3f4c8cac8ee65512263"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/layout.tsx",
+    "sha256": "f715a25427ed76958c94c19987b75c6829b2850f2c616f69ccd303de4bcb3ee3"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/page.tsx",
+    "sha256": "effe9d5f0ce8d159388d98e870e9e17fd446ded1393c0473e5b3b860f11c2d1c"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/payment/hotel-confirm/page.tsx",
+    "sha256": "d77674b8c45727afe8399c3311ca9a0bad8456aaaa7c4ce75235b5eba5c438a3"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/payment/page.tsx",
+    "sha256": "36a54964e25db8b38ccf9241df5c959fcd708b95f5013862852d9d909895320b"
+  },
+  {
+    "path": "checkinn-frontend/app/booking/payment/return/page.tsx",
+    "sha256": "a187a39e19fd43578ae5f14726c824a02b33cbfc6ed27e412f372e2828b614c7"
+  },
+  {
+    "path": "checkinn-frontend/app/help-center/page.tsx",
+    "sha256": "3f6f5a9fa287d7f5a14f099c996c50436b25e9a6a795bb32991527c886644687"
+  },
+  {
+    "path": "checkinn-frontend/app/host/bookings/page.tsx",
+    "sha256": "cdcda6c3fea8f60261695bd8be0981831d20f588b289332dafcf7ac6589ff198"
+  },
+  {
+    "path": "checkinn-frontend/app/host/dashboard/page.tsx",
+    "sha256": "dca4da309239eef82cd94615bcc3cb7f8da74d3b64a830897b59164a8aa9379a"
+  },
+  {
+    "path": "checkinn-frontend/app/host/hotels/[id]/page.tsx",
+    "sha256": "83cf6b7551012356a772cbf997495d9d90ebeb49fc5c665b61f9631e72b8b2ec"
+  },
+  {
+    "path": "checkinn-frontend/app/host/hotels/[id]/rooms/[roomId]/page.tsx",
+    "sha256": "23585c4f51f30e1b3306e9b4e154296726e503eef64b016ba7e849c77f4e79f9"
+  },
+  {
+    "path": "checkinn-frontend/app/host/hotels/[id]/rooms/new/page.tsx",
+    "sha256": "9ff9f340996cee23d43bec848085a60b9efc915f72262642a8fcbd37a232ee8e"
+  },
+  {
+    "path": "checkinn-frontend/app/host/hotels/newHotel/page.tsx",
+    "sha256": "5fe611581bd26d7db791e38ac13bcd4fd94b813e8e7b3b1bd5bd75a197fb04ba"
+  },
+  {
+    "path": "checkinn-frontend/app/host/hotels/page.tsx",
+    "sha256": "ab6c744c99667ff9ac1f5494e79a9275720d353d0ad17a43de3f2e419e61c90e"
+  },
+  {
+    "path": "checkinn-frontend/app/host/layout.tsx",
+    "sha256": "39ba24968fc81c12673c1358b8d9f31afea81830e55dd21f6a5fcfe6dd3432f4"
+  },
+  {
+    "path": "checkinn-frontend/app/host/page.tsx",
+    "sha256": "8aa89620d1de3434dd73c32d559d9430128b72dafe6539acaeb1ae8f9ef2857a"
+  },
+  {
+    "path": "checkinn-frontend/app/host/revenue/page.tsx",
+    "sha256": "2c6d09edcc99ec941b5044ba5bf4ac444b3fd4f92b55cb5eadf76f3c1010ab99"
+  },
+  {
+    "path": "checkinn-frontend/app/host/reviews/page.tsx",
+    "sha256": "1c209825327a4531673cb361e04892e9565bcc93e74a08635c480d960edd202d"
+  },
+  {
+    "path": "checkinn-frontend/app/hotel/[id]/page.tsx",
+    "sha256": "bb0c54f88bc6da9b2b22cb2cab336ffceed6c1f16b62c9a7c3dcc8a297f0e4d6"
+  },
+  {
+    "path": "checkinn-frontend/app/layout.tsx",
+    "sha256": "92b704c30a0b806f566e33aabba81d69f88e2811d6845e6d7fec0bd3fcc31749"
+  },
+  {
+    "path": "checkinn-frontend/app/page.tsx",
+    "sha256": "72659eed4201d83ac9cd5b5181968afec5bad2422a13256ab168776d05837206"
+  },
+  {
+    "path": "checkinn-frontend/app/personal-data/my-bookings/page.tsx",
+    "sha256": "8b559f41a0429c6d00f50c3903bc722665eae2d7e2028a25051cb218d2ac00bb"
+  },
+  {
+    "path": "checkinn-frontend/app/personal-data/page.tsx",
+    "sha256": "f2b4bf4ca96160f8779ad4b4155e4ca73c5d053b61e43a15e389e67631cda291"
+  },
+  {
+    "path": "checkinn-frontend/app/providers.tsx",
+    "sha256": "4114877116368bb36909baa35df19a95a1a9eef0c170f28c1e7224b3a661418f"
+  },
+  {
+    "path": "checkinn-frontend/app/reviews/new/page.tsx",
+    "sha256": "28ba218291f29160ba589cf581058976f60fe7ba8120645d70a158e44be69f0a"
+  },
+  {
+    "path": "checkinn-frontend/app/reviews/page.tsx",
+    "sha256": "b4002c9a3c5f4640f05f044dd1d82a8856bb57aa753600b68c5c0baf64f614e3"
+  },
+  {
+    "path": "checkinn-frontend/app/search/layout.tsx",
+    "sha256": "02491f127183ba7a5e120125126836547b965631406551204aa2d0dfc5c0e3b0"
+  },
+  {
+    "path": "checkinn-frontend/app/search/page.tsx",
+    "sha256": "ded2f42da9962cae61325396ac4565c57f05e61251f2ee42c1c96ace757f33a7"
+  },
+  {
+    "path": "checkinn-frontend/components/AIAgentButton.tsx",
+    "sha256": "96e1c1930e7c0b17dbe1a1207c76d60047ddc97cc43e58cb8f3cc668e39b9632"
+  },
+  {
+    "path": "checkinn-frontend/components/AccommodationTypeSelect.tsx",
+    "sha256": "19a80423dc73d96af8139243d385aff49516236e2b0ecd769dd1ceae70958487"
+  },
+  {
+    "path": "checkinn-frontend/components/AdminHeroPanel.tsx",
+    "sha256": "87927f7987e8a436e2c28859d6afb23af5d79f313a3d91f1810b644b83c17716"
+  },
+  {
+    "path": "checkinn-frontend/components/AdminInputField.tsx",
+    "sha256": "61448619519bc85bb105c07f401918e3674190af926df36bb4222dafa3531198"
+  },
+  {
+    "path": "checkinn-frontend/components/AdminStatCard.tsx",
+    "sha256": "e5a01884fe54c5094d9bc34e58bd38d81f48b46377f5bde6f90643dacba555a1"
+  },
+  {
+    "path": "checkinn-frontend/components/AmenityCodeFilters.tsx",
+    "sha256": "cdeba20e1796181f41bc66c5b5f71ec8ec646f40465bff646bdef5d1baa1da81"
+  },
+  {
+    "path": "checkinn-frontend/components/BookingSummaryPoints.tsx",
+    "sha256": "ed5e5b5f4f2ab22cd07dd35cd346ceb881467cad29aa34a5c5404c10f4d3ebc9"
+  },
+  {
+    "path": "checkinn-frontend/components/CustomerOnlyRoute.tsx",
+    "sha256": "b9330de817c9fbbbd893d5c06c9f7870714c89a34ac9b8595a4bf1897114f0ee"
+  },
+  {
+    "path": "checkinn-frontend/components/DateRangePicker.tsx",
+    "sha256": "30be4161d327da55e1e3532182f17a49c537f6603f35a742616aabecf4dfe1bc"
+  },
+  {
+    "path": "checkinn-frontend/components/FeaturedHotels.tsx",
+    "sha256": "c49da60bad18de1069003058e9d974368c9e96979f7885628518a993572b36ba"
+  },
+  {
+    "path": "checkinn-frontend/components/Footer.tsx",
+    "sha256": "fd4288cf3d0fdaca7ff504797c3a7f4e376640b27186ea445fedfbce5f060eb4"
+  },
+  {
+    "path": "checkinn-frontend/components/GuestReviews.tsx",
+    "sha256": "34dfc35d4870f3787fd644d1645ee601221373cd1a8cf19c216d0cdbf62e7b58"
+  },
+  {
+    "path": "checkinn-frontend/components/Header.tsx",
+    "sha256": "42e46b39658c502d62b76c5d5a6476d3502e4994f52558299071ea035d65f258"
+  },
+  {
+    "path": "checkinn-frontend/components/HostHeader.tsx",
+    "sha256": "dd26c499c4060a6d42c83af2bc87c71101ea5c439d90a61a0d09f876f470bac2"
+  },
+  {
+    "path": "checkinn-frontend/components/HostReviewCard.tsx",
+    "sha256": "98cb3cda6d16585733b8719aeb24b369111ad279281b554d435ebef24e13f347"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelAccommodationEditor.tsx",
+    "sha256": "051bb3636815bc889186f935bf9bfd69fabda8d57f7c5e9d1172b042aa8bf019"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelAmenityMappings.tsx",
+    "sha256": "062351f4b1f8e00e6f4f8e3c8a890a6a5814b8e3057baf08710639ec34302dad"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelCard.tsx",
+    "sha256": "d76ef023985a9909424baedcf7e707ea42df3501309bb44524f779933710290d"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelDetailHeader.tsx",
+    "sha256": "ddd2a1fc35abbd11fd2f53f8cc44f987bd0c015d405cf5d0a2e67811a0b69167"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelGuestPicker.tsx",
+    "sha256": "f90e128a31fedca3de1c4b743dce8329554f9f7e40c4b57dc8f1ce1dd648fc25"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelLocationPicker.tsx",
+    "sha256": "8709251ade3f8eb8ff20c5976423e411f16ee8f1d7bc3ef9cb422243069b99f1"
+  },
+  {
+    "path": "checkinn-frontend/components/HotelSearchBar.tsx",
+    "sha256": "071fd65156e73402b172fab4545c932dc3d8189184516a99794de15b3b964b44"
+  },
+  {
+    "path": "checkinn-frontend/components/LocationSearch.tsx",
+    "sha256": "d959ccfbe6a1ffaa81312a9a85c6b19e907bffed4782ea29325b475c7e7ff60e"
+  },
+  {
+    "path": "checkinn-frontend/components/Logo.tsx",
+    "sha256": "14c850399f82cec394a0e642c0c2abc8a33003de21a17db78e9f9a947357bd9b"
+  },
+  {
+    "path": "checkinn-frontend/components/NearbyPlacesSection.tsx",
+    "sha256": "d01eccd40102327d99764c52346c39398f01808ba10db85e1bb074c21d4f27de"
+  },
+  {
+    "path": "checkinn-frontend/components/NotificationModal.tsx",
+    "sha256": "fb5435f3ac86347e0a796749e1f6ee903f627a7bfc0b120f3ef8333253dc31a4"
+  },
+  {
+    "path": "checkinn-frontend/components/PersonalDataForm.tsx",
+    "sha256": "f0bc65e6cae794a32bc3426e2a295c1b4a48935780b4f7a492ffa9fd578855e6"
+  },
+  {
+    "path": "checkinn-frontend/components/PlaceCard.tsx",
+    "sha256": "187bc1a2720a6ef345eb3eadee1c6486a987e95a3e860bab2bd219dac0e819fd"
+  },
+  {
+    "path": "checkinn-frontend/components/PlaceReviewsModal.tsx",
+    "sha256": "76a09126757bc0992641ff3b19a165ef3483780560f39098ece27e2008ec652f"
+  },
+  {
+    "path": "checkinn-frontend/components/PointsDiscountSection.tsx",
+    "sha256": "c616748b5eb88100d560c97959edf2978976dfde43301777aae80b66141858a7"
+  },
+  {
+    "path": "checkinn-frontend/components/ReviewCard.tsx",
+    "sha256": "4398395368cf217a83dae562541d2cce42c157224c58d2be0d9d7ee049a56a16"
+  },
+  {
+    "path": "checkinn-frontend/components/ReviewForm.tsx",
+    "sha256": "d6a0da67686893029aeabe7568f8ad53e5bc3a9e4b004226cc28318627149892"
+  },
+  {
+    "path": "checkinn-frontend/components/ReviewSection.tsx",
+    "sha256": "c79f8f1f6b15c6b509e86730e86c41d71196f4bccc09c3c20b658ee98e3c1aa6"
+  },
+  {
+    "path": "checkinn-frontend/components/RoomGuestPicker.tsx",
+    "sha256": "36be0d09497c641b972493b7835b5afa89549b28ed1c3fef1b14a10747c8de65"
+  },
+  {
+    "path": "checkinn-frontend/components/SearchFilters.tsx",
+    "sha256": "faf6cb1adfd1f01ca91c7dcae31f1c97e3d169c4d20daa59bb90a5c87d04d01e"
+  },
+  {
+    "path": "checkinn-frontend/components/Sidebar.tsx",
+    "sha256": "7bbe4ee7dd60c1b7c600625581928d7824e34b482ed4fc3e7459b6a1dbf440e2"
+  },
+  {
+    "path": "checkinn-frontend/components/UserSidebar.tsx",
+    "sha256": "9fa4ac37d1304c6e1ac6d501fa3bc8d79db79257d7be327df2d5d78369baad88"
+  },
+  {
+    "path": "checkinn-frontend/components/VerificationDocumentBoundary.tsx",
+    "sha256": "a657209b86a6ba360ca5ba9a1e7ee3588c3a8a4b2e8e7f2c293a704d32f0418b"
+  },
+  {
+    "path": "checkinn-frontend/components/admin/AccommodationTypeReviews.tsx",
+    "sha256": "7debd95305d020a538da5b9a48f6f34a61130f1de4325dcbbb2fb9356f8f79ad"
+  },
+  {
+    "path": "checkinn-frontend/components/admin/menu/AdminMenu.tsx",
+    "sha256": "a70357ad37c5048fe7466a642f33d05cb2a6bddd807dbaa833169bc8a41b6246"
+  },
+  {
+    "path": "checkinn-frontend/components/admin/menu/menuItems.ts",
+    "sha256": "db069d2c1e1eaa3606b597d6b12b1b1a6ca41204469e45eee36d24a30eb85719"
+  },
+  {
+    "path": "checkinn-frontend/components/host/BookingDetailModal.tsx",
+    "sha256": "c7eea4cfab629d83cd73ccb2659de3396e8fbf14342c19b079f5520c55998d6b"
+  },
+  {
+    "path": "checkinn-frontend/components/host/BookingPaymentConfirm.tsx",
+    "sha256": "7020055b25da919d832a802a4edcc05e48b375e89f6a39b91f43a5eb6b72197b"
+  },
+  {
+    "path": "checkinn-frontend/components/host/BookingsList.tsx",
+    "sha256": "c7c84d250fe8a64b55934d830466e10147395ebba4c79f86c75ee78e9b33500d"
+  },
+  {
+    "path": "checkinn-frontend/components/host/MediaWriteNotice.tsx",
+    "sha256": "0c4576c92ed864095ad1c85f9ddb8b26e5073287489a4d8c65601eb34215f0fe"
+  },
+  {
+    "path": "checkinn-frontend/components/host/RoomInventoryReview.tsx",
+    "sha256": "8c09c836778c5f584f9d0851e5e8226b5ea224557807c07002bb4d50a630c0a9"
+  },
+  {
+    "path": "checkinn-frontend/components/host/menu/HostMenu.tsx",
+    "sha256": "8e54d7bd9ac0c2862060fcef56616902df64a6252580189808ffc920e539de07"
+  },
+  {
+    "path": "checkinn-frontend/components/host/menu/menuItems.ts",
+    "sha256": "fa4c72fababd8fd9658c73884ff6d72d32faaf1d9dac81c5b9c9d6ff547afea7"
+  },
+  {
+    "path": "checkinn-frontend/components/map/HotelLocationMap.tsx",
+    "sha256": "34a2c39964f1436904cff73bfb1e43d5ebf5b5848419ade653224a1aa94909eb"
+  },
+  {
+    "path": "checkinn-frontend/components/map/HotelLocationMapInner.tsx",
+    "sha256": "27e336f3c20900bb7b824f256ca9a22d8b58e5d05d281852b026813d05fe166d"
+  },
+  {
+    "path": "checkinn-frontend/components/map/LocationPickerInner.tsx",
+    "sha256": "47883ccf96f4ac864ec945375f0a0b881bec48bf8a3de8b554e13eaa03b1f29d"
+  },
+  {
+    "path": "checkinn-frontend/components/map/LocationPickerMap.tsx",
+    "sha256": "f5a126754e9647b54b7ec07dea32bb1d2a74c72a0d257e1c9eebfb581af93fbd"
+  },
+  {
+    "path": "checkinn-frontend/eslint.config.mjs",
+    "sha256": "870f1adccecf3051cbcd9fd307cef51d7633cf510979c181a81f4b1797273493"
+  },
+  {
+    "path": "checkinn-frontend/hooks/useAuth.ts",
+    "sha256": "aa03ead8a06e12dd9ae707d507a17f5e85cfa7e864f5699fcb2408249b1b410e"
+  },
+  {
+    "path": "checkinn-frontend/hooks/usePointsQuote.ts",
+    "sha256": "9f0e7206a47a221d6ab5b4509f4e1755bd9fde4ec7089e1619a63ddca7e618fe"
+  },
+  {
+    "path": "checkinn-frontend/hooks/useProtectedRoute.ts",
+    "sha256": "d2455f392f97bc4ca8b2c32c545e998fbd7db2891dae2c24a1fd8eeb02cfcb40"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/accommodation-types.ts",
+    "sha256": "55b3be1472c2b7037c2fb0ac26696860de16baad606973239fc45ac093e57358"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/admin.ts",
+    "sha256": "691661f469f87361062f39ec6e29ec1e60fa526bcf325e427f831952163385ed"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/amenity-catalog.ts",
+    "sha256": "8b69853efb47e369d30d51e617a32ebe226c4382c5b75ac63fa71dba1d189e4a"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/auth.ts",
+    "sha256": "62f77b6d0c0c79f28c62e7bd821ea0f2550278dbb1f194c6519c0fed9f3cf600"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/availability.ts",
+    "sha256": "240cee7bf3c6debd92e8557dfa52f8fb9f4a407dbc2987a654e6eefbf5fd0ab3"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/booking.ts",
+    "sha256": "c79f4e0686c9f93d1eec98155e6f4bf576e377c578c70731c1bbbaae53460897"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/cities.ts",
+    "sha256": "6376c92f31d563bc69c5a842214d84a6d28213b6c574a451714bf012a976eb80"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/hotel-content.ts",
+    "sha256": "f60115a24417ea12631183be8a79a794125899329f213146d3d6f85c486430db"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/hotel-documents.ts",
+    "sha256": "ffecc9ec51ec128abd4860b8e3cba005fd357625585d3338d2c0270d90a3661d"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/hotels.ts",
+    "sha256": "1fceae5b1405265875c652a807b50453ec96772d726d42f052017310d781a3ad"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/inventory-review.ts",
+    "sha256": "cd0d80847e7bfe4d67ebf0e8c09029dbd3d713762fa201159f23e8106a46346a"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/media-state.ts",
+    "sha256": "d5089a6b23cf982e0e16cf3bc112b9dd6135a69d15f455941a41f6a6273e1676"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/media-upload-batch.ts",
+    "sha256": "ce526821eb25e847d22f47cdd432890f6120d83c434a161ca1190c2db5485451"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/media-write.ts",
+    "sha256": "fa052f2145d82530ab52e99e078e694ef5624ffd6f579a6812223fb023f0b671"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/places.ts",
+    "sha256": "e4f43a194f45489bdc0c06202531453f144b51729fcebf0959cec37f2cc35ca6"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/read-request.ts",
+    "sha256": "2c9b72614d1a8fbd9e03e55e18741d3182a0fdeb978c52532816d820a0558b91"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/regulations.ts",
+    "sha256": "f68e8ed4a669c5c9c5968b548e798bb13c645f1aa0a7b2854b3c02dd0fdc0f05"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/request-error.ts",
+    "sha256": "98298971ff0c79baff3187e631e87d2b45263139ce439a2086b2e1317ee7960d"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/revenue.ts",
+    "sha256": "067366361a518b3f0eb0d287e1db3d578c56a9346ea28c00879cc9062ed073ee"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/review-summaries.ts",
+    "sha256": "387fb28d9374ca546be0a184c0276b8ba33e4841bb4eb2a05939311e3b10afc4"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/reviews.ts",
+    "sha256": "e6ed6250b3f1fb979eb71702bb7a1769dc8c16d58ca741e76bd75aba87f44def"
+  },
+  {
+    "path": "checkinn-frontend/lib/api/users.ts",
+    "sha256": "c2bd03611ed7adad1d011d0930936939e43f40fcec4671acdafb37b972689df8"
+  },
+  {
+    "path": "checkinn-frontend/lib/auth/credentials.ts",
+    "sha256": "a6ee53c43d44b0fd629d62aa9bcadd0dbe19f946841f8dfd023fde56316d8367"
+  },
+  {
+    "path": "checkinn-frontend/lib/auth/session.ts",
+    "sha256": "9503860d53b1a8a480a2c9b97ca1c64f31ccb3c5cefa47f3120206a9e5afe9e8"
+  },
+  {
+    "path": "checkinn-frontend/lib/booking/creation-command.ts",
+    "sha256": "c0b16ffe2e4d1bf748caa66dda2a3df910fa7ecd19cac5c0ea46ea32609e4336"
+  },
+  {
+    "path": "checkinn-frontend/lib/booking/payment-state.ts",
+    "sha256": "45d9124e072c3c487de9a214911dc6dc5c1614d866bbbccc1c06084e4fd517c5"
+  },
+  {
+    "path": "checkinn-frontend/lib/mapUtils.ts",
+    "sha256": "f47c1f68bfef0c4c05187d7f79110f4530b4fd8147d1f3cae09e8fbcd2b17e69"
+  },
+  {
+    "path": "checkinn-frontend/lib/points-quote.ts",
+    "sha256": "1cc6c6822f77b33c507f8ecfbd3a29a57553cd5393abf65980f61b5fc9d182bc"
+  },
+  {
+    "path": "checkinn-frontend/lib/reporting/calendar.ts",
+    "sha256": "073873cd004f9feebcdb1de2128c270d47681d81d574a300658a3818307222b5"
+  },
+  {
+    "path": "checkinn-frontend/lib/reporting/errors.ts",
+    "sha256": "17d5b991cfcbc1ef6e36288141273c16642a8fdf670618bfea3a70eb64be2f36"
+  },
+  {
+    "path": "checkinn-frontend/lib/search/criteria.ts",
+    "sha256": "48aa70695b6df0a74806cdbf13fe5030e9808a9fa7975fa2ef2298b86fee7281"
+  },
+  {
+    "path": "checkinn-frontend/lib/search/hotel-facts.ts",
+    "sha256": "b958573bff0b30862e4c090034662af9af26f79374bd0bac9a0e6cba55f013b6"
+  },
+  {
+    "path": "checkinn-frontend/lib/search/inventory.ts",
+    "sha256": "fbdd32079388f4ad57ea0d4790dfb8ff7a2db3953242044117ca3bd36cb9e33a"
+  },
+  {
+    "path": "checkinn-frontend/lib/search/room-facts.ts",
+    "sha256": "1ba84d70031585cd86cdc9a575c6c247005b1a3c465a9dd04c9f806205d9ca55"
+  },
+  {
+    "path": "checkinn-frontend/lib/search/stay-dates.ts",
+    "sha256": "01b69560f041cc52ec8945d3dd442b0888b71ffd6f06744bc806d433beeabbd9"
+  },
+  {
+    "path": "checkinn-frontend/lib/server/points-quote-proxy.ts",
+    "sha256": "3688dffeb948c9606732a67f33b7765d630939d262d9d5fdd9a309d3f440ed40"
+  },
+  {
+    "path": "checkinn-frontend/middleware.ts",
+    "sha256": "0465a0f033cb42102ef46f1318cb65ac5de70c5bde5d2f20dfa53c78eaffbeac"
+  },
+  {
+    "path": "checkinn-frontend/next.config.ts",
+    "sha256": "496898063c834c666510bdb5bb472bcf08e01ca8eef297da101ad12680c8fc93"
+  },
+  {
+    "path": "checkinn-frontend/playwright.amenities.config.ts",
+    "sha256": "d4751d07665e6a57f3010928a9e212f293e5b655b742e1c4467cf6bfce8a6ed0"
+  },
+  {
+    "path": "checkinn-frontend/playwright.config.ts",
+    "sha256": "6f32d27a715b6305e779d981bc800d62597b26ece4b8af5ed179dc17e444a8cb"
+  },
+  {
+    "path": "checkinn-frontend/playwright.content-webpack.config.ts",
+    "sha256": "e450a9236a0da47da0722aa8163d590092c9da549fd099644876e43142a639fe"
+  },
+  {
+    "path": "checkinn-frontend/playwright.content.config.ts",
+    "sha256": "cd0d329988abdde0753858ff6ef6506f899b5ff019da3fd1618e2af3d5a03d29"
+  },
+  {
+    "path": "checkinn-frontend/playwright.documents.config.ts",
+    "sha256": "5a1d95b267b90caf4346bbb89fc21e6ad1517f9e8c48fa15c250c93d0faef4b2"
+  },
+  {
+    "path": "checkinn-frontend/playwright.media-write.config.ts",
+    "sha256": "211643f977b08edc7923f6d7f848d3b9e901fb00de1bf79af294f43383f830f5"
+  },
+  {
+    "path": "checkinn-frontend/playwright.regulations.config.ts",
+    "sha256": "6acbc31bfcc0fef7b0bf6f3bef87d6483f1516c3de04a204972e653ce8248a74"
+  },
+  {
+    "path": "checkinn-frontend/playwright.revenue.config.ts",
+    "sha256": "065966f085d836bae10028468f280f7e2e696a3d8b6b3c5f9c089f6169b40a5f"
+  },
+  {
+    "path": "checkinn-frontend/playwright.reviews.config.ts",
+    "sha256": "d5a18633c8de0b45214721198447f339dfc6ab78741ad938de01cfd6fd1cf5d1"
+  },
+  {
+    "path": "checkinn-frontend/postcss.config.mjs",
+    "sha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde"
+  },
+  {
+    "path": "checkinn-frontend/tests/accommodation-type.test.mjs",
+    "sha256": "2442c3bed5cf0f1ac627619f6d7a3ab9b8a1baea6a67a6045bd5f7cc3d955219"
+  },
+  {
+    "path": "checkinn-frontend/tests/amenity-write.test.mjs",
+    "sha256": "76de8d8909f4dd2c4e572f652de96293b724655cd05c820478144542a8bf2fc4"
+  },
+  {
+    "path": "checkinn-frontend/tests/api-errors.test.mjs",
+    "sha256": "1eb7c6f4c04d4a89267184466478f0938f99caed60d94685aed1dde7e14c3174"
+  },
+  {
+    "path": "checkinn-frontend/tests/auth-session.test.mjs",
+    "sha256": "fffeee4bec3119d3ee29137160f8d5cb9793483939a2be962bbe84f3e6e59567"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/accommodation-type.spec.ts",
+    "sha256": "c8eb033b207927d2f5562ee25383c62c920afe8fcdad608bcdb5acbedc329c4f"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/amenity-catalog.spec.ts",
+    "sha256": "ba606adbd15f091f7fccde307e10d2583ad37c5848711c2d19e090d5d773b8bd"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/amenity-write.spec.ts",
+    "sha256": "251255ee8e70d3d26424d9e788efc1efea054b88e9f1d4e5469947d0a68d71e1"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/auth-backend.mjs",
+    "sha256": "0f011df804dd4be1f0d90bd9cb89e5100f27df22e59f247b837c1325851b9691"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/auth-session.spec.ts",
+    "sha256": "a311c80221fd99165b7aee5888a36f703c352f28b61149451a19ff9ab3094c0a"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/canonical-text.spec.ts",
+    "sha256": "d0ab7d4d92524e62449eb6603eafae539a94c3a9ab17896a8418dfd414613504"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/document-boundary.spec.ts",
+    "sha256": "85fa213bc2464db1613639d379fe36c8b81434be6b9c46f5231fbcf09aa397f3"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/hotel-content.spec.ts",
+    "sha256": "ee7d83672fda2d9d27f5db90b138a9b0245a289955876fedf0b6d7c945618a50"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/hotel-preview.spec.ts",
+    "sha256": "f1b2a083365d194fb965045edb599de41348fba539a9c1bf09eb1e6d9aeeb8a2"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/inventory-review.spec.ts",
+    "sha256": "8c5341f6880a949fb39c77cd0bd4b31e654b27486427f29f04f26f8758bdc90d"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/media-write.spec.ts",
+    "sha256": "57581087e8bd79dd728cc830a0f9bad1dd3d6749f396cfc72f698f0ecb15a27a"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/new-room-facts.spec.ts",
+    "sha256": "693682d54644238617d5cdb08efccff5020d1aaa70306ae210b20b4dcded2faf"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/offer-fixtures.ts",
+    "sha256": "e8d635db38f3e857033bc8fc62466523ac36ddb1b8d4d25810bcd5bd5e6388d5"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/onsite-reservation.spec.ts",
+    "sha256": "0be26d9e6dff6bf1e723a2ff97885cabf19670870353a1c5305d15ddb93a9152"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/paid-reservation.spec.ts",
+    "sha256": "f7e42118176b87868babc8c1677b05a25807b8919a867497c8eff700ab604fe6"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/payment-hold.spec.ts",
+    "sha256": "b9abdb92b087b2b111579ca0e68ee58ce69881113e4cc08a52865ac3764f2a5d"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/points-preview.spec.ts",
+    "sha256": "43c0f8c3d75d03d1e0ec6f2f006c5a32091d3dd5024470f6643acc62f77ef063"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/regulation-consistency.spec.ts",
+    "sha256": "9c65d9e96e7c6eca70ae4cdefa6ba7e0d477ce6b3586fa47cd024c548bed6efd"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/revenue-consistency.spec.ts",
+    "sha256": "53e54bff207c76032b541d9af295137d4fae5d77f6bd4357156f50b3fd3fb19b"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/review-history.spec.ts",
+    "sha256": "acb0f57e4878bfc6f819a318a01cf4bc9410e95b26492afc794bc0cdc18accb9"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-errors.spec.ts",
+    "sha256": "320df27f84ba01dae73ec45a703fd076e48daa6ed3ab1843d4b823f5d26594d3"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-lifecycle.spec.ts",
+    "sha256": "a9c9d51e1b081058bbfe01dd358718da274ce76017baa2163f7cc571d5f4f1a3"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-pagination.spec.ts",
+    "sha256": "75d21ebe50efb0f4a3c8df65f554891a8eb8c88c7ea4814d7768635b02bc6d89"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/search-review-summaries.spec.ts",
+    "sha256": "cbd4250440205e599c498ae6b6c613b68093fb4ea42e62dfe85c73f1f04b2756"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/start-server.mjs",
+    "sha256": "52f7d001dd1eb9399bdc6942c7388ff7d7452516a49b63f3ffc3418edffaa08c"
+  },
+  {
+    "path": "checkinn-frontend/tests/browser/unknown-room-facts.spec.ts",
+    "sha256": "88fee1b4b892040bf157b4884c3994538cddb4383c29bb148724b47231177b73"
+  },
+  {
+    "path": "checkinn-frontend/tests/canonical-text.test.mjs",
+    "sha256": "fcdab570a906825984db0c1f8b857332d4c22f0887c97c2cc9b689e1772d11a1"
+  },
+  {
+    "path": "checkinn-frontend/tests/document-boundary.test.mjs",
+    "sha256": "9eac91ceb503cf2dc4f27b02aa92a966dae7a44c3fe1de67fb22b4b4518fa105"
+  },
+  {
+    "path": "checkinn-frontend/tests/hotel-content.test.mjs",
+    "sha256": "afcd68ebc8472a129127c94af3217da5c7043a34e890454b175281a41c40e749"
+  },
+  {
+    "path": "checkinn-frontend/tests/hotel-publication.test.mjs",
+    "sha256": "18f758720fea575626d7f2348f7932ed0489343cae2532f5a969da69bf5075d2"
+  },
+  {
+    "path": "checkinn-frontend/tests/inventory-review.test.mjs",
+    "sha256": "47c673a955ccc7d1f9c9d206c9eef682ed13fc1e9ef8f3fb8d1c74f9bea3c038"
+  },
+  {
+    "path": "checkinn-frontend/tests/media-state.test.mjs",
+    "sha256": "b0f64bac8c3f9f1d196c44cd64b9de14d45bf4d65453286ddb9457ccfb52619a"
+  },
+  {
+    "path": "checkinn-frontend/tests/media-write.test.mjs",
+    "sha256": "b36bb50ea3249abdc5f7cdf420fc8b69cf71d0c9221eea11a5fb1ffa566168fb"
+  },
+  {
+    "path": "checkinn-frontend/tests/payment-state.test.mjs",
+    "sha256": "6c3531cc47d322865df3c0cd6449bc0bede7d5d22c87e83b491360fd5d8ce322"
+  },
+  {
+    "path": "checkinn-frontend/tests/points-quote.test.mjs",
+    "sha256": "ccfb0949fd108a21829b50c2d02b14933b4e074c7f924b1f53b1210449dca164"
+  },
+  {
+    "path": "checkinn-frontend/tests/regulation-consistency.test.mjs",
+    "sha256": "47df77e5868ee2f1c5aa6f888d3fdd71cb0f99ab04b353f5df1ba50d7df38621"
+  },
+  {
+    "path": "checkinn-frontend/tests/revenue-auth.test.mjs",
+    "sha256": "2dffa1fd77fdbb90ee86afcd0342ed11be9cda3619b8687e96929f8621094394"
+  },
+  {
+    "path": "checkinn-frontend/tests/revenue-consistency.test.mjs",
+    "sha256": "139cef5d894756c665dd644042a9dbd252d90894724e8417e237970170609b12"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-auth.test.mjs",
+    "sha256": "f1d30e776f7b1407eb1680d751267c41433a9ad763b93cfa7acacd2028859bd1"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-consistency.test.mjs",
+    "sha256": "ebe66071db67aae2af48050353b21f3f1be8a36b3dc5af34454a46eeda81d218"
+  },
+  {
+    "path": "checkinn-frontend/tests/review-summaries.test.mjs",
+    "sha256": "f89709a7b9f4101d1f25b4000354902f441210d5ce2e52bdeea5c62786bd0cc1"
+  },
+  {
+    "path": "checkinn-frontend/tests/room-facts.test.mjs",
+    "sha256": "f3a811c239c628d4a82baccfcb4de64d36d20add140feb24a0d338c212d27a60"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-errors.test.mjs",
+    "sha256": "3338ab4f9834fe91187fc3a2266e58abb571c5978095546a4a6bdeeede16827c"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-filters.test.mjs",
+    "sha256": "ae8636e876dff1a4d0b79705917e91d5e0fe0242097944a35b4cc397c2f54a76"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-inventory.test.mjs",
+    "sha256": "77706afbc68d157f33a3bb12a9f86bcd9c645ffc4731b56a19a6f6c1d4798d34"
+  },
+  {
+    "path": "checkinn-frontend/tests/search-pagination.test.mjs",
+    "sha256": "db4a0d52ceec6b7e34d56fa3462869845cc928849a2cbc26458573a73e27cc9b"
+  },
+  {
+    "path": "checkinn-frontend/types/next-auth.d.ts",
+    "sha256": "eb949f002c7bc1d435fb1613867e3a3436b3795feed125582b167b757430642a"
+  },
+  {
+    "path": "checkinn-frontend/types/place.ts",
+    "sha256": "2daeca8ed636a54c11b459fc21934af4664a1b8ffea7fcd49929688d63bfff55"
+  }
+]

@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.service;
 
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import com.example.bookingservice.booking.repository.BookingRepository;
@@ -48,16 +49,16 @@ public class BookingScheduledTask {
         LocalDateTime expiryThreshold = LocalDateTime.now();
         
         // Find all PENDING and PENDING_PAYMENT bookings with holdExpiresAt in the past
-        List<String> pendingBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING);
-        List<String> pendingPaymentBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING_PAYMENT);
+        List<UUID> pendingBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING);
+        List<UUID> pendingPaymentBookings = bookingRepository.findIdsByStatus(BookingStatus.PENDING_PAYMENT);
         
-        List<String> allPendingBookings = new ArrayList<>();
+        List<UUID> allPendingBookings = new ArrayList<>();
         allPendingBookings.addAll(pendingBookings);
         allPendingBookings.addAll(pendingPaymentBookings);
         
         int cancelledCount = 0;
-        allPendingBookings.sort(String::compareTo);
-        for (String bookingId : allPendingBookings) {
+        allPendingBookings.sort(java.util.Comparator.comparing(UUID::toString));
+        for (UUID bookingId : allPendingBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
             if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null || (booking.getStatus() != BookingStatus.PENDING && booking.getStatus() != BookingStatus.PENDING_PAYMENT)
@@ -102,14 +103,14 @@ public class BookingScheduledTask {
         LocalDate today = LocalDate.now();
         
         // Find all CONFIRMED or CHECKED_IN bookings with checkOutDate in the past
-        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
-        List<String> checkedInBookings = bookingRepository.findIdsByStatus(BookingStatus.CHECKED_IN);
+        List<UUID> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
+        List<UUID> checkedInBookings = bookingRepository.findIdsByStatus(BookingStatus.CHECKED_IN);
         
         confirmedBookings.addAll(checkedInBookings);
         
         int checkedOutCount = 0;
-        confirmedBookings.sort(String::compareTo);
-        for (String bookingId : confirmedBookings) {
+        confirmedBookings.sort(java.util.Comparator.comparing(UUID::toString));
+        for (UUID bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
             if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;
@@ -156,11 +157,11 @@ public class BookingScheduledTask {
             return;
         }
 
-        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
+        List<UUID> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
 
         int checkedInCount = 0;
-        confirmedBookings.sort(String::compareTo);
-        for (String bookingId : confirmedBookings) {
+        confirmedBookings.sort(java.util.Comparator.comparing(UUID::toString));
+        for (UUID bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
             if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;
@@ -196,11 +197,11 @@ public class BookingScheduledTask {
         LocalDate today = LocalDate.now();
 
         // Find all CONFIRMED bookings with checkInDate before today (missed check-in day)
-        List<String> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
+        List<UUID> confirmedBookings = new ArrayList<>(bookingRepository.findIdsByStatus(BookingStatus.CONFIRMED));
 
         int noShowCount = 0;
-        confirmedBookings.sort(String::compareTo);
-        for (String bookingId : confirmedBookings) {
+        confirmedBookings.sort(java.util.Comparator.comparing(UUID::toString));
+        for (UUID bookingId : confirmedBookings) {
             Booking booking = bookingRepository.findByIdForUpdate(bookingId).orElse(null);
             if (booking != null && booking.getOnsiteReservationStatus() != null) continue;
             if (booking == null) continue;

@@ -27,7 +27,7 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("@bookingAccess.canPay(authentication, #request.bookingId)")
-    public ResponseEntity<PaymentResponse> createPayment(@RequestBody CreatePaymentRequest request) {
+    public ResponseEntity<PaymentResponse> createPayment(@jakarta.validation.Valid @RequestBody CreatePaymentRequest request) {
         try {
             PaymentResponse payment = paymentService.createPayment(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(payment);
@@ -38,7 +38,7 @@ public class PaymentController {
 
     @PostMapping("/vnpay/create")
     @PreAuthorize("@bookingAccess.canPay(authentication, #bookingId)")
-    public ResponseEntity<VnPayInitResponse> createVnPay(@RequestParam String bookingId, @RequestHeader(value = "X-Forwarded-For", required = false) String xff, @RequestHeader(value = "X-Real-IP", required = false) String xRealIp) {
+    public ResponseEntity<VnPayInitResponse> createVnPay(@RequestParam java.util.UUID bookingId, @RequestHeader(value = "X-Forwarded-For", required = false) String xff, @RequestHeader(value = "X-Real-IP", required = false) String xRealIp) {
         try {
             String clientIp = xff != null ? xff.split(",")[0].trim() : (xRealIp != null ? xRealIp : null);
             VnPayInitResponse resp = paymentService.initVnPayPayment(bookingId, clientIp);
@@ -109,7 +109,7 @@ public class PaymentController {
 
     @GetMapping("/{id}")
     @PreAuthorize("@bookingAccess.canReadPayment(authentication, #id)")
-    public ResponseEntity<PaymentResponse> getPayment(@PathVariable String id) {
+    public ResponseEntity<PaymentResponse> getPayment(@PathVariable java.util.UUID id) {
         try {
             PaymentResponse payment = paymentService.getPayment(id);
             return ResponseEntity.ok(payment);
@@ -120,7 +120,7 @@ public class PaymentController {
 
     @GetMapping("/booking/{bookingId}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #bookingId)")
-    public ResponseEntity<PaymentResponse> getPaymentByBookingId(@PathVariable String bookingId) {
+    public ResponseEntity<PaymentResponse> getPaymentByBookingId(@PathVariable java.util.UUID bookingId) {
         try {
             PaymentResponse payment = paymentService.getPaymentByBookingId(bookingId);
             return ResponseEntity.ok(payment);
@@ -131,7 +131,7 @@ public class PaymentController {
 
     @PostMapping("/{id}/refund")
     @PreAuthorize("@bookingAccess.isAdmin(authentication)")
-    public ResponseEntity<PaymentResponse> refundPayment(@PathVariable String id) {
+    public ResponseEntity<PaymentResponse> refundPayment(@PathVariable java.util.UUID id) {
         try {
             PaymentResponse payment = paymentService.refundPayment(id);
             return ResponseEntity.ok(payment);
@@ -142,7 +142,7 @@ public class PaymentController {
 
     @PostMapping("/{bookingId}/confirm")
     @PreAuthorize("@bookingAccess.canManage(authentication, #bookingId)")
-    public ResponseEntity<PaymentResponse> confirmHotelPayment(@PathVariable String bookingId) {
+    public ResponseEntity<PaymentResponse> confirmHotelPayment(@PathVariable java.util.UUID bookingId) {
         try {
             PaymentResponse payment = paymentService.confirmHotelPayment(bookingId);
             return ResponseEntity.ok(payment);

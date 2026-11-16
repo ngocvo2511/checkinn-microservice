@@ -1,0 +1,72 @@
+[
+  {
+    "detail": "Source-derived historical table; synthetic original receipt unchanged, nullable execution_mode not inferred",
+    "status": "PASS",
+    "test": "cash-original-fields-preserved"
+  },
+  {
+    "detail": "No automatic provider/internal classification",
+    "status": "PASS",
+    "test": "cash-mode-null"
+  },
+  {
+    "detail": "Exact normalized catalog equality for cash table only, not whole Revenue",
+    "status": "PASS",
+    "test": "cash-clean-upgrade-schema-match"
+  },
+  {
+    "detail": "PostgreSQL rejects invalid cash write; no repair",
+    "status": "PASS",
+    "test": "negative-cash"
+  },
+  {
+    "detail": "Distinct id/source_event_id; PostgreSQL payment_id+kind unique violation confirmed",
+    "status": "PASS",
+    "test": "duplicate-payment-kind"
+  },
+  {
+    "detail": "Synthetic amount unchanged after rollback",
+    "status": "PASS",
+    "test": "cash-transaction-rollback"
+  },
+  {
+    "detail": "Synthetic NULL/10/negative values preserved; invalid values require review",
+    "status": "PASS",
+    "test": "inventory-no-backfill"
+  },
+  {
+    "detail": "No fabricated proposals, approvals or stock changes",
+    "status": "PASS",
+    "test": "inventory-no-auto-approval"
+  },
+  {
+    "detail": "Positive quantity CHECK enforced",
+    "status": "PASS",
+    "test": "inventory-negative-proposal-blocked"
+  },
+  {
+    "detail": "Only empty synthetic hotels relation, no claim of complete historical baseline",
+    "status": "PASS",
+    "test": "hotel-v1-synthetic-prerequisite"
+  },
+  {
+    "detail": "ADD CONSTRAINT IF NOT EXISTS is rejected by PostgreSQL 18; history not rewritten",
+    "status": "PASS",
+    "test": "hotel-v2-syntax-defect-reproduced"
+  },
+  {
+    "detail": "JPA expiry column collides with one-time V5",
+    "status": "PASS",
+    "test": "hotel-v5-jpa-conflict-reproduced"
+  },
+  {
+    "detail": "Raw strings, JSON string/object/array, SQL NULL, nested JSON null, Unicode retained",
+    "status": "PASS",
+    "test": "encoding-db-roundtrip"
+  },
+  {
+    "detail": "timestamptz instant preserved; timestamp-without-time-zone requires application convention",
+    "status": "PASS",
+    "test": "timezone-instant"
+  }
+]

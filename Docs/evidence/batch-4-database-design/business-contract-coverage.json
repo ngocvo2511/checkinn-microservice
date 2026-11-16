@@ -1,0 +1,373 @@
+[
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+    "sha256": "0d4fae9c5e29292b15a9e4ecaeb6c0936580a0524368f28e1f7a4593b842fa67",
+    "signals": [
+      "transaction",
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingService.java",
+    "sha256": "dc71eb4a05b64e588d320dbad304d754d67d22c9284b888b7a9f50500d21f187",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+    "sha256": "ac251fb33c43e5026a7ebf16eed9d74478d376f3c217941c64805813920316e4",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementService.java",
+    "sha256": "c6bc22070c28dab1611019e7f13f870ea698dc02cf7f97dd3c6711a47e03867a",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+    "sha256": "082b3f0caccf9a25f5da9c7894180de351cd9d1c7b44b9002af5065c46e3f26b",
+    "signals": [
+      "transaction",
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationService.java",
+    "sha256": "d4b9cc333463599166c67738a096322cf6915eafde93ca08cf7ef2713912897f",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java",
+    "sha256": "99b8728c8c7f8899c7be58abf92e053e4c03ef02ab0f513e9703ba73a4491a64",
+    "signals": [
+      "transaction",
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationService.java",
+    "sha256": "f9089c976e5f86d39287bb6ad050aea8470e3218724c0611cf8094727c6d8be4",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventDelivery.java",
+    "sha256": "872aab8efffd9c88bbc8aa6bb3f2ba8276a50d3e686fd4ac1e0180d142f5909b",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventOutbox.java",
+    "sha256": "d2c715d844e6be5de33ef46ebb6dc6f4ab35eef05313168ce82fd5be78d50524",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+    "sha256": "6fefa4e87973c5d25fec8629085877c499f51768dc42c16b9b947e107490ec3b",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+    "sha256": "b749ac63749458eb1166b6650c7637bb1ba9019381c86374eedccaa60337816d",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundService.java",
+    "sha256": "4e4a40d01805067cd85908423d8b535ac6c78ac58797ca135dd5819a5c80b319",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/refund/RefundRequestService.java",
+    "sha256": "ec8276d8d8c0ce630937742c4f22255c78db17f421dda8ee2403ddf9cecd013f",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "booking-service/src/main/java/com/example/bookingservice/payment/service/PaymentService.java",
+    "sha256": "d9faa877e5187cf82355fabc62354dc43f8c40a63bf6c7b35916fa7e9c3067d1",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCatalogService.java",
+    "sha256": "05ce6d9eee77856bf607ebb8eb0b33e94bfce40fc201239209ef8c99d6d91dee",
+    "signals": [
+      "validation",
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/dto/request/CityCreateRequest.java",
+    "sha256": "379f4b6a264a7051c571a0fb2c4ffa4447a112433335c4d8247a34006a049b3a",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/CityServiceImpl.java",
+    "sha256": "edd2c7ac7d9b424f1fee945458ac5039a71bbf33ef9b68af57cc617656b84f70",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/City/service/LocationService.java",
+    "sha256": "434681c6ab561ac92653919bb1928273698cb6ad3ed3e78b045d5090fc3e131e",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AccommodationSchemaGuard.java",
+    "sha256": "94d8faddc13dc07c00477665b92ff05b5ec1f9b9bd6692caedc111a511f65569",
+    "signals": [
+      "guard"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/config/AmenitySchemaGuard.java",
+    "sha256": "b61f13ce4de6d2d9c22190e57430d30bbd1505fa2b1f75c969fb0214ea1dfeb3",
+    "signals": [
+      "guard"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOfferController.java",
+    "sha256": "61a31d205da4cc712910df48a06eeb5860af3d2eb411a8e522ba4e7902373ebc",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelAddressDto.java",
+    "sha256": "35a33db673eda17c4efe1f2d1a62ed95a159e12236e35eaa1f22a4b6f9a3f8ad",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/dto/request/HotelCreateRequest.java",
+    "sha256": "37f7907efd184f8b0734ea0c94ec140169607852429843bd00ec6dd7a8cd69ed",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/AccommodationTypeService.java",
+    "sha256": "109925a6350968c68abcb2bed2df4ae94c47ab3d7697a784aa74b3a662367780",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferCandidates.java",
+    "sha256": "14b007d25a4609ffcac57b77a9967a98b6ad3dbd98023aa856668b833626849d",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelServiceImpl.java",
+    "sha256": "5d0707e7092bbbb462f2913c6b8139078a056851580f6f2fc247e9c8b00741c2",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/service/MediaMutationService.java",
+    "sha256": "8ede31ecdde9052b213bb8094a03fd03663e035ca9296206744ecc4ecfa90efe",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewRequest.java",
+    "sha256": "50174c353a5655b32ccaf9f92c813b9fcd97145910eec2ccb714f2a7f54bd18d",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/CreateReviewResponseRequest.java",
+    "sha256": "b553f89a95cee28a8621d32f136035b180335496403e5cba6fdb6c50a81a8dcd",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/dto/request/UpdateReviewRequest.java",
+    "sha256": "88754d63fab5db2dbb11dd898596013c0f1c4efce7a84cba5517b5398d30f08a",
+    "signals": []
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewService.java",
+    "sha256": "8881162c45afd59fb1e91426b0acd2d25c6553f80173aa79b84f658023bd4b29",
+    "signals": [
+      "transaction",
+      "rounding"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Review/service/ReviewSummaryService.java",
+    "sha256": "2e38e5bead4831ed2281c9e1052f925c4e4b0283fc311397de2827473e2765fd",
+    "signals": [
+      "transaction",
+      "rounding"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "sha256": "b13d08b8bbb8c3d91a5af35e0be915033b9477c547d963e8561abe6736064c2d",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java",
+    "sha256": "88116b0a58bd7ccb010c39c8d975e1672660d035a861f83dd2b0f135f15bdb4c",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/dto/request/RoomTypeCreateRequest.java",
+    "sha256": "69a43ac1d044447dbf687ea42ef6798c09074eeca29dc5f8673ff4c849206ba4",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+    "sha256": "fd95f4916916d35d7f61a33e0761c1dfce0ef2e4679e692c1dd02afa3f7bab36",
+    "signals": [
+      "validation",
+      "transaction"
+    ]
+  },
+  {
+    "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+    "sha256": "a341b3fd2a7c0eeea73e92d57e9265ba407db7ea0cc491ddfdad2eb709d5f424",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationDto.java",
+    "sha256": "0f36fcd1db7ff15f0dba644a9c4c5bc6290cfc41f32ecb05882c9ad2b101587e",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/dto/RegulationValueValidator.java",
+    "sha256": "2425102ec51d63e5e5ca4ca5627f91d5dc60daa62fb6260b19d263f9084636ee",
+    "signals": [
+      "validation"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventDelivery.java",
+    "sha256": "ea9a32574b9c9ef6e6af8c2d15d507948220b72dc27ed0893f80b6808bf2f7f5",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventPublisher.java",
+    "sha256": "db583f5e834756e9966db300ffa15c740cc00dde7eff097945270041ed769df9",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java",
+    "sha256": "fe64b40e88b5f48443f263e1e27a9eec7262edc7894dd45765ec262016c76f6c",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationBootstrap.java",
+    "sha256": "2ef8be872304b763385d06a96d078760ea66bc74cfc4a5dedb12dcc15c3aa247",
+    "signals": [
+      "guard"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationCacheProvider.java",
+    "sha256": "ad90e241fbf33153949eda307a973991898d52030e7c800c0a00518976e9905d",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "regulations-service/src/main/java/com/example/regulationsservice/service/RegulationService.java",
+    "sha256": "a5bb5c1d3d5a51eebf737c837f0740fcee5018a00a7aac0283fa1e5f25015348",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/EventIngestionService.java",
+    "sha256": "8b5184a0d76dd9f50459f72a040cad911a4efc96f8ed4c8e0041ae58bde60b1a",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "revenue-service/src/main/java/com/example/revenueservice/service/RevenueReportService.java",
+    "sha256": "09ddce526bacbb1564050f670400b8c6c4356ac3ed5f927095b16130aa183628",
+    "signals": [
+      "transaction",
+      "rounding"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/LoyaltyPointsService.java",
+    "sha256": "7f4a09ab51f1155c4b64b698af8ad3724d8fece44ce105432093d4b7df7f1f7a",
+    "signals": [
+      "transaction",
+      "rounding"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/OtpService.java",
+    "sha256": "1a7911a28f20529757262e997406aecebfabb0cc0a1f956ad74f5317b43fc81a",
+    "signals": [
+      "transaction"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java",
+    "sha256": "d3559a104517167878290b44fc92b33a816b1467fb2fccfdac149a6448d65d1e",
+    "signals": [
+      "scheduled"
+    ]
+  },
+  {
+    "path": "user-service/src/main/java/com/example/userservice/service/UserService.java",
+    "sha256": "7b0458a1c4eec24162d1f887f4315e6e8ec9ad46a6007d281ca1fc0a2e460981",
+    "signals": [
+      "transaction"
+    ]
+  }
+]

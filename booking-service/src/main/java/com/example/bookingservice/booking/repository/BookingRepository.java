@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.repository;
 
+import java.util.UUID;
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,24 +13,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, String> {
+public interface BookingRepository extends JpaRepository<Booking, UUID> {
     @Query("SELECT b.id FROM Booking b WHERE b.paidReservationStatus = 'V1_PENDING' AND b.paidReservationNextAttemptAt <= ?1 ORDER BY b.paidReservationNextAttemptAt, b.id")
-    List<String> findDuePaidReservations(LocalDateTime now, org.springframework.data.domain.Pageable page);
+    List<UUID> findDuePaidReservations(LocalDateTime now, org.springframework.data.domain.Pageable page);
     @Query("SELECT b.id FROM Booking b WHERE b.onsiteReservationStatus = 'V1_PENDING' AND b.onsiteNextAttemptAt <= ?1 ORDER BY b.onsiteNextAttemptAt, b.id")
-    List<String> findDueOnsite(LocalDateTime now, org.springframework.data.domain.Pageable page);
+    List<UUID> findDueOnsite(LocalDateTime now, org.springframework.data.domain.Pageable page);
     java.util.Optional<Booking> findByIdempotencyKeyHash(String keyHash);
 
     @Query(value = "select cast(pg_advisory_xact_lock(hashtextextended(cast(?1 as text), 0)) as text)", nativeQuery = true)
     String lockCreationCommand(String keyHash);
     @Query("SELECT b.id FROM Booking b WHERE b.loyaltyStatus = 'PENDING' AND b.loyaltyNextAttemptAt <= ?1 ORDER BY b.loyaltyNextAttemptAt, b.id")
-    List<String> findDueLoyalty(LocalDateTime now, org.springframework.data.domain.Pageable page);
+    List<UUID> findDueLoyalty(LocalDateTime now, org.springframework.data.domain.Pageable page);
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT b FROM Booking b WHERE b.id = ?1")
-    java.util.Optional<Booking> findByIdForUpdate(String id);
+    java.util.Optional<Booking> findByIdForUpdate(UUID id);
     @Query("SELECT b.id FROM Booking b WHERE b.status = ?1")
-    List<String> findIdsByStatus(BookingStatus status);
-    List<Booking> findByUserId(String userId);
-    List<Booking> findByHotelId(String hotelId);
+    List<UUID> findIdsByStatus(BookingStatus status);
+    List<Booking> findByUserId(UUID userId);
+    List<Booking> findByHotelId(UUID hotelId);
     List<Booking> findByStatus(BookingStatus status);
     List<Booking> findByCheckInDateBetween(LocalDate startDate, LocalDate endDate);
 

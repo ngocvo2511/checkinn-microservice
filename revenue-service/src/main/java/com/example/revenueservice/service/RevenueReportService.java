@@ -1,5 +1,6 @@
 package com.example.revenueservice.service;
 
+import static com.example.revenueservice.contract.UuidContract.*;
 import com.example.revenueservice.client.HotelCapacityClient;
 import com.example.revenueservice.client.HotelGrpcClient;
 import com.example.revenueservice.dto.AdminRevenueResponse;
@@ -109,7 +110,7 @@ public class RevenueReportService {
                     : record.getAmount();
             totalRevenue = totalRevenue.add(signed);
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                if(completedBookings.add(record.getBookingId()))completedCount++;
+                if(completedBookings.add(text(record.getBookingId())))completedCount++;
             }
         }
 
@@ -130,7 +131,7 @@ public class RevenueReportService {
         List<BookingStatusRecord> records =
                 hotelId == null
                         ? bookingStatusRecordRepository.findActiveBookings(from, to)
-                        : bookingStatusRecordRepository.findActiveBookingsByHotel(hotelId, from, to);
+                        : bookingStatusRecordRepository.findActiveBookingsByHotel(required(hotelId), from, to);
 
         long roomNights = 0;
 
@@ -171,11 +172,11 @@ public class RevenueReportService {
     private double calculateCancellationRate(String hotelId, LocalDateTime start, LocalDateTime end) {
         List<BookingStatusRecord> records = hotelId == null
                 ? bookingStatusRecordRepository.findByEventAtBetween(start, end)
-                : bookingStatusRecordRepository.findByHotelIdAndEventAtBetween(hotelId, start, end);
+                : bookingStatusRecordRepository.findByHotelIdAndEventAtBetween(required(hotelId), start, end);
         Map<String, BookingStatusRecord> latestByBooking = new HashMap<>();
         records.sort(Comparator.comparing(BookingStatusRecord::getEventAt));
         for (BookingStatusRecord record : records) {
-            latestByBooking.put(record.getBookingId(), record);
+            latestByBooking.put(text(record.getBookingId()), record);
         }
 
         if (latestByBooking.isEmpty()) {
@@ -209,10 +210,10 @@ public class RevenueReportService {
 
         Map<String, List<PaymentRecord>> byHotel = new HashMap<>();
         for (PaymentRecord record : payments) {
-            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(record.getHotelId());
+            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(text(record.getHotelId()));
             // include when owner matches (case-insensitive) and owner id is present
             if (info.ownerId() != null && ownerId != null && info.ownerId().equalsIgnoreCase(ownerId)) {
-                byHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
+                byHotel.computeIfAbsent(text(record.getHotelId()), k -> new ArrayList<>()).add(record);
             }
         }
 
@@ -243,18 +244,18 @@ public class RevenueReportService {
         Map<String, List<BookingStatusRecord>> statusByHotel = new HashMap<>();
 
         for (PaymentRecord record : payments) {
-            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(record.getHotelId());
+            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(text(record.getHotelId()));
             logger.debug("OwnerId: {} , Hotel OwnerId: {}", ownerId, info.ownerId());
             if (info.ownerId() != null && info.ownerId().equalsIgnoreCase(ownerId)) {
-                paymentsByHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
+                paymentsByHotel.computeIfAbsent(text(record.getHotelId()), k -> new ArrayList<>()).add(record);
             }
         }
 
         List<BookingStatusRecord> statuses = bookingStatusRecordRepository.findByEventAtBetween(start, end);
         for (BookingStatusRecord record : statuses) {
-            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(record.getHotelId());
+            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(text(record.getHotelId()));
             if (info.ownerId() != null && ownerId != null && info.ownerId().equalsIgnoreCase(ownerId)) {
-                statusByHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
+                statusByHotel.computeIfAbsent(text(record.getHotelId()), k -> new ArrayList<>()).add(record);
             }
         }
 
@@ -274,7 +275,7 @@ public class RevenueReportService {
                         : record.getAmount();
                 hotelRevenue = hotelRevenue.add(signed);
                 if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                    if(completedBookings.add(record.getBookingId()))completedCount++;
+                    if(completedBookings.add(text(record.getBookingId())))completedCount++;
                 }
             }
             totalRevenue = totalRevenue.add(hotelRevenue);
@@ -337,7 +338,7 @@ public class RevenueReportService {
         records=new ArrayList<>(records);
         records.sort(Comparator.comparing(BookingStatusRecord::getEventAt));
         for (BookingStatusRecord record : records) {
-            latestByBooking.put(record.getBookingId(), record);
+            latestByBooking.put(text(record.getBookingId()), record);
         }
         if (latestByBooking.isEmpty()) {
             return 0.0;
@@ -377,7 +378,7 @@ public class RevenueReportService {
             totalCommission = totalCommission.add(commission);
             
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                if(completedBookings.add(record.getBookingId()))totalBookings++;
+                if(completedBookings.add(text(record.getBookingId())))totalBookings++;
             }
         }
         
@@ -412,7 +413,7 @@ public class RevenueReportService {
         
         Map<String, List<PaymentRecord>> byHotel = new HashMap<>();
         for (PaymentRecord record : payments) {
-            byHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
+            byHotel.computeIfAbsent(text(record.getHotelId()), k -> new ArrayList<>()).add(record);
         }
         
         List<HotelRevenueSeries> hotelBreakdown = new ArrayList<>();
@@ -440,9 +441,9 @@ public class RevenueReportService {
         Map<String, Set<String>> bookingCountByHotel = new HashMap<>();
         
         for (PaymentRecord record : allPayments) {
-            byHotel.computeIfAbsent(record.getHotelId(), k -> new ArrayList<>()).add(record);
+            byHotel.computeIfAbsent(text(record.getHotelId()), k -> new ArrayList<>()).add(record);
             if (record.getPaymentStatus() != null && record.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                bookingCountByHotel.computeIfAbsent(record.getHotelId(),key->new HashSet<>()).add(record.getBookingId());
+                bookingCountByHotel.computeIfAbsent(text(record.getHotelId()),key->new HashSet<>()).add(text(record.getBookingId()));
             }
         }
         
@@ -487,11 +488,11 @@ public class RevenueReportService {
         Map<String, Set<String>> hotelsByCity = new HashMap<>();
         
         for (PaymentRecord record : allPayments) {
-            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(record.getHotelId());
+            HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(text(record.getHotelId()));
             String city = info.city() != null ? info.city() : "Unknown";
             
             byCity.computeIfAbsent(city, k -> new ArrayList<>()).add(record);
-            hotelsByCity.computeIfAbsent(city, k -> new HashSet<>()).add(record.getHotelId());
+            hotelsByCity.computeIfAbsent(city, k -> new HashSet<>()).add(text(record.getHotelId()));
         }
         
         List<RegionalRevenue> regional = new ArrayList<>();
@@ -565,10 +566,10 @@ public class RevenueReportService {
         
         for (PaymentRecord p : payments) {
             if (p.getPaymentStatus() != null && p.getPaymentStatus().equalsIgnoreCase("COMPLETED")) {
-                uniqueCustomers.add(p.getCustomerId());
+                uniqueCustomers.add(text(p.getCustomerId()));
                 
                 // Get hotel owner info
-                HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(p.getHotelId());
+                HotelGrpcClient.HotelOwnerInfo info = hotelGrpcClient.getHotelInfo(text(p.getHotelId()));
                 if (info.ownerId() != null) {
                     uniqueHotelOwners.add(info.ownerId());
                 }

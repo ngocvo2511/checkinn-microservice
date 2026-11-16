@@ -1,0 +1,87 @@
+[
+  {
+    "path": "BATCH6A_SUPABASE_READINESS_SECURITY_AUDIT_2026-11-14.md",
+    "bytes": 8527,
+    "sha256": "147c019e58e97e13f10dd419a4c40023dc90be1d4dde1cdcc6582e93a393a2e2"
+  },
+  {
+    "path": "BATCH5B_CANONICAL_FLYWAY_IMPLEMENTATION_2026-11-14.md",
+    "bytes": 7557,
+    "sha256": "de85bd53af85335fb6d40f4c56b3acd33ea13db5aec5156cb53b265552e4b7b4"
+  },
+  {
+    "path": "BATCH5A_UUID_CONTRACT_IMPLEMENTATION_2026-11-13.md",
+    "bytes": 6522,
+    "sha256": "04662c67f89bf37533c8efb5da7d7a004fabdb6dda82f89081f7eaa28c2a2601"
+  },
+  {
+    "path": "BATCH4_1_UUID_AND_SUPABASE_ARCHITECTURE_REVISION_2026-11-13.md",
+    "bytes": 11224,
+    "sha256": "a3d3bf8ea13afff01c7e995f1a2f9b55d27762899617e9eaa86fe67d1168b2af"
+  },
+  {
+    "path": "database-design/SUPABASE_DATABASE_ARCHITECTURE.md",
+    "bytes": 18446,
+    "sha256": "19298ae99613f142824165b32f80e847cb044a47641c958eac79ca8d73f4e538"
+  },
+  {
+    "path": "database-design/CANONICAL_DATABASE_SCHEMA_V1.md",
+    "bytes": 123202,
+    "sha256": "c29a3c7d5f4d2baadc1e6586049045a0dd310361c795f41174a5636fef43ffaa"
+  },
+  {
+    "path": "database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+    "bytes": 19672,
+    "sha256": "27e2dfb7e7df5b40db86c222d29276d0fbad2171d1f4a11d1e7dff316c958db2"
+  },
+  {
+    "path": "database-design/ID_STANDARDIZATION_CONTRACT.md",
+    "bytes": 14632,
+    "sha256": "478522a4364d14417eb125dedba83bc82ba485c290ac50c28cfe62c773e22713"
+  },
+  {
+    "path": "evidence/batch-5b-canonical-flyway/REPRODUCE.md",
+    "bytes": 1733,
+    "sha256": "c9bb0f49a5096a839ff9c14d119add4e32a96632a936042cba89a1ca9c5fd3f1"
+  },
+  {
+    "path": "standardization/PROJECT_STANDARDIZATION_PLAN.md",
+    "bytes": 744702,
+    "sha256": "fd660a10169dc0f4b4de671fbc41a75e2cb4d7599e0a05b36a9efb2866333049"
+  },
+  {
+    "path": "standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+    "bytes": 90364,
+    "sha256": "b87da1ba7fdd3cab62274a9870d9e9ce55093280df33c1b5fe9bfd860aaba859"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/batch-6b-execution-plan.md",
+    "bytes": 16482,
+    "sha256": "8bb7286a0e660ce1ddead84fe5ca676500b2763a6fe68ba89f251e7fea856058"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/flyway-deployment-preflight.md",
+    "bytes": 2867,
+    "sha256": "4a25e41846b93acf60b4c902de014a8238ca6d65786b84735488d38a60facf82"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/supabase-security-model.md",
+    "bytes": 3631,
+    "sha256": "a7422514318781942fdab0a4a2c1ae250682e0f2e55e972ec8caa1700603176c"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/roles-and-grants-plan.md",
+    "bytes": 3496,
+    "sha256": "a3403f94ba72ee3c1272f9ea38dba0940aaa07b9f70b2070b25612eacce9f57a"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/connection-strategy.md",
+    "bytes": 5023,
+    "sha256": "9b863017bbb84cd7e8e63d4b11b860f610498d3c48074732590b31dcb0e8f517"
+  },
+  {
+    "path": "evidence/batch-6a-supabase-readiness/remaining-risks.md",
+    "bytes": 1955,
+    "sha256": "7d86f7e59e408e90c8fb076f2a0584f3a4db1a0c4f26e896212d79e0f6529452"
+  }
+]

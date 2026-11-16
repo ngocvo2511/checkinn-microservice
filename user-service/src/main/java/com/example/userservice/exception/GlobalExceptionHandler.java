@@ -11,6 +11,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<?> malformedJson(org.springframework.http.converter.HttpMessageNotReadableException error) {
+        return ResponseEntity.badRequest().body(java.util.Map.of("status", 400, "error", "Bad Request", "message", "Malformed request or UUID"));
+    }
     @ExceptionHandler({org.springframework.web.servlet.resource.NoResourceFoundException.class,
             org.springframework.web.servlet.NoHandlerFoundException.class})
     public ResponseEntity<Map<String,Object>> notFound(Exception ex) {

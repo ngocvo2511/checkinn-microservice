@@ -1,5 +1,6 @@
 package com.example.userservice.controller;
 
+import static com.example.userservice.contract.UuidContract.*;
 import com.example.userservice.dto.ApplyPointsRequest;
 import com.example.userservice.dto.LoyaltyPointsResponse;
 import com.example.userservice.dto.PointsTransactionResponse;
@@ -81,7 +82,7 @@ public class LoyaltyPointsController {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.FORBIDDEN,"Booking ledger is service/admin only");
         }
         log.info("[LOYALTY_POINTS_HISTORY_BOOKING] Getting transaction history for booking: {}", bookingId);
-        List<PointsTransactionResponse> transactions = loyaltyPointsService.getBookingTransactionHistory(bookingId);
+        List<PointsTransactionResponse> transactions = loyaltyPointsService.getBookingTransactionHistory(required(bookingId));
         return ResponseEntity.ok(transactions);
     }
 
@@ -96,7 +97,7 @@ public class LoyaltyPointsController {
             @RequestParam BigDecimal totalAmount, @RequestHeader(value="Authorization",required=false) String authorization) {
         requireService(authorization);
         log.info("[LOYALTY_POINTS_EARN] Earning points for user: {}, booking: {}, amount: {}", userId, bookingId, totalAmount);
-        LoyaltyPointsResponse response = loyaltyPointsService.earnPoints(UUID.fromString(userId), bookingId, totalAmount);
+        LoyaltyPointsResponse response = loyaltyPointsService.earnPoints(required(userId), required(bookingId), totalAmount);
         return ResponseEntity.ok(response);
     }
 
@@ -150,7 +151,7 @@ public class LoyaltyPointsController {
             @RequestParam String bookingId, @RequestHeader(value="Authorization",required=false) String authorization) {
         requireService(authorization);
         log.info("[LOYALTY_POINTS_REFUND] Refunding points for user: {}, booking: {}", userId, bookingId);
-        loyaltyPointsService.refundPoints(UUID.fromString(userId), bookingId);
+        loyaltyPointsService.refundPoints(required(userId), required(bookingId));
         return ResponseEntity.ok().build();
     }
 }

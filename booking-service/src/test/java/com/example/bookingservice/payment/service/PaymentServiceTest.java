@@ -1,4 +1,5 @@
 package com.example.bookingservice.payment.service;
+import static com.example.bookingservice.contract.TestIds.*;
 
 import com.example.bookingservice.booking.entity.Booking;
 import com.example.bookingservice.booking.enums.BookingStatus;
@@ -33,14 +34,14 @@ import static org.mockito.Mockito.when;
 
 class PaymentServiceTest {
     @Test void confirmedOnsitePaymentChoiceReplaysWithoutAnotherHoldOrPayment() {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.CONFIRMED).paidAmount(BigDecimal.ZERO)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.CONFIRMED).paidAmount(BigDecimal.ZERO)
                 .onsiteReservationStatus("V1_CONFIRMED").totalAmount(BigDecimal.TEN).build();
-        var payment = Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.HOTEL)
+        var payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1")).method(PaymentMethod.HOTEL)
                 .status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(payment));
-        assertThat(paymentService.createPayment(CreatePaymentRequest.builder().bookingId("booking-1")
-                .method(PaymentMethod.HOTEL).amount(BigDecimal.TEN).build()).getId()).isEqualTo("payment-1");
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.of(payment));
+        assertThat(paymentService.createPayment(CreatePaymentRequest.builder().bookingId(id("booking-1"))
+                .method(PaymentMethod.HOTEL).amount(BigDecimal.TEN).build()).getId()).isEqualTo(id("payment-1"));
         verify(paymentRepository, never()).save(any()); verifyNoInventoryOrLoyalty();
     }
     private void verifyNoInventoryOrLoyalty() {
@@ -50,12 +51,12 @@ class PaymentServiceTest {
     }
 
     @Test void onsiteReceiptCannotClaimMoneyWhileInventoryIsUnknown() {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
                 .onsiteReservationStatus("V1_PENDING").totalAmount(BigDecimal.TEN).build();
-        var payment = Payment.builder().id("payment-1").method(PaymentMethod.HOTEL).status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc("booking-1", PaymentStatus.ONSITE_PENDING)).thenReturn(Optional.of(payment));
-        assertThatThrownBy(() -> paymentService.confirmHotelPayment("booking-1"))
+        var payment = Payment.builder().id(id("payment-1")).method(PaymentMethod.HOTEL).status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.TEN).build();
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(id("booking-1"), PaymentStatus.ONSITE_PENDING)).thenReturn(Optional.of(payment));
+        assertThatThrownBy(() -> paymentService.confirmHotelPayment(id("booking-1")))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.ONSITE_PENDING);
         verify(paymentRepository, never()).save(any()); verifyNoInventoryOrLoyalty();
@@ -95,24 +96,24 @@ class PaymentServiceTest {
     @Test
     void createPaymentCreatesHotelPaymentOnly() {
         Booking booking = Booking.builder()
-                .id("booking-1")
+                .id(id("booking-1"))
                 .status(BookingStatus.PENDING)
                 .totalAmount(BigDecimal.valueOf(1_000_000))
                 .build();
         CreatePaymentRequest request = CreatePaymentRequest.builder()
-                .bookingId("booking-1")
+                .bookingId(id("booking-1"))
                 .amount(BigDecimal.valueOf(1_000_000))
                 .method(PaymentMethod.HOTEL)
                 .build();
 
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.empty());
-        when(bookingService.ensureActiveHold("booking-1")).thenReturn(booking);
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.empty());
+        when(bookingService.ensureActiveHold(id("booking-1"))).thenReturn(booking);
         when(paymentCreationPolicyFactory.getPolicy(PaymentMethod.HOTEL)).thenReturn(new HotelPaymentCreationPolicy());
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> {
             Payment payment = invocation.getArgument(0);
-            payment.setId("payment-1");
+            payment.setId(id("payment-1"));
             return payment;
         });
 
@@ -126,7 +127,7 @@ class PaymentServiceTest {
     @Test
     void createPaymentRejectsVnPayBecauseVnPayUsesInitFlow() {
         CreatePaymentRequest request = CreatePaymentRequest.builder()
-                .bookingId("booking-1")
+                .bookingId(id("booking-1"))
                 .amount(BigDecimal.valueOf(1_000_000))
                 .method(PaymentMethod.VNPAY)
                 .build();
@@ -142,14 +143,14 @@ class PaymentServiceTest {
     @Test
     void initVnPayPaymentCreatesPaymentThroughPolicyFactory() {
         Booking booking = Booking.builder()
-                .id("booking-1")
+                .id(id("booking-1"))
                 .status(BookingStatus.PENDING)
                 .totalAmount(BigDecimal.valueOf(1_000_000))
                 .build();
 
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.empty());
-        when(bookingService.ensureActiveHold("booking-1")).thenReturn(booking);
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.empty());
+        when(bookingService.ensureActiveHold(id("booking-1"))).thenReturn(booking);
         when(paymentCreationPolicyFactory.getPolicy(PaymentMethod.VNPAY)).thenReturn(new VnPayPaymentCreationPolicy());
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> {
@@ -157,7 +158,7 @@ class PaymentServiceTest {
             // Must be present at the first INSERT because the column is immutable.
             assertThat(payment.getVnpayCreateDate()).matches("[0-9]{14}");
             if (payment.getId() == null) {
-                payment.setId("payment-1");
+                payment.setId(id("payment-1"));
             }
             return payment;
         });
@@ -167,10 +168,10 @@ class PaymentServiceTest {
         when(vnPayProperties.getPayUrl()).thenReturn("http://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
         when(vnPayProperties.getHashSecret()).thenReturn("secret");
 
-        var response = paymentService.initVnPayPayment("booking-1", "127.0.0.1");
+        var response = paymentService.initVnPayPayment(id("booking-1"), "127.0.0.1");
 
-        assertThat(response.getOrderId()).isEqualTo("payment-1");
-        assertThat(response.getRedirectUrl()).contains("vnp_TxnRef=payment-1");
+        assertThat(response.getOrderId()).isEqualTo(wire("payment-1"));
+        assertThat(response.getRedirectUrl()).contains("vnp_TxnRef="+wire("payment-1"));
         var saved = org.mockito.ArgumentCaptor.forClass(Payment.class);
         verify(paymentRepository, times(2)).save(saved.capture());
         assertThat(response.getRedirectUrl()).contains("vnp_CreateDate=" + saved.getValue().getVnpayCreateDate());
@@ -185,9 +186,9 @@ class PaymentServiceTest {
     @Test
     void processVNPayCallbackReturnsExistingPaymentOnSuccessfulReplay() {
         Booking booking = Booking.builder()
-                .id("booking-1")
-                .userId("user-1")
-                .hotelId("hotel-1")
+                .id(id("booking-1"))
+                .userId(id("user-1"))
+                .hotelId(id("hotel-1"))
                 .hotelName("Tripto Hotel")
                 .checkInDate(LocalDate.now().plusDays(1))
                 .checkOutDate(LocalDate.now().plusDays(2))
@@ -199,23 +200,23 @@ class PaymentServiceTest {
                 .contactName("Test User")
                 .contactEmail("test@example.com")
                 .contactPhone("0900000000")
-                .holdId("hold-1")
+                .holdId(id("hold-1"))
                 .build();
 
         Payment payment = Payment.builder()
-                .id("payment-1")
-                .bookingId("booking-1")
+                .id(id("payment-1"))
+                .bookingId(id("booking-1"))
                 .amount(BigDecimal.valueOf(1_000_000))
                 .method(PaymentMethod.VNPAY)
                 .status(PaymentStatus.PENDING)
                 .vnpayOrderId("payment-1")
                 .build();
 
-        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of(id("booking-1")));
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
         when(paymentRepository.findByVnpayTransactionNo("vnpay-txn-1")).thenReturn(Optional.empty());
         when(paymentRepository.save(any(Payment.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         paymentService.processVNPayCallback("payment-1", "00", "vnpay-txn-1");
@@ -226,7 +227,7 @@ class PaymentServiceTest {
 
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
         assertThat(booking.getPaidReservationStatus()).isEqualTo("V1_PENDING");
-        assertThat(booking.getPaidReservationPaymentId()).isEqualTo("payment-1");
+        assertThat(booking.getPaidReservationPaymentId()).isEqualTo(id("payment-1"));
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.PENDING_PAYMENT);
         verify(bookingService, never()).confirmBookingHold(any());
         verify(eventPublisher, times(1)).publishPaymentCompleted(any());
@@ -236,13 +237,13 @@ class PaymentServiceTest {
 
     @Test
     void clientAmountCannotChangeBookingPaymentAmount() {
-        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING)
+        Booking booking = Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING)
                 .totalAmount(new BigDecimal("1000000")).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(bookingService.ensureActiveHold("booking-1")).thenReturn(booking);
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(bookingService.ensureActiveHold(id("booking-1"))).thenReturn(booking);
         when(paymentCreationPolicyFactory.getPolicy(PaymentMethod.HOTEL)).thenReturn(new HotelPaymentCreationPolicy());
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        CreatePaymentRequest request = CreatePaymentRequest.builder().bookingId("booking-1")
+        CreatePaymentRequest request = CreatePaymentRequest.builder().bookingId(id("booking-1"))
                 .amount(BigDecimal.ONE).method(PaymentMethod.HOTEL).build();
 
         assertThatThrownBy(() -> paymentService.createPayment(request)).isInstanceOf(IllegalArgumentException.class);
@@ -251,12 +252,12 @@ class PaymentServiceTest {
     }
 
     @Test void onsiteReceiptReplayRetriesOnlyLoyaltyWithoutRepeatingPaymentOrEvents() {
-        Booking booking = Booking.builder().id("booking-1").status(BookingStatus.CONFIRMED).build();
-        Payment payment = Payment.builder().id("payment-1").bookingId("booking-1")
+        Booking booking = Booking.builder().id(id("booking-1")).status(BookingStatus.CONFIRMED).build();
+        Payment payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1"))
                 .method(PaymentMethod.HOTEL).status(PaymentStatus.COMPLETED).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc("booking-1")).thenReturn(Optional.of(payment));
-        assertThat(paymentService.confirmHotelPayment("booking-1").getStatus()).isEqualTo(PaymentStatus.COMPLETED);
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdOrderByCreatedAtDesc(id("booking-1"))).thenReturn(Optional.of(payment));
+        assertThat(paymentService.confirmHotelPayment(id("booking-1")).getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         verify(bookingService).settleLoyaltyPoints(booking);
         verify(bookingService, never()).confirmBookingHold(any());
         org.mockito.Mockito.verifyNoInteractions(eventPublisher);
@@ -265,19 +266,19 @@ class PaymentServiceTest {
 
     @Test
     void refundCannotClaimMoneyWasReturnedWithoutProviderConfirmation() {
-        Booking booking = Booking.builder().id("booking-1").userId("user-1").hotelId("hotel-1")
+        Booking booking = Booking.builder().id(id("booking-1")).userId(id("user-1")).hotelId(id("hotel-1"))
                 .checkInDate(LocalDate.now().plusDays(2)).checkOutDate(LocalDate.now().plusDays(3))
                 .status(BookingStatus.CONFIRMED).paidAmount(new BigDecimal("1000000")).build();
-        Payment payment = Payment.builder().id("payment-1").bookingId("booking-1")
+        Payment payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1"))
                 .method(PaymentMethod.VNPAY).amount(new BigDecimal("1000000")).status(PaymentStatus.COMPLETED).build();
-        when(paymentRepository.findById("payment-1")).thenReturn(Optional.of(payment));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findById(id("payment-1"))).thenReturn(Optional.of(payment));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-        assertThatThrownBy(() -> paymentService.refundPayment("payment-1"))
+        assertThatThrownBy(() -> paymentService.refundPayment(id("payment-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         ex -> assertThat(ex.getStatusCode().value()).isEqualTo(503));
-        verify(refundRequests).validateExecution("payment-1");
+        verify(refundRequests).validateExecution(id("payment-1"));
         assertThat(payment.getStatus()).isEqualTo(PaymentStatus.COMPLETED);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("1000000");
         verify(paymentRepository, never()).save(any());
@@ -287,8 +288,8 @@ class PaymentServiceTest {
     @Test void refundCannotBypassApprovalGuardThroughPaymentService() {
         org.mockito.Mockito.doThrow(new org.springframework.web.server.ResponseStatusException(
                 org.springframework.http.HttpStatus.CONFLICT, "Approval required"))
-                .when(refundRequests).validateExecution("payment-1");
-        assertThatThrownBy(() -> paymentService.refundPayment("payment-1"))
+                .when(refundRequests).validateExecution(id("payment-1"));
+        assertThatThrownBy(() -> paymentService.refundPayment(id("payment-1")))
                 .isInstanceOfSatisfying(org.springframework.web.server.ResponseStatusException.class,
                         ex -> assertThat(ex.getStatusCode().value()).isEqualTo(409));
         org.mockito.Mockito.verifyNoInteractions(paymentRepository, bookingRepository, eventPublisher, bookingService);
@@ -298,14 +299,14 @@ class PaymentServiceTest {
     @org.junit.jupiter.params.provider.NullAndEmptySource
     @org.junit.jupiter.params.provider.ValueSource(strings = "2026-02-28T17:01:00Z")
     void callbackQueuesReservationWithoutClaimingInventorySuccess(String signedTime) {
-        Booking booking = Booking.builder().id("booking-1").userId("user-1")
+        Booking booking = Booking.builder().id(id("booking-1")).userId(id("user-1"))
                 .status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal("1000000"))
                 .checkInDate(LocalDate.now().plusDays(2)).checkOutDate(LocalDate.now().plusDays(3)).build();
-        Payment payment = Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.VNPAY)
+        Payment payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1")).method(PaymentMethod.VNPAY)
                 .status(PaymentStatus.PENDING).amount(new BigDecimal("1000000")).vnpayOrderId("payment-1").build();
-        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of(id("booking-1")));
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         var transactionAt = signedTime == null || signedTime.isEmpty() ? null : java.time.Instant.parse(signedTime);
         paymentService.processVNPayCallback("payment-1", "00", "123456789", transactionAt);
@@ -330,33 +331,33 @@ class PaymentServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.ValueSource(strings = {"0", "-1", "10000000000", "1.000001"})
     void unsupportedProviderAmountIsRejectedWithoutRoundingOrOverflow(String amount) {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING)
                 .paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal(amount)).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        assertThatThrownBy(() -> paymentService.initVnPayPayment("booking-1", "127.0.0.1"))
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        assertThatThrownBy(() -> paymentService.initVnPayPayment(id("booking-1"), "127.0.0.1"))
                 .isInstanceOf(IllegalArgumentException.class);
         verify(bookingService, never()).ensureActiveHold(any());
         verify(paymentRepository, never()).save(any());
     }
     @Test void legacyOnsiteAmountMismatchCannotInventReceivedMoney() {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING_PAYMENT)
                 .paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal("1000000")).build();
-        var payment = Payment.builder().id("payment-1").status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.ONE).build();
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
-        when(paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc("booking-1", PaymentStatus.ONSITE_PENDING)).thenReturn(Optional.of(payment));
-        assertThatThrownBy(() -> paymentService.confirmHotelPayment("booking-1"))
+        var payment = Payment.builder().id(id("payment-1")).status(PaymentStatus.ONSITE_PENDING).amount(BigDecimal.ONE).build();
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
+        when(paymentRepository.findFirstByBookingIdAndStatusOrderByCreatedAtDesc(id("booking-1"), PaymentStatus.ONSITE_PENDING)).thenReturn(Optional.of(payment));
+        assertThatThrownBy(() -> paymentService.confirmHotelPayment(id("booking-1")))
                 .isInstanceOf(org.springframework.web.server.ResponseStatusException.class);
         assertThat(booking.getPaidAmount()).isEqualByComparingTo("0");
         verify(paymentRepository, never()).save(any());
     }
     @Test void lateFailedCallbackDoesNotReopenCancelledBooking() {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.CANCELLED)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.CANCELLED)
                 .paidAmount(BigDecimal.ZERO).totalAmount(new BigDecimal("1000000")).build();
-        var payment = Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.VNPAY)
+        var payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1")).method(PaymentMethod.VNPAY)
                 .status(PaymentStatus.PENDING).amount(new BigDecimal("1000000")).build();
-        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of(id("booking-1")));
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         paymentService.processVNPayCallback("payment-1", "24", "0");
         assertThat(booking.getStatus()).isEqualTo(BookingStatus.CANCELLED);
@@ -367,13 +368,13 @@ class PaymentServiceTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.ValueSource(strings = {"0", "1000000"})
     void lateSuccessRecordsCancelledPaymentOnceWithoutReopeningReservation(String received) {
-        var booking = Booking.builder().id("booking-1").status(BookingStatus.CANCELLED)
+        var booking = Booking.builder().id(id("booking-1")).status(BookingStatus.CANCELLED)
                 .paidAmount(new BigDecimal(received)).totalAmount(new BigDecimal("1000000"))
                 .checkInDate(LocalDate.now().plusDays(2)).checkOutDate(LocalDate.now().plusDays(3)).build();
-        var payment = Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.VNPAY)
+        var payment = Payment.builder().id(id("payment-1")).bookingId(id("booking-1")).method(PaymentMethod.VNPAY)
                 .status(PaymentStatus.CANCELLED).amount(new BigDecimal("1000000")).build();
-        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of(id("booking-1")));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -390,13 +391,13 @@ class PaymentServiceTest {
         verify(paymentRepository, never()).findByVnpayOrderId(any());
     }
     @Test void providerReceiptHasNoRemoteReservationEffectsBeforeCommit() {
-        var booking=Booking.builder().id("booking-1").status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
-            .totalAmount(new BigDecimal("1000000")).holdId("hold-1").checkInDate(LocalDate.now().plusDays(2))
+        var booking=Booking.builder().id(id("booking-1")).status(BookingStatus.PENDING_PAYMENT).paidAmount(BigDecimal.ZERO)
+            .totalAmount(new BigDecimal("1000000")).holdId(id("hold-1")).checkInDate(LocalDate.now().plusDays(2))
             .checkOutDate(LocalDate.now().plusDays(3)).items(java.util.List.of()).build();
-        var payment=Payment.builder().id("payment-1").bookingId("booking-1").method(PaymentMethod.VNPAY)
+        var payment=Payment.builder().id(id("payment-1")).bookingId(id("booking-1")).method(PaymentMethod.VNPAY)
             .status(PaymentStatus.PENDING).amount(new BigDecimal("1000000")).build();
-        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of("booking-1"));
-        when(bookingRepository.findByIdForUpdate("booking-1")).thenReturn(Optional.of(booking));
+        when(paymentRepository.findBookingIdByVnpayOrderId("payment-1")).thenReturn(Optional.of(id("booking-1")));
+        when(bookingRepository.findByIdForUpdate(id("booking-1"))).thenReturn(Optional.of(booking));
         when(paymentRepository.findByVnpayOrderIdForUpdate("payment-1")).thenReturn(Optional.of(payment));
         when(paymentRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         org.springframework.transaction.support.TransactionSynchronizationManager.initSynchronization();

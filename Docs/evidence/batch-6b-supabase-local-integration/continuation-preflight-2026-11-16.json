@@ -1,0 +1,132 @@
+{
+  "date": "2026-11-16",
+  "scope": "Current private configuration and guarded preflight invocations; no migration or security mutations",
+  "runner": "1.2.0",
+  "distinctProjectMappings": true,
+  "managementTokenPresent": false,
+  "owners": [
+    {
+      "owner": "user",
+      "expectedTables": 7,
+      "v1File": "user-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "v1Sha256": "ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d",
+      "v1HashMatchesManifest": true,
+      "createTableStatements": 7,
+      "missingRunnerEnvironment": [
+        "USER_MIGRATION_DB_PASSWORD",
+        "BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "missingTargetFields": [],
+      "configuredTlsVerifyFull": true,
+      "caHashMatchesManifest": true,
+      "exitCode": 2,
+      "runnerResult": [
+        "BLOCKED MISSING_BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "hostedPreflight": "BLOCKED",
+      "security": "NOT VERIFIED"
+    },
+    {
+      "owner": "hotel",
+      "expectedTables": 24,
+      "v1File": "hotel-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "v1Sha256": "0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a",
+      "v1HashMatchesManifest": true,
+      "createTableStatements": 24,
+      "missingRunnerEnvironment": [
+        "HOTEL_MIGRATION_DB_URL",
+        "HOTEL_MIGRATION_DB_USERNAME",
+        "HOTEL_MIGRATION_DB_PASSWORD",
+        "BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "missingTargetFields": [
+        "hotel.login",
+        "hotel.sqlUser",
+        "hotel.runtimeRole"
+      ],
+      "exitCode": 2,
+      "runnerResult": [
+        "BLOCKED MISSING_HOTEL_MIGRATION_DB_URL"
+      ],
+      "hostedPreflight": "BLOCKED",
+      "security": "NOT VERIFIED"
+    },
+    {
+      "owner": "booking",
+      "expectedTables": 7,
+      "v1File": "booking-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "v1Sha256": "1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2",
+      "v1HashMatchesManifest": true,
+      "createTableStatements": 7,
+      "missingRunnerEnvironment": [
+        "BOOKING_MIGRATION_DB_URL",
+        "BOOKING_MIGRATION_DB_USERNAME",
+        "BOOKING_MIGRATION_DB_PASSWORD",
+        "BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "missingTargetFields": [
+        "booking.login",
+        "booking.sqlUser",
+        "booking.runtimeRole"
+      ],
+      "exitCode": 2,
+      "runnerResult": [
+        "BLOCKED MISSING_BOOKING_MIGRATION_DB_URL"
+      ],
+      "hostedPreflight": "BLOCKED",
+      "security": "NOT VERIFIED"
+    },
+    {
+      "owner": "revenue",
+      "expectedTables": 5,
+      "v1File": "revenue-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "v1Sha256": "bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223",
+      "v1HashMatchesManifest": true,
+      "createTableStatements": 5,
+      "missingRunnerEnvironment": [
+        "REVENUE_MIGRATION_DB_URL",
+        "REVENUE_MIGRATION_DB_USERNAME",
+        "REVENUE_MIGRATION_DB_PASSWORD",
+        "BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "missingTargetFields": [
+        "revenue.login",
+        "revenue.sqlUser",
+        "revenue.runtimeRole"
+      ],
+      "exitCode": 2,
+      "runnerResult": [
+        "BLOCKED MISSING_REVENUE_MIGRATION_DB_URL"
+      ],
+      "hostedPreflight": "BLOCKED",
+      "security": "NOT VERIFIED"
+    },
+    {
+      "owner": "regulations",
+      "expectedTables": 3,
+      "v1File": "regulations-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "v1Sha256": "f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac",
+      "v1HashMatchesManifest": true,
+      "createTableStatements": 3,
+      "missingRunnerEnvironment": [
+        "REGULATIONS_MIGRATION_DB_URL",
+        "REGULATIONS_MIGRATION_DB_USERNAME",
+        "REGULATIONS_MIGRATION_DB_PASSWORD",
+        "BATCH6B_MANAGEMENT_TOKEN"
+      ],
+      "missingTargetFields": [
+        "regulations.login",
+        "regulations.sqlUser",
+        "regulations.runtimeRole"
+      ],
+      "exitCode": 2,
+      "runnerResult": [
+        "BLOCKED MISSING_REGULATIONS_MIGRATION_DB_URL"
+      ],
+      "hostedPreflight": "BLOCKED",
+      "security": "NOT VERIFIED"
+    }
+  ],
+  "migrationApproved": false,
+  "hostedVerified": false
+}

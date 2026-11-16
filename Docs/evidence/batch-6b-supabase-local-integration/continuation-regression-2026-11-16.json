@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-16",
+  "scope": "Local configuration guards and runner unit suite; no hosted tests",
+  "results": {
+    "springGuards": {
+      "status": "PASS",
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "executed": 35
+      },
+      "suites": [
+        {
+          "suite": "com.example.userservice.config.SupabaseDevEnvironmentGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.example.hotelservice.config.SupabaseDevEnvironmentGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.example.bookingservice.config.SupabaseDevEnvironmentGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.example.revenueservice.config.SupabaseDevEnvironmentGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.example.regulationsservice.config.SupabaseDevEnvironmentGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "buildExitCode": 0
+    },
+    "runner": {
+      "status": "PASS",
+      "totals": {
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "executed": 9
+      },
+      "suites": [
+        {
+          "suite": "com.checkinn.db.HostedRunnerTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.checkinn.db.LocalCanonicalRolesTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "com.checkinn.db.LocalCatalogTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "com.checkinn.db.LocalManagedEventReviewTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1
+        }
+      ],
+      "buildExitCode": 0
+    }
+  },
+  "broadBackendRegression": "NOT RUN",
+  "frontendTypeScript": "NOT RUN",
+  "frontendRegression": "NOT RUN",
+  "hostedJdbcHibernateBusiness": "BLOCKED",
+  "diffCheck": "PASS"
+}

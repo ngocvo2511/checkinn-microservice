@@ -1,5 +1,6 @@
 package com.example.bookingservice.payment.entity;
 
+import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,10 +27,10 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(nullable = false)
-    private String bookingId;
+    private UUID bookingId;
 
     @Column(nullable = false)
     private BigDecimal amount;

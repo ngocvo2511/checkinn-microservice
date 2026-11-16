@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-14 Asia/Saigon",
+  "unexpected_tracked_changes": [],
+  "tracked_changes": [
+    "checkinn/Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+    "checkinn/Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md"
+  ],
+  "append_only_history_preserved": {
+    "Docs/database-design/SUPABASE_DATABASE_ARCHITECTURE.md": true,
+    "Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md": true,
+    "Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md": true,
+    "Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md": true
+  },
+  "canonical_sha_matches_5b": true,
+  "owner_local_fk_references": true,
+  "table_counts": {
+    "user": 7,
+    "hotel": 24,
+    "booking": 7,
+    "revenue": 5,
+    "regulations": 3
+  },
+  "json_parsed": [
+    "initial-state.json",
+    "protected-before.json",
+    "required-inputs.json",
+    "secret-locations.json",
+    "source-inventory.json",
+    "source-signals.json"
+  ],
+  "python_ast": "PASS",
+  "required_evidence_markdown_count": 14,
+  "broken_new_links": [],
+  "known_local_secret_or_literal_endpoint_matches": [],
+  "diff_check_exit": {
+    "backend": 0,
+    "frontend": 0
+  },
+  "frontend_all_tracked_bytes_unchanged": true,
+  "git_index": "",
+  "runtime_tests": "NOT RUN: documentation/static-inspector only",
+  "hosted_access": "NONE",
+  "verification_status": "PASS",
+  "verification_note": "Initial link check preceded creation of verification.json; final repeat confirms the report link resolves."
+}

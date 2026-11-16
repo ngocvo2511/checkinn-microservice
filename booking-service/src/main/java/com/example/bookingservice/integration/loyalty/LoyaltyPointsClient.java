@@ -1,5 +1,6 @@
 package com.example.bookingservice.integration.loyalty;
 
+import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +17,15 @@ public interface LoyaltyPointsClient {
      * Lấy thông tin điểm của người dùng
      */
     @GetMapping("/api/loyalty-points/{userId}")
-    LoyaltyPointsDTO getLoyaltyPoints(@PathVariable String userId);
+    LoyaltyPointsDTO getLoyaltyPoints(@PathVariable UUID userId);
 
     /**
      * Tích điểm từ booking thành công
      */
     @PostMapping("/api/loyalty-points/earn")
     LoyaltyPointsDTO earnPoints(
-            @RequestParam String userId,
-            @RequestParam String bookingId,
+            @RequestParam UUID userId,
+            @RequestParam UUID bookingId,
             @RequestParam BigDecimal totalAmount
     );
 
@@ -39,7 +40,7 @@ public interface LoyaltyPointsClient {
      */
     @PostMapping("/api/loyalty-points/refund")
     void refundPoints(
-            @RequestParam String userId,
-            @RequestParam String bookingId
+            @RequestParam UUID userId,
+            @RequestParam UUID bookingId
     );
 }

@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-15",
+  "scope": "User static supplied-snapshot review + local PostgreSQL17.11 tests only",
+  "runnerVersion": "1.2.0",
+  "flywayVersion": "10.22.0",
+  "testSuites": [
+    {
+      "name": "com.checkinn.db.HostedRunnerTest",
+      "tests": 9,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalCanonicalRolesTest",
+      "tests": 5,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalCatalogTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalManagedEventReviewTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "sourceSnapshotSha256": "22c415a419dadd2e14b69cacbcb28cac3a55b1bea43ad9a83a8c30b7d443aa23",
+  "reviewPolicySha256": "b1a7699a4bde3d78b433330b22b0ee9827ad0dc333d15d45ed0ee92981cbfd01",
+  "reviewScope": "User only, pinned V1, exact6 descriptors and definitions; NOT migration approval",
+  "reviewedPolicyLiveMatch": "NOT RUN against actual hosted connection",
+  "userDataApi": "enabled; public/graphql_public exposed; change proposed but not applied",
+  "rolesPasswordsSettingsOrSchemaChangedOnHosted": false,
+  "dedicatedMigratorCallbacks": "PASS on local synthetic6-trigger fixture using non-superuser; actual Supabase callback execution NOT VERIFIED",
+  "driftNegatives": [
+    "extra trigger",
+    "definition",
+    "owner",
+    "enabled flag",
+    "search path",
+    "ACL",
+    "policy hash",
+    "owner/project/V1/status scope"
+  ],
+  "newOwnedLocalTestClustersRunning": 0,
+  "protectedSqlBaseConfigFilesUnchanged": 30,
+  "runnerJarSha256": "50ecb443b4d418322cf08ddc4673cd1353be467a9426450cb89f0daab5591c4d",
+  "activeReadinessFlags": false,
+  "frontendWorkingTree": "clean",
+  "stagedChanges": 0
+}

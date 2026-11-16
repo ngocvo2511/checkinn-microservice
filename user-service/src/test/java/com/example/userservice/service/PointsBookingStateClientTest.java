@@ -1,4 +1,5 @@
 package com.example.userservice.service;
+import static com.example.userservice.contract.TestIds.*;
 
 import com.example.bookingservice.grpc.*;
 import com.example.userservice.security.JwtService;
@@ -18,8 +19,8 @@ class PointsBookingStateClientTest {
         try {
             ReflectionTestUtils.setField(client, "bookings", BookingGrpcServiceGrpc.newBlockingStub(channel));
             UUID user = UUID.randomUUID();
-            assertThat(client.getState("booking", user)).isEqualTo("MISSING");
-            assertThat(channel.request).isEqualTo(LoyaltyBookingStateRequest.newBuilder().setBookingId("booking").setUserId(user.toString()).build());
+            assertThat(client.getState(id("booking"), user)).isEqualTo("MISSING");
+            assertThat(channel.request).isEqualTo(LoyaltyBookingStateRequest.newBuilder().setBookingId(wire("booking")).setUserId(user.toString()).build());
             assertThat(channel.authorization).isEqualTo("Bearer test-service-token");
             assertThat(channel.options.getDeadline().timeRemaining(TimeUnit.MILLISECONDS)).isBetween(1L, 3000L);
         } finally { client.close(); }
@@ -31,10 +32,10 @@ class PointsBookingStateClientTest {
         try {
             for (Status status : new Status[]{Status.UNAVAILABLE, Status.DEADLINE_EXCEEDED, Status.UNAUTHENTICATED, Status.UNIMPLEMENTED}) {
                 ReflectionTestUtils.setField(client, "bookings", BookingGrpcServiceGrpc.newBlockingStub(new StateChannel(status, "")));
-                assertThat(client.getState("booking", UUID.randomUUID())).isEqualTo("UNKNOWN");
+                assertThat(client.getState(id("booking"), UUID.randomUUID())).isEqualTo("UNKNOWN");
             }
             ReflectionTestUtils.setField(client, "bookings", BookingGrpcServiceGrpc.newBlockingStub(new StateChannel(Status.OK, "unexpected")));
-            assertThat(client.getState("booking", UUID.randomUUID())).isEqualTo("UNKNOWN");
+            assertThat(client.getState(id("booking"), UUID.randomUUID())).isEqualTo("UNKNOWN");
         } finally { client.close(); }
     }
 

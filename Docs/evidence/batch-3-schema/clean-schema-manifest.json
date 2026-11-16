@@ -1,0 +1,5765 @@
+{
+  "current_booking": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "cancellation_policy",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "booking_items",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "booking_items",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "guest_name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 6,
+        "table_name": "booking_items",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "quantity",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 7,
+        "table_name": "booking_items",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "rate_plan_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "subtotal",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 11,
+        "table_name": "booking_items",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "tax_fee",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 12,
+        "table_name": "booking_items",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "unit_price",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 13,
+        "table_name": "booking_items",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "booking_items",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "adults",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 2,
+        "table_name": "bookings",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "cancellation_policy_version",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "bookings",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "bookings",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "bookings",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "children",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 7,
+        "table_name": "bookings",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "contact_email",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "contact_name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "contact_phone",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "earned_points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 12,
+        "table_name": "bookings",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "free_cancellation_until",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "bookings",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hold_expires_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "hold_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "idempotency_key_hash",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "idempotency_request_hash",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 19,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "inventory_review_reason",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 20,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "inventory_reviewed_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 21,
+        "table_name": "bookings",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "inventory_reviewed_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 22,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "loyalty_attempts",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 23,
+        "table_name": "bookings",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "loyalty_last_error",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 24,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "loyalty_next_attempt_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 25,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "loyalty_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 26,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "onsite_attempts",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 27,
+        "table_name": "bookings",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "onsite_last_error",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 28,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "onsite_next_attempt_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 29,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "onsite_reservation_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 30,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 31,
+        "table_name": "bookings",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_reservation_attempts",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 32,
+        "table_name": "bookings",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_reservation_last_error",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 33,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_reservation_next_attempt_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 34,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_reservation_payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 35,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_reservation_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 36,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "points_discount_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 37,
+        "table_name": "bookings",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "special_requests",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 38,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 39,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "total_amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 40,
+        "table_name": "bookings",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 41,
+        "table_name": "bookings",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "used_points",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 42,
+        "table_name": "bookings",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "user_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 43,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "voucher_code",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 44,
+        "table_name": "bookings",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "voucher_discount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 45,
+        "table_name": "bookings",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 2,
+        "table_name": "payments",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "payments",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "payments",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "transaction_occurred_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "payments",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "payments",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "vnpay_create_date",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "vnpay_order_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "vnpay_response_code",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "vnpay_transaction_no",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "payments",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 2,
+        "table_name": "refund_requests",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "approved_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "refund_requests",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "approved_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_mode",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "reason",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "refunded_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "refund_requests",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "requested_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "refund_requests",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "requested_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "refund_requests",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 13,
+        "table_name": "refund_requests",
+        "udt_name": "int8"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "booking_items_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_quantity_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL quantity",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_rate_plan_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rate_plan_id",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_room_type_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_type_id",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_room_type_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_type_name",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_subtotal_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL subtotal",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "booking_items_unit_price_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL unit_price",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "fkrw74irmyat5c39cnjkn02u99m",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (booking_id) REFERENCES bookings(id)",
+        "table_name": "booking_items"
+      },
+      {
+        "conname": "bookings_adults_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL adults",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_children_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL children",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_contact_email_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL contact_email",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_contact_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL contact_name",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_contact_phone_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL contact_phone",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_hotel_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_name",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_idempotency_key_hash_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (idempotency_key_hash)",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_paid_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL paid_amount",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'PENDING_PAYMENT'::character varying, 'CONFIRMED'::character varying, 'CHECKED_IN'::character varying, 'CHECKED_OUT'::character varying, 'CANCELLED'::character varying, 'NO_SHOW'::character varying]::text[]))",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_total_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL total_amount",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "bookings_user_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL user_id",
+        "table_name": "bookings"
+      },
+      {
+        "conname": "payments_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_method_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (method::text = ANY (ARRAY['HOTEL'::character varying, 'VNPAY'::character varying]::text[]))",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL method",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'ONSITE_PENDING'::character varying, 'COMPLETED'::character varying, 'FAILED'::character varying, 'REFUNDED'::character varying, 'CANCELLED'::character varying]::text[]))",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "payments"
+      },
+      {
+        "conname": "payments_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "payments"
+      },
+      {
+        "conname": "uk_payments_vnpay_order_id",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (vnpay_order_id)",
+        "table_name": "payments"
+      },
+      {
+        "conname": "uk_payments_vnpay_transaction_no",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (vnpay_transaction_no)",
+        "table_name": "payments"
+      },
+      {
+        "conname": "refund_requests_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_payment_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_id",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_reason_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL reason",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_requested_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_at",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_requested_by_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_by",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['REQUESTED'::character varying, 'APPROVED_PENDING_EXECUTION'::character varying, 'REJECTED'::character varying, 'REFUNDED'::character varying]::text[]))",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "refund_requests_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL version",
+        "table_name": "refund_requests"
+      },
+      {
+        "conname": "uk_refund_requests_payment_id",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payment_id)",
+        "table_name": "refund_requests"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX booking_items_pkey ON public.booking_items USING btree (id)",
+        "indexname": "booking_items_pkey",
+        "tablename": "booking_items"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX bookings_idempotency_key_hash_unique ON public.bookings USING btree (idempotency_key_hash)",
+        "indexname": "bookings_idempotency_key_hash_unique",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE INDEX bookings_loyalty_due ON public.bookings USING btree (loyalty_status, loyalty_next_attempt_at)",
+        "indexname": "bookings_loyalty_due",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE INDEX bookings_onsite_due ON public.bookings USING btree (onsite_reservation_status, onsite_next_attempt_at)",
+        "indexname": "bookings_onsite_due",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE INDEX bookings_paid_reservation_due ON public.bookings USING btree (paid_reservation_status, paid_reservation_next_attempt_at)",
+        "indexname": "bookings_paid_reservation_due",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX bookings_pkey ON public.bookings USING btree (id)",
+        "indexname": "bookings_pkey",
+        "tablename": "bookings"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX payments_pkey ON public.payments USING btree (id)",
+        "indexname": "payments_pkey",
+        "tablename": "payments"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_payments_vnpay_order_id ON public.payments USING btree (vnpay_order_id)",
+        "indexname": "uk_payments_vnpay_order_id",
+        "tablename": "payments"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_payments_vnpay_transaction_no ON public.payments USING btree (vnpay_transaction_no)",
+        "indexname": "uk_payments_vnpay_transaction_no",
+        "tablename": "payments"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX refund_requests_pkey ON public.refund_requests USING btree (id)",
+        "indexname": "refund_requests_pkey",
+        "tablename": "refund_requests"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_refund_requests_payment_id ON public.refund_requests USING btree (payment_id)",
+        "indexname": "uk_refund_requests_payment_id",
+        "tablename": "refund_requests"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "booking_items"
+      },
+      {
+        "tablename": "bookings"
+      },
+      {
+        "tablename": "payments"
+      },
+      {
+        "tablename": "refund_requests"
+      }
+    ]
+  },
+  "current_hotel": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "amenity_category_types",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "amenity_category_types",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "cities",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_count",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "cities",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "latitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "longitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "parent_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "previous_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "rejection_reason",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "requested_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "requester_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "reviewed_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "reviewer_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "hotel_accommodation_type_changes",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_amenities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_amenities",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_amenities",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "title",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_amenities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "category_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_amenities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "title",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotel_amenity_categories",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_policies",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "content",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_policies",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_policies",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_policies",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_policies",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "category_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotel_policies",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "hotel_policies",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_questions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "answer",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_questions",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_questions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_questions",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "question",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_questions",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotel_questions",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "hotel_questions",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotel_reviews",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "amenities_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotel_reviews",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "cleanliness_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "comfort_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "content",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotel_reviews",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "hotel_reviews",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "guest_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "hotel_reviews",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "helpful_count",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 9,
+        "table_name": "hotel_reviews",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "hotel_reviews",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "location_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "rating",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 12,
+        "table_name": "hotel_reviews",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "staff_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "hotel_reviews",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "title",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "hotel_reviews",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "unhelpful_count",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 16,
+        "table_name": "hotel_reviews",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "hotel_reviews",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "value_for_money_rating",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "hotel_reviews",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "hotels",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "accommodation_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "address",
+        "data_type": "jsonb",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "hotels",
+        "udt_name": "jsonb"
+      },
+      {
+        "column_default": null,
+        "column_name": "approved_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "business_license_file_path",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "business_license_number",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "city_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "hotels",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "contact_email",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "contact_phone",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "hotels",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "description",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "hotels",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "hotels",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "operation_license_file_path",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "operation_license_number",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "owner_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "hotels",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "owner_identity_back_path",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 17,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "owner_identity_front_path",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 18,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "owner_identity_number",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 19,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "rejection_reason",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 20,
+        "table_name": "hotels",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "revision",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 21,
+        "table_name": "hotels",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "star_rating",
+        "data_type": "smallint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 16,
+        "numeric_scale": 0,
+        "ordinal_position": 22,
+        "table_name": "hotels",
+        "udt_name": "int2"
+      },
+      {
+        "column_default": null,
+        "column_name": "tax_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 23,
+        "table_name": "hotels",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 24,
+        "table_name": "hotels",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "media_assets",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "media_assets",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_thumbnail",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "media_assets",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "sort_order",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 4,
+        "table_name": "media_assets",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "target_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "media_assets",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "target_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "media_assets",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "media_assets",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "url",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "media_assets",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "policy_category_types",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "policy_category_types",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "provinces",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "provinces",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_count",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 3,
+        "table_name": "provinces",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "latitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "provinces",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "longitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "provinces",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "provinces",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "review_feedbacks",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "review_feedbacks",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "feedback_type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "review_feedbacks",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "review_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "review_feedbacks",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "review_feedbacks",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "review_feedbacks",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "review_responses",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "content",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "review_responses",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "review_responses",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "owner_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "review_responses",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "review_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "review_responses",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "review_responses",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_availability",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "booked",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 2,
+        "table_name": "room_availability",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "room_availability",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "room_availability",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "held",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 5,
+        "table_name": "room_availability",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "room_availability",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "room_availability",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_holds",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "room_holds",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "room_holds",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "command_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "room_holds",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "room_holds",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "expires_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "room_holds",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "room_holds",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "quantity",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 8,
+        "table_name": "room_holds",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "room_holds",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "room_holds",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "room_holds",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "room_types",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "amenities",
+        "data_type": "jsonb",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "room_types",
+        "udt_name": "jsonb"
+      },
+      {
+        "column_default": null,
+        "column_name": "base_price",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 3,
+        "table_name": "room_types",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "capacity",
+        "data_type": "jsonb",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "room_types",
+        "udt_name": "jsonb"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "room_types",
+        "udt_name": "timestamptz"
+      },
+      {
+        "column_default": null,
+        "column_name": "description",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "room_types",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "room_types",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "room_types",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "room_types",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "total_rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 10,
+        "table_name": "room_types",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "room_types",
+        "udt_name": "timestamptz"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "amenity_category_types_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "amenity_category_types"
+      },
+      {
+        "conname": "amenity_category_types_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "amenity_category_types"
+      },
+      {
+        "conname": "amenity_category_types_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "amenity_category_types"
+      },
+      {
+        "conname": "uk5dhxp2q56g7chrf0pfdxe0hts",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "amenity_category_types"
+      },
+      {
+        "conname": "cities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_hotel_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_count",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "fktphlk2hf0r6v1ebeyb23memif",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (parent_id) REFERENCES provinces(id)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "ukl61tawv0e2a93es77jkyvi7qa",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_previous_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (previous_type::text = ANY (ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying]::text[]))",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_requested_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (requested_type::text = ANY (ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying]::text[]))",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_requested_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requested_type",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_requester_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL requester_id",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying, 'SUPERSEDED'::character varying]::text[]))",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "hotel_accommodation_type_changes_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "hotel_accommodation_type_changes"
+      },
+      {
+        "conname": "fkl7yyfhnep65fgiia7pkbs255w",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (category_id) REFERENCES hotel_amenity_categories(id)",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_category_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL category_id",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenities_title_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL title",
+        "table_name": "hotel_amenities"
+      },
+      {
+        "conname": "hotel_amenity_categories_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_title_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL title",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "hotel_amenity_categories_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "hotel_amenity_categories"
+      },
+      {
+        "conname": "fk8v4llyrp0cq76bsr6vqy7a99",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (category_id) REFERENCES policy_category_types(id)",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "fkeu2fa5r51by4qqp414we57nc9",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (hotel_id) REFERENCES hotels(id)",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_category_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL category_id",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_content_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL content",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "hotel_policies_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "hotel_policies"
+      },
+      {
+        "conname": "fk8fcsjjooyxb0a1in8o1q1hw86",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (hotel_id) REFERENCES hotels(id)",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_answer_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL answer",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_question_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL question",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_questions_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "hotel_questions"
+      },
+      {
+        "conname": "hotel_reviews_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_guest_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL guest_id",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_helpful_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL helpful_count",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_rating_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rating",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'PUBLISHED'::character varying, 'REJECTED'::character varying]::text[]))",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_unhelpful_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL unhelpful_count",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "hotel_reviews_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "uk3yo71l210cgneb12xxs1t91b8",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (hotel_id, guest_id, booking_id)",
+        "table_name": "hotel_reviews"
+      },
+      {
+        "conname": "fks4hjpubog1wqi4qktjpoejarg",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (city_id) REFERENCES cities(id)",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_accommodation_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (accommodation_type::text = ANY (ARRAY['HOTEL'::character varying, 'VILLA'::character varying, 'APARTMENT'::character varying, 'GUEST_HOUSE'::character varying]::text[]))",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_address_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL address",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_approved_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (approved_status::text = ANY (ARRAY['DRAFT'::character varying, 'PENDING'::character varying, 'APPROVED'::character varying, 'REJECTED'::character varying]::text[]))",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_approved_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL approved_status",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_business_license_number_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL business_license_number",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_city_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL city_id",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_owner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL owner_id",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_revision_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL revision",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "hotels_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "hotels"
+      },
+      {
+        "conname": "media_assets_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_is_thumbnail_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_thumbnail",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_sort_order_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL sort_order",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_target_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL target_id",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_target_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (target_type::text = ANY (ARRAY['HOTEL'::character varying, 'ROOM_TYPE'::character varying]::text[]))",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_target_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL target_type",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "media_assets_url_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL url",
+        "table_name": "media_assets"
+      },
+      {
+        "conname": "policy_category_types_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "policy_category_types"
+      },
+      {
+        "conname": "policy_category_types_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "policy_category_types"
+      },
+      {
+        "conname": "policy_category_types_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "policy_category_types"
+      },
+      {
+        "conname": "ukapt0ht47b8dy5pf23nvrmsiuj",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "policy_category_types"
+      },
+      {
+        "conname": "provinces_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "provinces_hotel_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_count",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "provinces_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "provinces_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "provinces_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "ukl256wnwfdobq071mcq7rckr9y",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "provinces"
+      },
+      {
+        "conname": "review_feedbacks_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_feedback_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (feedback_type::text = ANY (ARRAY['HELPFUL'::character varying, 'UNHELPFUL'::character varying]::text[]))",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_feedback_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL feedback_type",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_review_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL review_id",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_feedbacks_user_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL user_id",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "ukeqr0oll0lr2pmm3cn8k6shsss",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (review_id, user_id)",
+        "table_name": "review_feedbacks"
+      },
+      {
+        "conname": "review_responses_content_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL content",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_owner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL owner_id",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_review_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL review_id",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "review_responses_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "review_responses"
+      },
+      {
+        "conname": "room_availability_booked_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booked",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL date",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_held_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL held",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_room_type_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_type_id",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_availability_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "uknw3vl4q1ljvnf0gvpp9qw5dlp",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (room_type_id, date)",
+        "table_name": "room_availability"
+      },
+      {
+        "conname": "room_holds_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_command_id_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (command_id)",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_quantity_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL quantity",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_room_type_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL room_type_id",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (status::text = ANY (ARRAY['HELD'::character varying, 'CONFIRMED'::character varying, 'RELEASED'::character varying]::text[]))",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_holds_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "room_holds"
+      },
+      {
+        "conname": "room_types_base_price_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL base_price",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_capacity_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL capacity",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_is_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL is_active",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "room_types"
+      },
+      {
+        "conname": "room_types_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "room_types"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX amenity_category_types_pkey ON public.amenity_category_types USING btree (id)",
+        "indexname": "amenity_category_types_pkey",
+        "tablename": "amenity_category_types"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk5dhxp2q56g7chrf0pfdxe0hts ON public.amenity_category_types USING btree (name)",
+        "indexname": "uk5dhxp2q56g7chrf0pfdxe0hts",
+        "tablename": "amenity_category_types"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)",
+        "indexname": "cities_pkey",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX ukl61tawv0e2a93es77jkyvi7qa ON public.cities USING btree (name)",
+        "indexname": "ukl61tawv0e2a93es77jkyvi7qa",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_accommodation_type_changes_pkey ON public.hotel_accommodation_type_changes USING btree (id)",
+        "indexname": "hotel_accommodation_type_changes_pkey",
+        "tablename": "hotel_accommodation_type_changes"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_amenities_pkey ON public.hotel_amenities USING btree (id)",
+        "indexname": "hotel_amenities_pkey",
+        "tablename": "hotel_amenities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_amenity_categories_pkey ON public.hotel_amenity_categories USING btree (id)",
+        "indexname": "hotel_amenity_categories_pkey",
+        "tablename": "hotel_amenity_categories"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_policies_pkey ON public.hotel_policies USING btree (id)",
+        "indexname": "hotel_policies_pkey",
+        "tablename": "hotel_policies"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_questions_pkey ON public.hotel_questions USING btree (id)",
+        "indexname": "hotel_questions_pkey",
+        "tablename": "hotel_questions"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotel_reviews_pkey ON public.hotel_reviews USING btree (id)",
+        "indexname": "hotel_reviews_pkey",
+        "tablename": "hotel_reviews"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk3yo71l210cgneb12xxs1t91b8 ON public.hotel_reviews USING btree (hotel_id, guest_id, booking_id)",
+        "indexname": "uk3yo71l210cgneb12xxs1t91b8",
+        "tablename": "hotel_reviews"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX hotels_pkey ON public.hotels USING btree (id)",
+        "indexname": "hotels_pkey",
+        "tablename": "hotels"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX media_assets_pkey ON public.media_assets USING btree (id)",
+        "indexname": "media_assets_pkey",
+        "tablename": "media_assets"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX policy_category_types_pkey ON public.policy_category_types USING btree (id)",
+        "indexname": "policy_category_types_pkey",
+        "tablename": "policy_category_types"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX ukapt0ht47b8dy5pf23nvrmsiuj ON public.policy_category_types USING btree (name)",
+        "indexname": "ukapt0ht47b8dy5pf23nvrmsiuj",
+        "tablename": "policy_category_types"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX provinces_pkey ON public.provinces USING btree (id)",
+        "indexname": "provinces_pkey",
+        "tablename": "provinces"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX ukl256wnwfdobq071mcq7rckr9y ON public.provinces USING btree (name)",
+        "indexname": "ukl256wnwfdobq071mcq7rckr9y",
+        "tablename": "provinces"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX review_feedbacks_pkey ON public.review_feedbacks USING btree (id)",
+        "indexname": "review_feedbacks_pkey",
+        "tablename": "review_feedbacks"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX ukeqr0oll0lr2pmm3cn8k6shsss ON public.review_feedbacks USING btree (review_id, user_id)",
+        "indexname": "ukeqr0oll0lr2pmm3cn8k6shsss",
+        "tablename": "review_feedbacks"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX review_responses_pkey ON public.review_responses USING btree (id)",
+        "indexname": "review_responses_pkey",
+        "tablename": "review_responses"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_availability_pkey ON public.room_availability USING btree (id)",
+        "indexname": "room_availability_pkey",
+        "tablename": "room_availability"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uknw3vl4q1ljvnf0gvpp9qw5dlp ON public.room_availability USING btree (room_type_id, date)",
+        "indexname": "uknw3vl4q1ljvnf0gvpp9qw5dlp",
+        "tablename": "room_availability"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_holds_command_id_unique ON public.room_holds USING btree (command_id)",
+        "indexname": "room_holds_command_id_unique",
+        "tablename": "room_holds"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_holds_pkey ON public.room_holds USING btree (id)",
+        "indexname": "room_holds_pkey",
+        "tablename": "room_holds"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX room_types_pkey ON public.room_types USING btree (id)",
+        "indexname": "room_types_pkey",
+        "tablename": "room_types"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "amenity_category_types"
+      },
+      {
+        "tablename": "cities"
+      },
+      {
+        "tablename": "hotel_accommodation_type_changes"
+      },
+      {
+        "tablename": "hotel_amenities"
+      },
+      {
+        "tablename": "hotel_amenity_categories"
+      },
+      {
+        "tablename": "hotel_policies"
+      },
+      {
+        "tablename": "hotel_questions"
+      },
+      {
+        "tablename": "hotel_reviews"
+      },
+      {
+        "tablename": "hotels"
+      },
+      {
+        "tablename": "media_assets"
+      },
+      {
+        "tablename": "policy_category_types"
+      },
+      {
+        "tablename": "provinces"
+      },
+      {
+        "tablename": "review_feedbacks"
+      },
+      {
+        "tablename": "review_responses"
+      },
+      {
+        "tablename": "room_availability"
+      },
+      {
+        "tablename": "room_holds"
+      },
+      {
+        "tablename": "room_types"
+      }
+    ]
+  },
+  "current_regulations_service": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 1,
+        "table_name": "regulation_snapshots",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "applied_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "regulation_snapshots",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "regulation_key",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "regulation_snapshots",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "regulation_name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "regulation_snapshots",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "snapshot_data",
+        "data_type": "text",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "regulation_snapshots",
+        "udt_name": "text"
+      },
+      {
+        "column_default": null,
+        "column_name": "source_user",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "regulation_snapshots",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "version",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 7,
+        "table_name": "regulation_snapshots",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 1,
+        "table_name": "regulations",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "active",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "regulations",
+        "udt_name": "bool"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "regulations",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "description",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "regulations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "regulations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "regulation_key",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "regulations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "updated_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "regulations",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "value",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "regulations",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "version",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 9,
+        "table_name": "regulations",
+        "udt_name": "int4"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "regulation_snapshots_applied_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL applied_at",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_regulation_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL regulation_key",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_regulation_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL regulation_name",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_snapshot_data_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL snapshot_data",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulation_snapshots_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL version",
+        "table_name": "regulation_snapshots"
+      },
+      {
+        "conname": "regulations_active_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL active",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_regulation_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL regulation_key",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_value_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL value",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "regulations_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL version",
+        "table_name": "regulations"
+      },
+      {
+        "conname": "ukpeayty49ty0779rjkgcd2dcam",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (regulation_key)",
+        "table_name": "regulations"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX regulation_snapshots_pkey ON public.regulation_snapshots USING btree (id)",
+        "indexname": "regulation_snapshots_pkey",
+        "tablename": "regulation_snapshots"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX regulations_pkey ON public.regulations USING btree (id)",
+        "indexname": "regulations_pkey",
+        "tablename": "regulations"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX ukpeayty49ty0779rjkgcd2dcam ON public.regulations USING btree (regulation_key)",
+        "indexname": "ukpeayty49ty0779rjkgcd2dcam",
+        "tablename": "regulations"
+      }
+    ],
+    "sequences": [
+      {
+        "cycle": false,
+        "data_type": "bigint",
+        "increment_by": 1,
+        "max_value": 9223372036854775807,
+        "min_value": 1,
+        "sequencename": "regulation_snapshots_id_seq",
+        "start_value": 1
+      },
+      {
+        "cycle": false,
+        "data_type": "bigint",
+        "increment_by": 1,
+        "max_value": 9223372036854775807,
+        "min_value": 1,
+        "sequencename": "regulations_id_seq",
+        "start_value": 1
+      }
+    ],
+    "tables": [
+      {
+        "tablename": "regulation_snapshots"
+      },
+      {
+        "tablename": "regulations"
+      }
+    ]
+  },
+  "current_revenue_service": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "booking_status_records",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "booking_status_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "booking_status_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "booking_status_records",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "booking_status_records",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "booking_status_records",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "event_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "booking_status_records",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "event_version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 8,
+        "table_name": "booking_status_records",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9,
+        "table_name": "booking_status_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "last_event_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "booking_status_records",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 11,
+        "table_name": "booking_status_records",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12,
+        "table_name": "booking_status_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 13,
+        "table_name": "booking_status_records",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "payment_records",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "amount",
+        "data_type": "numeric",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 38,
+        "numeric_scale": 2,
+        "ordinal_position": 2,
+        "table_name": "payment_records",
+        "udt_name": "numeric"
+      },
+      {
+        "column_default": null,
+        "column_name": "booking_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_in_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "payment_records",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "check_out_date",
+        "data_type": "date",
+        "datetime_precision": 0,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "payment_records",
+        "udt_name": "date"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "payment_records",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "customer_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "event_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "payment_records",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "event_version",
+        "data_type": "bigint",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 64,
+        "numeric_scale": 0,
+        "ordinal_position": 9,
+        "table_name": "payment_records",
+        "udt_name": "int8"
+      },
+      {
+        "column_default": null,
+        "column_name": "hotel_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "last_event_id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11,
+        "table_name": "payment_records",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "nights",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 12,
+        "table_name": "payment_records",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "paid_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13,
+        "table_name": "payment_records",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_method",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "payment_status",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "room_type_id",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16,
+        "table_name": "payment_records",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "rooms",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 17,
+        "table_name": "payment_records",
+        "udt_name": "int4"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "booking_status_records_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_booking_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_status",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_event_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL event_at",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "booking_status_records_rooms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rooms",
+        "table_name": "booking_status_records"
+      },
+      {
+        "conname": "payment_records_amount_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_booking_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL booking_id",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_check_in_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_in_date",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_check_out_date_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL check_out_date",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_customer_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL customer_id",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_event_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL event_at",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_hotel_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL hotel_id",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_nights_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL nights",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_payment_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_method",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_payment_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payment_status",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "payment_records"
+      },
+      {
+        "conname": "payment_records_rooms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL rooms",
+        "table_name": "payment_records"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX booking_status_records_pkey ON public.booking_status_records USING btree (id)",
+        "indexname": "booking_status_records_pkey",
+        "tablename": "booking_status_records"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX payment_records_pkey ON public.payment_records USING btree (id)",
+        "indexname": "payment_records_pkey",
+        "tablename": "payment_records"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "booking_status_records"
+      },
+      {
+        "tablename": "payment_records"
+      }
+    ]
+  },
+  "current_user_service": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "installed_rank",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 1,
+        "table_name": "flyway_schema_history",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "version",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "flyway_schema_history",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "description",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "flyway_schema_history",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "type",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "flyway_schema_history",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "script",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "flyway_schema_history",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "checksum",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 6,
+        "table_name": "flyway_schema_history",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "installed_by",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7,
+        "table_name": "flyway_schema_history",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": "now()",
+        "column_name": "installed_on",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8,
+        "table_name": "flyway_schema_history",
+        "udt_name": "timestamp"
+      },
+      {
+        "column_default": null,
+        "column_name": "execution_time",
+        "data_type": "integer",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "ordinal_position": 9,
+        "table_name": "flyway_schema_history",
+        "udt_name": "int4"
+      },
+      {
+        "column_default": null,
+        "column_name": "success",
+        "data_type": "boolean",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10,
+        "table_name": "flyway_schema_history",
+        "udt_name": "bool"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "flyway_schema_history_description_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL description",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_execution_time_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL execution_time",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_installed_by_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL installed_by",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_installed_on_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL installed_on",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_installed_rank_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL installed_rank",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_pk",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (installed_rank)",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_script_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL script",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_success_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL success",
+        "table_name": "flyway_schema_history"
+      },
+      {
+        "conname": "flyway_schema_history_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL type",
+        "table_name": "flyway_schema_history"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX flyway_schema_history_pk ON public.flyway_schema_history USING btree (installed_rank)",
+        "indexname": "flyway_schema_history_pk",
+        "tablename": "flyway_schema_history"
+      },
+      {
+        "indexdef": "CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success)",
+        "indexname": "flyway_schema_history_s_idx",
+        "tablename": "flyway_schema_history"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "flyway_schema_history"
+      }
+    ]
+  },
+  "migration_booking": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  },
+  "migration_hotel": {
+    "columns": [
+      {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "uuid",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1,
+        "table_name": "cities",
+        "udt_name": "uuid"
+      },
+      {
+        "column_default": null,
+        "column_name": "name",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "code",
+        "data_type": "character varying",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3,
+        "table_name": "cities",
+        "udt_name": "varchar"
+      },
+      {
+        "column_default": null,
+        "column_name": "latitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 4,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "longitude",
+        "data_type": "double precision",
+        "datetime_precision": null,
+        "is_nullable": "YES",
+        "numeric_precision": 53,
+        "numeric_scale": null,
+        "ordinal_position": 5,
+        "table_name": "cities",
+        "udt_name": "float8"
+      },
+      {
+        "column_default": null,
+        "column_name": "created_at",
+        "data_type": "timestamp without time zone",
+        "datetime_precision": 6,
+        "is_nullable": "NO",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6,
+        "table_name": "cities",
+        "udt_name": "timestamp"
+      }
+    ],
+    "constraints": [
+      {
+        "conname": "cities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL name",
+        "table_name": "cities"
+      },
+      {
+        "conname": "cities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_code",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (code)",
+        "table_name": "cities"
+      },
+      {
+        "conname": "uk_cities_name",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (name)",
+        "table_name": "cities"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [
+      {
+        "indexdef": "CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id)",
+        "indexname": "cities_pkey",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_code ON public.cities USING btree (code)",
+        "indexname": "uk_cities_code",
+        "tablename": "cities"
+      },
+      {
+        "indexdef": "CREATE UNIQUE INDEX uk_cities_name ON public.cities USING btree (name)",
+        "indexname": "uk_cities_name",
+        "tablename": "cities"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "tablename": "cities"
+      }
+    ]
+  },
+  "migration_user": {
+    "columns": [],
+    "constraints": [],
+    "extensions": [
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ],
+    "indexes": [],
+    "sequences": [],
+    "tables": []
+  }
+}

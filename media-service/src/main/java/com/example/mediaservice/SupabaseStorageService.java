@@ -80,8 +80,10 @@ public class SupabaseStorageService {
         if(result.size()!=unique.size())throw protocol();return result;
     }
     private HttpRequest.Builder request(String path) {
-        return HttpRequest.newBuilder(URI.create(storageBaseUrl+"/storage/v1"+path))
-                .header("Authorization","Bearer "+key).header("apikey",key);
+        var request=HttpRequest.newBuilder(URI.create(storageBaseUrl+"/storage/v1"+path)).header("apikey",key);
+        // Opaque server secret keys are API keys, not JWT bearer tokens. Legacy service_role JWTs retain both headers.
+        if(!key.startsWith("sb_secret_"))request.header("Authorization","Bearer "+key);
+        return request;
     }
     private long deadline(){return System.nanoTime()+timeoutNanos;}
     private HttpResponse<String> send(HttpRequest.Builder request,long deadline) throws IOException,InterruptedException {

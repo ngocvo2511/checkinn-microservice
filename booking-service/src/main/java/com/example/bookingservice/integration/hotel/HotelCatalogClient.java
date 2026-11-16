@@ -1,5 +1,6 @@
 package com.example.bookingservice.integration.hotel;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class HotelCatalogClient {
     private String hotelServiceUrl;
 
     public record Capacity(Integer adults, Integer children) {}
-    public record Room(String id, String hotelId, String name, BigDecimal basePrice,
+    public record Room(String id, UUID hotelId, String name, BigDecimal basePrice,
                        Capacity capacity, Boolean isActive, Integer totalRooms) {}
     public record Hotel(String id, String name, Boolean isActive, String approvedStatus) {}
 

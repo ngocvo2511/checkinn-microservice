@@ -1,5 +1,6 @@
 package com.example.bookingservice.booking.dto;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class BookingItemResponse {
-    private String id;
-    private String roomTypeId;
+    private UUID id;
+    private UUID roomTypeId;
     private String roomTypeName;
     private String ratePlanId;
     private LocalDate checkInDate;

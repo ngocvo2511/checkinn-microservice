@@ -1,0 +1,28 @@
+{
+  "branch": "test/booking-hotel-gateway-acceptance",
+  "head": "8ee230b250863164dd47f83af037711a0ea4a0ef",
+  "preexisting": [
+    " M .idea/compiler.xml",
+    " M .idea/encodings.xml",
+    " D Docs/BATCH2_PR_REVIEW_2026-11-13.md"
+  ],
+  "frontend_head": "d446b9808f8732c9982da2c156979e245742aa7f",
+  "frontend_initial_status": "clean",
+  "staged_initial": false,
+  "production_connections": "NONE",
+  "environment_variable_names": [
+    "DB_URL",
+    "DB_PASSWORD",
+    "SPRING_DATASOURCE_URL",
+    "SPRING_DATASOURCE_USERNAME",
+    "SPRING_DATASOURCE_PASSWORD",
+    "SPRING_JPA_HIBERNATE_DDL_AUTO",
+    "SPRING_FLYWAY_BASELINE_ON_MIGRATE",
+    "USER_DB_URL",
+    "HOTEL_DB_URL",
+    "BOOKING_DB_URL",
+    "REVENUE_DB_URL",
+    "REGULATIONS_DB_URL"
+  ],
+  "values_collected": false
+}

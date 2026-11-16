@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface PaymentRecordRepository extends JpaRepository<PaymentRecord, UUID> {
-    Optional<PaymentRecord> findByBookingId(String bookingId);
-    List<PaymentRecord> findByHotelIdAndEventAtBetween(String hotelId, LocalDateTime from, LocalDateTime to);
+    Optional<PaymentRecord> findByBookingId(UUID bookingId);
+    List<PaymentRecord> findByHotelIdAndEventAtBetween(UUID hotelId, LocalDateTime from, LocalDateTime to);
     List<PaymentRecord> findByEventAtBetween(LocalDateTime from, LocalDateTime to);
 }

@@ -1,0 +1,300 @@
+{
+  "timestamp": "2026-11-13T18:11:09.795216+00:00",
+  "results": [
+    {
+      "owner": "user",
+      "database": "batch5b_user_1794592498_33124",
+      "role": {
+        "user": "batch5b_user_app",
+        "superuser": false,
+        "create_database": false,
+        "create_role": false,
+        "bypass_rls": false
+      },
+      "schema_create_denied": true,
+      "history_access_denied": true,
+      "checks": [
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_hotel_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_booking_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_revenue_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_regulations_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "postgres",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "template1",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "loyalty_commands",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "points_transactions",
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "owner": "hotel",
+      "database": "batch5b_hotel_1794592498_33124",
+      "role": {
+        "user": "batch5b_hotel_app",
+        "superuser": false,
+        "create_database": false,
+        "create_role": false,
+        "bypass_rls": false
+      },
+      "schema_create_denied": true,
+      "history_access_denied": true,
+      "checks": [
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_user_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_booking_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_revenue_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_regulations_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "postgres",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "template1",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "checkinn_feature_migrations",
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "owner": "booking",
+      "database": "batch5b_booking_1794592498_33124",
+      "role": {
+        "user": "batch5b_booking_app",
+        "superuser": false,
+        "create_database": false,
+        "create_role": false,
+        "bypass_rls": false
+      },
+      "schema_create_denied": true,
+      "history_access_denied": true,
+      "checks": [
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_user_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_hotel_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_revenue_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_regulations_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "postgres",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "template1",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "manual_refund_audit",
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "owner": "revenue",
+      "database": "batch5b_revenue_1794592498_33124",
+      "role": {
+        "user": "batch5b_revenue_app",
+        "superuser": false,
+        "create_database": false,
+        "create_role": false,
+        "bypass_rls": false
+      },
+      "schema_create_denied": true,
+      "history_access_denied": true,
+      "checks": [
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_user_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_hotel_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_booking_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_regulations_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "postgres",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "template1",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "revenue_cash_transactions",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "revenue_event_receipts",
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "owner": "regulations",
+      "database": "batch5b_regulations_1794592498_33124",
+      "role": {
+        "user": "batch5b_regulations_app",
+        "superuser": false,
+        "create_database": false,
+        "create_role": false,
+        "bypass_rls": false
+      },
+      "schema_create_denied": true,
+      "history_access_denied": true,
+      "checks": [
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_user_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_hotel_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_booking_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "batch5b_revenue_1794592498_33124",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "postgres",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "CONNECT denied",
+          "database": "template1",
+          "sqlstate": "42501",
+          "pass": true
+        },
+        {
+          "case": "immutable table UPDATE/DELETE denied",
+          "table": "regulation_snapshots",
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    }
+  ]
+}
