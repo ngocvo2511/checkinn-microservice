@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "timestampUtc": "2026-11-16T11:10:27.070048+00:00",
+  "dailyModes": [
+    "Supabase",
+    "Test"
+  ],
+  "mainConfig": "docker/.env",
+  "testConfig": "docker/.env.test",
+  "localTestDatabaseTargetsVerified": 5,
+  "hostedTlsDatabaseTargetsVerified": 5,
+  "existingApplicationEnvironmentDefinitionsUnchanged": 11,
+  "distinctAuthenticationSecrets": true,
+  "ambientDatabaseOverridesIgnoredByTest": true,
+  "conflictingSelectorsRejected": true,
+  "mainEnvRejectedAsCloneSource": true,
+  "commentOnlyProfilesRemoved": 5,
+  "protectedFilesUnchanged": 30,
+  "sqlExecuted": false,
+  "containersStarted": false,
+  "testStackStarted": false,
+  "privateRuntimeFallbackDisabled": true,
+  "supabaseUpRejectsOtherStackBeforeDependencyStart": true,
+  "publicFilesCheckedForConfiguredSecrets": true
+}

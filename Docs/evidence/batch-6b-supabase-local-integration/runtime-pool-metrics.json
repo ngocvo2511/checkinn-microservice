@@ -1,0 +1,57 @@
+[
+  {
+    "owner": "user",
+    "status": "PASS",
+    "runtimePrometheusMetrics": {
+      "hikaricp_connections_active": 0.0,
+      "hikaricp_connections_idle": 2.0,
+      "hikaricp_connections_max": 2.0,
+      "hikaricp_connections_min": 1.0,
+      "hikaricp_connections_pending": 0.0
+    }
+  },
+  {
+    "owner": "regulations",
+    "status": "PASS",
+    "runtimePrometheusMetrics": {
+      "hikaricp_connections_active": 0.0,
+      "hikaricp_connections_idle": 2.0,
+      "hikaricp_connections_max": 2.0,
+      "hikaricp_connections_min": 1.0,
+      "hikaricp_connections_pending": 0.0
+    }
+  },
+  {
+    "owner": "hotel",
+    "status": "PASS",
+    "runtimePrometheusMetrics": {
+      "hikaricp_connections_active": 0.0,
+      "hikaricp_connections_idle": 2.0,
+      "hikaricp_connections_max": 2.0,
+      "hikaricp_connections_min": 1.0,
+      "hikaricp_connections_pending": 0.0
+    }
+  },
+  {
+    "owner": "booking",
+    "status": "PASS",
+    "runtimePrometheusMetrics": {
+      "hikaricp_connections_active": 0.0,
+      "hikaricp_connections_idle": 2.0,
+      "hikaricp_connections_max": 2.0,
+      "hikaricp_connections_min": 1.0,
+      "hikaricp_connections_pending": 0.0
+    }
+  },
+  {
+    "owner": "revenue",
+    "status": "PASS",
+    "runtimePrometheusMetrics": {
+      "hikaricp_connections_active": 0.0,
+      "hikaricp_connections_idle": 2.0,
+      "hikaricp_connections_max": 2.0,
+      "hikaricp_connections_min": 1.0,
+      "hikaricp_connections_pending": 0.0
+    }
+  }
+]

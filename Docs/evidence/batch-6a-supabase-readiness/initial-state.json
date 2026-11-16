@@ -1,0 +1,14 @@
+{
+  "checkinn": {
+    "branch": "feat/canonical-uuid-schema",
+    "head": "909e73d6021d076479bb6533badb9a029c5a9c2a",
+    "status": "M .idea/compiler.xml\n M .idea/encodings.xml\n?? Docs/evidence/batch-6a-supabase-readiness/",
+    "index": ""
+  },
+  "checkinn-frontend": {
+    "branch": "fix/place-card-distance-visibility",
+    "head": "a10f82b7d84d941e77a2c5ae44aa2a899ab0a547",
+    "status": "",
+    "index": ""
+  }
+}

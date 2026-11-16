@@ -1,0 +1,54 @@
+{
+  "hosted": true,
+  "checks": [
+    {
+      "case": "policy write commits while owned broker is stopped",
+      "status": "PASS"
+    },
+    {
+      "case": "source and immutable snapshot commit once during outage",
+      "status": "PASS"
+    },
+    {
+      "case": "durable outbox stays PENDING while broker unavailable",
+      "status": "PASS"
+    },
+    {
+      "case": "only five recorded core JVMs stopped; data retained",
+      "status": "PASS"
+    },
+    {
+      "case": "user actual full Spring application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "regulations actual full Spring application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "hotel actual full Spring application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "booking actual full Spring application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "revenue actual full Spring application restart",
+      "status": "PASS"
+    },
+    {
+      "case": "persisted PENDING outbox delivers after broker and JVM restart",
+      "status": "PASS"
+    },
+    {
+      "case": "restart does not duplicate policy snapshot",
+      "status": "PASS"
+    },
+    {
+      "case": "restart seed initialization does not duplicate default policies",
+      "status": "PASS"
+    }
+  ],
+  "dataRetained": true
+}

@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "timestampUtc": "2026-11-16T10:07:14.539313+00:00",
+  "deletedRowsByDatabase": {
+    "revenue": 54,
+    "booking": 70,
+    "hotel": 29,
+    "user": 26,
+    "regulations": 13
+  },
+  "totalDeletedRows": 192,
+  "deletedHotels": 4,
+  "deletedRooms": 4,
+  "deletedBookings": 10,
+  "deletedTestAccounts": 2,
+  "deletedTestPolicies": 3,
+  "remainingRowCounts": {
+    "user": {
+      "otps": 2,
+      "users": 2,
+      "user_profiles": 2,
+      "flyway_schema_history": 1
+    },
+    "regulations": {
+      "regulations": 4,
+      "regulation_snapshots": 4,
+      "regulation_event_outbox": 4,
+      "flyway_schema_history": 1
+    },
+    "hotel": {
+      "checkinn_feature_migrations": 1,
+      "flyway_schema_history": 1
+    },
+    "booking": {
+      "flyway_schema_history": 1
+    },
+    "revenue": {
+      "flyway_schema_history": 1
+    }
+  },
+  "transport": {
+    "redisTestKeysDeleted": 0,
+    "redisOtherKeysPreserved": 2,
+    "mailTestMessagesDeleted": 7,
+    "mailOtherMessagesPreserved": 3,
+    "rabbitMessagesBefore": 0
+  },
+  "unselectedDatabaseRowsUnchanged": true,
+  "flywayHistoryAndFeatureMigrationRowsPreserved": true,
+  "protectedFilesUnchanged": 30,
+  "dockerApplicationContainersHealthy": 11,
+  "noFixtureRecreationAfterRestart": true,
+  "gatewaySyntheticHotelSearchResults": 0,
+  "privateBackupDirectory": ".local/batch6b/backups/fixture-cleanup-20261116"
+}

@@ -1,0 +1,6 @@
+# Uses the existing local runtime layer (Java 21, curl, non-root app user).
+# run-docker-stack.py packages the current source before building these images.
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+ARG SERVICE
+COPY --chown=app:app ${SERVICE}/target/*.jar /app/app.jar

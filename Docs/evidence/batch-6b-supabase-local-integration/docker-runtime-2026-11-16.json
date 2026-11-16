@@ -1,0 +1,133 @@
+{
+  "timestampUtc": "2026-11-16T08:32:21.674303+00:00",
+  "status": "PASS",
+  "runtime": "Docker Compose",
+  "hostApplicationProcesses": 0,
+  "applicationContainers": 11,
+  "containers": [
+    {
+      "service": "frontend",
+      "health": "healthy",
+      "restartCount": 0
+    },
+    {
+      "service": "auth-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "ddb3c6e1689800ef447e0a6c3038c3fc5ee3e033a9050e7cae61175e278da0da"
+    },
+    {
+      "service": "regulations-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "80a64ee5f4d57107524fc500347e7a77e741a08a4c354a46fd1a29489172f589",
+      "tls": "verify-full",
+      "poolMax": 2,
+      "caReadOnly": true,
+      "startupSchemaValidation": "PASS"
+    },
+    {
+      "service": "revenue-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "b26eceee35c96f41a8d2edb864fffa3bd74a5735115bc87a87948ec6b2ea116e",
+      "tls": "verify-full",
+      "poolMax": 2,
+      "caReadOnly": true,
+      "startupSchemaValidation": "PASS"
+    },
+    {
+      "service": "media-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "46c1c5c1ef29cfb9c18dbd3ab8591dc1298b500d83748cf66a423203964e14e1"
+    },
+    {
+      "service": "notification-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "c8da1ebcfcae6a56b4b2867c8222ae6c9707029b76a4e81f4d5a6de566b7a843"
+    },
+    {
+      "service": "user-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "b1b31221511de8fdaf3b21dc03fd2e42d91c09a4cd210ba088c61ac27ceaa503",
+      "tls": "verify-full",
+      "poolMax": 2,
+      "caReadOnly": true,
+      "startupSchemaValidation": "PASS"
+    },
+    {
+      "service": "hotel-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "33f2c59113535fbce9ff21d28fa13b95c404046f34332ad0fc93b4355d40f1c7",
+      "tls": "verify-full",
+      "poolMax": 2,
+      "caReadOnly": true,
+      "startupSchemaValidation": "PASS"
+    },
+    {
+      "service": "api-gateway",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "796f29455fffd5c2bc9a6707a0b056a39d71ec685dfca7632030977938035d96"
+    },
+    {
+      "service": "booking-service",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "d1b5cdab5abb43146457d3e7a040db2f12a6b2fd2f5a7c06e2794ab0f1894112",
+      "tls": "verify-full",
+      "poolMax": 2,
+      "caReadOnly": true,
+      "startupSchemaValidation": "PASS"
+    },
+    {
+      "service": "eureka-server",
+      "health": "healthy",
+      "restartCount": 0,
+      "currentPackagedJarMatchesImage": true,
+      "jarSha256": "91a5dee2eabc81056377b41f74cfbb586ba220b267d18afaecfae999e7a2bab0"
+    }
+  ],
+  "guardTests": {
+    "passed": 40,
+    "failed": 0
+  },
+  "frontendProductionBuild": "PASS (Webpack + TypeScript)",
+  "frontendSearchRegression": {
+    "passed": 33,
+    "failed": 0
+  },
+  "nextAuthLogin": "PASS",
+  "reusedBrokerCacheMail": true,
+  "persistentVolumesPreserved": true,
+  "protectedFilesUnchanged": 30,
+  "migrationExecuted": false,
+  "acceptanceFixturesReplayed": false,
+  "discoveryWarmupGate": "Gateway cities route required after Compose health",
+  "providerLimitations": "VNPay merchant approval / Storage DNS remain unresolved",
+  "browserSearch": {
+    "status": "PASS",
+    "typedLocationNormally": true,
+    "checkIn": "2026-11-20",
+    "checkOut": "2026-11-21",
+    "rooms": 1,
+    "adults": 2,
+    "children": 0,
+    "renderedHotelResults": 2,
+    "homeFormNavigatesToSearch": true,
+    "debounceMs": 300
+  }
+}

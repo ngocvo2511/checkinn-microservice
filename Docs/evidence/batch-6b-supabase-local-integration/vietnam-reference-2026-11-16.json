@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "catalogVersion": "vn-34-provinces-2026-11-16",
+  "catalogSha256": "7011737643dc6ebc2e7bd577c6032530dc650c866588a327de016659589582ba",
+  "provinces": 34,
+  "destinations": 40,
+  "rowsInserted": 74,
+  "immediateReapplyRowsInserted": 0,
+  "existingRowsUnchanged": true,
+  "hotelCountsInitializedToZero": true,
+  "coordinates": "NULL pending verified geospatial data",
+  "schemaChanged": false,
+  "gatewayAllLocationsCount": 74,
+  "gatewayParentMappingChecks": {
+    "Phú Quốc": true,
+    "Vũng Tàu": true,
+    "Hội An": true,
+    "Đà Lạt": true,
+    "Nha Trang": true,
+    "Quy Nhơn": true
+  }
+}

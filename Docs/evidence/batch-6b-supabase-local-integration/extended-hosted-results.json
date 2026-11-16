@@ -1,0 +1,78 @@
+{
+  "hosted": true,
+  "checks": [
+    {
+      "case": "concurrent inventory requests prevent oversell",
+      "status": "PASS",
+      "detail": [
+        201,
+        409
+      ]
+    },
+    {
+      "case": "inventory stays at two rooms under contention",
+      "status": "PASS"
+    },
+    {
+      "case": "changed payload cannot reuse idempotency key",
+      "status": "PASS",
+      "detail": 409
+    },
+    {
+      "case": "unpaid cancellation compensates inventory",
+      "status": "PASS",
+      "detail": 204
+    },
+    {
+      "case": "held inventory released after compensation",
+      "status": "PASS"
+    },
+    {
+      "case": "Regulations API create commits source and snapshot",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "Regulations version update",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "stale policy version rejected",
+      "status": "PASS",
+      "detail": 409
+    },
+    {
+      "case": "version history has exactly two immutable snapshots",
+      "status": "PASS"
+    },
+    {
+      "case": "policy snapshot API round trip",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "seeded points policy lookup",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "Revenue report query through Gateway",
+      "status": "PASS",
+      "detail": 200
+    },
+    {
+      "case": "Revenue event receipts persisted for paid/refunded fixture",
+      "status": "PASS"
+    },
+    {
+      "case": "Next.js NextAuth to Gateway/Auth/User/Supabase login",
+      "status": "PASS"
+    },
+    {
+      "case": "frontend session contains issued internal JWT",
+      "status": "PASS"
+    }
+  ],
+  "cleanup": "none"
+}

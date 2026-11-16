@@ -1,0 +1,59 @@
+{
+  "backend": [
+    {
+      "owner": "user",
+      "tests": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "status": "PASS",
+      "scope": "Relevant business/guard suite; excludes default ApplicationTests requiring old local environment; actual hosted full startup tested separately"
+    },
+    {
+      "owner": "hotel",
+      "tests": 404,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 33,
+      "status": "PASS",
+      "scope": "Relevant business/guard suite; excludes default ApplicationTests requiring old local environment; actual hosted full startup tested separately"
+    },
+    {
+      "owner": "booking",
+      "tests": 287,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "status": "PASS",
+      "scope": "Relevant business/guard suite; excludes default ApplicationTests requiring old local environment; actual hosted full startup tested separately"
+    },
+    {
+      "owner": "revenue",
+      "tests": 52,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "status": "PASS",
+      "scope": "Relevant business/guard suite; excludes default ApplicationTests requiring old local environment; actual hosted full startup tested separately"
+    },
+    {
+      "owner": "regulations",
+      "tests": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "status": "PASS",
+      "scope": "Relevant business/guard suite; excludes default ApplicationTests requiring old local environment; actual hosted full startup tested separately"
+    }
+  ],
+  "frontend": {
+    "tests": 214,
+    "pass": 214,
+    "fail": 0,
+    "skipped": 0
+  },
+  "frontendTypecheck": "PASS",
+  "initialUnconfiguredDefaultContextAttempt": "FAIL at local password authentication, no DDL/DML; stopped and rerun correctly scoped regression",
+  "backendDefaultContextTests": "NOT RUN in final scoped suite; raw failed attempt retained privately",
+  "time": "2026-11-16"
+}

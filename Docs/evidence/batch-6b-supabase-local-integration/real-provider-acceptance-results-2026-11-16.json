@@ -1,0 +1,47 @@
+{
+  "source": "user explicitly selected docker/.env provider credentials",
+  "vnpayMode": "sandbox",
+  "sandboxEndpointVerified": true,
+  "storageMode": "disabled-pending-readonly-provider-check",
+  "databaseCredentialsImported": false,
+  "sandboxDns": "PASS",
+  "storageDns": "DNS_LOOKUP_FAILED",
+  "storageKeyRole": "service_role",
+  "storageKeyNotExpired": true,
+  "status": "BLOCKED_EXTERNAL_PROVIDERS",
+  "vnpayProviderStatus": "NEW_MERCHANT_BLOCKED_WEBSITE_NOT_APPROVED_CODE71",
+  "storageProviderStatus": "BLOCKED_DNS_NXDOMAIN",
+  "sourceCredentialsPresent": true,
+  "providerPaymentSubmitted": false,
+  "storageUploadSent": false,
+  "providerConfigTests": {
+    "tests": 8,
+    "status": "PASS"
+  },
+  "mediaRegression": {
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "status": "PASS"
+  },
+  "storageControlDns": "Core Hotel API resolves; configured Storage hostname NXDOMAIN in system and independent DNS",
+  "storageProjectControlPlane": "403 with current three scoped PATs, project state not independently determined",
+  "sandboxVisibleMessage": "Website n\u00e0y ch\u01b0a \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
+  "sandboxErrorCode": "71",
+  "mediaBuild": "PASS",
+  "temporaryCheckoutBridgeStopped": true,
+  "failedUnpaidBookingCancelledNormally": true,
+  "providerProbeRevenueCashRows": 0,
+  "latestMerchantRecheck": {
+    "checkedAtUtc": "2026-11-16T07:12:18.476344+00:00",
+    "source": "user-updated docker/.env",
+    "newMerchantLoaded": true,
+    "checkoutHmacMatchesConfiguredSecret": true,
+    "providerErrorCode": "71",
+    "visibleMessage": "Website n\u00e0y ch\u01b0a \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
+    "trace": "ODXO7ycYqa",
+    "bankFormReached": false,
+    "paymentSubmitted": false,
+    "syntheticBookingCancelledNormally": true
+  }
+}

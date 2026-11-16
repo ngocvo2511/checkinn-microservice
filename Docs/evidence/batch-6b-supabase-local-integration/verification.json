@@ -1,0 +1,117 @@
+{
+  "date": "2026-11-14",
+  "timezone": "Asia/Saigon",
+  "status": "PARTIAL",
+  "hosted": "BLOCKED; not accessed",
+  "guardSuites": [
+    {
+      "suite": "com.example.userservice.config.SupabaseDevEnvironmentGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "com.example.hotelservice.config.SupabaseDevEnvironmentGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "com.example.bookingservice.config.SupabaseDevEnvironmentGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "com.example.revenueservice.config.SupabaseDevEnvironmentGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "com.example.regulationsservice.config.SupabaseDevEnvironmentGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "runnerSuites": [
+    {
+      "suite": "com.checkinn.db.HostedRunnerTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "com.checkinn.db.LocalCatalogTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "runnerJarSha256": "12c047686829ef1d4be6f50f14cb270d5d73bb367efd639a59729b97c1d7cd9e",
+  "runnerPackage": "PASS",
+  "missingManifestExit": 2,
+  "backendRegression": {
+    "executed": 843,
+    "skipped": 47,
+    "failures": 0,
+    "errors": 0,
+    "scope": "five affected modules before final guard refinements;35 final guard tests passed afterward"
+  },
+  "frontendTypecheck": "PASS exit0",
+  "frontendRegression": {
+    "executed": 214,
+    "passed": 214
+  },
+  "composeConfig": "PASS synthetic env only; no startup",
+  "protectedSqlAndBaseYaml": {
+    "files": 30,
+    "mismatches": []
+  },
+  "newOwnedGuardClustersRunning": 0,
+  "frontendWorkingTree": "clean",
+  "stagedChanges": 0,
+  "requiredEvidenceDocuments": 13,
+  "sourceHashes": {
+    "booking-service\\src\\main\\java\\com\\example\\bookingservice\\config\\SupabaseDevEnvironmentGuard.java": "ad8d42b3c3e60e5973907d51903cd3544328c1adaa3ea3f4d766debf041f6197",
+    "booking-service\\src\\main\\resources\\application-local.yml": "65a0bcaf37f26ed81df97ebcfbcbbede141f582dbaecf3f1e3127a6ecc869adf",
+    "booking-service\\src\\main\\resources\\application-supabase-dev.yml": "ab86978c46f49b98516a0ba5f86b5be965862e7e5f8cd2aceb42c2054f6360f5",
+    "booking-service\\src\\test\\java\\com\\example\\bookingservice\\config\\SupabaseDevEnvironmentGuardTest.java": "0fe530631f99ecd1e169299f02d9f9ebf7f3e9ddf49fda0345257bf23e9b6a06",
+    "config\\supabase-dev\\.env.example": "3dc45aff5269e3ed8aca0beeeed7c32af037b2d084fd06bafad79c9464a00d55",
+    "config\\supabase-dev\\approval.properties.example": "ab982c130869aefcdda9c667e209251e7b233a1b99e436b64c5f3fef19372b1b",
+    "config\\supabase-dev\\targets.properties.example": "97c361529eb150aca038c5ffe49b9c0a3312b898caa3d463b64bb52af3601a11",
+    "docker\\docker-compose.supabase-dev-infra.yml": "cf643054ca568970fa4ea8fee331df39b66fce0a8a18187970ade0351e04f584",
+    "hotel-service\\src\\main\\java\\com\\example\\hotelservice\\config\\SupabaseDevEnvironmentGuard.java": "0376c1dac6df737428a8322806f2987df8e4c5e4379e95ff25e8b0d8789f4b42",
+    "hotel-service\\src\\main\\resources\\application-local.yml": "65a0bcaf37f26ed81df97ebcfbcbbede141f582dbaecf3f1e3127a6ecc869adf",
+    "hotel-service\\src\\main\\resources\\application-supabase-dev.yml": "4408ddb8f9d1d4dd1900c47f25a54d6234b580002b1a66da94d0c993c62a9259",
+    "hotel-service\\src\\test\\java\\com\\example\\hotelservice\\config\\SupabaseDevEnvironmentGuardTest.java": "9b608d892a9ea89ebc7dadc644d590c8751bf19639f4e0f535d3791287d45480",
+    "regulations-service\\src\\main\\java\\com\\example\\regulationsservice\\config\\SupabaseDevEnvironmentGuard.java": "b9bf1f3a9be5c0bfe3bb63899536b2ab71e624cf60aeb79d5fbaf1612f1232c3",
+    "regulations-service\\src\\main\\resources\\application-local.yml": "65a0bcaf37f26ed81df97ebcfbcbbede141f582dbaecf3f1e3127a6ecc869adf",
+    "regulations-service\\src\\main\\resources\\application-supabase-dev.yml": "d924a115db8c5ddcbf15d1cd21251ce52905d11d6ca784888850c4074c436ae4",
+    "regulations-service\\src\\test\\java\\com\\example\\regulationsservice\\config\\SupabaseDevEnvironmentGuardTest.java": "49fa030cde54e3cd194c81b57eb8be1e5af6ce91bf63f0b10a3d8a733b8bd922",
+    "revenue-service\\src\\main\\java\\com\\example\\revenueservice\\config\\SupabaseDevEnvironmentGuard.java": "e12ef582d599b0b02426a8c1f671743e800d3c1e06d65dea87163c5ef9dcc656",
+    "revenue-service\\src\\main\\resources\\application-local.yml": "65a0bcaf37f26ed81df97ebcfbcbbede141f582dbaecf3f1e3127a6ecc869adf",
+    "revenue-service\\src\\main\\resources\\application-supabase-dev.yml": "2e94eeed3462e322a716f8e0b920348b95b075767fd8ed1130eb0c4406585b39",
+    "revenue-service\\src\\test\\java\\com\\example\\revenueservice\\config\\SupabaseDevEnvironmentGuardTest.java": "f9356d342d566a08498c0ba2a90fbcfa4cc2bfdd064daf358b8a2011df7bcef4",
+    "tools\\supabase-runner\\pom.xml": "483f3597751bb539cffd5f75a00bd5ff41cd19e0f9040e4b289d305120f6a2d0",
+    "tools\\supabase-runner\\runtime-guard.java.template": "76e30279df1f2d6e3381dafae053d5071504e8e044655bf838d4f8953245b4c3",
+    "tools\\supabase-runner\\src\\main\\java\\com\\checkinn\\db\\HostedRunner.java": "f5156be9a58673a632abc66c139ec26c42580839d2b01e85e1d9eab9fd0eb61f",
+    "tools\\supabase-runner\\src\\test\\java\\com\\checkinn\\db\\HostedRunnerTest.java": "3c370d9f6a90a0e9636a9c1ed5ee3d768e2d21a919a5f99a6c84d280acb73639",
+    "tools\\supabase-runner\\src\\test\\java\\com\\checkinn\\db\\LocalCatalogTest.java": "074aff1ba0266b0863238e6bd0cd92f09e86d925240cce0600a9da983e6830d0",
+    "tools\\supabase-runner\\test-local.py": "94d58702c2d221cb84ed1ccb077ee3952d5c74b89540f2148c96fd357c2ae70b",
+    "user-service\\src\\main\\java\\com\\example\\userservice\\config\\SupabaseDevEnvironmentGuard.java": "488aef97daf2c73b494fdbe322bb93790b5e82d4ce2ab4eb4f9095c5e7701a88",
+    "user-service\\src\\main\\resources\\application-local.yml": "65a0bcaf37f26ed81df97ebcfbcbbede141f582dbaecf3f1e3127a6ecc869adf",
+    "user-service\\src\\main\\resources\\application-supabase-dev.yml": "6152df03eb1afdddd90e1be18f12569b8e721b31f529718a320d48c96ca71628",
+    "user-service\\src\\test\\java\\com\\example\\userservice\\config\\SupabaseDevEnvironmentGuardTest.java": "73619f59ff95adaf5136648c4c445629e163f01a3bf19525e6d151c0ff313515"
+  },
+  "newTextWhitespace": "PASS",
+  "newEvidenceLocalLinks": "PASS"
+}

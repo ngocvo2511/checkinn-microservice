@@ -1,0 +1,108 @@
+{
+  "clientDate": "2026-11-16",
+  "owner": "user",
+  "runnerVersion": "1.3.0",
+  "readOnlyHostedResults": {
+    "preflight": {
+      "clientDate": "2026-11-16",
+      "owner": "user",
+      "mode": "preflight",
+      "exitCode": 0,
+      "safeOutput": [
+        "user CONTROL_PLANE_IDENTITY_PASS",
+        "user POOLER_BACKEND_TLS_FALSE_MIGRATION_BLOCKED",
+        "user CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+        "user PREFLIGHT_SQL_PASS inventorySha256=cb960a1cd977a07a1166d54b7900a73a08b2fff83cf8cf515df4743978259bef",
+        "HOSTED_SECURITY_REVIEW_AND_EXACT_MIGRATION_APPROVAL_REQUIRED"
+      ],
+      "unpublishedLines": 0,
+      "runnerVersion": "1.3.0",
+      "runnerJarSha256": "3de9655470208eca9503d59024c9c2d5340f35225ed88fc02b95b39b222d8a8e",
+      "ddlDmlPerformed": false,
+      "migrationRequested": false,
+      "approvalFileLoaded": false
+    },
+    "runtime-readonly": {
+      "clientDate": "2026-11-16",
+      "owner": "user",
+      "mode": "runtime-readonly",
+      "exitCode": 0,
+      "safeOutput": [
+        "user CONTROL_PLANE_IDENTITY_PASS",
+        "user POOLER_BACKEND_TLS_FALSE_MIGRATION_BLOCKED",
+        "user CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+        "user RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+      ],
+      "unpublishedLines": 0,
+      "runnerVersion": "1.3.0",
+      "runnerJarSha256": "3de9655470208eca9503d59024c9c2d5340f35225ed88fc02b95b39b222d8a8e",
+      "ddlDmlPerformed": false,
+      "migrationRequested": false,
+      "approvalFileLoaded": false
+    },
+    "tls-negatives": {
+      "clientDate": "2026-11-16",
+      "owner": "user",
+      "mode": "tls-negatives",
+      "exitCode": 0,
+      "safeOutput": [
+        "user TLS_NEGATIVE_CA_CERTIFICATE_REJECTED",
+        "user TLS_NEGATIVE_HOST_HOSTNAME_REJECTED"
+      ],
+      "unpublishedLines": 0,
+      "runnerVersion": "1.3.0",
+      "runnerJarSha256": "3de9655470208eca9503d59024c9c2d5340f35225ed88fc02b95b39b222d8a8e",
+      "ddlDmlPerformed": false,
+      "migrationRequested": false,
+      "approvalFileLoaded": false
+    }
+  },
+  "localTestSuites": [
+    {
+      "name": "com.checkinn.db.HostedRunnerTest",
+      "tests": 11,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalCanonicalRolesTest",
+      "tests": 5,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalCatalogTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.checkinn.db.LocalManagedEventReviewTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "scope": "Only User authenticated read-only/TLS checks; no DDL/DML/settings/migration/startup",
+  "clientTls": "PASS TLSv1.3 with verified CA/hostname",
+  "backendTls": false,
+  "migrationStatus": "BLOCKED_BACKEND_TLS_AND_SECURITY_APPROVAL",
+  "dataApiNegative": {
+    "clientDate": "2026-11-16",
+    "owner": "user",
+    "probe": "unauthenticated HTTPS GET /rest/v1/; no keys sent",
+    "httpStatus": 401,
+    "classification": "AUTH_REQUIRED_NOT_EXPOSURE_PROOF",
+    "actualDataApiDisablementVerified": false,
+    "schemaChanged": false
+  },
+  "databaseTempInherited": true,
+  "protectedSqlBaseConfigFilesUnchanged": 30,
+  "ownedTestClustersRunning": 0,
+  "frontendWorkingTree": "clean",
+  "stagedChanges": 0
+}

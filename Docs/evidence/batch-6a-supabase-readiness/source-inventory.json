@@ -1,0 +1,302 @@
+[
+  {
+    "owner": "user",
+    "path": "user-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d",
+    "tables": [
+      "loyalty_commands",
+      "loyalty_points",
+      "otps",
+      "points_reservations",
+      "points_transactions",
+      "users",
+      "user_profiles"
+    ],
+    "references": [
+      "loyalty_points",
+      "users"
+    ],
+    "dangerous_sql": [],
+    "spring_boot": "3.3.4",
+    "dependencies": [
+      {
+        "artifact": "postgresql",
+        "version": "managed",
+        "scope": "runtime"
+      },
+      {
+        "artifact": "micrometer-registry-prometheus",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "flyway-core",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "flyway-database-postgresql",
+        "version": "managed",
+        "scope": "compile"
+      }
+    ],
+    "existing_jars": [
+      {
+        "path": "user-service\\target\\user-service-0.0.1-SNAPSHOT.jar",
+        "sha256": "190a1c8744c5ec99a7ac0424dbd9544c0c3579ebd9d467a540828274c8ed779a",
+        "note": "existing artifact, not rebuilt in 6A",
+        "libraries": [
+          "spring-boot-3.3.4.jar",
+          "HikariCP-5.1.0.jar",
+          "hibernate-core-6.5.3.Final.jar",
+          "postgresql-42.7.4.jar",
+          "flyway-core-10.10.0.jar",
+          "flyway-database-postgresql-10.10.0.jar"
+        ]
+      }
+    ]
+  },
+  {
+    "owner": "hotel",
+    "path": "hotel-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a",
+    "tables": [
+      "amenity_category_types",
+      "hotel_amenities",
+      "hotel_amenity_categories",
+      "cities",
+      "provinces",
+      "hotel_accommodation_type_changes",
+      "hotels",
+      "media_assets",
+      "hotel_policies",
+      "policy_category_types",
+      "hotel_questions",
+      "hotel_reviews",
+      "review_feedbacks",
+      "review_responses",
+      "room_availability",
+      "room_holds",
+      "room_types",
+      "amenity_catalog",
+      "amenity_mapping_requests",
+      "amenity_mapping_request_codes",
+      "amenity_mapping_states",
+      "checkinn_feature_migrations",
+      "room_inventory_review_requests",
+      "room_inventory_review_states"
+    ],
+    "references": [
+      "hotel_amenity_categories",
+      "provinces",
+      "hotels",
+      "cities",
+      "policy_category_types",
+      "hotels",
+      "hotels",
+      "hotel_reviews",
+      "hotel_reviews",
+      "amenity_catalog",
+      "amenity_mapping_requests",
+      "amenity_mapping_requests",
+      "amenity_mapping_requests",
+      "room_inventory_review_requests",
+      "room_inventory_review_requests"
+    ],
+    "dangerous_sql": [],
+    "spring_boot": "3.3.4",
+    "dependencies": [
+      {
+        "artifact": "postgresql",
+        "version": "managed",
+        "scope": "runtime"
+      },
+      {
+        "artifact": "micrometer-registry-prometheus",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "flyway-core",
+        "version": "managed",
+        "scope": "test"
+      },
+      {
+        "artifact": "flyway-database-postgresql",
+        "version": "managed",
+        "scope": "test"
+      }
+    ],
+    "existing_jars": [
+      {
+        "path": "hotel-service\\target\\hotel-service-0.0.1-SNAPSHOT.jar",
+        "sha256": "5de5870c9a3698f2c963f8c0ec47b42e27a6b56df8657e191cadcfd186b2327d",
+        "note": "existing artifact, not rebuilt in 6A",
+        "libraries": [
+          "spring-boot-3.3.4.jar",
+          "HikariCP-5.1.0.jar",
+          "hibernate-core-6.5.3.Final.jar",
+          "postgresql-42.7.4.jar"
+        ]
+      }
+    ]
+  },
+  {
+    "owner": "booking",
+    "path": "booking-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2",
+    "tables": [
+      "bookings",
+      "booking_items",
+      "payments",
+      "refund_requests",
+      "booking_event_outbox",
+      "manual_refund_executions",
+      "manual_refund_audit"
+    ],
+    "references": [
+      "bookings",
+      "payments",
+      "bookings",
+      "bookings",
+      "payments",
+      "refund_requests",
+      "manual_refund_executions"
+    ],
+    "dangerous_sql": [],
+    "spring_boot": "3.3.4",
+    "dependencies": [
+      {
+        "artifact": "postgresql",
+        "version": "managed",
+        "scope": "runtime"
+      },
+      {
+        "artifact": "micrometer-registry-prometheus",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "flyway-core",
+        "version": "managed",
+        "scope": "test"
+      },
+      {
+        "artifact": "flyway-database-postgresql",
+        "version": "managed",
+        "scope": "test"
+      }
+    ],
+    "existing_jars": [
+      {
+        "path": "booking-service\\target\\booking-service-0.0.1-SNAPSHOT.jar",
+        "sha256": "3a5cd4853bf8e41e3dbefb49d6f093c306fd09e4d64137c579dc67b84be1eb79",
+        "note": "existing artifact, not rebuilt in 6A",
+        "libraries": [
+          "spring-boot-3.3.4.jar",
+          "HikariCP-5.1.0.jar",
+          "hibernate-core-6.5.3.Final.jar",
+          "postgresql-42.7.4.jar"
+        ]
+      }
+    ]
+  },
+  {
+    "owner": "revenue",
+    "path": "revenue-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223",
+    "tables": [
+      "booking_status_records",
+      "payment_records",
+      "revenue_cash_transactions",
+      "revenue_event_receipts",
+      "revenue_cashflow_gaps"
+    ],
+    "references": [],
+    "dangerous_sql": [],
+    "spring_boot": "3.3.4",
+    "dependencies": [
+      {
+        "artifact": "micrometer-registry-prometheus",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "postgresql",
+        "version": "managed",
+        "scope": "runtime"
+      },
+      {
+        "artifact": "flyway-core",
+        "version": "managed",
+        "scope": "test"
+      },
+      {
+        "artifact": "flyway-database-postgresql",
+        "version": "managed",
+        "scope": "test"
+      }
+    ],
+    "existing_jars": [
+      {
+        "path": "revenue-service\\target\\revenue-service-0.0.1-SNAPSHOT.jar",
+        "sha256": "2c7de7e1be3c0da1519cf097117eff8a2adf15af1dcadc0656a0f3d3dd6cf757",
+        "note": "existing artifact, not rebuilt in 6A",
+        "libraries": [
+          "spring-boot-3.3.4.jar",
+          "HikariCP-5.1.0.jar",
+          "hibernate-core-6.5.3.Final.jar",
+          "postgresql-42.7.4.jar"
+        ]
+      }
+    ]
+  },
+  {
+    "owner": "regulations",
+    "path": "regulations-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+    "sha256": "f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac",
+    "tables": [
+      "regulations",
+      "regulation_snapshots",
+      "regulation_event_outbox"
+    ],
+    "references": [],
+    "dangerous_sql": [],
+    "spring_boot": "3.3.4",
+    "dependencies": [
+      {
+        "artifact": "micrometer-registry-prometheus",
+        "version": "managed",
+        "scope": "compile"
+      },
+      {
+        "artifact": "postgresql",
+        "version": "managed",
+        "scope": "runtime"
+      },
+      {
+        "artifact": "flyway-core",
+        "version": "managed",
+        "scope": "test"
+      },
+      {
+        "artifact": "flyway-database-postgresql",
+        "version": "managed",
+        "scope": "test"
+      }
+    ],
+    "existing_jars": [
+      {
+        "path": "regulations-service\\target\\regulations-service-0.0.1-SNAPSHOT.jar",
+        "sha256": "0444ae40e46465413b9b7bdc2eca283615cca48633475f19572fd891c6a445b5",
+        "note": "existing artifact, not rebuilt in 6A",
+        "libraries": [
+          "spring-boot-3.3.4.jar",
+          "HikariCP-5.1.0.jar",
+          "hibernate-core-6.5.3.Final.jar",
+          "postgresql-42.7.4.jar"
+        ]
+      }
+    ]
+  }
+]

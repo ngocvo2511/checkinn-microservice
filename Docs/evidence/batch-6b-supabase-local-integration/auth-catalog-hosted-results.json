@@ -1,0 +1,171 @@
+{
+  "checks": [
+    {
+      "case": "guest register via Gateway",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "guest unverified login denied",
+      "status": "PASS",
+      "httpStatus": 401
+    },
+    {
+      "case": "guest real RabbitMQ/Notification/Mailpit delivery",
+      "status": "PASS"
+    },
+    {
+      "case": "guest actual OTP verification",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "guest verified login via Gateway",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "wrong password denied",
+      "status": "PASS",
+      "httpStatus": 401
+    },
+    {
+      "case": "profile read through Gateway",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "profile update persisted",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "real issued JWT accesses own bookings",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "real issued JWT cannot access other user bookings",
+      "status": "PASS",
+      "httpStatus": 403
+    },
+    {
+      "case": "logout stores revocation in isolated Redis",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "revoked JWT rejected across services",
+      "status": "PASS",
+      "httpStatus": 401
+    },
+    {
+      "case": "fresh login after logout",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "owner register via Gateway",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "owner unverified login denied",
+      "status": "PASS",
+      "httpStatus": 401
+    },
+    {
+      "case": "owner real RabbitMQ/Notification/Mailpit delivery",
+      "status": "PASS"
+    },
+    {
+      "case": "owner actual OTP verification",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "owner verified login via Gateway",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "Hotel create through real API",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "Hotel UUIDv4 persisted",
+      "status": "PASS"
+    },
+    {
+      "case": "owner reads draft Hotel",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "draft Hotel hidden from public",
+      "status": "PASS",
+      "httpStatus": 404
+    },
+    {
+      "case": "Hotel update through real API",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "Room type create through real API",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "Room UUIDv4 persisted",
+      "status": "PASS"
+    },
+    {
+      "case": "Room type update through real API",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "owner reads updated room type",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "draft room hidden from public",
+      "status": "PASS",
+      "httpStatus": 404
+    },
+    {
+      "case": "Room deactivation through real API retains data",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "synthetic fixtures retained; no destructive cleanup",
+      "status": "PASS"
+    },
+    {
+      "case": "owner cannot invoke ADMIN Hotel deactivation",
+      "status": "PASS",
+      "httpStatus": 403
+    },
+    {
+      "case": "DRAFT Hotel cannot use APPROVED-only deactivation",
+      "status": "PASS",
+      "httpStatus": 400
+    },
+    {
+      "case": "ADMIN Hotel logical deactivation retains approved synthetic Hotel row",
+      "status": "PASS",
+      "httpStatus": 200
+    },
+    {
+      "case": "deactivated Hotel hidden from public",
+      "status": "PASS",
+      "httpStatus": 404
+    }
+  ],
+  "hosted": true,
+  "fixtureCleanup": "none; retained synthetic rows"
+}

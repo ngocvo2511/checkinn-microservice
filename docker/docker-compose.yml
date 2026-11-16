@@ -1,4 +1,6 @@
-name: checkinn-local
+# Shared local-test services. Main Supabase mode is selected by stack.ps1.
+# Database targets here are deliberately fixed; docker/.env cannot redirect them.
+name: checkinn-test
 
 x-java: &java
   init: true
@@ -140,9 +142,9 @@ services:
       <<: *java-env
       SERVER_PORT: "8082"
       BOOKING_GRPC_ADDRESS: ${BOOKING_GRPC_ADDRESS:-booking-service:9093}
-      SPRING_DATASOURCE_URL: ${USER_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_user}
-      SPRING_DATASOURCE_USERNAME: ${USER_DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${USER_DB_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_user
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:-}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}
@@ -175,9 +177,9 @@ services:
     environment:
       <<: *java-env
       SERVER_PORT: "8083"
-      SPRING_DATASOURCE_URL: ${HOTEL_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_hotel}
-      SPRING_DATASOURCE_USERNAME: ${HOTEL_DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${HOTEL_DB_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_hotel
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:-}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}
@@ -214,9 +216,9 @@ services:
     environment:
       <<: *java-env
       SERVER_PORT: "8084"
-      SPRING_DATASOURCE_URL: ${BOOKING_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_booking}
-      SPRING_DATASOURCE_USERNAME: ${BOOKING_DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${BOOKING_DB_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_booking
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:-}
       VNPAY_TMN_CODE: ${VNPAY_TMN_CODE:-}
       VNPAY_HASH_SECRET: ${VNPAY_HASH_SECRET:-}
       VNPAY_RETURN_URL: ${VNPAY_RETURN_URL:-http://localhost:3000/booking/payment/return}
@@ -239,9 +241,9 @@ services:
     environment:
       <<: *java-env
       SERVER_PORT: "8088"
-      SPRING_DATASOURCE_URL: ${REVENUE_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_revenue}
-      SPRING_DATASOURCE_USERNAME: ${REVENUE_DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${REVENUE_DB_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_revenue
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:-}
       # Must match booking-service when testing the internal refund event pipeline.
       REFUND_INTERNAL_ENABLED: ${REFUND_INTERNAL_ENABLED:-false}
     depends_on:
@@ -260,9 +262,9 @@ services:
     environment:
       <<: *java-env
       SERVER_PORT: "8091"
-      SPRING_DATASOURCE_URL: ${REGULATIONS_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_regulations}
-      SPRING_DATASOURCE_USERNAME: ${REGULATIONS_DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${REGULATIONS_DB_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_regulations
+      SPRING_DATASOURCE_USERNAME: checkinn_test
+      SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:-}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}
@@ -322,6 +324,7 @@ services:
       start_period: 60s
 
   osrm-backend:
+    profiles: [routing]
     image: osrm/osrm-backend:latest
     container_name: checkinn-osrm
     restart: unless-stopped

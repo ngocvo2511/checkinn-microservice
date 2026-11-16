@@ -1,0 +1,5 @@
+# Runtime build context contains only packaged application JARs.
+**
+!*/
+!*/target/
+!*/target/*.jar

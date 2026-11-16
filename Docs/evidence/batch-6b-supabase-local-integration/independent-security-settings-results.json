@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "owner": "user",
+      "endpoint": "ssl-enforcement",
+      "httpStatus": 200,
+      "currentConfig": {
+        "database": true
+      },
+      "appliedSuccessfully": true
+    },
+    {
+      "owner": "user",
+      "endpoint": "postgrest",
+      "httpStatus": 200,
+      "db_schema": "",
+      "db_extra_search_path": "public, extensions"
+    },
+    {
+      "owner": "regulations",
+      "endpoint": "ssl-enforcement",
+      "httpStatus": 200,
+      "currentConfig": {
+        "database": true
+      },
+      "appliedSuccessfully": true
+    },
+    {
+      "owner": "regulations",
+      "endpoint": "postgrest",
+      "httpStatus": 200,
+      "db_schema": "",
+      "db_extra_search_path": "public, extensions"
+    },
+    {
+      "owner": "hotel",
+      "endpoint": "ssl-enforcement",
+      "httpStatus": 200,
+      "currentConfig": {
+        "database": true
+      },
+      "appliedSuccessfully": true
+    },
+    {
+      "owner": "hotel",
+      "endpoint": "postgrest",
+      "httpStatus": 200,
+      "db_schema": "",
+      "db_extra_search_path": "public, extensions"
+    },
+    {
+      "owner": "booking",
+      "endpoint": "ssl-enforcement",
+      "httpStatus": 200,
+      "currentConfig": {
+        "database": true
+      },
+      "appliedSuccessfully": true
+    },
+    {
+      "owner": "booking",
+      "endpoint": "postgrest",
+      "httpStatus": 200,
+      "db_schema": "",
+      "db_extra_search_path": "public, extensions"
+    },
+    {
+      "owner": "revenue",
+      "endpoint": "ssl-enforcement",
+      "httpStatus": 200,
+      "currentConfig": {
+        "database": true
+      },
+      "appliedSuccessfully": true
+    },
+    {
+      "owner": "revenue",
+      "endpoint": "postgrest",
+      "httpStatus": 200,
+      "db_schema": "",
+      "db_extra_search_path": "public, extensions"
+    }
+  ],
+  "operation": "Authenticated GET only; settings changed by operator earlier",
+  "publicSchemaExposed": false,
+  "sslEnforcementAllFive": true
+}

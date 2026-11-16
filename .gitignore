@@ -95,6 +95,7 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+!docker/.env.test.example
 key.json
 **/key.json
 *service-account*.json

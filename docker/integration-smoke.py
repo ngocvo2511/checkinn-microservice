@@ -15,7 +15,7 @@ import urllib.parse
 
 ROOT = Path(__file__).resolve().parent
 COMPOSE = ['docker', 'compose', '-p', 'checkinn-test', '--project-directory', str(ROOT),
-           '--env-file', str(ROOT / '.env'), '--env-file', str(ROOT / '.env.test'),
+           '--env-file', str(ROOT / '.env.test'),
            '-f', str(ROOT / 'docker-compose.yml'), '-f', str(ROOT / 'docker-compose.test.yml'), '--profile', 'app']
 RESULTS = []
 

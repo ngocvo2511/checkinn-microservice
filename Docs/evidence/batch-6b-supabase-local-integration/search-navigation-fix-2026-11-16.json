@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-16",
+  "before": {
+    "bundler": "Turbopack",
+    "searchRoute": "HTTP timeout after 14.23 seconds",
+    "homepageHttp": 200,
+    "log": "Compiling /search without completion; failed RSC payload"
+  },
+  "change": {
+    "file": "tools/supabase-runner/run-local-stack.py",
+    "frontendDevBundler": "explicit --webpack",
+    "applicationSearchOrDatabaseCodeChanged": false
+  },
+  "after": {
+    "coldSearchHttp": 200,
+    "coldSearchSeconds": 4.55,
+    "actualBrowserHomeSearchForm": "PASS",
+    "checkIn": "2026-11-20",
+    "checkOut": "2026-11-21",
+    "rooms": 1,
+    "adults": 2,
+    "children": 0,
+    "queryParametersPreserved": true,
+    "renderedSyntheticHotelResults": 2,
+    "navigationHttp": 200,
+    "navigationSeconds": 0.176
+  },
+  "frontendSourceChanged": false,
+  "productionBuildClaimed": false
+}

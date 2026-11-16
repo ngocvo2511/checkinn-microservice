@@ -1,0 +1,41 @@
+# Isolated broker/cache shared by host JVM OR Docker app mode (never both).
+# Create a NEW session only for a genuinely new acceptance run. Keep existing volumes.
+name: checkinn-supabase-dev-${SUPABASE_DEV_SESSION:?unique fresh development session required}
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "127.0.0.1:${SUPABASE_DEV_RABBIT_PORT:?dedicated non-default local port required}:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${SUPABASE_DEV_RABBIT_USERNAME:?required}
+      RABBITMQ_DEFAULT_PASS: ${SUPABASE_DEV_RABBIT_PASSWORD:?required}
+      RABBITMQ_DEFAULT_VHOST: ${SUPABASE_DEV_RABBIT_VHOST:?dedicated vhost required}
+    volumes:
+      - rabbit-data:/var/lib/rabbitmq
+    labels:
+      checkinn.environment: supabase-dev
+      checkinn.session: ${SUPABASE_DEV_SESSION}
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:${SUPABASE_DEV_REDIS_PORT:?dedicated non-default local port required}:6379"
+    command: [redis-server, --appendonly, "yes"]
+    volumes:
+      - redis-data:/data
+    labels:
+      checkinn.environment: supabase-dev
+      checkinn.session: ${SUPABASE_DEV_SESSION}
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+volumes:
+  rabbit-data:
+  redis-data:

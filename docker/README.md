@@ -1,5 +1,66 @@
 # Docker local development
 
+## Current entry point: two environments
+
+From `checkinn`:
+
+```powershell
+# Main app: hosted Supabase databases, configuration in docker/.env.
+.\docker\stack.ps1 -Environment Supabase -Action Validate
+.\docker\stack.ps1 -Environment Supabase -Action Up
+.\docker\stack.ps1 -Environment Supabase -Action Status
+.\docker\stack.ps1 -Environment Supabase -Action Down
+
+# Tests: local PostgreSQL container, independent docker/.env.test.
+.\docker\stack.ps1 -Environment Test -Action Validate
+.\docker\stack.ps1 -Environment Test -Action Build
+.\docker\stack.ps1 -Environment Test -Action Up
+```
+
+`Build` rebuilds source; `Up` starts existing images. Stop one mode before
+starting the other (ports 3000/8080/8761 overlap). Existing test volumes and
+passwords are retained; no reset, clone, schema conversion or migration occurs
+merely by selecting a mode. Check schema/source compatibility before rebuilding
+against a historical local test clone. Test runtime was configuration-validated
+during consolidation, not started against that retained clone.
+
+| File/location | Purpose |
+| --- | --- |
+| `.env` / `.env.example` | Main app's Supabase runtime credentials and provider modes |
+| `.env.test` / `.env.test.example` | Independent local test credentials; no fallback to main .env |
+| `docker-compose.yml` + `docker-compose.test.yml` | Local test topology; all five SQL URLs fixed to postgres-test |
+| `tools/supabase-runner/run-docker-stack.py` | Internal Supabase Compose adapter, called by stack.ps1 |
+| `.local/batch6b/` | Private operator state, CA files, management/migrator credentials, backups and generated Compose; not another application .env source |
+| `config/reference-data/` | Reviewed real province/destination data |
+
+The adapter still verifies the existing owned broker/cache session and mounts
+verified CAs read-only. The original operator .env may contain historical
+runtime copies; these are no longer application fallbacks. Edit runtime values
+only in `docker/.env`. Management/migrator tokens do not enter app containers.
+Supabase mode requires the previously reviewed private session state and owned
+infrastructure under `.local/batch6b`; copying `.env.example` alone does not
+provision a new environment. Do not recreate approval/readiness files to bypass
+setup. `Validate` and `Build` do not attach infrastructure networks; `Up` may
+attach the owned Mailpit container to its session network.
+Legacy `-SupabaseDev` and `-Test` switches remain aliases for older scripts;
+new commands use `-Environment`. Supabase is the default.
+
+Service resources retain `application.yml` (base), `application-supabase-dev.yml`
+(hosted runtime validation/TLS/pool policy) and `application-canonical.yml`
+(guarded canonical migration integration). The five comment-only local profile
+files have been removed. Canonical and historical SQL are retained.
+
+OSRM is optional via Compose's `routing` profile and requires separately
+provisioned map data. It is not started by a normal application/test command.
+Test Mailpit stays local; test external-provider values are placeholders.
+The previously documented VNPay merchant/Storage issues remain separate from
+database selection. No production rollout is implied by the main mode.
+
+The sections below preserve earlier checkpoint-specific commands and evidence.
+Use the current entry point above for daily startup. The legacy local clone
+tool now requires `--source-env <separate-local-source-file>` and rejects the
+main Supabase .env before any Docker/database operation.
+
 Media/private-document HTTP/gRPC contract checkpoint (09/11/2026):
 [media-service/README.md](../media-service/README.md). This batch uses isolated
 loopback providers and needs no schema/bucket change or live storage credentials.

@@ -1,0 +1,46 @@
+{
+  "buildSuccess": true,
+  "rows": [
+    {
+      "service": "user",
+      "reported": 112,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "executed": 108
+    },
+    {
+      "service": "hotel",
+      "reported": 403,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 33,
+      "executed": 370
+    },
+    {
+      "service": "booking",
+      "reported": 286,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "executed": 282
+    },
+    {
+      "service": "revenue",
+      "reported": 51,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "executed": 47
+    },
+    {
+      "service": "regulations",
+      "reported": 38,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "executed": 36
+    }
+  ],
+  "scope": "five affected services; no ApplicationTests; opt-in DB suites disabled; before final strengthened runtime mapping guard checks"
+}

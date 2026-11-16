@@ -1,0 +1,20 @@
+{
+  "owner": "revenue",
+  "sqlMaxConnections": 60,
+  "sqlSuperuserReserved": 3,
+  "runtimeRoleCap": 4,
+  "observedDatabaseSessions": 15,
+  "exhaustionTimeoutMillis": 10018,
+  "maximumPoolSize": 2,
+  "minimumIdle": 1,
+  "allocatedProjectBudget": 7,
+  "migrationReserve": 2,
+  "operationsReserve": 3,
+  "startupTwoConnections": "PASS",
+  "exhaustionAndReleaseRecovery": "PASS",
+  "localClientAbortAndFreshConnectionRecovery": "PASS",
+  "providerWideNetworkOutage": "NOT SIMULATED",
+  "businessDmlPerformed": false,
+  "status": "PASS",
+  "measuredPoolerConfig": "Management API returns defaults/null for numeric pooler settings; no invented provider-wide max. Budget uses actual SQL max/reserved, role cap and bounded two-client tests."
+}
