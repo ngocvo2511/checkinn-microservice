@@ -35,6 +35,16 @@ class HotelCatalogClientTest {
         assertThat(room.capacity().adults()).isEqualTo(2);
         server.verify();
     }
+    @Test void unapprovedCatalogInventoryIsBusinessConflictNotDependencyOutage() {
+        var rest=new RestTemplate();var server=MockRestServiceServer.bindTo(rest).build();
+        var client=new HotelCatalogClient(rest);ReflectionTestUtils.setField(client,"hotelServiceUrl","http://hotel.test");
+        server.expect(requestTo("http://hotel.test/api/v1/room-1"))
+                .andRespond(withStatus(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON)
+                        .body("{\"code\":\"INVENTORY_APPROVAL_REQUIRED\",\"message\":\"private evidence\"}"));
+        assertThatThrownBy(()->client.getRoom("room-1")).isInstanceOfSatisfying(ResponseStatusException.class,
+                error->{assertThat(error.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);assertThat(error.getReason()).doesNotContain("private");});
+        server.verify();
+    }
     @Test void dependencyOutageIsNotAnEmptyOfferOrSoldOutResult() {
         RestTemplate rest = new RestTemplate();
         var server = MockRestServiceServer.bindTo(rest).build();

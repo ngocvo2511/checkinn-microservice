@@ -1,0 +1,60 @@
+{
+  "processes": {
+    "eureka": {
+      "pid": 29680,
+      "port": 8761,
+      "startedAtUtc": "2026-11-17T10:07:29.162726+00:00",
+      "creationDate": "/Date(1794910049155)/",
+      "batch8cOwned": true
+    },
+    "user": {
+      "pid": 14228,
+      "port": 8082,
+      "startedAtUtc": "2026-11-17T10:07:42.567134+00:00",
+      "creationDate": "/Date(1794910062559)/",
+      "batch8cOwned": true
+    },
+    "hotel": {
+      "pid": 24924,
+      "port": 8083,
+      "startedAtUtc": "2026-11-17T10:08:06.579600+00:00",
+      "creationDate": "/Date(1794910086571)/",
+      "batch8cOwned": true
+    },
+    "booking": {
+      "pid": 34276,
+      "port": 8084,
+      "startedAtUtc": "2026-11-17T10:08:30.507831+00:00",
+      "creationDate": "/Date(1794910110499)/",
+      "batch8cOwned": true
+    },
+    "auth": {
+      "pid": 3824,
+      "port": 8081,
+      "startedAtUtc": "2026-11-17T10:08:53.065278+00:00",
+      "creationDate": "/Date(1794910133055)/",
+      "batch8cOwned": true
+    },
+    "gateway": {
+      "pid": 25880,
+      "port": 8080,
+      "startedAtUtc": "2026-11-17T10:09:05.524972+00:00",
+      "creationDate": "/Date(1794910145516)/",
+      "batch8cOwned": true
+    }
+  },
+  "ports": {
+    "eureka": 8761,
+    "gateway": 8080,
+    "auth": 8081,
+    "user": 8082,
+    "hotel": 8083,
+    "booking": 8084,
+    "media": 8085,
+    "notification": 8086,
+    "revenue": 8088,
+    "regulations": 8091,
+    "frontend": 3000
+  },
+  "chainSmoke": "smoke-final-restart-attempt-3.json"
+}

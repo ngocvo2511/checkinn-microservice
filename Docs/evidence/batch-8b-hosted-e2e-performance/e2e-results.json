@@ -1,0 +1,292 @@
+[
+  {
+    "case": "OWNER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER OTP local Mailpit",
+    "status": "FAIL",
+    "httpStatus": null
+  },
+  {
+    "case": "OWNER OTP local Mailpit",
+    "status": "FAIL",
+    "httpStatus": null
+  },
+  {
+    "case": "OWNER OTP local Mailpit",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "OWNER verify OTP",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER real login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER OTP local Mailpit",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "OWNER verify OTP",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER real login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER OTP local Mailpit",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "CUSTOMER verify OTP",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER real login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER OTP local Mailpit",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "CUSTOMER verify OTP",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER real login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "ADMIN proposal queue Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Unapproved room booking conflict",
+    "status": "PASS",
+    "httpStatus": 409
+  },
+  {
+    "case": "Unapproved booking leaves no hold/counter write",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "OWNER cannot approve",
+    "status": "PASS",
+    "httpStatus": 403
+  },
+  {
+    "case": "CUSTOMER cannot approve",
+    "status": "PASS",
+    "httpStatus": 403
+  },
+  {
+    "case": "OWNER B cannot edit OWNER A hotel",
+    "status": "PASS",
+    "httpStatus": 403
+  },
+  {
+    "case": "Forged ADMIN header rejected",
+    "status": "PASS",
+    "httpStatus": 403
+  },
+  {
+    "case": "ADMIN approve previously pending room",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Stale proposal approval conflict",
+    "status": "PASS",
+    "httpStatus": 409
+  },
+  {
+    "case": "Approved inventory available quantity 2",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER approved booking/hold Gateway",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Booking retry same idempotency key",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Idempotency changed payload conflict",
+    "status": "PASS",
+    "httpStatus": 409
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Concurrency 3 full stock all conflict",
+    "status": "FAIL",
+    "httpStatus": null
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Concurrent counters held=2 booked=0",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "Quantity change proposal with existing holds",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Cannot approve quantity below committed holds",
+    "status": "PASS",
+    "httpStatus": 409
+  },
+  {
+    "case": "ADMIN reject quantity proposal",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Rejected proposal preserves effective approved stock",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Cancel synthetic unpaid booking",
+    "status": "PASS",
+    "httpStatus": 204
+  },
+  {
+    "case": "Cancel synthetic unpaid booking",
+    "status": "PASS",
+    "httpStatus": 204
+  },
+  {
+    "case": "Cancellation releases all occupied counters",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "Create unpaid fixture for natural hold expiration",
+    "status": "FAIL",
+    "httpStatus": 400
+  }
+]

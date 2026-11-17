@@ -1,0 +1,41 @@
+{
+  "atUtc": "2026-11-17T14:35:11.899106+00:00",
+  "deleted": [
+    [
+      "room_holds",
+      0
+    ],
+    [
+      "room_availability",
+      0
+    ],
+    [
+      "room_inventory_review_states",
+      11
+    ],
+    [
+      "room_inventory_review_requests",
+      11
+    ],
+    [
+      "room_types",
+      11
+    ],
+    [
+      "hotels",
+      1
+    ]
+  ],
+  "remainingOfDeleted": 0,
+  "keptHotels": [
+    "ce8e8e37-377a-48e6-8b85-7c4abaefc2ef",
+    "90317a8f-e9fa-4f9e-b56a-868527de1727"
+  ],
+  "keptRooms": [
+    "df3270bd-31f7-4d03-af73-20ad42fe6c59",
+    "92985a19-a2e7-446e-b3b7-fc8a19792ad9",
+    "6776ba82-f907-4840-a923-426932b3e2c6",
+    "d0fd6ed9-0840-4b93-b670-b6cb41752450"
+  ],
+  "method": "Exact manifested IDs, one hotel-DB transaction, expected rowcounts; no wildcard; no booking/financial rows involved"
+}

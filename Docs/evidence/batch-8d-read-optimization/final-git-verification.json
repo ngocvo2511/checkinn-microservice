@@ -1,0 +1,35 @@
+{
+  "backend": {
+    "headUnchanged": true,
+    "branchUnchanged": true,
+    "stagedUnchanged": true,
+    "initialUnstagedStillModified": true,
+    "initialUntrackedStillPresent": true,
+    "newlyModifiedTracked": [
+      "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityCategoryRepository.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Amenity/repository/HotelAmenityRepository.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Amenity/service/AmenityCatalogService.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelController.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/controller/HotelOfferController.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/entity/Hotel.java",
+      "hotel-service/src/main/java/com/example/hotelservice/MediaAsset/repository/MediaAssetRepository.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Policy/repository/HotelPolicyRepository.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Question/repository/QuestionRepository.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/HotelMapperTextTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferControllerTest.java"
+    ],
+    "newUntrackedCount": 178,
+    "unstagedChangedInRun": true
+  },
+  "frontend": {
+    "headUnchanged": true,
+    "branchUnchanged": true,
+    "stagedUnchanged": true,
+    "initialUnstagedStillModified": true,
+    "initialUntrackedStillPresent": true,
+    "newlyModifiedTracked": [],
+    "newUntrackedCount": 0,
+    "unstagedChangedInRun": false
+  },
+  "note": "No stage/commit/push/reset/checkout/restore/clean/stash. Batch8D edits on top of pre-existing uncommitted changes in shared files (HotelMapper, HotelOfferSearchService, RoomTypeMapper, HotelOfferSearchServiceTest, standardization docs) were additive."
+}

@@ -1,0 +1,61 @@
+{
+  "clientOS": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.5",
+  "timezone": "Asia/Saigon",
+  "poolMax": 2,
+  "minimumIdle": 1,
+  "connectionTimeoutMs": 10000,
+  "jvm": "Java21, process -Xmx256m with JAVA_TOOL_OPTIONS -Xmx384m; effective last option 256m",
+  "gatewayPort": 8080,
+  "hotelPort": 8083,
+  "warmup": 3,
+  "samplesPerCell": 30,
+  "percentiles": "linear interpolation",
+  "baselineConcurrencyRestriction": "C1 only due 5-7s search and 10s acquisition timeout/pool2; higher read concurrency evaluated after optimization",
+  "regions": "pooler host codes only; not independently verified physical DB region",
+  "dataset": "Small 2 hotels x 2 rooms; same exact IDs before/after",
+  "schemaChanges": false,
+  "providers": "No payment/refund API. Media off. SMTP only isolated local Mailpit rdns disabled.",
+  "targets": [
+    {
+      "owner": "user",
+      "hostRegion": "ap-south-1",
+      "endpointHash": "8646b19542f9644cf5cce9f361acb8dc1eed699e78af4b17fecc0ad694f29754",
+      "mode": "session pooler",
+      "port": 5432,
+      "sslmode": "verify-full"
+    },
+    {
+      "owner": "regulations",
+      "hostRegion": "ap-southeast-2",
+      "endpointHash": "0a5b6be6c6fb5581fc5384faf2a13bb88aa866758f0d9613a176488ffa1b1c48",
+      "mode": "session pooler",
+      "port": 5432,
+      "sslmode": "verify-full"
+    },
+    {
+      "owner": "hotel",
+      "hostRegion": "ap-northeast-1",
+      "endpointHash": "269ce28419b1f6636be80e8094ec67247ec537b019c557f190eea41aa4744ccc",
+      "mode": "session pooler",
+      "port": 5432,
+      "sslmode": "verify-full"
+    },
+    {
+      "owner": "booking",
+      "hostRegion": "ap-southeast-1",
+      "endpointHash": "f6670813d52096764ddff30cc9248989332c53aee063dd174cb3946db041bd03",
+      "mode": "session pooler",
+      "port": 5432,
+      "sslmode": "verify-full"
+    },
+    {
+      "owner": "revenue",
+      "hostRegion": "ap-northeast-2",
+      "endpointHash": "4f7e825a0f2f30e1b8940a973a54f2acaf763aad87c4739011d17c75f6b7605c",
+      "mode": "session pooler",
+      "port": 5432,
+      "sslmode": "verify-full"
+    }
+  ]
+}

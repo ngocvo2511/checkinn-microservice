@@ -1,0 +1,17 @@
+{
+  "clientDate": "2026-11-17",
+  "owner": "booking",
+  "mode": "runtime-readonly",
+  "exitCode": 0,
+  "safeOutput": [
+    "booking CONTROL_PLANE_IDENTITY_PASS",
+    "booking CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "booking RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ],
+  "unpublishedLines": 0,
+  "runnerVersion": "1.3.0",
+  "runnerJarSha256": "3de9655470208eca9503d59024c9c2d5340f35225ed88fc02b95b39b222d8a8e",
+  "ddlDmlPerformed": false,
+  "migrationRequested": false,
+  "approvalFileLoaded": false
+}

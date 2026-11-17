@@ -1,0 +1,22 @@
+[
+  {
+    "owner": "hotel",
+    "exitCode": 0,
+    "tests": 435,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 34,
+    "executedPass": 401,
+    "command": "mvn -o -B -ntp -pl hotel-service -Dtest=*,!*ApplicationTests test"
+  },
+  {
+    "owner": "booking",
+    "exitCode": 0,
+    "tests": 289,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "executedPass": 285,
+    "command": "mvn -o -B -ntp -pl booking-service -Dtest=*,!*ApplicationTests test"
+  }
+]

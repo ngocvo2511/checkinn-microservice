@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "stock": 2,
+  "attempts": [
+    {
+      "index": 0,
+      "httpStatus": 201,
+      "ms": 5282.498399996257
+    },
+    {
+      "index": 1,
+      "httpStatus": 201,
+      "ms": 4424.672500004817
+    },
+    {
+      "index": 2,
+      "httpStatus": 409,
+      "ms": 8009.831099996518
+    }
+  ],
+  "counters": {
+    "held": 2,
+    "booked": 0
+  },
+  "concurrentSameKeyAttempts": [
+    {
+      "httpStatus": 201,
+      "ms": 4587.412700006098
+    },
+    {
+      "httpStatus": 201,
+      "ms": 4820.328400004655
+    }
+  ],
+  "concurrentSameKeyOneBooking": true,
+  "concurrentSameKeyCounters": {
+    "held": 1,
+    "booked": 0
+  },
+  "finalCounters": {
+    "held": 0,
+    "booked": 0
+  }
+}

@@ -1,0 +1,1994 @@
+{
+  "note": "Snapshots with JVM/application tags; cumulative counters are not summed across restarts or snapshots",
+  "snapshots": [
+    {
+      "snapshot": "hikari-before-cleanup",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 217.0,
+        "TOTAL_TIME": 21.624554401,
+        "MAX": 0.110711301
+      },
+      "usage": {
+        "COUNT": 217.0,
+        "TOTAL_TIME": 54.662,
+        "MAX": 1.402
+      },
+      "creation": {
+        "COUNT": 6.0,
+        "TOTAL_TIME": 5.94,
+        "MAX": 1.025
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-before-cleanup",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 1754.0,
+        "TOTAL_TIME": 1736.316716198,
+        "MAX": 0.239344301
+      },
+      "usage": {
+        "COUNT": 1754.0,
+        "TOTAL_TIME": 5329.805,
+        "MAX": 2.643
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 4.434,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-before-cleanup",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 15526.0,
+        "TOTAL_TIME": 526.943537474,
+        "MAX": 6.538475301
+      },
+      "usage": {
+        "COUNT": 15525.0,
+        "TOTAL_TIME": 847.612,
+        "MAX": 6.592
+      },
+      "creation": {
+        "COUNT": 5.0,
+        "TOTAL_TIME": 2.832,
+        "MAX": 0.51
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-concurrency",
+      "owner": "user",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 0.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 212.0,
+        "TOTAL_TIME": 21.106170902,
+        "MAX": 0.1137469
+      },
+      "usage": {
+        "COUNT": 211.0,
+        "TOTAL_TIME": 50.967,
+        "MAX": 1.402
+      },
+      "creation": {
+        "COUNT": 5.0,
+        "TOTAL_TIME": 4.915,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-concurrency",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 1746.0,
+        "TOTAL_TIME": 1735.378232096,
+        "MAX": 5.2862973
+      },
+      "usage": {
+        "COUNT": 1746.0,
+        "TOTAL_TIME": 5322.953,
+        "MAX": 2.881
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 4.434,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-concurrency",
+      "owner": "booking",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 15222.0,
+        "TOTAL_TIME": 506.192052976,
+        "MAX": 6.538475301
+      },
+      "usage": {
+        "COUNT": 15221.0,
+        "TOTAL_TIME": 816.063,
+        "MAX": 6.592
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 2.322,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1-corrected",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 0.951361,
+        "MAX": 0.1109529
+      },
+      "usage": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 2.188,
+        "MAX": 0.742
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:635eec3f-b0d8-4845-8b7a-143660170ab4"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1-corrected",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 0.736065,
+        "MAX": 0.1263287
+      },
+      "usage": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 2.236,
+        "MAX": 0.678
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:a3f944db-c86f-4a2a-86df-d7f9c8090634"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1-corrected",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 336.0,
+        "TOTAL_TIME": 10.893962,
+        "MAX": 0.0864714
+      },
+      "usage": {
+        "COUNT": 336.0,
+        "TOTAL_TIME": 17.879,
+        "MAX": 0.324
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:ad02c48e-74b1-4f1d-89e2-fe6c10070c18"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 0.7486828,
+        "MAX": 0.1109529
+      },
+      "usage": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 1.433,
+        "MAX": 0.742
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:635eec3f-b0d8-4845-8b7a-143660170ab4"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 0.617863,
+        "MAX": 0.1263287
+      },
+      "usage": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 1.314,
+        "MAX": 0.385
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:a3f944db-c86f-4a2a-86df-d7f9c8090634"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle1",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 300.0,
+        "TOTAL_TIME": 9.8603269,
+        "MAX": 0.0864714
+      },
+      "usage": {
+        "COUNT": 300.0,
+        "TOTAL_TIME": 16.097,
+        "MAX": 0.324
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:ad02c48e-74b1-4f1d-89e2-fe6c10070c18"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle2",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 0.9568056,
+        "MAX": 0.1093231
+      },
+      "usage": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 1.864,
+        "MAX": 0.737
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle2",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 0.5803861,
+        "MAX": 0.1205889
+      },
+      "usage": {
+        "COUNT": 8.0,
+        "TOTAL_TIME": 1.869,
+        "MAX": 0.919
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2ada36d2-0963-4c02-9dce-63cd2c90f92a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-cycle2",
+      "owner": "booking",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 323.0,
+        "TOTAL_TIME": 10.2976287,
+        "MAX": 0.0792038
+      },
+      "usage": {
+        "COUNT": 323.0,
+        "TOTAL_TIME": 17.441,
+        "MAX": 0.628
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-during-small",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 55.0,
+        "TOTAL_TIME": 3.7229439,
+        "MAX": 0.1030834
+      },
+      "usage": {
+        "COUNT": 55.0,
+        "TOTAL_TIME": 15.908,
+        "MAX": 0.21
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-during-small",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 2.0
+      },
+      "idle": {
+        "VALUE": 0.0
+      },
+      "pending": {
+        "VALUE": 1.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 98.0,
+        "TOTAL_TIME": 27.1908196,
+        "MAX": 3.1996664
+      },
+      "usage": {
+        "COUNT": 96.0,
+        "TOTAL_TIME": 224.837,
+        "MAX": 3.657
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-during-small",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 1796.0,
+        "TOTAL_TIME": 58.1580817,
+        "MAX": 0.314494
+      },
+      "usage": {
+        "COUNT": 1796.0,
+        "TOTAL_TIME": 98.229,
+        "MAX": 4.977
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-final-restart",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 6.0,
+        "TOTAL_TIME": 0.546061501,
+        "MAX": 0.1116172
+      },
+      "usage": {
+        "COUNT": 6.0,
+        "TOTAL_TIME": 1.128,
+        "MAX": 0.671
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-final-restart",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 0.776094601,
+        "MAX": 0.1375888
+      },
+      "usage": {
+        "COUNT": 10.0,
+        "TOTAL_TIME": 3.541,
+        "MAX": 0.81
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-final-restart",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 151.0,
+        "TOTAL_TIME": 5.240019,
+        "MAX": 0.0701524
+      },
+      "usage": {
+        "COUNT": 151.0,
+        "TOTAL_TIME": 8.314,
+        "MAX": 0.068
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented-recheck",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 44.0,
+        "TOTAL_TIME": 2.5682908,
+        "MAX": 0.1183086
+      },
+      "usage": {
+        "COUNT": 44.0,
+        "TOTAL_TIME": 12.928,
+        "MAX": 0.653
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented-recheck",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 6.0,
+        "TOTAL_TIME": 0.4728285,
+        "MAX": 0.1222506
+      },
+      "usage": {
+        "COUNT": 6.0,
+        "TOTAL_TIME": 1.721,
+        "MAX": 1.067
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented-recheck",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 942.0,
+        "TOTAL_TIME": 31.3490046,
+        "MAX": 0.3283389
+      },
+      "usage": {
+        "COUNT": 942.0,
+        "TOTAL_TIME": 51.024,
+        "MAX": 0.327
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 41.0,
+        "TOTAL_TIME": 2.2476728,
+        "MAX": 0.1183086
+      },
+      "usage": {
+        "COUNT": 41.0,
+        "TOTAL_TIME": 11.47,
+        "MAX": 0.631
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 0.2368049,
+        "MAX": 0.1222506
+      },
+      "usage": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 0.37,
+        "MAX": 0.127
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-instrumented",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 831.0,
+        "TOTAL_TIME": 27.8635731,
+        "MAX": 0.3283389
+      },
+      "usage": {
+        "COUNT": 831.0,
+        "TOTAL_TIME": 45.003,
+        "MAX": 0.327
+      },
+      "creation": {
+        "COUNT": 0.0,
+        "TOTAL_TIME": 0.0,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-c1-running",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 166.0,
+        "TOTAL_TIME": 16.0334755,
+        "MAX": 0.1070319
+      },
+      "usage": {
+        "COUNT": 166.0,
+        "TOTAL_TIME": 40.535,
+        "MAX": 0.216
+      },
+      "creation": {
+        "COUNT": 3.0,
+        "TOTAL_TIME": 3.136,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-c1-running",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 1402.0,
+        "TOTAL_TIME": 1417.0942615,
+        "MAX": 0.1358054
+      },
+      "usage": {
+        "COUNT": 1401.0,
+        "TOTAL_TIME": 3857.901,
+        "MAX": 12.626
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 4.434,
+        "MAX": 1.147
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-c1-running",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 11287.0,
+        "TOTAL_TIME": 364.3193785,
+        "MAX": 0.1697821
+      },
+      "usage": {
+        "COUNT": 11287.0,
+        "TOTAL_TIME": 595.503,
+        "MAX": 0.081
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 2.322,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-dated-running",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 182.0,
+        "TOTAL_TIME": 17.9050889,
+        "MAX": 0.109175
+      },
+      "usage": {
+        "COUNT": 182.0,
+        "TOTAL_TIME": 44.07,
+        "MAX": 0.214
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 4.097,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-dated-running",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 1446.0,
+        "TOTAL_TIME": 1418.0516694,
+        "MAX": 0.1224592
+      },
+      "usage": {
+        "COUNT": 1445.0,
+        "TOTAL_TIME": 4345.863,
+        "MAX": 14.383
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 4.434,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-larger-dated-running",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 12729.0,
+        "TOTAL_TIME": 409.1205147,
+        "MAX": 0.0629532
+      },
+      "usage": {
+        "COUNT": 12729.0,
+        "TOTAL_TIME": 667.587,
+        "MAX": 0.148
+      },
+      "creation": {
+        "COUNT": 4.0,
+        "TOTAL_TIME": 2.322,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-catalog",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 133.0,
+        "TOTAL_TIME": 12.3348708,
+        "MAX": 0.1183642
+      },
+      "usage": {
+        "COUNT": 133.0,
+        "TOTAL_TIME": 33.016,
+        "MAX": 0.233
+      },
+      "creation": {
+        "COUNT": 1.0,
+        "TOTAL_TIME": 1.122,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-catalog",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 972.0,
+        "TOTAL_TIME": 1047.6346839,
+        "MAX": 0.3065123
+      },
+      "usage": {
+        "COUNT": 971.0,
+        "TOTAL_TIME": 2826.828,
+        "MAX": 6.385
+      },
+      "creation": {
+        "COUNT": 2.0,
+        "TOTAL_TIME": 2.313,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-catalog",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 8546.0,
+        "TOTAL_TIME": 277.7062108,
+        "MAX": 0.123473
+      },
+      "usage": {
+        "COUNT": 8546.0,
+        "TOTAL_TIME": 456.063,
+        "MAX": 0.155
+      },
+      "creation": {
+        "COUNT": 2.0,
+        "TOTAL_TIME": 1.162,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-pool-rotation",
+      "owner": "user",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 107.0,
+        "TOTAL_TIME": 9.3788107,
+        "MAX": 0.1177737
+      },
+      "usage": {
+        "COUNT": 107.0,
+        "TOTAL_TIME": 27.134,
+        "MAX": 0.262
+      },
+      "creation": {
+        "COUNT": 1.0,
+        "TOTAL_TIME": 1.122,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:208a068d-262d-40da-bfed-2bfb9e5acd07"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-pool-rotation",
+      "owner": "hotel",
+      "active": {
+        "VALUE": 1.0
+      },
+      "idle": {
+        "VALUE": 1.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 807.0,
+        "TOTAL_TIME": 826.3542721,
+        "MAX": 0.1348355
+      },
+      "usage": {
+        "COUNT": 806.0,
+        "TOTAL_TIME": 1819.286,
+        "MAX": 6.662
+      },
+      "creation": {
+        "COUNT": 2.0,
+        "TOTAL_TIME": 2.313,
+        "MAX": 1.17
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:7d10da52-ad8a-4774-b695-da280f12a14d"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    {
+      "snapshot": "hikari-medium-pool-rotation",
+      "owner": "booking",
+      "active": {
+        "VALUE": 0.0
+      },
+      "idle": {
+        "VALUE": 2.0
+      },
+      "pending": {
+        "VALUE": 0.0
+      },
+      "max": {
+        "VALUE": 2.0
+      },
+      "min": {
+        "VALUE": 1.0
+      },
+      "timeout": {
+        "COUNT": 0.0
+      },
+      "acquire": {
+        "COUNT": 6245.0,
+        "TOTAL_TIME": 200.1955207,
+        "MAX": 0.3316982
+      },
+      "usage": {
+        "COUNT": 6245.0,
+        "TOTAL_TIME": 330.071,
+        "MAX": 0.16
+      },
+      "creation": {
+        "COUNT": 2.0,
+        "TOTAL_TIME": 1.162,
+        "MAX": 0.0
+      },
+      "scopeTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:c7c96cf1-0593-4f2d-9bd4-66997705ae1a"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    }
+  ]
+}

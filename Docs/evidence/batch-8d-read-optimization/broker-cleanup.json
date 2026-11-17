@@ -1,0 +1,36 @@
+[
+  {
+    "queue": "revenue.booking.queue",
+    "removedExactFixturePayloadHashes": [
+      "d90a34abe87af042935c556145cb969d16979be6b1298a1619d22c6ebe59021f",
+      "d0aa2b2e80061d58ad5f3419ec82c553f568bcfb486dda971afcdde5506b3bd2",
+      "1da401d573f6692ecb369319fbcc858d21f197f5cc09167ed4d4501ee8caf897",
+      "a48cfaa755055dae550a2a642389848cb12472ef993dd8bdcaea3278469e900c",
+      "ee5673c7dd85ed6732355c5240b7ae04eb979062386638212779648fbee12244",
+      "ced00c221f782b9532b114d86a073e82b7202b01bd81c04faca2dd39b34ce912",
+      "cc8f3ffdc75b4d5c2a5b015efda8a08a43be12205ba1b5887d350409f6a5ebe3",
+      "57e73673cbbb3a25f7bcbfcf1eb50fd01094342cbd87fb2e97a4dab5c63c5816",
+      "d8a75671b98c7e3d67d76967ab773a71a0c03ab60a34ebc32b707e0e1dfff440",
+      "9758e5a6b9ae1dd7c51188c2ba96d5af46db63729a0f105c31fe153f58b11f26"
+    ],
+    "preservedUnmatched": 0,
+    "remaining": 0
+  },
+  {
+    "queue": "notification.otp.dlq",
+    "removedExactFixturePayloadHashes": [],
+    "preservedUnmatched": 0,
+    "remaining": 0
+  },
+  {
+    "queue": "notification.otp.queue",
+    "removedExactFixturePayloadHashes": [
+      "58186c7b6f77a98183ae706759d2ce293ed31166f0ba7507552ec3c807ad262d",
+      "2eafebaad1a910377fc467526e9bd72111aa42aaf29764a7994dc62d2c97233e",
+      "0d0d3e2cac95020b49ad4df70e6dc1fc413eeb1c6dc944b1f28ac9ddb1d73eea",
+      "b3e9be1788ca00ee1202a656fef26058051d299f6881e872867de96902cbb8d4"
+    ],
+    "preservedUnmatched": 0,
+    "remaining": 0
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "queue": "revenue.booking.queue",
+    "removedExactFixturePayloadHashes": [
+      "f6d13b0a21d8a63ea86558d8af3460f56e7afd1526c708721aa683b027854330",
+      "27bf1fba4d06800d295e85d1110d6d8d656c7fe3032577a43df45f381fb0bc09",
+      "c32f10a627bbb642174cf7b03f2fbd3778215b57fcae23c49956b6a2ca675f9c",
+      "d181987026617efb965de6add4c184d584a69fcd14fbf8043ec7f6bf14be5157",
+      "0100362e6e20eb54607762067057b90f641ac47f54c3cb62285e3e9532c07385",
+      "69c9f3a1a6da5824ef42f3cef5559f280ef19b748b58ede2598677610f846163"
+    ],
+    "preservedUnmatched": 0,
+    "remaining": 0
+  },
+  {
+    "queue": "notification.otp.dlq",
+    "removedExactFixturePayloadHashes": [
+      "0e9b55a191c88d0925814b659b7c0f814050369a3d5726bf7a664e57e612f3fd",
+      "d69a6dd783a1e11154445b7062d1053b698ddfcb026d10c4412bec87f00d6afa"
+    ],
+    "preservedUnmatched": 0,
+    "remaining": 0
+  }
+]

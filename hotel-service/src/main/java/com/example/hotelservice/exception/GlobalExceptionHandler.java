@@ -21,6 +21,15 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException.class)
+    public ResponseEntity<Map<String,Object>> handleInventoryApprovalRequired(
+            com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException ex,
+            HttpServletRequest req) {
+        var response=buildErrorResponse(HttpStatus.CONFLICT,ex.getMessage(),req.getRequestURI());
+        response.getBody().put("code","INVENTORY_APPROVAL_REQUIRED");
+        return response;
+    }
+
     @ExceptionHandler(com.example.hotelservice.Room.availability.service.InventoryInconsistentException.class)
     public ResponseEntity<Map<String, Object>> handleInventoryInconsistent(
             com.example.hotelservice.Room.availability.service.InventoryInconsistentException ex,

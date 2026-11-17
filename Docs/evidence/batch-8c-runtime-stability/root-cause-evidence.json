@@ -1,0 +1,25 @@
+{
+  "confirmed": [
+    {
+      "finding": "PostgreSQL app-role admission limit exhausted in historical Hotel restart",
+      "evidence": "Batch8B log: FATAL too many connections for role, Hikari total=0. Current dedicated runtime role cap=4; configured max=2."
+    },
+    {
+      "finding": "Legacy runner forcibly terminates JVM",
+      "evidence": "tools/supabase-runner/run-local-stack.py stop uses taskkill /T /F; no Hikari shutdown acceptance there."
+    },
+    {
+      "finding": "Discovery and route readiness lag process/health startup",
+      "evidence": "smoke-instrumented.json has ADMIN login200 but Hotel queue/search503 and missing HOTEL-SERVICE; instrumented-recheck all PASS."
+    }
+  ],
+  "notProven": [
+    "Original four backend sessions belonged to specific old JVMs",
+    "A Java/JDBC resource leak",
+    "Account-level Supavisor client limit, dashboard pool size, or other-client ownership",
+    "All external/managed backend states (role visibility restricted)"
+  ],
+  "currentEvidence": "No Java JVM at initial inventory. Explicit Hikari shutdown completed for all three DB services. User/Hotel backend rows fell to0; Booking2 then0 on next bounded probe. Cycle2 app backend counts2/role4. No app-role grants/pool caps/endpoints changed.",
+  "fix": "Opt-in owned local launcher: operation lock, module JVM scan, exclusive port guard, PID creation-time check, runtime-role headroom gate, process-only Spring admin local attach/graceful shutdown, bounded health and separate chain smoke. No forced-kill fallback.",
+  "conclusion": "Historical role-limit exhaustion is proven; original backend ownership is not reconstructable. Forced-stop and incomplete readiness are confirmed lifecycle defects. Scoped non-recurrence must be evaluated from current restart/load evidence, not asserted as a universal Supavisor infrastructure fix."
+}

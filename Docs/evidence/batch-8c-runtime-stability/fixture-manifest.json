@@ -1,0 +1,2344 @@
+{
+  "testRunId": "batch8c-20261117T082401Z-3caeb342",
+  "writesAllowed": false,
+  "records": [
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "791963e8-fb02-422f-9fa0-41a73ffeb71b",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Rabbit OTP message; no SMTP consumer started"
+      ],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "f3de302f-0913-4dc2-9498-15d924a2863d",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "5877ccae-d8ce-4d29-8f67-101a94fb30d4",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Rabbit OTP message; no SMTP consumer started"
+      ],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "16047162-df0f-45ce-aa21-ee0223529136",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "be0c0812-4bae-49f3-98d4-34c37bbf4c87",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "0ad368be-27e6-49a5-8274-5d854823925f",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Rabbit OTP message; no SMTP consumer started"
+      ],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "908fd9e1-c914-4743-8ef2-2928dffffe11",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "50a48b42-e6b3-4834-9750-1b5ab3b232cb",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "78e72169-c495-4b60-8933-cd7a3a74c3a6",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Rabbit OTP message; no SMTP consumer started"
+      ],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "0f50a007-8c90-492a-b251-785e8d981a31",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "393a3af2-e12c-4011-84ab-035d196cabdb",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+      "parents": [
+        "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "762e7f08-5272-418a-92da-2530b45718b5",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "3b5e130c-cdb5-4f7a-8f43-559f2e8667b6",
+      "parents": [
+        "762e7f08-5272-418a-92da-2530b45718b5"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "762e7f08-5272-418a-92da-2530b45718b5",
+      "parents": [
+        "762e7f08-5272-418a-92da-2530b45718b5",
+        "3b5e130c-cdb5-4f7a-8f43-559f2e8667b6"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "da9328c6-011f-475b-b869-d540d213368e",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "fbeda56e-8f17-48dd-893a-d0655372ccbe",
+      "parents": [
+        "da9328c6-011f-475b-b869-d540d213368e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "da9328c6-011f-475b-b869-d540d213368e",
+      "parents": [
+        "da9328c6-011f-475b-b869-d540d213368e",
+        "fbeda56e-8f17-48dd-893a-d0655372ccbe"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+      "parents": [
+        "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "591ab9ec-9481-4df1-a94c-b5408858b525",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "bc208170-c3dd-4ff4-97b4-d6c00a074632",
+      "parents": [
+        "591ab9ec-9481-4df1-a94c-b5408858b525"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "591ab9ec-9481-4df1-a94c-b5408858b525",
+      "parents": [
+        "591ab9ec-9481-4df1-a94c-b5408858b525",
+        "bc208170-c3dd-4ff4-97b4-d6c00a074632"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "0f33d90e-da2b-498a-b50d-c1807355e5f9",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "b7460695-b379-4f01-8bee-3352fb8a703d",
+      "parents": [
+        "0f33d90e-da2b-498a-b50d-c1807355e5f9"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "0f33d90e-da2b-498a-b50d-c1807355e5f9",
+      "parents": [
+        "0f33d90e-da2b-498a-b50d-c1807355e5f9",
+        "b7460695-b379-4f01-8bee-3352fb8a703d"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "4e5ab02c-3b29-3ca2-bb92-dd15e9a776d5",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_availability",
+      "key": "id",
+      "id": "6c0c5599-9274-4a79-9039-855749a76544",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "db5bb488-789e-43f4-88b1-36ce55a78686",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "8a6e0c3e-4828-40b8-a7dc-11863c42f00c",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "d9fd252d-9e05-4248-bedf-7ca7030e54dc",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "eb7db142-da67-4233-8f4d-3ddd3365b1a8",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "300ad1c7-e9d2-4649-859c-b52c7a9ccb78",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "1f259c13-0991-4467-a52f-ba6751cff624",
+      "parents": [
+        "300ad1c7-e9d2-4649-859c-b52c7a9ccb78"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "300ad1c7-e9d2-4649-859c-b52c7a9ccb78",
+      "parents": [
+        "300ad1c7-e9d2-4649-859c-b52c7a9ccb78",
+        "1f259c13-0991-4467-a52f-ba6751cff624"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "ff26d081-d74c-4c74-9087-a5c7ff02987d",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "ec70a04d-f35c-4305-80c2-67232a061dd6",
+      "parents": [
+        "ff26d081-d74c-4c74-9087-a5c7ff02987d"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "ff26d081-d74c-4c74-9087-a5c7ff02987d",
+      "parents": [
+        "ff26d081-d74c-4c74-9087-a5c7ff02987d",
+        "ec70a04d-f35c-4305-80c2-67232a061dd6"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "7933ec7b-390b-4c2c-8f35-bc864e7a0c30",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "576ce144-2748-4e16-9fd9-4784ed826877",
+      "parents": [
+        "7933ec7b-390b-4c2c-8f35-bc864e7a0c30"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "7933ec7b-390b-4c2c-8f35-bc864e7a0c30",
+      "parents": [
+        "7933ec7b-390b-4c2c-8f35-bc864e7a0c30",
+        "576ce144-2748-4e16-9fd9-4784ed826877"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "7e3e2486-5c43-40bb-931a-a5dd6dccd2fe",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "256f65a1-6bab-48b6-9bc2-45d5035986d4",
+      "parents": [
+        "7e3e2486-5c43-40bb-931a-a5dd6dccd2fe"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "7e3e2486-5c43-40bb-931a-a5dd6dccd2fe",
+      "parents": [
+        "7e3e2486-5c43-40bb-931a-a5dd6dccd2fe",
+        "256f65a1-6bab-48b6-9bc2-45d5035986d4"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "09f4b1e2-3ba6-44ca-9e26-59dd7ca73857",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "28f46332-63fa-4e67-9647-bb3012f1260c",
+      "parents": [
+        "09f4b1e2-3ba6-44ca-9e26-59dd7ca73857"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "09f4b1e2-3ba6-44ca-9e26-59dd7ca73857",
+      "parents": [
+        "09f4b1e2-3ba6-44ca-9e26-59dd7ca73857",
+        "28f46332-63fa-4e67-9647-bb3012f1260c"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "de09ac3e-4559-47e8-89b4-0d423d69b908",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "9203109b-9c85-454b-87bd-e6cfa6387d1c",
+      "parents": [
+        "de09ac3e-4559-47e8-89b4-0d423d69b908"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "de09ac3e-4559-47e8-89b4-0d423d69b908",
+      "parents": [
+        "de09ac3e-4559-47e8-89b4-0d423d69b908",
+        "9203109b-9c85-454b-87bd-e6cfa6387d1c"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+      "parents": [
+        "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "d6ee7d24-95b3-4310-9033-762db590c9b8",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "e535f49e-8277-4133-a177-adebe39bef95",
+      "parents": [
+        "d6ee7d24-95b3-4310-9033-762db590c9b8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "d6ee7d24-95b3-4310-9033-762db590c9b8",
+      "parents": [
+        "d6ee7d24-95b3-4310-9033-762db590c9b8",
+        "e535f49e-8277-4133-a177-adebe39bef95"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "7434786a-3d9e-440c-a3bc-6ea0bfa397b1",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "4dcf48cc-0091-4fe5-9586-28451c5b0733",
+      "parents": [
+        "7434786a-3d9e-440c-a3bc-6ea0bfa397b1"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "7434786a-3d9e-440c-a3bc-6ea0bfa397b1",
+      "parents": [
+        "7434786a-3d9e-440c-a3bc-6ea0bfa397b1",
+        "4dcf48cc-0091-4fe5-9586-28451c5b0733"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "47ae22c4-209e-4573-873a-da459eda78de",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "83199e37-a879-450d-930a-f6da27c2123e",
+      "parents": [
+        "47ae22c4-209e-4573-873a-da459eda78de"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "47ae22c4-209e-4573-873a-da459eda78de",
+      "parents": [
+        "47ae22c4-209e-4573-873a-da459eda78de",
+        "83199e37-a879-450d-930a-f6da27c2123e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "fe0593d8-1ad1-410c-b9ce-06d8aca8a783",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "3ddf081f-e87e-4f4c-b4aa-4916359a66c8",
+      "parents": [
+        "fe0593d8-1ad1-410c-b9ce-06d8aca8a783"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "fe0593d8-1ad1-410c-b9ce-06d8aca8a783",
+      "parents": [
+        "fe0593d8-1ad1-410c-b9ce-06d8aca8a783",
+        "3ddf081f-e87e-4f4c-b4aa-4916359a66c8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "68e23c64-6598-4def-b62d-ad8afc1700b5",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "2ca565c5-f59b-428a-8c8d-79a37703f6fe",
+      "parents": [
+        "68e23c64-6598-4def-b62d-ad8afc1700b5"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "68e23c64-6598-4def-b62d-ad8afc1700b5",
+      "parents": [
+        "68e23c64-6598-4def-b62d-ad8afc1700b5",
+        "2ca565c5-f59b-428a-8c8d-79a37703f6fe"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "4d575020-9d21-410e-8b3a-bd5de6f71993",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "dfb09c18-2aef-4508-8978-f6ea3b3c171c",
+      "parents": [
+        "4d575020-9d21-410e-8b3a-bd5de6f71993"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "4d575020-9d21-410e-8b3a-bd5de6f71993",
+      "parents": [
+        "4d575020-9d21-410e-8b3a-bd5de6f71993",
+        "dfb09c18-2aef-4508-8978-f6ea3b3c171c"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "402362a7-8fd5-44af-a621-de71df335d9b",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "7e4583cf-b209-4665-9ed8-0183576da10b",
+      "parents": [
+        "402362a7-8fd5-44af-a621-de71df335d9b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "402362a7-8fd5-44af-a621-de71df335d9b",
+      "parents": [
+        "402362a7-8fd5-44af-a621-de71df335d9b",
+        "7e4583cf-b209-4665-9ed8-0183576da10b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "37877977-3063-476f-afb6-4354362ed964",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "feb51187-61ea-40b9-80e4-c0e4a07977a9",
+      "parents": [
+        "37877977-3063-476f-afb6-4354362ed964"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "37877977-3063-476f-afb6-4354362ed964",
+      "parents": [
+        "37877977-3063-476f-afb6-4354362ed964",
+        "feb51187-61ea-40b9-80e4-c0e4a07977a9"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "38adb840-68ee-46ba-8f84-12ab8294f252",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "0b8270c4-87b6-4f4c-892f-1eb2744e287e",
+      "parents": [
+        "38adb840-68ee-46ba-8f84-12ab8294f252"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "38adb840-68ee-46ba-8f84-12ab8294f252",
+      "parents": [
+        "38adb840-68ee-46ba-8f84-12ab8294f252",
+        "0b8270c4-87b6-4f4c-892f-1eb2744e287e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "a588eb59-51d5-4476-ae1d-5f9077e8ef56",
+      "parents": [
+        "c4456aad-9e21-43f4-8872-cb74b6a02efd"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "45f37567-63ff-4e83-8510-4992632eb160",
+      "parents": [
+        "a588eb59-51d5-4476-ae1d-5f9077e8ef56"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "a588eb59-51d5-4476-ae1d-5f9077e8ef56",
+      "parents": [
+        "a588eb59-51d5-4476-ae1d-5f9077e8ef56",
+        "45f37567-63ff-4e83-8510-4992632eb160"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "764d0ebc-6299-459e-a005-e57143095925",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "a847e9a5-c52f-4af1-90b7-a09b885a48eb",
+      "parents": [
+        "764d0ebc-6299-459e-a005-e57143095925"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "764d0ebc-6299-459e-a005-e57143095925",
+      "parents": [
+        "764d0ebc-6299-459e-a005-e57143095925",
+        "a847e9a5-c52f-4af1-90b7-a09b885a48eb"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "1416494f-23c9-4714-8683-cc99c5d575eb",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "8acbbcc3-90e2-46e9-ab83-c6e0e9c38fa1",
+      "parents": [
+        "1416494f-23c9-4714-8683-cc99c5d575eb"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "1416494f-23c9-4714-8683-cc99c5d575eb",
+      "parents": [
+        "1416494f-23c9-4714-8683-cc99c5d575eb",
+        "8acbbcc3-90e2-46e9-ab83-c6e0e9c38fa1"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "126ecb06-bfc5-4e0d-9521-524ccbcf7290",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "65b9e22d-1d96-4583-9a50-c9f346850555",
+      "parents": [
+        "126ecb06-bfc5-4e0d-9521-524ccbcf7290"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "126ecb06-bfc5-4e0d-9521-524ccbcf7290",
+      "parents": [
+        "126ecb06-bfc5-4e0d-9521-524ccbcf7290",
+        "65b9e22d-1d96-4583-9a50-c9f346850555"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "c8682537-2f3b-4dcb-907b-ede147a8e071",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "d5e20e17-dd67-4a4b-9342-c05f75fbb5a8",
+      "parents": [
+        "c8682537-2f3b-4dcb-907b-ede147a8e071"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "c8682537-2f3b-4dcb-907b-ede147a8e071",
+      "parents": [
+        "c8682537-2f3b-4dcb-907b-ede147a8e071",
+        "d5e20e17-dd67-4a4b-9342-c05f75fbb5a8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "46928996-79b8-4364-b2f5-bdfff990a79e",
+      "parents": [
+        "68cb2ec9-1987-4d09-9255-034dc7c2e21a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "be4c7e4f-aa5d-41f0-8ff7-6618a45d28fc",
+      "parents": [
+        "46928996-79b8-4364-b2f5-bdfff990a79e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "46928996-79b8-4364-b2f5-bdfff990a79e",
+      "parents": [
+        "46928996-79b8-4364-b2f5-bdfff990a79e",
+        "be4c7e4f-aa5d-41f0-8ff7-6618a45d28fc"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "f16b6312-74a6-4bdf-a6e5-ce2e028754e2",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "b76b52e4-75dd-4011-9f11-d8c3b2773ed7",
+      "parents": [
+        "f16b6312-74a6-4bdf-a6e5-ce2e028754e2"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "f16b6312-74a6-4bdf-a6e5-ce2e028754e2",
+      "parents": [
+        "f16b6312-74a6-4bdf-a6e5-ce2e028754e2",
+        "b76b52e4-75dd-4011-9f11-d8c3b2773ed7"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "b4d65e31-5894-4b18-8b59-6f146b2f9181",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "835f448b-5e2a-48ad-afc6-c69a3c903043",
+      "parents": [
+        "b4d65e31-5894-4b18-8b59-6f146b2f9181"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "b4d65e31-5894-4b18-8b59-6f146b2f9181",
+      "parents": [
+        "b4d65e31-5894-4b18-8b59-6f146b2f9181",
+        "835f448b-5e2a-48ad-afc6-c69a3c903043"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "e05bc8ef-bfd2-4afd-9b95-1927663b3d5d",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "ba3e0b57-f172-400f-9d84-ccf4824b0859",
+      "parents": [
+        "e05bc8ef-bfd2-4afd-9b95-1927663b3d5d"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "e05bc8ef-bfd2-4afd-9b95-1927663b3d5d",
+      "parents": [
+        "e05bc8ef-bfd2-4afd-9b95-1927663b3d5d",
+        "ba3e0b57-f172-400f-9d84-ccf4824b0859"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "b01ed0ad-3904-4a5d-8b2f-2516577abc02",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "ef2416f6-77d0-4580-a24c-0e735569fe56",
+      "parents": [
+        "b01ed0ad-3904-4a5d-8b2f-2516577abc02"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "b01ed0ad-3904-4a5d-8b2f-2516577abc02",
+      "parents": [
+        "b01ed0ad-3904-4a5d-8b2f-2516577abc02",
+        "ef2416f6-77d0-4580-a24c-0e735569fe56"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "e5ddb47b-feb7-4ab2-94db-e4859bf64a50",
+      "parents": [
+        "a67babe1-4a49-43f0-8e8f-c615183ef45e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "e24b2203-b205-4755-b3f8-9b0bde042d2f",
+      "parents": [
+        "e5ddb47b-feb7-4ab2-94db-e4859bf64a50"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "e5ddb47b-feb7-4ab2-94db-e4859bf64a50",
+      "parents": [
+        "e5ddb47b-feb7-4ab2-94db-e4859bf64a50",
+        "e24b2203-b205-4755-b3f8-9b0bde042d2f"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "ef07c46c-6029-4291-bd53-69932f1e381b",
+      "parents": [
+        "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "55038759-6ea5-4a1b-bde0-699e763b643e",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "78e69ec0-990e-4565-8a2e-21e9cacc0dbc",
+      "parents": [
+        "55038759-6ea5-4a1b-bde0-699e763b643e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "55038759-6ea5-4a1b-bde0-699e763b643e",
+      "parents": [
+        "55038759-6ea5-4a1b-bde0-699e763b643e",
+        "78e69ec0-990e-4565-8a2e-21e9cacc0dbc"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "3c52f48f-938f-474f-8b97-45cb66904bd0",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "cbd0f4b3-2262-4a34-ab5a-d255fd546981",
+      "parents": [
+        "3c52f48f-938f-474f-8b97-45cb66904bd0"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "3c52f48f-938f-474f-8b97-45cb66904bd0",
+      "parents": [
+        "3c52f48f-938f-474f-8b97-45cb66904bd0",
+        "cbd0f4b3-2262-4a34-ab5a-d255fd546981"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "1cd83f27-3f06-4d3f-9ef5-c28e27575472",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "7b33e3cb-46ea-4518-8ace-971a8888e391",
+      "parents": [
+        "1cd83f27-3f06-4d3f-9ef5-c28e27575472"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "1cd83f27-3f06-4d3f-9ef5-c28e27575472",
+      "parents": [
+        "1cd83f27-3f06-4d3f-9ef5-c28e27575472",
+        "7b33e3cb-46ea-4518-8ace-971a8888e391"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "5bdd663b-ec7a-4bdd-8527-37a603cc1630",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "6116b05d-3382-44c4-bda1-86d756cf05de",
+      "parents": [
+        "5bdd663b-ec7a-4bdd-8527-37a603cc1630"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "5bdd663b-ec7a-4bdd-8527-37a603cc1630",
+      "parents": [
+        "5bdd663b-ec7a-4bdd-8527-37a603cc1630",
+        "6116b05d-3382-44c4-bda1-86d756cf05de"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "af9770ea-5203-4e65-8c4b-6dea2298a1eb",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "fbed3b2d-43a3-44ad-a79d-e505fa68fea2",
+      "parents": [
+        "af9770ea-5203-4e65-8c4b-6dea2298a1eb"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "af9770ea-5203-4e65-8c4b-6dea2298a1eb",
+      "parents": [
+        "af9770ea-5203-4e65-8c4b-6dea2298a1eb",
+        "fbed3b2d-43a3-44ad-a79d-e505fa68fea2"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "a0d6eec3-3e0c-4d86-9329-5f51a0d9f987",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "8c0224cb-32bb-43e9-9403-d49e80ded50b",
+      "parents": [
+        "a0d6eec3-3e0c-4d86-9329-5f51a0d9f987"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "a0d6eec3-3e0c-4d86-9329-5f51a0d9f987",
+      "parents": [
+        "a0d6eec3-3e0c-4d86-9329-5f51a0d9f987",
+        "8c0224cb-32bb-43e9-9403-d49e80ded50b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "3c0cdd2c-93ef-430c-90b9-b7a515c685f2",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "a63aedd4-ad3c-4441-837a-695e6380e8d5",
+      "parents": [
+        "3c0cdd2c-93ef-430c-90b9-b7a515c685f2"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "3c0cdd2c-93ef-430c-90b9-b7a515c685f2",
+      "parents": [
+        "3c0cdd2c-93ef-430c-90b9-b7a515c685f2",
+        "a63aedd4-ad3c-4441-837a-695e6380e8d5"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "4516ed52-0378-4b28-9f2b-452b1a051ab3",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "e54924c7-2ab9-49e4-8412-12b91259ae6a",
+      "parents": [
+        "4516ed52-0378-4b28-9f2b-452b1a051ab3"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "4516ed52-0378-4b28-9f2b-452b1a051ab3",
+      "parents": [
+        "4516ed52-0378-4b28-9f2b-452b1a051ab3",
+        "e54924c7-2ab9-49e4-8412-12b91259ae6a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "9f37242e-07c2-4634-b065-428b5fdbd20e",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "706ef4c0-1ad2-4ce1-9af9-aaba0c96b3d2",
+      "parents": [
+        "9f37242e-07c2-4634-b065-428b5fdbd20e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "9f37242e-07c2-4634-b065-428b5fdbd20e",
+      "parents": [
+        "9f37242e-07c2-4634-b065-428b5fdbd20e",
+        "706ef4c0-1ad2-4ce1-9af9-aaba0c96b3d2"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "66642eba-910e-45a8-a2de-c6c9d5eda61b",
+      "parents": [
+        "ef07c46c-6029-4291-bd53-69932f1e381b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "ec27048d-9305-420e-88ac-16d07c7a9b1b",
+      "parents": [
+        "66642eba-910e-45a8-a2de-c6c9d5eda61b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "66642eba-910e-45a8-a2de-c6c9d5eda61b",
+      "parents": [
+        "66642eba-910e-45a8-a2de-c6c9d5eda61b",
+        "ec27048d-9305-420e-88ac-16d07c7a9b1b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "0dace6ac-11c1-4354-8194-09cdaf070524",
+      "parents": [
+        "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "42a05399-bab0-4078-9674-8253d7903031",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "181c76e8-d850-4d2d-8f62-7e3d243d507f",
+      "parents": [
+        "42a05399-bab0-4078-9674-8253d7903031"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "42a05399-bab0-4078-9674-8253d7903031",
+      "parents": [
+        "42a05399-bab0-4078-9674-8253d7903031",
+        "181c76e8-d850-4d2d-8f62-7e3d243d507f"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "830583df-b5ba-44ba-b6db-1847e05a0af5",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "db94183e-3aca-45c8-a57f-7c9d3495e73b",
+      "parents": [
+        "830583df-b5ba-44ba-b6db-1847e05a0af5"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "830583df-b5ba-44ba-b6db-1847e05a0af5",
+      "parents": [
+        "830583df-b5ba-44ba-b6db-1847e05a0af5",
+        "db94183e-3aca-45c8-a57f-7c9d3495e73b"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "43d3d84b-aed1-486f-bfeb-4b626982e8ee",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "e1988a88-93af-4676-af31-65e5843b334a",
+      "parents": [
+        "43d3d84b-aed1-486f-bfeb-4b626982e8ee"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "43d3d84b-aed1-486f-bfeb-4b626982e8ee",
+      "parents": [
+        "43d3d84b-aed1-486f-bfeb-4b626982e8ee",
+        "e1988a88-93af-4676-af31-65e5843b334a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "db1cefc1-3527-465a-8102-c7c95fd1d54f",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "641e40bf-26e1-4e30-92fc-7be00f65a09e",
+      "parents": [
+        "db1cefc1-3527-465a-8102-c7c95fd1d54f"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "db1cefc1-3527-465a-8102-c7c95fd1d54f",
+      "parents": [
+        "db1cefc1-3527-465a-8102-c7c95fd1d54f",
+        "641e40bf-26e1-4e30-92fc-7be00f65a09e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "768787be-20f6-4036-8315-15da8398adc5",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "bdbd4355-4cfd-4d0f-9118-68d0fed6c4e4",
+      "parents": [
+        "768787be-20f6-4036-8315-15da8398adc5"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "768787be-20f6-4036-8315-15da8398adc5",
+      "parents": [
+        "768787be-20f6-4036-8315-15da8398adc5",
+        "bdbd4355-4cfd-4d0f-9118-68d0fed6c4e4"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "c7489f5c-ee60-40be-8ffa-ecc492897017",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "56e3eb10-230d-4963-b2f2-28d1c483c9ff",
+      "parents": [
+        "c7489f5c-ee60-40be-8ffa-ecc492897017"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "c7489f5c-ee60-40be-8ffa-ecc492897017",
+      "parents": [
+        "c7489f5c-ee60-40be-8ffa-ecc492897017",
+        "56e3eb10-230d-4963-b2f2-28d1c483c9ff"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "90e13244-b3a9-4709-8456-780b551d6c37",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "abac3c9a-321b-41d1-91e9-46897b488ba8",
+      "parents": [
+        "90e13244-b3a9-4709-8456-780b551d6c37"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "90e13244-b3a9-4709-8456-780b551d6c37",
+      "parents": [
+        "90e13244-b3a9-4709-8456-780b551d6c37",
+        "abac3c9a-321b-41d1-91e9-46897b488ba8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "2916b13f-9de2-4293-a1c0-f7e1d198bd0c",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "a48adfce-1016-4c66-932d-9742121bb6e2",
+      "parents": [
+        "2916b13f-9de2-4293-a1c0-f7e1d198bd0c"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "2916b13f-9de2-4293-a1c0-f7e1d198bd0c",
+      "parents": [
+        "2916b13f-9de2-4293-a1c0-f7e1d198bd0c",
+        "a48adfce-1016-4c66-932d-9742121bb6e2"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "d63fd79d-3123-4d0c-8138-af005206d84e",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "dc431097-7f2c-4ce7-99d5-ecfbd145b233",
+      "parents": [
+        "d63fd79d-3123-4d0c-8138-af005206d84e"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "d63fd79d-3123-4d0c-8138-af005206d84e",
+      "parents": [
+        "d63fd79d-3123-4d0c-8138-af005206d84e",
+        "dc431097-7f2c-4ce7-99d5-ecfbd145b233"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "bdee25f8-416d-45fb-80a6-66124cd03dea",
+      "parents": [
+        "0dace6ac-11c1-4354-8194-09cdaf070524"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "468d5903-4b60-4b65-9f6e-16b94220f871",
+      "parents": [
+        "bdee25f8-416d-45fb-80a6-66124cd03dea"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "bdee25f8-416d-45fb-80a6-66124cd03dea",
+      "parents": [
+        "bdee25f8-416d-45fb-80a6-66124cd03dea",
+        "468d5903-4b60-4b65-9f6e-16b94220f871"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "e396d6f8-6a2a-3ce0-a246-5f2333799c77",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "0c7676fd-5253-3b4a-a970-8afd02622bf1",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_availability",
+      "key": "id",
+      "id": "b5677083-4648-4771-a8ba-f6cc58071225",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "f0875bdc-97fe-4f67-afdb-c6af106bd555",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "19465bad-1b8a-41ef-95bb-2824e713e56f",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "9d73c1e1-dad5-4bca-a381-c62309c22ff0",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "a67907d0-bd34-4eb2-a6a9-aa306202adb9",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "17b9ca21-612d-49ba-b2ad-c12bd798d4dd",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "ec609d5d-b5f1-45bc-bfc9-12f69e6fdb9d",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "cd754bec-47c5-4271-b5ea-e48c6f99a3af",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "85847dbb-8aed-46ec-9c68-2949ddf6770a",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "4be17c96-ac62-3393-a467-35c3cc33ce9b",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "86ef7e35-cc83-42f5-a5f8-62cabc7a4a85",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_commands",
+      "key": "command_key",
+      "id": "e396d6f8-6a2a-3ce0-a246-5f2333799c77|CANCEL",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_commands",
+      "key": "command_key",
+      "id": "0c7676fd-5253-3b4a-a970-8afd02622bf1|CANCEL",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_points",
+      "key": "id",
+      "id": "6142314d-e495-4ba8-b637-3405fa1ba23e",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_points",
+      "key": "id",
+      "id": "c29092ed-805f-4117-af06-b1053d2a0f02",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "bfe2993c-4d2f-4e77-9f04-1854b777e70d",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "8f4aa5ff-073f-4094-93f0-b10ff2827a23",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "ce4e36de-9f8f-44e9-8e84-70478331a58d",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_commands",
+      "key": "command_key",
+      "id": "4be17c96-ac62-3393-a467-35c3cc33ce9b|CANCEL",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT"
+    }
+  ],
+  "protectedAdmin": "admin",
+  "reason": "Runtime stability gate not yet passed",
+  "protectedAdminId": "65061b93-fee0-4b44-b5f6-6ad09341b4e2",
+  "cleanupOrder": [
+    "loyalty_commands",
+    "points_transactions",
+    "points_reservations",
+    "loyalty_points",
+    "booking_event_outbox",
+    "booking_items",
+    "bookings",
+    "room_holds",
+    "room_availability",
+    "room_inventory_review_states",
+    "room_inventory_review_requests",
+    "room_types",
+    "hotels",
+    "otps",
+    "user_profiles",
+    "users"
+  ],
+  "cleanupStatus": "DONE"
+}

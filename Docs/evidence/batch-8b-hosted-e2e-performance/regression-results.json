@@ -1,0 +1,55 @@
+{
+  "initialAttempt": {
+    "status": "FAIL",
+    "reason": "Default UserServiceApplicationTests context lacks development DB; other reactor modules skipped",
+    "logSha256": "6ee38101eb4d890320e80c90caa3f59021847f2eef7bc97a08cb9d79d0e9bd7d"
+  },
+  "intermediateAttempt": {
+    "status": "FAIL",
+    "reason": "AvailabilityBatchTest Mockito restubbing invoked generic Answer with null; corrected doReturn"
+  },
+  "overlapPolicy": "Final complete suite per module only; native opt-ins counted separately when actually executed; no double counting focus/failed attempts",
+  "excluded": [
+    "*ApplicationTests"
+  ],
+  "frontend": "SKIPPED unchanged by Batch8B",
+  "user": {
+    "discovered": 114,
+    "executedPass": 110,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "logSha256": "13eba7c14220142be172cfbfb49bc2849ee2b2c93677782b6ec543e8c644e55a"
+  },
+  "auth": {
+    "discovered": 47,
+    "executedPass": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "logSha256": "13eba7c14220142be172cfbfb49bc2849ee2b2c93677782b6ec543e8c644e55a"
+  },
+  "hotel": {
+    "discovered": 429,
+    "executedPass": 396,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 33,
+    "logSha256": "fdb3d314a2ee7aaf6891902dcbb6a9050e9f4b3c3a9c7d7b3377cac585fea501"
+  },
+  "booking": {
+    "discovered": 289,
+    "executedPass": 285,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "logSha256": "fdb3d314a2ee7aaf6891902dcbb6a9050e9f4b3c3a9c7d7b3377cac585fea501"
+  },
+  "native": {
+    "executedPass": 5,
+    "catalogMatches": 5,
+    "clusterStopped": true,
+    "hosted": false
+  },
+  "uniqueExecutedPassTotal": 843
+}

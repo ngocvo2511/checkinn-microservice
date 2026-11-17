@@ -1,0 +1,55 @@
+{
+  "samples": [
+    {
+      "sample": 0,
+      "select1MsIncludingNetwork": 312.95979999958945,
+      "select1PlusRollbackMs": 470.4941999998482
+    },
+    {
+      "sample": 1,
+      "select1MsIncludingNetwork": 324.9203999994279,
+      "select1PlusRollbackMs": 488.45799999980954
+    },
+    {
+      "sample": 2,
+      "select1MsIncludingNetwork": 314.1574999999648,
+      "select1PlusRollbackMs": 466.6414999992412
+    },
+    {
+      "sample": 3,
+      "select1MsIncludingNetwork": 369.49920000006387,
+      "select1PlusRollbackMs": 531.8489999999656
+    },
+    {
+      "sample": 4,
+      "select1MsIncludingNetwork": 333.8080000003174,
+      "select1PlusRollbackMs": 472.7515000004132
+    },
+    {
+      "sample": 5,
+      "select1MsIncludingNetwork": 504.1876000004777,
+      "select1PlusRollbackMs": 643.2169999998223
+    },
+    {
+      "sample": 6,
+      "select1MsIncludingNetwork": 315.22859999950015,
+      "select1PlusRollbackMs": 470.926199999667
+    },
+    {
+      "sample": 7,
+      "select1MsIncludingNetwork": 330.92800000031275,
+      "select1PlusRollbackMs": 489.2126000004282
+    },
+    {
+      "sample": 8,
+      "select1MsIncludingNetwork": 313.63340000007156,
+      "select1PlusRollbackMs": 455.0564999999551
+    },
+    {
+      "sample": 9,
+      "select1MsIncludingNetwork": 304.07350000041333,
+      "select1PlusRollbackMs": 467.56620000087423
+    }
+  ],
+  "method": "Persistent libpq TLS verify-full connection, sequential SELECT1 + rollback. Separate diagnostic pass, no load client; includes driver/protocol, not pure ICMP RTT. Migration-role connection; not application Hikari."
+}

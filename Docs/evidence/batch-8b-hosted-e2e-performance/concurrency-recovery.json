@@ -1,0 +1,8 @@
+{
+  "attemptStatuses": [
+    409,
+    500,
+    409
+  ],
+  "note": "Previous post-race SQL probe failed 08006; new attempts against full capacity, no retries of original writes."
+}

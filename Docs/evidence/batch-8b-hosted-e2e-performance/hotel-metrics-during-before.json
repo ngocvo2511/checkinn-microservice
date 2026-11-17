@@ -1,0 +1,131 @@
+{
+  "hikaricp.connections.acquire": {
+    "name": "hikaricp.connections.acquire",
+    "description": "Connection acquire time",
+    "baseUnit": "seconds",
+    "measurements": [
+      {
+        "statistic": "COUNT",
+        "value": 113.0
+      },
+      {
+        "statistic": "TOTAL_TIME",
+        "value": 25.313345302
+      },
+      {
+        "statistic": "MAX",
+        "value": 0.5848936
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "application",
+        "values": [
+          "hotel-service:7b04e20d-3ac1-4e3e-9a15-2dca3e5f00b3"
+        ]
+      },
+      {
+        "tag": "pool",
+        "values": [
+          "HikariPool-1"
+        ]
+      }
+    ]
+  },
+  "hikaricp.connections.active": {
+    "name": "hikaricp.connections.active",
+    "description": "Active connections",
+    "measurements": [
+      {
+        "statistic": "VALUE",
+        "value": 1.0
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "application",
+        "values": [
+          "hotel-service:7b04e20d-3ac1-4e3e-9a15-2dca3e5f00b3"
+        ]
+      },
+      {
+        "tag": "pool",
+        "values": [
+          "HikariPool-1"
+        ]
+      }
+    ]
+  },
+  "hikaricp.connections.pending": {
+    "name": "hikaricp.connections.pending",
+    "description": "Pending threads",
+    "measurements": [
+      {
+        "statistic": "VALUE",
+        "value": 0.0
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "application",
+        "values": [
+          "hotel-service:7b04e20d-3ac1-4e3e-9a15-2dca3e5f00b3"
+        ]
+      },
+      {
+        "tag": "pool",
+        "values": [
+          "HikariPool-1"
+        ]
+      }
+    ]
+  },
+  "hikaricp.connections.timeout": {
+    "name": "hikaricp.connections.timeout",
+    "description": "Connection timeout total count",
+    "measurements": [
+      {
+        "statistic": "COUNT",
+        "value": 0.0
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "application",
+        "values": [
+          "hotel-service:7b04e20d-3ac1-4e3e-9a15-2dca3e5f00b3"
+        ]
+      },
+      {
+        "tag": "pool",
+        "values": [
+          "HikariPool-1"
+        ]
+      }
+    ]
+  },
+  "hikaricp.connections.max": {
+    "name": "hikaricp.connections.max",
+    "description": "Max connections",
+    "measurements": [
+      {
+        "statistic": "VALUE",
+        "value": 2.0
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "application",
+        "values": [
+          "hotel-service:7b04e20d-3ac1-4e3e-9a15-2dca3e5f00b3"
+        ]
+      },
+      {
+        "tag": "pool",
+        "values": [
+          "HikariPool-1"
+        ]
+      }
+    ]
+  }
+}

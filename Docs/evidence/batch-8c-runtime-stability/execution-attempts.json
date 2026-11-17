@@ -1,0 +1,52 @@
+[
+  {
+    "phase": "preflight tooling",
+    "result": "FAILED_LOCAL_WRAPPER",
+    "cause": "Windows cp1252 decoding of Git diff; corrected UTF-8 decoding. No SQL reached."
+  },
+  {
+    "phase": "diagnostic wrapper",
+    "result": "FAILED_LOCAL_WRAPPER",
+    "cause": "psycopg3 SSL flag read from ConnectionInfo instead of pgconn; corrected. These BLOCKED AttributeError files do not represent a DB connection failure; probe records supersede them."
+  },
+  {
+    "phase": "dependency readiness",
+    "result": "BLOCKED_START",
+    "cause": "Container health starting immediately after start-deps; no JVM launched."
+  },
+  {
+    "phase": "Eureka initial launcher attempt",
+    "result": "FAILED_START",
+    "cause": "Duplicate command-line logging flag combined OFF,INFO; replaced existing flag. No DB connection involved."
+  },
+  {
+    "phase": "first smoke",
+    "result": "FAILED_RUNNER_CONTRACT",
+    "cause": "Search omitted required cityId and returned400; corrected smoke retained separately."
+  },
+  {
+    "phase": "overlapping lifecycle command",
+    "result": "BLOCKED_OPERATION_LOCK",
+    "cause": "Auth start attempted while Booking readiness command held operation lock; no duplicate JVM launched."
+  },
+  {
+    "phase": "Hotel instrumentation",
+    "result": "FIXED_BEFORE_BENCHMARK",
+    "cause": "Environment map binding did not retain hibernate.generate_statistics underscore; exact property enabled through process-local SPRING_APPLICATION_JSON."
+  },
+  {
+    "phase": "post-Hotel-restart route readiness",
+    "result": "TRANSIENT_503",
+    "cause": "Hotel health UP preceded discovery/Gateway propagation; complete smoke recheck PASS."
+  },
+  {
+    "phase": "initial dataset attempt",
+    "result": "FAILED_503",
+    "cause": "Shell ran dataset command after failed smoke. OWNER create hotel returned503. Kept failed attempt, re-observed chain and added explicit dataset readiness assertion; no hotel ID was returned. Exact fixture discovery and final baseline verification must confirm residue absent."
+  },
+  {
+    "phase": "SQL pattern visibility",
+    "result": "BLOCKED_READONLY",
+    "cause": "pg_stat_statements not in default schema; extensions.pg_stat_statements read denied to runtime role. No grants changed."
+  }
+]

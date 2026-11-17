@@ -1,0 +1,22 @@
+{
+  "ownedJvmsRemaining": 0,
+  "dependencies": [
+    {
+      "dependency": "rabbitContainer",
+      "status": "exited",
+      "retained": true
+    },
+    {
+      "dependency": "redisContainer",
+      "status": "exited",
+      "retained": true
+    },
+    {
+      "dependency": "mailpit",
+      "status": "exited",
+      "retained": true
+    }
+  ],
+  "finalAdminSmoke": "smoke-final-restart-attempt-3.json",
+  "note": "Actual HTTP acceptance passed before intentional final graceful shutdown; services are now stopped"
+}

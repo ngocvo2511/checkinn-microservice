@@ -1,0 +1,5 @@
+{
+  "jarSha256": "119333d2da041509f1ffded0389063c8fa04541c7fefc26f66c994fe120e820f",
+  "tests": "Hotel 396 pass/33 skip; native acceptance pending",
+  "configuration": "same guarded runtime, pool2/min1 timeout10s, Hibernate stats enabled SQL/binds OFF"
+}

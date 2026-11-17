@@ -1,0 +1,9 @@
+{
+  "owner": "hotel",
+  "exitCode": 0,
+  "safeOutput": [
+    "hotel CONTROL_PLANE_IDENTITY_PASS",
+    "hotel CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "hotel RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ]
+}

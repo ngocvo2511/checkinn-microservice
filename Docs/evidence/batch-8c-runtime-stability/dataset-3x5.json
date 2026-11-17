@@ -1,0 +1,101 @@
+{
+  "dataset": {
+    "hotels": [
+      {
+        "id": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "762e7f08-5272-418a-92da-2530b45718b5",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "da9328c6-011f-475b-b869-d540d213368e",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "591ab9ec-9481-4df1-a94c-b5408858b525",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "0f33d90e-da2b-498a-b50d-c1807355e5f9",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "300ad1c7-e9d2-4649-859c-b52c7a9ccb78",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "ff26d081-d74c-4c74-9087-a5c7ff02987d",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "7933ec7b-390b-4c2c-8f35-bc864e7a0c30",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "7e3e2486-5c43-40bb-931a-a5dd6dccd2fe",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "09f4b1e2-3ba6-44ca-9e26-59dd7ca73857",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "de09ac3e-4559-47e8-89b4-0d423d69b908",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "d6ee7d24-95b3-4310-9033-762db590c9b8",
+        "hotelId": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "7434786a-3d9e-440c-a3bc-6ea0bfa397b1",
+        "hotelId": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "47ae22c4-209e-4573-873a-da459eda78de",
+        "hotelId": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "fe0593d8-1ad1-410c-b9ce-06d8aca8a783",
+        "hotelId": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "68e23c64-6598-4def-b62d-ad8afc1700b5",
+        "hotelId": "a67babe1-4a49-43f0-8e8f-c615183ef45e",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      }
+    ],
+    "city": "04365ef7-059b-5570-9309-916ec2974542"
+  },
+  "totals": [
+    3,
+    5
+  ],
+  "reconstructedAfterStage": false
+}

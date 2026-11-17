@@ -1,0 +1,102 @@
+{
+  "status": "PASS",
+  "database": "postgres",
+  "version": "17.11",
+  "maxConnections": 60,
+  "reserved": 3,
+  "loginRoleCap": 4,
+  "clientTls": true,
+  "backendActivity": [
+    {
+      "role": "authenticator",
+      "application": "PostgREST 14.18",
+      "state": null,
+      "backendRows": 2,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "checkinn_regulations_app",
+      "application": "Supavisor",
+      "state": "active",
+      "backendRows": 1,
+      "visibleBackendStart": 1,
+      "visibleQueryStart": 1,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "checkinn_regulations_migrator",
+      "application": "Supavisor",
+      "state": null,
+      "backendRows": 1,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "pgbouncer",
+      "application": "",
+      "state": null,
+      "backendRows": 1,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "pgbouncer",
+      "application": "Supavisor (auth_query)",
+      "state": null,
+      "backendRows": 2,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "postgres",
+      "application": "pg_net 0.20.4",
+      "state": null,
+      "backendRows": 1,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "supabase_admin",
+      "application": "",
+      "state": null,
+      "backendRows": 2,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "supabase_admin",
+      "application": "pg_cron scheduler",
+      "state": null,
+      "backendRows": 1,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": "supabase_admin",
+      "application": "postgres_exporter",
+      "state": null,
+      "backendRows": 1,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    },
+    {
+      "role": null,
+      "application": "",
+      "state": null,
+      "backendRows": 5,
+      "visibleBackendStart": 0,
+      "visibleQueryStart": 0,
+      "idleInTransaction": 0
+    }
+  ],
+  "visibility": "pg_stat_activity describes server backends; Supavisor application label does not establish client/JVM ownership"
+}

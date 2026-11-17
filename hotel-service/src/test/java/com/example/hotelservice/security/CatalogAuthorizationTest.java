@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = {CityController.class, HotelController.class, RoomTypeController.class, com.example.hotelservice.Hotel.controller.HotelOwnershipController.class, com.example.hotelservice.Hotel.controller.HotelReportContextController.class,
+@WebMvcTest(value = {com.example.hotelservice.Room.controller.RoomInventoryReviewController.class, CityController.class, HotelController.class, RoomTypeController.class, com.example.hotelservice.Hotel.controller.HotelOwnershipController.class, com.example.hotelservice.Hotel.controller.HotelReportContextController.class,
         com.example.hotelservice.Room.availability.controller.AvailabilityController.class}, properties = {
         "spring.cloud.config.enabled=false", "spring.cloud.discovery.enabled=false",
         "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration"})
@@ -55,6 +55,7 @@ class CatalogAuthorizationTest {
     private static final UUID TARGET = UUID.fromString("00000000-0000-0000-0000-000000000011");
     private static final UUID ACTOR = UUID.fromString("00000000-0000-0000-0000-000000000012");
     @Autowired MockMvc mvc;
+    @MockBean com.example.hotelservice.Room.service.RoomInventoryReviewService inventoryReviews;
     @MockBean JwtDecoder decoder;
     @MockBean TokenRevocationService revocation;
     @MockBean CityService cities;
@@ -75,6 +76,19 @@ class CatalogAuthorizationTest {
                     .claim("role", "admin".equals(token) ? "ADMIN" : (token.contains("service") ? "BOOKING_SERVICE" : "OWNER")).build();
         });
         when(cities.getAllCities()).thenReturn(List.of());
+    }
+
+    @Test void ownerCannotApproveInventoryEvenWithForgedAdminHeaders() throws Exception {
+        String payload="{\"approve\":true,\"revision\":1,\"reason\":\"Checked source\"}";
+        mvc.perform(post("/admin/inventory-reviews/"+TARGET+"/review").contentType("application/json").content(payload))
+                .andExpect(status().isUnauthorized());
+        mvc.perform(post("/admin/inventory-reviews/"+TARGET+"/review").header("Authorization","Bearer owner")
+                .header("X-Is-Admin","true").contentType("application/json").content(payload))
+                .andExpect(status().isForbidden());
+        verifyNoInteractions(inventoryReviews);
+        mvc.perform(post("/admin/inventory-reviews/"+TARGET+"/review").header("Authorization","Bearer admin")
+                .contentType("application/json").content(payload)).andExpect(status().isOk());
+        verify(inventoryReviews).review(eq(TARGET),any(),eq(new com.example.hotelservice.Room.service.RoomInventoryReviewService.Actor(ACTOR,"ADMIN")));
     }
 
     @Test void anonymousCannotDeleteCity() throws Exception {

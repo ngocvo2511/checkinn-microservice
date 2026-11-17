@@ -1,0 +1,37 @@
+{
+  "checkinn": [
+    "Docs/BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md",
+    "Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+    "Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md",
+    "booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java",
+    "booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryApprovalRequiredException.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+    "hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java",
+    "hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java",
+    "tools/batch7b-schema-verify.py"
+  ],
+  "checkinn-frontend": [
+    "app/host/hotels/[id]/rooms/[roomId]/page.tsx",
+    "app/host/hotels/[id]/rooms/new/page.tsx",
+    "components/host/RoomInventoryReview.tsx",
+    "tests/browser/inventory-review.spec.ts",
+    "tests/browser/new-room-facts.spec.ts"
+  ]
+}

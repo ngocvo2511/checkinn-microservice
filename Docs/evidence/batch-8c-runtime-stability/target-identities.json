@@ -1,0 +1,67 @@
+[
+  {
+    "owner": "user",
+    "targetIdentitySha256": "eb3c43b8bd18c02286b09a4b981ee27a8bcc7967cb229546678447f0e88cd54a",
+    "poolerHostSha256": "7241705f8fda099d5a4e78cc87fed6e198ea123c2252350691f8e83b1188d4f2",
+    "poolerRegionCode": "ap-south-1",
+    "sessionPoolerPort": 5432,
+    "clientSslMode": [
+      "verify-full"
+    ],
+    "explicitCaConfigured": true,
+    "runtimeRole": "checkinn_user_app",
+    "note": "Hostname region code is not independent proof of PostgreSQL backend location; no raw endpoint/ref exported"
+  },
+  {
+    "owner": "regulations",
+    "targetIdentitySha256": "720a434daa7166bb93f0cc14d20fedae55889c2f48f08134d553dbba4805b4d3",
+    "poolerHostSha256": "2cb24b7a8059fe17573e6db1ffb79e0badcaa7b63f14ac46d4f4468d97755c44",
+    "poolerRegionCode": "ap-southeast-2",
+    "sessionPoolerPort": 5432,
+    "clientSslMode": [
+      "verify-full"
+    ],
+    "explicitCaConfigured": true,
+    "runtimeRole": "checkinn_regulations_app",
+    "note": "Hostname region code is not independent proof of PostgreSQL backend location; no raw endpoint/ref exported"
+  },
+  {
+    "owner": "hotel",
+    "targetIdentitySha256": "09415f880c2ad3581fe865fffc88635d5bbadd4a4cf7b5ce6bf53d8e1dea7262",
+    "poolerHostSha256": "d6308325c757c9a473b812a486b9a7817600834c77f9d806ace1d443ecb476a4",
+    "poolerRegionCode": "ap-northeast-1",
+    "sessionPoolerPort": 5432,
+    "clientSslMode": [
+      "verify-full"
+    ],
+    "explicitCaConfigured": true,
+    "runtimeRole": "checkinn_hotel_app",
+    "note": "Hostname region code is not independent proof of PostgreSQL backend location; no raw endpoint/ref exported"
+  },
+  {
+    "owner": "booking",
+    "targetIdentitySha256": "657fe881411af485fa10339f2193a6f9798636c897fc313f37b0a8ad7166c66a",
+    "poolerHostSha256": "06eb5f60fd044994f216e734cc4afacbd51759f7560f0d54b6c0aca0719dc51f",
+    "poolerRegionCode": "ap-southeast-1",
+    "sessionPoolerPort": 5432,
+    "clientSslMode": [
+      "verify-full"
+    ],
+    "explicitCaConfigured": true,
+    "runtimeRole": "checkinn_booking_app",
+    "note": "Hostname region code is not independent proof of PostgreSQL backend location; no raw endpoint/ref exported"
+  },
+  {
+    "owner": "revenue",
+    "targetIdentitySha256": "5ed6f36f3b283ae895b950f36d902a281f98d10ad2cff5735a63b2c37cfa31ed",
+    "poolerHostSha256": "2b718f83dd1acad405d780e320265d3f2e5d2a97dbfd6d0fc79be97ad5c9d4a0",
+    "poolerRegionCode": "ap-northeast-2",
+    "sessionPoolerPort": 5432,
+    "clientSslMode": [
+      "verify-full"
+    ],
+    "explicitCaConfigured": true,
+    "runtimeRole": "checkinn_revenue_app",
+    "note": "Hostname region code is not independent proof of PostgreSQL backend location; no raw endpoint/ref exported"
+  }
+]

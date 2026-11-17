@@ -37,6 +37,7 @@ class InventoryCounterSafetyTest {
     final RoomAvailability row=new RoomAvailability();
     final RoomHold hold=new RoomHold();
     @BeforeEach void setup() {
+        when(rooms.hasEffectiveInventoryApproval(any())).thenReturn(true);
         var room=new RoomType();room.setId(roomId);room.setHotelId(hotelId);room.setIsActive(true);room.setTotalRooms(10);
         when(rooms.findById(roomId)).thenReturn(Optional.of(room));when(rooms.findByIdForUpdate(roomId)).thenReturn(Optional.of(room));
         when(hotels.findById(hotelId)).thenReturn(Optional.of(Hotel.builder().id(hotelId).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build()));

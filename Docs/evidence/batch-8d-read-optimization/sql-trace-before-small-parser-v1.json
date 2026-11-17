@@ -1,0 +1,392 @@
+[
+  {
+    "endpoint": "search_undated",
+    "sample": 0,
+    "status": 200,
+    "ms": 3481.0857999982545,
+    "traceId": "68a3be5a48f0d0c9a602c2bc38727e52",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 21,
+    "hibernateJdbcMsIncludingNetwork": 2624.028,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.0697,
+    "loggedHibernateSql": 21,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 21
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 1,
+    "status": 200,
+    "ms": 3596.1071999990963,
+    "traceId": "0e9029cb08bc7f9c52c964f7282d9937",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 21,
+    "hibernateJdbcMsIncludingNetwork": 2632.0702,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 124.4768,
+    "loggedHibernateSql": 21,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 21
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 2,
+    "status": 200,
+    "ms": 3604.2287000018405,
+    "traceId": "38c6094862b00449b356ec902fbf1827",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 21,
+    "hibernateJdbcMsIncludingNetwork": 2634.9176,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 127.5883,
+    "loggedHibernateSql": 21,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 21
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 0,
+    "status": 200,
+    "ms": 4222.402299994428,
+    "traceId": "839190eba973361bd9709cd023d6f91e",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 27,
+    "hibernateJdbcMsIncludingNetwork": 3376.8151,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.1483,
+    "loggedHibernateSql": 27,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 10,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 27
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 1,
+    "status": 200,
+    "ms": 4414.374799998768,
+    "traceId": "b6a4eb6b73ec98683f2732974e1bada0",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 27,
+    "hibernateJdbcMsIncludingNetwork": 3409.0279,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 123.8936,
+    "loggedHibernateSql": 27,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 10,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 27
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 2,
+    "status": 200,
+    "ms": 4351.917300002242,
+    "traceId": "6b7eed4c58ecaf489bdf53905aa55bf5",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 27,
+    "hibernateJdbcMsIncludingNetwork": 3376.8423,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 124.6585,
+    "loggedHibernateSql": 27,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 10,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 27
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 0,
+    "status": 200,
+    "ms": 2977.59280000173,
+    "traceId": "7c4e9ec0009e2d88dc3c9228ae645c97",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 19,
+    "hibernateJdbcMsIncludingNetwork": 2384.0537,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.3337,
+    "loggedHibernateSql": 19,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 2,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 19
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 1,
+    "status": 200,
+    "ms": 3098.9205000005313,
+    "traceId": "5e4b3d9e2ee39a251900d48ffd649ffa",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 19,
+    "hibernateJdbcMsIncludingNetwork": 2401.25,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 131.5389,
+    "loggedHibernateSql": 19,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 2,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 19
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 2,
+    "status": 200,
+    "ms": 3056.869599997299,
+    "traceId": "33169701e5f9d765c0e6086feed9767b",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 19,
+    "hibernateJdbcMsIncludingNetwork": 2365.4819,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 125.6088,
+    "loggedHibernateSql": 19,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 2,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 19
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 0,
+    "status": 200,
+    "ms": 1538.6513999983435,
+    "traceId": "34f787c758a8909131fc7bddd88a903d",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1251.4139,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.045,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 10
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 1,
+    "status": 200,
+    "ms": 1677.6017000011052,
+    "traceId": "8ed83826f9a35bdbaa3d2f670f561c47",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1242.8754,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 126.7408,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 10
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 2,
+    "status": 200,
+    "ms": 1664.9269000045024,
+    "traceId": "0827e5f949dc133b71d0d0c98724ee5b",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1248.8933,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 126.4883,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 10
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 0,
+    "status": 200,
+    "ms": 1053.9391999991494,
+    "traceId": "f1daee98506d486645fd85456306e490",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 504.0507,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.0328,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 4
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 1,
+    "status": 200,
+    "ms": 1189.215200000035,
+    "traceId": "25147cfa43d5c1b71e3e26284faf262b",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 517.2341,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 127.9078,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 4
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 2,
+    "status": 200,
+    "ms": 1172.7627999935066,
+    "traceId": "dff6578dcf4903a755ecaf9e5ceebb3f",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 509.9011,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 127.4043,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e3b0c44298fc",
+        {
+          "kind": "hibernate",
+          "sql": "",
+          "count": 4
+        }
+      ]
+    ]
+  }
+]

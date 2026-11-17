@@ -1,0 +1,138 @@
+[
+  {
+    "owner": "user",
+    "baselineDifferences": [],
+    "schemaFingerprint": "e31a8e2755cba614ed2889dbfc2a521ee293638e23a9d5ed3610ea5e3b47efb4",
+    "flywayRows": 1,
+    "counts": {
+      "loyalty_commands": 0,
+      "loyalty_points": 0,
+      "otps": 2,
+      "points_reservations": 0,
+      "points_transactions": 0,
+      "user_profiles": 3,
+      "users": 3
+    },
+    "triggers": [],
+    "connection": {
+      "status": "PASS",
+      "maxConnections": 60,
+      "reserved": 3,
+      "runtimeRoleCap": 4,
+      "tls": true,
+      "version": "17.11",
+      "database": "postgres"
+    }
+  },
+  {
+    "owner": "regulations",
+    "baselineDifferences": [],
+    "schemaFingerprint": "17ab1a25bf08e74f6cde56011b5c661a25cd5f8c1254a0d905d01cffba3521e1",
+    "flywayRows": 1,
+    "counts": {
+      "regulation_event_outbox": 4,
+      "regulation_snapshots": 4,
+      "regulations": 4
+    },
+    "triggers": [],
+    "connection": {
+      "status": "PASS",
+      "maxConnections": 60,
+      "reserved": 3,
+      "runtimeRoleCap": 4,
+      "tls": true,
+      "version": "17.11",
+      "database": "postgres"
+    }
+  },
+  {
+    "owner": "hotel",
+    "baselineDifferences": [],
+    "schemaFingerprint": "f7d0252811103671c00f0d3b164eac23cb0027ee55fba6e230c8968fc2d250cb",
+    "flywayRows": 1,
+    "counts": {
+      "amenity_catalog": 0,
+      "amenity_category_types": 0,
+      "amenity_mapping_request_codes": 0,
+      "amenity_mapping_requests": 0,
+      "amenity_mapping_states": 0,
+      "checkinn_feature_migrations": 1,
+      "cities": 40,
+      "hotel_accommodation_type_changes": 0,
+      "hotel_amenities": 0,
+      "hotel_amenity_categories": 0,
+      "hotel_policies": 0,
+      "hotel_questions": 0,
+      "hotel_reviews": 0,
+      "hotels": 1,
+      "media_assets": 2,
+      "policy_category_types": 0,
+      "provinces": 34,
+      "review_feedbacks": 0,
+      "review_responses": 0,
+      "room_availability": 0,
+      "room_holds": 0,
+      "room_inventory_review_requests": 0,
+      "room_inventory_review_states": 0,
+      "room_types": 0
+    },
+    "triggers": [],
+    "connection": {
+      "status": "PASS",
+      "maxConnections": 60,
+      "reserved": 3,
+      "runtimeRoleCap": 4,
+      "tls": true,
+      "version": "17.11",
+      "database": "postgres"
+    }
+  },
+  {
+    "owner": "booking",
+    "baselineDifferences": [],
+    "schemaFingerprint": "750a28789cd9f8707e65bd94d1e7a6bc6f92ef310f8687dfd2c13aec52b367b3",
+    "flywayRows": 1,
+    "counts": {
+      "booking_event_outbox": 0,
+      "booking_items": 0,
+      "bookings": 0,
+      "manual_refund_audit": 0,
+      "manual_refund_executions": 0,
+      "payments": 0,
+      "refund_requests": 0
+    },
+    "triggers": [],
+    "connection": {
+      "status": "PASS",
+      "maxConnections": 60,
+      "reserved": 3,
+      "runtimeRoleCap": 4,
+      "tls": true,
+      "version": "17.11",
+      "database": "postgres"
+    }
+  },
+  {
+    "owner": "revenue",
+    "baselineDifferences": [],
+    "schemaFingerprint": "6aaa9f380e5cbb0c0530eeed0d01878c8948522aa3afbec9e831476b7886151e",
+    "flywayRows": 1,
+    "counts": {
+      "booking_status_records": 0,
+      "payment_records": 0,
+      "revenue_cash_transactions": 0,
+      "revenue_cashflow_gaps": 0,
+      "revenue_event_receipts": 0
+    },
+    "triggers": [],
+    "connection": {
+      "status": "PASS",
+      "maxConnections": 60,
+      "reserved": 3,
+      "runtimeRoleCap": 4,
+      "tls": true,
+      "version": "17.11",
+      "database": "postgres"
+    }
+  }
+]

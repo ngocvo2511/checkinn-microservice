@@ -1,0 +1,16 @@
+{
+  "status": "PARTIAL",
+  "hostedApprovalBookingE2E": "BLOCKED_NO_AUTHORIZED_ADMIN_IDENTITY",
+  "httpScenarios": 12,
+  "initialPass": 11,
+  "initialFailure": 1,
+  "bookingRecheckPass": true,
+  "gatewayBenchmarkSuccesses": 480,
+  "directBenchmarkSuccesses": 120,
+  "hostedFixturesCreated": 0,
+  "hostedFixturesDeleted": 0,
+  "sourceOptimized": false,
+  "hostedSchemaChanged": false,
+  "nativeTests": 5,
+  "nativeClusterStopped": true
+}

@@ -65,9 +65,13 @@ public class HotelOfferController {
         for(int offset=0;offset<reviewIds.size();offset+=com.example.hotelservice.Review.service.ReviewSummaryService.MAX_HOTELS)
             for(var summary:summaries.summarize(reviewIds.subList(offset,Math.min(offset+com.example.hotelservice.Review.service.ReviewSummaryService.MAX_HOTELS,reviewIds.size()))))facts.put(summary.hotelId(),summary);
         var selection=com.example.hotelservice.Hotel.service.HotelOfferPaging.page(candidates,facts,page);
-        var content=selection.content().stream().map(selected->
-                new com.example.hotelservice.Hotel.dto.response.HotelOfferPageResponse.RatedOffer(
-                        mapper.toPublicHotelResponse(entities.get(selected.hotel().id())),selected.offer(),selected.reviews())).toList();
+        // Full public representations only for the selected page, mapped with one batched fact read.
+        var details=selection.content().isEmpty() ? List.<com.example.hotelservice.Hotel.dto.response.HotelResponse>of()
+                : mapper.toPublicHotelResponses(selection.content().stream().map(selected->entities.get(selected.hotel().id())).toList());
+        var content=java.util.stream.IntStream.range(0,selection.content().size()).mapToObj(i->{
+                var selected=selection.content().get(i);
+                return new com.example.hotelservice.Hotel.dto.response.HotelOfferPageResponse.RatedOffer(
+                        details.get(i),selected.offer(),selected.reviews());}).toList();
         return new com.example.hotelservice.Hotel.dto.response.HotelOfferPageResponse(content,selection.page(),selection.size(),
                 selection.totalElements(),selection.totalPages(),selection.sort(),selection.availableAmenities());
     }
@@ -77,10 +81,15 @@ public class HotelOfferController {
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<HotelOfferResponse> search(@ModelAttribute HotelOfferCriteria criteria) {
         List<HotelOfferResponse> result = new ArrayList<>();
-        for (var hotel : candidateHotels(criteria).values()) {
-            var response = mapper.toPublicHotelResponse(hotel);
-            offers.match(response,criteria).ifPresent(offer -> result.add(new HotelOfferResponse(response,offer)));
-        }
+        var hotels = new ArrayList<>(candidateHotels(criteria).values());
+        if (hotels.isEmpty()) return result;
+        // One batched fact read for all candidates; approval/availability read once per request
+        // within this REPEATABLE_READ transaction instead of once per hotel.
+        var responses = mapper.toPublicHotelResponses(hotels);
+        var inventory = offers.availabilityFor(responses,criteria);
+        var approved = offers.approvalFor(responses,criteria);
+        for (var response : responses)
+            offers.match(response,criteria,inventory,approved).ifPresent(offer -> result.add(new HotelOfferResponse(response,offer)));
         return result;
     }
 

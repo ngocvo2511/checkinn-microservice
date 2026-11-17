@@ -1,0 +1,9 @@
+{
+  "redisExactFixtureGenerationKeysFound": 0,
+  "redisDeleted": 0,
+  "adminRedisKeyExcluded": true,
+  "brokerFinal": "name\tmessages_ready\tmessages_unacknowledged\tconsumers\nrevenue.booking.queue\t0\t0\t0\nrevenue.payment.queue\t0\t0\t0\nnotification.otp.queue\t0\t0\t0\nnotification.otp.dlq\t0\t0\t0\nnotification.payment.queue\t0\t0\t0\nrevenue.events.dlq\t0\t0\t0\nnotification.payment.dlq\t0\t0\t0",
+  "mailpitSyntheticMessagesRemovedWithOwnedContainer": 4,
+  "ownedMailpitContainersRemoved": 2,
+  "noQueuePurgeOrRedisFlush": true
+}

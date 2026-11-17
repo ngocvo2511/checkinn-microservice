@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "unmanifestedExactIds": {
+    "hotels": [],
+    "rooms": []
+  },
+  "hotelCount": 2,
+  "roomCount": 4,
+  "scope": "Read-only exact fixture-owner/parent ID predicates; no deletion scope expansion"
+}

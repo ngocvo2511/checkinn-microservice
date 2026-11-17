@@ -1,0 +1,17 @@
+{
+  "capturedAtUtc": "2026-11-17T11:57:13.198924+00:00",
+  "branch": "main",
+  "head": "91a2751cf500c38b95a68e354374f63eea9d5113",
+  "staged": [],
+  "unstaged": [
+    "app/host/hotels/[id]/rooms/[roomId]/page.tsx",
+    "app/host/hotels/[id]/rooms/new/page.tsx",
+    "components/host/RoomInventoryReview.tsx",
+    "tests/browser/inventory-review.spec.ts",
+    "tests/browser/new-room-facts.spec.ts"
+  ],
+  "untracked": [],
+  "stagedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "unstagedSha256": "b863e21574d3b432c31180eb201819444b35e9bfb09cc254941e8b8523c31ee5",
+  "note": "Captured before any Batch 8D file was created in the repository (only empty evidence/private directories existed)."
+}

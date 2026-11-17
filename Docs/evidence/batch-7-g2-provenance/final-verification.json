@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-16",
+  "backendHeadUnchanged": true,
+  "frontendHeadUnchanged": true,
+  "frontendClean": true,
+  "indexUnchangedAndEmpty": true,
+  "preexistingIdeHashesUnchanged": true,
+  "fiveV1HashesUnchanged": true,
+  "noPlaceChanges": true,
+  "noHistoricalSQLChanges": true,
+  "noRuntimeConfigChanges": true,
+  "historicalDocumentationPreserved": true,
+  "relativeLinksPass": true,
+  "gitDiffCheck": "PASS (line-ending conversion warnings only)",
+  "localOwnedClusterStopped": true,
+  "loopback55486Listening": false,
+  "hostedAccess": 0,
+  "hostedWrites": 0,
+  "hostedFixtures": 0,
+  "cleanup": "NOT APPLICABLE for Supabase; local cluster stopped with private synthetic data retained",
+  "manifestSources": 68,
+  "catalogServicesPass": 5,
+  "catalogDifferenceCount": 0,
+  "filesChanged": [
+    {
+      "path": "Docs/BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md",
+      "sha256": "9c1ba61bfa05bfa93a580884c1d6e008f12757d742b2cf6a2596ab2ee2e7269e"
+    },
+    {
+      "path": "Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md",
+      "sha256": "16934d0b76142b1cb257bbd97fd311afb84735ffcd6737df0f6e3b1e9e05bbd0"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/README.md",
+      "sha256": "e8e88a45674637cb85fbfb12ad77dcb6f2c78e9fde840dd81f08848afe05261d"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/booking-catalog.json",
+      "sha256": "6b0dc806c6ababbee044a30a7a99bb57887f3f42376c1e6da2c9cbda2dae9f06"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/compatibility-financial.md",
+      "sha256": "97051281236e8ea73bd02299e7d0a443f3cd02f4863df80425a08c4c20f2167a"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/gap-classification.md",
+      "sha256": "66faead9747261e85d519baac629aede2d3b2a129e1feb223f92bac04b6cd6eb"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/hotel-catalog.json",
+      "sha256": "43c449c5cf0ec4e94be91d1a1368a523d2786c888152aaa113c957be6eb504de"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/initial-state.json",
+      "sha256": "87539e91fbcfe784e0c6340a24a785dd4d9cd233e3e1f992fdeff15e6bfcc72f"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/inventory.md",
+      "sha256": "cbd265f3d7d03bed06199a01218ca6dcc55241d210066074f825029a735e66a4"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/migration-manifests.json",
+      "sha256": "36fc24bab93a8aef32eca6826ac7db465ca5ef7f85368390cde2da8f56a7987c"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/regression-results.json",
+      "sha256": "6cf67deda86f2aa47c8debcfdaf2afd1bbb01ae6de74b2890e82283e88996e38"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/regulations-catalog.json",
+      "sha256": "910a91dedf0e5615e7f3fa50dd51b9c02e4f35fa29abde66affb10957a5acfac"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/revenue-catalog.json",
+      "sha256": "f2fdd87628daf1f375fd82d983c5ac6442fa1e9157628e290a9217eb54985f6d"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/schema-verification-09203d90ba4d425d8457ea940adf0444.json",
+      "sha256": "03501e93660be12890df9b6a9a35e2f39601fce6129ce9a85de4ce8e2543e302"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/schema-verification-76292d75545040178160426939ddbdbd.json",
+      "sha256": "433645943bccde74b2f79843c401bea27bb2ac01c0e96c835a96a4438c839af9"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/schema-verification.json",
+      "sha256": "03501e93660be12890df9b6a9a35e2f39601fce6129ce9a85de4ce8e2543e302"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/schema.md",
+      "sha256": "1b4df7fda4cba382b9b37a128dc0fee5514e7b1932ffb4fe38aeceb57ac07f9e"
+    },
+    {
+      "path": "Docs/evidence/batch-7-g2-provenance/user-catalog.json",
+      "sha256": "07012de56b17f5fadc75f9b81a78e879b4e3b7d51f3dda96cb72aeb7b7b419b9"
+    },
+    {
+      "path": "Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "sha256": "a1d4d5cd55ad72ee3f8cf85cbcbfeb32a26e3e7357ddd7531d05250a6a0d7f8d"
+    },
+    {
+      "path": "Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md",
+      "sha256": "66efc142e30f3afdfde6af92e910b0775e0b9e86cab0eb1d0117f2f50adc5bed"
+    },
+    {
+      "path": "docker/batch7-inventory-provenance.sql",
+      "sha256": "1cf4a6e5c2358c75c036f752248f8221f7b65a8896b2e7b582bf78487bb0cda6"
+    },
+    {
+      "path": "hotel-service/src/main/java/com/example/hotelservice/Room/mapper/RoomTypeMapper.java",
+      "sha256": "4dc5a1bd08f3d228b1d0865928db7aa8c81be81b585440dc6f4e203108408c73"
+    },
+    {
+      "path": "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+      "sha256": "ae1824d68b06d467882914e85cf017a571af716f98acbd5a8744b83cb9ed5d24"
+    },
+    {
+      "path": "hotel-service/src/test/java/com/example/hotelservice/Room/mapper/RoomAmenitiesCompatibilityTest.java",
+      "sha256": "d77b18254a13d190fa36286253687847805de9755e125510c5a583cabc51ff7a"
+    },
+    {
+      "path": "hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java",
+      "sha256": "d8da0db85bda39399d357f38acf1b16289826b3d5df10756d6b4d3bed8a11f40"
+    },
+    {
+      "path": "hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java",
+      "sha256": "4d391c07704845221031f2b758c8a0c9c1a9e1cf31d31fa178cc5da83d11bcf1"
+    },
+    {
+      "path": "tools/batch7-schema-verify.py",
+      "sha256": "46e6c8261757daaa5d06dc1c86ef2bd0281cc70e9289d3699d29832d84d21a93"
+    }
+  ]
+}

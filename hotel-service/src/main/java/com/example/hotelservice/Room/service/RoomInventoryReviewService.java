@@ -67,16 +67,33 @@ public class RoomInventoryReviewService {
         if(state==null)return new State(0,false,false,room.getTotalRooms(),null,null);
         var latest=state.get("latest_request_id")==null?null:request((UUID)state.get("latest_request_id"));
         var approved=state.get("approved_request_id")==null?null:request((UUID)state.get("approved_request_id"));
-        boolean verified=approved!=null && Objects.equals(approved.get("proposed_quantity"),room.getTotalRooms());
+        // A foreign-key pointer alone proves neither approval nor ownership of the evidence.
+        requireMatchingRequest(room,latest);requireMatchingRequest(room,approved);
+        boolean verified=approved!=null && "APPROVED".equals(approved.get("status"))
+                && room.getTotalRooms()!=null && room.getTotalRooms()>0
+                && Objects.equals(approved.get("proposed_quantity"),room.getTotalRooms())
+                && approved.get("requested_by")!=null && approved.get("reviewed_by")!=null
+                && approved.get("reviewed_at")!=null && nonblank(approved.get("source"))
+                && nonblank(approved.get("review_reason"))
+                && rooms.hasEffectiveInventoryApproval(id);
         return new State(((Number)state.get("revision")).longValue(),true,verified,room.getTotalRooms(),latest,approved);
+    }
+    private static boolean nonblank(Object value) {
+        return value instanceof String text && !text.isBlank();
+    }
+    private static void requireMatchingRequest(RoomType room,Map<String,Object> request) {
+        if(request!=null && (!room.getId().equals(request.get("room_id"))
+                || !room.getHotelId().equals(request.get("hotel_id"))))throw conflict();
     }
     public Map<String,Object> propose(UUID id,Proposal input,Actor actor) {
         if(actor==null || !"OWNER".equals(actor.role()))throw new SecurityException("Chỉ OWNER được đề xuất số phòng kèm nguồn.");
         InputValidation.require(input);RoomType room=authorized(id,actor,true);
         jdbc.update("INSERT INTO room_inventory_review_states(room_id) VALUES (?) ON CONFLICT DO NOTHING",id);
         var state=storedState(id);revision(state,input.revision());
-        if(state.get("latest_request_id")!=null)
+        if(state.get("latest_request_id")!=null) {
+            requireMatchingRequest(room,request((UUID)state.get("latest_request_id")));
             jdbc.update("UPDATE room_inventory_review_requests SET status='SUPERSEDED' WHERE id=? AND status='PENDING'",state.get("latest_request_id"));
+        }
         UUID requestId=UUID.randomUUID();
         jdbc.update("INSERT INTO room_inventory_review_requests(id,room_id,hotel_id,previous_quantity,proposed_quantity,source,requested_by,status) VALUES (?,?,?,?,?,?,?,'PENDING')",
                 requestId,id,room.getHotelId(),room.getTotalRooms(),input.quantity(),input.source().trim(),actor.id());
@@ -91,6 +108,7 @@ public class RoomInventoryReviewService {
         RoomType room=authorized(targets.getFirst(),actor,true);
         var state=storedState(room.getId());revision(state,input.revision());
         var request=request(id);
+        requireMatchingRequest(room,request);
         if(!id.equals(state.get("latest_request_id")) || !"PENDING".equals(request.get("status")))throw conflict();
         if(input.approve()) {
             if(!Objects.equals(request.get("hotel_id"),room.getHotelId())
@@ -98,6 +116,8 @@ public class RoomInventoryReviewService {
             var load=jdbc.queryForMap("SELECT COALESCE(MAX(held::bigint+booked::bigint),0) peak, "
                     +"COALESCE(SUM(CASE WHEN held<0 OR booked<0 THEN 1 ELSE 0 END),0) invalid FROM room_availability WHERE room_type_id=?",room.getId());
             int quantity=((Number)request.get("proposed_quantity")).intValue();
+            if(quantity<=0 || !nonblank(request.get("source")) || request.get("requested_by")==null
+                    || request.get("requested_at")==null)throw conflict();
             if(((Number)load.get("invalid")).longValue()!=0 || ((Number)load.get("peak")).longValue()>quantity)throw conflict();
             room.setTotalRooms(quantity);rooms.saveAndFlush(room);
             jdbc.update("UPDATE room_inventory_review_states SET approved_request_id=? WHERE room_id=?",id,room.getId());
@@ -114,9 +134,9 @@ public class RoomInventoryReviewService {
                 +"ORDER BY requested_at "+(history?"DESC,":"ASC,")+"id LIMIT 50 OFFSET ?",UUID.class,page*50)
                 .stream().map(this::request).toList();
     }
-    /** Caller already holds the room lock. Unmanaged legacy edits retain their existing contract. */
+    /** Caller already holds the room lock. All quantity changes require review. */
     public void requireLegacyUpdateAllowed(RoomType room,Integer quantity) {
-        if(!Objects.equals(room.getTotalRooms(),quantity) && storedState(room.getId())!=null)
+        if(!Objects.equals(room.getTotalRooms(),quantity))
             throw new ResponseStatusException(CONFLICT,"Số phòng đang được quản lý bằng quy trình OWNER đề xuất, ADMIN duyệt.");
     }
 }

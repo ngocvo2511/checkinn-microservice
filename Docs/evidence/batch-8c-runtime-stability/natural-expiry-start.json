@@ -1,0 +1,13 @@
+{
+  "booking": {
+    "id": "4e5ab02c-3b29-3ca2-bb92-dd15e9a776d5",
+    "status": "PENDING",
+    "holdExpiresAt": "2026-11-17T08:57:56.848"
+  },
+  "observedAt": "2026-11-17T08:43:03.127891+00:00",
+  "counters": {
+    "held": 1,
+    "booked": 0
+  },
+  "method": "Application default expiry unchanged; no expires_at updates; no provider call"
+}

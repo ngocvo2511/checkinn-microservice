@@ -1,5 +1,7 @@
 # Migration Implementation Plan — Revised Batch 4.1
 
+> **Provider closure 17/11/2026 — Batch6B: DONE cho phạm vi local development + VNPay Sandbox/Storage.** Actual NCB card/OTP → return00 → payment COMPLETED, booking CONFIRMED, một Revenue CREDIT; callback replay/negative checks PASS. Storage upload/private signing PASS; fixture đã dọn. [Evidence và giới hạn](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). Các provider BLOCKED/PARTIAL ở checkpoint16/11 phía dưới là lịch sử; không tự đóng production/IPN/refund, batch khác hoặc parent standardization findings.
+
 > Trạng thái hiện hành 16/11/2026: **Batch 6B overall PARTIAL; core database/local integration VERIFIED/PASS, provider acceptance BLOCKED (VNPay code 71, Storage NXDOMAIN).** Năm projects / 46 business tables / 5 Flyway histories / 32 JPA entities; startup/restart và 117 workflow checks đã PASS theo evidence. Backend cloud deployment chưa thực hiện. Fixtures đã cleanup 192 rows; cấu hình daily Supabase=`docker/.env`, Test=`docker/.env.test`; private runtime fallback đã tắt. Quan sát runtime cuối ghi stopped trước configuration cleanup, không khẳng định đang chạy. [Báo cáo tổng kết](../BATCH6B_FINAL_COMPLETION_REPORT_2026-11-16.md). Các kết luận phía dưới giữ nguyên theo checkpoint lịch sử; trạng thái hiện hành ưu tiên ghi chú này.
 
 > Historical status (superseded by checkpoint 16/11/2026): Current: Batch5B local canonical acceptance DONE (14/11/2026); see appended checkpoint. Older statuses are dated history. Supabase/Batch6 not executed.
@@ -174,8 +176,15 @@ Giữ mở PUBLIC TEMP, STD-006 stock provenance, legacy cutover/recovery, real 
 - [x] Runtime/migrator separation, scoped grants, independent security settings, 30 denials/5 cross-project pairs.
 - [x] Isolated broker/cache, bounded pools, 117 core workflow checks và scoped regression acceptance.
 - [x] Fixture cleanup và daily configuration consolidation theo evidence; không replay acceptance.
-- [ ] Real VNPay Sandbox payment: merchant approval code71 cần owner/provider xử lý trước acceptance.
-- [ ] Supabase Storage bucket/visibility/upload/private-preview: cần endpoint hoạt động, hiện NXDOMAIN.
+- [x] Real VNPay Sandbox payment — 17/11/2026: NCB test card/OTP, return00/HMAC, payment COMPLETED, booking CONFIRMED, Revenue một CREDIT; replay/negative checks PASS. [Evidence](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md).
+- [x] Supabase Storage bucket/visibility/upload/private-preview — actual public/private upload, signed download/batch signing và anonymous denial PASS; probe objects đã xóa.
 - [ ] Production backup/restore/PITR/RPO/RTO, legacy-data cutover/reconciliation, broader outage/load và backend cloud deployment.
 
 Dependencies: Batch5B local canonical → Batch6A static readiness → Batch6B hosted database/core local acceptance đã xác minh. Provider follow-up độc lập còn BLOCKED; deployment tương lai phải có acceptance riêng. STD-021 local/hosted integration subgates được giải quyết, parent migration/operational readiness vẫn IN_PROGRESS; STD-006 OPEN. Không đổi các checkbox lịch sử thành DONE ngoài phạm vi.
+
+
+## Batch 7 current source/history manifest — 16/11/2026
+
+Canonical fresh/hosted V1 acceptance của Batch5B/6B được bảo toàn. [Service-specific SHA256/history manifest](../evidence/batch-7-g2-provenance/migration-manifests.json) phân biệt canonical V1, legacy/test-only SQL không được chạy trên canonical và external role grants không phải Flyway versions. Historical applied receipts ngoài canonical vẫn UNKNOWN.
+
+[Fresh Batch7 verification](../evidence/batch-7-g2-provenance/schema-verification.json): PostgreSQL18 disposable mới, năm canonical/Flyway/Hibernate tests PASS, exact catalog5/5 MATCH baseline5B; stopped finally, không hosted access hoặc V1/history changes. Không cần V2 cho Java/compatibility/tooling fixes. Representative legacy full upgrade NOT VERIFIED; import/cutover DEFERRED theo U03 fresh/no-import. Nếu cần thay schema về sau phải proposal additive versioned migration, thử disposable và xin phê duyệt target riêng, không sửa applied V1 hoặc dùng repair/baseline che drift. [Batch7 report](../BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md).

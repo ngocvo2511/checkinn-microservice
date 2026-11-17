@@ -1,0 +1,22 @@
+{
+  "user": [
+    "DELETE FROM public.loyalty_commands WHERE command_key IN ('9b7023f4-db70-378e-9e42-1dbf8650523f|CANCEL','8688832d-dbcc-3e7b-8396-0218bfd0ae1e|CANCEL') /* expected:2 */",
+    "DELETE FROM public.loyalty_points WHERE id IN ('2d7a368b-06dc-49e5-8649-d95f95db2c98') /* expected:1 */",
+    "DELETE FROM public.otps WHERE id IN ('e8e9ee57-4de4-442b-a51d-a191d26aaf43','6f8f67d1-4061-423c-8105-0993ff4e8790','fe1322fb-c666-4436-8c35-78ad7a8e9111','030cf51c-f08d-4455-9e62-60811251d899','c40f8e93-40b5-4239-a439-5d56e857ae39') /* expected:4 */",
+    "DELETE FROM public.user_profiles WHERE id IN ('f01c387f-7734-4448-bb90-de4851060dd8','7dafa5e7-4e91-4a25-8391-c6aa54f8ecec','86b76f10-299b-4620-854d-5b31b1de8f7c','59004bd8-2d4f-40fe-82f9-629267a24966') /* expected:4 */",
+    "DELETE FROM public.users WHERE id IN ('f35a8ecd-ed7b-4e13-a3f3-acf96560e736','767a3fd2-36a7-49f2-b5a2-4e56cb71f70c','7ef90796-ed73-4563-8e5e-8b01d40a9bea','eed69de4-550c-425b-a6c0-e7d7ddf2ab2f') /* expected:4 */"
+  ],
+  "booking": [
+    "DELETE FROM public.booking_event_outbox WHERE id IN ('707d96f0-518b-4a3b-a450-d82655caf8f3','93e0e59f-a348-49b3-a3ca-cde475bc1284','47c98d5d-6f9a-4f86-a8e6-4aa7f3280ee1','857a6bd5-6117-4c21-938d-f83dc68eb2b8','4965ef86-d996-4b1e-ae9c-4543a473ddb2','e93cf840-9a7b-4fae-8f21-dc34b9397d10') /* expected:6 */",
+    "DELETE FROM public.booking_items WHERE id IN ('434ccda5-920d-4ad1-bf97-9a792b0f222e','e5b84a0a-a3b9-4f97-8149-4c695fb11e0e','c5d12fa1-9d40-4a05-aabb-4de9ac4b7db7') /* expected:3 */",
+    "DELETE FROM public.bookings WHERE id IN ('9b7023f4-db70-378e-9e42-1dbf8650523f','8688832d-dbcc-3e7b-8396-0218bfd0ae1e','20a95387-b310-3d1a-9d14-b852f8440662') /* expected:3 */"
+  ],
+  "hotel": [
+    "DELETE FROM public.room_holds WHERE id IN ('1061b187-ba74-45e5-a0b0-2825e9cea506','5c59c558-d603-4e70-8b0a-56257a9b5ea4','f215b564-f7f7-4216-b41c-5a89270a91dd') /* expected:3 */",
+    "DELETE FROM public.room_availability WHERE id IN ('8fc137ad-42be-4f87-a9f4-e3dc942eb297','ccb7dde9-6707-4c2f-8108-c2b88df81d37') /* expected:2 */",
+    "DELETE FROM public.room_inventory_review_states WHERE room_id IN ('2a4145be-9fd3-49ab-ae3b-1e8bfed7add8','ba8b132b-762c-48a2-bf20-5f046689cfef','d30472e5-d69e-421a-9451-f34a470d29aa','95c8afc1-d93a-44fd-8024-09554fc5cfc7') /* expected:4 */",
+    "DELETE FROM public.room_inventory_review_requests WHERE id IN ('d08e7c42-1210-4684-8c63-4592dcda33e4','26dbde92-7e68-4997-b85f-71e3d3a929ad','77e4f526-2bc9-498c-a1d0-be298d279b68','5d15a1b5-e41a-409a-8604-c81e8049a17a','3273df9d-2978-4b31-8c0c-000b2b7330dc') /* expected:5 */",
+    "DELETE FROM public.room_types WHERE id IN ('2a4145be-9fd3-49ab-ae3b-1e8bfed7add8','ba8b132b-762c-48a2-bf20-5f046689cfef','d30472e5-d69e-421a-9451-f34a470d29aa','95c8afc1-d93a-44fd-8024-09554fc5cfc7') /* expected:4 */",
+    "DELETE FROM public.hotels WHERE id IN ('c71802a6-1498-4926-98cc-7035e74419d1','e7913e2e-dbf7-4dcd-a203-7a6d2b92c79f') /* expected:2 */"
+  ]
+}

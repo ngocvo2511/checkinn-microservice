@@ -1,0 +1,28 @@
+{
+  "commands": [
+    {
+      "commandKey": "9b7023f4-db70-378e-9e42-1dbf8650523f|CANCEL",
+      "bookingId": "9b7023f4-db70-378e-9e42-1dbf8650523f",
+      "userId": "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+      "type": "CANCEL",
+      "resultPoints": 0
+    },
+    {
+      "commandKey": "8688832d-dbcc-3e7b-8396-0218bfd0ae1e|CANCEL",
+      "bookingId": "8688832d-dbcc-3e7b-8396-0218bfd0ae1e",
+      "userId": "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+      "type": "CANCEL",
+      "resultPoints": 0
+    }
+  ],
+  "accounts": [
+    {
+      "id": "2d7a368b-06dc-49e5-8649-d95f95db2c98",
+      "userId": "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+      "total": 0,
+      "used": 0,
+      "available": 0
+    }
+  ],
+  "cleanupAuthorizedScope": "Only synthetic users/bookings with exact manifested primary keys; no existing ledger rows. No payments or points transaction history created."
+}

@@ -1,0 +1,344 @@
+{
+  "callSites": {
+    "media-per-collection": "Lazy Hotel.mediaAssets / RoomType.mediaAssets init (HotelMapper.toMediaAssetResponses, RoomTypeMapper.toMediaAssetResponses), one SELECT per collection",
+    "media-batched": "Batched media collection init (@BatchSize)",
+    "approval-set": "RoomTypeRepository.findEffectivelyApprovedRoomIds (HotelMapper public facts; AvailabilityService.approvedRoomIds via HotelOfferSearchService; getAvailableRoomCounts)",
+    "approval-single": "RoomTypeRepository.hasEffectiveInventoryApproval (single-room availability)",
+    "rooms-by-hotel": "Hotel.roomTypes lazy init / findByHotelIdIn",
+    "rooms-by-id": "RoomTypeRepository.findAllById/findById (availability)",
+    "amenity-categories": "HotelAmenityCategoryRepository.findAllByHotelId[In] (HotelMapper public amenities)",
+    "amenity-items": "HotelAmenityRepository.findAllByCategoryHotelId[In]",
+    "policies": "HotelPolicyRepository.findAllByHotelId[In] (JOIN FETCH category)",
+    "faqs": "QuestionRepository.findAllByHotelId[In]",
+    "amenity-effective-codes": "AmenityCatalogService.effectiveCodes (JdbcTemplate)",
+    "city": "Hotel.city lazy (first-level cache: once per city)",
+    "availability-peaks": "RoomAvailabilityRepository peak occupancy",
+    "hotels": "Hotel list / findById / findAllById (statement text truncated at 400 chars in early traces)"
+  },
+  "stages": {
+    "before-small": {
+      "search_undated": {
+        "hibernateStatements": 21,
+        "jdbcTemplateStatements": 2,
+        "totalSqlStatements": 23,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 5,
+          "approval-set": 4,
+          "rooms-by-hotel": 2,
+          "amenity-categories": 2,
+          "amenity-items": 2,
+          "policies": 2,
+          "faqs": 2,
+          "amenity-effective-codes": 2,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 3530.5455999987316,
+        "meanHibernateJdbcMs": 2631.6714333333334
+      },
+      "search_dated": {
+        "hibernateStatements": 27,
+        "jdbcTemplateStatements": 2,
+        "totalSqlStatements": 29,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 5,
+          "approval-set": 4,
+          "hotels": 3,
+          "rooms-by-hotel": 2,
+          "amenity-categories": 2,
+          "amenity-items": 2,
+          "policies": 2,
+          "faqs": 2,
+          "amenity-effective-codes": 2,
+          "rooms-by-id": 2,
+          "availability-peaks": 2,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 4316.232466665194,
+        "meanHibernateJdbcMs": 3390.4468333333334
+      },
+      "public_catalog": {
+        "hibernateStatements": 19,
+        "jdbcTemplateStatements": 2,
+        "totalSqlStatements": 21,
+        "physicalSpringTransactions": 2,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 5,
+          "rooms-by-hotel": 2,
+          "approval-set": 2,
+          "amenity-categories": 2,
+          "amenity-items": 2,
+          "policies": 2,
+          "faqs": 2,
+          "amenity-effective-codes": 2,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 3023.902700001296,
+        "meanHibernateJdbcMs": 2376.6887666666667
+      },
+      "hotel_detail": {
+        "hibernateStatements": 10,
+        "jdbcTemplateStatements": 1,
+        "totalSqlStatements": 11,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 2,
+          "hotels": 1,
+          "rooms-by-hotel": 1,
+          "approval-set": 1,
+          "city": 1,
+          "amenity-categories": 1,
+          "amenity-items": 1,
+          "policies": 1,
+          "faqs": 1,
+          "amenity-effective-codes": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 1628.1725333343882,
+        "meanHibernateJdbcMs": 1244.0079333333333
+      },
+      "room_availability": {
+        "hibernateStatements": 4,
+        "jdbcTemplateStatements": 0,
+        "totalSqlStatements": 4,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "rooms-by-id": 1,
+          "hotels": 1,
+          "approval-single": 1,
+          "availability-peaks": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 1130.225400001412,
+        "meanHibernateJdbcMs": 515.0904333333333
+      }
+    },
+    "before-medium": {
+      "search_undated": {
+        "hibernateStatements": 40,
+        "jdbcTemplateStatements": 3,
+        "totalSqlStatements": 43,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 17,
+          "approval-set": 6,
+          "rooms-by-hotel": 3,
+          "amenity-categories": 3,
+          "amenity-items": 3,
+          "policies": 3,
+          "faqs": 3,
+          "amenity-effective-codes": 3,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 6132.529833334654,
+        "meanHibernateJdbcMs": 5081.564166666667
+      },
+      "search_dated": {
+        "hibernateStatements": 49,
+        "jdbcTemplateStatements": 3,
+        "totalSqlStatements": 52,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 17,
+          "approval-set": 6,
+          "hotels": 4,
+          "rooms-by-hotel": 3,
+          "amenity-categories": 3,
+          "amenity-items": 3,
+          "policies": 3,
+          "faqs": 3,
+          "rooms-by-id": 3,
+          "availability-peaks": 3,
+          "amenity-effective-codes": 3,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 7006.811633335019,
+        "meanHibernateJdbcMs": 5979.4686
+      },
+      "public_catalog": {
+        "hibernateStatements": 37,
+        "jdbcTemplateStatements": 3,
+        "totalSqlStatements": 40,
+        "physicalSpringTransactions": 3,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 17,
+          "rooms-by-hotel": 3,
+          "approval-set": 3,
+          "amenity-categories": 3,
+          "amenity-items": 3,
+          "policies": 3,
+          "faqs": 3,
+          "amenity-effective-codes": 3,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 5304.209333335166,
+        "meanHibernateJdbcMs": 4451.178166666667
+      },
+      "hotel_detail": {
+        "hibernateStatements": 13,
+        "jdbcTemplateStatements": 1,
+        "totalSqlStatements": 14,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 5,
+          "hotels": 1,
+          "rooms-by-hotel": 1,
+          "approval-set": 1,
+          "city": 1,
+          "amenity-categories": 1,
+          "amenity-items": 1,
+          "policies": 1,
+          "faqs": 1,
+          "amenity-effective-codes": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 1933.7844000037876,
+        "meanHibernateJdbcMs": 1580.0613
+      },
+      "room_availability": {
+        "hibernateStatements": 4,
+        "jdbcTemplateStatements": 0,
+        "totalSqlStatements": 4,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "rooms-by-id": 1,
+          "hotels": 1,
+          "approval-single": 1,
+          "availability-peaks": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 1065.2247999993658,
+        "meanHibernateJdbcMs": 479.73473333333334
+      }
+    },
+    "before-larger": {
+      "search_undated": {
+        "hibernateStatements": 91,
+        "jdbcTemplateStatements": 5,
+        "totalSqlStatements": 96,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 54,
+          "approval-set": 10,
+          "rooms-by-hotel": 5,
+          "amenity-categories": 5,
+          "amenity-items": 5,
+          "policies": 5,
+          "faqs": 5,
+          "amenity-effective-codes": 5,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 12608.80940000061,
+        "meanHibernateJdbcMs": 11333.312966666666
+      },
+      "search_dated": {
+        "hibernateStatements": 106,
+        "jdbcTemplateStatements": 5,
+        "totalSqlStatements": 111,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 54,
+          "approval-set": 10,
+          "hotels": 6,
+          "rooms-by-hotel": 5,
+          "amenity-categories": 5,
+          "amenity-items": 5,
+          "policies": 5,
+          "faqs": 5,
+          "rooms-by-id": 5,
+          "availability-peaks": 5,
+          "amenity-effective-codes": 5,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 13857.69949999667,
+        "meanHibernateJdbcMs": 12631.243866666668
+      },
+      "public_catalog": {
+        "hibernateStatements": 86,
+        "jdbcTemplateStatements": 5,
+        "totalSqlStatements": 91,
+        "physicalSpringTransactions": 5,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 54,
+          "rooms-by-hotel": 5,
+          "approval-set": 5,
+          "amenity-categories": 5,
+          "amenity-items": 5,
+          "policies": 5,
+          "faqs": 5,
+          "amenity-effective-codes": 5,
+          "hotels": 1,
+          "city": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 11508.968999999828,
+        "meanHibernateJdbcMs": 10178.566566666666
+      },
+      "hotel_detail": {
+        "hibernateStatements": 18,
+        "jdbcTemplateStatements": 1,
+        "totalSqlStatements": 19,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "media-per-collection": 10,
+          "hotels": 1,
+          "rooms-by-hotel": 1,
+          "approval-set": 1,
+          "city": 1,
+          "amenity-categories": 1,
+          "amenity-items": 1,
+          "policies": 1,
+          "faqs": 1,
+          "amenity-effective-codes": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 2512.8706000032253,
+        "meanHibernateJdbcMs": 2162.466
+      },
+      "room_availability": {
+        "hibernateStatements": 4,
+        "jdbcTemplateStatements": 0,
+        "totalSqlStatements": 4,
+        "physicalSpringTransactions": 1,
+        "connectionAcquisitions": 1,
+        "byCategory": {
+          "rooms-by-id": 1,
+          "hotels": 1,
+          "approval-single": 1,
+          "availability-peaks": 1
+        },
+        "stableAcross3Samples": true,
+        "meanHttpMsTraced": 1052.4254666646204,
+        "meanHibernateJdbcMs": 475.9033
+      }
+    }
+  }
+}

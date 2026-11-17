@@ -1,0 +1,28 @@
+{
+  "finalStatus": "PARTIAL / PERFORMANCE AFTER & FULL CONCURRENCY BLOCKED",
+  "loggedChecks": {
+    "PASS": 54,
+    "FAIL": 4
+  },
+  "notUniqueScenarioCount": true,
+  "initialAdminLoginAndGatewayAuthorization": "PASS",
+  "finalAdminDatabaseAndCredentialPreservation": "PASS",
+  "finalAdminHttpLogin": "BLOCKED 503",
+  "ownerAdminCustomerInventoryBooking": "PASS scoped, SQL synthetic hotel publication setup",
+  "unapprovedBooking": "PASS 409; no hold/counter writes",
+  "idempotency": "PASS original ID / changed payload 409",
+  "authorizationOwnership": "PASS",
+  "concurrency": "PARTIAL: stock2 occupied2, but recovery race 409/500/409; pool acquisition timeout",
+  "naturalHoldExpiration": "NOT VERIFIED end-to-end: runtime unavailable after natural deadline",
+  "populatedBenchmark": "PARTIAL 29/30; stop on timeout",
+  "querySlope": "NOT VERIFIED across sizes",
+  "sourceOptimization": "IMPLEMENTED / local regression+native PASS / hosted after NOT VERIFIED",
+  "hostedDeletedRows": 47,
+  "manifestIdsAbsent": 48,
+  "hostedRemainingFixtureIds": 0,
+  "schemaAndHistory": "UNCHANGED 5/5",
+  "productionReady": false,
+  "runtimeStopped": true,
+  "localInfrastructureStopped": true,
+  "secretsScan": "PASS"
+}

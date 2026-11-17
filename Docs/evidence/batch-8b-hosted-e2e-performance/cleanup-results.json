@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "owner": "user",
+      "deleted": 15,
+      "counts": [
+        2,
+        1,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "owner": "booking",
+      "deleted": 12,
+      "counts": [
+        6,
+        3,
+        3
+      ]
+    },
+    {
+      "owner": "hotel",
+      "deleted": 20,
+      "counts": [
+        3,
+        2,
+        4,
+        5,
+        4,
+        2
+      ]
+    }
+  ],
+  "remaining": [],
+  "status": "DONE"
+}

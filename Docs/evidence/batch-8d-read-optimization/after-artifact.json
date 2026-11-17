@@ -1,0 +1,14 @@
+{
+  "artifact": "hotel-service-after.jar (private copy in .local/batch8d/artifacts)",
+  "sha256": "763ee42e785cc23deb9a4345323996b852ed3280aa397cc448c3237e6f7fd5f1",
+  "bytes": 110319654,
+  "builtAtUtc": "2026-11-17T14:01:43.746151+00:00",
+  "command": "mvn -o -B -ntp -q -pl hotel-service -DskipTests package (artifact only; tests executed separately)",
+  "sourceTreeSha256": {
+    "main": "cdacb13b9d1a8fbab44341b9c032cd1228d8b6dc6068e732925eac4f6214b2f6",
+    "pom": "76532e8ba09ced3ca646889dfe90e6d7f5ef31ac2a59f522d1b9aa99e6426f91"
+  },
+  "gitHead": "ea46f3cb7168039b0160d05a05822aa906a81a17",
+  "hotelMainWorkingTreeDiffSha256": "c7cb5ccbd8be20f64352fbc562fa16807422f848bb0aab6ca6b6d7a6edbe566e",
+  "note": "Built from BEFORE tree + Batch 8D hotel-service source changes (uncommitted; HEAD unchanged)."
+}

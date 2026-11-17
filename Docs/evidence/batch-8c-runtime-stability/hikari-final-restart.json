@@ -1,0 +1,737 @@
+{
+  "user": {
+    "active": {
+      "name": "hikaricp.connections.active",
+      "description": "Active connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "idle": {
+      "name": "hikaricp.connections.idle",
+      "description": "Idle connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "pending": {
+      "name": "hikaricp.connections.pending",
+      "description": "Pending threads",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "max": {
+      "name": "hikaricp.connections.max",
+      "description": "Max connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "min": {
+      "name": "hikaricp.connections.min",
+      "description": "Min connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 1.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "timeout": {
+      "name": "hikaricp.connections.timeout",
+      "description": "Connection timeout total count",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "acquire": {
+      "name": "hikaricp.connections.acquire",
+      "description": "Connection acquire time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 6.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 0.546061501
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.1116172
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "usage": {
+      "name": "hikaricp.connections.usage",
+      "description": "Connection usage time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 6.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 1.128
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.671
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "creation": {
+      "name": "hikaricp.connections.creation",
+      "description": "Connection creation time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 0.0
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "user-service:2dc8bea1-9de5-4ef2-a93e-cbc4d35f3db6"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    }
+  },
+  "hotel": {
+    "active": {
+      "name": "hikaricp.connections.active",
+      "description": "Active connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "idle": {
+      "name": "hikaricp.connections.idle",
+      "description": "Idle connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "pending": {
+      "name": "hikaricp.connections.pending",
+      "description": "Pending threads",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "max": {
+      "name": "hikaricp.connections.max",
+      "description": "Max connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "min": {
+      "name": "hikaricp.connections.min",
+      "description": "Min connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 1.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "timeout": {
+      "name": "hikaricp.connections.timeout",
+      "description": "Connection timeout total count",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "acquire": {
+      "name": "hikaricp.connections.acquire",
+      "description": "Connection acquire time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 10.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 0.776094601
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.1375888
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "usage": {
+      "name": "hikaricp.connections.usage",
+      "description": "Connection usage time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 10.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 3.541
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.81
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "creation": {
+      "name": "hikaricp.connections.creation",
+      "description": "Connection creation time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 0.0
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "hotel-service:2c8c4ad2-69aa-4c08-a026-79055892bebb"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    }
+  },
+  "booking": {
+    "active": {
+      "name": "hikaricp.connections.active",
+      "description": "Active connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "idle": {
+      "name": "hikaricp.connections.idle",
+      "description": "Idle connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "pending": {
+      "name": "hikaricp.connections.pending",
+      "description": "Pending threads",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "max": {
+      "name": "hikaricp.connections.max",
+      "description": "Max connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 2.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "min": {
+      "name": "hikaricp.connections.min",
+      "description": "Min connections",
+      "measurements": [
+        {
+          "statistic": "VALUE",
+          "value": 1.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "timeout": {
+      "name": "hikaricp.connections.timeout",
+      "description": "Connection timeout total count",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "acquire": {
+      "name": "hikaricp.connections.acquire",
+      "description": "Connection acquire time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 151.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 5.240019
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.0701524
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "usage": {
+      "name": "hikaricp.connections.usage",
+      "description": "Connection usage time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 151.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 8.314
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.068
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    },
+    "creation": {
+      "name": "hikaricp.connections.creation",
+      "description": "Connection creation time",
+      "baseUnit": "seconds",
+      "measurements": [
+        {
+          "statistic": "COUNT",
+          "value": 0.0
+        },
+        {
+          "statistic": "TOTAL_TIME",
+          "value": 0.0
+        },
+        {
+          "statistic": "MAX",
+          "value": 0.0
+        }
+      ],
+      "availableTags": [
+        {
+          "tag": "application",
+          "values": [
+            "booking-service:8930c1d8-d06f-4e18-8199-bb2e2a138a5c"
+          ]
+        },
+        {
+          "tag": "pool",
+          "values": [
+            "HikariPool-1"
+          ]
+        }
+      ]
+    }
+  }
+}

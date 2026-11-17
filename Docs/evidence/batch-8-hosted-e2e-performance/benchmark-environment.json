@@ -1,0 +1,20 @@
+{
+  "clientDate": "2026-11-17",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "clientRegion": "Asia/Saigon (user context; physical IP geolocation not verified)",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "java": [
+    "openjdk version \"21.0.3\" 2024-04-16 LTS",
+    "OpenJDK Runtime Environment Temurin-21.0.3+9 (build 21.0.3+9-LTS)",
+    "OpenJDK 64-Bit Server VM Temurin-21.0.3+9 (build 21.0.3+9-LTS, mixed mode, sharing)"
+  ],
+  "connectionMode": "session pooler; TLS verify-full",
+  "poolMax": 2,
+  "poolMinIdle": 1,
+  "poolTimeoutMs": 10000,
+  "warmupPerEndpoint": 5,
+  "successfulSamplesPerLevelTarget": 30,
+  "maxConcurrency": 10,
+  "responseBodiesRetained": false,
+  "productionReady": false
+}

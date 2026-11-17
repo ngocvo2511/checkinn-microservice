@@ -1,0 +1,622 @@
+[
+  {
+    "endpoint": "search_undated",
+    "samples": [
+      {
+        "ms": 773.1988999876194,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 622.9703999997582,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 704.7270000039134,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 707.7328000159469,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 626.6197999939322,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 660.6080000055954,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 645.2104999916628,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 632.761799992295,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 640.5975999950897,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 766.5082000021357,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 778.3571999752894,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 638.7246000231244,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 620.6917999952566,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 625.1412999990862,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 805.0190999929328,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 660.0077000039164,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 637.5251999998,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 636.9242000218946,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 647.0752000168432,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 751.0045999952126,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 754.121000005398,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 647.5942999823019,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 634.08889999846,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 816.3581999833696,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 636.0877999977674,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 637.4776999873575,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 628.9947000041138,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 630.4179999860935,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 626.1072000197601,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 764.3335000029765,
+        "status": 200,
+        "timeout": false
+      }
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "samples": [
+      {
+        "ms": 750.9376000089105,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 623.0595000088215,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 650.1010000065435,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 639.3654000130482,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 623.1712999870069,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 637.9708000167739,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 649.7280999901704,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 626.3124000106473,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 624.3444999854546,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 759.2087999801151,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 759.7405999840703,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 642.1048000047449,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 635.0333000009414,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 637.5344000116456,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 656.1093000054825,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 650.434299983317,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 629.1803999920376,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 639.474199997494,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 621.5888999868184,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 771.5576000045985,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 763.350299996091,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 629.0855999977794,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 624.0332000015769,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 641.38549999916,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 635.2572000178043,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 639.9725000082981,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 626.4561999996658,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 646.5535000024829,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 635.3728999965824,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 767.3279000155162,
+        "status": 200,
+        "timeout": false
+      }
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "samples": [
+      {
+        "ms": 267.59360000141896,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 143.49389998824336,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 156.91759999026544,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 131.1416999960784,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 133.52269999450073,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 128.4555000020191,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 134.29400001768954,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 130.97779999952763,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 129.94240000261925,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 253.03280001389794,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 144.6126000082586,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.6377999917604,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 140.7626000000164,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 140.7251000055112,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.34819999849424,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 140.97139998921193,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 126.86320001375861,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.97200000449084,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 141.6142999951262,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 255.28129999293014,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 146.63760000257753,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.95949999662116,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.41920001525432,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 138.01149997743778,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 142.91929997853003,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 127.62259997543879,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 154.24889998394065,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 139.38320000306703,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 142.27920002304018,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 252.1361999970395,
+        "status": 200,
+        "timeout": false
+      }
+    ]
+  },
+  {
+    "endpoint": "location_catalog",
+    "samples": [
+      {
+        "ms": 528.7932999781333,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 528.0715999833774,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 524.015299975872,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 505.93290000688285,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 529.8278000263963,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 516.4327000093181,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 565.6763000006322,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 546.8276000174228,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 521.0567000031006,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 640.1593000045978,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 640.4775999835692,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 517.0978999813087,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 506.46150001557544,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 527.9422999883536,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 539.7515000076964,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 515.5317999888211,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 606.2897999945562,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 503.9128000207711,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 503.6536999978125,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 643.42750000651,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 640.4466000094544,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 525.9056999930181,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 517.7239000040572,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 517.7611999970395,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 518.2323000044562,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 515.1799999875948,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 528.5312999913003,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 503.3642000053078,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 515.8361000067089,
+        "status": 200,
+        "timeout": false
+      },
+      {
+        "ms": 519.6009000064805,
+        "status": 200,
+        "timeout": false
+      }
+    ]
+  }
+]

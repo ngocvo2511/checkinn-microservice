@@ -1,0 +1,48 @@
+{
+  "user": {
+    "schemaFingerprintEqual": true,
+    "baselineDifferencesAfter": [],
+    "flywayHistoryEqual": true,
+    "countsEqual": true,
+    "fullRowDigestsEqual": true,
+    "changedTables": []
+  },
+  "hotel": {
+    "schemaFingerprintEqual": true,
+    "baselineDifferencesAfter": [],
+    "flywayHistoryEqual": true,
+    "countsEqual": true,
+    "fullRowDigestsEqual": true,
+    "changedTables": []
+  },
+  "booking": {
+    "schemaFingerprintEqual": true,
+    "baselineDifferencesAfter": [],
+    "flywayHistoryEqual": true,
+    "countsEqual": true,
+    "fullRowDigestsEqual": true,
+    "changedTables": []
+  },
+  "revenue": {
+    "schemaFingerprintEqual": true,
+    "baselineDifferencesAfter": [],
+    "flywayHistoryEqual": true,
+    "countsEqual": true,
+    "fullRowDigestsEqual": true,
+    "changedTables": []
+  },
+  "regulations": {
+    "schemaFingerprintEqual": true,
+    "baselineDifferencesAfter": [],
+    "flywayHistoryEqual": true,
+    "countsEqual": true,
+    "fullRowDigestsEqual": true,
+    "changedTables": []
+  },
+  "admin": {
+    "identityEqual": true,
+    "completeUsersTableDigestEqual": true,
+    "role": "ADMIN",
+    "active": true
+  }
+}

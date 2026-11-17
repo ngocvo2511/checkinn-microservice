@@ -1,0 +1,14 @@
+[
+  {
+    "service": "hotel",
+    "buildSuccess": true,
+    "testsSkipped": true,
+    "jarSha256": "bc50d8b24c2386d21414b12fb193a6178370d2976ec3d68cfb79ca703ccdc066"
+  },
+  {
+    "service": "booking",
+    "buildSuccess": true,
+    "testsSkipped": true,
+    "jarSha256": "69e0a80895d633c145b36fb19d400c22ac61328335ba16f24208a6176fba5867"
+  }
+]

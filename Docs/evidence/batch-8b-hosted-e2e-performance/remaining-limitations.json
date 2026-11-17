@@ -1,0 +1,42 @@
+[
+  {
+    "item": "Hosted AFTER benchmark",
+    "status": "BLOCKED",
+    "reason": "Hotel runtime-role connection exhaustion; bounded recovery did not establish User/Hotel readiness"
+  },
+  {
+    "item": "Multi-size query-count slope",
+    "status": "NOT RUN",
+    "reason": "Only Small2x2 populated; pressure stop before Medium/Larger"
+  },
+  {
+    "item": "30 successful samples per benchmark cell",
+    "status": "PARTIAL",
+    "reason": "29/30 C1, one timeout; remaining cells/direct not run"
+  },
+  {
+    "item": "Full concurrency acceptance",
+    "status": "PARTIAL",
+    "reason": "Occupied2/stock2 observed, but race409/500/409; acquisition timeout"
+  },
+  {
+    "item": "Natural hold expiry/release",
+    "status": "NOT VERIFIED",
+    "reason": "Real15-minute fixture created, runtime unavailable for end-to-end verification"
+  },
+  {
+    "item": "Final HTTP ADMIN login",
+    "status": "BLOCKED503",
+    "reason": "User runtime unavailable; initial login/auth PASS, final DB row and secure-password match PASS"
+  },
+  {
+    "item": "Hotel publication documents",
+    "status": "NOT RUN",
+    "reason": "Storage provider prohibited; synthetic SQL publication setup explicitly separate"
+  },
+  {
+    "item": "Read optimization hosted improvement",
+    "status": "NOT CLAIMED",
+    "reason": "Source +843 local regression/native PASS, no hosted AFTER; lazy media/per-hotel association reads remain"
+  }
+]

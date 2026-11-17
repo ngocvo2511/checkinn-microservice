@@ -31,6 +31,9 @@ public interface MediaAssetRepository extends JpaRepository<MediaAsset, UUID> {
             UUID targetId,
             MediaTargetType targetType
     );
+    /** Request-scoped bulk read for public representations; callers bound the ID chunk size. */
+    List<MediaAsset> findByTargetTypeAndTargetIdIn(MediaTargetType targetType, java.util.Collection<UUID> targetIds);
+
     List<MediaAsset> findByTargetIdAndTargetType(
             UUID targetId,
             MediaTargetType targetType

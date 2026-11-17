@@ -1,0 +1,38 @@
+[
+  {
+    "owner": "user",
+    "exitCode": 0,
+    "tests": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "executedPass": 110
+  },
+  {
+    "owner": "auth",
+    "exitCode": 0,
+    "tests": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "executedPass": 47
+  },
+  {
+    "owner": "hotel",
+    "exitCode": 0,
+    "tests": 429,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 33,
+    "executedPass": 396
+  },
+  {
+    "owner": "booking",
+    "exitCode": 0,
+    "tests": 289,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "executedPass": 285
+  }
+]

@@ -22,6 +22,8 @@ public interface HotelAmenityRepository extends JpaRepository<HotelAmenity, UUID
     List<CandidateFacet> findCandidateFacets(@org.springframework.data.repository.query.Param("hotelIds") java.util.Collection<UUID> hotelIds);
 
     List<HotelAmenity> findAllByCategoryHotelId(UUID hotelId);
+    /** Request-scoped bulk read for public representations; callers bound the ID chunk size. */
+    List<HotelAmenity> findAllByCategoryHotelIdIn(java.util.Collection<UUID> hotelIds);
     void deleteAllByCategoryHotelId(UUID hotelId);
     void deleteAllByCategory(HotelAmenityCategory category);
 }

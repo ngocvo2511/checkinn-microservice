@@ -1,0 +1,488 @@
+[
+  {
+    "endpoint": "search_undated",
+    "concurrency": 1,
+    "sample": 0,
+    "status": 200,
+    "ms": 2151.080499999807,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 1,
+    "sample": 1,
+    "status": 200,
+    "ms": 2238.919099996565,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 1,
+    "sample": 2,
+    "status": 200,
+    "ms": 2088.0512000003364,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 3,
+    "sample": 0,
+    "status": 200,
+    "ms": 2070.052199997008,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 3,
+    "sample": 1,
+    "status": 200,
+    "ms": 2110.185799996543,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 3,
+    "sample": 2,
+    "status": 200,
+    "ms": 4122.901800001273,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 5,
+    "sample": 0,
+    "status": 200,
+    "ms": 2069.2101000022376,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 5,
+    "sample": 1,
+    "status": 200,
+    "ms": 4133.1056999988505,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_undated",
+    "concurrency": 5,
+    "sample": 2,
+    "status": 200,
+    "ms": 2145.991099998355,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 1,
+    "sample": 0,
+    "status": 200,
+    "ms": 2474.0537000034237,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 1,
+    "sample": 1,
+    "status": 200,
+    "ms": 2519.421400000283,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 1,
+    "sample": 2,
+    "status": 200,
+    "ms": 2470.401500002481,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 3,
+    "sample": 0,
+    "status": 200,
+    "ms": 2611.830900001223,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 3,
+    "sample": 1,
+    "status": 200,
+    "ms": 2572.5803000023006,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 3,
+    "sample": 2,
+    "status": 200,
+    "ms": 5174.620999998297,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 5,
+    "sample": 0,
+    "status": 200,
+    "ms": 2462.5711999979103,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 5,
+    "sample": 1,
+    "status": 200,
+    "ms": 2549.490199999127,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "search_dated",
+    "concurrency": 5,
+    "sample": 2,
+    "status": 200,
+    "ms": 4924.961199998506,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 1,
+    "sample": 0,
+    "status": 200,
+    "ms": 1572.2622999965097,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 1,
+    "sample": 1,
+    "status": 200,
+    "ms": 1572.7384999991045,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 1,
+    "sample": 2,
+    "status": 200,
+    "ms": 1602.3151999979746,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 3,
+    "sample": 0,
+    "status": 200,
+    "ms": 1618.0913999996847,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 3,
+    "sample": 1,
+    "status": 200,
+    "ms": 1546.7722000030335,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 3,
+    "sample": 2,
+    "status": 200,
+    "ms": 3101.115400000708,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 5,
+    "sample": 0,
+    "status": 200,
+    "ms": 3103.032400002121,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 5,
+    "sample": 1,
+    "status": 200,
+    "ms": 1565.4319000022952,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 5,
+    "sample": 2,
+    "status": 200,
+    "ms": 1553.2418999937363,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 10,
+    "sample": 0,
+    "status": 200,
+    "ms": 1542.659700004151,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 10,
+    "sample": 1,
+    "status": 200,
+    "ms": 1563.9813999951002,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "public_catalog",
+    "concurrency": 10,
+    "sample": 2,
+    "status": 200,
+    "ms": 3082.0433999979286,
+    "error": null,
+    "size": 2
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 1,
+    "sample": 0,
+    "status": 200,
+    "ms": 1579.2667999994592,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 1,
+    "sample": 1,
+    "status": 200,
+    "ms": 1582.0682000048691,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 1,
+    "sample": 2,
+    "status": 200,
+    "ms": 1554.9817999999505,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 3,
+    "sample": 0,
+    "status": 200,
+    "ms": 1549.016400000255,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 3,
+    "sample": 1,
+    "status": 200,
+    "ms": 1546.584299998358,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 3,
+    "sample": 2,
+    "status": 200,
+    "ms": 2985.229199999594,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 5,
+    "sample": 0,
+    "status": 200,
+    "ms": 1571.557599992957,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 5,
+    "sample": 1,
+    "status": 200,
+    "ms": 3177.7776000017184,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 5,
+    "sample": 2,
+    "status": 200,
+    "ms": 1611.1558000047808,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 10,
+    "sample": 0,
+    "status": 200,
+    "ms": 1588.0925000019488,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 10,
+    "sample": 1,
+    "status": 200,
+    "ms": 1558.8060000009136,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "hotel_detail",
+    "concurrency": 10,
+    "sample": 2,
+    "status": 200,
+    "ms": 3093.4659999984433,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 1,
+    "sample": 0,
+    "status": 200,
+    "ms": 1069.2000999988522,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 1,
+    "sample": 1,
+    "status": 200,
+    "ms": 1055.7472000000416,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 1,
+    "sample": 2,
+    "status": 200,
+    "ms": 1051.6944999981206,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 3,
+    "sample": 0,
+    "status": 200,
+    "ms": 1071.9073000000208,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 3,
+    "sample": 1,
+    "status": 200,
+    "ms": 2129.5687000019825,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 3,
+    "sample": 2,
+    "status": 200,
+    "ms": 1106.761799994274,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 5,
+    "sample": 0,
+    "status": 200,
+    "ms": 1150.2967000051285,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 5,
+    "sample": 1,
+    "status": 200,
+    "ms": 963.2686999975704,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 5,
+    "sample": 2,
+    "status": 200,
+    "ms": 1913.556100000278,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 10,
+    "sample": 0,
+    "status": 200,
+    "ms": 1034.393399997498,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 10,
+    "sample": 1,
+    "status": 200,
+    "ms": 1082.1532999980263,
+    "error": null,
+    "size": null
+  },
+  {
+    "endpoint": "room_availability",
+    "concurrency": 10,
+    "sample": 2,
+    "status": 200,
+    "ms": 2058.6369000011473,
+    "error": null,
+    "size": null
+  }
+]

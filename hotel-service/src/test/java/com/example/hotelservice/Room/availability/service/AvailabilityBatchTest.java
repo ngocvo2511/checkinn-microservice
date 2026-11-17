@@ -36,12 +36,19 @@ class AvailabilityBatchTest {
     final Map<UUID,RoomType> known=new HashMap<>();
 
     @BeforeEach void setup() {
+        when(rooms.findEffectivelyApprovedRoomIds(any())).thenAnswer(c -> new ArrayList<>((java.util.Collection<UUID>)c.getArgument(0)));
         when(rooms.findAllById(any())).thenAnswer(call->{
             List<RoomType> found=new ArrayList<>();
             for(UUID id:(Iterable<UUID>)call.getArgument(0))if(known.containsKey(id))found.add(known.get(id));
             return found;
         });
         when(hotels.findAllById(any())).thenReturn(List.of(parent));
+    }
+    @Test void unapprovedRoomIsZeroWithoutHidingApprovedRoom() {
+        var unapproved=room(10);var approved=room(3);
+        doReturn(List.of(approved.getId())).when(rooms).findEffectivelyApprovedRoomIds(any());
+        assertThat(service.getAvailableRoomCounts(List.of(unapproved.getId(),approved.getId()),start,end))
+                .containsEntry(unapproved.getId(),0).containsEntry(approved.getId(),3);
     }
     RoomType room(Integer total) {
         var room=new RoomType();room.setId(UUID.randomUUID());room.setHotelId(parent.getId());room.setIsActive(true);room.setTotalRooms(total);

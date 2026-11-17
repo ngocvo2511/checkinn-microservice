@@ -13,6 +13,7 @@ class HotelMapperTextTest {
         var m=org.mapstruct.factory.Mappers.getMapper(HotelMapper.class);m.setObjectMapper(json);
         m.roomTypeMapper=mock(com.example.hotelservice.Room.mapper.RoomTypeMapper.class);
         m.hotelPolicyRepository=mock(com.example.hotelservice.Policy.repository.HotelPolicyRepository.class);
+        m.mediaAssetRepository=mock(com.example.hotelservice.MediaAsset.repository.MediaAssetRepository.class);
         m.questionRepository=mock(com.example.hotelservice.Question.repository.QuestionRepository.class);
         m.hotelAmenityCategoryRepository=mock(com.example.hotelservice.Amenity.repository.HotelAmenityCategoryRepository.class);
         m.hotelAmenityRepository=mock(com.example.hotelservice.Amenity.repository.HotelAmenityRepository.class);

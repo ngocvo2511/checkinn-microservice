@@ -1,0 +1,922 @@
+[
+  {
+    "case": "OWNER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER API verify exact synthetic OTP (DB-assisted setup)",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER real Gateway login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER API verify exact synthetic OTP (DB-assisted setup)",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER real Gateway login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER API verify exact synthetic OTP (DB-assisted setup)",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER real Gateway login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER register Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER API verify exact synthetic OTP (DB-assisted setup)",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "CUSTOMER real Gateway login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "FAIL",
+    "httpStatus": 503
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Approve first benchmark room",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Natural expiry unpaid booking created",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Natural expiry idempotent booking replay",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Permanent ADMIN login",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create hotel Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER create room Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "OWNER submit pending inventory",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "ADMIN approve inventory Gateway",
+    "status": "PASS",
+    "httpStatus": 200
+  },
+  {
+    "case": "Concurrent successful booking idempotent retry",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Concurrent fixture cancel",
+    "status": "PASS",
+    "httpStatus": 204
+  },
+  {
+    "case": "Concurrent successful booking idempotent retry",
+    "status": "PASS",
+    "httpStatus": 201
+  },
+  {
+    "case": "Concurrent fixture cancel",
+    "status": "PASS",
+    "httpStatus": 204
+  },
+  {
+    "case": "Concurrent counters released after cancellation",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "Concurrent same-key retries create one booking and one hold",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "Cancel same-key fixture booking",
+    "status": "PASS",
+    "httpStatus": 204
+  },
+  {
+    "case": "Same-key cancellation releases exact one hold",
+    "status": "PASS",
+    "httpStatus": null
+  },
+  {
+    "case": "Natural expiry idempotent booking replay",
+    "status": "PASS",
+    "httpStatus": 201
+  }
+]

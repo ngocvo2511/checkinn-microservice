@@ -1,0 +1,30 @@
+{
+  "before": {
+    "endpoint": "search_undated",
+    "concurrency": 1,
+    "samples": 30,
+    "successful": 29,
+    "errors": 1,
+    "timeouts": 1,
+    "rps": 0.11375773697984344,
+    "p50": 5875.7917000002635,
+    "p95": 15758.243279999439,
+    "p99": 19907.929279999655,
+    "mean": 7541.640075861826,
+    "min": 5335.119499999564,
+    "max": 21236.01729999973
+  },
+  "after": {
+    "status": "BLOCKED",
+    "reason": "Hotel runtime role connection limit; User/Hotel readiness failed after restart and bounded recovery"
+  },
+  "sameFixtureIdsIntended": true,
+  "latencyImprovementClaim": false,
+  "sqlReductionClaimFromHostedAfter": false,
+  "limitations": [
+    "Before has 29 successes/30 attempts, below 30 successful samples",
+    "Only one benchmark cell completed before timeout pressure stop",
+    "No Medium/Larger dataset or Gateway-vs-direct completed comparison",
+    "Natural expiry write used separate March dates during before window; baseline is development diagnostic, not isolated production benchmark"
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "service": "eureka",
+    "exportedLines": 608,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 0,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  },
+  {
+    "service": "gateway",
+    "exportedLines": 227,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 0,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  },
+  {
+    "service": "user",
+    "exportedLines": 1903,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 3,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  },
+  {
+    "service": "auth",
+    "exportedLines": 538,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 0,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  },
+  {
+    "service": "hotel",
+    "exportedLines": 35878,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 4,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  },
+  {
+    "service": "booking",
+    "exportedLines": 11695,
+    "roleLimitErrors": 0,
+    "hikariTimeoutLogOccurrences": 0,
+    "hikariShutdownCompleteOccurrences": 6,
+    "source": "Private console, timestamp bounded from 2026-11-17 08:24 UTC; known secrets/JWT/bcrypt/JDBC URLs redacted"
+  }
+]

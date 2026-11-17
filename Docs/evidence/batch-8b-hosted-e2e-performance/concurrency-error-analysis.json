@@ -1,0 +1,10 @@
+{
+  "exceptionTypes": [
+    "com.zaxxer.hikari.pool.HikariPool.createTimeoutException",
+    "java.sql.SQLTransientConnectionException"
+  ],
+  "poolAcquisitionTimeoutObserved": true,
+  "poolMaximum": 2,
+  "connectionTimeoutMs": 10000,
+  "action": "Stopped further booking load; no pool or transaction-boundary changes"
+}

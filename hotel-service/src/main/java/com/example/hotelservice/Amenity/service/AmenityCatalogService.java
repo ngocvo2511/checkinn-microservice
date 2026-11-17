@@ -153,6 +153,30 @@ public class AmenityCatalogService {
             """,rs->{ result.computeIfAbsent(rs.getObject(1,UUID.class),id->new ArrayList<>()).add(new Code(rs.getString(2),rs.getString(3))); },hotelId);
         return result;
     }
+    /**
+     * Same reviewed-mapping predicate as {@link #effectiveCodes(UUID)} for several hotels in one
+     * statement per 500-ID chunk. Amenity IDs are unique per hotel, so results key by amenity.
+     */
+    @Transactional(readOnly=true)
+    public Map<UUID,List<Code>> effectiveCodesForHotels(Collection<UUID> hotelIds) {
+        Map<UUID,List<Code>> result=new HashMap<>();
+        if(hotelIds==null || hotelIds.isEmpty()) return result;
+        var ids=new ArrayList<>(new LinkedHashSet<>(hotelIds));
+        if(ids.stream().anyMatch(Objects::isNull)) throw new IllegalArgumentException("Hotel IDs are required");
+        for(int offset=0;offset<ids.size();offset+=500) {
+            var chunk=ids.subList(offset,Math.min(offset+500,ids.size()));
+            jdbc.query("""
+                SELECT a.id,k.code,k.label FROM amenity_mapping_states s
+                JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='APPROVED' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id
+                JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active
+                JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active
+                JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id
+                JOIN amenity_catalog k ON k.code=rc.code AND k.active
+                """+" WHERE s.hotel_id IN ("+String.join(",",Collections.nCopies(chunk.size(),"?"))+") ORDER BY a.id,k.code",
+                rs->{ result.computeIfAbsent(rs.getObject(1,UUID.class),id->new ArrayList<>()).add(new Code(rs.getString(2),rs.getString(3))); },chunk.toArray());
+        }
+        return result;
+    }
     public boolean matches(UUID hotelId, Collection<String> codes) {
         if(codes==null || codes.isEmpty()) return true;
         var available=new HashSet<String>(); effectiveCodes(hotelId).values().forEach(items->items.forEach(c->available.add(c.code())));

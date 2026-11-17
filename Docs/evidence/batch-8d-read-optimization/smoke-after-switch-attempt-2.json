@@ -1,0 +1,33 @@
+[
+  {
+    "case": "ADMIN real Gateway login",
+    "httpStatus": 200,
+    "passed": true
+  },
+  {
+    "case": "ADMIN queue contract",
+    "httpStatus": 503,
+    "responseType": "NoneType",
+    "passed": false
+  },
+  {
+    "case": "hotel search",
+    "httpStatus": 503,
+    "passed": false
+  },
+  {
+    "case": "booking authorization",
+    "httpStatus": 401,
+    "passed": true
+  },
+  {
+    "case": "Eureka registrations",
+    "registered": [
+      "BOOKING-SERVICE",
+      "API-GATEWAY",
+      "AUTH-SERVICE",
+      "USER-SERVICE"
+    ],
+    "passed": false
+  }
+]

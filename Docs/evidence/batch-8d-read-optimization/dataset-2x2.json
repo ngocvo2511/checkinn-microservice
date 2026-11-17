@@ -1,0 +1,48 @@
+{
+  "createdAtUtc": "2026-11-17T12:09:48.592209+00:00",
+  "dataset": {
+    "hotels": [
+      {
+        "id": "ce8e8e37-377a-48e6-8b85-7c4abaefc2ef",
+        "ownerId": "0f155fda-f339-4496-b41c-da5a971e906d"
+      },
+      {
+        "id": "90317a8f-e9fa-4f9e-b56a-868527de1727",
+        "ownerId": "b43fbb79-0295-42de-beb3-70445e792f96"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "df3270bd-31f7-4d03-af73-20ad42fe6c59",
+        "hotelId": "ce8e8e37-377a-48e6-8b85-7c4abaefc2ef",
+        "ownerId": "0f155fda-f339-4496-b41c-da5a971e906d"
+      },
+      {
+        "id": "92985a19-a2e7-446e-b3b7-fc8a19792ad9",
+        "hotelId": "ce8e8e37-377a-48e6-8b85-7c4abaefc2ef",
+        "ownerId": "0f155fda-f339-4496-b41c-da5a971e906d"
+      },
+      {
+        "id": "6776ba82-f907-4840-a923-426932b3e2c6",
+        "hotelId": "90317a8f-e9fa-4f9e-b56a-868527de1727",
+        "ownerId": "b43fbb79-0295-42de-beb3-70445e792f96"
+      },
+      {
+        "id": "d0fd6ed9-0840-4b93-b670-b6cb41752450",
+        "hotelId": "90317a8f-e9fa-4f9e-b56a-868527de1727",
+        "ownerId": "b43fbb79-0295-42de-beb3-70445e792f96"
+      }
+    ],
+    "city": "04365ef7-059b-5570-9309-916ec2974542"
+  },
+  "shape": {
+    "hotels": 2,
+    "rooms": 4,
+    "perHotel": [
+      2,
+      2
+    ],
+    "pendingRoomIndex": 0,
+    "publication": "SQL synthetic exact-ID setup; not hotel-publication API acceptance"
+  }
+}

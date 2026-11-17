@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-16",
+  "backend_branch": "feat/supabase-dev-runtime",
+  "backend_head": "ea46f3cb7168039b0160d05a05822aa906a81a17",
+  "frontend_branch": "fix/place-card-distance-visibility",
+  "frontend_head": "ae40b4e64dfcce6b19a042a954909d9d148646d6",
+  "backend_staged": [],
+  "backend_unstaged": [
+    ".idea/compiler.xml",
+    ".idea/encodings.xml"
+  ],
+  "backend_untracked": [],
+  "frontend_staged": [],
+  "frontend_unstaged": [],
+  "frontend_untracked": [],
+  "hosted_access": "NONE in Batch7",
+  "canonical_v1": [
+    {
+      "path": "booking-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql",
+      "sha256": "1D6C3B49FE1C70E04227A2E8C7A583AAEF6DC3CEC771402C8C083AC67A5CFAD2"
+    },
+    {
+      "path": "hotel-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql",
+      "sha256": "0D1DD1B726D1E22758CE098BCA5B2EEFD5ED20DEF0439A7CDDF5D44A0E190C4A"
+    },
+    {
+      "path": "regulations-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql",
+      "sha256": "F90AAF2E94EF7FDF15DF1A43B48D60F3CF003AFA51287E311996B539A1A78FAC"
+    },
+    {
+      "path": "revenue-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql",
+      "sha256": "BBBC05F29BDFD8282E5AF5152B75A375787BB1FE19611E02774E4D53726C8223"
+    },
+    {
+      "path": "user-service\\src\\main\\resources\\db\\canonical\\V1__canonical_schema.sql",
+      "sha256": "EC1311005B867250CA49AFD1D7FDFA479C0E2064C99DF6E8BB8868A4222B5D1D"
+    }
+  ],
+  "protected_ide": [
+    {
+      "path": "compiler.xml",
+      "sha256": "AE717B90085044C80880A73483C15A76A6A3888ADF41D7FE488F2EF75F38DF7E"
+    },
+    {
+      "path": "encodings.xml",
+      "sha256": "5BD9C9B2854A3BE824CF6A3910D7257F1228F37F8EAB7D0A95F7E681F7CB4B2A"
+    }
+  ]
+}

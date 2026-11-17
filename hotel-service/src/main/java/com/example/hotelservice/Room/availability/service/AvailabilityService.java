@@ -55,6 +55,7 @@ public class AvailabilityService {
         RoomType roomType = loadRoomType(roomTypeId);
         requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
+        requireInventoryApproved(roomType.getId());
 
         long peakOccupied = requirePeak(roomAvailabilityRepository.findLoadForStay(roomTypeId, checkIn, checkOut));
         return (int) Math.max(0L, Math.min(totalRooms, (long) totalRooms - peakOccupied));
@@ -85,9 +86,11 @@ public class AvailabilityService {
                     .collect(Collectors.toMap(
                             OccupiedRoom::getRoomTypeId,
                             this::requirePeak));
+            var approved = new HashSet<>(roomTypeRepository.findEffectivelyApprovedRoomIds(chunk));
             for (var id:chunk) {
                 int total=requireTotalRooms(byId.get(id));
                 long peak=peaks.getOrDefault(id,0L);
+                if (!approved.contains(id)) { result.put(id,0); continue; }
                 result.put(id,(int)Math.max(0L,Math.min(total,(long)total-peak)));
             }
         }
@@ -118,6 +121,7 @@ public class AvailabilityService {
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại phòng"));
         requirePublished(roomType);
         int totalRooms = requireTotalRooms(roomType);
+        requireInventoryApproved(roomType.getId());
 
         List<LocalDate> dates = expandDates(request.checkInDate(), request.checkOutDate());
 
@@ -254,6 +258,27 @@ public class AvailabilityService {
         if (hotel == null || !Boolean.TRUE.equals(room.getIsActive()) || !Boolean.TRUE.equals(hotel.getIsActive())
                 || hotel.getApprovedStatus() != com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED)
             throw new EntityNotFoundException("Không tìm thấy loại phòng");
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isInventoryApproved(UUID roomId) {
+        return roomTypeRepository.hasEffectiveInventoryApproval(roomId);
+    }
+
+    /** Read snapshot only; new holds still recheck the authoritative predicate after locking. */
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
+    public java.util.Set<UUID> approvedRoomIds(List<UUID> roomIds) {
+        if (roomIds == null || roomIds.stream().anyMatch(Objects::isNull))
+            throw new IllegalArgumentException("Room IDs are required");
+        var ids = new ArrayList<>(new LinkedHashSet<>(roomIds));
+        var approved = new HashSet<UUID>();
+        for (int offset = 0; offset < ids.size(); offset += READ_BATCH_SIZE)
+            approved.addAll(roomTypeRepository.findEffectivelyApprovedRoomIds(ids.subList(offset, Math.min(offset + READ_BATCH_SIZE, ids.size()))));
+        return java.util.Set.copyOf(approved);
+    }
+
+    private void requireInventoryApproved(UUID roomId) {
+        if (!isInventoryApproved(roomId)) throw new InventoryApprovalRequiredException();
     }
 
     private int requireTotalRooms(RoomType roomType) {

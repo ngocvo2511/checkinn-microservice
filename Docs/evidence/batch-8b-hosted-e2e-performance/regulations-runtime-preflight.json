@@ -1,0 +1,9 @@
+{
+  "owner": "regulations",
+  "exitCode": 0,
+  "safeOutput": [
+    "regulations CONTROL_PLANE_IDENTITY_PASS",
+    "regulations CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "regulations RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ]
+}

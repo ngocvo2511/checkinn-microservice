@@ -1,0 +1,25 @@
+{
+  "mainSourceTouched": [
+    "hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+    "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java"
+  ],
+  "existingTestsUpdated": [
+    "hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java",
+    "hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java"
+  ],
+  "newTools": [
+    "tools/batch8b-acceptance.py",
+    "tools/batch8b-benchmark.py",
+    "tools/batch8b-native.py",
+    "tools/batch8b-finalize.py"
+  ],
+  "docs": "New Batch8B report/evidence; append checkpoint to plan/audit. Historical Batch8 untouched.",
+  "note": "Pre-existing source/test changes retained. Overall git diff includes prior batches and must not be attributed entirely to Batch8B.",
+  "frontendChangedByBatch": false,
+  "pythonSyntax": "PASS",
+  "gitDiffCheckExit": 0
+}
