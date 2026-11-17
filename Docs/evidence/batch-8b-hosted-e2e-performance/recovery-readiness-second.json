@@ -1,0 +1,15 @@
+[
+  {
+    "service": "user",
+    "error": "URLError"
+  },
+  {
+    "service": "hotel",
+    "error": "URLError"
+  },
+  {
+    "service": "booking",
+    "httpStatus": 200,
+    "status": "UP"
+  }
+]

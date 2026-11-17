@@ -111,9 +111,12 @@ public class Hotel {
     // ===================
     // HOTEL 1 - N ROOMTYPE
     // ===================
+        // Batch8D: one batched SELECT initializes the room collections of all hotels in the
+        // persistence context instead of one SELECT per hotel (read-only; no eager fetch).
         @OneToMany(fetch = FetchType.LAZY)
         @JoinColumn(name = "hotel_id", referencedColumnName = "id", insertable = false, updatable = false,
             foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+        @org.hibernate.annotations.BatchSize(size = 100)
         private List<RoomType> roomTypes;
 
 

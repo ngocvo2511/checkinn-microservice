@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "atUtc": "2026-11-17T14:54:36.803760+00:00",
+  "label": "final-admin-check",
+  "smoke": "smoke-final-admin-check-attempt-0.json",
+  "budget": [
+    {
+      "owner": "user",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    },
+    {
+      "owner": "hotel",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    },
+    {
+      "owner": "booking",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    }
+  ],
+  "hotelArtifact": "after"
+}

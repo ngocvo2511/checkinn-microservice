@@ -1,0 +1,9 @@
+{
+  "owner": "booking",
+  "exitCode": 0,
+  "safeOutput": [
+    "booking CONTROL_PLANE_IDENTITY_PASS",
+    "booking CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "booking RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ]
+}

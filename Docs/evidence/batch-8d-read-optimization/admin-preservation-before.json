@@ -1,0 +1,11 @@
+{
+  "identityHmac": "fa7be80b1bc27b2bb506ad6c81eaa4a2a71002e16b88e9d66d83e2a5dd74521f",
+  "role": "ADMIN",
+  "active": true,
+  "exists": true,
+  "completeUsersTableDigest": {
+    "count": 3,
+    "digest": "1180ebfdd5aad61ac52755c7eb93fd46875ea02d7eec1615998c527d76354a7c"
+  },
+  "note": "HMAC over complete rows (includes password column) without exporting it"
+}

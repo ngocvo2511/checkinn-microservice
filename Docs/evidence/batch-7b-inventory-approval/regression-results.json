@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-16 Asia/Saigon",
+  "finalStatus": "LOCAL IMPLEMENTATION DONE / HOSTED ACCEPTANCE NOT VERIFIED",
+  "overlapPolicy": "Only final full suites counted; focused/earlier attempts excluded. Five native tests executed separately from opt-in skips. No aggregate claiming skips as pass.",
+  "hotel": {
+    "command": "mvn.cmd -o -B -ntp -pl hotel-service '-Dtest=*,!HotelServiceApplicationTests' test",
+    "discovered": 429,
+    "pass": 396,
+    "fail": 0,
+    "error": 0,
+    "skipped": 33,
+    "log": ".local/batch7b-hotel-final-complete.log",
+    "logSha256": "4e00954406f3787f1798d4b62556e368323aaf6f90cc7f7a84d923474abccfc1"
+  },
+  "booking": {
+    "command": "mvn.cmd -o -B -ntp -pl booking-service '-Dtest=*,!BookingServiceApplicationTests' test",
+    "discovered": 289,
+    "pass": 285,
+    "fail": 0,
+    "error": 0,
+    "skipped": 4,
+    "log": ".local/batch7b-booking-final.log",
+    "logSha256": "387e75624bd971904e58a8409229bd375f8354922eb1bfd586253f3a9dca383a"
+  },
+  "native": {
+    "command": "python tools/batch7b-schema-verify.py",
+    "pass": 5,
+    "fail": 0,
+    "skipped": 0,
+    "catalogMatches": 5,
+    "clusterStopped": true
+  },
+  "frontend": {
+    "command": "npm.cmd run test:regression",
+    "pass": 214,
+    "fail": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "command": "npx.cmd playwright test tests/browser/inventory-review.spec.ts tests/browser/new-room-facts.spec.ts tests/browser/unknown-room-facts.spec.ts tests/browser/search-lifecycle.spec.ts",
+    "pass": 28,
+    "fail": 0,
+    "skipped": 0,
+    "syntheticApi": true
+  },
+  "typecheck": {
+    "command": "npx.cmd tsc --noEmit",
+    "status": "PASS"
+  },
+  "build": {
+    "command": "npm.cmd run build",
+    "status": "PASS",
+    "warnings": [
+      "Existing middleware convention deprecation"
+    ]
+  },
+  "gateway": {
+    "status": "NOT RUN / NO SUITE",
+    "attemptedCommand": "mvn.cmd -o -B -ntp -pl api-gateway '-Dtest=*,!ApiGatewayApplicationTests' test",
+    "commandResult": "FAIL: no tests matching; src/test absent",
+    "fullRunningGatewayAcceptance": "NOT VERIFIED",
+    "serviceAuthorization": "PASS in Hotel HTTP/JWT and gRPC suites"
+  },
+  "excluded": [
+    "HotelServiceApplicationTests",
+    "BookingServiceApplicationTests"
+  ],
+  "earlierFailedAttempts": [
+    {
+      "log": ".local/batch7b-hotel.log",
+      "reason": "New test generic type inference ambiguous; corrected explicit type arguments"
+    },
+    {
+      "log": ".local/batch7b-hotel-final.log",
+      "reason": "Two old no-interactions expectations plus one public-room fixture not adapted to approval reads; final suites rerun"
+    },
+    {
+      "log": ".local/batch7b-gateway.log",
+      "reason": "No test suite exists, not reported PASS"
+    }
+  ],
+  "hosted": {
+    "reads": 0,
+    "writes": 0,
+    "fixtures": 0,
+    "cleanup": "NOT_APPLICABLE",
+    "acceptance": "NOT VERIFIED"
+  }
+}

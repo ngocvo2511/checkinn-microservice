@@ -1,0 +1,52 @@
+{
+  "user": [
+    {
+      "table": "loyalty_commands",
+      "count": 2
+    },
+    {
+      "table": "loyalty_points",
+      "count": 1
+    },
+    {
+      "table": "points_reservations",
+      "count": 0
+    },
+    {
+      "table": "points_transactions",
+      "count": 0
+    }
+  ],
+  "booking": [
+    {
+      "table": "payments",
+      "count": 0
+    },
+    {
+      "table": "refund_requests",
+      "count": 0
+    },
+    {
+      "table": "manual_refund_audit",
+      "count": 0
+    },
+    {
+      "table": "manual_refund_executions",
+      "count": 0
+    }
+  ],
+  "revenue": [
+    {
+      "table": "booking_status_records",
+      "count": 0
+    },
+    {
+      "table": "payment_records",
+      "count": 0
+    },
+    {
+      "table": "revenue_cash_transactions",
+      "count": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PARTIAL",
+  "reportSha256": "756c05c13a67fa35fe0d559c1a1ecd19de1bb8da4578aea4c35aa52c35a4b246",
+  "manifestIds": 48,
+  "deletedRows": 47,
+  "remainingFixtureIds": 0,
+  "protectedAdminPreserved": true,
+  "schemaHistoryUnchangedTargets": 5,
+  "existingRowDigestMatches": 5,
+  "unitAndServiceExecutedPass": 838,
+  "nativeExecutedPass": 5,
+  "optionalSkipped": 41,
+  "hostedAfterBenchmark": "BLOCKED",
+  "noPerformanceImprovementClaim": true,
+  "noHostedDDL": true,
+  "noProviderCalls": true,
+  "noGitIndexOrHeadChanges": true,
+  "runtimeProcesses": 0
+}

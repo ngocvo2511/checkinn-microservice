@@ -1,0 +1,9 @@
+{
+  "owner": "user",
+  "exitCode": 0,
+  "safeOutput": [
+    "user CONTROL_PLANE_IDENTITY_PASS",
+    "user CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "user RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ]
+}

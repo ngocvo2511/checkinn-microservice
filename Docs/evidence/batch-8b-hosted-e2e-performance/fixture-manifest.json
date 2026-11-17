@@ -1,0 +1,646 @@
+{
+  "testRunId": "batch8b-20261117T015015Z-e3b481f8",
+  "records": [
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "f35a8ecd-ed7b-4e13-a3f3-acf96560e736",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Notification OTP to local Mailpit"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 15
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "f01c387f-7734-4448-bb90-de4851060dd8",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 14
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "e8e9ee57-4de4-442b-a51d-a191d26aaf43",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 13
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "6f8f67d1-4061-423c-8105-0993ff4e8790",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 13
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "767a3fd2-36a7-49f2-b5a2-4e56cb71f70c",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Notification OTP to local Mailpit"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 15
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "7dafa5e7-4e91-4a25-8391-c6aa54f8ecec",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 14
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "fe1322fb-c666-4436-8c35-78ad7a8e9111",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 13
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Notification OTP to local Mailpit"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 15
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "86b76f10-299b-4620-854d-5b31b1de8f7c",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 14
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "030cf51c-f08d-4455-9e62-60811251d899",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 13
+    },
+    {
+      "owner": "user",
+      "table": "users",
+      "key": "id",
+      "id": "eed69de4-550c-425b-a6c0-e7d7ddf2ab2f",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "user_profiles",
+        "otps",
+        "Notification OTP to local Mailpit"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 15
+    },
+    {
+      "owner": "user",
+      "table": "user_profiles",
+      "key": "id",
+      "id": "59004bd8-2d4f-40fe-82f9-629267a24966",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 14
+    },
+    {
+      "owner": "user",
+      "table": "otps",
+      "key": "id",
+      "id": "c40f8e93-40b5-4239-a439-5d56e857ae39",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 13
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "c71802a6-1498-4926-98cc-7035e74419d1",
+      "parents": [
+        "f35a8ecd-ed7b-4e13-a3f3-acf96560e736"
+      ],
+      "scenario": "OWNER create API; exact-ID SQL synthetic publication only, no document/provider acceptance",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 12
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "2a4145be-9fd3-49ab-ae3b-1e8bfed7add8",
+      "parents": [
+        "c71802a6-1498-4926-98cc-7035e74419d1"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 11
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "d08e7c42-1210-4684-8c63-4592dcda33e4",
+      "parents": [
+        "2a4145be-9fd3-49ab-ae3b-1e8bfed7add8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "Effective stock applied only by real ADMIN review API; ADMIN protected and not fixture"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 10
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "2a4145be-9fd3-49ab-ae3b-1e8bfed7add8",
+      "parents": [
+        "2a4145be-9fd3-49ab-ae3b-1e8bfed7add8",
+        "d08e7c42-1210-4684-8c63-4592dcda33e4"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 9
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "ba8b132b-762c-48a2-bf20-5f046689cfef",
+      "parents": [
+        "c71802a6-1498-4926-98cc-7035e74419d1"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 11
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "26dbde92-7e68-4997-b85f-71e3d3a929ad",
+      "parents": [
+        "ba8b132b-762c-48a2-bf20-5f046689cfef"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "Effective stock applied only by real ADMIN review API; ADMIN protected and not fixture"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 10
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "ba8b132b-762c-48a2-bf20-5f046689cfef",
+      "parents": [
+        "ba8b132b-762c-48a2-bf20-5f046689cfef",
+        "26dbde92-7e68-4997-b85f-71e3d3a929ad"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 9
+    },
+    {
+      "owner": "hotel",
+      "table": "hotels",
+      "key": "id",
+      "id": "e7913e2e-dbf7-4dcd-a203-7a6d2b92c79f",
+      "parents": [
+        "767a3fd2-36a7-49f2-b5a2-4e56cb71f70c"
+      ],
+      "scenario": "OWNER create API; exact-ID SQL synthetic publication only, no document/provider acceptance",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 12
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "d30472e5-d69e-421a-9451-f34a470d29aa",
+      "parents": [
+        "e7913e2e-dbf7-4dcd-a203-7a6d2b92c79f"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 11
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "77e4f526-2bc9-498c-a1d0-be298d279b68",
+      "parents": [
+        "d30472e5-d69e-421a-9451-f34a470d29aa"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "Effective stock applied only by real ADMIN review API; ADMIN protected and not fixture"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 10
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "d30472e5-d69e-421a-9451-f34a470d29aa",
+      "parents": [
+        "d30472e5-d69e-421a-9451-f34a470d29aa",
+        "77e4f526-2bc9-498c-a1d0-be298d279b68"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 9
+    },
+    {
+      "owner": "hotel",
+      "table": "room_types",
+      "key": "id",
+      "id": "95c8afc1-d93a-44fd-8024-09554fc5cfc7",
+      "parents": [
+        "e7913e2e-dbf7-4dcd-a203-7a6d2b92c79f"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 11
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "5d15a1b5-e41a-409a-8604-c81e8049a17a",
+      "parents": [
+        "95c8afc1-d93a-44fd-8024-09554fc5cfc7"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "Effective stock applied only by real ADMIN review API; ADMIN protected and not fixture"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 10
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_states",
+      "key": "room_id",
+      "id": "95c8afc1-d93a-44fd-8024-09554fc5cfc7",
+      "parents": [
+        "95c8afc1-d93a-44fd-8024-09554fc5cfc7",
+        "5d15a1b5-e41a-409a-8604-c81e8049a17a"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 9
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "9b7023f4-db70-378e-9e42-1dbf8650523f",
+      "parents": [
+        "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+        "c71802a6-1498-4926-98cc-7035e74419d1",
+        "2a4145be-9fd3-49ab-ae3b-1e8bfed7add8"
+      ],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "booking_items",
+        "room_holds",
+        "room_availability",
+        "booking_event_outbox",
+        "revenue.booking.queue; worker not started"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 6
+    },
+    {
+      "owner": "hotel",
+      "table": "room_availability",
+      "key": "id",
+      "id": "8fc137ad-42be-4f87-a9f4-e3dc942eb297",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 8
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "1061b187-ba74-45e5-a0b0-2825e9cea506",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 7
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "434ccda5-920d-4ad1-bf97-9a792b0f222e",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 5
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "707d96f0-518b-4a3b-a450-d82655caf8f3",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "8688832d-dbcc-3e7b-8396-0218bfd0ae1e",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "booking_items",
+        "room_holds",
+        "room_availability",
+        "booking_event_outbox",
+        "revenue.booking.queue; worker not started"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 6
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "5c59c558-d603-4e70-8b0a-56257a9b5ea4",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 7
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "e5b84a0a-a3b9-4f97-8149-4c695fb11e0e",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 5
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "93e0e59f-a348-49b3-a3ca-cde475bc1284",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "hotel",
+      "table": "room_inventory_review_requests",
+      "key": "id",
+      "id": "3273df9d-2978-4b31-8c0c-000b2b7330dc",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [
+        "Effective stock applied only by real ADMIN review API; ADMIN protected and not fixture"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 10
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "47c98d5d-6f9a-4f86-a8e6-4aa7f3280ee1",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "857a6bd5-6117-4c21-938d-f83dc68eb2b8",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "booking",
+      "table": "bookings",
+      "key": "id",
+      "id": "20a95387-b310-3d1a-9d14-b852f8440662",
+      "parents": [
+        "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+        "ba8b132b-762c-48a2-bf20-5f046689cfef"
+      ],
+      "scenario": "Natural hold expiry, distinct benchmark dates",
+      "asyncEffects": [
+        "booking_items",
+        "room_holds",
+        "room_availability",
+        "booking_event_outbox",
+        "revenue.booking.queue; worker not started"
+      ],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 6
+    },
+    {
+      "owner": "hotel",
+      "table": "room_availability",
+      "key": "id",
+      "id": "ccb7dde9-6707-4c2f-8108-c2b88df81d37",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 8
+    },
+    {
+      "owner": "hotel",
+      "table": "room_holds",
+      "key": "id",
+      "id": "f215b564-f7f7-4216-b41c-5a89270a91dd",
+      "parents": [],
+      "scenario": "Discovered exact child PK of manifested fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 7
+    },
+    {
+      "owner": "booking",
+      "table": "booking_items",
+      "key": "id",
+      "id": "c5d12fa1-9d40-4a05-aabb-4de9ac4b7db7",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 5
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "4965ef86-d996-4b1e-ae9c-4543a473ddb2",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "booking",
+      "table": "booking_event_outbox",
+      "key": "id",
+      "id": "e93cf840-9a7b-4fae-8f21-dc34b9397d10",
+      "parents": [],
+      "scenario": "API fixture",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 4
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_commands",
+      "key": "command_key",
+      "id": "9b7023f4-db70-378e-9e42-1dbf8650523f|CANCEL",
+      "parents": [
+        "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+        "9b7023f4-db70-378e-9e42-1dbf8650523f"
+      ],
+      "scenario": "Unpaid cancellation: zero-point command receipt",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 0
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_commands",
+      "key": "command_key",
+      "id": "8688832d-dbcc-3e7b-8396-0218bfd0ae1e|CANCEL",
+      "parents": [
+        "7ef90796-ed73-4563-8e5e-8b01d40a9bea",
+        "8688832d-dbcc-3e7b-8396-0218bfd0ae1e"
+      ],
+      "scenario": "Unpaid cancellation: zero-point command receipt",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 0
+    },
+    {
+      "owner": "user",
+      "table": "loyalty_points",
+      "key": "id",
+      "id": "2d7a368b-06dc-49e5-8649-d95f95db2c98",
+      "parents": [
+        "7ef90796-ed73-4563-8e5e-8b01d40a9bea"
+      ],
+      "scenario": "Unpaid cancellation: zero-point synthetic account",
+      "asyncEffects": [],
+      "cleanupVerification": "ABSENT",
+      "cleanupOrderIndex": 3
+    }
+  ],
+  "writesAllowed": false,
+  "protectedRecords": [],
+  "protectedAdminId": "65061b93-fee0-4b44-b5f6-6ad09341b4e2",
+  "cleanupOrder": [
+    "loyalty_commands",
+    "points_transactions",
+    "points_reservations",
+    "loyalty_points",
+    "booking_event_outbox",
+    "booking_items",
+    "bookings",
+    "room_holds",
+    "room_availability",
+    "room_inventory_review_states",
+    "room_inventory_review_requests",
+    "room_types",
+    "hotels",
+    "otps",
+    "user_profiles",
+    "users"
+  ],
+  "cleanupStatus": "DONE"
+}

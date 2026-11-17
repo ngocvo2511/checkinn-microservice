@@ -36,6 +36,21 @@ public class HotelOfferSearchService {
         return availability.getAvailableRoomCounts(List.copyOf(ids),criteria.checkIn(),criteria.checkOut());
     }
 
+    /**
+     * Undated searches: one effective-approval read for the eligible rooms of all hotels in the
+     * response, instead of one per hotel. Dated searches use the availability snapshot instead.
+     */
+    public java.util.Set<UUID> approvalFor(List<HotelResponse> hotels, HotelOfferCriteria criteria) {
+        criteria.validate();
+        if (criteria.checkIn() != null) return java.util.Set.of();
+        var ids=new java.util.LinkedHashSet<UUID>();
+        for(var hotel:hotels)for(var room:eligibleRooms(hotel,criteria)) {
+            requireInventory(room);
+            ids.add(room.id());
+        }
+        return ids.isEmpty() ? java.util.Set.of() : availability.approvedRoomIds(List.copyOf(ids));
+    }
+
     private List<RoomTypeResponse> eligibleRooms(HotelResponse hotel, HotelOfferCriteria criteria) {
         criteria.validate();
         if (hotel.roomTypes() == null) return List.of();
@@ -54,13 +69,27 @@ public class HotelOfferSearchService {
     }
 
     public Optional<RoomOffer> match(HotelResponse hotel, HotelOfferCriteria criteria, Map<UUID,Integer> snapshot) {
-        return eligibleRooms(hotel,criteria).stream()
+        return match(hotel,criteria,snapshot,null);
+    }
+
+    /** {@code approvedSnapshot} must come from {@link #approvalFor} in the same request; null reads it now. */
+    public Optional<RoomOffer> match(HotelResponse hotel, HotelOfferCriteria criteria, Map<UUID,Integer> snapshot,
+                                     java.util.Set<UUID> approvedSnapshot) {
+        var eligible = eligibleRooms(hotel,criteria);
+        if (eligible.isEmpty()) return Optional.empty();
+        eligible.forEach(this::requireInventory);
+        var ids = eligible.stream().map(RoomTypeResponse::id).toList();
+        var approved = criteria.checkIn() != null ? java.util.Set.<UUID>of()
+                : approvedSnapshot != null ? approvedSnapshot : availability.approvedRoomIds(ids);
+        var counts = criteria.checkIn() == null ? null : snapshot == null
+                ? availability.getAvailableRoomCounts(ids, criteria.checkIn(), criteria.checkOut()) : snapshot;
+        return eligible.stream()
             .map(r -> {
                 requireInventory(r);
+                if (criteria.checkIn() == null && !approved.contains(r.id())) return null;
                 Integer count = null;
                 if (criteria.checkIn() != null) {
-                    if (snapshot == null) count = availability.getAvailableRoomCount(r.id(),criteria.checkIn(),criteria.checkOut());
-                    else count = snapshot.get(r.id());
+                    count = counts.get(r.id());
                 }
                 if (criteria.checkIn() != null && (count == null || count < 0))
                     throw new IllegalStateException("Availability snapshot is incomplete");

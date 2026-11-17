@@ -1,0 +1,9 @@
+{
+  "status": "PASS_SCOPED",
+  "publicTriggers": 0,
+  "foreignKeys": "Canonical FK catalog reviewed; review states deleted before requests; user profiles before users; booking items/outbox before bookings",
+  "workers": "Revenue/Regulations/Media not started. Notification local Mailpit only. Booking/Hotel/User scheduled recovery assessed; baseline has no bookings/holds/loyalty reservations. Stop owned apps before cleanup.",
+  "financialScope": "No payments/refunds created; no receipt/ledger scenario. Only unpaid bookings and cancellable holds.",
+  "publicationLimitation": "Hotel API publication requires Storage documents. Synthetic SQL publication setup is explicitly separate from API publication acceptance.",
+  "cleanup": "Enumerate exact PKs of fixture parents and descendants; expected count guarded DELETE; no wildcard or sequence reset"
+}

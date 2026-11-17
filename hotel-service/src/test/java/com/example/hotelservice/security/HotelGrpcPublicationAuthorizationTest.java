@@ -15,6 +15,16 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.UUID;
 
 class HotelGrpcPublicationAuthorizationTest {
+    @org.junit.jupiter.api.Test @SuppressWarnings({"unchecked","rawtypes"})
+    void unapprovedRoomIsFailedPreconditionWithoutPrivateEvidenceOrMediaLookup() {
+        var hotels=mock(HotelService.class);var rooms=mock(RoomTypeService.class);var media=mock(MediaService.class);
+        var server=new HotelGrpcServiceImpl(hotels,rooms,media,new ObjectMapper());
+        var observer=mock(StreamObserver.class);UUID id=UUID.randomUUID();
+        when(rooms.getPublicById(id)).thenThrow(new com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException());
+        server.getRoomTypeById(GetRoomTypeByIdRequest.newBuilder().setRoomTypeId(id.toString()).build(),observer);
+        verify(observer).onError(argThat(error->Status.fromThrowable((Throwable)error).getCode()==Status.Code.FAILED_PRECONDITION));
+        verify(observer,never()).onNext(any());verifyNoInteractions(media);
+    }
     @ParameterizedTest @ValueSource(strings = {"hotel", "rooms", "room"})
     @SuppressWarnings({"unchecked", "rawtypes"})
     void hiddenCatalogUsesNotFoundWithoutMediaLookup(String method) {

@@ -1,0 +1,67 @@
+[
+  {
+    "endpoint": "hotel_detail",
+    "attempts": 30,
+    "successful": 30,
+    "errors": 0,
+    "mean": 1591.445629999483,
+    "p50": 1557.7593499983777,
+    "p95": 1787.4226700001598,
+    "p99": 1823.5354999983247,
+    "min": 1531.4670999978262,
+    "max": 1830.6955999978527,
+    "scope": "Serial direct window; wall throughput not recorded, do not derive pure Gateway overhead"
+  },
+  {
+    "endpoint": "public_catalog",
+    "attempts": 30,
+    "successful": 30,
+    "errors": 0,
+    "mean": 2902.7525900003334,
+    "p50": 2870.063399999708,
+    "p95": 3156.731410001339,
+    "p99": 3180.446282001576,
+    "min": 2830.8913000000757,
+    "max": 3189.9363000011363,
+    "scope": "Serial direct window; wall throughput not recorded, do not derive pure Gateway overhead"
+  },
+  {
+    "endpoint": "room_availability",
+    "attempts": 30,
+    "successful": 30,
+    "errors": 0,
+    "mean": 995.2694700002515,
+    "p50": 969.1181500002131,
+    "p95": 1148.2155000016064,
+    "p99": 1152.2610720014563,
+    "min": 944.4352999998955,
+    "max": 1153.8135000009788,
+    "scope": "Serial direct window; wall throughput not recorded, do not derive pure Gateway overhead"
+  },
+  {
+    "endpoint": "search_dated",
+    "attempts": 30,
+    "successful": 30,
+    "errors": 0,
+    "mean": 4099.2877800000615,
+    "p50": 4032.8807000005327,
+    "p95": 4387.727484996867,
+    "p99": 4405.468840998838,
+    "min": 4000.8918000021367,
+    "max": 4410.229799999797,
+    "scope": "Serial direct window; wall throughput not recorded, do not derive pure Gateway overhead"
+  },
+  {
+    "endpoint": "search_undated",
+    "attempts": 30,
+    "successful": 30,
+    "errors": 0,
+    "mean": 3405.372856667115,
+    "p50": 3319.2899500008934,
+    "p95": 3636.6973149990367,
+    "p99": 4647.517355001183,
+    "min": 3287.18310000113,
+    "max": 5039.9223000022175,
+    "scope": "Serial direct window; wall throughput not recorded, do not derive pure Gateway overhead"
+  }
+]

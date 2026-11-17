@@ -120,12 +120,15 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         RoomType room = getById(roomTypeId);
         requirePublishedHotel(room.getHotelId());
         if (!Boolean.TRUE.equals(room.getIsActive())) throw new EntityNotFoundException("Không tìm thấy loại phòng");
+        if (!roomTypeRepository.hasEffectiveInventoryApproval(roomTypeId))
+            throw new com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException();
         return room;
     }
 
     @Override public List<RoomType> getPublicByHotel(UUID hotelId) {
         requirePublishedHotel(hotelId);
-        return getByHotel(hotelId).stream().filter(room -> Boolean.TRUE.equals(room.getIsActive())).toList();
+        return getByHotel(hotelId).stream().filter(room -> Boolean.TRUE.equals(room.getIsActive()))
+                .filter(room -> roomTypeRepository.hasEffectiveInventoryApproval(room.getId())).toList();
     }
 
     @Override public RoomType getPreviewById(UUID roomTypeId, UUID actorId, boolean admin) {

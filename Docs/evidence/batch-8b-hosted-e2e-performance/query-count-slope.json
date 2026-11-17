@@ -1,0 +1,53 @@
+{
+  "small2x2": {
+    "search_undated": {
+      "jdbcStatements": [
+        31,
+        30,
+        30
+      ],
+      "jdbcExecuteMeanMsIncludingNetwork": 4652.1525,
+      "httpMeanMs": 6159.879500000291
+    },
+    "search_dated": {
+      "jdbcStatements": [
+        38,
+        38,
+        38
+      ],
+      "jdbcExecuteMeanMsIncludingNetwork": 5801.996433333333,
+      "httpMeanMs": 6920.474666667057
+    },
+    "public_catalog": {
+      "jdbcStatements": [
+        26,
+        27,
+        26
+      ],
+      "jdbcExecuteMeanMsIncludingNetwork": 4051.7222666666667,
+      "httpMeanMs": 4770.861066666839
+    },
+    "hotel_detail": {
+      "jdbcStatements": [
+        14,
+        14,
+        14
+      ],
+      "jdbcExecuteMeanMsIncludingNetwork": 2030.2836,
+      "httpMeanMs": 2457.5945000002926
+    },
+    "room_availability": {
+      "jdbcStatements": [
+        4,
+        4,
+        4
+      ],
+      "jdbcExecuteMeanMsIncludingNetwork": 568.5864333333333,
+      "httpMeanMs": 1294.542633333246
+    }
+  },
+  "medium3x5": "NOT RUN: pressure stop",
+  "larger5x10": "NOT RUN: pressure stop",
+  "after": "BLOCKED: restarted runtime not ready, role connection exhaustion",
+  "conclusion": "Per-room and duplicate approval lookups confirmed in source; one populated size measured. Runtime slope across room counts NOT VERIFIED; N+1 NOT declared resolved. Room media lazy loading and per-hotel association/amenity reads remain follow-up."
+}

@@ -149,10 +149,8 @@ public class HotelController {
     @GetMapping
     public ResponseEntity<List<HotelResponse>> getAllApprovedHotels() {
         log.info("[HOTEL_CONTROLLER_GET_APPROVED] Fetch approved hotels request received");
-        List<HotelResponse> hotels = hotelService.getAllApprovedHotels()
-                .stream()
-                .map(hotelMapper::toPublicHotelResponse)
-                .toList();
+        // One batched fact read for the whole list (Batch8D), same public representation.
+        List<HotelResponse> hotels = hotelMapper.toPublicHotelResponses(hotelService.getAllApprovedHotels());
         return ResponseEntity.ok(hotels);
     }
 
@@ -207,10 +205,7 @@ public class HotelController {
     @GetMapping("/search")
     public ResponseEntity<?> searchHotelsByName(@RequestParam String name) {
         log.info("[HOTEL_CONTROLLER_SEARCH] Search hotels by name request received - name: {}", name);
-        var hotels = hotelService.searchByName(name)
-                .stream()
-                .map(hotelMapper::toPublicHotelResponse)
-                .toList();
+        var hotels = hotelMapper.toPublicHotelResponses(hotelService.searchByName(name));
 
         return ResponseEntity.ok(hotels);
     }
@@ -221,10 +216,7 @@ public class HotelController {
     @GetMapping("/city/{cityId}")
     public ResponseEntity<?> getHotelsByCity(@PathVariable UUID cityId) {
         log.info("[HOTEL_CONTROLLER_CITY] Fetch hotels by city request received - cityId: {}", cityId);
-        var hotels = hotelService.getByCity(cityId)
-                .stream()
-                .map(hotelMapper::toPublicHotelResponse)
-                .toList();
+        var hotels = hotelMapper.toPublicHotelResponses(hotelService.getByCity(cityId));
 
         return ResponseEntity.ok(hotels);
     }

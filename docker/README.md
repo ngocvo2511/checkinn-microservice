@@ -53,8 +53,9 @@ files have been removed. Canonical and historical SQL are retained.
 OSRM is optional via Compose's `routing` profile and requires separately
 provisioned map data. It is not started by a normal application/test command.
 Test Mailpit stays local; test external-provider values are placeholders.
-The previously documented VNPay merchant/Storage issues remain separate from
-database selection. No production rollout is implied by the main mode.
+VNPay Sandbox NCB/OTP and real Storage upload/signing passed their provider
+follow-ups; see [VNPay acceptance](../Docs/BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md).
+No production rollout, external IPN or real-refund certification is implied.
 
 The sections below preserve earlier checkpoint-specific commands and evidence.
 Use the current entry point above for daily startup. The legacy local clone

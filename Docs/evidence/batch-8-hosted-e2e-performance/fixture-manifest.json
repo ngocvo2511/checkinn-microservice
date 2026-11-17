@@ -1,0 +1,7 @@
+{
+  "testRunId": "batch8-20261116T172722Z-611bd90a",
+  "records": [],
+  "writesAllowed": false,
+  "cleanupStatus": "NOT APPLICABLE: zero hosted fixtures",
+  "blockedReason": "No authorized ADMIN test identity; existing accounts are outside fixture scope. No role mutation or signed ADMIN token fabrication permitted."
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "owner": "user",
+    "differences": [],
+    "counts": {
+      "loyalty_commands": 0,
+      "loyalty_points": 0,
+      "otps": 2,
+      "points_reservations": 0,
+      "points_transactions": 0,
+      "user_profiles": 2,
+      "users": 2
+    }
+  },
+  {
+    "owner": "regulations",
+    "differences": [],
+    "counts": {
+      "regulation_event_outbox": 4,
+      "regulation_snapshots": 4,
+      "regulations": 4
+    }
+  },
+  {
+    "owner": "hotel",
+    "differences": [],
+    "counts": {
+      "amenity_catalog": 0,
+      "amenity_category_types": 0,
+      "amenity_mapping_request_codes": 0,
+      "amenity_mapping_requests": 0,
+      "amenity_mapping_states": 0,
+      "checkinn_feature_migrations": 1,
+      "cities": 40,
+      "hotel_accommodation_type_changes": 0,
+      "hotel_amenities": 0,
+      "hotel_amenity_categories": 0,
+      "hotel_policies": 0,
+      "hotel_questions": 0,
+      "hotel_reviews": 0,
+      "hotels": 1,
+      "media_assets": 2,
+      "policy_category_types": 0,
+      "provinces": 34,
+      "review_feedbacks": 0,
+      "review_responses": 0,
+      "room_availability": 0,
+      "room_holds": 0,
+      "room_inventory_review_requests": 0,
+      "room_inventory_review_states": 0,
+      "room_types": 0
+    }
+  },
+  {
+    "owner": "booking",
+    "differences": [],
+    "counts": {
+      "booking_event_outbox": 0,
+      "booking_items": 0,
+      "bookings": 0,
+      "manual_refund_audit": 0,
+      "manual_refund_executions": 0,
+      "payments": 0,
+      "refund_requests": 0
+    }
+  },
+  {
+    "owner": "revenue",
+    "differences": [],
+    "counts": {
+      "booking_status_records": 0,
+      "payment_records": 0,
+      "revenue_cash_transactions": 0,
+      "revenue_cashflow_gaps": 0,
+      "revenue_event_receipts": 0
+    }
+  }
+]

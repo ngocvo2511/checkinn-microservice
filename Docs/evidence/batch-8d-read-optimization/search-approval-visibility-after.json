@@ -1,0 +1,26 @@
+{
+  "phase": "after-admin-approval",
+  "undated": {
+    "approvedRoomInSearch": true,
+    "offerRoomIds": [
+      "6776ba82-f907-4840-a923-426932b3e2c6",
+      "df3270bd-31f7-4d03-af73-20ad42fe6c59"
+    ],
+    "room0IsOffer": true,
+    "availableForRoom0": [
+      null
+    ]
+  },
+  "dated": {
+    "approvedRoomInSearch": true,
+    "offerRoomIds": [
+      "6776ba82-f907-4840-a923-426932b3e2c6",
+      "df3270bd-31f7-4d03-af73-20ad42fe6c59"
+    ],
+    "room0IsOffer": true,
+    "availableForRoom0": [
+      2
+    ]
+  },
+  "detailContainsRoom0": true
+}

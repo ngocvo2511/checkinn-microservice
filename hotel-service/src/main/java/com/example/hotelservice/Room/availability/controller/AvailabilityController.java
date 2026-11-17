@@ -45,6 +45,8 @@ public class AvailabilityController {
             HoldResponse response = availabilityService.checkAndHold(request);
             log.info("[AVAILABILITY_CONTROLLER_HOLD] Hold success - holdId: {}, roomTypeId: {}", response.holdId(), request.roomTypeId());
             return ResponseEntity.ok(response);
+        } catch (com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException ex) {
+            return ResponseEntity.status(409).body(java.util.Map.of("code","INVENTORY_APPROVAL_REQUIRED","message",ex.getMessage()));
         } catch (com.example.hotelservice.Room.availability.service.InsufficientInventoryException ex) {
             return ResponseEntity.status(409).body(java.util.Map.of("code","INSUFFICIENT_INVENTORY","message",ex.getMessage()));
         } catch (IllegalArgumentException ex) {

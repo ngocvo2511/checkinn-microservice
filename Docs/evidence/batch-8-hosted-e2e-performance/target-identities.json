@@ -1,0 +1,82 @@
+[
+  {
+    "owner": "user",
+    "projectIdentitySha256": "eb3c43b8bd18c02286b09a4b981ee27a8bcc7967cb229546678447f0e88cd54a",
+    "hostname": "aws-0-ap-south-1.pooler.supabase.com",
+    "port": 5432,
+    "database": "postgres",
+    "schema": [
+      "public"
+    ],
+    "sslmode": [
+      "verify-full"
+    ],
+    "runtimeRole": "checkinn_user_app",
+    "poolMax": "2",
+    "controlPlaneIdentityVerified": true
+  },
+  {
+    "owner": "regulations",
+    "projectIdentitySha256": "720a434daa7166bb93f0cc14d20fedae55889c2f48f08134d553dbba4805b4d3",
+    "hostname": "aws-0-ap-southeast-2.pooler.supabase.com",
+    "port": 5432,
+    "database": "postgres",
+    "schema": [
+      "public"
+    ],
+    "sslmode": [
+      "verify-full"
+    ],
+    "runtimeRole": "checkinn_regulations_app",
+    "poolMax": "2",
+    "controlPlaneIdentityVerified": true
+  },
+  {
+    "owner": "hotel",
+    "projectIdentitySha256": "09415f880c2ad3581fe865fffc88635d5bbadd4a4cf7b5ce6bf53d8e1dea7262",
+    "hostname": "aws-0-ap-northeast-1.pooler.supabase.com",
+    "port": 5432,
+    "database": "postgres",
+    "schema": [
+      "public"
+    ],
+    "sslmode": [
+      "verify-full"
+    ],
+    "runtimeRole": "checkinn_hotel_app",
+    "poolMax": "2",
+    "controlPlaneIdentityVerified": true
+  },
+  {
+    "owner": "booking",
+    "projectIdentitySha256": "657fe881411af485fa10339f2193a6f9798636c897fc313f37b0a8ad7166c66a",
+    "hostname": "aws-0-ap-southeast-1.pooler.supabase.com",
+    "port": 5432,
+    "database": "postgres",
+    "schema": [
+      "public"
+    ],
+    "sslmode": [
+      "verify-full"
+    ],
+    "runtimeRole": "checkinn_booking_app",
+    "poolMax": "2",
+    "controlPlaneIdentityVerified": true
+  },
+  {
+    "owner": "revenue",
+    "projectIdentitySha256": "5ed6f36f3b283ae895b950f36d902a281f98d10ad2cff5735a63b2c37cfa31ed",
+    "hostname": "aws-0-ap-northeast-2.pooler.supabase.com",
+    "port": 5432,
+    "database": "postgres",
+    "schema": [
+      "public"
+    ],
+    "sslmode": [
+      "verify-full"
+    ],
+    "runtimeRole": "checkinn_revenue_app",
+    "poolMax": "2",
+    "controlPlaneIdentityVerified": true
+  }
+]

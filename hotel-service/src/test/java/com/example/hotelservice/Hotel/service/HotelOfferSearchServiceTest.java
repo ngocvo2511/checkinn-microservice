@@ -16,7 +16,45 @@ import static org.mockito.Mockito.*;
 class HotelOfferSearchServiceTest {
     final AvailabilityService availability = mock(AvailabilityService.class);
     final HotelOfferSearchService service = new HotelOfferSearchService(availability);
+    final java.util.Map<UUID,Integer> counts = new java.util.HashMap<>();
+    @org.junit.jupiter.api.BeforeEach void approvedFixtures() {
+        when(availability.approvedRoomIds(anyList())).thenAnswer(c -> new java.util.HashSet<>((List<UUID>)c.getArgument(0)));
+        when(availability.getAvailableRoomCounts(anyList(),any(),any())).thenAnswer(c -> {
+            var result = new java.util.HashMap<UUID,Integer>();
+            for (UUID id : (List<UUID>)c.getArgument(0)) result.put(id, counts.getOrDefault(id,0));
+            return result;
+        });
+    }
     final LocalDate in = LocalDate.of(2026,12,1), out = in.plusDays(2);
+    @Test void unapprovedPositiveStockNeverProducesDatedOrUndatedOffer() {
+        var r=room(100,2,0,10,true);
+        when(availability.approvedRoomIds(List.of(r.id()))).thenReturn(java.util.Set.of());
+        assertTrue(service.match(hotel(r),criteria(1,1,0,null,null,false)).isEmpty());
+        assertTrue(service.match(hotel(r),criteria(1,1,0,null,null,true)).isEmpty());
+        verify(availability,never()).getAvailableRoomCount(any(),any(),any());
+    }
+    @Test void batchedApprovalIsOneReadForAllHotelsAndExcludesUnapprovedRooms() {
+        var approved=room(100,2,0,2,true);var pending=room(50,2,0,2,true);var other=room(200,2,0,2,true);
+        var h1=hotel(approved,pending);var h2=hotel(other);
+        when(availability.approvedRoomIds(anyList())).thenReturn(java.util.Set.of(approved.id(),other.id()));
+        var undated=criteria(1,1,0,null,null,false);
+        var snapshot=service.approvalFor(List.of(h1,h2),undated);
+        verify(availability,times(1)).approvedRoomIds(List.of(approved.id(),pending.id(),other.id()));
+        assertEquals(approved.id(),service.match(h1,undated,java.util.Map.of(),snapshot).orElseThrow().roomTypeId());
+        assertEquals(other.id(),service.match(h2,undated,java.util.Map.of(),snapshot).orElseThrow().roomTypeId());
+        // The request snapshot replaces per-hotel re-reads; the pending cheaper room is never offered.
+        verify(availability,times(1)).approvedRoomIds(anyList());
+        assertTrue(service.match(hotel(pending),undated,java.util.Map.of(),snapshot).isEmpty());
+    }
+    @Test void batchedApprovalSkipsDatedSearchesAndEmptyEligibility() {
+        var r=room(100,2,0,2,true);
+        assertEquals(java.util.Set.of(),service.approvalFor(List.of(hotel(r)),criteria(1,1,0,null,null,true)));
+        assertEquals(java.util.Set.of(),service.approvalFor(List.of(hotel(r)),criteria(1,1,0,500,null,false)));
+        verify(availability,never()).approvedRoomIds(anyList());
+        var unconfigured=room(100,2,0,0,true);
+        assertThrows(com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException.class,
+                ()->service.approvalFor(List.of(hotel(unconfigured)),criteria(1,1,0,null,null,false)));
+    }
     HotelOfferCriteria criteria(int rooms, int adults, int children, Integer min, Integer max, boolean dated) {
         return new HotelOfferCriteria(null,null,null,"Fixture",dated?in:null,dated?out:null,rooms,adults,children,
             min==null?null:BigDecimal.valueOf(min),max==null?null:BigDecimal.valueOf(max),null,null);
@@ -48,8 +86,8 @@ class HotelOfferSearchServiceTest {
     }
     @Test void soldOutCheapestDoesNotSetDisplayedPrice() {
         var cheap=room(100,2,0,3,true); var expensive=room(300,2,0,3,true);
-        when(availability.getAvailableRoomCount(cheap.id(),in,out)).thenReturn(0);
-        when(availability.getAvailableRoomCount(expensive.id(),in,out)).thenReturn(2);
+        counts.put(cheap.id(),0);
+        counts.put(expensive.id(),2);
         var offer=service.match(hotel(cheap,expensive),criteria(2,4,0,null,null,true)).orElseThrow();
         assertEquals(expensive.id(),offer.roomTypeId()); assertEquals(BigDecimal.valueOf(300),offer.unitPrice());
         assertEquals(BigDecimal.valueOf(600),offer.totalPerNight()); assertEquals(2,offer.availableRooms());
@@ -74,11 +112,12 @@ class HotelOfferSearchServiceTest {
     }
     @Test void undatedOfferDoesNotPretendConfiguredInventoryIsAvailability() {
         var offer=service.match(hotel(room(100,2,0,3,true)),criteria(1,1,0,null,null,false)).orElseThrow();
-        assertNull(offer.availableRooms()); assertNull(offer.checkedAt()); verifyNoInteractions(availability);
+        assertNull(offer.availableRooms()); assertNull(offer.checkedAt()); verify(availability).approvedRoomIds(anyList());
+        verify(availability,never()).getAvailableRoomCount(any(),any(),any());
     }
     @Test void dependencyFailurePropagatesInsteadOfSoldOut() {
         var r=room(100,2,0,3,true);
-        when(availability.getAvailableRoomCount(r.id(),in,out)).thenThrow(new IllegalStateException("unavailable"));
+        when(availability.getAvailableRoomCounts(anyList(),eq(in),eq(out))).thenThrow(new IllegalStateException("unavailable"));
         assertThrows(IllegalStateException.class,()->service.match(hotel(r),criteria(1,1,0,null,null,true)));
     }
     @Test void invalidCriteriaAreRejected() {
@@ -95,7 +134,7 @@ class HotelOfferSearchServiceTest {
     }
     @Test void oneRoomShortOnAnyStayNightExcludesOffer() {
         var r=room(100,2,0,3,true);
-        when(availability.getAvailableRoomCount(r.id(),in,out)).thenReturn(1);
+        counts.put(r.id(),1);
         assertTrue(service.match(hotel(r),criteria(2,4,0,null,null,true)).isEmpty());
     }
 
@@ -121,6 +160,7 @@ class HotelOfferSearchServiceTest {
         var h=hotel(room(100,2,0,3,true));
         var snapshot=service.availabilityFor(List.of(h),criteria(1,1,0,null,null,false));
         assertTrue(snapshot.isEmpty());assertNull(service.match(h,criteria(1,1,0,null,null,false),snapshot).orElseThrow().availableRooms());
-        verifyNoInteractions(availability);
+        verify(availability).approvedRoomIds(anyList());
+        verify(availability,never()).getAvailableRoomCount(any(),any(),any());
     }
 }

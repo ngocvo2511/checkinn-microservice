@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-16",
+  "finalSuites": [
+    {
+      "scope": "Hotel full regression",
+      "command": "mvn.cmd -o -B -ntp -pl hotel-service '-Dtest=*,!HotelServiceApplicationTests' test",
+      "executedPass": 390,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 33,
+      "excluded": [
+        "HotelServiceApplicationTests"
+      ],
+      "log": ".local/batch7-hotel-regression-final.log"
+    },
+    {
+      "scope": "Booking lifecycle/payment/refund regression",
+      "command": "mvn.cmd -o -B -ntp -pl booking-service -Dtest=BookingServiceTest,BookingIdempotencyTest,BookingCreationCompensationTest,PaidReservationServiceTest,OnsiteReservationServiceTest,PaymentServiceTest,RefundRequestServiceTest,ManualRefundServiceTest,CancellationPolicyTest test",
+      "executedPass": 135,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "log": ".local/batch7-booking-regression.log"
+    },
+    {
+      "scope": "Five native canonical PostgreSQL/Flyway/Hibernate tests",
+      "command": "python tools/batch7-schema-verify.py",
+      "executedPass": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "schema-verification.json"
+    },
+    {
+      "scope": "Regulations consistency + service",
+      "command": "mvn -f regulations-service/pom.xml -Dtest=RegulationConsistencyTest,RegulationServiceTest test -q",
+      "executedPass": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "Revenue UUID receipt + cash identity",
+      "command": "mvn -f revenue-service/pom.xml -Dtest=UuidReceiptContractTest,CashTransactionIdentityTest test -q",
+      "executedPass": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "Loyalty service",
+      "command": "mvn -f user-service/pom.xml -Dtest=LoyaltyPointsServiceTest test -q",
+      "executedPass": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "Standalone runner unit tests",
+      "command": "mvn -o -B -ntp -f tools/supabase-runner/pom.xml -Dtest=HostedRunnerTest test",
+      "executedPass": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "Runtime + provider configuration unit regression (mocks only)",
+      "command": "python -m unittest discover -s tools/supabase-runner -p 'test_*config.py' -v",
+      "executedPass": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "note": "Includes the 2 runtime-config tests also executed by schema agent; do not add those twice. No provider acceptance/network access."
+    }
+  ],
+  "notRun": [
+    "Representative actual historical corpus/legacy full upgrade",
+    "Frontend/TypeScript (no changes)",
+    "Hosted write tests",
+    "Real provider acceptance"
+  ],
+  "initialFocusedHotel": {
+    "executedPass": 70,
+    "skipped": 0,
+    "note": "Overlaps full Hotel suite; earlier source checkpoint."
+  },
+  "failedAttempts": [
+    {
+      "scope": "Hotel focused testCompile",
+      "reason": "Overlapping Maven shared target; no executed tests; serial runs used afterward"
+    },
+    {
+      "scope": "First local canonical Hotel",
+      "counts": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "reason": "Synthetic MapStruct fixture missing injected MediaAssetMapper; fixed test wiring; owned cluster stopped; fresh rerun PASS",
+      "evidence": "schema-verification-76292d75545040178160426939ddbdbd.json"
+    },
+    {
+      "scope": "First full Hotel regression",
+      "discovered": 423,
+      "executedPass": 389,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 33,
+      "reason": "New test expected ConstraintViolationException instead of existing InputValidation.InvalidInput; assertion corrected, final full rerun PASS",
+      "log": ".local/batch7-hotel-regression.log"
+    }
+  ],
+  "hostedWrites": 0
+}

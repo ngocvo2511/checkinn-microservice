@@ -4,7 +4,7 @@
 
 ## A. Executive Summary
 
-**Final status: PARTIAL. Chưa đủ điều kiện đóng toàn bộ phạm vi Batch 6B đã mở rộng.** Phần database integration cho backend chạy local có evidence PASS và có thể đóng riêng. VNPay Sandbox và Supabase Storage thực tế vẫn BLOCKED bởi provider. Không suy backend cloud deployment hoặc production readiness từ việc database đã được triển khai.
+**Final status cập nhật 17/11/2026: DONE trong phạm vi Batch6B local development + VNPay Sandbox/Storage thực tế.** Core database integration giữ evidence PASS; hai provider blockers đã được thay bằng actual acceptance: [VNPay NCB/OTP, callback, Booking/Revenue và replay](BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md), [Storage upload/private signing](evidence/batch-6b-supabase-local-integration/storage-live-acceptance-2026-11-16.json). Không suy backend cloud deployment, IPN webhook hoặc production stability. Các mục ghi documentation-only dưới đây mô tả lần rà soát 16/11 trước follow-up live này.
 
 Kết luận dựa trên source/config và evidence có sẵn; phiên này không kết nối database, chạy service/test, migration hoặc DDL/DML. PASS dưới đây nghĩa là VERIFIED bằng evidence đã lưu, không phải tái xác minh live ngày giờ hiện tại.
 
@@ -62,7 +62,7 @@ Managed PUBLIC database TEMP vẫn được kế thừa; không chứng nhận c
 
 117 hosted checks PASS: register/OTP qua Mailpit/login/NextAuth; Hotel/Room ownership và lifecycle; Booking idempotency, holds/no oversell/compensation; Loyalty commit/reversal; onsite payment/internal refund/duplicate execution; Revenue CREDIT/DEBIT/outbox/replay; Regulations snapshots/stale updates/broker outage/restart.
 
-Callback acceptance dùng HTTP/HMAC local giả lập; SMTP chỉ Mailpit. Real VNPay recheck đã tới provider nhưng trả code 71, chưa tới bank form/chưa submit payment. Storage NXDOMAIN, control-plane 403 không xác định project Active/Paused; upload chưa gửi. [Provider report](BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md), [provider evidence](evidence/batch-6b-supabase-local-integration/real-provider-acceptance-results-2026-11-16.json).
+Checkpoint 16/11 dùng callback HTTP/HMAC giả lập, VNPay còn code71 và Storage còn NXDOMAIN. Follow-up live 17/11 đã supersede hai blocker đó: NCB card/OTP → provider return00 → payment COMPLETED / booking CONFIRMED / Revenue một CREDIT, replay/negative checks PASS; Storage actual upload/signing PASS. SMTP chỉ Mailpit. [Provider report](BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md), [VNPay actual evidence](evidence/batch-6b-supabase-local-integration/vnpay-sandbox-acceptance-2026-11-17.json).
 
 Fixtures sau đó đã cleanup theo yêu cầu người dùng; không tự replay để tái lập kết quả. Search trả 2 synthetic hotels là lịch sử; cleanup ghi synthetic search results 0.
 
@@ -80,9 +80,9 @@ Architecture bổ sung mapping/deployed state, profiles/TLS/roles/pool và giớ
 
 ## K. Remaining Risks
 
-- BLOCKED: owner cần merchant/website Sandbox được VNPay phê duyệt, rồi kiểm payment/callback thật trong phạm vi được duyệt.
-- BLOCKED: owner xác minh Storage project/URL và quyền truy cập; bucket visibility/upload/private preview NOT RUN.
-- NOT RUN: real provider refund, external SMTP, provider-wide outage/load, production backup/PITR/restore drill/RPO/RTO, backend cloud deployment.
+- RESOLVED 17/11: VNPay Sandbox actual NCB card/OTP → signed return 00 → payment/booking/Revenue PASS; duplicate and malformed callbacks checked.
+- RESOLVED: Storage public/private buckets verified; real Media upload/download/signing/denial and probe cleanup PASS.
+- NOT RUN: external IPN delivery, real provider refund/query/reconciliation, external SMTP, provider-wide outage/load, production backup/PITR/restore drill/RPO/RTO, backend cloud deployment.
 - NOT VERIFIED: exhaustive cross-project login matrix, toàn bộ managed-schema/API surfaces, toàn bộ Git history secret absence, demo schema UUID compatibility. Không phải lời khẳng định các mục này thất bại.
 - Retained: PUBLIC TEMP; STD-006 physical stock provenance OPEN, không default stock10/backfill; legacy migration/data cutover và financial recovery/reconciliation là scope tương lai.
 - Cần cập nhật evidence mới sau source/provider/runtime thay đổi; 30 protected hashes và historical frontend-clean claim không đồng nghĩa toàn bộ working tree hiện tại sạch. Follow-up trước phiên này có Media/frontend tooling changes; phiên documentation này không sửa chúng.
@@ -97,14 +97,14 @@ Architecture bổ sung mapping/deployed state, profiles/TLS/roles/pool và giớ
 | 4 | 46 bảng đúng thiết kế | VERIFIED/PASS — hosted catalog; history đếm riêng |
 | 5 | History/checksums | VERIFIED/PASS — V1 success/validate/no-op/hash review |
 | 6 | Hibernate năm services | VERIFIED/PASS — 32 entities + startup validation |
-| 7 | Local Spring Boot → Supabase | VERIFIED/PASS — recorded startup/restart/Docker; hiện không live recheck |
+| 7 | Local Spring Boot → Supabase | VERIFIED/PASS — recorded core startup/restart; Docker live recheck 17/11 with 11 healthy application containers |
 | 8 | Runtime không tự đổi schema | VERIFIED/PASS — profiles/guards + catalog/protected hashes |
 | 9 | Security/permissions | VERIFIED/PASS trong scoped checks; PUBLIC TEMP/managed-surface limits giữ mở |
-| 10 | Core workflows | VERIFIED/PASS — 117 checks; provider mở rộng BLOCKED |
+| 10 | Core workflows | VERIFIED/PASS — 117 historical checks; VNPay Sandbox/Storage actual follow-up PASS |
 | 11 | Demo PostgreSQL không bị ảnh hưởng | VERIFIED/PASS trong evidence no legacy DDL/DML/protected hashes; compatibility NOT VERIFIED |
 | 12 | Không cross-service DB access | VERIFIED/PASS trong source boundaries và 5 negative pairs; exhaustive matrix NOT RUN |
 | 13 | Credentials/secrets | VERIFIED/PASS cho public-artifact scans trong phạm vi; all-history absence NOT VERIFIED |
 | 14 | Regression liên quan | VERIFIED/PASS trong các suite nêu trên; skipped/default-context không PASS |
 | 15 | Remaining risks | VERIFIED/PASS — liệt kê ở mục K, không xóa risk để đóng batch |
 
-**Core database/local integration: đủ điều kiện đóng riêng. Overall Batch 6B mở rộng: PARTIAL, chưa đóng toàn bộ.** Các provider blockers phải được giải quyết và có actual acceptance evidence trước khi đổi overall thành DONE. Standardization vẫn PARTIAL/IN_PROGRESS. Backend cloud deployment là giai đoạn tương lai; không tự triển khai Batch 7.
+**Overall Batch6B: DONE cho phạm vi local-development và hai provider follow-up đã yêu cầu**, cập nhật 17/11/2026 bằng actual acceptance evidence. Không đóng các scope chưa kiểm: IPN delivery, real refund/query/reconciliation, outage/load, production readiness. Standardization và các batch khác giữ trạng thái riêng; không tự triển khai giai đoạn tiếp theo.

@@ -1,0 +1,58 @@
+{
+  "providerResponseCode": "00",
+  "providerTransactionStatus": "00",
+  "providerHmacValidated": true,
+  "bookingStatus": "CONFIRMED",
+  "paidReservationStatus": "V1_CONFIRMED",
+  "paymentStatus": "COMPLETED",
+  "amountVnd": 10000,
+  "revenueCreditCountBeforeReplay": 1,
+  "realCallbackReplayCount": 3,
+  "replayIdempotent": true,
+  "revenueCreditCountAfterReplay": 1,
+  "badHashRejectedHttp": 400,
+  "mismatchedAmountRejectedHttp": 400,
+  "status": "PASS",
+  "scope": "Real NCB Sandbox happy path + backend confirmation + Revenue + replay/negative callback checks",
+  "anonymousReturnUi": "Conservative pending message without authenticated booking access",
+  "ipnWebhookTested": false,
+  "productionStabilityClaimed": false,
+  "timestampUtc": "2026-11-17T11:27:40.935495+00:00",
+  "clientDate": "2026-11-17",
+  "timezone": "Asia/Saigon",
+  "bank": "NCB",
+  "sandboxTestCardOnly": true,
+  "realFundsTransferred": false,
+  "fixtureCleanup": {
+    "revenue": {
+      "deletedRows": 7,
+      "untargetedRowsUnchanged": true
+    },
+    "booking": {
+      "deletedRows": 7,
+      "untargetedRowsUnchanged": true
+    },
+    "hotel": {
+      "deletedRows": 4,
+      "untargetedRowsUnchanged": true
+    },
+    "user": {
+      "deletedRows": 6,
+      "untargetedRowsUnchanged": true
+    },
+    "mailTestMessagesRemoved": 2,
+    "status": "PASS",
+    "realReferenceDataRetained": true
+  },
+  "temporaryCheckoutBridgeStopped": true,
+  "applicationPaymentLogicChanged": false,
+  "testHelperUtf8Explicit": true,
+  "historicalProtectedBaselineMatched": 29,
+  "preExistingConfigDriftFromHistoricalBaseline": [
+    "notification-service\\src\\main\\resources\\application.yml"
+  ],
+  "canonicalAndHistoricalSqlUnchanged": true,
+  "dockerApplicationContainersHealthy": 11,
+  "postRestartProbeReferencesInAllFivePublicSchemas": 0,
+  "completedAtUtc": "2026-11-17T11:29:48.777627+00:00"
+}

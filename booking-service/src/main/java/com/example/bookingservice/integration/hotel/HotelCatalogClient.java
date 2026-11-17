@@ -35,6 +35,10 @@ public class HotelCatalogClient {
             return response;
         } catch (HttpClientErrorException.NotFound ex) {
             throw new IllegalArgumentException("Catalog resource not found");
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().value()==409)
+                throw new ResponseStatusException(HttpStatus.CONFLICT,"Inventory requires review before a new reservation");
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Hotel catalog unavailable");
         } catch (RestClientException | IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Hotel catalog unavailable");
         }

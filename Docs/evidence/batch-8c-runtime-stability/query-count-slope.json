@@ -1,0 +1,382 @@
+[
+  {
+    "dataset": "larger",
+    "endpoint": "search_undated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      92,
+      92,
+      92
+    ],
+    "jdbcMs": 11539.852766666667,
+    "httpMs": 12694.643399999526,
+    "acquisitionMs": 0.014733333333333334,
+    "requestScoped": true
+  },
+  {
+    "dataset": "larger",
+    "endpoint": "search_dated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      107,
+      107,
+      107
+    ],
+    "jdbcMs": 13283.706766666666,
+    "httpMs": 14443.235800000062,
+    "acquisitionMs": 0.02146666666666667,
+    "requestScoped": true
+  },
+  {
+    "dataset": "larger",
+    "endpoint": "public_catalog",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      87,
+      87,
+      87
+    ],
+    "jdbcMs": 10753.261033333334,
+    "httpMs": 12104.906799999299,
+    "acquisitionMs": 84.32086666666666,
+    "requestScoped": true
+  },
+  {
+    "dataset": "larger",
+    "endpoint": "hotel_detail",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      19,
+      19,
+      19
+    ],
+    "jdbcMs": 2347.5498333333335,
+    "httpMs": 2616.1183333339673,
+    "acquisitionMs": 0.011166666666666667,
+    "requestScoped": true
+  },
+  {
+    "dataset": "larger",
+    "endpoint": "room_availability",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      4,
+      4,
+      4
+    ],
+    "jdbcMs": 495.6766333333333,
+    "httpMs": 1002.4088666674894,
+    "acquisitionMs": 0.0121,
+    "requestScoped": true
+  },
+  {
+    "dataset": "medium",
+    "endpoint": "search_undated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      41,
+      41,
+      41
+    ],
+    "jdbcMs": 4863.674566666667,
+    "httpMs": 5768.745566666136,
+    "acquisitionMs": 38.85223333333334,
+    "requestScoped": true
+  },
+  {
+    "dataset": "medium",
+    "endpoint": "search_dated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      50,
+      50,
+      50
+    ],
+    "jdbcMs": 6151.939166666667,
+    "httpMs": 7017.378266665522,
+    "acquisitionMs": 0.0169,
+    "requestScoped": true
+  },
+  {
+    "dataset": "medium",
+    "endpoint": "public_catalog",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      38,
+      38,
+      38
+    ],
+    "jdbcMs": 4557.2671,
+    "httpMs": 5398.579666668714,
+    "acquisitionMs": 80.76833333333333,
+    "requestScoped": true
+  },
+  {
+    "dataset": "medium",
+    "endpoint": "hotel_detail",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      14,
+      14,
+      14
+    ],
+    "jdbcMs": 1638.8536,
+    "httpMs": 1895.884533332719,
+    "acquisitionMs": 0.0112,
+    "requestScoped": true
+  },
+  {
+    "dataset": "medium",
+    "endpoint": "room_availability",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      4,
+      4,
+      4
+    ],
+    "jdbcMs": 472.51643333333334,
+    "httpMs": 956.8209666661763,
+    "acquisitionMs": 0.013666666666666666,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small-traced",
+    "endpoint": "search_undated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      22,
+      22,
+      22
+    ],
+    "jdbcMs": 2598.7363333333333,
+    "httpMs": 3347.917799999171,
+    "acquisitionMs": 0.0236,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small-traced",
+    "endpoint": "search_dated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      28,
+      28,
+      28
+    ],
+    "jdbcMs": 3373.1245,
+    "httpMs": 4206.489066668534,
+    "acquisitionMs": 80.33883333333334,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small-traced",
+    "endpoint": "public_catalog",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      20,
+      20,
+      20
+    ],
+    "jdbcMs": 2355.4531,
+    "httpMs": 2845.2699666656067,
+    "acquisitionMs": 0.015866666666666668,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small-traced",
+    "endpoint": "hotel_detail",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      11,
+      11,
+      11
+    ],
+    "jdbcMs": 1307.9216333333334,
+    "httpMs": 1562.3192666668426,
+    "acquisitionMs": 0.012433333333333334,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small-traced",
+    "endpoint": "room_availability",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      4,
+      4,
+      4
+    ],
+    "jdbcMs": 473.45550000000003,
+    "httpMs": 1010.883333333671,
+    "acquisitionMs": 38.99483333333333,
+    "requestScoped": true
+  },
+  {
+    "dataset": "small",
+    "endpoint": "search_undated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      22,
+      22,
+      22
+    ],
+    "jdbcMs": 2694.5797,
+    "httpMs": 3536.7288000003705,
+    "acquisitionMs": 0.27276666666666666,
+    "requestScoped": false
+  },
+  {
+    "dataset": "small",
+    "endpoint": "search_dated",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      28,
+      28,
+      28
+    ],
+    "jdbcMs": 3191.708,
+    "httpMs": 4098.651766666687,
+    "acquisitionMs": 38.107533333333336,
+    "requestScoped": false
+  },
+  {
+    "dataset": "small",
+    "endpoint": "public_catalog",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      20,
+      20,
+      20
+    ],
+    "jdbcMs": 2282.046533333333,
+    "httpMs": 2805.6060666676785,
+    "acquisitionMs": 0.09496666666666667,
+    "requestScoped": false
+  },
+  {
+    "dataset": "small",
+    "endpoint": "hotel_detail",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      11,
+      11,
+      11
+    ],
+    "jdbcMs": 1289.2383666666667,
+    "httpMs": 1662.5063333340222,
+    "acquisitionMs": 78.24343333333333,
+    "requestScoped": false
+  },
+  {
+    "dataset": "small",
+    "endpoint": "room_availability",
+    "samples": 3,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "statements": [
+      4,
+      4,
+      4
+    ],
+    "jdbcMs": 454.21523333333334,
+    "httpMs": 954.4101999999839,
+    "acquisitionMs": 0.13626666666666667,
+    "requestScoped": false
+  }
+]

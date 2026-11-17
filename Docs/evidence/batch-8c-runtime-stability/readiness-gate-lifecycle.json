@@ -1,0 +1,11 @@
+{
+  "initialBenchmarkGate": true,
+  "initialDecisionEvidence": [
+    "Original execution BENCHMARK_GATE True output",
+    "smoke-cycle2.json",
+    "benchmark-readiness-gate.json original budget/errors inputs retained"
+  ],
+  "provenance": "Retrospective evidence index; final restart invalidates the mutable benchmark gate and cleanup closes writes. This is not a new initial probe.",
+  "finalReadinessSmoke": "smoke-final-restart-attempt-3.json",
+  "fixtureWritesClosed": true
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "owner": "user",
+    "privateRawLog": ".local/batch8c/user-regression.private.log",
+    "rawLogSha256": "0e2985287e5402047116e2499f0b6b72bf1739b730c7f2c2802d3c981218eb5b",
+    "finalMavenSummary": "Tests run: 114, Failures: 0, Errors: 0, Skipped: 4"
+  },
+  {
+    "owner": "auth",
+    "privateRawLog": ".local/batch8c/auth-regression.private.log",
+    "rawLogSha256": "89958e2bcd7e6b592952cdcee75d9bb966d24d8fca01e538d02f728a9af6fbfe",
+    "finalMavenSummary": "Tests run: 47, Failures: 0, Errors: 0, Skipped: 0"
+  },
+  {
+    "owner": "hotel",
+    "privateRawLog": ".local/batch8c/hotel-regression.private.log",
+    "rawLogSha256": "357a8a41f2e27160815a0d5082ab13a304bb9ef9e161faceb9ee40b0c8fd58ef",
+    "finalMavenSummary": "Tests run: 429, Failures: 0, Errors: 0, Skipped: 33"
+  },
+  {
+    "owner": "booking",
+    "privateRawLog": ".local/batch8c/booking-regression.private.log",
+    "rawLogSha256": "afb7eb4ca0090c4a5f602ceec087458434bed21d6d11af65009475cd1238b774",
+    "finalMavenSummary": "Tests run: 289, Failures: 0, Errors: 0, Skipped: 4"
+  }
+]

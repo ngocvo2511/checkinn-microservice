@@ -1,12 +1,17 @@
 # BATCH 6B — Tích hợp Supabase cho local development
 
+> **Storage đã kiểm thử thật thành công:** endpoint DNS phục hồi, bật mode supabase,
+> public/private upload và signed download qua Media gRPC đã qua; file test đã
+> xóa. [Kết quả Storage mới nhất](BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md).
+> Ghi chú Storage NXDOMAIN bên dưới là trạng thái trước lần kiểm tra này.
+
 > **Danh mục thật đã bổ sung:** 34 tỉnh/thành hiện hành và 40 điểm đến du lịch, hotel_count=0, không thêm khách sạn/booking mẫu. [Dữ liệu và cách nạp](../config/reference-data/README.md).
 
 > **Dữ liệu test đã dọn theo yêu cầu người dùng:** 192 dòng trong 5 database và 7 email Mailpit. Giữ 2 tài khoản ngoài fixture, 4 quy định mặc định và migration history. [Chi tiết cleanup](BATCH6B_FIXTURE_CLEANUP_2026-11-16.md). Các kết quả acceptance bên dưới là lịch sử trước cleanup.
 
 > **Runtime hiện tại: Docker Compose.** Đã tắt host JVM/Next dev; 10 JVM container và frontend production đều healthy, đăng nhập và tìm kiếm qua giao diện đã qua. Lệnh chạy và kết quả: [Docker runtime](BATCH6B_DOCKER_RUNTIME_2026-11-16.md). Database vẫn là 5 project Supabase đã duyệt.
 
-> **Provider follow-up hiện tại: PARTIAL.** Người dùng yêu cầu VNPay Sandbox và Storage thật. Đã dùng credentials từ docker/.env: VNPay trả71/website chưa duyệt; Storage hostname NXDOMAIN. [Kết quả thực tế và việc cần xử lý](BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md). Phần DONE bên dưới là core local acceptance trước yêu cầu mở rộng này.
+> **Provider follow-up 17/11/2026: DONE cho VNPay Sandbox và Storage.** NCB test-card/OTP → return 00 → payment COMPLETED → booking CONFIRMED → một Revenue CREDIT; replay/negative checks PASS. Storage public/private upload và signed download PASS. [Kết quả thực tế](BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). Các kết luận provider BLOCKED trước đó là lịch sử; không chứng nhận production hoặc real refund.
 
 
 16/11/2026, Asia/Saigon. **DONE trong phạm vi development local.** Backend, Gateway, Eureka, Next.js, RabbitMQ và Redis chạy trên máy local; PostgreSQL dùng năm Supabase project độc lập. Không triển khai backend lên cloud. VNPay provider thật và Storage uploads không được chứng nhận bởi batch này.
@@ -93,7 +98,7 @@ Synthetic data được giữ lại, không destructive cleanup. Fixture chuẩn
 
 ## K. Remaining Risks
 
-Không blocker cho mục tiêu local-development hiện tại. NOT RUN: merchant VNPay Sandbox thật, real refund, Supabase Storage uploads/private previews, provider-wide outage/load limits, production backup/PITR/restore/RPO/RTO. Không cần thêm credentials để dùng stack hiện tại. Media provider fail closed tại loopback chưa cấu hình; empty-media paths đã kiểm. SMTP chỉ Mailpit.
+Không blocker còn lại cho phạm vi Batch6B local development và provider Sandbox/Storage đã yêu cầu: cả hai đã actual acceptance PASS. NOT RUN: real provider refund/query/reconciliation, external IPN delivery, provider-wide outage/load limits, production backup/PITR/restore/RPO/RTO. Media đã dùng Storage thật; SMTP vẫn chỉ Mailpit. Không suy production readiness.
 
 PUBLIC TEMP/STD-006 legacy stock provenance vẫn là giới hạn được ghi nhận. Không suy production readiness, full managed-schema denial hoặc legacy-schema compatibility. Checkpoints PARTIAL/BLOCKED trước đây là lịch sử as-of, được supersede trong phạm vi hoàn tất; historical Batch5A/5B/6A không rewrite.
 

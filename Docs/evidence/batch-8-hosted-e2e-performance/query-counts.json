@@ -1,0 +1,122 @@
+[
+  {
+    "endpoint": "search_undated",
+    "sample": 1,
+    "httpStatus": 200,
+    "apiMs": 644.2765999818221,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 122.4771,
+    "connectionAcquisitionMs": 0.5507
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 2,
+    "httpStatus": 200,
+    "apiMs": 634.9016999884043,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 122.3386,
+    "connectionAcquisitionMs": 0.0337
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 3,
+    "httpStatus": 200,
+    "apiMs": 622.6475999865215,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 120.8311,
+    "connectionAcquisitionMs": 0.0393
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 1,
+    "httpStatus": 200,
+    "apiMs": 641.2596000009216,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 122.2965,
+    "connectionAcquisitionMs": 0.028
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 2,
+    "httpStatus": 200,
+    "apiMs": 627.3396000033244,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 123.1646,
+    "connectionAcquisitionMs": 0.0343
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 3,
+    "httpStatus": 200,
+    "apiMs": 637.2438999824226,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 120.6353,
+    "connectionAcquisitionMs": 0.0429
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 1,
+    "httpStatus": 200,
+    "apiMs": 154.39290000358596,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 122.4452,
+    "connectionAcquisitionMs": 0.1369
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 2,
+    "httpStatus": 200,
+    "apiMs": 160.945499985246,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 120.9254,
+    "connectionAcquisitionMs": 0.068
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 3,
+    "httpStatus": 200,
+    "apiMs": 163.53910000179894,
+    "sessions": 1,
+    "jdbcStatements": 1,
+    "jdbcExecutionMsIncludingNetwork": 120.8329,
+    "connectionAcquisitionMs": 0.1871
+  },
+  {
+    "endpoint": "location_catalog",
+    "sample": 1,
+    "httpStatus": 200,
+    "apiMs": 526.8481999810319,
+    "sessions": 1,
+    "jdbcStatements": 2,
+    "jdbcExecutionMsIncludingNetwork": 249.6286,
+    "connectionAcquisitionMs": 0.0741
+  },
+  {
+    "endpoint": "location_catalog",
+    "sample": 2,
+    "httpStatus": 200,
+    "apiMs": 548.3037999947555,
+    "sessions": 1,
+    "jdbcStatements": 2,
+    "jdbcExecutionMsIncludingNetwork": 246.023,
+    "connectionAcquisitionMs": 0.0489
+  },
+  {
+    "endpoint": "location_catalog",
+    "sample": 3,
+    "httpStatus": 200,
+    "apiMs": 532.3874999885447,
+    "sessions": 1,
+    "jdbcStatements": 2,
+    "jdbcExecutionMsIncludingNetwork": 245.2579,
+    "connectionAcquisitionMs": 0.0328
+  }
+]

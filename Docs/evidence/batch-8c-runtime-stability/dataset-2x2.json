@@ -1,0 +1,43 @@
+{
+  "dataset": {
+    "hotels": [
+      {
+        "id": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "762e7f08-5272-418a-92da-2530b45718b5",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "da9328c6-011f-475b-b869-d540d213368e",
+        "hotelId": "c4456aad-9e21-43f4-8872-cb74b6a02efd",
+        "ownerId": "791963e8-fb02-422f-9fa0-41a73ffeb71b"
+      },
+      {
+        "id": "591ab9ec-9481-4df1-a94c-b5408858b525",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      },
+      {
+        "id": "0f33d90e-da2b-498a-b50d-c1807355e5f9",
+        "hotelId": "68cb2ec9-1987-4d09-9255-034dc7c2e21a",
+        "ownerId": "8ae49be4-ab4f-48f0-a5ce-9d0eb9162ca6"
+      }
+    ],
+    "city": "04365ef7-059b-5570-9309-916ec2974542"
+  },
+  "totals": [
+    2,
+    2
+  ],
+  "reconstructedAfterStage": true,
+  "basis": "First two hotels and first two rooms of each, in creation manifest order; recorded Small request and raw response hotel count2; separate stage snapshot added after Medium"
+}

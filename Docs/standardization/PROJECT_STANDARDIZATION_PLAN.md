@@ -1,5 +1,9 @@
 # PROJECT STANDARDIZATION PLAN
 
+> **Provider closure 17/11/2026 — Batch6B: DONE cho phạm vi local development + VNPay Sandbox/Storage.** Actual NCB card/OTP → return00 → payment COMPLETED, booking CONFIRMED, một Revenue CREDIT; callback replay/negative checks PASS. Storage upload/private signing PASS; fixture đã dọn. [Evidence và giới hạn](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). Các provider BLOCKED/PARTIAL ở checkpoint16/11 phía dưới là lịch sử; không tự đóng production/IPN/refund, batch khác hoặc parent standardization findings.
+
+> Checkpoint Batch 7 — 16/11/2026: **G2 PARTIAL; implementation source/tests/tooling đã thực hiện.** Inventory approval/link integrity và nullable amenities compatibility đã sửa; fresh local canonical provisioning/catalog/Hibernate 5/5 PASS, zero schema diff. Không sửa V1, không truy cập Supabase hoặc dữ liệu lịch sử. STD-006/021 vẫn IN_PROGRESS; STD-024 full historical scope vẫn FIXED_UNVERIFIED. Actual provenance NOT VERIFIED, legacy import DEFERRED; unmanaged compatibility theo §56 giữ nguyên, verified-only admission cần policy riêng. Batch 6B database integration tạm đóng theo quyết định người dùng; không mở lại bởi VNPay/Storage. [Báo cáo Batch 7](../BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md).
+
 > Trạng thái hiện hành 16/11/2026: **Batch 6B overall PARTIAL; core database/local integration VERIFIED/PASS, provider acceptance BLOCKED (VNPay code 71, Storage NXDOMAIN).** Năm projects / 46 business tables / 5 Flyway histories / 32 JPA entities; startup/restart và 117 workflow checks đã PASS theo evidence. Backend cloud deployment chưa thực hiện. Fixtures đã cleanup 192 rows; cấu hình daily Supabase=`docker/.env`, Test=`docker/.env.test`; private runtime fallback đã tắt. Quan sát runtime cuối ghi stopped trước configuration cleanup, không khẳng định đang chạy. [Báo cáo tổng kết](../BATCH6B_FINAL_COMPLETION_REPORT_2026-11-16.md). Các kết luận phía dưới giữ nguyên theo checkpoint lịch sử; trạng thái hiện hành ưu tiên ghi chú này.
 
 > Historical status (superseded by checkpoint 16/11/2026): Current: Batch5B local canonical acceptance DONE (14/11/2026); see appended checkpoint. Older statuses are dated history. Supabase/Batch6 not executed.
@@ -3827,10 +3831,61 @@ Giữ mở PUBLIC TEMP, STD-006 stock provenance, legacy cutover/recovery, real 
 - [x] Runtime/migrator separation, scoped grants, independent security settings, 30 denials/5 cross-project pairs.
 - [x] Isolated broker/cache, bounded pools, 117 core workflow checks và scoped regression acceptance.
 - [x] Fixture cleanup và daily configuration consolidation theo evidence; không replay acceptance.
-- [ ] Real VNPay Sandbox payment: merchant approval code71 cần owner/provider xử lý trước acceptance.
-- [ ] Supabase Storage bucket/visibility/upload/private-preview: cần endpoint hoạt động, hiện NXDOMAIN.
+- [x] Real VNPay Sandbox payment — 17/11/2026: NCB test card/OTP, return00/HMAC, payment COMPLETED, booking CONFIRMED, Revenue một CREDIT; replay/negative checks PASS. [Evidence](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md).
+- [x] Supabase Storage bucket/visibility/upload/private-preview — actual public/private upload, signed download/batch signing và anonymous denial PASS; probe objects đã xóa.
 - [ ] Production backup/restore/PITR/RPO/RTO, legacy-data cutover/reconciliation, broader outage/load và backend cloud deployment.
 
 Dependencies: Batch5B local canonical → Batch6A static readiness → Batch6B hosted database/core local acceptance đã xác minh. Provider follow-up độc lập còn BLOCKED; deployment tương lai phải có acceptance riêng. STD-021 local/hosted integration subgates được giải quyết, parent migration/operational readiness vẫn IN_PROGRESS; STD-006 OPEN. Không đổi các checkbox lịch sử thành DONE ngoài phạm vi.
 
 Evidence: [migration](../evidence/batch-6b-supabase-local-integration/five-project-migration-acceptance-2026-11-16.json), [core/regression](../evidence/batch-6b-supabase-local-integration/final-verification-2026-11-16.json), [provider](../evidence/batch-6b-supabase-local-integration/real-provider-acceptance-results-2026-11-16.json), [cleanup](../evidence/batch-6b-supabase-local-integration/fixture-cleanup-2026-11-16.json), [consolidation](../evidence/batch-6b-supabase-local-integration/config-consolidation-2026-11-16.json).
+
+
+## Batch 7 — G2 provenance implementation checkpoint, 16/11/2026
+
+Source fixes: `RoomInventoryReviewService` xác nhận approval/source/reviewer và đúng room/hotel, chặn foreign-link reads/review/supersede; `RoomTypeMapper` giữ SQL NULL/JSON null amenities và từ chối unsupported shapes. Thêm unit/native round-trip/authorization/approval-vs-hold race và metadata-only read-only classifier. Không thay stock admission policy: §56/56.1 giữ unmanaged legacy compatibility; không gọi mọi positive stock là VERIFIED.
+
+Fresh disposable PostgreSQL18: five canonical tests/Flyway validate/no-op/Hibernate/repositories/permission checks PASS; exact catalog columns/constraints/indexes/sequences/history 5/5 MATCH baseline5B, không drift. Manifest hash-bound theo owner phân biệt canonical V1, legacy/test SQL, external grants. Không sửa applied V1 hoặc history, không V2 cần thiết cho fixes hiện tại, không đọc/ghi Supabase. Local owned cluster dừng finally; synthetic data riêng được giữ để review.
+
+Actual physical stock, representative historical encoding/financial corpus và full legacy upgrade NOT VERIFIED; legacy cutover/import DEFERRED theo fresh/no-import U03. Không guessed backfill, approve, historical booking/financial mutation. **Batch7/G2 PARTIAL**; không đóng toàn STD-006/021/024 hoặc chuyển G3/G4/G5. Batch6B core database/local integration được tạm đóng; provider workstream riêng.
+
+[Báo cáo và regression chính xác](../BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md); [gap classification](../evidence/batch-7-g2-provenance/gap-classification.md); [fresh results](../evidence/batch-7-g2-provenance/schema-verification.json). Checkpoint lịch sử phía trên giữ nguyên, không xem Batch3 legacy defects là canonical V1 chưa triển khai.
+
+
+## Batch 7B — mandatory inventory approval, 16/11/2026
+
+Quyết định mới của người dùng thay thế unmanaged legacy admission compatibility cho booking mới; các checkpoint Batch7/7A giữ nguyên lịch sử. Đã triển khai database approval predicate thực (room/hotel/status/quantity/source/reviewer/time/effective pointer), gate sau room FOR UPDATE ở new hold, availability/search cả không ngày và public catalog/lowestPrice. OWNER changed quantity luôn qua proposal; ADMIN review revision/latest request/stock constraints. Pending/rejected proposal mới giữ effective approved quantity cũ; idempotent retries và confirm/release/expiry của hold cũ giữ nguyên. Frontend thông báo chờ duyệt và dẫn từ tạo phòng sang workflow hiện có. REST409/gRPC FAILED_PRECONDITION; không sửa financial state machine.
+
+**LOCAL IMPLEMENTATION DONE / HOSTED ACCEPTANCE NOT VERIFIED.** Final suite counts/skip/fail attempts nằm trong [báo cáo Batch7B](../BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md) và [evidence](../evidence/batch-7b-inventory-approval/README.md). Five canonical PostgreSQL18 native tests/catalog5/5 PASS, V1 unchanged, không V2; cluster stopped finally. Hosted reads/writes/fixtures0, cleanup N/A. Gateway không có suite riêng/full running acceptance chưa chạy; provider/physical-stock/load/operational gates không được coi verified. Parent provenance/historical gaps STD-006/021/024 không tự đóng; VNPay/Storage/Place/Supabase data giữ nguyên. Không stage/commit/push.
+
+
+## Batch 8 — hosted acceptance/performance checkpoint, 17/11/2026
+
+**PARTIAL / HOSTED APPROVAL & BOOKING E2E BLOCKED**: năm project identity/runtime TLS1.3/read-only catalog+Flyway baseline khớp; Gateway read benchmark480/480 tại concurrency1/3/5/10, không error/timeout. Twelve HTTP scenarios: một transient booking503 lúc startup, recheck401; không successful approval/booking acceptance vì không có ADMIN test hợp lệ (existing users ADMIN0). Không tạo hosted fixtures (0created/0deleted); sau stop row counts/schema/history năm projects không đổi. Empty public catalog/0room: runtime room N+1 chưa xác minh; source có per-room/duplicate approval reads. Không Java optimization/index/schema mutation hoặc production-ready claim. Native five-owner disposable results và limits tại [báo cáo Batch8](../BATCH8_HOSTED_E2E_PERFORMANCE_2026-11-17.md); evidence mới tách riêng, checkpoint6B/7/7B giữ nguyên. Next: provision synthetic ADMIN qua security contract rồi controlled populated E2E+write benchmark+exact-ID cleanup.
+
+
+## Batch 8B — hosted authenticated E2E & performance follow-up, 17/11/2026
+
+**PARTIAL / PERFORMANCE AFTER & FULL CONCURRENCY BLOCKED.** Permanent `admin` login200/ADMIN queue200; real Gateway OWNER→proposal→ADMIN approve/reject→CUSTOMER booking/idempotency/cancel and ownership/header/stale guards exercised. Synthetic hotel publication SQL setup is separate from document/provider acceptance. Small2×2 populated SQL counts/search measured; benchmark29/30 C1 with timeout, stopped. Read batching implemented; final843 executed local regression/native PASS,41 opt-in skips. Hosted AFTER/multi-size slope/expiry/final HTTP ADMIN login not verified because role-connection exhaustion and failed User/Hotel readiness after restart; no latency improvement/N+1-resolved/production-ready claim.
+
+Exact-ID cleanup47 rows,48 manifested IDs absent, fixture broker/DLQ payloads removed without purge; existing row digests and schema/Flyway/counts5/5 match. ADMIN complete row unchanged,active/ADMIN and BCrypt credentials match; final runtime login503 is explicitly BLOCKED. No role/password change,extra ADMIN,hosted DDL/V1/provider/frontend/index/HEAD change or Git stage/commit/push. Prior Batch8 conclusions remain historical. Next: operator-reviewed Supavisor/runtime-role connection lifecycle and readiness, then new controlled populated BEFORE/AFTER+concurrency/expiry/query slope run preserving permanent ADMIN.
+
+[Batch8B report](../BATCH8B_HOSTED_E2E_PERFORMANCE_2026-11-17.md), [evidence](../evidence/batch-8b-hosted-e2e-performance/README.md). Parent standardization/production gates remain open.
+
+
+## Batch 8C — runtime stability & performance checkpoint, 17/11/2026
+
+**PARTIAL; scoped runtime/hosted acceptance PASS, historical ownership RCA và remaining read amplification OPEN.** Thêm opt-in guarded Windows launcher (operation lock, JVM/port/PID ownership, live role-headroom gate, local JMX graceful close, bounded full-chain readiness). Không tăng pool/role cap hoặc đổi hosted settings. Hikari max2/min1/timeout10s; trong run không role-limit error/Hikari timeout. Final post-cleanup ADMIN login/queue HTTP200 sau discovery/route readiness polls; cuối cùng owned JVM/backend rows về0, dependencies dừng/retained.
+
+AFTER thực tế: Gateway1170/1170 + direct150/150 measured samples PASS; datasets2×2,3×5,5×10. Trace-scoped search undated statements22→41→92, dated28→50→107, catalog20→38→87, detail11→14→19, availability4: remaining N+1/read amplification được xác nhận, không claim resolved hoặc % improvement; controlled BEFORE artifact không có. Medium/Larger có per-cell warmup, unsafe concurrency cells được skip rõ. Stock2 race201/201/409, concurrent same-key một booking/hold, cancellation counters0; natural15-minute expiry CANCELLED/RELEASED và replay PASS.
+
+Cleanup194 exact rows/IDs, broker8 exact fixture payloads, Redis4 exact keys absent; schema/Flyway/counts/full-row HMAC5/5 và permanent ADMIN preserved.843 Java/native +6 guard tests PASS,41 opt-in skips; frontend unchanged. Không hosted DDL/role/grant/index/provider call hoặc Git stage/commit/push/reset/checkout/restore. Parent STD-006/021/024 và production/provider/physical-stock gates không tự đóng.
+
+Next: source-level lazy room-media/per-hotel fetch optimization trong run mới, giữ authoritative approval sau lock/idempotency/financial boundaries; current AFTER JAR đã giữ private để làm baseline tương thích. Historical Batch8/8B giữ nguyên. [Báo cáo8C](../BATCH8C_RUNTIME_STABILITY_PERFORMANCE_2026-11-17.md), [evidence](../evidence/batch-8c-runtime-stability/README.md).
+
+## Batch 8D — read amplification & hotel search optimization, 17/11/2026
+
+**DONE (scoped hosted development acceptance); không production-ready.** SQL attribution theo W3C trace ID xác nhận N+1 cấp room (lazy media) và cấp hotel (rooms/policies/FAQ/amenity categories/items/effective codes, approval lặp mapper+matching, dated availability snapshot mỗi hotel). Sửa cục bộ `hotel-service`: `@BatchSize` cho `Hotel.roomTypes`, `HotelMapper.toPublicHotelResponses` đọc facts một lần/response (chunk 500, request-local, không cache), media bulk theo `target_type` (vì `@BatchSize` không batch collection có `@Where` — native evidence), `HotelOfferSearchService.approvalFor` + availability snapshot một lần/request. Không đổi schema/Flyway/API/authorization/approval predicate/booking transaction.
+
+Controlled BEFORE/AFTER trên cùng hosted fixture IDs (AFTER 5×10 rồi exact-ID shrink về đúng tập 3×5, 2×2): SQL 5×10 search undated 96→12, dated 111→15, catalog 91→11, detail 19→11, availability 4→4; slope/room 1,587/1,783/1,522/0,174 → 0. Gateway C1 p50 5×10: search 12022→1919 ms, catalog 11535→1944, detail 2360→1821; dated cell gốc 13291→4701 (nhiễu cửa sổ; đo lặp 2327). Response tương đương 15/15. Gateway 2760/2760 + direct 600/600 thành công; 0 Hikari timeout/role-limit/HTTP500. E2E approval/booking/idempotency/race/cancel/authz PASS. Cleanup 202 rows exact-ID + 14 broker messages + 4 Redis keys; schema/Flyway/counts/full-row HMAC 5/5 và permanent ADMIN preserved. Regression hotel 401 + booking 285 PASS (38 opt-in skips), native PostgreSQL18 2/2 PASS (SQL count hằng số 12/15/11/11 ở 2×2–5×10). Không hosted DDL/index/role/grant/provider call; không Git stage/commit/push/reset/checkout/restore.
+
+Next: giảm 12–15 round trip cố định còn lại hoặc latency floor network (đo RTT/region), hosted rich-content dataset, thứ tự ổn định cho collection public nếu được phê duyệt. Parent STD/production gates không tự đóng. [Báo cáo 8D](../BATCH8D_READ_OPTIMIZATION_2026-11-17.md), [evidence](../evidence/batch-8d-read-optimization/README.md).

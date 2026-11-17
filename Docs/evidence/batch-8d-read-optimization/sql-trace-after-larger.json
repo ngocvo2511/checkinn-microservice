@@ -1,0 +1,1424 @@
+[
+  {
+    "endpoint": "search_undated",
+    "sample": 0,
+    "status": 200,
+    "ms": 2036.0000000000582,
+    "traceId": "0e8a7a278b3f9e542eaf3b3dfcef415d",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 11,
+    "hibernateJdbcMsIncludingNetwork": 1356.7369,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.1267,
+    "loggedHibernateSql": 11,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 4,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 1,
+    "status": 200,
+    "ms": 2294.1714999979013,
+    "traceId": "bbcb13d75e9647b77742e0efde9804fb",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 11,
+    "hibernateJdbcMsIncludingNetwork": 1484.3216,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 113.3485,
+    "loggedHibernateSql": 11,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 4,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_undated",
+    "sample": 2,
+    "status": 200,
+    "ms": 2357.8269999998156,
+    "traceId": "e72eb436f7b825b79d535214ad0a2972",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 11,
+    "hibernateJdbcMsIncludingNetwork": 1594.1126,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 114.7949,
+    "loggedHibernateSql": 11,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 4,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 0,
+    "status": 200,
+    "ms": 2354.2359999992186,
+    "traceId": "0ddabaeab772ce601c059e917607fd49",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 14,
+    "hibernateJdbcMsIncludingNetwork": 1665.0475,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.1263,
+    "loggedHibernateSql": 14,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "ba9985ef4c83",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "78f7f2b38fee",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "636ea7d85017",
+        {
+          "kind": "hibernate",
+          "sql": "select ra1_0.room_type_id, max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end) from public.room_availability ra1_0 where ra1_0.room_type_id in (?...) and ra1_0.date>=? and ra1_0.date<? group by ra1_0.room_type_id",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 1,
+    "status": 200,
+    "ms": 2530.1208999953815,
+    "traceId": "c7ed193cb0c1b510aa1211496e15b42d",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 14,
+    "hibernateJdbcMsIncludingNetwork": 1726.558,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 113.2945,
+    "loggedHibernateSql": 14,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "ba9985ef4c83",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "78f7f2b38fee",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "636ea7d85017",
+        {
+          "kind": "hibernate",
+          "sql": "select ra1_0.room_type_id, max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end) from public.room_availability ra1_0 where ra1_0.room_type_id in (?...) and ra1_0.date>=? and ra1_0.date<? group by ra1_0.room_type_id",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "search_dated",
+    "sample": 2,
+    "status": 200,
+    "ms": 2514.561500000127,
+    "traceId": "1c7d56a36a4ae26d49ad096461fe5936",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 14,
+    "hibernateJdbcMsIncludingNetwork": 1734.8497,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 117.2964,
+    "loggedHibernateSql": 14,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 6,
+    "fingerprints": [
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 2
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "fc248f1e3c3d",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "ba9985ef4c83",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "78f7f2b38fee",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "636ea7d85017",
+        {
+          "kind": "hibernate",
+          "sql": "select ra1_0.room_type_id, max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end) from public.room_availability ra1_0 where ra1_0.room_type_id in (?...) and ra1_0.date>=? and ra1_0.date<? group by ra1_0.room_type_id",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 0,
+    "status": 200,
+    "ms": 1474.0591000008862,
+    "traceId": "b83c2c83d9364b1550c34c6625e2efec",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1179.996,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.0357,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "61fc0a012e82",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 1,
+    "status": 200,
+    "ms": 1636.5193000019644,
+    "traceId": "01f21f4cf23879cb29c46104a0e28038",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1224.5847,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 114.3078,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "61fc0a012e82",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "public_catalog",
+    "sample": 2,
+    "status": 200,
+    "ms": 1648.4531000023708,
+    "traceId": "c961078f6f594400a628affb7cb3725a",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1236.8805,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 115.2882,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 0,
+    "fingerprints": [
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 2
+        }
+      ],
+      [
+        "61fc0a012e82",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "401bfd930369",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id = any (?)",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "9956fcbf44ef",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "4a2563efbacb",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "737634b8b693",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "572a998c305c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "3ac06580e1ed",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?...) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 0,
+    "status": 200,
+    "ms": 1478.0642000041553,
+    "traceId": "c918957b6790af9fc48af84de664a961",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1178.9063,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.0446,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "3c9db77576f3",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "f77d17e10aa3",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "e97f8f084f34",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "1e2b79305491",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "96b30c5fb82c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "2ec70ed2fdc8",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "99368d9e63e6",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 1,
+    "status": 200,
+    "ms": 1568.1530000001658,
+    "traceId": "5cbc0b575dc367b27d8ff7bf24bf832c",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1171.4736,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 116.3894,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "3c9db77576f3",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "f77d17e10aa3",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "e97f8f084f34",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "1e2b79305491",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "96b30c5fb82c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "2ec70ed2fdc8",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "99368d9e63e6",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "hotel_detail",
+    "sample": 2,
+    "status": 200,
+    "ms": 1606.8788999982644,
+    "traceId": "74f3fced2e678171047f2d681d0c121c",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 10,
+    "hibernateJdbcMsIncludingNetwork": 1199.1181,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 127.0145,
+    "loggedHibernateSql": 10,
+    "loggedJdbcTemplateSql": 1,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "3c9db77576f3",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.hotel_id, rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.hotel_id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7229c73a3a5d",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT r.id FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id IN (?...) AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at)",
+          "count": 1
+        }
+      ],
+      [
+        "d2dc3e129cbc",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?...)",
+          "count": 1
+        }
+      ],
+      [
+        "f77d17e10aa3",
+        {
+          "kind": "hibernate",
+          "sql": "select hp1_0.id, hp1_0.category_id, c1_0.id, c1_0.name, hp1_0.content, hp1_0.created_at, hp1_0.hotel_id, hp1_0.is_active, hp1_0.updated_at from public.hotel_policies hp1_0 join public.policy_category_types c1_0 on c1_0.id=hp1_0.category_id where hp1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "e97f8f084f34",
+        {
+          "kind": "hibernate",
+          "sql": "select q1_0.id, q1_0.answer, q1_0.created_at, q1_0.hotel_id, q1_0.is_active, q1_0.question, q1_0.updated_at from public.hotel_questions q1_0 where q1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "1e2b79305491",
+        {
+          "kind": "hibernate",
+          "sql": "select hac1_0.id, hac1_0.created_at, hac1_0.hotel_id, hac1_0.is_active, hac1_0.title, hac1_0.updated_at from public.hotel_amenity_categories hac1_0 where hac1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "96b30c5fb82c",
+        {
+          "kind": "hibernate",
+          "sql": "select ha1_0.id, ha1_0.category_id, ha1_0.created_at, ha1_0.is_active, ha1_0.title from public.hotel_amenities ha1_0 left join public.hotel_amenity_categories c1_0 on c1_0.id=ha1_0.category_id where c1_0.hotel_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "2ec70ed2fdc8",
+        {
+          "kind": "hibernate",
+          "sql": "select ma1_0.id, ma1_0.created_at, ma1_0.is_thumbnail, ma1_0.sort_order, ma1_0.target_id, ma1_0.target_type, ma1_0.updated_at, ma1_0.url from public.media_assets ma1_0 where ma1_0.target_type=? and ma1_0.target_id in (?)",
+          "count": 1
+        }
+      ],
+      [
+        "b9e452a1e673",
+        {
+          "kind": "hibernate",
+          "sql": "select c1_0.id, c1_0.created_at, c1_0.hotel_count, c1_0.latitude, c1_0.longitude, c1_0.name, c1_0.parent_id from public.cities c1_0 where c1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "99368d9e63e6",
+        {
+          "kind": "jdbcTemplate",
+          "sql": "SELECT a.id,k.code,k.label FROM amenity_mapping_states s JOIN amenity_mapping_requests r ON r.id=s.approved_request_id AND r.status='?' AND r.hotel_id=s.hotel_id AND r.amenity_id=s.amenity_id JOIN hotel_amenities a ON a.id=s.amenity_id AND a.title=r.title_snapshot AND a.is_active JOIN hotel_amenity_categories c ON c.id=a.category_id AND c.hotel_id=s.hotel_id AND c.is_active JOIN amenity_mapping_request_codes rc ON rc.request_id=r.id JOIN amenity_catalog k ON k.code=rc.code AND k.active WHERE s.hotel_id IN (?) ORDER BY a.id,k.code",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 0,
+    "status": 200,
+    "ms": 976.1422000010498,
+    "traceId": "a7e8c3dcc4c4439c727131d0c8d59765",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 467.2737,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 0.0585,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e2ab5086242a",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "0fbdfaf11489",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT EXISTS (SELECT 1 FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id=? AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at))",
+          "count": 1
+        }
+      ],
+      [
+        "1a5030254fc4",
+        {
+          "kind": "hibernate",
+          "sql": "select coalesce(max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), 0), coalesce(sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end), 0) from public.room_availability ra1_0 where ra1_0.room_type_id=? and ra1_0.date>=? and ra1_0.date<?",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 1,
+    "status": 200,
+    "ms": 1083.422600000631,
+    "traceId": "dba0a02e3a211485c8931157433ed274",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 465.8748,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 123.7737,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e2ab5086242a",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "0fbdfaf11489",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT EXISTS (SELECT 1 FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id=? AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at))",
+          "count": 1
+        }
+      ],
+      [
+        "1a5030254fc4",
+        {
+          "kind": "hibernate",
+          "sql": "select coalesce(max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), 0), coalesce(sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end), 0) from public.room_availability ra1_0 where ra1_0.room_type_id=? and ra1_0.date>=? and ra1_0.date<?",
+          "count": 1
+        }
+      ]
+    ]
+  },
+  {
+    "endpoint": "room_availability",
+    "sample": 2,
+    "status": 200,
+    "ms": 1146.28200000152,
+    "traceId": "f4938877d90d039828f7eb9090321fca",
+    "matchedSessions": 1,
+    "hibernateStatisticsStatements": 4,
+    "hibernateJdbcMsIncludingNetwork": 538.1253,
+    "connectionAcquisitions": 1,
+    "acquisitionMs": 113.8328,
+    "loggedHibernateSql": 4,
+    "loggedJdbcTemplateSql": 0,
+    "physicalTransactions": 1,
+    "participatingTransactions": 2,
+    "fingerprints": [
+      [
+        "e2ab5086242a",
+        {
+          "kind": "hibernate",
+          "sql": "select rt1_0.id, rt1_0.amenities, rt1_0.base_price, rt1_0.capacity, rt1_0.created_at, rt1_0.description, rt1_0.hotel_id, rt1_0.is_active, rt1_0.name, rt1_0.total_rooms, rt1_0.updated_at from public.room_types rt1_0 where rt1_0.id=?",
+          "count": 1
+        }
+      ],
+      [
+        "7fede7354319",
+        {
+          "kind": "hibernate",
+          "sql": "select h1_0.id, h1_0.accommodation_type, h1_0.address, h1_0.approved_status, h1_0.business_license_file_path, h1_0.business_license_number, h1_0.city_id, h1_0.contact_email, h1_0.contact_phone, h1_0.created_at, h1_0.description, h1_0.is_active, h1_0.name, h1_0.operation_license_file_path, h1_0.operation_license_number, h1_0.owner_id, h1_0.owner_identity_back_path, h1_0.owner_identity_front_path, h",
+          "count": 1
+        }
+      ],
+      [
+        "0fbdfaf11489",
+        {
+          "kind": "hibernate",
+          "sql": "SELECT EXISTS (SELECT 1 FROM room_types r JOIN room_inventory_review_states s ON s.room_id=r.id JOIN room_inventory_review_requests a ON a.id=s.approved_request_id WHERE r.id=? AND r.total_rooms>0 AND s.revision>=2 AND a.room_id=r.id AND a.hotel_id=r.hotel_id AND a.status='?' AND a.proposed_quantity=r.total_rooms AND a.requested_by IS NOT NULL AND a.requested_at IS NOT NULL AND a.reviewed_by IS NOT NULL AND a.reviewed_at>=a.requested_at AND length(trim(a.source))>0 AND length(trim(a.review_reason))>0 AND NOT EXISTS (SELECT 1 FROM room_inventory_review_requests newer WHERE newer.room_id=r.id AND newer.status='?' AND newer.reviewed_at>a.reviewed_at))",
+          "count": 1
+        }
+      ],
+      [
+        "1a5030254fc4",
+        {
+          "kind": "hibernate",
+          "sql": "select coalesce(max((cast(ra1_0.held as bigint)+cast(ra1_0.booked as bigint))), 0), coalesce(sum(case when ra1_0.held<0 or ra1_0.booked<0 then 1 else 0 end), 0) from public.room_availability ra1_0 where ra1_0.room_type_id=? and ra1_0.date>=? and ra1_0.date<?",
+          "count": 1
+        }
+      ]
+    ]
+  }
+]

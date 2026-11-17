@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface HotelAmenityCategoryRepository extends JpaRepository<HotelAmenityCategory, UUID> {
     List<HotelAmenityCategory> findAllByHotelId(UUID hotelId);
+    /** Request-scoped bulk read for public representations; callers bound the ID chunk size. */
+    List<HotelAmenityCategory> findAllByHotelIdIn(java.util.Collection<UUID> hotelIds);
     HotelAmenityCategory findByTitle(String title);
     Optional<HotelAmenityCategory> findByHotelIdAndTitle(UUID hotelId, String title);
     void deleteAllByHotelId(UUID hotelId);

@@ -1,0 +1,26 @@
+[
+  {
+    "service": "eureka",
+    "status": "UP"
+  },
+  {
+    "service": "gateway",
+    "status": "UP"
+  },
+  {
+    "service": "user",
+    "status": "UP"
+  },
+  {
+    "service": "auth",
+    "status": "UP"
+  },
+  {
+    "service": "hotel",
+    "status": "UP"
+  },
+  {
+    "service": "booking",
+    "status": "UP"
+  }
+]

@@ -1,0 +1,211 @@
+{
+  "services": [
+    {
+      "service": "user",
+      "database": "user",
+      "poolMax": 2,
+      "poolMin": 1,
+      "connectionTimeoutMs": 10000,
+      "initializationFailTimeoutMs": 10000,
+      "connectionMode": "JDBC session pooler 5432, TLS verify-full",
+      "runtimeRoleCap": 4,
+      "postgresMax": 60,
+      "postgresReserved": 3,
+      "allocatedProjectBudget": 7,
+      "idleTimeoutMs": {
+        "value": 600000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "maxLifetimeMs": {
+        "value": 1800000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "keepaliveTimeMs": {
+        "value": 0,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "flyway": "disabled; no separate migration datasource at runtime",
+      "secondaryDatasource": "none found in scoped Java/config scan",
+      "openInView": "Boot default true, not overridden in scanned profiles",
+      "scheduledJobs": [
+        "user-service/src/main/java/com/example/userservice/service/PointsReservationRecovery.java"
+      ],
+      "expectedThisRun": 2,
+      "migrationDiagnosticReserve": 1,
+      "operationsReserve": 3,
+      "singleInstanceOnly": true,
+      "autoCommit": "true Hikari default; transactions managed by Spring/JPA"
+    },
+    {
+      "service": "regulations",
+      "database": "regulations",
+      "poolMax": 2,
+      "poolMin": 1,
+      "connectionTimeoutMs": 10000,
+      "initializationFailTimeoutMs": 10000,
+      "connectionMode": "JDBC session pooler 5432, TLS verify-full",
+      "runtimeRoleCap": 4,
+      "postgresMax": 60,
+      "postgresReserved": 3,
+      "allocatedProjectBudget": 7,
+      "idleTimeoutMs": {
+        "value": 600000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "maxLifetimeMs": {
+        "value": 1800000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "keepaliveTimeMs": {
+        "value": 0,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "flyway": "disabled; no separate migration datasource at runtime",
+      "secondaryDatasource": "none found in scoped Java/config scan",
+      "openInView": "Boot default true, not overridden in scanned profiles",
+      "scheduledJobs": [
+        "regulations-service/src/main/java/com/example/regulationsservice/messaging/RegulationEventRecovery.java"
+      ],
+      "expectedThisRun": 0,
+      "migrationDiagnosticReserve": 1,
+      "operationsReserve": 3,
+      "singleInstanceOnly": true,
+      "autoCommit": "false explicit base configuration"
+    },
+    {
+      "service": "hotel",
+      "database": "hotel",
+      "poolMax": 2,
+      "poolMin": 1,
+      "connectionTimeoutMs": 10000,
+      "initializationFailTimeoutMs": 10000,
+      "connectionMode": "JDBC session pooler 5432, TLS verify-full",
+      "runtimeRoleCap": 4,
+      "postgresMax": 60,
+      "postgresReserved": 3,
+      "allocatedProjectBudget": 7,
+      "idleTimeoutMs": {
+        "value": 600000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "maxLifetimeMs": {
+        "value": 1800000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "keepaliveTimeMs": {
+        "value": 0,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "flyway": "disabled; no separate migration datasource at runtime",
+      "secondaryDatasource": "none found in scoped Java/config scan",
+      "openInView": "Boot default true, not overridden in scanned profiles",
+      "scheduledJobs": [
+        "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/HoldCleanupScheduler.java"
+      ],
+      "expectedThisRun": 2,
+      "migrationDiagnosticReserve": 1,
+      "operationsReserve": 3,
+      "singleInstanceOnly": true,
+      "autoCommit": "true Hikari default; transactions managed by Spring/JPA"
+    },
+    {
+      "service": "booking",
+      "database": "booking",
+      "poolMax": 2,
+      "poolMin": 1,
+      "connectionTimeoutMs": 10000,
+      "initializationFailTimeoutMs": 10000,
+      "connectionMode": "JDBC session pooler 5432, TLS verify-full",
+      "runtimeRoleCap": 4,
+      "postgresMax": 60,
+      "postgresReserved": 3,
+      "allocatedProjectBudget": 7,
+      "idleTimeoutMs": {
+        "value": 600000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "maxLifetimeMs": {
+        "value": 1800000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "keepaliveTimeMs": {
+        "value": 0,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "flyway": "disabled; no separate migration datasource at runtime",
+      "secondaryDatasource": "none found in scoped Java/config scan",
+      "openInView": "false explicit",
+      "scheduledJobs": [
+        "booking-service/src/main/java/com/example/bookingservice/messaging/BookingEventRecovery.java",
+        "booking-service/src/main/java/com/example/bookingservice/payment/refund/ManualRefundRecovery.java",
+        "booking-service/src/main/java/com/example/bookingservice/booking/service/BookingScheduledTask.java",
+        "booking-service/src/main/java/com/example/bookingservice/booking/service/LoyaltySettlementRecovery.java",
+        "booking-service/src/main/java/com/example/bookingservice/booking/service/OnsiteReservationRecovery.java",
+        "booking-service/src/main/java/com/example/bookingservice/booking/service/PaidReservationRecovery.java"
+      ],
+      "expectedThisRun": 2,
+      "migrationDiagnosticReserve": 1,
+      "operationsReserve": 3,
+      "singleInstanceOnly": true,
+      "autoCommit": "true Hikari default; transactions managed by Spring/JPA"
+    },
+    {
+      "service": "revenue",
+      "database": "revenue",
+      "poolMax": 2,
+      "poolMin": 1,
+      "connectionTimeoutMs": 10000,
+      "initializationFailTimeoutMs": 10000,
+      "connectionMode": "JDBC session pooler 5432, TLS verify-full",
+      "runtimeRoleCap": 4,
+      "postgresMax": 60,
+      "postgresReserved": 3,
+      "allocatedProjectBudget": 7,
+      "idleTimeoutMs": {
+        "value": 600000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "maxLifetimeMs": {
+        "value": 1800000,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "keepaliveTimeMs": {
+        "value": 0,
+        "basis": "Hikari 5.1.0 default; no source override"
+      },
+      "flyway": "disabled; no separate migration datasource at runtime",
+      "secondaryDatasource": "none found in scoped Java/config scan",
+      "openInView": "Boot default true, not overridden in scanned profiles",
+      "scheduledJobs": [],
+      "expectedThisRun": 0,
+      "migrationDiagnosticReserve": 1,
+      "operationsReserve": 3,
+      "singleInstanceOnly": true,
+      "autoCommit": "true Hikari default; transactions managed by Spring/JPA"
+    }
+  ],
+  "nonDatabaseServices": [
+    "Eureka",
+    "Gateway",
+    "Auth (User gRPC/HTTP and Redis only)",
+    "Notification (not started)",
+    "Media (not started)"
+  ],
+  "limits": "Role cap is backend limit, not a Supavisor client quota. No account/dashboard pool-size or total external-client visibility obtained; do not infer these from pg_stat_activity.",
+  "budget": "Per independent database: runtime max2 + migration reserve2 + operations3 = allocated7. App role4 admits one max2 JVM with backend headroom2; two replicas consume4 and leave zero role headroom, therefore disallowed by this launcher. Revenue/Regulations runtime0 this run. Redis/RabbitMQ do not open PostgreSQL connections.",
+  "otherWorkspaceServices": [
+    {
+      "service": "Place",
+      "hasDatasource": true,
+      "configuredLoopback": true,
+      "supabaseProfilePresent": false,
+      "started": false,
+      "hostedBudgetThisRun": 0
+    },
+    {
+      "service": "Config/Admin servers",
+      "started": false,
+      "hostedDatasourceFound": false
+    }
+  ]
+}

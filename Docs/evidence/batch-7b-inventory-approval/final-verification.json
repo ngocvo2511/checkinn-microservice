@@ -1,0 +1,298 @@
+{
+  "asOf": "2026-11-16 Asia/Saigon",
+  "hostedReads": 0,
+  "hostedWrites": 0,
+  "hostedFixtures": 0,
+  "hostedCleanup": "NOT_APPLICABLE",
+  "schema": {
+    "testRunId": "a3c100e170c7486782fdb102fbc3e847",
+    "hosted": false,
+    "postgresVersion": "postgres (PostgreSQL) 18.0",
+    "port": 55486,
+    "privateDirectory": ".local/batch7b-schema-a3c100e170c7486782fdb102fbc3e847",
+    "services": [
+      {
+        "owner": "user",
+        "database": "batch5b_user_1794846717_39340",
+        "exitCode": 0,
+        "tests": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "passCanonical": true,
+        "catalogDifferences": {},
+        "passCatalog": true
+      },
+      {
+        "owner": "hotel",
+        "database": "batch5b_hotel_1794846800_39340",
+        "exitCode": 0,
+        "tests": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "passCanonical": true,
+        "catalogDifferences": {},
+        "passCatalog": true
+      },
+      {
+        "owner": "booking",
+        "database": "batch5b_booking_1794846897_39340",
+        "exitCode": 0,
+        "tests": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "passCanonical": true,
+        "catalogDifferences": {},
+        "passCatalog": true
+      },
+      {
+        "owner": "revenue",
+        "database": "batch5b_revenue_1794846965_39340",
+        "exitCode": 0,
+        "tests": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "passCanonical": true,
+        "catalogDifferences": {},
+        "passCatalog": true
+      },
+      {
+        "owner": "regulations",
+        "database": "batch5b_regulations_1794847040_39340",
+        "exitCode": 0,
+        "tests": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "passCanonical": true,
+        "catalogDifferences": {},
+        "passCatalog": true
+      }
+    ],
+    "cleanup": {
+      "clusterStopped": true,
+      "dataPreservedForReview": true,
+      "hostedWrites": 0,
+      "developmentDatabaseTouched": false
+    },
+    "completedAt": "2026-11-16T16:38:07.883969+00:00"
+  },
+  "canonicalV1": [
+    {
+      "path": "booking-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "sha256": "1d6c3b49fe1c70e04227a2e8c7a583aaef6dc3cec771402c8c083ac67a5cfad2",
+      "unchanged": true
+    },
+    {
+      "path": "hotel-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "sha256": "0d1dd1b726d1e22758ce098bca5b2eefd5ed20def0439a7cddf5d44a0e190c4a",
+      "unchanged": true
+    },
+    {
+      "path": "regulations-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "sha256": "f90aaf2e94ef7fdf15df1a43b48d60f3cf003afa51287e311996b539a1a78fac",
+      "unchanged": true
+    },
+    {
+      "path": "revenue-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "sha256": "bbbc05f29bdfd8282e5af5152b75a375787bb1fe19611e02774e4d53726c8223",
+      "unchanged": true
+    },
+    {
+      "path": "user-service/src/main/resources/db/canonical/V1__canonical_schema.sql",
+      "sha256": "ec1311005b867250ca49afd1d7fdfa479c0e2064c99df6e8bb8868a4222b5d1d",
+      "unchanged": true
+    }
+  ],
+  "protectedSnapshotFilesUnexpectedlyChanged": [],
+  "filesChanged": {
+    "checkinn": [
+      "Docs/BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md",
+      "Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md",
+      "Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md",
+      "booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java",
+      "booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryApprovalRequiredException.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java",
+      "hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java",
+      "hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java",
+      "hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java",
+      "hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java",
+      "tools/batch7b-schema-verify.py"
+    ],
+    "checkinn-frontend": [
+      "app/host/hotels/[id]/rooms/[roomId]/page.tsx",
+      "app/host/hotels/[id]/rooms/new/page.tsx",
+      "components/host/RoomInventoryReview.tsx",
+      "tests/browser/inventory-review.spec.ts",
+      "tests/browser/new-room-facts.spec.ts"
+    ]
+  },
+  "git": {
+    "checkinn": {
+      "branch": "feat/supabase-dev-runtime",
+      "head": "ea46f3cb7168039b0160d05a05822aa906a81a17",
+      "headUnchanged": true,
+      "stagedDiffStatUnchanged": true,
+      "status": " M .idea/compiler.xml\n M .idea/encodings.xml\n M Docs/BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md\n M Docs/BATCH6B_SUPABASE_LOCAL_DATABASE_INTEGRATION_2026-11-16.md\nA  Docs/BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md\n M Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md\n M Docs/evidence/batch-6b-supabase-local-integration/final-verification-2026-11-16.json\nA  Docs/evidence/batch-7-g2-provenance/README.md\nA  Docs/evidence/batch-7-g2-provenance/booking-catalog.json\nA  Docs/evidence/batch-7-g2-provenance/compatibility-financial.md\nA  Docs/evidence/batch-7-g2-provenance/final-verification.json\nA  Docs/evidence/batch-7-g2-provenance/gap-classification.md\nA  Docs/evidence/batch-7-g2-provenance/hotel-catalog.json\nA  Docs/evidence/batch-7-g2-provenance/initial-state.json\nA  Docs/evidence/batch-7-g2-provenance/inventory.md\nA  Docs/evidence/batch-7-g2-provenance/migration-manifests.json\nA  Docs/evidence/batch-7-g2-provenance/regression-results.json\nA  Docs/evidence/batch-7-g2-provenance/regulations-catalog.json\nA  Docs/evidence/batch-7-g2-provenance/revenue-catalog.json\nA  Docs/evidence/batch-7-g2-provenance/schema-verification-09203d90ba4d425d8457ea940adf0444.json\nA  Docs/evidence/batch-7-g2-provenance/schema-verification-76292d75545040178160426939ddbdbd.json\nA  Docs/evidence/batch-7-g2-provenance/schema-verification.json\nA  Docs/evidence/batch-7-g2-provenance/schema.md\nA  Docs/evidence/batch-7-g2-provenance/user-catalog.json\n M Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md\n M Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md\n M booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java\n M booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java\nA  docker/batch7-inventory-provenance.sql\n M hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java\n M hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/mapper/RoomTypeMapper.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java\n M hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java\n M hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java\n M hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java\n M hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java\n M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java\n M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java\n M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java\nA  hotel-service/src/test/java/com/example/hotelservice/Room/mapper/RoomAmenitiesCompatibilityTest.java\n M hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java\n M hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java\n M hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java\n M hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java\n M hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java\nA  tools/batch7-schema-verify.py\n?? Docs/BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md\n?? Docs/evidence/batch-6b-supabase-local-integration/storage-live-acceptance-2026-11-16.json\n?? Docs/evidence/batch-7b-inventory-approval/\n?? hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryApprovalRequiredException.java\n?? hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java\n?? tools/batch7b-schema-verify.py\n"
+    },
+    "checkinn-frontend": {
+      "branch": "main",
+      "head": "91a2751cf500c38b95a68e354374f63eea9d5113",
+      "headUnchanged": true,
+      "stagedDiffStatUnchanged": true,
+      "status": " M app/host/hotels/[id]/rooms/[roomId]/page.tsx\n M app/host/hotels/[id]/rooms/new/page.tsx\n M components/host/RoomInventoryReview.tsx\n M tests/browser/inventory-review.spec.ts\n M tests/browser/new-room-facts.spec.ts\n"
+    }
+  },
+  "finalStatus": "LOCAL IMPLEMENTATION DONE / HOSTED ACCEPTANCE NOT VERIFIED",
+  "finalRegression": {
+    "date": "2026-11-16 Asia/Saigon",
+    "finalStatus": "LOCAL IMPLEMENTATION DONE / HOSTED ACCEPTANCE NOT VERIFIED",
+    "overlapPolicy": "Only final full suites counted; focused/earlier attempts excluded. Five native tests executed separately from opt-in skips. No aggregate claiming skips as pass.",
+    "hotel": {
+      "command": "mvn.cmd -o -B -ntp -pl hotel-service '-Dtest=*,!HotelServiceApplicationTests' test",
+      "discovered": 429,
+      "pass": 396,
+      "fail": 0,
+      "error": 0,
+      "skipped": 33,
+      "log": ".local/batch7b-hotel-final-complete.log",
+      "logSha256": "4e00954406f3787f1798d4b62556e368323aaf6f90cc7f7a84d923474abccfc1"
+    },
+    "booking": {
+      "command": "mvn.cmd -o -B -ntp -pl booking-service '-Dtest=*,!BookingServiceApplicationTests' test",
+      "discovered": 289,
+      "pass": 285,
+      "fail": 0,
+      "error": 0,
+      "skipped": 4,
+      "log": ".local/batch7b-booking-final.log",
+      "logSha256": "387e75624bd971904e58a8409229bd375f8354922eb1bfd586253f3a9dca383a"
+    },
+    "native": {
+      "command": "python tools/batch7b-schema-verify.py",
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0,
+      "catalogMatches": 5,
+      "clusterStopped": true
+    },
+    "frontend": {
+      "command": "npm.cmd run test:regression",
+      "pass": 214,
+      "fail": 0,
+      "skipped": 0
+    },
+    "browser": {
+      "command": "npx.cmd playwright test tests/browser/inventory-review.spec.ts tests/browser/new-room-facts.spec.ts tests/browser/unknown-room-facts.spec.ts tests/browser/search-lifecycle.spec.ts",
+      "pass": 28,
+      "fail": 0,
+      "skipped": 0,
+      "syntheticApi": true
+    },
+    "typecheck": {
+      "command": "npx.cmd tsc --noEmit",
+      "status": "PASS"
+    },
+    "build": {
+      "command": "npm.cmd run build",
+      "status": "PASS",
+      "warnings": [
+        "Existing middleware convention deprecation"
+      ]
+    },
+    "gateway": {
+      "status": "NOT RUN / NO SUITE",
+      "attemptedCommand": "mvn.cmd -o -B -ntp -pl api-gateway '-Dtest=*,!ApiGatewayApplicationTests' test",
+      "commandResult": "FAIL: no tests matching; src/test absent",
+      "fullRunningGatewayAcceptance": "NOT VERIFIED",
+      "serviceAuthorization": "PASS in Hotel HTTP/JWT and gRPC suites"
+    },
+    "excluded": [
+      "HotelServiceApplicationTests",
+      "BookingServiceApplicationTests"
+    ],
+    "earlierFailedAttempts": [
+      {
+        "log": ".local/batch7b-hotel.log",
+        "reason": "New test generic type inference ambiguous; corrected explicit type arguments"
+      },
+      {
+        "log": ".local/batch7b-hotel-final.log",
+        "reason": "Two old no-interactions expectations plus one public-room fixture not adapted to approval reads; final suites rerun"
+      },
+      {
+        "log": ".local/batch7b-gateway.log",
+        "reason": "No test suite exists, not reported PASS"
+      }
+    ],
+    "hosted": {
+      "reads": 0,
+      "writes": 0,
+      "fixtures": 0,
+      "cleanup": "NOT_APPLICABLE",
+      "acceptance": "NOT VERIFIED"
+    }
+  },
+  "completedAt": "2026-11-16T23:44:45.439592+07:00",
+  "batchFilesSha256": {
+    "checkinn/Docs/BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md": "93a03c1f5556fe77d781ebb80c3d194638549f470218a22b2d834917a7d205c3",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md": "3eb9b918c49d2e8e15f3e8e078a4578ac03233df0429c40c4ea1f94fbe3a3b24",
+    "checkinn/Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md": "00af53355029d662b7b4d28bffa0be5d9942375b313c8c3263a86660fe2b917e",
+    "checkinn/booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java": "b2689c286a2946ec13033c9b0ea43a8c27e75f840d402d20ec767bcd3d6d67d8",
+    "checkinn/booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java": "acd7004b2fcbcc668987d3363b18a2027acc8ae610e1366cab04bdaeeec78b63",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java": "0c830e68c908c7442b78060263e53d10d791e0c2565d61d5d37f895f497f0f1e",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java": "c579fa5b036f5e2bc85e642d7020c9c170b46fe21cb37583b38498f1775b71e7",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java": "066f3ae3605e8edcb25e62fb7bbbb1c343482cc7db04c4238d60dc50e7b628dc",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java": "c36106833c21a841203533660063cbdb536b71242db97c5f9576530cca624035",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryApprovalRequiredException.java": "1a06ab94f42dbe19bbe2c518dc3f47c7dcee7ed5d4e17f94c596348c2d0ccc05",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java": "7bee99e44fdaea18653c78f4a8e2be57c32bd0ababc3319bbc3c7ad5c905e6c6",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java": "56134e5aaad6d96f23ac398262c0c844c9a56034efd2d822ec65a644aa46b756",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java": "c12ad97141543afdb661faa7a29fe9dac1d7bedac3bbfa130b58455c514b2b77",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java": "ee472330219c59ae1ca65f47c1ce8c3e25a15416598a7b5fbd98a76e34597bf1",
+    "checkinn/hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java": "a7a34d8fbb6a9deac3eb3d06bdeb88dd435fea6b565931b106be9f427c6e55cd",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java": "f66801a5c5adf0929405fc257f2cb5eb0578796646cdf3ab3600ac4dc86f7963",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java": "d5218fd88b362a2d7c88bdbd773641a1e7078c2eb8b6a0d73d4871e2cbb3f24e",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java": "734ebda54ae22347f3f3c65c056cb4888999d758a6a8645ce0acf802d00436e6",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java": "c45c8951b1fa0659e2ab08c703c91bd95261d49c2e140be2ce973befe8abe9b4",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java": "01532ca6108b0b316002fb34515b90be36307becd1b55ceb546fcb40f3e2f268",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java": "813bf488c9bace4a2d7b8f516cb08c3cef79f0b712c74e6a033e260c863b0a43",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java": "9bb796d93174907fbea77807038b9afc517e641dc39e610515e8de4c6fc3ee46",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java": "257634cc2dad5adf68eecceb39ba721440f84177235e5649cb5e33c4b02ac0b9",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java": "0df364991c31032fb22261c17aef62b3e8a73269cc1462ab38707513daf50a10",
+    "checkinn/hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java": "a8b09c6732664693d0083ce63051f757b7c20c6b87bf2081298d523ec9f81cbd",
+    "checkinn/tools/batch7b-schema-verify.py": "413d913cac7b658d746eb2683e9882b1a15a3f81cfe70d6e9dc075d68051253a",
+    "checkinn-frontend/app/host/hotels/[id]/rooms/[roomId]/page.tsx": "67fbca9225954db0d56845434f14063b1911d28d943dc19c3ce32dfe5c3eaaa6",
+    "checkinn-frontend/app/host/hotels/[id]/rooms/new/page.tsx": "d3e6845af99fc734ab48f805fd1ec9e8aac62b1e48074a6332413824d7bcb7a9",
+    "checkinn-frontend/components/host/RoomInventoryReview.tsx": "5a17c1a1626d883eec2a1e041d7e6640824ecf9ac53d3048e4ccdc578ea08a43",
+    "checkinn-frontend/tests/browser/inventory-review.spec.ts": "473807e198deb3fd1102d521406e1607d668b4f6f5514deafd1ff4ced07e803a",
+    "checkinn-frontend/tests/browser/new-room-facts.spec.ts": "452b2d9b9f378c5d4f7b4bc88c1d08fc3e63e7ee764a9249cc2e2d444f1990d1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "deadline": "2026-11-17T08:57:56.848",
+  "bookingId": "4e5ab02c-3b29-3ca2-bb92-dd15e9a776d5",
+  "schedulerLogLines": [
+    "2026-11-17 09:00:00  INFO [booking-service] [traceId=6afc17909a637bdc33620827029a1fbe] [userId=anonymous] [user=anonymous] com.example.bookingservice.booking.service.BookingScheduledTask - Cancelled expired hold for booking: 4e5ab02c-3b29-3ca2-bb92-dd15e9a776d5 (status: CANCELLED, holdExpiresAt: 2026-11-17T08:57:56.848)",
+    "file: > 2026-11-17 09:00:00  INFO [booking-service] [traceId=6afc17909a637bdc33620827029a1fbe] [userId=anonymous] [user=anonymous] com.example.bookingservice.booking.service.BookingScheduledTask - Cancelled expired hold for booking: 4e5ab02c-3b29-3ca2-bb92-dd15e9a776d5 (status: CANCELLED, holdExpiresAt: 2026-11-17T08:57:56.848)"
+  ],
+  "lastStateVerification": "natural-expiry-result.json",
+  "note": "Scheduler event timestamp is distinct from later HTTP/SQL observation; no expiry timestamp was altered"
+}

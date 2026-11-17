@@ -1,0 +1,26 @@
+[
+  {
+    "case": "ADMIN real Gateway login",
+    "httpStatus": 503,
+    "passed": false
+  },
+  {
+    "case": "hotel search",
+    "httpStatus": 200,
+    "passed": true
+  },
+  {
+    "case": "booking authorization",
+    "httpStatus": 401,
+    "passed": true
+  },
+  {
+    "case": "Eureka registrations",
+    "registered": [
+      "BOOKING-SERVICE",
+      "HOTEL-SERVICE",
+      "USER-SERVICE"
+    ],
+    "passed": false
+  }
+]

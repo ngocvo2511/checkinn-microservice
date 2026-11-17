@@ -1,0 +1,16 @@
+{
+  "processes": {},
+  "ports": {
+    "eureka": 8761,
+    "gateway": 8080,
+    "auth": 8081,
+    "user": 8082,
+    "hotel": 8083,
+    "booking": 8084,
+    "media": 8085,
+    "notification": 8086,
+    "revenue": 8088,
+    "regulations": 8091,
+    "frontend": 3000
+  }
+}

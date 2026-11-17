@@ -1,0 +1,18 @@
+{
+  "hostedWriteScenarios": "NOT EXECUTED",
+  "fixtureTables": [],
+  "recordsCreated": 0,
+  "recordsDeleted": 0,
+  "exactIdCleanupStatements": [],
+  "reason": "No fixtures created. Do not run historical Batch6B cleanup scripts.",
+  "sideEffectReview": {
+    "hotelTriggers": 0,
+    "userTriggers": 0,
+    "managedEventTriggersPerProject": 6,
+    "regulationsExistingOutboxRows": 4,
+    "regulationsServiceStarted": false,
+    "notificationWorkerStarted": false,
+    "providersCalled": false
+  },
+  "verification": "Compare all five metadata/history and table counts after stopping run-owned services; empty exact fixture ID set."
+}

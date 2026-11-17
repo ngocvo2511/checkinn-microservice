@@ -38,6 +38,7 @@ class AvailabilityServiceTest {
     private RoomType room;
 
     @BeforeEach void setUp() {
+        when(rooms.hasEffectiveInventoryApproval(any())).thenReturn(true);
         when(availability.findLoadForStay(any(),any(),any())).thenReturn(load(0,0));
         room = new RoomType();
         room.setId(roomId);
@@ -200,6 +201,22 @@ class AvailabilityServiceTest {
         assertThat(counters.getBooked()).isEqualTo(1);
         assertThat(counters.getHeld()).isZero();
         verify(availability, times(1)).save(any());
+    }
+
+    @Test void positiveUnapprovedInventoryCannotCreateHoldOrAdvertiseStock() throws Exception {
+        room.setTotalRooms(10);
+        when(rooms.hasEffectiveInventoryApproval(roomId)).thenReturn(false);
+        assertThatThrownBy(()->service.checkAndHold(new HoldRequest(roomId,checkIn,checkOut,1)))
+                .isInstanceOf(InventoryApprovalRequiredException.class);
+        assertThatThrownBy(()->service.getAvailableRoomCount(roomId,checkIn,checkOut))
+                .isInstanceOf(InventoryApprovalRequiredException.class);
+        var mvc=MockMvcBuilders.standaloneSetup(new AvailabilityController(service))
+                .setControllerAdvice(new com.example.hotelservice.exception.GlobalExceptionHandler()).build();
+        mvc.perform(post("/api/v1/availability/hold").contentType("application/json")
+                .content("{\"roomTypeId\":\""+roomId+"\",\"checkInDate\":\""+checkIn+"\",\"checkOutDate\":\""+checkOut+"\",\"quantity\":1}"))
+                .andExpect(status().isConflict())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.code").value("INVENTORY_APPROVAL_REQUIRED"));
+        verifyNoInteractions(availability,holds);
     }
 
     private RoomHold heldRoom(UUID holdId) {

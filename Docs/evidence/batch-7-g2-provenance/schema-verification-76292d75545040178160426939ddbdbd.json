@@ -1,0 +1,44 @@
+{
+  "testRunId": "76292d75545040178160426939ddbdbd",
+  "hosted": false,
+  "postgresVersion": "postgres (PostgreSQL) 18.0",
+  "port": 55486,
+  "privateDirectory": ".local/batch7-schema-76292d75545040178160426939ddbdbd",
+  "services": [
+    {
+      "owner": "user",
+      "database": "batch5b_user_1794832096_43244",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    },
+    {
+      "owner": "hotel",
+      "database": "batch5b_hotel_1794832125_43244",
+      "exitCode": 1,
+      "tests": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "passCanonical": false,
+      "failure": "New synthetic encoding fixture: NPE verifyEncodingRoundTrips line210; see compatibility findings. Original harness log decoding then raised UnicodeDecodeError; corrected."
+    }
+  ],
+  "cleanup": {
+    "clusterStopped": true,
+    "dataPreservedForReview": true,
+    "hostedWrites": 0,
+    "developmentDatabaseTouched": false
+  },
+  "completedAt": "2026-11-16T12:29:28.987827+00:00",
+  "status": "FAILED_ATTEMPT"
+}

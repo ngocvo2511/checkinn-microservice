@@ -1,0 +1,119 @@
+{
+  "testRunId": "45589461fd63472d8ac54779d071c8fa",
+  "hosted": false,
+  "postgresVersion": "postgres (PostgreSQL) 18.0",
+  "port": 55486,
+  "runs": [
+    {
+      "test": "CanonicalPostgresAcceptanceTest",
+      "database": "batch5b_hotel_1794927662_3092",
+      "exitCode": 0,
+      "summary": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "sqlCounts": []
+    },
+    {
+      "test": "PublicReadAmplificationPostgresTest",
+      "database": "batch5b_hotel_1794927709_3092",
+      "exitCode": 0,
+      "summary": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "sqlCounts": [
+        {
+          "shape": "2x2",
+          "endpoint": "search_undated",
+          "statements": 12
+        },
+        {
+          "shape": "2x2",
+          "endpoint": "search_dated",
+          "statements": 15
+        },
+        {
+          "shape": "2x2",
+          "endpoint": "public_catalog",
+          "statements": 11
+        },
+        {
+          "shape": "2x2",
+          "endpoint": "hotel_detail",
+          "statements": 11
+        },
+        {
+          "shape": "1x10",
+          "endpoint": "search_undated",
+          "statements": 12
+        },
+        {
+          "shape": "1x10",
+          "endpoint": "search_dated",
+          "statements": 15
+        },
+        {
+          "shape": "1x10",
+          "endpoint": "public_catalog",
+          "statements": 11
+        },
+        {
+          "shape": "1x10",
+          "endpoint": "hotel_detail",
+          "statements": 11
+        },
+        {
+          "shape": "3x5",
+          "endpoint": "search_undated",
+          "statements": 12
+        },
+        {
+          "shape": "3x5",
+          "endpoint": "search_dated",
+          "statements": 15
+        },
+        {
+          "shape": "3x5",
+          "endpoint": "public_catalog",
+          "statements": 11
+        },
+        {
+          "shape": "3x5",
+          "endpoint": "hotel_detail",
+          "statements": 11
+        },
+        {
+          "shape": "5x10",
+          "endpoint": "search_undated",
+          "statements": 12
+        },
+        {
+          "shape": "5x10",
+          "endpoint": "search_dated",
+          "statements": 15
+        },
+        {
+          "shape": "5x10",
+          "endpoint": "public_catalog",
+          "statements": 11
+        },
+        {
+          "shape": "5x10",
+          "endpoint": "hotel_detail",
+          "statements": 11
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "clusterStopped": true,
+    "hostedWrites": 0,
+    "developmentDatabaseTouched": false
+  },
+  "completedAt": "2026-11-17T15:02:34.084687+00:00"
+}

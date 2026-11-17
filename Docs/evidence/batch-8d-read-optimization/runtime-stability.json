@@ -1,0 +1,218 @@
+{
+  "window": "Log lines with UTC timestamp >= 2026-11-17 12:06:00 (first Batch8D owned start) until final pre-stop snapshot",
+  "logScan": [
+    {
+      "service": "eureka",
+      "linesInWindow": 199,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 0,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 0
+    },
+    {
+      "service": "gateway",
+      "linesInWindow": 92,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 0,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 0
+    },
+    {
+      "service": "user",
+      "linesInWindow": 6625,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 0,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 0
+    },
+    {
+      "service": "auth",
+      "linesInWindow": 290,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 0,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 0
+    },
+    {
+      "service": "hotel",
+      "linesInWindow": 125119,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 1,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 1
+    },
+    {
+      "service": "booking",
+      "linesInWindow": 560685,
+      "roleLimitErrors": 0,
+      "hikariAcquisitionTimeouts": 0,
+      "errorLevelLines": 3,
+      "http500StatusLines": 0,
+      "hikariShutdownCompleted": 0
+    }
+  ],
+  "finalMetrics": {
+    "user": {
+      "hikaricp.connections.active": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.pending": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.timeout": [
+        [
+          "COUNT",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.max": [
+        [
+          "VALUE",
+          2.0
+        ]
+      ],
+      "hikaricp.connections.acquire": [
+        [
+          "COUNT",
+          377.0
+        ],
+        [
+          "TOTAL_TIME",
+          42.410803
+        ],
+        [
+          "MAX",
+          0.1264899
+        ]
+      ],
+      "jvm.memory.used?tag=area:heap": [
+        [
+          "VALUE",
+          76436640.0
+        ]
+      ],
+      "jvm.memory.max?tag=area:heap": [
+        [
+          "VALUE",
+          268435454.0
+        ]
+      ]
+    },
+    "hotel": {
+      "hikaricp.connections.active": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.pending": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.timeout": [
+        [
+          "COUNT",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.max": [
+        [
+          "VALUE",
+          2.0
+        ]
+      ],
+      "hikaricp.connections.acquire": [
+        [
+          "COUNT",
+          2213.0
+        ],
+        [
+          "TOTAL_TIME",
+          2414.4675333
+        ],
+        [
+          "MAX",
+          0.1708959
+        ]
+      ],
+      "jvm.memory.used?tag=area:heap": [
+        [
+          "VALUE",
+          108183904.0
+        ]
+      ],
+      "jvm.memory.max?tag=area:heap": [
+        [
+          "VALUE",
+          268435454.0
+        ]
+      ]
+    },
+    "booking": {
+      "hikaricp.connections.active": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.pending": [
+        [
+          "VALUE",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.timeout": [
+        [
+          "COUNT",
+          0.0
+        ]
+      ],
+      "hikaricp.connections.max": [
+        [
+          "VALUE",
+          2.0
+        ]
+      ],
+      "hikaricp.connections.acquire": [
+        [
+          "COUNT",
+          28936.0
+        ],
+        [
+          "TOTAL_TIME",
+          1091.2348656
+        ],
+        [
+          "MAX",
+          4.8514998
+        ]
+      ],
+      "jvm.memory.used?tag=area:heap": [
+        [
+          "VALUE",
+          107911456.0
+        ]
+      ],
+      "jvm.memory.max?tag=area:heap": [
+        [
+          "VALUE",
+          268435454.0
+        ]
+      ]
+    }
+  },
+  "errorSamplesPrivateOnly": "See classification in report; raw lines kept in private console logs"
+}

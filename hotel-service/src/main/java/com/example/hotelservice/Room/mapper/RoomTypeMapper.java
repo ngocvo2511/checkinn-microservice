@@ -39,6 +39,11 @@ public abstract class RoomTypeMapper {
     @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(entity.getMediaAssets()))")
     public abstract RoomTypeResponse toRoomTypeResponse(RoomType entity);
 
+    /** Same representation as {@link #toRoomTypeResponse} with media supplied by a request-scoped bulk read. */
+    @InheritConfiguration(name = "toRoomTypeResponse")
+    @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(media))")
+    public abstract RoomTypeResponse toRoomTypeResponseWithMedia(RoomType entity, @Context java.util.List<com.example.hotelservice.MediaAsset.entity.MediaAsset> media);
+
     /** Internal eligibility facts only; never returned as a public room representation. */
     @Named("searchCandidate")
     @BeanMapping(ignoreByDefault = true)
@@ -71,8 +76,24 @@ public abstract class RoomTypeMapper {
     }
 
     protected List<String> readAmenities(String json) {
-        try { return objectMapper.readValue(json, List.class); }
-        catch (Exception ex) { throw new RuntimeException(ex); }
+        // SQL NULL and JSON null both represent the optional, unknown value.
+        // Do not coerce legacy objects/numbers or decode nested strings into valid labels.
+        if (json == null) return null;
+        try {
+            var value = objectMapper.readTree(json);
+            if (value != null && value.isNull()) return null;
+            if (value == null || !value.isArray())
+                throw new IllegalStateException("Stored room amenities must be a string array or null");
+            var labels = new java.util.ArrayList<String>(value.size());
+            for (var item : value) {
+                if (!item.isTextual())
+                    throw new IllegalStateException("Stored room amenities must contain only strings");
+                labels.add(item.textValue());
+            }
+            return labels;
+        } catch (com.fasterxml.jackson.core.JsonProcessingException invalid) {
+            throw new IllegalStateException("Stored room amenities contain invalid JSON");
+        }
     }
 
     protected java.util.List<com.example.hotelservice.MediaAsset.dto.response.MediaAssetResponse> toMediaAssetResponses(

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "booking": {
+    "status": "CANCELLED",
+    "holdExpiresAt": "2026-11-17T08:57:56.848"
+  },
+  "holds": [
+    {
+      "status": "RELEASED",
+      "expiresAt": "2026-11-17T08:57:56.848+00:00"
+    }
+  ],
+  "counters": {
+    "held": 0,
+    "booked": 0
+  },
+  "observedAt": "2026-11-17T10:03:39.798594+00:00"
+}

@@ -1,6 +1,6 @@
 {
-  "status": "PARTIAL",
-  "scope": "Core local development passed; real VNPay Sandbox and Storage acceptance explicitly requested, currently blocked at external providers",
+  "status": "DONE",
+  "scope": "Batch6B local development + real VNPay Sandbox and Storage acceptance; excludes production/IPN/refund/outage certification",
   "timestampUtc": "2026-11-15T21:56:32.776366+00:00",
   "doneConditions": {
     "1": "PASS",
@@ -48,13 +48,14 @@
   "protectedSqlAndBaseConfigsUnchanged": 30,
   "legacyDatabaseDdlDmlExecuted": false,
   "syntheticHostedBusinessDataCreatedAndRetained": false,
-  "realPaymentOrRefundProviderCalled": false,
+  "realPaymentOrRefundProviderCalled": true,
   "externalSmtpEmailSent": false,
   "migrationApprovalsDisabled": true,
   "optionalNotRun": [
-    "Real VNPay sandbox merchant/provider integration (no supplied provider credentials)",
-    "Supabase Storage uploads/previews (no supplied storage credentials)",
-    "Provider-wide network outage/load/production backup restore drill"
+    "External IPN webhook delivery",
+    "Real provider refund/query/reconciliation",
+    "External SMTP",
+    "Provider-wide outage/load and production backup/PITR/restore drill"
   ],
   "retainedLimitations": [
     "Runtime inherits managed PUBLIC database TEMP; persistent public DDL/history access denied",
@@ -65,11 +66,11 @@
   "sourceArtifacts": [
     {
       "path": "tools/supabase-runner/acceptance_runtime.py",
-      "sha256": "c854e253aea4afc0f4d12ff5516592c28e0d3483a6b4adeaa838ff34bc70c226"
+      "sha256": "7877169d2cdda5401f7c2750142bc40119237342b47a1d9c22e9ec5248c47ccf"
     },
     {
       "path": "tools/supabase-runner/hosted-auth-catalog-acceptance.py",
-      "sha256": "c90b53b852d51c2f2b1221eab39ccf0ab47c431b82f89c17270f2fe6d19c74f0"
+      "sha256": "42e1add00d5b20d345926b7c02356301d2d10abf69fc2b9e783b5d12c246c65d"
     },
     {
       "path": "tools/supabase-runner/hosted-booking-acceptance.py",
@@ -77,7 +78,7 @@
     },
     {
       "path": "tools/supabase-runner/hosted-cross-project-acceptance.py",
-      "sha256": "d3afcb657fb0f308e1112b50b19bbbd6b89b72657b225f0233b693e27c930239"
+      "sha256": "38b5877016489648c8a9936e79f42e23f2331ce4eae2c13d371ad51fd4fd5aac"
     },
     {
       "path": "tools/supabase-runner/hosted-extended-acceptance.py",
@@ -89,43 +90,43 @@
     },
     {
       "path": "tools/supabase-runner/hosted-restart-acceptance.py",
-      "sha256": "e57876a354104ac05630e2d312572a8f3b7ab8fc615812fceebe08ae1430ef3a"
+      "sha256": "5c928ed4be524913d5d1ea66c5640a1b5b6190a51878c2d525ae8e4478230f2f"
     },
     {
       "path": "tools/supabase-runner/prepare-batch-readonly.py",
-      "sha256": "318e885e06b0dc7b2c77e6d9152f3837f25ed7de7e69981813ce8d2a7af1a56d"
+      "sha256": "2e517cdf8409a7299e10877bfb416ded375d75712c5de1339a93bb322fce7153"
     },
     {
       "path": "tools/supabase-runner/prepare-remaining-role-setup.py",
-      "sha256": "e2eeafd71b2857a9e43ae0d793df6fa3fea9c285964bfd2f935ea2de992ea80a"
+      "sha256": "75c0fd728ee1cb8d2705c4429211394af04b8c0fb04496a04855915ed967edd1"
     },
     {
       "path": "tools/supabase-runner/prepare-role-review.py",
-      "sha256": "c4c453f13d2ed43c28ac179f143ae83cc619975b956947ecb010b4b2783f895a"
+      "sha256": "21fa91b072355ccf2b84cb33f2c165410519b57ba794457e05c589be8e86dbc6"
     },
     {
       "path": "tools/supabase-runner/prepare-user-role-action.py",
-      "sha256": "703d44b8fce94304fe9933709e47c6ed703fc91c5ad421811e5b730173f5da71"
+      "sha256": "d72bf197785b32c8554794aa167840947983c75340e6846e5cc39d6c2a742e5c"
     },
     {
       "path": "tools/supabase-runner/provider_config.py",
-      "sha256": "364bdb80fa3134c8bdef9ce91d436a173e6df368eb62119ae14b711de3637927"
+      "sha256": "60b0438ce445a1fe368fa0c441c93e8ab3d82b3a74e51e7415e056bbfb8bf7ca"
     },
     {
       "path": "tools/supabase-runner/run-local-stack.py",
-      "sha256": "0ca32fea88802c99fc8cbfd1d3addcbfc3dd49ee6631154c46c708f0152510d1"
+      "sha256": "2744f879347149246f5f2dc91a4a502b22006a3279c2108bc9a71ae4f640bedd"
     },
     {
       "path": "tools/supabase-runner/run-preflight.py",
-      "sha256": "288a423fb48343a2cb4d4959c8c9ff16d54ba6679b77246b7cc0163cfd37b29b"
+      "sha256": "82b2b51425685f58295137c135ae311ca571b0c776747c95164f6b1f8c8543d5"
     },
     {
       "path": "tools/supabase-runner/test-local.py",
-      "sha256": "7908b70b85ce1743bcaa969b1e3d8837ed222e53cdbe05a720df8453c38fdc62"
+      "sha256": "ffdc1a12f4544cbda30ff1cc7181c033d5a1d9dd5675accab68e4149ad3c7840"
     },
     {
       "path": "tools/supabase-runner/test_provider_config.py",
-      "sha256": "58f23c3216f064563539208f4fc4ee75246767e1fe8e8c8fecd5fa12afcf3515"
+      "sha256": "1ff54287e1db02d086190691f4264bb8da1bbe4b813d248b82f5858d3af45b39"
     },
     {
       "path": "tools/supabase-runner/acceptance/java/CrossProjectLoginProbe.java",
@@ -141,7 +142,7 @@
     },
     {
       "path": "tools/supabase-runner/acceptance/java/OwnedRabbitReplay.java",
-      "sha256": "9beb99f4750de01575319dd35f0ec3173f671db3dfc13a1ee698ab10787a8c10"
+      "sha256": "e6d13f8695e601394798774b1c6c23a63b3c6ea5b54e8f82ef0ecebbb2ca9ebe"
     }
   ],
   "applicationLeftRunningForUser": true,
@@ -244,8 +245,9 @@
   "currentRuntime": {
     "mode": "Docker Compose",
     "selectedEnvironment": "Supabase",
-    "observedState": "stopped before configuration cleanup",
-    "containersStartedDuringCleanup": false
+    "observedState": "running",
+    "applicationContainersHealthy": 11,
+    "evidence": "Docs/evidence/batch-6b-supabase-local-integration/vnpay-sandbox-acceptance-2026-11-17.json"
   },
   "fixtureCleanup": {
     "status": "PASS",
@@ -255,5 +257,23 @@
   "configurationConsolidation": {
     "status": "PASS",
     "evidence": "Docs/evidence/batch-6b-supabase-local-integration/config-consolidation-2026-11-16.json"
+  },
+  "storageAcceptance": {
+    "status": "PASS",
+    "mode": "supabase",
+    "publicAndPrivateMediaGrpcUpload": "PASS",
+    "signedAndBatchSignedDownload": "PASS",
+    "probeFilesCleaned": true,
+    "permanentMediaConfigUpdated": true,
+    "evidence": "Docs/evidence/batch-6b-supabase-local-integration/storage-live-acceptance-2026-11-16.json"
+  },
+  "realFundsTransferred": false,
+  "vnpaySandboxAcceptance": {
+    "status": "PASS",
+    "evidence": "Docs/evidence/batch-6b-supabase-local-integration/vnpay-sandbox-acceptance-2026-11-17.json",
+    "bankCardAndOtpUsed": true,
+    "bookingConfirmed": true,
+    "revenueCreditDeduplicated": true,
+    "testFixturesCleaned": true
   }
 }

@@ -1,0 +1,102 @@
+[
+  {
+    "scenario": "search_undated",
+    "expected": 200,
+    "actual": 200,
+    "pass": true,
+    "resultCount": 0
+  },
+  {
+    "scenario": "search_dated",
+    "expected": 200,
+    "actual": 200,
+    "pass": true,
+    "resultCount": 0
+  },
+  {
+    "scenario": "public_catalog",
+    "expected": 200,
+    "actual": 200,
+    "pass": true,
+    "resultCount": 0
+  },
+  {
+    "scenario": "location_catalog",
+    "expected": 200,
+    "actual": 200,
+    "pass": true,
+    "resultCount": 74
+  },
+  {
+    "scenario": "anonymous proposal denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "scenario": "anonymous ADMIN review denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "scenario": "forged admin header denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "scenario": "forged JWT denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "scenario": "anonymous booking denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 503,
+    "pass": false
+  },
+  {
+    "scenario": "anonymous hold denied",
+    "expected": [
+      401,
+      403
+    ],
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "scenario": "missing hotel detail",
+    "expected": [
+      404,
+      409
+    ],
+    "actual": 404,
+    "pass": true
+  },
+  {
+    "scenario": "missing room availability",
+    "expected": [
+      404,
+      409
+    ],
+    "actual": 404,
+    "pass": true
+  }
+]

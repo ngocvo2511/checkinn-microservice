@@ -1,0 +1,7 @@
+{
+  "branch": "main",
+  "head": "91a2751cf500c38b95a68e354374f63eea9d5113",
+  "status": " M app/host/hotels/[id]/rooms/[roomId]/page.tsx\n M app/host/hotels/[id]/rooms/new/page.tsx\n M components/host/RoomInventoryReview.tsx\n M tests/browser/inventory-review.spec.ts\n M tests/browser/new-room-facts.spec.ts\n",
+  "stagedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "unstagedSha256": "b863e21574d3b432c31180eb201819444b35e9bfb09cc254941e8b8523c31ee5"
+}

@@ -36,13 +36,15 @@ class HotelOfferControllerTest {
         when(hotels.searchByName("Fixture")).thenReturn(List.of(a,b));
         when(amenities.matchingHotels(anyCollection(),eq(List.of("WIFI_FREE")))).thenReturn(java.util.Set.of(b.getId()));
         var response=mock(com.example.hotelservice.Hotel.dto.response.HotelResponse.class);
-        when(mapper.toPublicHotelResponse(b)).thenReturn(response);
-        when(offers.match(eq(response),any())).thenReturn(java.util.Optional.empty());
+        when(mapper.toPublicHotelResponses(List.of(b))).thenReturn(List.of(response));
+        when(offers.match(eq(response),any(),any(),any())).thenReturn(java.util.Optional.empty());
         assertTrue(controller.search(new HotelOfferCriteria(null,null,null,"Fixture",null,null,1,1,0,null,null,null,List.of("WIFI_FREE"))).isEmpty());
         verify(amenities,times(1)).matchingHotels(anyCollection(),eq(List.of("WIFI_FREE")));
         verify(amenities,never()).matches(any(),any());
-        verify(mapper,never()).toPublicHotelResponse(a);
-        verify(mapper).toPublicHotelResponse(b);
+        // Filtered hotel a is never mapped; b is mapped in one batched call (Batch8D).
+        verify(mapper).toPublicHotelResponses(List.of(b));
+        verify(mapper,never()).toPublicHotelResponse(any());
+        verify(offers,times(1)).approvalFor(eq(List.of(response)),any());
     }
     @Test void fullDetailMappingBudgetFollowsPageSizeAfterGlobalSort() {
         var entities=new java.util.ArrayList<Hotel>();
@@ -53,7 +55,7 @@ class HotelOfferControllerTest {
             entities.add(entity);
             var dto=mock(com.example.hotelservice.Hotel.dto.response.HotelResponse.class);
             when(dto.id()).thenReturn(id);
-            when(mapper.toPublicHotelResponse(entity)).thenReturn(dto);
+            when(mapper.toPublicHotelResponses(List.of(entity))).thenReturn(List.of(dto));
             when(mapper.toSearchCandidateResponseWithFacts(eq(entity),anyList(),anyList())).thenReturn(dto);
             when(amenities.matches(id,null)).thenReturn(true);
             var price=java.math.BigDecimal.valueOf(300-i*100);
@@ -67,15 +69,17 @@ class HotelOfferControllerTest {
                 new org.springframework.mock.web.MockHttpServletRequest());
         assertEquals(3,result.totalElements());
         assertEquals(entities.get(2).getId(),result.content().get(0).hotel().id());
-        verify(mapper,times(1)).toPublicHotelResponse(any());
-        verify(mapper).toPublicHotelResponse(entities.get(2));
+        // Detail mapping budget follows page size: one batched call containing only the selected hotel.
+        verify(mapper,times(1)).toPublicHotelResponses(anyList());
+        verify(mapper).toPublicHotelResponses(List.of(entities.get(2)));
+        verify(mapper,never()).toPublicHotelResponse(any());
     }
     @Test void literalAmenityWithCommaIsOneLabelRatherThanTwoFilters() throws Exception {
         UUID id=UUID.randomUUID();var entity=Hotel.builder().id(id).isActive(true).approvedStatus(HotelApprovalStatus.APPROVED).build();
         var dto=mock(com.example.hotelservice.Hotel.dto.response.HotelResponse.class);
         when(dto.id()).thenReturn(id);
         when(dto.amenityCategories()).thenReturn(List.of(com.example.hotelservice.Amenity.dto.response.AmenityResponse.builder().items(List.of(com.example.hotelservice.Amenity.dto.response.AmenityItemResponse.builder().title("Pool, Indoor").build())).build()));
-        when(hotels.searchByName("Fixture")).thenReturn(List.of(entity));when(amenities.matches(id,null)).thenReturn(true);when(mapper.toPublicHotelResponse(entity)).thenReturn(dto);
+        when(hotels.searchByName("Fixture")).thenReturn(List.of(entity));when(amenities.matches(id,null)).thenReturn(true);when(mapper.toPublicHotelResponses(List.of(entity))).thenReturn(List.of(dto));
         when(mapper.toSearchCandidateResponseWithFacts(eq(entity),anyList(),anyList())).thenReturn(dto);
         when(offers.match(eq(dto),any(),anyMap())).thenReturn(java.util.Optional.of(new com.example.hotelservice.Hotel.dto.response.HotelOfferResponse.RoomOffer(UUID.randomUUID(),1,java.math.BigDecimal.TEN,java.math.BigDecimal.TEN,null,null,null,null)));
         when(summaries.summarize(List.of(id))).thenReturn(List.of(new com.example.hotelservice.Review.dto.response.ReviewSummaryResponse(id,0,null)));

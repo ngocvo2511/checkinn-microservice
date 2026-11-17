@@ -1,0 +1,10 @@
+{
+  "scenario": "anonymous booking after service discovery readiness",
+  "expected": [
+    401,
+    403
+  ],
+  "actual": 401,
+  "pass": true,
+  "initial503RetainedIn": "functional-results.json"
+}

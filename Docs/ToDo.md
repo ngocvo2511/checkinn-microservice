@@ -1,5 +1,7 @@
 # Tripto Implementation ToDo
 
+> **Provider closure 17/11/2026 — Batch6B: DONE cho phạm vi local development + VNPay Sandbox/Storage.** Actual NCB card/OTP → return00 → payment COMPLETED, booking CONFIRMED, một Revenue CREDIT; callback replay/negative checks PASS. Storage upload/private signing PASS; fixture đã dọn. [Evidence và giới hạn](BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). Các provider BLOCKED/PARTIAL ở checkpoint16/11 phía dưới là lịch sử; không tự đóng production/IPN/refund, batch khác hoặc parent standardization findings.
+
 > Checkpoint 16/11/2026: năm Supabase PostgreSQL projects độc lập đã được xác minh cho backend chạy local (46 business tables; Flyway/Hibernate/startup/core workflows PASS). Overall Batch 6B PARTIAL: VNPay Sandbox code71 và Supabase Storage NXDOMAIN còn BLOCKED; các mô tả Storage bên dưới là kiến trúc/capability, chưa phải actual upload acceptance. Daily Supabase dùng `docker/.env`, local Test dùng `docker/.env.test`; backend cloud deployment và production recovery vẫn là scope tương lai. Xem [báo cáo tổng kết](BATCH6B_FINAL_COMPLETION_REPORT_2026-11-16.md).
 
 This file tracks code work that is mentioned by the architecture documents but is not yet fully implemented or verified in the current project.

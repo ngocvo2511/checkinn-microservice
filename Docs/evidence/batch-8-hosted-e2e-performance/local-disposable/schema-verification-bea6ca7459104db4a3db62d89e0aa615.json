@@ -1,0 +1,86 @@
+{
+  "testRunId": "bea6ca7459104db4a3db62d89e0aa615",
+  "hosted": false,
+  "postgresVersion": "postgres (PostgreSQL) 18.0",
+  "port": 55486,
+  "privateDirectory": ".local/batch7b-schema-bea6ca7459104db4a3db62d89e0aa615",
+  "services": [
+    {
+      "owner": "user",
+      "database": "batch5b_user_1794850674_12996",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    },
+    {
+      "owner": "hotel",
+      "database": "batch5b_hotel_1794850723_12996",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    },
+    {
+      "owner": "booking",
+      "database": "batch5b_booking_1794850783_12996",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    },
+    {
+      "owner": "revenue",
+      "database": "batch5b_revenue_1794850821_12996",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    },
+    {
+      "owner": "regulations",
+      "database": "batch5b_regulations_1794850857_12996",
+      "exitCode": 0,
+      "tests": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "passCanonical": true,
+      "catalogDifferences": {},
+      "passCatalog": true
+    }
+  ],
+  "cleanup": {
+    "clusterStopped": true,
+    "dataPreservedForReview": true,
+    "hostedWrites": 0,
+    "developmentDatabaseTouched": false
+  },
+  "completedAt": "2026-11-16T17:41:17.338055+00:00"
+}

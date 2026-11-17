@@ -1,0 +1,1449 @@
+{
+  "method": "Same hosted fixture IDs per stage (BEFORE grown 2x2->3x5->5x10; AFTER measured 5x10 then exact-ID shrink to the identical 3x5 and 2x2 ID sets). Same endpoints/query params/3 warmups per cell/30 samples/C1-3-5-10 safety gate/pool max2.",
+  "rows": [
+    {
+      "dataset": "small",
+      "roomTypes": 4,
+      "endpoint": "search_undated",
+      "sqlBefore": [
+        23
+      ],
+      "sqlAfter": [
+        12
+      ],
+      "sqlReductionPct": 47.8,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 3428.1106000016734,
+          "p95Before": 3468.20579500054,
+          "rpsBefore": 0.2912400200600215,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2114.5280499986256,
+          "p95After": 2348.844929998449,
+          "rpsAfter": 0.4663459298954427,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 38.3,
+          "p95ImprovementPct": 32.3,
+          "throughputRatio": 1.6
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 4927.123550001852,
+          "p95Before": 6539.62301999818,
+          "rpsBefore": 0.585018552400875,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2993.240749998222,
+          "p95After": 3911.0812300012185,
+          "rpsAfter": 0.9556409805150328,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 39.2,
+          "p95ImprovementPct": 40.2,
+          "throughputRatio": 1.63
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 8069.165899996733,
+          "p95Before": 9586.131784999452,
+          "rpsBefore": 0.5844044826278975,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 5131.780249997973,
+          "p95After": 5889.255209999101,
+          "rpsAfter": 0.9446403415093251,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 36.4,
+          "p95ImprovementPct": 38.6,
+          "throughputRatio": 1.62
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 3448.1388999993214,
+          "p95": 3592.017779998787
+        },
+        "after": {
+          "n": 30,
+          "p50": 2073.034600001847,
+          "p95": 2210.7971999987058
+        },
+        "p50ImprovementPct": 39.9
+      }
+    },
+    {
+      "dataset": "small",
+      "roomTypes": 4,
+      "endpoint": "search_dated",
+      "sqlBefore": [
+        29
+      ],
+      "sqlAfter": [
+        15
+      ],
+      "sqlReductionPct": 48.3,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 4205.33825000166,
+          "p95Before": 4381.620205004583,
+          "rpsBefore": 0.23669456849328527,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2527.1523500014155,
+          "p95After": 2781.560185001945,
+          "rpsAfter": 0.38739424248555177,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 39.9,
+          "p95ImprovementPct": 36.5,
+          "throughputRatio": 1.64
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 6000.767099998484,
+          "p95Before": 7648.438815002009,
+          "rpsBefore": 0.4791146826903141,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3653.5982999994303,
+          "p95After": 4819.252500000948,
+          "rpsAfter": 0.7834977448505643,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 39.1,
+          "p95ImprovementPct": 37.0,
+          "throughputRatio": 1.64
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 6051.129399998899,
+          "p95After": 7201.5932149974105,
+          "rpsAfter": 0.7883868224359498,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 4232.125750000705,
+          "p95": 4347.624749999159
+        },
+        "after": {
+          "n": 30,
+          "p50": 2445.974849997583,
+          "p95": 2564.3325250024645
+        },
+        "p50ImprovementPct": 42.2
+      }
+    },
+    {
+      "dataset": "small",
+      "roomTypes": 4,
+      "endpoint": "public_catalog",
+      "sqlBefore": [
+        21
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 47.6,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 2910.2532000033534,
+          "p95Before": 3034.44544500162,
+          "rpsBefore": 0.3423751846356363,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1600.3801500010013,
+          "p95After": 1770.1371999966796,
+          "rpsAfter": 0.6129558166246476,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 45.0,
+          "p95ImprovementPct": 41.7,
+          "throughputRatio": 1.79
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 4228.155849999894,
+          "p95Before": 5322.086160001709,
+          "rpsBefore": 0.6872004623466841,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2220.5707999964943,
+          "p95After": 2913.7906350017147,
+          "rpsAfter": 1.286346122390718,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 47.5,
+          "p95ImprovementPct": 45.3,
+          "throughputRatio": 1.87
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 6867.322800000693,
+          "p95Before": 8067.139524999948,
+          "rpsBefore": 0.6873602235800431,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3717.5812999958,
+          "p95After": 4363.938945000336,
+          "rpsAfter": 1.2853068874987543,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 45.9,
+          "p95ImprovementPct": 45.9,
+          "throughputRatio": 1.87
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 7470.400049998716,
+          "p95After": 8030.0659700016695,
+          "rpsAfter": 1.2721521281243109,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 2960.4220500041265,
+          "p95": 3081.3591950016416
+        },
+        "after": {
+          "n": 30,
+          "p50": 1562.9155499991612,
+          "p95": 1833.1992200011882
+        },
+        "p50ImprovementPct": 47.2
+      }
+    },
+    {
+      "dataset": "small",
+      "roomTypes": 4,
+      "endpoint": "hotel_detail",
+      "sqlBefore": [
+        11
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 0.0,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 1538.6861999977555,
+          "p95Before": 1952.204869998239,
+          "rpsBefore": 0.6275730600056262,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1565.5107499987935,
+          "p95After": 1852.8667650036366,
+          "rpsAfter": 0.6194587300116068,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -1.7,
+          "p95ImprovementPct": 5.1,
+          "throughputRatio": 0.99
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 2198.7547500029905,
+          "p95Before": 2872.0014449980226,
+          "rpsBefore": 1.3032049663262286,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2213.659299999563,
+          "p95After": 2877.7968350001174,
+          "rpsAfter": 1.2902640331803947,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -0.7,
+          "p95ImprovementPct": -0.2,
+          "throughputRatio": 0.99
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 4383.60449999891,
+          "p95Before": 5707.699549998142,
+          "rpsBefore": 1.0691606182856233,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3654.371149998042,
+          "p95After": 4396.069389998593,
+          "rpsAfter": 1.2967199947521924,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 16.6,
+          "p95ImprovementPct": 23.0,
+          "throughputRatio": 1.21
+        },
+        {
+          "concurrency": 10,
+          "before": null,
+          "after": null,
+          "p50Before": 8690.250399999059,
+          "p95Before": 9478.617955000664,
+          "rpsBefore": 1.1626326652520256,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 7233.756000001449,
+          "p95After": 7742.622555001435,
+          "rpsAfter": 1.2956265245636085,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 16.8,
+          "p95ImprovementPct": 18.3,
+          "throughputRatio": 1.11
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 1557.2201999966637,
+          "p95": 1898.2401549987117
+        },
+        "after": {
+          "n": 30,
+          "p50": 1541.4278499993088,
+          "p95": 1679.254694998599
+        },
+        "p50ImprovementPct": 1.0
+      }
+    },
+    {
+      "dataset": "small",
+      "roomTypes": 4,
+      "endpoint": "room_availability",
+      "sqlBefore": [
+        4
+      ],
+      "sqlAfter": [
+        4
+      ],
+      "sqlReductionPct": 0.0,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 1036.5467500014347,
+          "p95Before": 1393.7016499996378,
+          "rpsBefore": 0.9010624427260948,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1049.2239500053984,
+          "p95After": 1171.020795001823,
+          "rpsAfter": 0.9378273486361052,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -1.2,
+          "p95ImprovementPct": 16.0,
+          "throughputRatio": 1.04
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 1521.3279999989027,
+          "p95Before": 2075.327589996959,
+          "rpsBefore": 1.852731098560937,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1603.2816500010085,
+          "p95After": 1899.8250050011848,
+          "rpsAfter": 1.9525633075368165,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -5.4,
+          "p95ImprovementPct": 8.5,
+          "throughputRatio": 1.05
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 2420.057250001264,
+          "p95Before": 2834.988479999811,
+          "rpsBefore": 1.9655242589786117,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2449.126100000285,
+          "p95After": 2815.1669950031646,
+          "rpsAfter": 1.9407138694729367,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -1.2,
+          "p95ImprovementPct": 0.7,
+          "throughputRatio": 0.99
+        },
+        {
+          "concurrency": 10,
+          "before": null,
+          "after": null,
+          "p50Before": 4798.4260999983235,
+          "p95Before": 5165.177949996723,
+          "rpsBefore": 1.942667064170285,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 4810.535000000527,
+          "p95After": 5147.963339996568,
+          "rpsAfter": 1.9504564682531702,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -0.3,
+          "p95ImprovementPct": 0.3,
+          "throughputRatio": 1.0
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 1046.214099995268,
+          "p95": 1166.6996000007202
+        },
+        "after": {
+          "n": 30,
+          "p50": 1040.9989000036148,
+          "p95": 1169.1251099982765
+        },
+        "p50ImprovementPct": 0.5
+      }
+    },
+    {
+      "dataset": "medium",
+      "roomTypes": 15,
+      "endpoint": "search_undated",
+      "sqlBefore": [
+        43
+      ],
+      "sqlAfter": [
+        12
+      ],
+      "sqlReductionPct": 72.1,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 5704.05044999643,
+          "p95Before": 6626.753715001541,
+          "rpsBefore": 0.17104860591249982,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1908.8823000020056,
+          "p95After": 2090.945205000389,
+          "rpsAfter": 0.5121336785257669,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 66.5,
+          "p95ImprovementPct": 68.4,
+          "throughputRatio": 2.99
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 8640.24304999839,
+          "p95Before": 10813.449840000976,
+          "rpsBefore": 0.3317972737990003,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2854.695999998512,
+          "p95After": 3599.170394997418,
+          "rpsAfter": 1.0150876813113503,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 67.0,
+          "p95ImprovementPct": 66.7,
+          "throughputRatio": 3.06
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 4620.741599996109,
+          "p95After": 5527.767765000317,
+          "rpsAfter": 1.0355644056423459,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ]
+    },
+    {
+      "dataset": "medium",
+      "roomTypes": 15,
+      "endpoint": "search_dated",
+      "sqlBefore": [
+        52
+      ],
+      "sqlAfter": [
+        15
+      ],
+      "sqlReductionPct": 71.2,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 6800.534699999844,
+          "p95Before": 7289.12759499799,
+          "rpsBefore": 0.14595225225875322,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2323.0599499984237,
+          "p95After": 2624.2069799984165,
+          "rpsAfter": 0.4196497621549776,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 65.8,
+          "p95ImprovementPct": 64.0,
+          "throughputRatio": 2.88
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 10451.442850000603,
+          "p95Before": 14609.358800001422,
+          "rpsBefore": 0.2737201203010966,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3387.9527999997663,
+          "p95After": 4183.534210002472,
+          "rpsAfter": 0.8563520625009254,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 67.6,
+          "p95ImprovementPct": 71.4,
+          "throughputRatio": 3.13
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 5388.73545000024,
+          "p95After": 6609.53516499976,
+          "rpsAfter": 0.863959519971652,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ]
+    },
+    {
+      "dataset": "medium",
+      "roomTypes": 15,
+      "endpoint": "public_catalog",
+      "sqlBefore": [
+        40
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 72.5,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 5241.243049997138,
+          "p95Before": 5629.660365001473,
+          "rpsBefore": 0.18911680853009094,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1522.4087499991583,
+          "p95After": 2036.982815000374,
+          "rpsAfter": 0.6364986275000187,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 71.0,
+          "p95ImprovementPct": 63.8,
+          "throughputRatio": 3.37
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 7969.616499998665,
+          "p95Before": 9995.611959999587,
+          "rpsBefore": 0.36206572122110425,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2274.5442999985244,
+          "p95After": 2915.7381149987486,
+          "rpsAfter": 1.2954877767771913,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 71.5,
+          "p95ImprovementPct": 70.8,
+          "throughputRatio": 3.58
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 3790.4448499975842,
+          "p95After": 4632.763240002532,
+          "rpsAfter": 1.226515639308962,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ]
+    },
+    {
+      "dataset": "medium",
+      "roomTypes": 15,
+      "endpoint": "hotel_detail",
+      "sqlBefore": [
+        14
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 21.4,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 1837.5833999998576,
+          "p95Before": 2070.2080600000045,
+          "rpsBefore": 0.5349125263429304,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1609.766599998693,
+          "p95After": 1707.7966599994397,
+          "rpsAfter": 0.6254711452616224,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 12.4,
+          "p95ImprovementPct": 17.5,
+          "throughputRatio": 1.17
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 2790.6917500004056,
+          "p95Before": 3513.560295000206,
+          "rpsBefore": 1.0339039756100479,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2352.2667000033834,
+          "p95After": 3114.750684999671,
+          "rpsAfter": 1.2420248189099956,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 15.7,
+          "p95ImprovementPct": 11.4,
+          "throughputRatio": 1.2
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 4546.337249998032,
+          "p95Before": 5470.276289998583,
+          "rpsBefore": 1.033416867518982,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3729.342449998512,
+          "p95After": 4488.464409998778,
+          "rpsAfter": 1.2476783098036799,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 18.0,
+          "p95ImprovementPct": 17.9,
+          "throughputRatio": 1.21
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 7576.859600001626,
+          "p95After": 7901.736480003092,
+          "rpsAfter": 1.27170132883632,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        }
+      ]
+    },
+    {
+      "dataset": "medium",
+      "roomTypes": 15,
+      "endpoint": "room_availability",
+      "sqlBefore": [
+        4
+      ],
+      "sqlAfter": [
+        4
+      ],
+      "sqlReductionPct": 0.0,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 985.9720499989635,
+          "p95Before": 1155.596859999423,
+          "rpsBefore": 0.9819273489303475,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1074.0979999973206,
+          "p95After": 1197.4482549987442,
+          "rpsAfter": 0.9108350118531434,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -8.9,
+          "p95ImprovementPct": -3.6,
+          "throughputRatio": 0.93
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 1482.591849999153,
+          "p95Before": 2055.521140000928,
+          "rpsBefore": 1.9205635455837113,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1533.258499999647,
+          "p95After": 1983.5232150038792,
+          "rpsAfter": 1.8998428196703587,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -3.4,
+          "p95ImprovementPct": 3.5,
+          "throughputRatio": 0.99
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 2507.570850000775,
+          "p95Before": 2890.4069800009893,
+          "rpsBefore": 1.917948329244445,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2529.7929499975,
+          "p95After": 3032.420365001599,
+          "rpsAfter": 1.8904509986566151,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -0.9,
+          "p95ImprovementPct": -4.9,
+          "throughputRatio": 0.99
+        },
+        {
+          "concurrency": 10,
+          "before": null,
+          "after": null,
+          "p50Before": 4864.192550001462,
+          "p95Before": 5169.659530000354,
+          "rpsBefore": 1.9552065057175885,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 5010.306750002201,
+          "p95After": 5323.976465001397,
+          "rpsAfter": 1.8963184595295643,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -3.0,
+          "p95ImprovementPct": -3.0,
+          "throughputRatio": 0.97
+        }
+      ]
+    },
+    {
+      "dataset": "larger",
+      "roomTypes": 50,
+      "endpoint": "search_undated",
+      "sqlBefore": [
+        96
+      ],
+      "sqlAfter": [
+        12
+      ],
+      "sqlReductionPct": 87.5,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 12022.085650001827,
+          "p95Before": 17505.372820001136,
+          "rpsBefore": 0.07795633614784955,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1919.1087000035623,
+          "p95After": 2012.216335002813,
+          "rpsAfter": 0.516959149918998,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 84.0,
+          "p95ImprovementPct": 88.5,
+          "throughputRatio": 6.63
+        },
+        {
+          "concurrency": 3,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 2889.9515999983123,
+          "p95After": 3398.1957900025004,
+          "rpsAfter": 1.0017240003955505,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 5835.654600003181,
+          "p95After": 7334.070525001514,
+          "rpsAfter": 0.8423847433610588,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 12295.91580000124,
+          "p95": 13089.61766500397
+        },
+        "after": {
+          "n": 30,
+          "p50": 2025.8333499987202,
+          "p95": 2387.5479750015074
+        },
+        "p50ImprovementPct": 83.5
+      }
+    },
+    {
+      "dataset": "larger",
+      "roomTypes": 50,
+      "endpoint": "search_dated",
+      "sqlBefore": [
+        111
+      ],
+      "sqlAfter": [
+        15
+      ],
+      "sqlReductionPct": 86.5,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 13290.875400001823,
+          "p95Before": 14435.446769997725,
+          "rpsBefore": 0.0744187007008985,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 4701.139550004882,
+          "p95After": 7235.703369998369,
+          "rpsAfter": 0.19981586501801576,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 64.6,
+          "p95ImprovementPct": 49.9,
+          "throughputRatio": 2.69
+        },
+        {
+          "concurrency": 3,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 6621.5242500038585,
+          "p95After": 7927.38669000064,
+          "rpsAfter": 0.4628805623652891,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 14336.343099999795,
+          "p95": 15288.198645000011
+        },
+        "after": {
+          "n": 30,
+          "p50": 2368.9518499995756,
+          "p95": 2660.4106349979697
+        },
+        "p50ImprovementPct": 83.5
+      }
+    },
+    {
+      "dataset": "larger",
+      "roomTypes": 50,
+      "endpoint": "public_catalog",
+      "sqlBefore": [
+        91
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 87.9,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 11535.348699999304,
+          "p95Before": 12230.676264997965,
+          "rpsBefore": 0.08656408601446933,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1944.3059000004723,
+          "p95After": 2402.503514995987,
+          "rpsAfter": 0.5223299546519068,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 83.1,
+          "p95ImprovementPct": 80.4,
+          "throughputRatio": 6.03
+        },
+        {
+          "concurrency": 3,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 2587.165199998708,
+          "p95After": 3347.2994400006423,
+          "rpsAfter": 1.127022176445408,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 5,
+          "before": "SKIPPED_SAFETY",
+          "after": null,
+          "p50After": 6265.987349997886,
+          "p95After": 7283.7435149995135,
+          "rpsAfter": 0.7892002097230448,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": false
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 12378.943550000258,
+          "p95": 13264.331514999138
+        },
+        "after": {
+          "n": 30,
+          "p50": 1478.1928000011249,
+          "p95": 1684.2303150009684
+        },
+        "p50ImprovementPct": 88.1
+      }
+    },
+    {
+      "dataset": "larger",
+      "roomTypes": 50,
+      "endpoint": "hotel_detail",
+      "sqlBefore": [
+        19
+      ],
+      "sqlAfter": [
+        11
+      ],
+      "sqlReductionPct": 42.1,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 2359.9543499985884,
+          "p95Before": 2725.5597599978496,
+          "rpsBefore": 0.41454406116490217,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1820.7234000001336,
+          "p95After": 2674.831000002085,
+          "rpsAfter": 0.5247266850868175,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 22.8,
+          "p95ImprovementPct": 1.9,
+          "throughputRatio": 1.27
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 2896.1894000021857,
+          "p95Before": 4528.870910000478,
+          "rpsBefore": 0.8419569771042005,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2337.7126999985194,
+          "p95After": 2810.636534998775,
+          "rpsAfter": 1.28145006839439,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 19.3,
+          "p95ImprovementPct": 37.9,
+          "throughputRatio": 1.52
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 4895.8020500031125,
+          "p95Before": 7221.080330002951,
+          "rpsBefore": 0.8360685361943179,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 3128.2967499973893,
+          "p95After": 4404.776015000607,
+          "rpsAfter": 1.3436825976616362,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 36.1,
+          "p95ImprovementPct": 39.0,
+          "throughputRatio": 1.61
+        },
+        {
+          "concurrency": 10,
+          "before": "SKIPPED_SAFETY",
+          "after": "SKIPPED_SAFETY",
+          "comparable": false
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 2541.7577999978676,
+          "p95": 2566.4173749977635
+        },
+        "after": {
+          "n": 30,
+          "p50": 1476.4248500032409,
+          "p95": 1979.6857599973005
+        },
+        "p50ImprovementPct": 41.9
+      }
+    },
+    {
+      "dataset": "larger",
+      "roomTypes": 50,
+      "endpoint": "room_availability",
+      "sqlBefore": [
+        4
+      ],
+      "sqlAfter": [
+        4
+      ],
+      "sqlReductionPct": 0.0,
+      "gateway": [
+        {
+          "concurrency": 1,
+          "before": null,
+          "after": null,
+          "p50Before": 982.6939000013226,
+          "p95Before": 1129.2235000008077,
+          "rpsBefore": 0.9944904862415455,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 962.1790000019246,
+          "p95After": 1139.3858600025849,
+          "rpsAfter": 1.0011712301755122,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 2.1,
+          "p95ImprovementPct": -0.9,
+          "throughputRatio": 1.01
+        },
+        {
+          "concurrency": 3,
+          "before": null,
+          "after": null,
+          "p50Before": 1493.0968000007852,
+          "p95Before": 2207.074230003854,
+          "rpsBefore": 1.8989560305659592,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 1422.5073000015982,
+          "p95After": 1842.4157399971589,
+          "rpsAfter": 2.0061244169872077,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 4.7,
+          "p95ImprovementPct": 16.5,
+          "throughputRatio": 1.06
+        },
+        {
+          "concurrency": 5,
+          "before": null,
+          "after": null,
+          "p50Before": 2278.8041999992856,
+          "p95Before": 2922.3056800012273,
+          "rpsBefore": 2.005660790385773,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 2062.540099999751,
+          "p95After": 2829.509499998312,
+          "rpsAfter": 2.07042713884931,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": 9.5,
+          "p95ImprovementPct": 3.2,
+          "throughputRatio": 1.03
+        },
+        {
+          "concurrency": 10,
+          "before": null,
+          "after": null,
+          "p50Before": 4807.460600000923,
+          "p95Before": 4950.870289997329,
+          "rpsBefore": 2.050176105686069,
+          "errorsBefore": 0,
+          "timeoutsBefore": 0,
+          "p50After": 4818.026299995836,
+          "p95After": 5264.922655001283,
+          "rpsAfter": 1.9600709888060996,
+          "errorsAfter": 0,
+          "timeoutsAfter": 0,
+          "comparable": true,
+          "p50ImprovementPct": -0.2,
+          "p95ImprovementPct": -6.3,
+          "throughputRatio": 0.96
+        }
+      ],
+      "direct": {
+        "before": {
+          "n": 30,
+          "p50": 1020.1090500013379,
+          "p95": 1056.3722749979206
+        },
+        "after": {
+          "n": 30,
+          "p50": 984.4796500001394,
+          "p95": 1414.6176500002184
+        },
+        "p50ImprovementPct": 3.5
+      }
+    }
+  ],
+  "queryCountSlope": {
+    "search_undated": {
+      "before": {
+        "points": [
+          [
+            4,
+            23
+          ],
+          [
+            15,
+            43
+          ],
+          [
+            50,
+            96
+          ]
+        ],
+        "statementsPerAddedRoomType": 1.587
+      },
+      "after": {
+        "points": [
+          [
+            4,
+            12
+          ],
+          [
+            15,
+            12
+          ],
+          [
+            50,
+            12
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      }
+    },
+    "search_dated": {
+      "before": {
+        "points": [
+          [
+            4,
+            29
+          ],
+          [
+            15,
+            52
+          ],
+          [
+            50,
+            111
+          ]
+        ],
+        "statementsPerAddedRoomType": 1.783
+      },
+      "after": {
+        "points": [
+          [
+            4,
+            15
+          ],
+          [
+            15,
+            15
+          ],
+          [
+            50,
+            15
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      }
+    },
+    "public_catalog": {
+      "before": {
+        "points": [
+          [
+            4,
+            21
+          ],
+          [
+            15,
+            40
+          ],
+          [
+            50,
+            91
+          ]
+        ],
+        "statementsPerAddedRoomType": 1.522
+      },
+      "after": {
+        "points": [
+          [
+            4,
+            11
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            50,
+            11
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      }
+    },
+    "hotel_detail": {
+      "before": {
+        "points": [
+          [
+            4,
+            11
+          ],
+          [
+            15,
+            14
+          ],
+          [
+            50,
+            19
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.174
+      },
+      "after": {
+        "points": [
+          [
+            4,
+            11
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            50,
+            11
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      }
+    },
+    "room_availability": {
+      "before": {
+        "points": [
+          [
+            4,
+            4
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            50,
+            4
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      },
+      "after": {
+        "points": [
+          [
+            4,
+            4
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            50,
+            4
+          ]
+        ],
+        "statementsPerAddedRoomType": 0.0
+      }
+    }
+  }
+}

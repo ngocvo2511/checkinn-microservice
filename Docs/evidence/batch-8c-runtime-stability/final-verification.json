@@ -1,0 +1,56 @@
+{
+  "status": "PARTIAL",
+  "hostedWritesStopped": true,
+  "fixtureManifestIds": 194,
+  "fixtureCleanupDone": true,
+  "fiveTargetSchemaHistoryCountsAndExistingRowsPreserved": true,
+  "permanentAdminCompleteRowPreserved": true,
+  "finalRealAdminGatewayLoginAndQueuePass": true,
+  "concurrency": "PASS",
+  "naturalExpiry": "PASS",
+  "javaRegressionExecuted": 838,
+  "javaRegressionSkips": 41,
+  "nativeCanonicalPass": 5,
+  "nativeClusterStopped": true,
+  "guardTestsPass": true,
+  "benchmarks": [
+    {
+      "file": "benchmark-after-larger-raw.json",
+      "attempts": 300,
+      "successful": 300,
+      "failed": 0
+    },
+    {
+      "file": "benchmark-after-medium-raw.json",
+      "attempts": 390,
+      "successful": 390,
+      "failed": 0
+    },
+    {
+      "file": "benchmark-after-small-raw.json",
+      "attempts": 480,
+      "successful": 480,
+      "failed": 0
+    }
+  ],
+  "ownedJvmsRemaining": 0,
+  "headAndIndexUnchanged": true,
+  "frontendTrackedDiffPreserved": true,
+  "limitations": [
+    "Original historical backend ownership not reconstructable",
+    "No controlled BEFORE artifact",
+    "Remaining SQL read amplification; SQL text attribution restricted; no N+1-resolved claim",
+    "Production/multi-node/provider/outage not certified"
+  ],
+  "statusReason": "Scoped runtime/AFTER/concurrency/expiry checks PASS; historical client ownership attribution remains partial, and remaining N+1 read amplification optimization is deferred within the bounded restart budget.",
+  "cleanupRowsDeleted": 194,
+  "brokerExactFixtureMessagesRemoved": 8,
+  "redisExactFixtureKeysAbsent": true,
+  "noRoleLimitOrHikariTimeoutInRunLogs": true,
+  "gatewayMeasuredAttempts": 1170,
+  "gatewayMeasuredSuccess": 1170,
+  "directMeasuredAttempts": 150,
+  "directMeasuredSuccess": 150,
+  "standardizationOriginalBytesPreserved": true,
+  "preExistingTrackedChangesPreservedBeforeAppend": true
+}

@@ -1,0 +1,46 @@
+{
+  "fixturesCreated": 0,
+  "fixturesDeleted": 0,
+  "fixtureIdSet": [],
+  "fixtureCleanup": "NOT APPLICABLE: no hosted fixture writes",
+  "comparisons": [
+    {
+      "owner": "user",
+      "rowCountsEqual": true,
+      "schemaHistoryFingerprintEqual": true,
+      "rowCountChanges": {},
+      "exactFixtureIdsRemaining": []
+    },
+    {
+      "owner": "hotel",
+      "rowCountsEqual": true,
+      "schemaHistoryFingerprintEqual": true,
+      "rowCountChanges": {},
+      "exactFixtureIdsRemaining": []
+    },
+    {
+      "owner": "booking",
+      "rowCountsEqual": true,
+      "schemaHistoryFingerprintEqual": true,
+      "rowCountChanges": {},
+      "exactFixtureIdsRemaining": []
+    },
+    {
+      "owner": "revenue",
+      "rowCountsEqual": true,
+      "schemaHistoryFingerprintEqual": true,
+      "rowCountChanges": {},
+      "exactFixtureIdsRemaining": []
+    },
+    {
+      "owner": "regulations",
+      "rowCountsEqual": true,
+      "schemaHistoryFingerprintEqual": true,
+      "rowCountChanges": {},
+      "exactFixtureIdsRemaining": []
+    }
+  ],
+  "allCountsAndSchemaHistoryUnchanged": true,
+  "existingRowsContentFingerprintCapturedBeforeRuntime": false,
+  "limitation": "Count equality does not prove unchanged row content. No business rows were exported; evidence supports empty Batch8 fixture set and identical catalog/history, not a full data-content audit."
+}

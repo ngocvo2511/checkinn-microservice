@@ -1,0 +1,14 @@
+{
+  "mediaGrpcPublicUploadAndDownloadShaMatch": true,
+  "privateUploadAndSignedDownloadShaMatch": true,
+  "batchSigning": true,
+  "privateAnonymousAccessDenied": 400,
+  "status": "PASS",
+  "source": "real Media JAR in temporary Docker container",
+  "mode": "supabase",
+  "probeImageSha256": "0f4708393a0019846a4ba9b81a18c8c5d691e031c9706303e5327987947f8ecd",
+  "probeObjectsCreated": 2,
+  "probeObjectsDeleted": 2,
+  "existingAssetsModified": false,
+  "databaseFixturesCreated": false
+}

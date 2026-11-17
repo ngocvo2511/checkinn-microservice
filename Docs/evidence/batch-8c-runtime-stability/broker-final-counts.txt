@@ -1,0 +1,8 @@
+name	messages_ready	messages_unacknowledged
+revenue.booking.queue	0	0
+revenue.payment.queue	0	0
+notification.otp.queue	4	0
+notification.otp.dlq	0	0
+notification.payment.queue	0	0
+revenue.events.dlq	0	0
+notification.payment.dlq	0	0

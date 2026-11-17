@@ -160,6 +160,7 @@ class RoomTypeServiceImplTest {
         UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
         Hotel hotel = hotel(hotelId, owner); hotel.setApprovedStatus(status); hotel.setIsActive(true);
         RoomType room = new RoomType(); room.setId(id); room.setHotelId(hotelId); room.setIsActive(true);
+        when(roomTypeRepository.hasEffectiveInventoryApproval(id)).thenReturn(true);
         when(roomTypeRepository.findById(id)).thenReturn(Optional.of(room));
         when(roomTypeRepository.findByHotelId(hotelId)).thenReturn(List.of(room));
         when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
@@ -179,6 +180,7 @@ class RoomTypeServiceImplTest {
         UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
         Hotel hotel = hotel(hotelId, owner); hotel.setIsActive(true); hotel.setApprovedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED);
         RoomType room = new RoomType(); room.setId(id); room.setHotelId(hotelId); room.setIsActive(false);
+        when(roomTypeRepository.hasEffectiveInventoryApproval(id)).thenReturn(true);
         when(roomTypeRepository.findById(id)).thenReturn(Optional.of(room));
         when(roomTypeRepository.findByHotelId(hotelId)).thenReturn(List.of(room));
         when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));

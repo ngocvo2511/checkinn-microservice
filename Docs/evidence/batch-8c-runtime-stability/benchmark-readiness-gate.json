@@ -1,0 +1,33 @@
+{
+  "passed": false,
+  "budget": [
+    {
+      "owner": "user",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    },
+    {
+      "owner": "hotel",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    },
+    {
+      "owner": "booking",
+      "observedRuntimeBackends": 2,
+      "roleCap": 4,
+      "poolMax": 2,
+      "headroom": 2
+    }
+  ],
+  "smoke": "smoke-cycle2.json",
+  "errors": {
+    "unexpectedTimeouts": 0,
+    "roleLimitErrors": 0
+  },
+  "cleanup": "Reuse reviewed exact-ID cleanup; no financial/payment/provider scope; manifest empty before writes",
+  "reason": "Service start invalidates prior chain readiness: gateway"
+}

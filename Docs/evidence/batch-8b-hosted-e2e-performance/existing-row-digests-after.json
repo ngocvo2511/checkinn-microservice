@@ -1,0 +1,305 @@
+{
+  "user": [
+    {
+      "table": "loyalty_commands",
+      "rows": []
+    },
+    {
+      "table": "loyalty_points",
+      "rows": []
+    },
+    {
+      "table": "otps",
+      "rows": [
+        "1ec60032ca0ab407432af3a9992da5da",
+        "c6a3dabc8acf0f87b7f4bc2df5a0347d"
+      ]
+    },
+    {
+      "table": "points_reservations",
+      "rows": []
+    },
+    {
+      "table": "points_transactions",
+      "rows": []
+    },
+    {
+      "table": "user_profiles",
+      "rows": [
+        "62d22036e40da4fe8f4cf382b35e15d0",
+        "7f0f9e0c147d830fe16e5e1dffaeb19d",
+        "89ee73ec92bd3f764e2366adc5367b41"
+      ]
+    },
+    {
+      "table": "users",
+      "rows": [
+        "5e54a9dcbbcb18ad8b90a631c9d6f682",
+        "71532efbb1bca1b5d860bc6d8670811d",
+        "76ea196a07f3c9eb6ce5f68a3755a9fa"
+      ]
+    }
+  ],
+  "regulations": [
+    {
+      "table": "regulation_event_outbox",
+      "rows": [
+        "8ab38fdfcfb417239de45da524fb8af8",
+        "c3716e2b21f759c52ff1995521a8409d",
+        "d7ec44716f762da4864748ac80d16f64",
+        "fba60b58d1a1ff5cdb65265a923dc607"
+      ]
+    },
+    {
+      "table": "regulation_snapshots",
+      "rows": [
+        "7788eb1f2ec23a43fb5518360cea9c30",
+        "dee9cb5bc5da4a22a9306d9c299311ab",
+        "e258cfa5ebaff642aaba3e12faeab611",
+        "fa3149d4705487ac0d89b1d4344b0ae1"
+      ]
+    },
+    {
+      "table": "regulations",
+      "rows": [
+        "9344a9cd8c155166da9b6e2588f311b8",
+        "b6a159d66c38d3eb8b3bbfeea5aa385b",
+        "e867a2043dbff817cbf6df257b84b71b",
+        "f5a01adf00c54dfdc51ace08be65b548"
+      ]
+    }
+  ],
+  "hotel": [
+    {
+      "table": "amenity_catalog",
+      "rows": []
+    },
+    {
+      "table": "amenity_category_types",
+      "rows": []
+    },
+    {
+      "table": "amenity_mapping_request_codes",
+      "rows": []
+    },
+    {
+      "table": "amenity_mapping_requests",
+      "rows": []
+    },
+    {
+      "table": "amenity_mapping_states",
+      "rows": []
+    },
+    {
+      "table": "checkinn_feature_migrations",
+      "rows": [
+        "a5419323e8a24ca0877fc3b51beb5cc6"
+      ]
+    },
+    {
+      "table": "cities",
+      "rows": [
+        "10e29601ad060753bb6267a165d7c9fb",
+        "13db7802c4b5d1e1b87b5d68264e82b3",
+        "17f664ecaf92dd6b6ea2419a536ede8e",
+        "27b90a8f9433ebbbdec23c01399c8938",
+        "28355df2ad9ef0ada901b9a9a9714c2c",
+        "28fd47a1f198d1a1734f1ae276cab71d",
+        "2f3fc873f472c74b5b554676ccc8e74b",
+        "39d8a5f966a24287e53a21388cbb1ad1",
+        "3c7c6ab5fdd0560de950a5f3c91a5cb3",
+        "46690e228c68006b79362ce69d2b8d33",
+        "4e5650663b10b60f846f5501046e6ada",
+        "52bab1fe591721d1b8f92964d8ea7c3d",
+        "5acc4f41e6c3f0536ab5182702551fcf",
+        "64f9069dc9eca9aa5b85be75296c7fac",
+        "656242bb58f26e1019eaf8796b0c33b3",
+        "669aa752ea5f75a29cef4acde7238301",
+        "6aef67dd1a1a85bcc4a0f290f09b2976",
+        "6d1e756ac4e97cab9cbb0534bc434980",
+        "77a347cf82e11474aea59dc43fb075f9",
+        "847db2d326553398b237c31beb32fc74",
+        "86df397cf50e5dc87387a40fb5c263e7",
+        "906164bc25b03f95d050cef62e025863",
+        "9541a414e6d8e6f31ba629caf61bc778",
+        "99d97f95a533a9b7e3bea13b352f367f",
+        "9a5c9acd033d0d8b4d3aeac4e974cf74",
+        "9a8653889964b7fa2502b79b60fbfe16",
+        "a813682cc68865a6a08bec62a1441827",
+        "ab6b3910607eaae6e654996027861c38",
+        "ac3cc85425118b2bc0ef5b31f79507c3",
+        "ac905834b41ba032ed783c505448c3e2",
+        "aec5b172dcc5e5d52a9462fbd4e1885e",
+        "b71a70f4e4cd3c3a5b34d7de1febbc7b",
+        "bd7a7ee029a1b65ac9257cd42ba05f74",
+        "bd7ad1abe42f7ed337b50b7a4a940812",
+        "cb81f4514a509adebc303ebce8f81f29",
+        "d9306e67cf165baa98a3499220933733",
+        "dbf12b1060303dc9962534febc7af5bd",
+        "df68658877834e61416488791b520b98",
+        "e29692002e7191e0c272c06612f4a9b7",
+        "ec9fe232f3c81826082b03f9d8c1f11a"
+      ]
+    },
+    {
+      "table": "hotel_accommodation_type_changes",
+      "rows": []
+    },
+    {
+      "table": "hotel_amenities",
+      "rows": []
+    },
+    {
+      "table": "hotel_amenity_categories",
+      "rows": []
+    },
+    {
+      "table": "hotel_policies",
+      "rows": []
+    },
+    {
+      "table": "hotel_questions",
+      "rows": []
+    },
+    {
+      "table": "hotel_reviews",
+      "rows": []
+    },
+    {
+      "table": "hotels",
+      "rows": [
+        "939460a9de7b5796a53aef04d7e98471"
+      ]
+    },
+    {
+      "table": "media_assets",
+      "rows": [
+        "71861a7c73a77589025e72ded3a57a15",
+        "cba4061e458b65d2adcbaa4f81673bed"
+      ]
+    },
+    {
+      "table": "policy_category_types",
+      "rows": []
+    },
+    {
+      "table": "provinces",
+      "rows": [
+        "0c313852756f6683e83a6de7f16e814c",
+        "118f60a1e0af4de0a6ca7aeb344b816b",
+        "1577f4cb59e5c81fd0ca8119113a44bb",
+        "2440cd3932c67568e3fbf225c7be2c40",
+        "32986ed85b539fa126f038632f2e7a36",
+        "3e5d85962df0ca90a5bc222fbbbfd0f5",
+        "45ef14b8d6581f05537d7bfd2c953873",
+        "5161daa0030915b62e76dc047b2aaf57",
+        "614df415adba43be6fd3d2c52bf33332",
+        "6a1ac4c593c11d7c4991dea636bbf094",
+        "6ad4a09b13a7da165439b94870ff104c",
+        "711382585dd4873ef4f09748bfde13ff",
+        "8739e10bc60e9ff2333722245f94f4b9",
+        "8f2038f839e8cb1b9b4c356ea7008423",
+        "937ef2fea391f082ff5e08d621048e85",
+        "99d28ed2e6e006866063d10ff1b7b97a",
+        "9a2833086fe230b0d07847121a299b06",
+        "a21a9d81de30c21f002a1cfbd2afaae3",
+        "ac0a9f4d820f17a9cd518fd309c09295",
+        "afdf9c02c9b29b625f9fdec581c7f28e",
+        "bad3f316fa10523abb1b4c69c46d050b",
+        "bb03477b1c30fc5f3a6db64a98f3d8fc",
+        "c65d83a447e44acd96d28c647850b432",
+        "dcdd760788c83c70451da489193c0248",
+        "df5ff46371f9a90fe5a0542b0ee8ccdc",
+        "e17288d32173fab596a971e7de9a0dc3",
+        "e6987824a6ca67e7a7a23b663ac44b6b",
+        "eb765fdf39095a0bcf6b577b09027c72",
+        "ef119943bf758536a7842c5f3715dbb4",
+        "f403d985129ec2ba3aaaa6e4f2e8040a",
+        "f4c6cd9a5e09effebfdc5e5ddb8cfb34",
+        "f9c1ed6228487e703a68d0c48a4412a6",
+        "f9d48e73c3a13faed83b67bbcef1e31d",
+        "fd3f1acb55b9bcd9c74b351f4769558e"
+      ]
+    },
+    {
+      "table": "review_feedbacks",
+      "rows": []
+    },
+    {
+      "table": "review_responses",
+      "rows": []
+    },
+    {
+      "table": "room_availability",
+      "rows": []
+    },
+    {
+      "table": "room_holds",
+      "rows": []
+    },
+    {
+      "table": "room_inventory_review_requests",
+      "rows": []
+    },
+    {
+      "table": "room_inventory_review_states",
+      "rows": []
+    },
+    {
+      "table": "room_types",
+      "rows": []
+    }
+  ],
+  "booking": [
+    {
+      "table": "booking_event_outbox",
+      "rows": []
+    },
+    {
+      "table": "booking_items",
+      "rows": []
+    },
+    {
+      "table": "bookings",
+      "rows": []
+    },
+    {
+      "table": "manual_refund_audit",
+      "rows": []
+    },
+    {
+      "table": "manual_refund_executions",
+      "rows": []
+    },
+    {
+      "table": "payments",
+      "rows": []
+    },
+    {
+      "table": "refund_requests",
+      "rows": []
+    }
+  ],
+  "revenue": [
+    {
+      "table": "booking_status_records",
+      "rows": []
+    },
+    {
+      "table": "payment_records",
+      "rows": []
+    },
+    {
+      "table": "revenue_cash_transactions",
+      "rows": []
+    },
+    {
+      "table": "revenue_cashflow_gaps",
+      "rows": []
+    },
+    {
+      "table": "revenue_event_receipts",
+      "rows": []
+    }
+  ]
+}

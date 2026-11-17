@@ -226,7 +226,8 @@ public class HotelGrpcServiceImpl extends HotelGrpcServiceGrpc.HotelGrpcServiceI
     private void fail(Exception failure,StreamObserver<?> observer) {
         Status.Code code;
         if(failure instanceof CatalogDataException || failure instanceof com.fasterxml.jackson.core.JsonProcessingException)code=Status.Code.DATA_LOSS;
-        else if(failure instanceof com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException)code=Status.Code.FAILED_PRECONDITION;
+        else if(failure instanceof com.example.hotelservice.Room.availability.service.InventoryNotConfiguredException
+                || failure instanceof com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException)code=Status.Code.FAILED_PRECONDITION;
         else if(failure instanceof jakarta.persistence.EntityNotFoundException)code=Status.Code.NOT_FOUND;
         else if(failure instanceof org.springframework.dao.DataAccessException)code=Status.Code.UNAVAILABLE;
         else if(failure instanceof io.grpc.StatusRuntimeException rpc)code=rpc.getStatus().getCode();

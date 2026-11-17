@@ -1,0 +1,56 @@
+ M .idea/compiler.xml
+ M .idea/encodings.xml
+ M Docs/BATCH6B_REAL_PROVIDER_ACCEPTANCE_2026-11-16.md
+ M Docs/BATCH6B_SUPABASE_LOCAL_DATABASE_INTEGRATION_2026-11-16.md
+A  Docs/BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md
+ M Docs/database-design/MIGRATION_IMPLEMENTATION_PLAN.md
+ M Docs/evidence/batch-6b-supabase-local-integration/final-verification-2026-11-16.json
+A  Docs/evidence/batch-7-g2-provenance/README.md
+A  Docs/evidence/batch-7-g2-provenance/booking-catalog.json
+A  Docs/evidence/batch-7-g2-provenance/compatibility-financial.md
+A  Docs/evidence/batch-7-g2-provenance/final-verification.json
+A  Docs/evidence/batch-7-g2-provenance/gap-classification.md
+A  Docs/evidence/batch-7-g2-provenance/hotel-catalog.json
+A  Docs/evidence/batch-7-g2-provenance/initial-state.json
+A  Docs/evidence/batch-7-g2-provenance/inventory.md
+A  Docs/evidence/batch-7-g2-provenance/migration-manifests.json
+A  Docs/evidence/batch-7-g2-provenance/regression-results.json
+A  Docs/evidence/batch-7-g2-provenance/regulations-catalog.json
+A  Docs/evidence/batch-7-g2-provenance/revenue-catalog.json
+A  Docs/evidence/batch-7-g2-provenance/schema-verification-09203d90ba4d425d8457ea940adf0444.json
+A  Docs/evidence/batch-7-g2-provenance/schema-verification-76292d75545040178160426939ddbdbd.json
+A  Docs/evidence/batch-7-g2-provenance/schema-verification.json
+A  Docs/evidence/batch-7-g2-provenance/schema.md
+A  Docs/evidence/batch-7-g2-provenance/user-catalog.json
+ M Docs/standardization/PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md
+ M Docs/standardization/PROJECT_STANDARDIZATION_PLAN.md
+ M booking-service/src/main/java/com/example/bookingservice/integration/hotel/HotelCatalogClient.java
+ M booking-service/src/test/java/com/example/bookingservice/integration/hotel/HotelCatalogClientTest.java
+A  docker/batch7-inventory-provenance.sql
+ M hotel-service/src/main/java/com/example/hotelservice/Hotel/mapper/HotelMapper.java
+ M hotel-service/src/main/java/com/example/hotelservice/Hotel/service/HotelOfferSearchService.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/availability/controller/AvailabilityController.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/AvailabilityService.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/mapper/RoomTypeMapper.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/repository/RoomTypeRepository.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomInventoryReviewService.java
+ M hotel-service/src/main/java/com/example/hotelservice/Room/service/RoomTypeServiceImpl.java
+ M hotel-service/src/main/java/com/example/hotelservice/exception/GlobalExceptionHandler.java
+ M hotel-service/src/main/java/com/example/hotelservice/grpc/HotelGrpcServiceImpl.java
+ M hotel-service/src/test/java/com/example/hotelservice/Hotel/service/HotelOfferSearchServiceTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityBatchTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/AvailabilityServiceTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/Room/availability/service/InventoryCounterSafetyTest.java
+A  hotel-service/src/test/java/com/example/hotelservice/Room/mapper/RoomAmenitiesCompatibilityTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomInventoryReviewServiceTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/Room/service/RoomTypeServiceImplTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/canonical/CanonicalPostgresAcceptanceTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/security/CatalogAuthorizationTest.java
+ M hotel-service/src/test/java/com/example/hotelservice/security/HotelGrpcPublicationAuthorizationTest.java
+A  tools/batch7-schema-verify.py
+?? Docs/BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md
+?? Docs/evidence/batch-6b-supabase-local-integration/storage-live-acceptance-2026-11-16.json
+?? Docs/evidence/batch-7b-inventory-approval/
+?? hotel-service/src/main/java/com/example/hotelservice/Room/availability/service/InventoryApprovalRequiredException.java
+?? hotel-service/src/test/java/com/example/hotelservice/Hotel/mapper/InventoryPublicCatalogTest.java
+?? tools/batch7b-schema-verify.py

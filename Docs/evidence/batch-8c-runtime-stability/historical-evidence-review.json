@@ -1,0 +1,626 @@
+[
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/after-summary.json",
+    "sha256": "3aef80b6102bd997a30a5e78e9466203f0ab9da3ddb252ee90fc2bcb461eb7a1",
+    "kind": "list",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/before-summary.json",
+    "sha256": "3aef80b6102bd997a30a5e78e9466203f0ab9da3ddb252ee90fc2bcb461eb7a1",
+    "kind": "list",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/benchmark-environment.json",
+    "sha256": "818ab790ceea38038ddf516334dafda7d36f3cb88fc1e77228d3330e4affa878",
+    "kind": "dict",
+    "entries": 14
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/benchmark-raw.json",
+    "sha256": "5347c49cd8874ab44a6ba88e78a5b5e52d98d1bbe5ffa4294fa92b97665823ec",
+    "kind": "list",
+    "entries": 480
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/benchmark-summary.json",
+    "sha256": "68aaad5c296850039e4661667b29c43149ef0bca1f94116a1727f1aa2117b1a5",
+    "kind": "list",
+    "entries": 16
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/booking-after.json",
+    "sha256": "cea1cb186e95eab1da27cfa23f7486869e0cb4e8b2c6f6cb802222e931e19b7a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/booking-before.json",
+    "sha256": "cea1cb186e95eab1da27cfa23f7486869e0cb4e8b2c6f6cb802222e931e19b7a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/booking-readiness-recheck.json",
+    "sha256": "2b043cd69fa7926b199c992e49d2deba6cb236bf2d75f8c4fb97f50ea18b1c0b",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/booking-runtime-preflight.json",
+    "sha256": "ed3de52ecff395b92180acfc4c182ecb8c905c85bd7bcf0b8199f73504749d49",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/cleanup-plan.json",
+    "sha256": "87d9bd5121ffec5fb2b86b69b3ca7b9961725a51980843fdaebf9b80f8cf1c84",
+    "kind": "dict",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/cleanup-verification.json",
+    "sha256": "45913b9f7130841d80d4c13f4b76b290e5dddd751d514df8246e0fc62e07ca76",
+    "kind": "dict",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/direct-service-raw.json",
+    "sha256": "868f98ae75d50809791219819d27a6953b6c546c23de50eb18ae215a59d61104",
+    "kind": "list",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/final-status.json",
+    "sha256": "fda3e938bc4be8ca751932e48717dd0fd239777980f60befe60c1113a02ca4dd",
+    "kind": "dict",
+    "entries": 14
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/final-verification.json",
+    "sha256": "137a3fc8687d3bd8f29f43b977e74395870c279bf805b0a8542428d17acb181a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/fixture-manifest.json",
+    "sha256": "49e645938a8e850765f60785c2448ffc1aa72f8dc3f82e00a949a83ed5bb81e9",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/functional-results.json",
+    "sha256": "1b89f3b493ce73cb2e50a83111ca2444389ec4b8a8a12a574114022477e59a3b",
+    "kind": "list",
+    "entries": 12
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/git-provenance.json",
+    "sha256": "bee5f1d23e722622888efb22442a61e3d2f8739fa8fecad6855a309e471b78ef",
+    "kind": "dict",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/hotel-after.json",
+    "sha256": "feddfd0af1f774f3010d9b88adfa12d9477beb11393867fabe6d6b9b77ea39b1",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/hotel-before.json",
+    "sha256": "feddfd0af1f774f3010d9b88adfa12d9477beb11393867fabe6d6b9b77ea39b1",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/hotel-runtime-preflight.json",
+    "sha256": "fed9165804690470e5aeba663e981f4e6a8219ee338c11ab51faacdd2fe38764",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/identity-role-counts.json",
+    "sha256": "876934061e9b4667e2ead4d078e593808131ac76ce0b341d32fa8d3afc393077",
+    "kind": "list",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/metrics-after.json",
+    "sha256": "0844d61965075e49588a29687f94aa62feec60d1f16d54108c4ca159d7d1c617",
+    "kind": "dict",
+    "entries": 10
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/metrics-before.json",
+    "sha256": "78f6d33e0ff53b996ca0e5b757bdf5799f076813e2a0e45f6611e90eb8ab3f3d",
+    "kind": "dict",
+    "entries": 10
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/query-counts-unavailable-attempt.json",
+    "sha256": "130007700cab91da0e991f26be3a608b0e1130bb03ecf27d9d7ad75721fe8151",
+    "kind": "list",
+    "entries": 12
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/query-counts.json",
+    "sha256": "e640e35f7dfbc54e4524598828bfae23eb0f0cb4b8908e6102935796dc74fdaa",
+    "kind": "list",
+    "entries": 12
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/regulations-after.json",
+    "sha256": "89d7f3fa5204187e0a3dd3f9a024982b238dde59d2655aca5f54f44846aa5a20",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/regulations-before.json",
+    "sha256": "89d7f3fa5204187e0a3dd3f9a024982b238dde59d2655aca5f54f44846aa5a20",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/regulations-runtime-preflight.json",
+    "sha256": "86a902a6e1bb919058817c9cc31127b94080d29127858469bf9f2326cdd651b2",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/revenue-after.json",
+    "sha256": "3f4bf0d0b6dfc421456fec79dac1e8092a697fd7468d2cf1dc2f12c81d968d5a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/revenue-before.json",
+    "sha256": "3f4bf0d0b6dfc421456fec79dac1e8092a697fd7468d2cf1dc2f12c81d968d5a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/revenue-runtime-preflight.json",
+    "sha256": "7c612dd53efa4d793b7f70c8ae44a24cd49f7d710329478dc9c9a7b6f5ec2fbd",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/runtime-builds.json",
+    "sha256": "dc2d13e6b4767910d5652522b69a75a02c170ecaacbd1ea69d252cf12000f313",
+    "kind": "list",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/runtime-health.json",
+    "sha256": "c16ecfd216ea902b090807e277fa7e88410a9d17c52e9149ae05e61a8785e2a5",
+    "kind": "list",
+    "entries": 6
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/sql-plans.json",
+    "sha256": "1d0f3360c78441411af0ef69a293da76790c083a773f1c91024f113e80b4e0bd",
+    "kind": "list",
+    "entries": 6
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/target-identities.json",
+    "sha256": "f86300a87b47d221be7b557ca2df1e811c63404cf10dc9d79f1718815a0d60f3",
+    "kind": "list",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/user-after.json",
+    "sha256": "cc9961908ad504a1242989cf3d2fbaa13340c9933840644faa8a26c84b7c10c6",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/user-before.json",
+    "sha256": "cc9961908ad504a1242989cf3d2fbaa13340c9933840644faa8a26c84b7c10c6",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8-hosted-e2e-performance/user-runtime-preflight.json",
+    "sha256": "346f78d8ff7e4209df9ae1647fd734101c6bf260beb117686d35383abe81f048",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/acceptance-summary.json",
+    "sha256": "28f89dbaaeeaef98052d30b8cdff2d920d02f2881169a1b23b014b3a234a6666",
+    "kind": "dict",
+    "entries": 23
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/admin-authentication.json",
+    "sha256": "01241af1816d00fc561fa634049dc8e5f1e954b7f63d5ba9e27d2aec8ffd99d3",
+    "kind": "dict",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/admin-baseline.json",
+    "sha256": "4a47b606e68d699ec73f8916ef9a8275065c52904eab5fa383cc0c8507a86ad4",
+    "kind": "list",
+    "entries": 1
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/before-after.json",
+    "sha256": "b6bac37bc8e7691a54fe978811a7c257ca208457fbf14b1f9efd5d3c3a816624",
+    "kind": "dict",
+    "entries": 6
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/benchmark-before-small-raw.json",
+    "sha256": "262c01de9548ab63161e7dce8332aa32fe8e29477cd8cbfad8c5e14b0f1856b1",
+    "kind": "list",
+    "entries": 30
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/benchmark-before-small-summary.json",
+    "sha256": "823e3b9e6bcc4ee8b2ed4fbfb009d0a2ef74fa13b7954f40dd65feeb97cd17e2",
+    "kind": "list",
+    "entries": 1
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/benchmark-environment.json",
+    "sha256": "fe064d2e14b06ae429bad12a7f6f1cefaa1ddb1b01b676dd14bd672aa8f5c3da",
+    "kind": "dict",
+    "entries": 18
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/booking-after.json",
+    "sha256": "cea1cb186e95eab1da27cfa23f7486869e0cb4e8b2c6f6cb802222e931e19b7a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/booking-before.json",
+    "sha256": "cea1cb186e95eab1da27cfa23f7486869e0cb4e8b2c6f6cb802222e931e19b7a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/booking-connection-pressure.json",
+    "sha256": "ef5e6ab9453a81a59ebb49f82455419268c10d5b6aff032b8a9ef864e0f4514d",
+    "kind": "list",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/booking-runtime-preflight.json",
+    "sha256": "2c1cab29566176a7f5746b63f6ec2e21e71b56c64f2c250cce05b40d583f91df",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/broker-cleanup.json",
+    "sha256": "7abc4d34471c2c91dd4de018d6909420e392d3d78e9d970aec906b413a0deb8d",
+    "kind": "list",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/changes-owned-by-batch.json",
+    "sha256": "bdd7eb2dcedb1dde3fd2908c92c851d0cfe770558a5cbdca29c155ffd7f554b0",
+    "kind": "dict",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/cleanup-exact-id-plan.json",
+    "sha256": "fc35cd85d84246c980d6913b21206ad8824504d52d4a08df27a5dd136f0488d4",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/cleanup-feasibility.json",
+    "sha256": "981a7c864ac7b1d9c13aa63e79b84ce096f554ee68f23d444afee5416426c20d",
+    "kind": "dict",
+    "entries": 7
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/cleanup-progress.json",
+    "sha256": "0c1f01bb5780543ddd03e655ed18f42900599e7fc9c00071ba7e29eb7f92e333",
+    "kind": "list",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/cleanup-results.json",
+    "sha256": "1e78be50cbe27ff56a252d84eb65ed079c924f4c61c112ecbf35e46f1e4f4c50",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/concurrency-error-analysis.json",
+    "sha256": "910d8719739f22d0509a5e571aef9a07ef499db98263bc3e27116fc7a0a045ca",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/concurrency-recovery.json",
+    "sha256": "6bd8b10a9b8e482dce79ceedc102b480cfcf46d7ae8bd12d5dd52254fdf007d3",
+    "kind": "dict",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/dataset-current.json",
+    "sha256": "8f480d3339a0a401ca3443cc291e73f923532d8e56e65537e581a64509d31baf",
+    "kind": "dict",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/e2e-results.json",
+    "sha256": "3ad419d3f861bd4a989810165b5809c49ae6527e5d6176b7e35dad549b8dce9d",
+    "kind": "list",
+    "entries": 58
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/existing-record-verification.json",
+    "sha256": "47936e073a395a9b2fc4ae8cc2600427a83b6bd58a9d8b1464c8d021e00223c6",
+    "kind": "list",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/existing-row-digests-after.json",
+    "sha256": "6017d33d992f2e27bfdd836250266561e8226bfb3e5fe91c3363be5c0c33504b",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/existing-row-digests-baseline.json",
+    "sha256": "40ab0ccdc5a037f51b8d98e5428fcd48b83f566c9e89e3cb47a81c2205ac3096",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/existing-row-digests-before.json",
+    "sha256": "b4e53ceb99bc0e3aa63b1b41e0f38205a06c5cd00b7b7cadf8e62f0a7042d07c",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/final-admin-login-attempt.json",
+    "sha256": "0bfb29c4c80f198fc3f498e8c642783078b55a702e0a18ff6a1f9885755fe057",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/final-admin-preservation.json",
+    "sha256": "5aba5953ada851917eb71c492c803b0c318a6ce1c2428d543e71a166f3268c40",
+    "kind": "dict",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/final-git-state.json",
+    "sha256": "99fc2ed759509d2844f648136008fff2eef3fcc5be45cab38de32f8f8ee16a97",
+    "kind": "dict",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/final-schema-history-count-verification.json",
+    "sha256": "43f4574fc09a4f197cf1d7d0b1b5ea648c9d2987349b40c5a6d2417c94d5c1c6",
+    "kind": "list",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/final-verification.json",
+    "sha256": "4417686d17e0f92d6129dfe6d1939b919cc38600b77acd7188a8794d1656f5a5",
+    "kind": "dict",
+    "entries": 17
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/financial-side-effect-check.json",
+    "sha256": "bcf889c6988482cd31a160ba09a43f5d89977125eae55b73a4b5097542b25530",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/fixture-manifest.json",
+    "sha256": "d0def3e86fe18b10db28918ae72a6c5871f0f41b55f6668773f794378d4e38c5",
+    "kind": "dict",
+    "entries": 7
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/fixture-scope.json",
+    "sha256": "18937dc84d710c759643ef4da6ef75a2585d21c2ee982e391b8d0c41866d8502",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hold-expiration-start.json",
+    "sha256": "e199732fd0c6ef936aeda572f91a432b50e36622d13ae4d2b65ce440ff1e0772",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-after-artifact.json",
+    "sha256": "77568a67a67585ce56ccad640519ebe2a435bf40aeb2226ffae06b037d075fdb",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-after.json",
+    "sha256": "feddfd0af1f774f3010d9b88adfa12d9477beb11393867fabe6d6b9b77ea39b1",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-before-artifact.json",
+    "sha256": "8541c14f25e714a12b4bc53fda07eb528f504f82b88cbc3f2d112e8eec507196",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-before.json",
+    "sha256": "feddfd0af1f774f3010d9b88adfa12d9477beb11393867fabe6d6b9b77ea39b1",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-metrics-during-before.json",
+    "sha256": "bbd8ea840a1cd5177e6af33598f9a7cd767f3263ecf1b070658595aa4d80f3f7",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-quiescent-probe.json",
+    "sha256": "2b22c5104e5a8b4420b63af97d3d3b94646bf7e952f3d7ab25495f59e50a67b7",
+    "kind": "list",
+    "entries": 1
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/hotel-runtime-preflight.json",
+    "sha256": "427ae272d6b1779fa64867056f3e0db473633abe904a6fa52422a1f09476b080",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/initial-git-backend.json",
+    "sha256": "5d13be651f2d2f876d01203e1292a84eeb40853953b98aaac953de4c18c60bcf",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/initial-git-frontend.json",
+    "sha256": "0dd1c3e68a6b654cbc52141c2ab0d41d4303a948bd98e54f7c10a79717202808",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/local-side-effect-cleanup.json",
+    "sha256": "5b54eb676555f78c63d21181c5be644a4821259b77f91a042f19369c0f1479b8",
+    "kind": "dict",
+    "entries": 7
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/network-transaction-probe.json",
+    "sha256": "0a56ed290799b5c5b2a1505f19e975028d087076b1fb031c93a07affe8ae48bc",
+    "kind": "dict",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/query-count-slope.json",
+    "sha256": "26ade42da1f82503bac260d0c8ca317568d6074a1c573335cc7a91416c4c3ac0",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/query-counts-before-small.json",
+    "sha256": "29eb5075d332a53c049543b76a3bc5851490c1fc4e6ac7902674a6c9678e50ca",
+    "kind": "list",
+    "entries": 15
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/readiness-after-restart.json",
+    "sha256": "a18d31581128b2228be4ae43b87c90b5cacb5cdcf8c9badd95d81c635a2bee1c",
+    "kind": "list",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/recovery-readiness-second.json",
+    "sha256": "dbfc1803b1bc0d9d39d4705abe14047057502bec9dca57482f966e608d1bad42",
+    "kind": "list",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/recovery-readiness.json",
+    "sha256": "997554ef1dfbce5ec311eca1cff975f82ba836b670b928635476d0aa507fea71",
+    "kind": "list",
+    "entries": 6
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/regression-results.json",
+    "sha256": "11e0e170479c9f36d99c070cbf5dac8afaa0ed2707a1c85ed8ccb38bca88ee9b",
+    "kind": "dict",
+    "entries": 11
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/regulations-after.json",
+    "sha256": "89d7f3fa5204187e0a3dd3f9a024982b238dde59d2655aca5f54f44846aa5a20",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/regulations-before.json",
+    "sha256": "89d7f3fa5204187e0a3dd3f9a024982b238dde59d2655aca5f54f44846aa5a20",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/regulations-runtime-preflight.json",
+    "sha256": "f3bb82143f51e5b219347a1b73eb61ef57a237de816a0104671745dcc12e8d1f",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/remaining-limitations.json",
+    "sha256": "f27d1c1ef4af00d5c51672167d5e554095c76fe5228347d1416a34f5d6beef80",
+    "kind": "list",
+    "entries": 8
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/revenue-after.json",
+    "sha256": "3f4bf0d0b6dfc421456fec79dac1e8092a697fd7468d2cf1dc2f12c81d968d5a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/revenue-before.json",
+    "sha256": "3f4bf0d0b6dfc421456fec79dac1e8092a697fd7468d2cf1dc2f12c81d968d5a",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/revenue-runtime-preflight.json",
+    "sha256": "9307a873a77c67eadc6bad8cf33e6dc86fc8cddcbc100650a3a46e0971e68019",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/runtime-readiness.json",
+    "sha256": "5ac306079a6ab8422c1820aa62b0c115b3da1910a0f0ec80a02631dfb0f263eb",
+    "kind": "list",
+    "entries": 6
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/secret-handling-verification.json",
+    "sha256": "28e815bea78fea591d61b178c81a5ed9b73ff658141a922764175426a6ffec83",
+    "kind": "dict",
+    "entries": 5
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/sql-plans-small.json",
+    "sha256": "91dcf19edbb32a8f6b63225dbdacc64a4d64af6643ae983123100cf05a58f885",
+    "kind": "list",
+    "entries": 2
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/user-after.json",
+    "sha256": "738253bd454d9e939ab8b016c15621a32a03c0c848582235498f9faa055403f0",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/user-before.json",
+    "sha256": "738253bd454d9e939ab8b016c15621a32a03c0c848582235498f9faa055403f0",
+    "kind": "dict",
+    "entries": 13
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/user-connection-pressure.json",
+    "sha256": "4d8bee600706bbf50bc0c33a0927b94158e1ac0ff8e70fc20690783ef5f60a6a",
+    "kind": "list",
+    "entries": 4
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/user-runtime-preflight.json",
+    "sha256": "cab0ea32a46e0c657c4f20581eaf59e505ef87d86ed2b0b9aa347b050d78f30a",
+    "kind": "dict",
+    "entries": 3
+  },
+  {
+    "path": "Docs/evidence/batch-8b-hosted-e2e-performance/zero-point-side-effects.json",
+    "sha256": "149fb777032a4e164a3918c7d1632d767c701497ba0aeaac8fe48aaaa837309b",
+    "kind": "dict",
+    "entries": 3
+  }
+]

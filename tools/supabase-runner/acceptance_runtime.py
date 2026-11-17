@@ -52,7 +52,7 @@ def sql(owner,statement,fixture=False):
         env[owner.upper()+suffix]=v[owner.upper()+suffix]
     env.update(BATCH6B_MANAGEMENT_TOKEN=v[GROUPS[owner]],BATCH6B_TARGET_MANIFEST=str(PRIVATE/'targets.properties'),BATCH6B_BACKEND_ROOT=str(ROOT))
     cp=os.pathsep.join([str(PRIVATE/'approved-classes'),str(ROOT/'tools/supabase-runner/target/supabase-runner-1.3.0.jar'),str(ROOT/'tools/supabase-runner/target/dependency-10.22.0/*')])
-    result=subprocess.run(['java','-cp',cp,'com.checkinn.db.HostedAcceptanceSql',owner,'fixture' if fixture else 'readonly'],input=statement,env=env,capture_output=True,text=True,timeout=60)
+    result=subprocess.run(['java','-cp',cp,'com.checkinn.db.HostedAcceptanceSql',owner,'fixture' if fixture else 'readonly'],input=statement,env=env,capture_output=True,text=True,encoding='utf-8',timeout=60)
     if result.returncode:
         # Never surface arbitrary driver output; retain no SQL credentials in public reports.
         safe=[line for line in (result.stdout+result.stderr).splitlines() if line.startswith('BLOCKED ')]

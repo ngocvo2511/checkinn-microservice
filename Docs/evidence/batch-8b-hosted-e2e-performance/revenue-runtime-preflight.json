@@ -1,0 +1,9 @@
+{
+  "owner": "revenue",
+  "exitCode": 0,
+  "safeOutput": [
+    "revenue CONTROL_PLANE_IDENTITY_PASS",
+    "revenue CLIENT_TLS_VERIFIED protocol=TLSv1.3",
+    "revenue RUNTIME_READONLY_PASS inheritedDatabaseTemp=true"
+  ]
+}
