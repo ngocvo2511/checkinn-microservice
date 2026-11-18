@@ -1,0 +1,543 @@
+{
+ "batch": "9C canonical smoke",
+ "runId": "30648016ef",
+ "startedAt": "2026-11-18T04:29:27.354948+00:00",
+ "finishedAt": "2026-11-18T04:30:51.879814+00:00",
+ "gateway": "127.0.0.1:58080 (disposable)",
+ "hosted": false,
+ "supabase": false,
+ "legacyTestClone": false,
+ "schema": "canonical V1 via Flyway 10.22, profile canonical (validate)",
+ "syntheticSql": [
+  "users.role ADMIN promotion of a freshly registered synthetic account",
+  "hotels publication DRAFT→APPROVED (no Storage/document workflow)"
+ ],
+ "checks": [
+  {
+   "name": "admin: register via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "admin: OTP delivered to local Mailpit",
+   "passed": true
+  },
+  {
+   "name": "admin: verify OTP",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "admin: real login returns ADMIN JWT",
+   "passed": true,
+   "status": 200,
+   "role": "ADMIN"
+  },
+  {
+   "name": "owner: register via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "owner: OTP delivered to local Mailpit",
+   "passed": true
+  },
+  {
+   "name": "owner: verify OTP",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "owner: real login returns OWNER JWT",
+   "passed": true,
+   "status": 200,
+   "role": "OWNER"
+  },
+  {
+   "name": "customer1: register via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "customer1: OTP delivered to local Mailpit",
+   "passed": true
+  },
+  {
+   "name": "customer1: verify OTP",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "customer1: real login returns CUSTOMER JWT",
+   "passed": true,
+   "status": 200,
+   "role": "CUSTOMER"
+  },
+  {
+   "name": "customer2: register via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "customer2: OTP delivered to local Mailpit",
+   "passed": true
+  },
+  {
+   "name": "customer2: verify OTP",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "customer2: real login returns CUSTOMER JWT",
+   "passed": true,
+   "status": 200,
+   "role": "CUSTOMER"
+  },
+  {
+   "name": "ADMIN creates city via Gateway",
+   "passed": true,
+   "status": 201
+  },
+  {
+   "name": "CUSTOMER cannot create city",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "OWNER creates hotel (DRAFT) via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "DRAFT hotel is not public",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "OWNER creates approved room via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "OWNER proposes inventory for approved room",
+   "passed": true,
+   "status": 201
+  },
+  {
+   "name": "OWNER creates pending room via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "OWNER proposes inventory for pending room",
+   "passed": true,
+   "status": 201
+  },
+  {
+   "name": "OWNER cannot approve own inventory",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "ADMIN approves inventory via Gateway",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ search page returns only the approved room offer",
+   "passed": true,
+   "status": 200,
+   "total": 1
+  },
+  {
+   "name": "READ hotel detail lists approved room only",
+   "passed": true,
+   "status": 200,
+   "rooms": [
+    "291f5d7d-4d4a-45af-a291-b4b45248d4d1"
+   ]
+  },
+  {
+   "name": "READ public hotel detail and search page carry no ownerId (F-9B-2)",
+   "passed": true,
+   "detailOwnerIdPresent": false
+  },
+  {
+   "name": "READ rooms by hotel lists approved room only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ approved room",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ unapproved room is 409 INVENTORY_APPROVAL_REQUIRED envelope",
+   "passed": true,
+   "status": 409
+  },
+  {
+   "name": "READ availability approved room",
+   "passed": true,
+   "status": 200,
+   "body": {
+    "available": true,
+    "availableRooms": 2,
+    "checkedAt": "2026-11-18T04:29:33.906183864Z"
+   }
+  },
+  {
+   "name": "READ availability unapproved room is business conflict, not sold out",
+   "passed": true,
+   "status": 409
+  },
+  {
+   "name": "READ public catalog /api/hotel/hotels/accommodation-types",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/amenity-catalog",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/hotels/amenities/categories",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/hotels/policies/categories",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/cities",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/cities/search/locations",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/api/v1/reviews/summaries",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/hotel/api/v1/reviews/stats/hotel/380ceaff-f058-49a0-b535-458298b15088",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ public catalog /api/bookings/cancellation-policy",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "READ invalid search is 400 envelope: no destination",
+   "passed": true,
+   "status": 400
+  },
+  {
+   "name": "READ invalid search is 400 envelope: size 51",
+   "passed": true,
+   "status": 400
+  },
+  {
+   "name": "READ invalid search is 400 envelope: reversed stay",
+   "passed": true,
+   "status": 400
+  },
+  {
+   "name": "READ unknown hotel is 404 NOT_FOUND envelope",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "READ private route anonymous 401 /hotels/",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ private route anonymous 401 /admin/inventory-reviews",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ private route anonymous 401 /internal/hotels/",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ private route anonymous 401 /api/v1/availability/hold/11a9e7b6-dc4e-40ad-8e13-7542d64587f8",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ private route anonymous 401 /hotels/pending",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ private route anonymous 401 /api/v1/291f5d7d-4d4a-45af-a291-b4b45248d4d1/inventory-review",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "READ admin/internal route CUSTOMER 403 /admin/inventory-reviews",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "READ admin/internal route CUSTOMER 403 /internal/hotels/",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "READ admin/internal route CUSTOMER 403 /hotels/pending",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE anonymous create is 401",
+   "passed": true,
+   "status": 401
+  },
+  {
+   "name": "WRITE create booking 201 with server total",
+   "passed": true,
+   "status": 201,
+   "total": 2400000.0
+  },
+  {
+   "name": "WRITE retry with same key returns same booking",
+   "passed": true,
+   "status": 201
+  },
+  {
+   "name": "WRITE same key with changed input is 409 envelope",
+   "passed": true,
+   "status": 409
+  },
+  {
+   "name": "WRITE one hold counted after create+retry",
+   "passed": true,
+   "counters": "1/0/1"
+  },
+  {
+   "name": "WRITE lost response then retry with same key: one booking, no extra hold",
+   "passed": true,
+   "status": 201,
+   "bookings": "2",
+   "counters": "2/0/2"
+  },
+  {
+   "name": "READ availability reflects holds (0 left)",
+   "passed": true,
+   "body": {
+    "available": false,
+    "availableRooms": 0,
+    "checkedAt": "2026-11-18T04:29:42.299864250Z"
+   }
+  },
+  {
+   "name": "WRITE stale price is 400 envelope, no hold",
+   "passed": true,
+   "status": 400,
+   "message": "Room price has changed; refresh the offer before booking"
+  },
+  {
+   "name": "C5 Gateway→Booking: error requestId equals client trace id",
+   "passed": true,
+   "requestId": "1afd795af2155373d1b1d2a8a55ed6fb"
+  },
+  {
+   "name": "WRITE unapproved room booking is 409, no hold",
+   "passed": true,
+   "status": 409,
+   "code": "CONFLICT"
+  },
+  {
+   "name": "WRITE other customer GET /api/bookings is 403",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE other customer DELETE /api/bookings is 403",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE other customer GET /api/payments/booking is 403",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE other customer POST /api/payments/vnpay is 403",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE out-of-scope PUT /api/bookings/b36f4cad-b5cd-3ac8-94a0-32e8612997d4/status is 403 for CUSTOMER",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE out-of-scope GET /api/bookings/count/total is 403 for CUSTOMER",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE out-of-scope GET /api/bookings/hotel/380ceaff-f058-49a0-b535-458298b15088 is 403 for CUSTOMER",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE out-of-scope GET /api/payments/manual-refunds is 403 for CUSTOMER",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "WRITE owner reads booking status",
+   "passed": true,
+   "status": 200,
+   "bookingStatus": "PENDING"
+  },
+  {
+   "name": "WRITE owner lists own bookings",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "WRITE VNPay URL handoff (signed locally, provider not called)",
+   "passed": true,
+   "status": 200,
+   "keys": [
+    "orderId",
+    "redirectUrl"
+   ]
+  },
+  {
+   "name": "WRITE owner cancels booking 204",
+   "passed": true,
+   "status": 204
+  },
+  {
+   "name": "WRITE owner cancels booking 204",
+   "passed": true,
+   "status": 204
+  },
+  {
+   "name": "WRITE cancellation releases holds (counters 0/0/0)",
+   "passed": true,
+   "counters": "0/0/0"
+  },
+  {
+   "name": "READ availability restored after cancel, with server checkedAt (F-9B-5)",
+   "passed": true,
+   "body": {
+    "available": true,
+    "availableRooms": 2,
+    "checkedAt": "2026-11-18T04:29:47.716634589Z"
+   }
+  },
+  {
+   "name": "WRITE repeated cancel is idempotent (204) with no further inventory effect",
+   "passed": true,
+   "status": 204,
+   "counters": "0/0/0"
+  },
+  {
+   "name": "WRITE VNPay create for a cancelled booking is a 400 envelope, no exception text (F-9C-4)",
+   "passed": true,
+   "status": 400,
+   "body": {
+    "timestamp": "2026-11-18T04:29:49.127384675Z",
+    "status": 400,
+    "error": "Bad Request",
+    "code": "INVALID_REQUEST",
+    "message": "Payment cannot be created for this booking",
+    "path": "/api/payments/vnpay/create",
+    "requestId": "6afd29bdfea15c6f851495bfad7168e3"
+   }
+  },
+  {
+   "name": "C5 trace id present in booking-service logs",
+   "passed": true,
+   "seen": {
+    "api-gateway": 0,
+    "booking-service": 8,
+    "hotel-service": 6
+   }
+  },
+  {
+   "name": "C5 trace id present in hotel-service logs (Booking→Hotel REST propagation, F-9C-2)",
+   "passed": true,
+   "seen": {
+    "api-gateway": 0,
+    "booking-service": 8,
+    "hotel-service": 6
+   }
+  },
+  {
+   "name": "Schema user: exactly one successful V1 history row",
+   "passed": true,
+   "history": "1/1"
+  },
+  {
+   "name": "Schema hotel: exactly one successful V1 history row",
+   "passed": true,
+   "history": "1/1"
+  },
+  {
+   "name": "Schema booking: exactly one successful V1 history row",
+   "passed": true,
+   "history": "1/1"
+  },
+  {
+   "name": "Schema revenue: exactly one successful V1 history row",
+   "passed": true,
+   "history": "1/1"
+  },
+  {
+   "name": "Schema regulations: exactly one successful V1 history row",
+   "passed": true,
+   "history": "1/1"
+  },
+  {
+   "name": "OUTAGE Hotel search with database stopped is a bounded dependency error (503 envelope or Gateway 504), never 500/data",
+   "passed": true,
+   "status": 504,
+   "code_": null,
+   "seconds": 20.0
+  },
+  {
+   "name": "OUTAGE Booking read with database stopped is a bounded dependency error (503 envelope or Gateway 504), never 500/data",
+   "passed": true,
+   "status": 504,
+   "code_": null,
+   "seconds": 20.0
+  },
+  {
+   "name": "OUTAGE Hotel search: service maps the dead pool to the 503 dependency handler (F-9B-1), not 500",
+   "passed": true,
+   "mapped": 1,
+   "unhandled": 0
+  },
+  {
+   "name": "OUTAGE Booking read: service maps the dead pool to the 503 dependency handler (F-9B-1), not 500",
+   "passed": true,
+   "mapped": 2,
+   "unhandled": 0
+  }
+ ],
+ "summary": {
+  "passed": 94,
+  "failed": 0,
+  "observations": 0
+ }
+}

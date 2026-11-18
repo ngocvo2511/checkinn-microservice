@@ -1,5 +1,7 @@
 # Project standardization audit and execution recommendation
 
+> **Current state — Batch 9A, 17/11/2026: xem [§0](#0-current-state--batch-9a-reconciliation-17112026).** 17 FIXED_VERIFIED / 12 IN_PROGRESS / 3 FIXED_UNVERIFIED / 0 NEEDS_ENVIRONMENT; Place scope EXCLUDED — EXTERNAL OWNER; không production-ready. Các ghi chú blockquote, mục A–H và checkpoint dưới đây là lịch sử có ngày; mọi tổng hợp trạng thái trong đó là HISTORICAL — SUPERSEDED BY BATCH 9A khi mâu thuẫn với §0.
+
 > **Provider closure 17/11/2026 — Batch6B: DONE cho phạm vi local development + VNPay Sandbox/Storage.** Actual NCB card/OTP → return00 → payment COMPLETED, booking CONFIRMED, một Revenue CREDIT; callback replay/negative checks PASS. Storage upload/private signing PASS; fixture đã dọn. [Evidence và giới hạn](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). Các provider BLOCKED/PARTIAL ở checkpoint16/11 phía dưới là lịch sử; không tự đóng production/IPN/refund, batch khác hoặc parent standardization findings.
 
 > Checkpoint Batch 7 — 16/11/2026: **G2 PARTIAL; implementation source/tests/tooling đã thực hiện.** Inventory approval/link integrity và nullable amenities compatibility đã sửa; fresh local canonical provisioning/catalog/Hibernate 5/5 PASS, zero schema diff. Không sửa V1, không truy cập Supabase hoặc dữ liệu lịch sử. STD-006/021 vẫn IN_PROGRESS; STD-024 full historical scope vẫn FIXED_UNVERIFIED. Actual provenance NOT VERIFIED, legacy import DEFERRED; unmanaged compatibility theo §56 giữ nguyên, verified-only admission cần policy riêng. Batch 6B database integration tạm đóng theo quyết định người dùng; không mở lại bởi VNPay/Storage. [Báo cáo Batch 7](../BATCH7_G2_PROVENANCE_IMPLEMENTATION_2026-11-16.md).
@@ -10,11 +12,172 @@
 
 Audit date: 12 November 2026, Asia/Saigon. Scope: the two local repositories and root planning documents. This is an audit, not authorization to implement the roadmap. The original 12 November audit did not edit the plan or application source.
 
-**Last reviewed: 2026-11-13 — Batch 2 execution.** [Vietnamese acceptance report](../BATCH2_BOOKING_HOTEL_GATEWAY_ACCEPTANCE_2026-11-13.md): isolated unpaid Booking–Hotel/Availability Gateway lifecycle accepted, 57 Gateway/SQL/setup assertions PASS; focused Booking/Hotel 627 PASS +34 skipped; separate fresh PostgreSQL2 PASS. No production source changes. Parent status counts below unchanged. Canonical PLAN/AUDIT are now here under `Docs/standardization`; DA1 originals are pointers, not independent copies. The initial execution left new files unstaged; the subsequent [PR review #31](https://github.com/ngocvo2511/checkinn-microservice/pull/31) prepares them for version control. **Recommended next: G2 schema/applied-history/provenance.** Provider/paid/positive-points Gateway, UNKNOWN boundary, multi-node and production rollout remain unverified.
+**HISTORICAL — SUPERSEDED BY BATCH 9A — Last reviewed: 2026-11-13 — Batch 2 execution.** [Vietnamese acceptance report](../BATCH2_BOOKING_HOTEL_GATEWAY_ACCEPTANCE_2026-11-13.md): isolated unpaid Booking–Hotel/Availability Gateway lifecycle accepted, 57 Gateway/SQL/setup assertions PASS; focused Booking/Hotel 627 PASS +34 skipped; separate fresh PostgreSQL2 PASS. No production source changes. Parent status counts below unchanged. Canonical PLAN/AUDIT are now here under `Docs/standardization`; DA1 originals are pointers, not independent copies. The initial execution left new files unstaged; the subsequent [PR review #31](https://github.com/ngocvo2511/checkinn-microservice/pull/31) prepares them for version control. **Recommended next: G2 schema/applied-history/provenance.** Provider/paid/positive-points Gateway, UNKNOWN boundary, multi-node and production rollout remain unverified.
 
 **Historical review: 2026-11-13 — Batch 1.7 documentation reconciliation.** Current Refund scope/status below incorporates [Batch 1.6](../BATCH1_6_REFUND_FINAL_ACCEPTANCE_2026-11-13.md); original 12 November Git/test snapshots remain dated history. No application/configuration/test/SQL changes, runtime tests, Docker operations or database access were performed in Batch 1.7. The plan receives only scope/dependency/evidence updates.
 
+
+## 0. Current state — Batch 9A reconciliation (17/11/2026)
+
+**Đây là trạng thái hiện hành duy nhất của 32 finding.** Các mục A–H, appendix và checkpoint phía dưới là lịch sử có ngày; phần nào mâu thuẫn với mục này được đánh dấu `HISTORICAL — SUPERSEDED BY BATCH 9A`. Bảng trạng thái hiện hành trong PLAN (§0) được sinh từ cùng dữ liệu. [Báo cáo Batch 9A](../BATCH9A_STANDARDIZATION_RECONCILIATION_2026-11-17.md).
+
+**Batch 9E (18/11) — Final core audit & closure:** đối chiếu lại 32 issue với source + evidence 9B–9D và lần chạy fresh 18/11 (backend 12 module 1054 run/0 fail/48 skipped, compile 13/13; FE Node 218, tsc, build PASS; browser 150 case PASS về chức năng). **Counts không đổi** (17/12/3/0; in-scope VERIFIED 17, PARTIAL 11, IN_SCOPE_DONE 3, DEFERRED 1). Core standardization **đóng cho AI READ MVP (Batch 10) với điều kiện R1–R5**, không đóng cho AI WRITE, không production-ready. Finding mới F-9E-1…5. Bảng §0.2 dưới đây đã cập nhật tới 9E; các dòng tóm tắt 9A trong §0.1 là lịch sử. [Báo cáo 9E](../BATCH9E_FINAL_CORE_STANDARDIZATION_AUDIT_2026-11-18.md).
+
+### 0.1 Executive summary
+
+- Batch 9A là documentation reconciliation + read-only verification: không sửa application source, database, provider hoặc runtime. Git: backend `feat/inventory-approval-read-batching`/`96bfc4f`, frontend `fix/inventory-approval-workflow`/`6942747`; chỉ hai IDE edit có sẵn.
+- **Parent status:** FIXED_VERIFIED **17**, IN_PROGRESS **12**, FIXED_UNVERIFIED **3**, NEEDS_ENVIRONMENT **0** (13/11: 16/12/3/1). Open (≠ FIXED_VERIFIED): **P0 3/7** (STD-002/003/007), **P1 7/17** (STD-011/012/018/021/023/026/028), **P2 4/7** (STD-024/027/029/030), **P3 1/1** (STD-032). Priority gốc không đổi: P0 7, P1 17, P2 7, P3 1.
+- **In-scope (không gồm Place):** VERIFIED 17, PARTIAL 9, `IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED` 3 (STD-011/023/032), NOT_VERIFIED 0, DEFERRED 1 (STD-024), BLOCKED 0. *(Batch 9B: STD-003/018 NOT_VERIFIED → PARTIAL; PARTIAL nay 11.)* `IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED` không đóng parent issue.
+- **Thay đổi:** STD-006 IN_PROGRESS → FIXED_VERIFIED (acceptance gốc về admission đạt bởi 5B/7B/8B/8D; legacy physical-stock provenance DEFERRED theo U03); STD-027 NEEDS_ENVIRONMENT → IN_PROGRESS (local Docker/production frontend có evidence; log ingestion/cloud còn thiếu).
+- **Verification 9A:** backend 8 module 1021 reported / 973 PASS / 48 opt-in skipped / 0 fail; reactor compile 13/13 (gồm Place, không diagnostic); frontend 214/214, `tsc` PASS, production Webpack build PASS; ESLint baseline FAIL 133 errors/152 warnings (không phải acceptance gate). Blocker `showDistance` lịch sử không còn.
+- Không production-ready; overall standardization PARTIAL. Không mở lại Batch 8E.
+
+### 0.2 Master issue status (current)
+
+| Issue | Pri | Historical (pre-9A) | **Current (9A–9E)** | In-scope (không gồm Place) | Latest evidence | Remaining work | AI | Recommendation |
+|---|---|---|---|---|---|---|---|---|
+| STD-001 | P0 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | BookingAuthorizationTest/GrpcBookingAuthorizationTest (9A rerun PASS); hosted Gateway authz 8B/8D (forged header/cross-owner 403) | External RPC caller inventory NOT_VERIFIED (G4); không phải code fix | WRITE | VERIFY (preserve) |
+| STD-002 | P0 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | Batch 1.6 internal refund demo; [6B VNPay Sandbox 17/11](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md) return00/HMAC/replay/amount-mismatch 400; 9A grep: 0 class `implements RefundProvider` | Provider refund/QueryDR/IPN reconciliation NOT IMPLEMENTED → DEFERRED (G1b). Sub-scope live Sandbox checkout nay VERIFIED | WRITE | DEFER provider refund; Agent không thực thi payment/refund |
+| STD-003 | P0 | FIXED_UNVERIFIED | **FIXED_UNVERIFIED** | PARTIAL | Catalog/Media/Review authorization tests; Storage live (6B); hosted 8B/8D 403; 9B `AgentReadContractTest` (14 public anonymous, 20 private 401, 8 admin/internal 403); 9C `AgentWriteContractTest`; **Gateway thật trên stack canonical 87→104/0 (9C–9D)** | Consolidated REST/RPC actor matrix cho owner/admin writes + external RPC caller inventory (G4) | BOTH | VERIFY |
+| STD-004 | P0 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | LoyaltyAuthorizationTest/ReportAuthorizationTest (9A rerun PASS); historical native | Caller/deployment recheck (G4) | NONE (WRITE nếu Agent dùng điểm) | — |
+| STD-005 | P0 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | [Batch 2](../BATCH2_BOOKING_HOTEL_GATEWAY_ACCEPTANCE_2026-11-13.md); hosted booking 201 server price 8B/8D; VNPay signed amount mismatch 400 (6B) | Không hỗ trợ rate plan/tax/partial payment — không được ngụ ý | WRITE | — |
+| STD-006 | P0 | IN_PROGRESS | **FIXED_VERIFIED** | VERIFIED | [7B](../BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md) native race/contract; hosted 8B/8D: room PENDING 409 + không hold/counter, không xuất hiện trong search; sau ADMIN approve available=2 | Legacy physical-stock provenance → DEFERRED (canonical DB fresh, không import legacy theo U03). Physical count thật thuộc OWNER/ADMIN workflow, không phải code | BOTH | Preserve; DEFER legacy provenance |
+| STD-007 | P0 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | Batch 2 unpaid lifecycle; 8C natural expiry; VNPay Sandbox paid → CONFIRMED + replay (6B); **9C Gateway lost-response + retry cùng key → 1 booking/1 hold; cancel lặp idempotent 204** | Provider refund/QueryDR DEFERRED; crash/restart, multi-node NOT_VERIFIED | WRITE | DEFER provider; VERIFY crash trước AI WRITE |
+| STD-008 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | AvailabilityServiceTest (9A rerun PASS); hosted stock2 race 201/201/409 (8C/8D); natural expiry (8C) | Multi-node throughput NOT_VERIFIED (D) | WRITE | — |
+| STD-009 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | BookingIdempotencyTest/BookingCreationCompensationTest (9A rerun PASS); hosted same-key concurrent → 1 booking/1 hold (8C/8D) | Prolonged orphan monitoring khi deploy | WRITE | — |
+| STD-010 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | HotelOfferSearchServiceTest (9A rerun PASS); 8D response BEFORE/AFTER tương đương 15/15 | Một room type/base price; availability là quan sát, không bảo đảm | READ | — |
+| STD-011 | P1 | IN_PROGRESS | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | Node search-errors/api-errors (9A regression 214 PASS) | Phần còn lại chỉ là Nearby/Place → EXCLUDED — EXTERNAL OWNER; không coi là DONE toàn issue | READ | EXCLUDE (Place) |
+| STD-012 | P1 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | Node room-facts/inventory PASS; **9E rà soát hệ thống**: `FeaturedHotels`/`GuestReviews`/`HotelCard` dùng dữ liệu nguồn | **F-9E-1**: `app/booking/page.tsx` khan hiếm phòng cứng; `app/booking/payment/page.tsx` giường/bữa sáng/Wi-Fi/giờ/“Không hoàn tiền”/“Không đổi lịch” cứng, mâu thuẫn cancellation-policy API. PlaceCard/PlaceReviewsModal EXCLUDED | READ (frontend); trang đích của AI WRITE | FIX (F-9E-1) |
+| STD-013 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | Node search-filters (9A PASS) | Giữ default/unit/AND-OR trong tool schema | READ | — |
+| STD-014 | P2 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | HotelOfferPagingTest (9A PASS); Node search-pagination | Thứ tự collection lồng (media/policies/FAQ/amenities) không có ORDER BY — không thuộc pagination contract (8D risk) | READ | — |
+| STD-015 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | AccommodationTypeServiceTest (9A PASS) | — | READ | — |
+| STD-016 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | AmenityCatalogServiceTest (9A PASS) | Mapping completeness là data review | READ | — |
+| STD-017 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | LocationSearchIntegrationTest; tsc PASS (9A) | — | READ | — |
+| STD-018 | P1 | FIXED_UNVERIFIED | **FIXED_UNVERIFIED** | PARTIAL | Validation tests (9A PASS); search/availability 400 (9B); booking-create fieldErrors (9C); **9D giới hạn F-9B-3 (không quá khứ, ≤30 đêm, rooms 1–20, adults 1–40, children 0–40) ở Hotel + Booking, unit + Gateway** | Inventory hợp nhất cho các REST/RPC write còn lại (content/media/regulations/owner-admin); Place EXCLUDED | BOTH | VERIFY |
+| STD-019 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | RoomDescriptionTest (9A PASS) | — | READ | — |
+| STD-020 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | Session/Revocation tests (9A PASS); NextAuth hosted E2E (6B); ADMIN Gateway login (8C/8D) | Google vẫn unsupported (không phải verified exchange) | WRITE | — |
+| STD-021 | P1 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | 5B; hosted V1 5/5 + Hibernate 32 entities (6B); zero drift (7); canonical `validate` + `hikari.connection-timeout` 10 s (9D) | Profile mặc định/`docker` vẫn `ddl-auto: update` (booking/hotel/regulations/revenue); backup/PITR/restore NOT_VERIFIED; legacy cutover DEFERRED (U03) | NONE (runtime canonical) | DEFER (production ops) |
+| STD-022 | P1 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | LoyaltyPointsServiceTest (9A PASS); §24 | — | WRITE (nếu bật điểm) | — |
+| STD-023 | P1 | IN_PROGRESS | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | HotelGrpcPublicationAuthorizationTest; hosted 8D PENDING room không lộ; **9D public `HotelResponse.ownerId` = null (mapper test + Gateway)** | Chỉ còn nearby/tọa độ thô → Place, EXCLUDED — EXTERNAL OWNER | READ | EXCLUDE (Place) |
+| STD-024 | P2 | FIXED_UNVERIFIED | **FIXED_UNVERIFIED** | DEFERRED | HotelMapperTextTest (9A PASS); Batch 3/7 synthetic shapes | Historical corpus chỉ tồn tại ở legacy DB không import (U03) → DEFERRED cùng legacy cutover | NONE | DEFER |
+| STD-025 | P2 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | [8D](../BATCH8D_READ_OPTIMIZATION_2026-11-17.md) SQL 96→12/111→15/91→11/19→11, slope 0; native 2/2 | 12–15 round trip cố định, p50 ~1,5–2,5 s hosted; không SLO → DEFERRED | READ (latency) | DEFER further perf |
+| STD-026 | P1 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | Backend READ/WRITE envelope (9B/9C); **9D Hotel/Booking DB outage → 503 `DEPENDENCY_UNAVAILABLE` trong 10 s qua Gateway, 400 rỗng → envelope, Gateway response-timeout 20 s**; FE F1 + bỏ fallback submit-approval | auth/user/revenue/regulations: DB outage vẫn generic 500; **F-9E-2** 27 `fetch` thô không deadline ở FE core (auth/admin/users/cities/profile/my-bookings/newHotel/loyalty proxy/geocode); Gateway 504 không có envelope; Place SDK EXCLUDED | BOTH | FIX (FE + service còn lại) |
+| STD-027 | P2 | NEEDS_ENVIRONMENT | **IN_PROGRESS** | PARTIAL | 6B Docker runtime; VNPay run qua `stack.ps1`; FE production build PASS (9E); **topology canonical tái lập từ source nhiều lần 9C–9D (13 container healthy, V1 5/5)** | Log ingestion Loki/Promtail NOT_VERIFIED; backend cloud deployment DEFERRED | NONE | DEFER |
+| STD-028 | P1 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | **9E fresh: backend 1054/0 fail/48 skipped (12 module), compile 13/13; FE Node 218, tsc, build; browser 150 case PASS về chức năng (105 default + 45 area trên Webpack)**; Gateway smoke 104/0 (9D) | Full booking→payment→cancel→refund E2E; browser non-intercepted; multi-node; hạ tầng test F-9E-3/4/5 | BOTH | VERIFY |
+| STD-029 | P2 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | Batch 1.6 DEBIT/net0; VNPay → 1 CREDIT + replay (6B) | Operator replay/DLQ/retention, legacy cash reconciliation DEFERRED; SMTP không exactly-once | NONE | DEFER |
+| STD-030 | P2 | IN_PROGRESS | **IN_PROGRESS** | PARTIAL | 8D SQL attribution theo trace; AuthLogPrivacy/JwtMdc tests; **9D Booking→Hotel propagate (`RestClientTracePropagationTest` + runtime: Hotel log 6 lần trace client, trước 0)** | `auth-service`/`revenue-service` vẫn `new RestTemplate(factory)`; `user-service` `RegulationClient` dùng `new RestTemplateBuilder()`; Gateway không có tracing bridge/log trace id; log ingestion NOT_VERIFIED | BOTH (vận hành Agent) | FIX trước AI WRITE |
+| STD-031 | P2 | FIXED_VERIFIED | **FIXED_VERIFIED** | VERIFIED | Historical browser; Node calendar/criteria (9A PASS) | Nearby fetch lifecycle là Place → EXCLUDED | READ (frontend) | — |
+| STD-032 | P3 | IN_PROGRESS | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | Node canonical/location regressions (9A PASS); §35 | Caller Nearby/PlaceCard/PlaceReviewsModal → EXCLUDED — EXTERNAL OWNER; Agent MVP không lọc địa lý | NONE (city-only READ) | EXCLUDE (Place) |
+
+### 0.3 Remaining risks
+
+1. Provider refund/QueryDR/IPN chưa có implementation (`RefundProvider` không có class triển khai); Sandbox Internal Refund không phải hoàn tiền thật; VNPay chỉ được nghiệm thu ở **Sandbox**.
+2. Chưa có consolidated route/RPC actor matrix (STD-003) và negative-contract inventory cho write còn lại (STD-018); api-gateway không có test và không có tracing bridge (response-timeout 20 s đã cấu hình 9D).
+3. UNKNOWN commit boundary, crash/restart, multi-node chưa kiểm (STD-007/008/009 vận hành).
+4. Test-mode profile `docker` vẫn kế thừa `ddl-auto: update` (hotel/booking/revenue/regulations); backup/PITR/restore và log ingestion chưa kiểm.
+5. Hosted latency p50 ~1,5–2,5 s với 12–15 round trip cố định; không có SLO.
+6. Frontend (9E): trang đặt phòng/thanh toán hiển thị dữ kiện/chính sách bịa (F-9E-1, STD-012); 27 `fetch` thô không deadline (F-9E-2, STD-026); browser default config đỏ 45 case do lẫn spec area + 3 area config Turbopack abort (F-9E-3/4); ESLint 133/151.
+7. Place/Nearby: EXCLUDED — EXTERNAL OWNER; không đánh giá, không phải DONE.
+
+### 0.4 Latest evidence
+
+[Batch 9E](../BATCH9E_FINAL_CORE_STANDARDIZATION_AUDIT_2026-11-18.md) (fresh 18/11); [9D](../BATCH9D_FINDINGS_REMEDIATION_2026-11-18.md); [9C](../BATCH9C_AI_WRITE_PREGATE_VERIFICATION_2026-11-18.md); [9B](../BATCH9B_AI_READ_CONTRACT_VERIFICATION_2026-11-17.md); [canonical smoke evidence](../evidence/batch-9c-canonical-smoke/README.md). Trước đó: [Batch 9A](../BATCH9A_STANDARDIZATION_RECONCILIATION_2026-11-17.md) (fresh local commands); [8D](../BATCH8D_READ_OPTIMIZATION_2026-11-17.md); [PR review 17/11](../PR_REVIEW_2026-11-17.md); [8C](../BATCH8C_RUNTIME_STABILITY_PERFORMANCE_2026-11-17.md); [8B](../BATCH8B_HOSTED_E2E_PERFORMANCE_2026-11-17.md); [7B](../BATCH7B_MANDATORY_INVENTORY_APPROVAL_2026-11-16.md); [VNPay Sandbox 17/11](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md); [6B final](../BATCH6B_FINAL_COMPLETION_REPORT_2026-11-16.md). Hosted/provider kết quả không chạy lại trong 9A.
+
+### 0.5 AI Agent readiness (supersedes §H)
+
+#### AI READ readiness (không gồm Place/Nearby)
+
+| Capability | Gateway API (đã có, không tạo mới) | Auth | Existing tests / evidence | Missing verification | Readiness |
+|---|---|---|---|---|---|
+| Hotel search + filtering + pagination | `GET /api/hotel/hotels/offers/page` (paged), `GET /api/hotel/hotels/offers` | Public | HotelOfferControllerTest, HotelOfferPagingTest, HotelOfferSearchServiceTest (9A PASS); Node search-filters/pagination/errors (9A PASS); hosted 8D Gateway 2760/2760, response tương đương 15/15 | Agent-facing contract test tại Gateway (schema, invalid criteria → 400 fieldErrors, 503 envelope); không có SLO (p50 hosted ~1,9–2,3 s) | READY_WITH_CONSTRAINTS |
+| Hotel detail + policies/FAQ/amenities | `GET /api/hotel/hotels/{hotelId}`; `GET /api/hotel/hotels/policies/categories`, `/amenities/categories` | Public (published only) | Publication tests (9A PASS); hosted 8D detail 19→11 SQL | Thứ tự collection lồng không có ORDER BY; hosted rich-content dataset chưa đo | READY_WITH_CONSTRAINTS |
+| Room types | `GET /api/hotel/api/v1/hotel/{hotelId}`, `GET /api/hotel/api/v1/{roomTypeId}` | Public (approved + published only) | 7B approval filter tests; hosted 8D PENDING room không lộ | Agent phải diễn đạt "không có phòng được duyệt" khác "hết phòng" | READY_WITH_CONSTRAINTS |
+| Amenity / accommodation type / location catalogs | `GET /api/hotel/amenity-catalog`, `/api/hotel/hotels/accommodation-types`, `/cities`, `/cities/search/locations` | Public | AmenityCatalogServiceTest, AccommodationTypeServiceTest, LocationSearchIntegrationTest (9A PASS) | Contract snapshot cho tool schema | READY_WITH_CONSTRAINTS |
+| Pricing | `basePrice`/`matchedOffer` trong offers | Public | STD-005/010 tests; booking từ chối giá cũ (400) | Chỉ base price/full payment; không tax/rate plan/discount | READY_WITH_CONSTRAINTS |
+| Dated availability | `GET /api/hotel/api/v1/availability/check?roomTypeId&checkIn&checkOut&quantity`; dated offers | Public | AvailabilityServiceTest (9A PASS); hosted 8C/8D | Là quan sát, không giữ chỗ; unapproved → 409 `INVENTORY_APPROVAL_REQUIRED` cần map đúng nghĩa | READY_WITH_CONSTRAINTS |
+| Cancellation policy | `GET /api/bookings/cancellation-policy` | Public | Batch 2 policy readback | Contract snapshot | READY_WITH_CONSTRAINTS |
+| Review summaries | `GET /api/hotel/api/v1/reviews/summaries`, `/stats/hotel/{hotelId}` | Public | ReviewSummary tests; Node review-summaries (9A PASS) | — | READY_WITH_CONSTRAINTS |
+| Public/private data boundary | Tất cả public GET ở trên | — | Publication/preview authz tests; hosted 8B/8D; 9B `AgentReadContractTest`; **Gateway canonical 104/0; `ownerId` public = null (9D)** | Contact khách sạn vẫn public — Agent chỉ đưa vào context khi cần | READY_WITH_CONSTRAINTS |
+| API errors / timeouts | Backend `ApiErrorSupport` (code/status/requestId) | — | 9B/9D: 400 envelope, 404, 409 approval, **DB outage 503 trong 10 s qua Gateway**; Gateway response-timeout 20 s (504, không envelope) | Agent đặt deadline ≤10 s và tự giới hạn tần suất (Gateway không rate limit) | READY_WITH_CONSTRAINTS |
+| Nearby Places / POI / road distance | `/api/places/**` | — | — | — | EXCLUDED — EXTERNAL OWNER (không thuộc AI MVP) |
+
+**Cập nhật Batch 9B (17/11):** C1/C2/C3 phần READ đã có evidence ở service boundary; Gateway-level READ smoke NOT_RUN (chuyển 9C). Tool contract: [READ_TOOL_CONTRACT](../ai-agent/READ_TOOL_CONTRACT.md).
+
+**Kết luận READ (9A):** không có issue nào cần **sửa code** trước một Agent READ MVP chỉ dùng public hotel API; còn **verification gates** C1–C3 (STD-003 public-read subset, STD-018 negative contract cho tham số search/availability, STD-028 agent-facing contract suite). Đây là READY_WITH_CONSTRAINTS trên local development runtime, không phải deployed/production READ.
+
+#### AI WRITE readiness
+
+| Capability | Required APIs | Auth | Existing tests / evidence | Missing verification | Readiness |
+|---|---|---|---|---|---|
+| User identity | `/api/auth/**` (NextAuth credentials → internal JWT) | User session của chính người dùng | Session/revocation tests (9A PASS); NextAuth hosted (6B) | Agent không được dùng service identity hay token người khác | READY_WITH_CONSTRAINTS |
+| Agent hỗ trợ soạn booking (draft, không mutation) | READ APIs ở trên | Public/CUSTOMER | Như READ | Draft user-bound/expiry là phần việc của Agent (chưa triển khai) | READY_WITH_CONSTRAINTS |
+| Agent tạo booking sau xác nhận rõ ràng | `POST /api/bookings` (idempotencyKey, unitPrice phải khớp basePrice) | CUSTOMER (principal) | BookingAuthorization/Idempotency/Validation tests (9A PASS); Batch 2; hosted 8B–8D (201, same-key, race, 409 approval) | Contract test cho TIMEOUT/UNKNOWN: phải đọc trạng thái và tái dùng cùng key, không tạo key mới; crash/multi-node NOT_VERIFIED | READY_WITH_CONSTRAINTS |
+| Agent xác nhận/đọc trạng thái booking | `GET /api/bookings/{id}`, `/api/bookings/user/{userId}`, `GET /api/payments/booking/{bookingId}` | Owner of booking | BookingAuthorizationTest; hosted | — | READY |
+| Hủy booking | `DELETE /api/bookings/{id}` + cancellation-policy | Owner | Batch 2; hosted 8B–8D cancel 204, counters 0 | Paid cancellation dẫn tới refund ADMIN-only → MVP chỉ unpaid/pending, có xác nhận | READY_WITH_CONSTRAINTS |
+| Thanh toán | `POST /api/payments/vnpay/create` (trả URL) | Owner | VNPay **Sandbox** live 6B 17/11 | Production/IPN NOT_VERIFIED; Agent chỉ trao URL, không nhập thẻ/OTP | READY_WITH_CONSTRAINTS (handoff, Sandbox); Agent tự thanh toán: **NOT ALLOWED** |
+| Yêu cầu hoàn tiền (CUSTOMER) | `POST /api/payments/{paymentId}/refund-request` | Owner | Batch 1.6 Gateway (CUSTOMER 201) | Frontend Refund UI NOT IMPLEMENTED; không thuộc MVP | DEFERRED |
+| Thực thi refund | `/api/payments/{paymentId}/refund-request/approve`, `/api/payments/{id}/refund` | ADMIN | Batch 1.6 (Sandbox Internal) | Provider refund NOT IMPLEMENTED; Sandbox Internal ≠ hoàn tiền thật | **BLOCKED / NOT ALLOWED** cho Agent |
+| Dùng điểm loyalty | User loyalty quote + booking | CUSTOMER | LoyaltyPointsServiceTest (9A PASS) | Không cần cho MVP | DEFERRED |
+| Error recovery / correlation | requestId trong lỗi; idempotency key | — | ApiErrorSupport; JwtMdcFilterTest; **9D: trace client → Booking → Hotel (test + runtime)** | Trace chỉ có khi client gửi `traceparent` (Gateway không sinh); auth/revenue/user client chưa instrument (STD-030) | READY_WITH_CONSTRAINTS (Booking/Hotel) |
+
+**Kết luận WRITE:** backend có đủ principal binding, server pricing (giá cũ → 400), mandatory inventory approval, idempotency và hold lifecycle đã kiểm thử hosted. Không có issue nào đã chứng minh cần sửa code trước MVP "Agent tạo booking unpaid sau xác nhận"; còn gates C2/C4/C5 và phần xác nhận user-bound phía Agent. Payment chỉ ở dạng trao URL Sandbox; refund bị loại khỏi Agent.
+
+### 0.6 Backlog and recommended next workstream (supersedes §G0 "NEXT")
+
+#### Remaining backlog (Batch 9A)
+
+**A. Must Fix Before AI READ — không có issue nào.** Không tìm thấy defect code đã chứng minh chặn search correctness, public data, authorization, API errors hoặc read contract cho Agent READ MVP (public hotel API, không Place). Điều kiện còn lại là verification gates ở nhóm C.
+
+**B. Must Fix Before AI WRITE — không có issue nào.** Principal binding (STD-001), server pricing + stale-price 400 (STD-005), mandatory inventory approval (STD-006), hold expiry/concurrency (STD-008), idempotency (STD-009) đều VERIFIED kể cả hosted Gateway 8B–8D. Phần còn thiếu là verification gates C2/C4/C5 và cơ chế draft/xác nhận user-bound thuộc phạm vi Agent.
+
+**C. Verification Only** (implementation có, thiếu evidence):
+
+| Gate | Issue | Phạm vi | Trước |
+|---|---|---|---|
+| C1 | STD-003 | Public-read route matrix (anonymous/CUSTOMER/OWNER khác hotel) cho mọi GET Agent dùng; full REST/RPC actor matrix giữ cho G4. **9B: READ subset DONE; 9C: Agent WRITE routes DONE (service boundary); Gateway-level còn thiếu** | AI READ (subset) / AI WRITE (đầy đủ cho route Agent dùng) |
+| C2 | STD-018 | Negative contract: search criteria, availability check, booking create → 4xx fieldErrors, không side effect. **9B: search + availability DONE; 9C: booking create HTTP DONE** | READ (search/availability), WRITE (create) |
+| C3 | STD-028, STD-026 | Agent-facing contract suite tại Gateway: response schema + error envelope (400/401/403/404/409/503) cho API trong ma trận. **9B/9C: READ + WRITE service-level DONE; Gateway-level DONE 18/11 trên stack canonical disposable (87/87, [evidence](../evidence/batch-9c-canonical-smoke/README.md))** | READ / WRITE |
+| C4 | STD-007 | TIMEOUT/UNKNOWN khi create: đọc trạng thái, tái dùng idempotency key, không tạo booking thứ hai. **9C: service + HTTP DONE** (key forward nguyên vẹn, replay trả cùng booking; service tests replay/409/hold-timeout/compensation); Gateway lost-response (socket đóng trước khi đọc) + retry cùng key → đúng 1 booking/1 hold trên stack canonical | AI WRITE |
+| C5 | STD-030 | Một lỗi correlated Gateway→Booking→Hotel (Gateway hiện không có tracing dependency). **9C: Booking `RestClientConfig` dùng `new RestTemplate(factory)` → Booking→Hotel không propagate trace; runtime-confirmed trên stack canonical (Gateway→Booking OK); cần fix nhỏ được duyệt** | AI WRITE |
+| C6 | STD-012 | Rà soát legacy UI surfaces ngoài search/detail (frontend; không chặn Agent backend) | Frontend core |
+| F1 (FIX, LOW, không chặn AI) | STD-026 | `lib/api/hotels.ts` `getHotelById` và owner/admin writers dùng `fetch` không deadline, lỗi chứa `statusText` → chuyển sang helper có deadline/typed error hiện có. **DONE 9C** (`tests/hotel-adapter-deadline.test.mjs`) | Frontend core |
+
+**D. Deferred** (không thuộc AI MVP): STD-002/007 provider refund/QueryDR/IPN (G1b); STD-007/008 crash/restart/multi-node; STD-021 backup/PITR/restore, Test-profile `ddl-auto: update`, legacy import/cutover (U03); STD-024 historical corpus; STD-025 round-trip floor/SLO (8D next); STD-027 log ingestion + backend cloud deployment; STD-029 operator replay/DLQ/retention, legacy cash reconciliation.
+
+**E. Excluded — External Owner** (không tạo implementation task): `place-service/**`; phần Place/Nearby của STD-011/012/023/026/031/032 (NearbyPlacesSection, PlaceCard, PlaceReviewsModal, `lib/api/places.ts`, nearby origin trong `app/hotel/[id]/page.tsx`). Không coi là DONE, không là blocker của AI MVP không dùng Place.
+
+#### Recommended next batches
+
+| Batch | Scope / Issue IDs | Dependencies | Expected source changes | Tests | Acceptance | Risks | Complexity |
+|---|---|---|---|---|---|---|---|
+| **9B — AI READ contract verification** — **DONE (service boundary) 17/11, [report](../BATCH9B_AI_READ_CONTRACT_VERIFICATION_2026-11-17.md)** | C1 (public subset), C2 (search/availability), C3 (READ APIs) — STD-003/018/026/028 | Không; dùng Test mode (`docker/.env.test`, local PostgreSQL) hoặc native disposable; không hosted write | Chỉ test/harness + tài liệu tool contract; không đổi API | MockMvc/socket contract tests hotel-service; Gateway read smoke trên stack test; anonymous/cross-owner negatives | Mỗi API READ trong ma trận có schema snapshot + error envelope + public/private negative có output thực; không Place | Stack test cần seed approved inventory qua workflow thật, không SQL bypass | LOW–MEDIUM |
+| **9C — AI WRITE pre-gate verification + F1** — **DONE (service boundary + F1) 18/11; Gateway smoke NOT_RUN, [report](../BATCH9C_AI_WRITE_PREGATE_VERIFICATION_2026-11-18.md)** | C1 (route Agent dùng), C2 (create), C3 (WRITE APIs + Gateway-level READ smoke từ 9B), C4, C5; F1 frontend | 9B harness | Tests; F1 sửa adapter frontend nhỏ; tracing Gateway chỉ khi được duyệt (dependency/config) | Create/cancel/status với CUSTOMER JWT qua Gateway; injected timeout → readback + same key; correlated trace một lỗi | Không duplicate booking dưới timeout; stale price 400; approval 409; một trace ID xuyên Gateway→Booking→Hotel | Thêm dependency tracing phải review; không tự retry write | MEDIUM |
+| **10 — AI Agent READ MVP** (ngoài standardization) | Read tools trên public hotel API | 9B DONE | Agent code mới (không sửa API) | AI evaluation query set; tool schema validation | Agent không bịa facts; phân biệt no-result/lỗi/unapproved | LLM output untrusted | MEDIUM |
+| **11 — AI Agent WRITE (booking assist)** | Draft → xác nhận → create unpaid; trao URL VNPay Sandbox | 9C + 10 | Agent code; draft/expiry/one-time confirmation | Confirmation required; timeout recovery | Không mutation nếu không xác nhận; không payment/refund tự động | Sandbox ≠ production | HIGH |
+
+Không mở lại Batch 8E. Deferred workstreams (G1b provider refund, production ops, 8D perf follow-up, legacy cutover) cần quyết định riêng.
+
+#### Batch 9E — kết quả gate và điều kiện trước Batch 10
+
+| Gate | Kết quả 9E |
+|---|---|
+| C1 STD-003 | READ subset + Agent WRITE routes VERIFIED (service + Gateway canonical); full actor matrix còn G4 |
+| C2 STD-018 | Search/availability/booking-create VERIFIED + giới hạn F-9B-3 |
+| C3 STD-028/026 | READ + WRITE tại Gateway canonical 104/0 |
+| C4 STD-007 | Lost response + retry cùng key VERIFIED (Gateway); crash/multi-node còn |
+| C5 STD-030 | Booking→Hotel VERIFIED; auth/revenue/user + Gateway bridge còn → gate trước AI WRITE |
+| C6 STD-012 | Rà soát xong; **F-9E-1** cần sửa trước AI WRITE |
+| F1 STD-026 | DONE (9C); phần FE còn lại là F-9E-2 |
+
+**Điều kiện trước Batch 10 (Agent READ MVP):** R1 review + commit thay đổi 9A–9E ở cả hai repo (hiện chưa commit); R2 bộ query/tiêu chí đánh giá AI; R3 Agent tự đặt deadline ≤10 s và giới hạn tần suất; R4 nếu chạy trên hosted Supabase-dev: deploy bản 9D và chạy lại READ smoke ở đó; R5 chỉ dùng route trong [READ_TOOL_CONTRACT](../ai-agent/READ_TOOL_CONTRACT.md), anonymous, không Place. Không có defect code nào chặn Agent READ.
+
+**Gate trước AI WRITE (Batch 11):** F-9E-1; STD-030 (auth/revenue/user + Gateway bridge); STD-026 DB outage 503 ở service còn lại; STD-007 crash/multi-node; draft user-bound + xác nhận một lần; refund không cho Agent.
+
+**Đề xuất batch:** 9F nhỏ (F-9E-1, F-9E-3/4, STD-030 còn lại, STD-026 503 còn lại) — có thể song song Batch 10.
+
 ## A. Executive summary
+
+> HISTORICAL — SUPERSEDED BY BATCH 9A (§0). Counts, risks và readiness dưới đây là trạng thái tổng hợp 13/11. Ví dụ: rủi ro 3 về TypeScript `showDistance` không còn tái hiện (`tsc`/build PASS ở 5B, PR review 17/11 và Batch 9A); STD-006 hiện FIXED_VERIFIED; G2 không còn là “NEXT”.
 
 The implementation is substantially stronger than the initial inventory: principal-bound booking operations, server pricing, fail-closed inventory, idempotent creation, durable reservation/loyalty recovery, published search offers, canonical catalogs, pagination, and a bounded media client exist. This is not evidence that the deployed system is ready for unrestricted AI operations.
 
@@ -67,6 +230,8 @@ Evidence policy: “fresh” in the original sections/appendix means executed on
 Commit author dates alone cannot establish when another user changed branches, staged, committed, pushed, or merged. The checkpoint's “no commit/push in that session” cannot be independently proved from today's Git tree. Later commits prove that the changes were subsequently recorded. The root DA1 directory is outside both Git repositories; the plan and this report need separate preservation. No additional repository was identified in the inspected project layout; no claim is made about unrelated directories elsewhere on the machine.
 
 ## C. Master issue status table
+
+> HISTORICAL — SUPERSEDED BY BATCH 9A: bảng hiện hành là [§0.2](#02-master-issue-status-current). Bảng dưới là trạng thái 13/11, giữ làm evidence lịch sử.
 
 Evidence keys in the table are defined immediately below it. Each row separates implemented behavior from acceptance/verification still missing. Status mapping for this review: FIXED_VERIFIED means DONE only for the accepted issue scope; IN_PROGRESS means PARTIAL; FIXED_UNVERIFIED means implementation exists but acceptance is NOT VERIFIED; NEEDS_ENVIRONMENT identifies missing environment evidence. BLOCKED/NOT IMPLEMENTED/NOT VERIFIED in D1 and G are sub-scope labels, not silent changes to all parent issues.
 
@@ -123,6 +288,8 @@ All source paths below are current local files. Class/function names are durable
 - **DATA/OPS/PERF:** [Docker runbook](C:/Users/ACER/IdeaProjects/DA1/checkinn/docker/README.md), [Dockerfile](C:/Users/ACER/IdeaProjects/DA1/checkinn/Dockerfile), [Compose](C:/Users/ACER/IdeaProjects/DA1/checkinn/docker/docker-compose.yml), [test overlay](C:/Users/ACER/IdeaProjects/DA1/checkinn/docker/docker-compose.test.yml), [retained search baseline](C:/Users/ACER/IdeaProjects/DA1/checkinn/hotel-service/target-search-read-baseline.log), [original plan](C:/Users/ACER/IdeaProjects/DA1/PROJECT_STANDARDIZATION_PLAN.md).
 
 ## D. Completed work and checkpoint 73 verification
+
+> HISTORICAL — SUPERSEDED BY BATCH 9A: danh sách accepted hiện hành gồm thêm STD-006 (xem §0.2). Kết quả `tsc` exit1 bên dưới là lịch sử 12/11; 9A `tsc`/build PASS.
 
 Fully accepted issues under their defined local scope: STD-001,004,005,008,009,010,013,014,015,016,017,019,020,022,025,031. Historical PostgreSQL/native evidence is explicitly distinct from freshly rerun unit/contract tests. For all other issues, the table identifies completed sub-scopes without promoting the parent issue.
 
@@ -221,6 +388,8 @@ Keep separate ledgers for pure unit, MVC/filter, loopback socket, real PostgreSQ
 9. A complete endpoint-level audit of every implementation line and external caller is not certified by this report. The table provides inspected anchors and explicit missing evidence; uninspected/externally configured behavior must not be treated as secure or verified by implication.
 
 ## G. Ordered execution roadmap
+
+> HISTORICAL — SUPERSEDED BY BATCH 9A: G0 “NEXT”/G2 không còn là workstream kế tiếp; backlog và batch đề xuất hiện hành ở [§0.6](#06-backlog-and-recommended-next-workstream-supersedes-g0-next). G1b, G3 (Place, EXCLUDED — EXTERNAL OWNER), G4, G5 giữ làm requirement gốc.
 
 The original roadmap below was not executed in Batch 1.7. Batch 2 has now accepted G1 isolated unpaid lifecycle; G2 owner-confirmed historical-baseline follow-up is the **single recommended next workstream**; G1b preserves the original provider requirement without reopening accepted internal Refund. G2 may supply the minimal schema manifest prerequisites for G1; it does not require a provider adapter to start. Place-dependent G3 is excluded from the next scope.
 
@@ -321,6 +490,8 @@ git diff --check
 The integration command's existing `revenue` suite checks current ordering/cash behavior; it is **not a new refund-provider test**. Run it only on the designated clone after checking the harness safeguards and with service startup separately authorized. Add a dedicated real-provider acceptance procedure once the adapter/merchant contract exists. Existing typecheck is expected to fail until the separate G3 contract issue is fixed; report that baseline honestly rather than bypassing it. The same applies to `npm run build` after G3.
 
 ## H. AI Agent readiness assessment
+
+> HISTORICAL — SUPERSEDED BY BATCH 9A: readiness hiện hành ở [§0.5](#05-ai-agent-readiness-supersedes-h).
 
 | Operation group | Current assessment | Prerequisites before enabling |
 |---|---|---|
@@ -477,8 +648,8 @@ Giữ mở PUBLIC TEMP, STD-006 stock provenance, legacy cutover/recovery, real 
 - [x] Runtime/migrator separation, scoped grants, independent security settings, 30 denials/5 cross-project pairs.
 - [x] Isolated broker/cache, bounded pools, 117 core workflow checks và scoped regression acceptance.
 - [x] Fixture cleanup và daily configuration consolidation theo evidence; không replay acceptance.
-- [ ] Real VNPay Sandbox payment: merchant approval code71 cần owner/provider xử lý trước acceptance.
-- [ ] Supabase Storage bucket/visibility/upload/private-preview: cần endpoint hoạt động, hiện NXDOMAIN.
+- [x] Real VNPay Sandbox payment — 17/11/2026: NCB test card/OTP, return00/HMAC, payment COMPLETED, booking CONFIRMED, Revenue một CREDIT; replay/negative checks PASS. [Evidence](../BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md). *(Đồng bộ với PLAN ở Batch 9A; ghi chú gốc 16/11: merchant code71.)*
+- [x] Supabase Storage bucket/visibility/upload/private-preview — actual public/private upload, signed download/batch signing và anonymous denial PASS; probe objects đã xóa. *(Đồng bộ Batch 9A; ghi chú gốc 16/11: NXDOMAIN.)*
 - [ ] Production backup/restore/PITR/RPO/RTO, legacy-data cutover/reconciliation, broader outage/load và backend cloud deployment.
 
 Dependencies: Batch5B local canonical → Batch6A static readiness → Batch6B hosted database/core local acceptance đã xác minh. Provider follow-up độc lập còn BLOCKED; deployment tương lai phải có acceptance riêng. STD-021 local/hosted integration subgates được giải quyết, parent migration/operational readiness vẫn IN_PROGRESS; STD-006 OPEN. Không đổi các checkbox lịch sử thành DONE ngoài phạm vi.
@@ -535,3 +706,45 @@ Next: source-level lazy room-media/per-hotel fetch optimization trong run mới,
 Controlled BEFORE/AFTER trên cùng hosted fixture IDs (AFTER 5×10 rồi exact-ID shrink về đúng tập 3×5, 2×2): SQL 5×10 search undated 96→12, dated 111→15, catalog 91→11, detail 19→11, availability 4→4; slope/room 1,587/1,783/1,522/0,174 → 0. Gateway C1 p50 5×10: search 12022→1919 ms, catalog 11535→1944, detail 2360→1821; dated cell gốc 13291→4701 (nhiễu cửa sổ; đo lặp 2327). Response tương đương 15/15. Gateway 2760/2760 + direct 600/600 thành công; 0 Hikari timeout/role-limit/HTTP500. E2E approval/booking/idempotency/race/cancel/authz PASS. Cleanup 202 rows exact-ID + 14 broker messages + 4 Redis keys; schema/Flyway/counts/full-row HMAC 5/5 và permanent ADMIN preserved. Regression hotel 401 + booking 285 PASS (38 opt-in skips), native PostgreSQL18 2/2 PASS (SQL count hằng số 12/15/11/11 ở 2×2–5×10). Không hosted DDL/index/role/grant/provider call; không Git stage/commit/push/reset/checkout/restore.
 
 Next: giảm 12–15 round trip cố định còn lại hoặc latency floor network (đo RTT/region), hosted rich-content dataset, thứ tự ổn định cho collection public nếu được phê duyệt. Parent STD/production gates không tự đóng. [Báo cáo 8D](../BATCH8D_READ_OPTIMIZATION_2026-11-17.md), [evidence](../evidence/batch-8d-read-optimization/README.md).
+
+## Batch 9A — Current-State Reconciliation, 17/11/2026
+
+**DONE (documentation reconciliation + read-only verification); không production-ready.** Current matrix, counts, risks, AI READ/WRITE readiness và backlog được đưa lên [§0](#0-current-state--batch-9a-reconciliation-17112026) và đồng bộ với PLAN §0/§77. Thay đổi: STD-006 → FIXED_VERIFIED (scoped admission; legacy provenance DEFERRED), STD-027 → IN_PROGRESS; STD-011/023/032 in-scope `IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED`. Fresh: backend 973 PASS/48 skipped/0 fail (8 module), reactor compile 13/13, frontend 214 PASS, `tsc` và production build PASS, lint baseline FAIL. Không sửa source/DB/provider/runtime; không stage/commit/push/reset/restore/checkout/clean/stash. Checkpoint lịch sử phía trên giữ nguyên. Next: Batch 9B — AI READ contract verification. [Báo cáo 9A](../BATCH9A_STANDARDIZATION_RECONCILIATION_2026-11-17.md).
+
+## Batch 9B — AI READ contract verification, 17/11/2026
+
+**DONE (service-boundary scope); Gateway-level NOT_RUN; không production-ready.** Thêm test-only `hotel-service` `AgentReadContractTest` (11) và `AvailabilityReadValidationTest` (1): 14 public GET Agent dùng là anonymous và dùng public policy kể cả dưới owner token/forged header; 20 private GET lân cận trả 401 envelope, 8 admin/internal/hold GET trả 403 cho CUSTOMER; 19 search + 6 availability input sai → 400 trước mọi query; 404/409 `INVENTORY_APPROVAL_REQUIRED`/5xx sanitized envelope có `requestId`. Hotel full suite: 447 reported / 413 PASS / 34 opt-in skipped / 0 fail, BUILD SUCCESS. Không đổi application source/API/schema/runtime. In-scope STD-003/018 NOT_VERIFIED → PARTIAL; parent statuses/counts không đổi. Findings: DB outage → 500 `INTERNAL_ERROR` (không 503); public `HotelResponse` có `ownerId`/contact; search không chặn ngày quá khứ/không có cận trên rooms/adults; Gateway không cấu hình response timeout. Tool contract: [READ_TOOL_CONTRACT](../ai-agent/READ_TOOL_CONTRACT.md). Next: **9C — AI WRITE pre-gate verification** (gồm Gateway-level READ smoke). [Báo cáo 9B](../BATCH9B_AI_READ_CONTRACT_VERIFICATION_2026-11-17.md).
+
+## Batch 9C — AI WRITE pre-gate verification + F1, 18/11/2026
+
+- **DONE ở service boundary + F1; Gateway-level smoke NOT_RUN; không production-ready.** [Báo cáo](../BATCH9C_AI_WRITE_PREGATE_VERIFICATION_2026-11-18.md).
+- **Test mới:** booking-service `AgentWriteContractTest` (9): 7 route Agent WRITE (create/read/list/cancel booking, read payment, VNPay URL, refund request) trả 401 envelope khi không có token và bỏ qua `X-User-Id`/`X-Is-Admin`/`X-Role`; CUSTOMER khác 403; 10 route ngoài phạm vi (status, cancel-reviewed, count, hotel list, refund execute/approve/reject, onsite confirm, manual-refunds) 403; create gắn principal và forward nguyên idempotency key, replay trả cùng booking; 6 body sai → 400 `fieldErrors`; giá cũ 400, key reuse 409, 503 `DEPENDENCY_UNAVAILABLE`, 500 sanitized; cancellation 204/409. Booking full suite: 298 reported / 294 PASS / 4 opt-in skipped / 0 fail, BUILD SUCCESS.
+- **F1 (frontend, source change):** `lib/api/hotels.ts` — detail/cities/pending/room reads dùng `readJson` (10 s); owner/admin writers dùng `bookingFetch` (15 s, deadline cả body) + `responseError` (typed, có `requestId`, không echo raw body/`statusText`); một lần gọi, không retry; fallback submit-approval chỉ khi 404; preview giữ message có status (test cũ không bị nới). Bỏ `extractErrorMessage` (echo raw text). Node `tests/hotel-adapter-deadline.test.mjs` (4) thêm vào `test:regression`. Frontend: regression 218/218, tsc PASS, production Webpack build PASS.
+- **Không chạy Gateway smoke:** volume `checkinn-test_postgres-test-data` là clone DB developer cũ (trước UUID) và Test profile `docker` dùng `ddl-auto: update` — khởi động source hiện tại trên đó vi phạm AGENTS.md (không chạy UUID mapping trên legacy VARCHAR schema). Cần stack canonical disposable mới (quyết định của người dùng).
+- **Finding C5:** Booking→Hotel REST không propagate trace do RestTemplate tạo thủ công (source-confirmed, runtime NOT_VERIFIED). Statuses/counts không đổi (17/12/3; in-scope VERIFIED 17, PARTIAL 11, IN_SCOPE_DONE 3, DEFERRED 1).
+
+## Batch 9C addendum — canonical disposable Gateway smoke, 18/11/2026
+
+- **Gateway READ/WRITE smoke 87/87 PASS trên stack canonical disposable mới** (`docker/canonical-smoke.py`, `docker/docker-compose.canonical-smoke.yml`, `docker/CanonicalSmokeMigrate.java`; test-only). PostgreSQL 18 fresh, 5 V1 qua Flyway 10.22 (46 bảng, 1 history row/owner, rerun 0), app role chỉ DML; 9 service profile `canonical` (`validate`) + infra healthy lần đầu; tmpfs, không named volume; loopback-only; không Supabase/`.env`/legacy `checkinn-test`/Storage/VNPay provider. [Evidence](../evidence/batch-9c-canonical-smoke/README.md).
+- **Chạy:** run 1 82/5 — cả 5 là lỗi định nghĩa check (cộng counter theo đêm, tên field `redirectUrl`, giả định cancel lặp không idempotent), giữ `results-run1.json`; run 2 dừng do trùng tên city fixture; run 3 87/0 sau khi sửa check (không sửa source).
+- **Kết luận mới:** lost response + retry cùng key → 1 booking/1 hold qua Gateway thật; cancel idempotent 204; unapproved room 409 không hold; principal/ownership/out-of-scope 401/403 qua Gateway. **F-9C-2 runtime-confirmed:** trace client tới Booking (requestId = trace) nhưng không tới Hotel.
+- **Cleanup:** project down — 0 container/network/volume còn lại; stack khác không bị đụng; 9 image `:canonical-smoke` giữ để chạy lại. Statuses/counts không đổi (17/12/3; in-scope VERIFIED 17, PARTIAL 11, IN_SCOPE_DONE 3, DEFERRED 1).
+
+## Batch 9D checkpoint — xử lý finding 9B/9C, 18/11/2026
+
+- **Xử lý finding 9B/9C** ([report](../BATCH9D_FINDINGS_REMEDIATION_2026-11-18.md)): F-9C-2 trace Booking→Hotel (RestTemplateBuilder), F-9C-3/4 envelope cho 400 rỗng, F-9B-1 DB outage → 503 `DEPENDENCY_UNAVAILABLE` (Hotel/Booking), F-9B-5 `checkedAt` + Gateway timeout 20 s, F-9B-2 `ownerId` bỏ khỏi public hotel DTO, F-9C-5 bỏ fallback submit-approval → FIXED_VERIFIED. F-9B-3 OPEN (cần quyết định nghiệp vụ cận trên/ngày quá khứ); F-9B-4 giữ by design.
+- **Mới F-9D-1:** Hikari chờ 30 s > Gateway 20 s → outage DB qua Gateway là 504 (service vẫn map 503).
+- **Kiểm tra:** Booking 301/0/4, Hotel 447/0/34 (`contextLoads` lỗi môi trường: PostgreSQL local ở 5432 từ chối mật khẩu), FE tsc PASS, regression 218/218; canonical Gateway smoke 94/0 trên stack mới ([evidence](../evidence/batch-9c-canonical-smoke/README.md)), down sạch.
+- Statuses/counts ở bảng §0 không đổi trong checkpoint này (cập nhật trạng thái STD-026/STD-030 thuộc lần reconcile kế tiếp).
+
+## Batch 9D addendum — F-9B-3, F-9B-4, F-9D-1, 18/11/2026
+
+- F-9B-3 FIXED_VERIFIED (giới hạn tìm kiếm/availability theo quyết định người dùng: từ hôm nay `Asia/Ho_Chi_Minh`, ≤30 đêm, rooms 1–20, adults 1–40, children 0–40; hold/booking không đổi). F-9B-4 KEPT với bằng chứng (Booking `HotelCatalogClient` phụ thuộc 409; thử 404 gây regression, đã hoàn tác). F-9D-1 FIXED_VERIFIED (canonical `hikari.connection-timeout` 10 s → outage DB là 503 qua Gateway sau 10 s). Smoke canonical 101/0. Chi tiết: [9D §4](../BATCH9D_FINDINGS_REMEDIATION_2026-11-18.md).
+
+## Batch 9D addendum — giới hạn lưu trú cho booking create, 18/11/2026
+
+- Giới hạn F-9B-3 áp thêm cho booking create (≤30 đêm, ≤20 phòng, adults ≤40, children ≤40; ngày đến quá khứ vốn đã bị chặn). Booking 306/0/4; smoke canonical 104/0. Chi tiết: [9D §5](../BATCH9D_FINDINGS_REMEDIATION_2026-11-18.md).
+
+## Batch 9E — Final core standardization audit & closure, 18/11/2026
+
+**DONE (audit; không sửa application source).** 32 issue đối chiếu lại với source + evidence 9B–9D: counts không đổi (17/12/3/0; in-scope VERIFIED 17, PARTIAL 11, IN_SCOPE_DONE 3, DEFERRED 1). Fresh: backend 12 module 1054 run/0 fail/48 skipped, compile 13/13 (Place 0 diagnostic); FE Node 218, tsc + build PASS, ESLint 133/151; browser default 105 PASS + 45 fail do lẫn spec area (F-9E-3); area specs 45/45 PASS trên Webpack, 3 config Turbopack abort (F-9E-4); `contextLoads` lỗi môi trường (F-9E-5). Finding chính **F-9E-1** (P1): dữ kiện/chính sách bịa trên trang đặt phòng/thanh toán. Core standardization đóng cho Agent READ MVP với điều kiện R1–R5; không đóng cho AI WRITE; không production-ready. [Báo cáo 9E](../BATCH9E_FINAL_CORE_STANDARDIZATION_AUDIT_2026-11-18.md).
