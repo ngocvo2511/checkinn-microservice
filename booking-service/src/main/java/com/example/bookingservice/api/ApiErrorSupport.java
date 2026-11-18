@@ -40,6 +40,13 @@ public final class ApiErrorSupport {
         }
         return result;
     }
+    /** 400 with the standard envelope and a fixed safe message (never the exception text). */
+    public static org.springframework.http.ResponseEntity<Map<String,Object>> rejected(String message) {
+        var attributes=org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+        String path=attributes instanceof org.springframework.web.context.request.ServletRequestAttributes servlet?servlet.getRequest().getRequestURI():"";
+        var body=body(400,path,Map.of("message",message));
+        return org.springframework.http.ResponseEntity.badRequest().header("X-Request-ID",body.get("requestId").toString()).body(body);
+    }
     public static String json(Object value) {
         try { return JSON.writeValueAsString(value); }
         catch(com.fasterxml.jackson.core.JsonProcessingException ex) { throw new IllegalStateException("Cannot serialize API error"); }

@@ -1,3 +1,4 @@
 package com.example.hotelservice.Room.availability.dto;
 
-public record AvailabilityCheckResponse(boolean available, Integer availableRooms) {}
+/** Point-in-time answer; {@code checkedAt} (UTC) tells callers how old it is. Not a hold. */
+public record AvailabilityCheckResponse(boolean available, Integer availableRooms, java.time.Instant checkedAt) {}

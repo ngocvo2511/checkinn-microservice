@@ -105,6 +105,8 @@ public abstract class HotelMapper {
     }
 
     @InheritConfiguration(name = "toHotelResponse")
+    // Internal owner identity is not part of the public catalog (owner views use toHotelResponse; Revenue uses /internal/reports).
+    @Mapping(target = "ownerId", expression = "java(null)")
     @Mapping(target = "roomTypes", expression = "java(toPublishedRoomTypeResponses(entity.getRoomTypes(), facts))")
     @Mapping(target = "lowestPrice", expression = "java(calculateApprovedLowestPrice(entity.getRoomTypes(), facts.approvedRoomIds()))")
     @Mapping(target = "mediaAssets", expression = "java(toMediaAssetResponses(facts.hotelMedia(entity.getId())))")

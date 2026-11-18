@@ -122,6 +122,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).headers(error.getHeaders()).body(buildErrorResponse(status,status.getReasonPhrase(),req.getRequestURI()).getBody());
     }
 
+    /** Database unreachable/exhausted: a dependency outage, not a bug. Safe generic body only. */
+    @ExceptionHandler({org.springframework.dao.DataAccessResourceFailureException.class,
+            org.springframework.dao.TransientDataAccessResourceException.class,
+            org.springframework.transaction.CannotCreateTransactionException.class})
+    public ResponseEntity<Map<String, Object>> handleDatabaseUnavailable(Exception ex, HttpServletRequest req) {
+        var response=buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE,null,req.getRequestURI());
+        log.error("Database unavailable - type: {}, path: {}, requestId: {}",ex.getClass().getSimpleName(),req.getRequestURI(),response.getBody().get("requestId"));
+        return response;
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex, HttpServletRequest req) {
         var response=buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Internal server error",req.getRequestURI());

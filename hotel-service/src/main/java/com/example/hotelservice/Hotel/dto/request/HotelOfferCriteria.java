@@ -15,13 +15,18 @@ public record HotelOfferCriteria(UUID cityId, UUID provinceId, String cityName, 
     public int roomCount() { return rooms == null ? 1 : rooms; }
     public int adultCount() { return adults == null ? 1 : adults; }
     public int childCount() { return children == null ? 0 : children; }
-    public void validate() {
+    public void validate() { validate(com.example.hotelservice.validation.StayLimits.today()); }
+
+    /** {@code today}: civil date in the business zone (injectable for tests). */
+    public void validate(LocalDate today) {
         if (accommodationTypes != null) for (String code : accommodationTypes) {
             if (code == null || code.isBlank()) throw new IllegalArgumentException("Loại hình lưu trú không hợp lệ");
             com.example.hotelservice.Hotel.enums.AccommodationType.parse(code);
         }
-        if (roomCount() < 1 || adultCount() < 1 || childCount() < 0) throw new IllegalArgumentException("Invalid room or guest count");
-        if ((checkIn == null) != (checkOut == null) || (checkIn != null && !checkOut.isAfter(checkIn))) throw new IllegalArgumentException("Invalid stay dates");
+        com.example.hotelservice.validation.StayLimits.requireRooms(roomCount());
+        com.example.hotelservice.validation.StayLimits.requireGuests(adultCount(), childCount());
+        if ((checkIn == null) != (checkOut == null)) throw new IllegalArgumentException("Invalid stay dates");
+        if (checkIn != null) com.example.hotelservice.validation.StayLimits.requireStay(checkIn, checkOut, today);
         if ((minPrice != null && minPrice.signum() < 0) || (maxPrice != null && maxPrice.signum() < 0)
                 || (minPrice != null && maxPrice != null && minPrice.compareTo(maxPrice) > 0)) throw new IllegalArgumentException("Invalid price range");
         if (cityId == null && provinceId == null && (cityName == null || cityName.isBlank()) && (hotelName == null || hotelName.isBlank()))

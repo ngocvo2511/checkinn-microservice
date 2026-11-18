@@ -176,6 +176,19 @@ class RoomTypeServiceImplTest {
         assertThatThrownBy(() -> roomTypeService.getPreviewById(id, UUID.randomUUID(), false)).isInstanceOf(org.springframework.security.access.AccessDeniedException.class);
     }
 
+    @Test void unapprovedInventoryIsAnApprovalConflictOnThePublicReadButVisibleInPreview() {
+        UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
+        Hotel hotel = hotel(hotelId, owner); hotel.setIsActive(true); hotel.setApprovedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED);
+        RoomType room = new RoomType(); room.setId(id); room.setHotelId(hotelId); room.setIsActive(true);
+        when(roomTypeRepository.hasEffectiveInventoryApproval(id)).thenReturn(false);
+        when(roomTypeRepository.findById(id)).thenReturn(Optional.of(room));
+        when(hotelRepository.findById(hotelId)).thenReturn(Optional.of(hotel));
+        // F-9B-4 kept by design: Booking admission depends on this 409 (HotelCatalogClient), so it is not a 404.
+        assertThatThrownBy(() -> roomTypeService.getPublicById(id))
+                .isInstanceOf(com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException.class);
+        assertThat(roomTypeService.getPreviewById(id, owner, false)).isSameAs(room);
+    }
+
     @Test void inactiveRoomHiddenAndStillEditableInOwnPreview() {
         UUID id = UUID.randomUUID(), hotelId = UUID.randomUUID(), owner = UUID.randomUUID();
         Hotel hotel = hotel(hotelId, owner); hotel.setIsActive(true); hotel.setApprovedStatus(com.example.hotelservice.Hotel.enums.HotelApprovalStatus.APPROVED);

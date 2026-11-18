@@ -34,12 +34,12 @@ public class BookingController {
     public record CancellationReview(@jakarta.validation.constraints.NotBlank @jakarta.validation.constraints.Size(max = 1000) String reason) {}
     @PostMapping("/{id}/cancel-reviewed")
     @PreAuthorize("@bookingAccess.isAdmin(authentication)")
-    public ResponseEntity<Void> cancelReviewed(@PathVariable java.util.UUID id, @jakarta.validation.Valid @RequestBody CancellationReview review, Authentication actor) {
+    public ResponseEntity<?> cancelReviewed(@PathVariable java.util.UUID id, @jakarta.validation.Valid @RequestBody CancellationReview review, Authentication actor) {
         try {
             bookingService.cancelBookingReviewed(id, required(actor.getName()), review.reason());
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Booking cannot be cancelled in its current state");
         }
     }
 
@@ -62,8 +62,11 @@ public class BookingController {
             error.put("error", "Validation Error");
             error.put("message", e.getMessage());
             return ResponseEntity.badRequest().body(error);
-        } catch (org.springframework.web.server.ResponseStatusException e) {
-            throw e;
+        } catch (org.springframework.web.server.ResponseStatusException
+                 | org.springframework.dao.DataAccessResourceFailureException
+                 | org.springframework.dao.TransientDataAccessResourceException
+                 | org.springframework.transaction.CannotCreateTransactionException e) {
+            throw e; // advice: status-specific / 503 DEPENDENCY_UNAVAILABLE
         } catch (Exception e) {
             var error=com.example.bookingservice.api.ApiErrorSupport.body(500,"/api/bookings",null);
             log.error("Booking creation failed - type: {}, requestId: {}",e.getClass().getSimpleName(),error.get("requestId"));
@@ -105,7 +108,7 @@ public class BookingController {
 
     @PutMapping("/{id}/status")
     @PreAuthorize("@bookingAccess.canManage(authentication, #id)")
-    public ResponseEntity<BookingResponse> updateBookingStatus(
+    public ResponseEntity<?> updateBookingStatus(
             @PathVariable java.util.UUID id,
             @RequestParam BookingStatus status) {
         try {
@@ -115,13 +118,13 @@ public class BookingController {
             return ResponseEntity.ok(booking);
         } catch (IllegalArgumentException e) {
             log.warn("[UPDATE_BOOKING_STATUS] Bad request - bookingId: {}, status: {}", id, status);
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Booking status cannot be changed");
         }
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #id)")
-    public ResponseEntity<Void> cancelBooking(@PathVariable java.util.UUID id, Authentication actor) {
+    public ResponseEntity<?> cancelBooking(@PathVariable java.util.UUID id, Authentication actor) {
         try {
             log.info("[CANCEL_BOOKING] Request received - bookingId: {}", id);
             bookingService.cancelBooking(id, required(actor.getName()));
@@ -129,7 +132,7 @@ public class BookingController {
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             log.warn("[CANCEL_BOOKING] Bad request - bookingId: {}", id);
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Booking cannot be cancelled in its current state");
         }
     }
 

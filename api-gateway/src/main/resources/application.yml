@@ -8,6 +8,11 @@ spring:
     max-in-memory-size: 50MB
   cloud:
     gateway:
+      # Bounded upstream wait (F-9B-5). Above every frontend deadline (<=15s) so browsers keep their own
+      # timeout UX; a 504 after a write may still have committed, so clients re-read / retry with the same key.
+      httpclient:
+        connect-timeout: ${GATEWAY_CONNECT_TIMEOUT_MS:3000}
+        response-timeout: ${GATEWAY_RESPONSE_TIMEOUT:20s}
       discovery:
         locator:
           enabled: true

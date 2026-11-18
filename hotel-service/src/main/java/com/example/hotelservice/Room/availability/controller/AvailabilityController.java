@@ -30,11 +30,13 @@ public class AvailabilityController {
         log.info("[AVAILABILITY_CONTROLLER_CHECK] Check availability request received - roomTypeId: {}, checkIn: {}, checkOut: {}, quantity: {}",
             roomTypeId, checkIn, checkOut, quantity);
         if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive");
+        com.example.hotelservice.validation.StayLimits.requireRooms(quantity);
+        com.example.hotelservice.validation.StayLimits.requireStay(checkIn, checkOut, com.example.hotelservice.validation.StayLimits.today());
         int availableRooms = availabilityService.getAvailableRoomCount(roomTypeId, checkIn, checkOut);
         boolean available = availableRooms >= quantity;
         log.info("[AVAILABILITY_CONTROLLER_CHECK] Check availability success - roomTypeId: {}, available: {}, availableRooms: {}",
             roomTypeId, available, availableRooms);
-        return ResponseEntity.ok(new AvailabilityCheckResponse(available, availableRooms));
+        return ResponseEntity.ok(new AvailabilityCheckResponse(available, availableRooms, java.time.Instant.now()));
     }
 
     @PostMapping("/hold")
