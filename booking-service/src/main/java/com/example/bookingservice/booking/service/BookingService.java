@@ -272,6 +272,10 @@ public class BookingService {
         }
     }
 
+    // Stay/guest limits (F-9B-3 product decision 18/11/2026; same values as Hotel search). Checked after the
+    // idempotency replay, so an already accepted booking is still returned for its original key.
+    static final int MAX_NIGHTS = 30, MAX_ROOMS = 20, MAX_ADULTS = 40, MAX_CHILDREN = 40;
+
     private void validateBookingInput(CreateBookingRequest request) {
         if (request.getAcceptedCancellationPolicyVersion() != null && !request.getAcceptedCancellationPolicyVersion().isBlank()
                 && !CancellationPolicy.VERSION.equals(request.getAcceptedCancellationPolicyVersion())) {
@@ -284,6 +288,15 @@ public class BookingService {
                 || request.getAdults() == null || request.getAdults() < 1
                 || request.getChildren() == null || request.getChildren() < 0) {
             throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("checkOutDate","Stay dates must be ordered and arrival must not be in the past"));
+        }
+        if (java.time.temporal.ChronoUnit.DAYS.between(request.getCheckInDate(), request.getCheckOutDate()) > MAX_NIGHTS) {
+            throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("checkOutDate","Stay cannot exceed " + MAX_NIGHTS + " nights"));
+        }
+        if (request.getAdults() > MAX_ADULTS) {
+            throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("adults","Adults must be between 1 and " + MAX_ADULTS));
+        }
+        if (request.getChildren() > MAX_CHILDREN) {
+            throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("children","Children must be between 0 and " + MAX_CHILDREN));
         }
         if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
             throw new IllegalArgumentException("Dịch vụ mã giảm giá hiện chưa khả dụng");
@@ -300,7 +313,9 @@ public class BookingService {
                 throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("items","Room dates must match the stay and rate plan must match the room"));
             }
             quantity += item.getQuantity();
-            if (quantity > Integer.MAX_VALUE) throw new IllegalArgumentException("Room quantity is too large");
+            if (quantity > MAX_ROOMS) {
+                throw new com.example.bookingservice.validation.InputValidation.InvalidInput(java.util.Map.of("items","Rooms must be between 1 and " + MAX_ROOMS));
+            }
         }
     }
 

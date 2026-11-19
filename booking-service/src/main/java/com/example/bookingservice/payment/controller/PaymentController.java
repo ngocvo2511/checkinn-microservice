@@ -27,24 +27,24 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("@bookingAccess.canPay(authentication, #request.bookingId)")
-    public ResponseEntity<PaymentResponse> createPayment(@jakarta.validation.Valid @RequestBody CreatePaymentRequest request) {
+    public ResponseEntity<?> createPayment(@jakarta.validation.Valid @RequestBody CreatePaymentRequest request) {
         try {
             PaymentResponse payment = paymentService.createPayment(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(payment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Payment cannot be created for this booking");
         }
     }
 
     @PostMapping("/vnpay/create")
     @PreAuthorize("@bookingAccess.canPay(authentication, #bookingId)")
-    public ResponseEntity<VnPayInitResponse> createVnPay(@RequestParam java.util.UUID bookingId, @RequestHeader(value = "X-Forwarded-For", required = false) String xff, @RequestHeader(value = "X-Real-IP", required = false) String xRealIp) {
+    public ResponseEntity<?> createVnPay(@RequestParam java.util.UUID bookingId, @RequestHeader(value = "X-Forwarded-For", required = false) String xff, @RequestHeader(value = "X-Real-IP", required = false) String xRealIp) {
         try {
             String clientIp = xff != null ? xff.split(",")[0].trim() : (xRealIp != null ? xRealIp : null);
             VnPayInitResponse resp = paymentService.initVnPayPayment(bookingId, clientIp);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Payment cannot be created for this booking");
         }
     }
 
@@ -131,23 +131,23 @@ public class PaymentController {
 
     @PostMapping("/{id}/refund")
     @PreAuthorize("@bookingAccess.isAdmin(authentication)")
-    public ResponseEntity<PaymentResponse> refundPayment(@PathVariable java.util.UUID id) {
+    public ResponseEntity<?> refundPayment(@PathVariable java.util.UUID id) {
         try {
             PaymentResponse payment = paymentService.refundPayment(id);
             return ResponseEntity.ok(payment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Payment cannot be refunded in its current state");
         }
     }
 
     @PostMapping("/{bookingId}/confirm")
     @PreAuthorize("@bookingAccess.canManage(authentication, #bookingId)")
-    public ResponseEntity<PaymentResponse> confirmHotelPayment(@PathVariable java.util.UUID bookingId) {
+    public ResponseEntity<?> confirmHotelPayment(@PathVariable java.util.UUID bookingId) {
         try {
             PaymentResponse payment = paymentService.confirmHotelPayment(bookingId);
             return ResponseEntity.ok(payment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.rejected("Payment cannot be confirmed in its current state");
         }
     }
 

@@ -74,7 +74,7 @@ class HotelMapperPublicBatchTest {
     }
 
     private static Hotel hotel(UUID id, List<RoomType> rooms) {
-        return Hotel.builder().id(id).name("Synthetic hotel").isActive(true)
+        return Hotel.builder().id(id).ownerId(UUID.randomUUID()).name("Synthetic hotel").isActive(true)
                 .address("{\"street\":\"Synthetic street\",\"city\":\"Synthetic city\",\"country\":\"VN\"}")
                 .roomTypes(rooms).build();
     }
@@ -125,6 +125,9 @@ class HotelMapperPublicBatchTest {
 
         var first = result.get(0); var second = result.get(1);
         assertThat(first.id()).isEqualTo(h1);
+        // F-9B-2: public catalog never carries the internal owner identity.
+        assertThat(result).allSatisfy(h -> assertThat(h.ownerId()).isNull());
+        assertThat(hotel1.getOwnerId()).isNotNull();
         assertThat(first.roomTypes()).extracting(r -> r.id()).containsExactly(approvedA.getId());
         assertThat(first.roomTypes().get(0).mediaAssets()).hasSize(2);
         assertThat(first.lowestPrice()).isEqualByComparingTo("300");

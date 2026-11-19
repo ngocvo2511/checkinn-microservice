@@ -6,6 +6,9 @@ spring:
     password: ${CANONICAL_APP_PASSWORD}
     hikari:
       connection-init-sql: SET TIME ZONE 'UTC'
+      # Bounded wait for a pool connection (same as supabase-dev), below the Gateway's 20 s response timeout,
+      # so a database outage reaches clients as 503 DEPENDENCY_UNAVAILABLE instead of a Gateway 504 (F-9D-1).
+      connection-timeout: ${CANONICAL_DB_CONNECTION_TIMEOUT_MS:10000}
   jpa:
     hibernate:
       ddl-auto: validate

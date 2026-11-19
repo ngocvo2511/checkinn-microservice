@@ -24,6 +24,28 @@ merely by selecting a mode. Check schema/source compatibility before rebuilding
 against a historical local test clone. Test runtime was configuration-validated
 during consolidation, not started against that retained clone.
 
+### Canonical disposable Gateway smoke (Batch 9C, 18/11/2026)
+
+The retained `checkinn-test` PostgreSQL volume is a pre-UUID developer clone
+(created 27/10) and the Test profile uses `ddl-auto: update`; do not start current
+source against it. For Gateway acceptance on the canonical schema use the separate,
+test-only harness (own project `checkinn-canonical-smoke`, tmpfs only, loopback
+ports 58080/58432/58025, profile `canonical`, Flyway 10.22 applies only V1):
+
+```powershell
+python -X utf8 docker/canonical-smoke.py prepare   # refuses existing .local/canonical-smoke state
+python -X utf8 docker/canonical-smoke.py package   # overwrites module target/*.jar
+python -X utf8 docker/canonical-smoke.py build
+python -X utf8 docker/canonical-smoke.py infra
+python -X utf8 docker/canonical-smoke.py migrate
+python -X utf8 docker/canonical-smoke.py apps
+python -X utf8 docker/canonical-smoke.py smoke     # writes Docs/evidence/batch-9c-canonical-smoke/results.json
+python -X utf8 docker/canonical-smoke.py down
+```
+
+It never reads `docker/.env`/`.env.test`, calls Supabase, Storage or VNPay, or touches
+other compose projects. Results: [evidence](../Docs/evidence/batch-9c-canonical-smoke/README.md).
+
 | File/location | Purpose |
 | --- | --- |
 | `.env` / `.env.example` | Main app's Supabase runtime credentials and provider modes |

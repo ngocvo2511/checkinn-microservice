@@ -120,6 +120,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         RoomType room = getById(roomTypeId);
         requirePublishedHotel(room.getHotelId());
         if (!Boolean.TRUE.equals(room.getIsActive())) throw new EntityNotFoundException("Không tìm thấy loại phòng");
+        // Kept as 409 INVENTORY_APPROVAL_REQUIRED (F-9B-4 review): Booking's HotelCatalogClient reads this route
+        // and maps the 409 to "inventory requires review" for booking admission; a 404 would become a 400 "not found".
         if (!roomTypeRepository.hasEffectiveInventoryApproval(roomTypeId))
             throw new com.example.hotelservice.Room.availability.service.InventoryApprovalRequiredException();
         return room;

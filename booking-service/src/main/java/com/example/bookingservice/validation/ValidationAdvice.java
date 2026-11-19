@@ -40,6 +40,15 @@ public class ValidationAdvice {
         var error=(org.springframework.web.ErrorResponse)ex;
         return ResponseEntity.status(error.getStatusCode()).headers(error.getHeaders()).body(com.example.bookingservice.api.ApiErrorSupport.body(error.getStatusCode().value(),req.getRequestURI(),null));
     }
+    /** Database unreachable/exhausted: a dependency outage, not a bug. Safe generic body only. */
+    @ExceptionHandler({org.springframework.dao.DataAccessResourceFailureException.class,
+            org.springframework.dao.TransientDataAccessResourceException.class,
+            org.springframework.transaction.CannotCreateTransactionException.class})
+    public ResponseEntity<Map<String,Object>> databaseUnavailable(Exception ex,HttpServletRequest req) {
+        var response=error(503,req,null);
+        org.slf4j.LoggerFactory.getLogger(ValidationAdvice.class).error("Database unavailable - type: {}, path: {}, requestId: {}",ex.getClass().getSimpleName(),req.getRequestURI(),response.getBody().get("requestId"));
+        return response;
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String,Object>> unexpected(Exception ex,HttpServletRequest req) {
         var response=error(500,req,null);

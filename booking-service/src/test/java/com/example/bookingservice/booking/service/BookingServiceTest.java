@@ -472,6 +472,34 @@ class BookingServiceTest {
                 .build();
     }
 
+    /** F-9B-3: same limits as Hotel search; rejected before any catalog read, hold or write. */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({"31,1,2,0,checkOutDate", "1,21,2,0,items", "1,1,41,0,adults", "1,1,2,41,children"})
+    void stayAndGuestLimitsAreRejectedBeforeAnyExternalEffect(int nights, int rooms, int adults, int children, String field) {
+        var in = new CancellationPolicy().today().plusDays(1);
+        var line = item(UUID.randomUUID().toString(), rooms, BigDecimal.valueOf(1_000_000));
+        line.setCheckInDate(in); line.setCheckOutDate(in.plusDays(nights));
+        var request = baseBookingRequest(List.of(line));
+        request.setCheckInDate(in); request.setCheckOutDate(in.plusDays(nights)); request.setAdults(adults); request.setChildren(children);
+        assertThatThrownBy(() -> bookingService.createBooking(request))
+                .isInstanceOfSatisfying(com.example.bookingservice.validation.InputValidation.InvalidInput.class,
+                        e -> assertThat(e.getFieldErrors()).containsKey(field));
+        org.mockito.Mockito.verifyNoInteractions(catalogClient, availabilityClient);
+        verify(bookingRepository, never()).save(any());
+    }
+
+    @Test void limitBoundariesAreAcceptedByInputValidation() {
+        var in = new CancellationPolicy().today().plusDays(1);
+        var line = item(UUID.randomUUID().toString(), 20, BigDecimal.valueOf(1_000_000));
+        line.setCheckInDate(in); line.setCheckOutDate(in.plusDays(30));
+        var request = baseBookingRequest(List.of(line));
+        request.setCheckInDate(in); request.setCheckOutDate(in.plusDays(30)); request.setAdults(40); request.setChildren(40);
+        // Passes input validation and reaches the catalog (which is not stubbed here), never an InvalidInput.
+        assertThatThrownBy(() -> bookingService.createBooking(request))
+                .isNotInstanceOf(com.example.bookingservice.validation.InputValidation.InvalidInput.class);
+        verify(catalogClient).getRoom(line.getRoomTypeId());
+    }
+
     @Test void nonPositiveRoomQuantityIsRejectedBeforeHoldingInventory() {
         var request = baseBookingRequest(List.of(item(UUID.randomUUID().toString(), 0, BigDecimal.TEN)));
         assertThatThrownBy(() -> bookingService.createBooking(request)).isInstanceOf(IllegalArgumentException.class);
