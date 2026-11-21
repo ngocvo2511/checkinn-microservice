@@ -24,6 +24,26 @@ merely by selecting a mode. Check schema/source compatibility before rebuilding
 against a historical local test clone. Test runtime was configuration-validated
 during consolidation, not started against that retained clone.
 
+### Test environment on the canonical schema (21/11/2026)
+
+Supersedes the clone-based Test setup below for daily work. The Test overlay now mounts
+`checkinn-test_postgres-test-canonical-data`. The five owner services (user, hotel, booking,
+revenue, regulations) run profile `canonical`, with Hibernate `validate` and no application
+Flyway. The pre-UUID clone volume `checkinn-test_postgres-test-data` is retained but no longer
+mounted, so do not point current source at it. Initialize or recheck from the backend root:
+
+```powershell
+python -X utf8 docker/init-test-canonical.py [--place-dump <pg_dump -Fc file>]
+.\docker\stack.ps1 -Test -Action Up -Scope App
+```
+
+The script refuses any volume other than the canonical one. It applies canonical V1 through the
+`flyway/flyway:10.22.0` container with the same settings as `CanonicalSmokeMigrate.java`. It only
+validates owner databases that already have V1, and refuses non-empty databases that have no V1.
+It seeds the reviewed Vietnam catalog (34 provinces, 40 destinations, idempotent) and creates
+`checkinn_place`. `checkinn_social` is still created by `social-db-init`. Clone-based smoke scripts
+that expect legacy fixtures are not revalidated on this volume.
+
 ### Canonical disposable Gateway smoke (Batch 9C, 18/11/2026)
 
 The retained `checkinn-test` PostgreSQL volume is a pre-UUID developer clone

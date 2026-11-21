@@ -1,4 +1,6 @@
-# Explicit opt-in overlay: isolated copies of live local databases, never schema.sql.
+# Explicit opt-in overlay: isolated local test databases, never schema.sql.
+# The five owner databases use the canonical V1 schema (init-test-canonical.py) and the `canonical`
+# profile. The pre-UUID clone volume checkinn-test_postgres-test-data is retained but no longer mounted.
 services:
   postgres-test:
     image: postgres:18-alpine
@@ -7,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: checkinn_test
       POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
-    volumes: [postgres-test-data:/var/lib/postgresql]
+    volumes: [postgres-test-canonical-data:/var/lib/postgresql]
     healthcheck:
       test: [CMD-SHELL, 'pg_isready -U checkinn_test -d postgres']
       interval: 5s
@@ -35,6 +37,10 @@ services:
       POINTS_RECOVERY_DELAY_MS: "1000"
       POINTS_RECOVERY_INITIAL_DELAY_MS: "5000"
       POINTS_RECOVERY_RETRY_SECONDS: "2"
+      SPRING_PROFILES_ACTIVE: canonical
+      CANONICAL_DB_URL: jdbc:postgresql://postgres-test:5432/checkinn_user?currentSchema=public
+      CANONICAL_APP_USER: checkinn_test
+      CANONICAL_APP_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_user
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -43,6 +49,10 @@ services:
 
   hotel-service:
     environment:
+      SPRING_PROFILES_ACTIVE: canonical
+      CANONICAL_DB_URL: jdbc:postgresql://postgres-test:5432/checkinn_hotel?currentSchema=public
+      CANONICAL_APP_USER: checkinn_test
+      CANONICAL_APP_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_hotel
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -54,6 +64,10 @@ services:
       LOYALTY_SETTLEMENT_DELAY_MS: "500"
       LOYALTY_SETTLEMENT_INITIAL_DELAY_MS: "5000"
       LOYALTY_SETTLEMENT_RETRY_SECONDS: "2"
+      SPRING_PROFILES_ACTIVE: canonical
+      CANONICAL_DB_URL: jdbc:postgresql://postgres-test:5432/checkinn_booking?currentSchema=public
+      CANONICAL_APP_USER: checkinn_test
+      CANONICAL_APP_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_booking
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -62,6 +76,10 @@ services:
 
   revenue-service:
     environment:
+      SPRING_PROFILES_ACTIVE: canonical
+      CANONICAL_DB_URL: jdbc:postgresql://postgres-test:5432/checkinn_revenue?currentSchema=public
+      CANONICAL_APP_USER: checkinn_test
+      CANONICAL_APP_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_revenue
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -70,6 +88,10 @@ services:
 
   regulations-service:
     environment:
+      SPRING_PROFILES_ACTIVE: canonical
+      CANONICAL_DB_URL: jdbc:postgresql://postgres-test:5432/checkinn_regulations?currentSchema=public
+      CANONICAL_APP_USER: checkinn_test
+      CANONICAL_APP_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-test:5432/checkinn_regulations
       SPRING_DATASOURCE_USERNAME: checkinn_test
       SPRING_DATASOURCE_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Run clone-test-databases.py first}
@@ -127,5 +149,5 @@ services:
       mailpit: {condition: service_healthy}
 
 volumes:
-  postgres-test-data:
+  postgres-test-canonical-data:
   mailpit-test-data:
