@@ -26,6 +26,9 @@ x-java: &java
     REGULATIONS_SERVICE_URL: http://regulations-service:8091
     SPRING_CLOUD_CONFIG_URI: http://config-server:8888
     MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+    # Without a cap each JVM sizes its heap from the whole Docker VM, and the stack then starves
+    # osrm-backend of the page cache its memory-mapped graph needs.
+    JAVA_TOOL_OPTIONS: ${JVM_OPTS:--Xmx256m -XX:MaxMetaspaceSize=192m -XX:ReservedCodeCacheSize=64m -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss512k}
   logging:
     driver: json-file
     options: {max-size: "10m", max-file: "3"}
@@ -367,14 +370,29 @@ services:
 
   osrm-backend:
     profiles: [routing]
-    image: osrm/osrm-backend:latest
+    # Docker Hub has no v5.26.0 tag; this digest is the build the graph files were prepared with.
+    image: osrm/osrm-backend:latest@sha256:af5d4a83fb90086a43b1ae2ca22872e6768766ad5fcbb07a29ff90ec644ee409
     container_name: checkinn-osrm
     restart: unless-stopped
     networks: [checkinn]
     ports: ["127.0.0.1:${OSRM_PORT:-5000}:5000"]
     volumes:
-      - ./osrm-data:/data
-    command: osrm-routed --algorithm mld --mmap --max-table-size 1000 /data/vietnam-latest.osrm
+      # A Windows bind mount makes cold --mmap reads take tens of seconds, beyond place-service's timeout.
+      - osrm-data:/data
+    init: true
+    # --mmap faults graph pages in on demand, so the first queries after a restart exceed place-service's
+    # 1.5 s timeout; reading the mapped files once in the background fills the page cache.
+    command:
+      - sh
+      - -c
+      - >-
+        cd /data &&
+        (cat vietnam-latest.osrm.mldgr vietnam-latest.osrm.cell_metrics vietnam-latest.osrm.cells
+        vietnam-latest.osrm.partition vietnam-latest.osrm.geometry vietnam-latest.osrm.fileIndex
+        vietnam-latest.osrm.ramIndex vietnam-latest.osrm.ebg_nodes vietnam-latest.osrm.nbg_nodes
+        vietnam-latest.osrm.edges vietnam-latest.osrm.icd vietnam-latest.osrm.names
+        vietnam-latest.osrm.turn_duration_penalties vietnam-latest.osrm.turn_weight_penalties > /dev/null &) &&
+        exec osrm-routed --algorithm mld --mmap --max-table-size 1000 /data/vietnam-latest.osrm
     healthcheck:
       test: [CMD-SHELL, "bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/5000' || exit 1"]
       interval: 15s
@@ -387,3 +405,7 @@ networks:
 volumes:
   redis-data:
   rabbitmq-data:
+  osrm-data:
+    # Provisioned by scripts/osrm/setup_osrm.ps1 and shared by every compose project.
+    name: checkinn-osrm-data
+    external: true

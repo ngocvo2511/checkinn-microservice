@@ -59,7 +59,7 @@ class PlaceServiceImplTest {
 
     @Test
     void getNearbyPlaces_WhenCacheHit_ReturnsCachedResultsWithoutQueryingDb() {
-        String cacheKey = String.format(Locale.US, "nearby:v2:coords:%.4f:%.4f:%s:%.1f:%d",
+        String cacheKey = String.format(Locale.US, "nearby:v3:coords:%.4f:%.4f:%s:%.1f:%d",
                 16.0544, 108.2022, PlaceCategory.ALL.name(), 10.0, 10);
         String cachedJson = "[{\"id\":\"" + UUID.randomUUID() + "\",\"name\":\"Cầu Rồng\",\"distanceKm\":1.2}]";
         when(valueOperations.get(cacheKey)).thenReturn(cachedJson);
@@ -84,8 +84,8 @@ class PlaceServiceImplTest {
         when(mockProj.getDistanceKm()).thenReturn(4.5);
         when(mockProj.getRating()).thenReturn(4.8);
 
-        // Expanded radius: 10.0 * 1.25 = 12.5 km, candidate limit = 25
-        when(placeRepository.findNearbyPlaces(eq(16.0544), eq(108.2022), eq(12.5), eq("ALL"), eq(25)))
+        when(placeRepository.findNearbyPlaces(eq(16.0544), eq(108.2022), eq(10.3),
+                anyDouble(), anyDouble(), anyDouble(), anyDouble(), eq("ALL"), eq(300)))
                 .thenReturn(List.of(mockProj));
         when(placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(any())).thenReturn(Collections.emptyList());
         when(placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(any())).thenReturn(Collections.emptyList());
@@ -120,7 +120,8 @@ class PlaceServiceImplTest {
         when(mockProj.getLongitude()).thenReturn(108.2240);
         when(mockProj.getDistanceKm()).thenReturn(1.6);
 
-        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
+        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(),
+                anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
                 .thenReturn(List.of(mockProj));
         when(placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(any())).thenReturn(Collections.emptyList());
         when(placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(any())).thenReturn(Collections.emptyList());
@@ -136,16 +137,93 @@ class PlaceServiceImplTest {
     }
 
     @Test
+    void getNearbyPlaces_WhenRemainingCandidatesCannotBeatTopResults_StopsRoutingEarly() {
+        List<NearbyPlaceProjection> candidates = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            candidates.add(candidate(16.06 + i * 0.0001, 0.5 + i * 0.01));
+        }
+        candidates.add(candidate(16.20, 5.0));
+        stubCandidates(candidates);
+        stubRoadDistanceAsStraightLineTimes(1.2);
+
+        List<NearbyPlaceResponse> result = placeService.getNearbyPlaces(16.0544, 108.2022, PlaceCategory.ALL, 10.0, 1);
+
+        assertThat(result).hasSize(1);
+        verify(roadDistanceService, times(1)).getRoadMetrics(any(Coordinate.class), anyList());
+    }
+
+    @Test
+    void getNearbyPlaces_WhenLaterCandidateMayBeCloserByRoad_RoutesNextBatch() {
+        List<NearbyPlaceProjection> candidates = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            candidates.add(candidate(16.06 + i * 0.0001, 2.0 + i * 0.01));
+        }
+        NearbyPlaceProjection directRoute = candidate(16.30, 2.6);
+        candidates.add(directRoute);
+        stubCandidates(candidates);
+        Coordinate directCoord = new Coordinate(16.30, 108.2022);
+        when(roadDistanceService.getRoadMetrics(any(Coordinate.class), anyList())).thenAnswer(inv -> {
+            List<Coordinate> dests = inv.getArgument(1);
+            Map<Coordinate, RoadMetrics> out = new HashMap<>();
+            for (Coordinate c : dests) {
+                double km = c.equals(directCoord) ? 2.7 : 4.0;
+                out.put(c, RoadMetrics.builder().distanceKm(km).durationMinutes(10).fallback(false).build());
+            }
+            return out;
+        });
+
+        List<NearbyPlaceResponse> result = placeService.getNearbyPlaces(16.0544, 108.2022, PlaceCategory.ALL, 10.0, 1);
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).latitude()).isEqualTo(16.30);
+        verify(roadDistanceService, times(2)).getRoadMetrics(any(Coordinate.class), anyList());
+    }
+
+    private NearbyPlaceProjection candidate(double latitude, double straightKm) {
+        NearbyPlaceProjection proj = mock(NearbyPlaceProjection.class);
+        when(proj.getId()).thenReturn(UUID.randomUUID());
+        when(proj.getName()).thenReturn("Place " + latitude);
+        when(proj.getCategory()).thenReturn("ATTRACTION");
+        when(proj.getLatitude()).thenReturn(latitude);
+        when(proj.getLongitude()).thenReturn(108.2022);
+        when(proj.getDistanceKm()).thenReturn(straightKm);
+        return proj;
+    }
+
+    private void stubCandidates(List<NearbyPlaceProjection> candidates) {
+        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(),
+                anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
+                .thenReturn(candidates);
+        when(placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(any())).thenReturn(Collections.emptyList());
+        when(placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(any())).thenReturn(Collections.emptyList());
+    }
+
+    private void stubRoadDistanceAsStraightLineTimes(double factor) {
+        when(roadDistanceService.getRoadMetrics(any(Coordinate.class), anyList())).thenAnswer(inv -> {
+            List<Coordinate> dests = inv.getArgument(1);
+            Map<Coordinate, RoadMetrics> out = new HashMap<>();
+            for (Coordinate c : dests) {
+                double km = Math.round(RoadDistanceService.haversineKm(16.0544, 108.2022, c.latitude(), c.longitude()) * factor * 10) / 10.0;
+                out.put(c, RoadMetrics.builder().distanceKm(km).durationMinutes(5).fallback(false).build());
+            }
+            return out;
+        });
+    }
+
+    @Test
     void getNearbyPlaces_WhenDatabaseEmpty_ReturnsEmptyListAndCachesResult() {
-        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
+        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(),
+                anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
                 .thenReturn(Collections.emptyList());
 
         List<NearbyPlaceResponse> result = placeService.getNearbyPlaces(16.0544, 108.2022, PlaceCategory.RESTAURANT, 5.0, 10);
 
         assertThat(result).isEmpty();
         verify(valueOperations).set(anyString(), eq("[]"), any());
-        // Candidate radius: 5.0 * 1.25 = 6.25, candidate limit = 25
-        verify(placeRepository, times(1)).findNearbyPlaces(eq(16.0544), eq(108.2022), eq(6.25), eq("RESTAURANT"), eq(25));
+        verify(placeRepository, times(1)).findNearbyPlaces(eq(16.0544), eq(108.2022), eq(5.3),
+                doubleThat(minLat -> minLat < 16.0544), doubleThat(maxLat -> maxLat > 16.0544),
+                doubleThat(minLng -> minLng < 108.2022), doubleThat(maxLng -> maxLng > 108.2022),
+                eq("RESTAURANT"), eq(300));
     }
 
 
@@ -158,10 +236,10 @@ class PlaceServiceImplTest {
         when(mockProj.getCategory()).thenReturn("ATTRACTION");
         when(mockProj.getLatitude()).thenReturn(16.1200);
         when(mockProj.getLongitude()).thenReturn(108.2800);
-        when(mockProj.getDistanceKm()).thenReturn(4.8); // Straight-line candidate is within 5.0 * 1.25 = 6.25 km
+        when(mockProj.getDistanceKm()).thenReturn(4.8);
 
-        // Target radius: 5.0 km, Candidate radius: 6.25 km
-        when(placeRepository.findNearbyPlaces(eq(16.0544), eq(108.2022), eq(6.25), eq("ALL"), eq(25)))
+        when(placeRepository.findNearbyPlaces(eq(16.0544), eq(108.2022), eq(5.3),
+                anyDouble(), anyDouble(), anyDouble(), anyDouble(), eq("ALL"), eq(300)))
                 .thenReturn(List.of(mockProj));
         when(placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(any())).thenReturn(Collections.emptyList());
         when(placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(any())).thenReturn(Collections.emptyList());
