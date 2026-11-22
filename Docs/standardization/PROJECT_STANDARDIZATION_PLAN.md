@@ -40,11 +40,17 @@
 
 **Counts:** FIXED_VERIFIED 17 · IN_PROGRESS 12 · FIXED_UNVERIFIED 3 · NEEDS_ENVIRONMENT 0. Open: P0 3/7, P1 7/17, P2 4/7, P3 1/1. In-scope (không gồm Place): VERIFIED 17, PARTIAL 9, `IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED` 3, NOT_VERIFIED 0, DEFERRED 1, BLOCKED 0 *(9B: STD-003/018 → PARTIAL; PARTIAL nay 11)*. Thay đổi 9A: STD-006 → FIXED_VERIFIED (scoped admission), STD-027 → IN_PROGRESS.
 
+**Batch 9H (21/11):** F-9G-1 (CORS) sửa; envelope chuẩn ở mọi service REST; STD-026 in-scope → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED; in-scope VERIFIED 18 · PARTIAL 7 · IN_SCOPE_DONE 6 · DEFERRED 1; parent 18/11/3. [Báo cáo 9H](../BATCH9H_CORS_AND_ERROR_CONTRACT_2026-11-21.md).
+
+**Batch 9G (21/11):** STD-028 → FIXED_VERIFIED (E2E paid lifecycle, browser không intercept, multi-node trên stack canonical); STD-030 in-scope → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED (Gateway tracing + log ingestion); STD-026 còn body legacy user-service. Counts: FIXED_VERIFIED 18 · IN_PROGRESS 11 · FIXED_UNVERIFIED 3; open P0 3/7, P1 6/17, P2 4/7, P3 1/1; in-scope VERIFIED 18 · PARTIAL 8 · IN_SCOPE_DONE 5 · DEFERRED 1. [Báo cáo 9G](../BATCH9G_REMAINING_CORE_GAPS_2026-11-21.md).
+
+**Batch 9F (20/11):** F-9E-1/3/4, STD-030 client REST còn lại, STD-026 503 ở user/revenue/regulations → FIXED_VERIFIED; in-scope STD-012 → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED (VERIFIED 17, PARTIAL 10, IN_SCOPE_DONE 4, DEFERRED 1); parent không đổi. [Báo cáo 9F](../BATCH9F_CORE_FOLLOWUP_FIXES_2026-11-20.md).
+
 **Batch 9E (18/11):** đối chiếu lại toàn bộ — counts không đổi; core standardization đóng cho Agent READ MVP với điều kiện R1–R5, không đóng cho AI WRITE, không production-ready. Backlog cập nhật: STD-012 → F (F-9E-1), STD-026/030 → F (phần còn lại). [Báo cáo 9E](../BATCH9E_FINAL_CORE_STANDARDIZATION_AUDIT_2026-11-18.md), [AUDIT §0.6](PROJECT_STANDARDIZATION_AUDIT_2026-11-12.md#06-backlog-and-recommended-next-workstream-supersedes-g0-next).
 
 **Backlog column:** C = verification only, F = cần sửa nhỏ (9F, không chặn Agent READ), D = deferred (sau AI MVP), E = excluded external owner (Place), — = không còn việc trong acceptance gốc.
 
-| Issue | Pri | **Current (9A–9E)** | In-scope (không gồm Place) | AI | Backlog |
+| Issue | Pri | **Current (9A–9H)** | In-scope (không gồm Place) | AI | Backlog |
 |---|---|---|---|---|---|
 | STD-001 | P0 | **FIXED_VERIFIED** | VERIFIED | WRITE | — |
 | STD-002 | P0 | **IN_PROGRESS** | PARTIAL | WRITE | D |
@@ -57,7 +63,7 @@
 | STD-009 | P1 | **FIXED_VERIFIED** | VERIFIED | WRITE | — |
 | STD-010 | P1 | **FIXED_VERIFIED** | VERIFIED | READ | — |
 | STD-011 | P1 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | READ | E |
-| STD-012 | P1 | **IN_PROGRESS** | PARTIAL | READ (frontend; Agent đọc backend) | F (F-9E-1) |
+| STD-012 | P1 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | READ (frontend; Agent đọc backend) | E |
 | STD-013 | P1 | **FIXED_VERIFIED** | VERIFIED | READ | — |
 | STD-014 | P2 | **FIXED_VERIFIED** | VERIFIED | READ | — |
 | STD-015 | P1 | **FIXED_VERIFIED** | VERIFIED | READ | — |
@@ -71,11 +77,11 @@
 | STD-023 | P1 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | READ | E |
 | STD-024 | P2 | **FIXED_UNVERIFIED** | DEFERRED | NONE | D |
 | STD-025 | P2 | **FIXED_VERIFIED** | VERIFIED | READ (latency) | D |
-| STD-026 | P1 | **IN_PROGRESS** | PARTIAL | BOTH | F (F-9E-2; 503 ở auth/user/revenue/regulations) |
+| STD-026 | P1 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | BOTH | E |
 | STD-027 | P2 | **IN_PROGRESS** | PARTIAL | NONE | D |
-| STD-028 | P1 | **IN_PROGRESS** | PARTIAL | BOTH | C |
+| STD-028 | P1 | **FIXED_VERIFIED** | VERIFIED | BOTH | — |
 | STD-029 | P2 | **IN_PROGRESS** | PARTIAL | NONE | D |
-| STD-030 | P2 | **IN_PROGRESS** | PARTIAL | BOTH (vận hành Agent) | F (auth/revenue/user client, Gateway bridge) |
+| STD-030 | P2 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | BOTH (vận hành Agent) | E |
 | STD-031 | P2 | **FIXED_VERIFIED** | VERIFIED | READ (frontend) | — |
 | STD-032 | P3 | **IN_PROGRESS** | IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED | NONE (city-only READ) | E |
 
@@ -88,14 +94,14 @@
 | City/province theo ID; type/amenity chuẩn hóa | VERIFIED | STD-015/016/017 |
 | Inventory không fallback; public đúng active/approval | VERIFIED | STD-006, STD-023 in-scope |
 | Giá/capacity/availability cùng offer, checkedAt | VERIFIED | STD-010 |
-| FE không sinh facts | PARTIAL | STD-012: C6 rà soát xong 9E; F-9E-1 trang đặt phòng/thanh toán (không ảnh hưởng Agent READ) |
+| FE không sinh facts | VERIFIED (không gồm Place) | STD-012: rà soát 9E; F-9E-1 sửa 9F |
 | Contract tương thích, bounded, thứ tự ổn định | VERIFIED | STD-014 (thứ tự collection lồng: 8D risk) |
 | No results / invalid / dependency failure khác nhau; deadline | VERIFIED (Hotel/Booking) | STD-011 in-scope done; 9D: DB outage 503 trong 10 s, Gateway timeout 20 s; còn F-9E-2 (FE) và 503 ở service khác (không thuộc READ) |
 | Validation trước side effect | VERIFIED (READ + booking create) | STD-018: search/availability (9B), booking create (9C), giới hạn F-9B-3 (9D); write còn lại thuộc inventory STD-018 |
 | Read-only API smoke/contract/security có output thực | VERIFIED (local canonical) | Hosted 8B–8D; service suite 9B; Gateway READ smoke trên stack canonical disposable 9C (87/87) |
 | State/filter/URL | VERIFIED | STD-013/031 |
 | Schema/fixture tái lập; upgrade/restore | PARTIAL | STD-021 canonical VERIFIED; restore NOT_VERIFIED |
-| Logging correlation/error code, không token | PARTIAL | STD-030: Booking→Hotel VERIFIED (9D); auth/revenue/user + Gateway bridge còn |
+| Logging correlation/error code, không token | VERIFIED (local canonical) | STD-030: trace xuyên Gateway→Booking→Hotel, log Gateway có trace id, Promtail→Loki (9G); log pipeline hosted thuộc STD-027 |
 | Bộ query/expected criteria cho AI evaluation | NOT STARTED | Batch 10 |
 
 | §13.2 Gate trước AI WRITE | 9A | Issue / gate |
@@ -4058,3 +4064,21 @@ Next: giảm 12–15 round trip cố định còn lại hoặc latency floor net
 - Audit-only (không sửa application source). 32 issue đối chiếu với source + evidence 9B–9D + lần chạy fresh: backend 1054/0/48 (12 module), compile 13/13; FE Node 218, tsc, build PASS; browser 150 case PASS về chức năng. Counts không đổi (17/12/3/0).
 - Finding: F-9E-1 (P1) dữ kiện/chính sách bịa ở `app/booking/page.tsx` và `app/booking/payment/page.tsx`; F-9E-2 (P2) 27 `fetch` thô không deadline; F-9E-3/4 (P3) cấu hình Playwright; F-9E-5 (P3) `contextLoads` phụ thuộc DB local.
 - Điều kiện trước Batch 10: R1 commit 9A–9E, R2 bộ đánh giá AI, R3 deadline/rate budget phía Agent, R4 hosted smoke nếu chạy hosted, R5 chỉ route trong READ_TOOL_CONTRACT. Đề xuất 9F nhỏ song song Batch 10. [Báo cáo 9E](../BATCH9E_FINAL_CORE_STANDARDIZATION_AUDIT_2026-11-18.md).
+
+## 85. 20/11/2026 — Batch 9F: core follow-up fixes
+
+- F-9E-1 (trang đặt phòng/thanh toán lấy giờ/điều khoản hủy từ API, bỏ dữ kiện cứng), F-9E-3/4 (Playwright), STD-030 (auth/revenue/user REST client qua Boot builder), STD-026 (`CannotCreateTransactionException` → 503 ở user/revenue/regulations) → FIXED_VERIFIED.
+- Kiểm tra: backend 4 service 260 run/0 fail; FE regression 221, browser 105/105 + area; canonical Gateway smoke 106/0.
+- In-scope STD-012 → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED; parent counts không đổi. Mới: F-9F-1. [Báo cáo 9F](../BATCH9F_CORE_FOLLOWUP_FIXES_2026-11-20.md).
+
+## 86. 21/11/2026 — Batch 9G: remaining core gaps (STD-026/028/030)
+
+- F-9F-1, F-9E-2, F-9E-5, Gateway envelope + tracing bridge + access log, log ingestion, E2E paid lifecycle, browser không intercept, multi-node → VERIFIED.
+- STD-028 → FIXED_VERIFIED; STD-030 in-scope → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED; STD-026 PARTIAL. Counts 18/11/3.
+- Kiểm tra: backend 1078/0 fail, gateway 5/5, FE 222 + browser; canonical 135/0 (1 replica + live) và 138/0 (2 replica). Mới: F-9G-1. [Báo cáo 9G](../BATCH9G_REMAINING_CORE_GAPS_2026-11-21.md).
+
+## 87. 21/11/2026 — Batch 9H: CORS (F-9G-1) + error contract STD-026
+
+- CORS booking/regulations = Gateway (`cors.allowed-origins`, env `CORS_ALLOWED_ORIGINS`); browser live ở `127.0.0.1:3000` PASS.
+- Envelope `{timestamp,status,error,code,message,path,requestId}` + `X-Request-ID` ở auth/user/revenue/regulations; 18 lỗi không body → envelope; sweep runtime 6 service.
+- STD-026 in-scope → IN_SCOPE_DONE / PLACE_SCOPE_EXCLUDED. Backend 1084/0, FE 222, smoke 144/0. [Báo cáo 9H](../BATCH9H_CORS_AND_ERROR_CONTRACT_2026-11-21.md).

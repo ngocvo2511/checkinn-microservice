@@ -11,6 +11,8 @@ x-java: &java
   networks: [smoke]
   labels: {checkinn.owner: canonical-smoke}
   logging: {driver: json-file, options: {max-size: "10m", max-file: "2"}}
+  # Service file logs (logs/<app>-<port>.log under /app) land in ignored .local/canonical-smoke/logs for Promtail.
+  volumes: ["${SMOKE_PRIVATE_DIR:?generated}/logs:/app/logs"]
   healthcheck: &health
     test: [CMD-SHELL, 'curl -fsS http://localhost:$${SERVER_PORT}/actuator/health >/dev/null || exit 1']
     interval: 10s
@@ -26,7 +28,8 @@ x-java: &java
     SPRING_BOOT_ADMIN_CLIENT_ENABLED: "false"
     SERVER_ADDRESS: 0.0.0.0
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+    # Register container IPs so scaled replicas (multi-node run) are distinct, routable instances.
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     SPRING_DATA_REDIS_HOST: redis
     SPRING_DATA_REDIS_PORT: "6379"
     SPRING_RABBITMQ_HOST: rabbitmq
@@ -39,7 +42,8 @@ x-java: &java
     REGULATIONS_SERVICE_URL: http://regulations-service:8091
     BOOKING_GRPC_ADDRESS: booking-service:9093
     GRPC_SERVER_ADDRESS: 0.0.0.0
-    REFUND_INTERNAL_ENABLED: "false"
+    # Sandbox Internal Refund (internal accounting only, never a provider refund) for the paid-lifecycle E2E.
+    REFUND_INTERNAL_ENABLED: "true"
   command:
     - --grpc.client.user-service.address=static://user-service:9097
     - --grpc.client.hotel-service.address=static://hotel-service:9092
@@ -113,6 +117,26 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+
+  # Log ingestion with the project's own monitoring configs (monitoring/loki, monitoring/promtail); tmpfs storage.
+  loki:
+    image: grafana/loki:2.9.8
+    labels: {checkinn.owner: canonical-smoke}
+    networks: [smoke]
+    command: [-config.file=/etc/loki/local-config.yaml]
+    tmpfs: ["/loki:uid=10001,gid=10001,mode=0750"]  # Loki runs as uid 10001
+    volumes: [../monitoring/loki/local-config.yaml:/etc/loki/local-config.yaml:ro]
+    ports: ["127.0.0.1:58100:3100"]
+
+  promtail:
+    image: grafana/promtail:2.9.8
+    labels: {checkinn.owner: canonical-smoke}
+    networks: [smoke]
+    command: [-config.file=/etc/promtail/config.yml]
+    volumes:
+      - ../monitoring/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - "${SMOKE_PRIVATE_DIR:?generated}/logs:/logs:ro"
+    depends_on: [loki]
 
   eureka-server:
     <<: *java
@@ -208,7 +232,7 @@ services:
   notification-service:
     <<: *java
     image: checkinn/notification-service:canonical-smoke
-    volumes: [./notification-health.sh:/usr/local/bin/checkinn-notification-health.sh:ro]
+    volumes: ["${SMOKE_PRIVATE_DIR:?generated}/logs:/app/logs", ./notification-health.sh:/usr/local/bin/checkinn-notification-health.sh:ro]
     healthcheck:
       <<: *health
       test: [CMD, bash, /usr/local/bin/checkinn-notification-health.sh]

@@ -25,7 +25,10 @@ OWNERS = ('user', 'hotel', 'booking', 'revenue', 'regulations')
 MODULES = ['eureka-server', 'api-gateway', 'auth-service', 'user-service', 'hotel-service', 'booking-service',
            'revenue-service', 'regulations-service', 'notification-service']
 GATEWAY, MAILPIT = 'http://127.0.0.1:58080', 'http://127.0.0.1:58025'
-INFRA = ['postgres', 'rabbitmq', 'redis', 'mailpit']
+INFRA = ['postgres', 'rabbitmq', 'redis', 'mailpit', 'loki', 'promtail']
+LOKI = 'http://127.0.0.1:58100'
+# Replicas of hotel-service and booking-service for the multi-node run (CANONICAL_SMOKE_SCALE=2).
+SCALE = int(os.environ.get('CANONICAL_SMOKE_SCALE', '1'))
 
 
 def sh(args, **kw):
@@ -53,12 +56,16 @@ def require_owned():
 
 def prepare():
     assert not (PRIVATE / 'state.private.json').exists(), 'Refuse existing canonical-smoke state; run down and remove it explicitly'
-    for port in (58080, 58432, 58025):
+    for port in (58080, 58432, 58025, 58100):
         with socket.socket() as s:
             s.bind(('127.0.0.1', port))
     existing = sh(['docker', 'ps', '-a', '--filter', 'label=com.docker.compose.project=' + PROJECT, '--format', '{{.Names}}']).split()
     assert not existing, 'Project already has containers: ' + ','.join(existing)
     PRIVATE.mkdir(parents=True, exist_ok=True)
+    logs = PRIVATE / 'logs'
+    if logs.exists():
+        for old in logs.glob('*.log'): old.unlink()
+    logs.mkdir(exist_ok=True)
     pw = lambda: secrets.token_urlsafe(32)
     env = {'SMOKE_PRIVATE_DIR': str(PRIVATE).replace('\\', '/'), 'SMOKE_SECRET_KEY': secrets.token_urlsafe(48),
            'SMOKE_POSTGRES_PASSWORD': pw(), 'SMOKE_RABBIT_PASSWORD': pw(), 'SMOKE_VNPAY_SECRET': pw()}
@@ -118,7 +125,8 @@ def migrate():
 
 def apps():
     require_owned()
-    compose('up', '-d', '--wait', '--wait-timeout', '480')
+    scale = ['--scale', f'hotel-service={SCALE}', '--scale', f'booking-service={SCALE}'] if SCALE > 1 else []
+    compose('up', '-d', '--wait', '--wait-timeout', '480', *scale)
     require_owned()
     print(compose('ps', '--format', '{{.Service}} {{.Health}}'))
 
@@ -210,10 +218,46 @@ def booking_body(customer, hotel, room, key, price, check_in='2030-03-10', check
             'items': [{'roomTypeId': room, 'quantity': 1, 'checkInDate': check_in, 'checkOutDate': check_out, 'unitPrice': price}]}
 
 
-def counters(room):
+def counters(room, start=None, end=None):
     # room_availability has one row per stay night: report the per-night peak (held/booked) and live HELD hold rows.
+    nights = f" AND date >= '{start}' AND date < '{end}'" if start else ''
+    holds = f" AND check_in_date = '{start}'" if start else ''
     return psql('checkinn_hotel', f"SELECT coalesce(max(held),0)||'/'||coalesce(max(booked),0)||'/'||"
-                f"(SELECT count(*) FROM room_holds WHERE room_type_id='{room}' AND status='HELD') FROM room_availability WHERE room_type_id='{room}'")
+                f"(SELECT count(*) FROM room_holds WHERE room_type_id='{room}' AND status='HELD'{holds}) FROM room_availability WHERE room_type_id='{room}'{nights}")
+
+
+def poll(fn, ok, seconds=60):
+    deadline = time.monotonic() + seconds
+    value = fn()
+    while not ok(value) and time.monotonic() < deadline:
+        time.sleep(2); value = fn()
+    return value
+
+
+def vnp_now():
+    return datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7))).strftime('%Y%m%d%H%M%S')
+
+
+def vnp_signed(params, secret):
+    # Same canonical form as VnPayUtil.buildQuery (sorted keys, URL-encoded values) and HMAC-SHA512 over it.
+    import hmac, hashlib
+    query = '&'.join(f"{k}={urllib.parse.quote_plus(v)}" for k, v in sorted(params.items()) if v)
+    return query + '&vnp_SecureHash=' + hmac.new(secret.encode(), query.encode(), hashlib.sha512).hexdigest()
+
+
+def loki_lines(needle):
+    q = urllib.parse.urlencode({'query': '{job="spring"} |= "' + needle + '"', 'limit': '200',
+                                'start': str(int((time.time() - 3600) * 1e9)), 'end': str(int((time.time() + 60) * 1e9))})
+    try:
+        with urllib.request.urlopen(LOKI + '/loki/api/v1/query_range?' + q, timeout=20) as r:
+            data = json.loads(r.read())
+    except Exception:
+        return {}
+    files = {}
+    for stream in data.get('data', {}).get('result', []):
+        name = stream.get('stream', {}).get('filename', '?').rsplit('/', 1)[-1]
+        files[name] = files.get(name, 0) + len(stream.get('values', []))
+    return files
 
 
 def lost_response_post(path, body, token):
@@ -327,6 +371,9 @@ def smoke():
     b1_body = booking_body(c1, hid, ra, k1, price)
     code, _, _ = api('/api/bookings', 'POST', b1_body)
     check('WRITE anonymous create is 401', code == 401, status=code)
+    # Booking's own discovery cache must list hotel-service before the first write (startup race seen in 9G run A):
+    # a stale-price request reaches Hotel and is rejected with 400 (no hold); 503 means "not yet resolvable".
+    poll(lambda: api('/api/bookings', 'POST', booking_body(c1, hid, ra, str(uuid.uuid4()), price - 1), c1['token'])[0], lambda c: c != 503, 120)
     code, b1, _ = api('/api/bookings', 'POST', b1_body, c1['token'], headers={'traceparent': f'00-{trace}-{secrets.token_hex(8)}-01'})
     check('WRITE create booking 201 with server total', code == 201 and b1.get('id') and float(b1.get('totalAmount', 0)) == price * 2
           and b1.get('userId') == c1['id'], status=code, total=(b1 or {}).get('totalAmount'))
@@ -392,6 +439,169 @@ def smoke():
           code == 400 and envelope_ok(d, h, 'INVALID_REQUEST') and d.get('message') == 'Payment cannot be created for this booking'
           and h.get('X-Request-ID') == d.get('requestId') and 'CANCELLED' not in json.dumps(d), status=code, body=d)
 
+    # ---------------- Batch 9G: full paid lifecycle (STD-028). VNPay return is signed locally with this stack's
+    # synthetic secret (provider never called); the refund is Sandbox Internal accounting, not a provider refund.
+    secret = env_file()['SMOKE_VNPAY_SECRET']
+    p_in, p_out = '2030-04-10', '2030-04-12'
+    code, b3, _ = api('/api/bookings', 'POST', booking_body(c1, hid, ra, str(uuid.uuid4()), price, p_in, p_out), c1['token'])
+    check('E2E paid: create booking 201', code == 201 and (b3 or {}).get('id'), status=code)
+    code, init, _ = api(f"/api/payments/vnpay/create?bookingId={b3['id']}", 'POST', token=c1['token'])
+    query = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit((init or {}).get('redirectUrl', '')).query))
+    ret = {'vnp_TmnCode': 'SMOKETEST', 'vnp_TxnRef': query.get('vnp_TxnRef', ''), 'vnp_Amount': query.get('vnp_Amount', ''),
+           'vnp_ResponseCode': '00', 'vnp_TransactionStatus': '00', 'vnp_TransactionNo': str(10**8 + secrets.randbelow(10**8)), 'vnp_PayDate': vnp_now()}
+    check('E2E paid: VNPay URL carries order and amount (2 nights x price x 100)', code == 200 and ret['vnp_TxnRef']
+          and ret['vnp_Amount'] == str(int(price * 2 * 100)), status=code, amount=ret['vnp_Amount'])
+    tampered = vnp_signed(ret, secret).replace('vnp_Amount=' + ret['vnp_Amount'], 'vnp_Amount=' + str(int(ret['vnp_Amount']) + 100))
+    code, _, _ = api('/api/payments/vnpay/return?' + tampered)
+    check('E2E paid: tampered amount (signature no longer matches) is 400, nothing paid', code == 400, status=code)
+    code, d, _ = api('/api/payments/vnpay/return?' + vnp_signed(dict(ret, vnp_Amount=str(int(ret['vnp_Amount']) + 100)), secret))
+    check('E2E paid: validly signed but wrong amount is 400 (persisted amount check)', code == 400, status=code)
+    code, paid, _ = api('/api/payments/vnpay/return?' + vnp_signed(ret, secret))
+    check('E2E paid: signed VNPay return 00 completes the payment', code == 200 and (paid or {}).get('status') == 'COMPLETED', status=code, payment=(paid or {}).get('status'))
+    code, again, _ = api('/api/payments/vnpay/return?' + vnp_signed(ret, secret))
+    check('E2E paid: replayed return is idempotent', code == 200 and (again or {}).get('status') == 'COMPLETED', status=code)
+    pid = (paid or {}).get('id')
+    status_of = lambda: (api(f"/api/bookings/{b3['id']}", token=c1['token'])[1] or {}).get('status')
+    check('E2E paid: booking becomes CONFIRMED', poll(status_of, lambda s: s == 'CONFIRMED') == 'CONFIRMED', status=status_of())
+    check('E2E paid: inventory booked (per-night booked 1, no live hold)', poll(lambda: counters(ra, p_in, p_out), lambda c: c == '0/1/0') == '0/1/0',
+          counters=counters(ra, p_in, p_out))
+    cash = lambda: psql('checkinn_revenue', f"SELECT count(*) FILTER (WHERE kind='CREDIT')||'/'||count(*) FILTER (WHERE kind='DEBIT')||'/'||"
+                                            f"coalesce(sum(CASE WHEN kind='CREDIT' THEN amount ELSE -amount END),0)::bigint FROM revenue_cash_transactions WHERE payment_id='{pid}'")
+    check('E2E paid: Revenue projects exactly one CREDIT', poll(cash, lambda c: c.startswith('1/0/')) == f"1/0/{int(price * 2)}", revenue=cash())
+    code, _, _ = api(f"/api/bookings/{b3['id']}", 'DELETE', token=c1['token'])
+    check('E2E paid: customer cancels within the free window (204) -> CANCELLED', code == 204 and status_of() == 'CANCELLED', status=code)
+    code, rr, _ = api(f"/api/payments/{pid}/refund-request", token=c1['token'])
+    check('E2E paid: cancellation opened a refund request', code == 200 and (rr or {}).get('status'), status=code, refund=(rr or {}).get('status'))
+    code, _, _ = api(f"/api/payments/{pid}/refund-request/approve", 'POST', token=c1['token'])
+    check('E2E paid: CUSTOMER cannot approve a refund (403)', code == 403, status=code)
+    code, rr, _ = api(f"/api/payments/{pid}/refund-request/approve", 'POST', token=admin['token'])
+    check('E2E paid: ADMIN approves the refund request', code == 200 and (rr or {}).get('status') == 'APPROVED_PENDING_EXECUTION', status=code, refund=(rr or {}).get('status'))
+    code, _, _ = api(f"/api/payments/{pid}/refund", 'POST', token=c1['token'])
+    check('E2E paid: CUSTOMER cannot execute a refund (403)', code == 403, status=code)
+    code, rf, _ = api(f"/api/payments/{pid}/refund", 'POST', token=admin['token'])
+    check('E2E paid: ADMIN executes the Sandbox Internal refund -> REFUNDED', code == 200 and (rf or {}).get('status') == 'REFUNDED', status=code, payment=(rf or {}).get('status'))
+    code, rf, _ = api(f"/api/payments/{pid}/refund", 'POST', token=admin['token'])
+    check('E2E paid: repeated refund execution is idempotent', code == 200 and (rf or {}).get('status') == 'REFUNDED', status=code)
+    check('E2E paid: Revenue has one CREDIT and one DEBIT, net 0', poll(cash, lambda c: c == '1/1/0') == '1/1/0', revenue=cash())
+    check('E2E paid: inventory released after cancellation', poll(lambda: counters(ra, p_in, p_out), lambda c: c == '0/0/0') == '0/0/0',
+          counters=counters(ra, p_in, p_out))
+    refund_row = psql('checkinn_booking', f"SELECT r.status||'/'||r.execution_mode||'/'||b.paid_amount::bigint FROM refund_requests r JOIN bookings b ON b.id=r.booking_id WHERE r.payment_id='{pid}'")
+    check('E2E paid: refund recorded as SANDBOX_INTERNAL, booking paid_amount back to 0', refund_row == 'REFUNDED/SANDBOX_INTERNAL/0', refund=refund_row)
+
+    # ---------------- Batch 9G: multi-node (STD-028), only when replicas were started (CANONICAL_SMOKE_SCALE>1)
+    if SCALE > 1:
+        import concurrent.futures
+        for app in ('HOTEL-SERVICE', 'BOOKING-SERVICE'):
+            raw = compose('exec', '-T', 'eureka-server', 'curl', '-fsS', '-H', 'Accept: application/json', f'http://localhost:8761/eureka/apps/{app}')
+            inst = json.loads(raw)['application']['instance']
+            inst = inst if isinstance(inst, list) else [inst]
+            check(f'MULTINODE Eureka lists {SCALE} UP {app} instances', sum(1 for i in inst if i.get('status') == 'UP') == SCALE, instances=len(inst))
+        m_in, m_out = '2030-05-10', '2030-05-12'
+        bodies = [(booking_body(c, hid, ra, str(uuid.uuid4()), price, m_in, m_out), c['token']) for c in (c1, c2) * 3]
+        with concurrent.futures.ThreadPoolExecutor(len(bodies)) as pool:
+            results = list(pool.map(lambda b: api('/api/bookings', 'POST', b[0], b[1]), bodies))
+        codes = sorted(r[0] for r in results)
+        check('MULTINODE 6 concurrent creates (distinct keys) on a stock-2 room: exactly two 201, the rest 409',
+              codes.count(201) == 2 and codes.count(409) == 4, codes=codes)
+        check('MULTINODE inventory never oversold (per-night held <= 2, 2 live holds)', counters(ra, m_in, m_out) == '2/0/2', counters=counters(ra, m_in, m_out))
+        s_in, s_out = '2030-06-10', '2030-06-12'
+        same = booking_body(c2, hid, ra, str(uuid.uuid4()), price, s_in, s_out)
+        with concurrent.futures.ThreadPoolExecutor(4) as pool:
+            results = list(pool.map(lambda _: api('/api/bookings', 'POST', same, c2['token']), range(4)))
+        ids = {(r[1] or {}).get('id') for r in results if r[0] == 201}
+        rows = psql('checkinn_booking', f"SELECT count(*) FROM bookings WHERE user_id='{uuid.UUID(c2['id'])}' AND check_in_date='{s_in}'")
+        check('MULTINODE 4 concurrent creates with one idempotency key: one booking, one hold',
+              rows == '1' and len(ids) <= 1 and counters(ra, s_in, s_out) == '1/0/1', codes=sorted(r[0] for r in results), bookings=rows, counters=counters(ra, s_in, s_out))
+        per_replica = {}
+        for cid in compose('ps', '-q', 'booking-service').split():
+            per_replica[cid[:12]] = sh(['docker', 'logs', cid]).count('[CREATE_BOOKING] Request received')
+        check('MULTINODE booking creates were served by every booking-service replica', len(per_replica) == SCALE and all(per_replica.values()),
+              perReplica=per_replica)
+        for r in results[:1]:
+            if r[0] == 201: api(f"/api/bookings/{r[1]['id']}", 'DELETE', token=c2['token'])
+
+    # ---------------- Batch 9H: one error per service through the Gateway uses the standard envelope (STD-026)
+    hv = lambda h, k: next((v for kk, v in (h or {}).items() if kk.lower() == k.lower()), None)
+    for label, path, method, body, token, statuses in [
+            ('auth wrong password', '/api/auth/login', 'POST', {'usernameOrEmail': 'cs_nobody_' + run, 'password': 'synthetic-wrong-Aa1!'}, None, (400, 401)),
+            ('user admin route as CUSTOMER', f'/api/user/admin/users/{uuid.uuid4()}', 'GET', None, c1['token'], (403,)),
+            ('revenue reversed dates', f"/api/reports/owner/summary?ownerId={owner['id']}&from=2030-02-01&to=2030-01-01", 'GET', None, owner['token'], (400,)),
+            ('regulations unknown key', '/api/regulations/NO_SUCH_KEY_' + run.upper(), 'GET', None, None, (401, 403, 404)),
+            ('booking unknown payment', f'/api/payments/{uuid.uuid4()}', 'GET', None, c1['token'], (403, 404)),
+            ('hotel unknown hotel', f'/api/hotel/hotels/{uuid.uuid4()}', 'GET', None, None, (404,))]:
+        code, d, h = api(path, method, body, token)
+        keys = {'timestamp', 'status', 'error', 'code', 'message', 'path', 'requestId'}
+        check(f'ENVELOPE {label}: standard fields and X-Request-ID = requestId (STD-026)',
+              code in statuses and isinstance(d, dict) and keys <= set(d) and hv(h, 'X-Request-ID') == d.get('requestId')
+              and 'Exception' not in json.dumps(d), status=code, missing=sorted(keys - set(d or {})), code_=(d or {}).get('code'))
+
+    # ---------------- Batch 9H: F-9G-1 — both Gateway-allowed browser origins reach Booking
+    for origin in ('http://localhost:3000', 'http://127.0.0.1:3000'):
+        code, d, h = api('/api/bookings/cancellation-policy', headers={'Origin': origin})
+        check(f'CORS Booking accepts browser origin {origin} through the Gateway (F-9G-1)', code == 200 and hv(h, 'Access-Control-Allow-Origin') == origin,
+              status=code, allowOrigin=hv(h, 'Access-Control-Allow-Origin'))
+    code, _, _ = api('/api/bookings/cancellation-policy', headers={'Origin': 'https://unknown.example.invalid'})
+    check('CORS unknown origin is still rejected', code == 403, status=code)
+
+    # ---------------- Batch 9G: Gateway trace bridge + access log (STD-030)
+    gw = compose('logs', '--no-color', 'api-gateway')
+    check('C5 Gateway access log carries the client trace id', f'traceId={trace}' in gw, occurrences=gw.count(trace))
+    code, d, h = api(f'/api/bookings/{uuid.uuid4()}', token=c1['token'])
+    rid = (d or {}).get('requestId') or ''
+    gw = poll(lambda: compose('logs', '--no-color', 'api-gateway'), lambda g: f'traceId={rid}' in g, 10)
+    check('C5 Gateway starts a trace when the client sends none (Booking error requestId = Gateway trace id)',
+          code in (403, 404) and len(rid) == 32 and f'traceId={rid}' in gw, status=code, requestId=rid)
+    check('C5 Gateway access log has no query strings or tokens', 'Bearer ' not in gw and '?' not in ''.join(l for l in gw.splitlines() if '[GATEWAY_ACCESS]' in l))
+
+    # ---------------- Batch 9G: log ingestion via the project's Promtail/Loki configs (STD-030)
+    files = poll(lambda: loki_lines(trace), lambda f: any('api-gateway' in k for k in f) and any('booking-service' in k for k in f)
+                 and any('hotel-service' in k for k in f), 90)
+    check('LOGS Loki has the client trace from Gateway, Booking and Hotel log files', any('api-gateway' in k for k in files)
+          and any('booking-service' in k for k in files) and any('hotel-service' in k for k in files), files=files)
+    leaked = loki_lines('eyJ')
+    check('LOGS no JWT-looking values ingested', not leaked, files=leaked)
+
+    # ---------------- Batch 9G: NON-intercepted browser smoke (STD-028), opt-in with CANONICAL_SMOKE_LIVE=1.
+    # Real Next dev server (port 3000) -> real Gateway -> services; fixture and a real CUSTOMER JWT in an ignored file.
+    if os.environ.get('CANONICAL_SMOKE_LIVE') == '1':
+        l_in, l_out = '2030-07-10', '2030-07-12'
+        code, live, _ = api('/api/bookings', 'POST', booking_body(c1, hid, ra, str(uuid.uuid4()), price, l_in, l_out), c1['token'])
+        check('BROWSER live fixture booking created', code == 201 and (live or {}).get('id'), status=code)
+        fixture = PRIVATE / 'live-fixture.private.json'
+        fixture.write_text(json.dumps({'hotelName': hotel_name, 'hotelId': hid, 'approvedRoom': 'Smoke room approved', 'pendingRoom': 'Smoke room pending',
+                                       'bookingId': live['id'], 'checkIn': l_in, 'checkOut': l_out, 'token': c1['token'],
+                                       'user': {'userId': c1['id'], 'fullName': 'Canonical smoke customer1', 'role': 'CUSTOMER'}}), encoding='utf-8')
+        before = compose('logs', '--no-color', 'api-gateway').count('[GATEWAY_ACCESS]')
+        frontend = ROOT.parent / 'checkinn-frontend'
+        npx = 'npx.cmd' if os.name == 'nt' else 'npx'
+        browser = subprocess.run([npx, 'playwright', 'test', '--config=playwright.live.config.ts', '--reporter=line'], cwd=frontend,
+                             capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=900,
+                             env=dict(os.environ, CANONICAL_LIVE_FIXTURE=str(fixture)))
+        fixture.unlink()
+        (PRIVATE / 'live-browser.log').write_text(browser.stdout[-20000:] + browser.stderr[-5000:], encoding='utf-8')
+        import re as _re
+        passed = sum(int(n) for n in _re.findall(r'(\d+) passed', browser.stdout)); failed = sum(int(n) for n in _re.findall(r'(\d+) failed', browser.stdout))
+        check('BROWSER non-intercepted Playwright: search, detail (approved only), payment page with API policy',
+              browser.returncode == 0 and passed == 3 and failed == 0, returncode=browser.returncode, passedCount=passed, failedCount=failed)
+        after = compose('logs', '--no-color', 'api-gateway').count('[GATEWAY_ACCESS]')
+        check('BROWSER requests reached the real Gateway (access-log lines added)', after - before >= 5, added=after - before)
+        api(f"/api/bookings/{live['id']}", 'DELETE', token=c1['token'])
+
+    # ---------------- Batch 9G: Gateway-generated failures use the envelope (STD-026)
+    compose('pause', 'hotel-service')
+    try:
+        t0 = time.monotonic(); code, d, h = api(f'/api/hotel/hotels/{hid}', timeout=60); elapsed = round(time.monotonic() - t0, 1)
+    finally:
+        compose('unpause', 'hotel-service')
+    check('GATEWAY response timeout is a 504 DEPENDENCY_TIMEOUT envelope after ~20 s, requestId = X-Request-ID',
+          code == 504 and envelope_ok(d, h, 'DEPENDENCY_TIMEOUT') and h.get('X-Request-ID') == (d or {}).get('requestId') and 18 <= elapsed <= 26,
+          status=code, seconds=elapsed, code_=(d or {}).get('code'))
+    compose('stop', 'regulations-service')
+    code, d, h = api('/api/regulations/typed/points', timeout=60)
+    check('GATEWAY stopped service is a 503 DEPENDENCY_UNAVAILABLE envelope without internal address',
+          code == 503 and envelope_ok(d, h, 'DEPENDENCY_UNAVAILABLE') and ':8091' not in json.dumps(d or {}) and 'refused' not in json.dumps(d or {}).lower(),
+          status=code, code_=(d or {}).get('code'))
+
     # ---------------- C5 runtime correlation from container logs (trace id only, no payloads)
     seen = {}
     for svc in ('api-gateway', 'booking-service', 'hotel-service'):
@@ -416,6 +626,14 @@ def smoke():
               code == 503 and envelope_ok(d, h, 'DEPENDENCY_UNAVAILABLE') and 'content' not in (d or {}) and elapsed <= 15,
               status=code, code_=(d or {}).get('code'), seconds=elapsed)
         outage.append((name, svc))
+    # Batch 9F (STD-026): services that used to answer a dead pool with 401 (user) or 500 (revenue).
+    for name, path, token, code_expected in [('User profile', '/api/user/profile', c1['token'], None),
+                                             ('Owner revenue summary', f"/api/reports/owner/summary?ownerId={owner['id']}&from=2030-01-01&to=2030-01-31", owner['token'], 'DEPENDENCY_UNAVAILABLE')]:
+        t0 = time.monotonic(); code, d, h = api(path, token=token, timeout=60); elapsed = round(time.monotonic() - t0, 1)
+        check(f'OUTAGE {name} with database stopped is 503 within 15 s, no exception text (STD-026, Batch 9F)',
+              code == 503 and (code_expected is None or (d or {}).get('code') == code_expected) and elapsed <= 15
+              and 'jdbc' not in json.dumps(d or {}).lower() and 'EntityManager' not in json.dumps(d or {}),
+              status=code, code_=(d or {}).get('code'), seconds=elapsed)
     for name, svc in outage:
         logs = compose('logs', '--no-color', '--since', '2m', svc)
         check(f'OUTAGE {name}: service maps the dead pool to the 503 dependency handler (F-9B-1), not 500',

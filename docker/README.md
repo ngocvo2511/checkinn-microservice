@@ -93,6 +93,7 @@ Latest independent regulation checkpoint, migration and commands:
 REGULATIONS-only additive outbox script before deploying that writer. This
 checkpoint does not implicitly merge the separate booking/revenue review branch.
 
+Batch 9G options: `CANONICAL_SMOKE_LIVE=1` on `smoke` runs the non-intercepted Playwright suite (`checkinn-frontend/playwright.live.config.ts`, needs Edge and a free port 3000); `CANONICAL_SMOKE_SCALE=2` on **both** `apps` and `smoke` starts two hotel-service and two booking-service replicas and adds the multi-node checks. The stack includes Loki/Promtail (project `monitoring/` configs, Loki on 127.0.0.1:58100) and enables the Sandbox Internal refund mode for the paid-lifecycle check only.
 
 ## Sandbox Internal Refund demo (reviewed 2026-11-13)
 

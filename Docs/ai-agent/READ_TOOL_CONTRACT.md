@@ -17,7 +17,7 @@ Contract for a read-only AI agent over **existing** public hotel APIs. No API wa
 | 404 | `NOT_FOUND` | Hotel/room not public or does not exist |
 | 409 | `INVENTORY_APPROVAL_REQUIRED` | Availability check/booking: room cannot take new bookings yet — not "sold out" |
 | 409 | `CONFLICT` | State changed; re-read |
-| 5xx | `INTERNAL_ERROR` / `DEPENDENCY_UNAVAILABLE` / `DEPENDENCY_TIMEOUT` | Temporary failure; say the data is unavailable. A database outage is 503 `DEPENDENCY_UNAVAILABLE` at the service; through the Gateway it is usually a 504 first (pool waits 30 s, Gateway 20 s) |
+| 5xx | `INTERNAL_ERROR` / `DEPENDENCY_UNAVAILABLE` / `DEPENDENCY_TIMEOUT` | Temporary failure; say the data is unavailable. A database outage is 503 `DEPENDENCY_UNAVAILABLE` (pool wait 10 s < Gateway 20 s). Gateway-generated failures (timeout 504 `DEPENDENCY_TIMEOUT`, no instance 503) use the same envelope with `requestId` = trace id |
 | — | client timeout | Unknown; report unavailability, may retry a read once |
 
 ## Tools
