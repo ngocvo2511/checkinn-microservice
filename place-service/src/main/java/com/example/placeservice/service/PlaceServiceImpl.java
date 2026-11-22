@@ -39,6 +39,8 @@ public class PlaceServiceImpl implements PlaceService {
     private final RoadDistanceService roadDistanceService;
 
     private static final Duration CACHE_TTL = Duration.ofHours(24);
+    // Short enough that results recover soon after OSRM comes back, long enough to avoid hammering it while down.
+    private static final Duration ESTIMATED_CACHE_TTL = Duration.ofMinutes(5);
 
     @Override
     @Transactional(readOnly = true)
@@ -52,7 +54,8 @@ public class PlaceServiceImpl implements PlaceService {
         PlaceCategory targetCategory = (category != null) ? category : PlaceCategory.ALL;
 
         // Check Redis Cache
-        String cacheKey = String.format(Locale.US, "nearby:coords:%.4f:%.4f:%s:%.1f:%d",
+        // v2: entries from before distanceEstimated existed may hold fallback values under a 24h TTL.
+        String cacheKey = String.format(Locale.US, "nearby:v2:coords:%.4f:%.4f:%s:%.1f:%d",
                 latitude, longitude, targetCategory.name(), targetRadiusKm, targetLimit);
         List<NearbyPlaceResponse> cachedResponses = getFromCache(cacheKey);
         if (cachedResponses != null) {
@@ -75,13 +78,14 @@ public class PlaceServiceImpl implements PlaceService {
             log.info("[NEARBY_PLACES] Found {} candidate places in DB for coordinates ({}, {}) within {} km (buffer: {} km). Enriching with road distances.",
                     projections.size(), latitude, longitude, targetRadiusKm, candidateRadiusKm);
             List<NearbyPlaceResponse> responses = buildResponsesWithRoadMetrics(latitude, longitude, projections, targetRadiusKm, targetLimit);
-            saveToCache(cacheKey, responses);
+            boolean anyEstimated = responses.stream().anyMatch(r -> Boolean.TRUE.equals(r.distanceEstimated()));
+            saveToCache(cacheKey, responses, anyEstimated ? ESTIMATED_CACHE_TTL : CACHE_TTL);
             return responses;
         }
 
         log.info("[NEARBY_PLACES] Zero places found in DB within {} km for coordinates ({}, {}). Returning empty list.",
                 candidateRadiusKm, latitude, longitude);
-        saveToCache(cacheKey, Collections.emptyList());
+        saveToCache(cacheKey, Collections.emptyList(), CACHE_TTL);
         return Collections.emptyList();
     }
 
@@ -296,12 +300,15 @@ public class PlaceServiceImpl implements PlaceService {
 
                     Double roadDistKm;
                     Integer durationMin;
+                    boolean estimated;
                     if (metrics != null) {
                         roadDistKm = metrics.getDistanceKm();
                         durationMin = metrics.getDurationMinutes();
+                        estimated = metrics.isFallback();
                     } else {
                         roadDistKm = proj.getDistanceKm() != null ? Math.round(proj.getDistanceKm() * 1.35 * 10.0) / 10.0 : 0.0;
                         durationMin = NearbyPlaceResponse.calculateTravelTimeMinutes(roadDistKm);
+                        estimated = true;
                     }
 
                     return NearbyPlaceResponse.builder()
@@ -319,6 +326,7 @@ public class PlaceServiceImpl implements PlaceService {
                             .provinceName(proj.getProvinceName())
                             .distanceKm(roadDistKm)
                             .estimatedTravelTimeMinutes(durationMin)
+                            .distanceEstimated(estimated)
                             .photos(photosByPlaceId.getOrDefault(proj.getId(), Collections.emptyList()))
                             .reviews(reviewsByPlaceId.getOrDefault(proj.getId(), Collections.emptyList()))
                             .build();
@@ -401,10 +409,10 @@ public class PlaceServiceImpl implements PlaceService {
         return null;
     }
 
-    private void saveToCache(String cacheKey, List<NearbyPlaceResponse> responses) {
+    private void saveToCache(String cacheKey, List<NearbyPlaceResponse> responses, Duration ttl) {
         try {
             String json = objectMapper.writeValueAsString(responses);
-            redisTemplate.opsForValue().set(cacheKey, json, CACHE_TTL);
+            redisTemplate.opsForValue().set(cacheKey, json, ttl);
         } catch (Exception ex) {
             log.warn("[NEARBY_PLACES] Redis cache write failed for key {}: {}", cacheKey, ex.getMessage());
         }

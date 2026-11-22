@@ -42,7 +42,8 @@ public class RoadDistanceService {
         for (Coordinate dest : destinations) {
             String cacheKey = buildCacheKey(origin, dest);
             RoadMetrics cached = getFromCache(cacheKey);
-            if (cached != null) {
+            // Entries written before fallbacks stopped being cached must not mask a real OSRM answer.
+            if (cached != null && !(cached.isFallback() && osrmClient.isEnabled())) {
                 results.put(dest, cached);
             } else {
                 uncachedDestinations.add(dest);
@@ -58,8 +59,6 @@ public class RoadDistanceService {
         if (osrmClient.isEnabled()) {
             osrmResponse = osrmClient.computeTable(origin, uncachedDestinations);
         }
-
-        Map<String, String> cacheEntriesToSave = new HashMap<>();
 
         if (osrmResponse.isPresent() && isValidResponse(osrmResponse.get(), uncachedDestinations.size())) {
             List<Double> distRow = osrmResponse.get().getDistances().getFirst();
@@ -84,16 +83,17 @@ public class RoadDistanceService {
                 }
 
                 results.put(dest, metrics);
-                cacheMetrics(origin, dest, metrics);
+                if (!metrics.isFallback()) {
+                    cacheMetrics(origin, dest, metrics);
+                }
             }
         } else {
             // Fallback for all uncached destinations
             log.info("[ROAD_DISTANCE] Using circuity factor fallback ({}x) for {} destinations",
                     CIRCUITY_FACTOR, uncachedDestinations.size());
+            // Fallbacks are cheap to recompute and are not cached, so a brief OSRM outage does not pin estimates for days.
             for (Coordinate dest : uncachedDestinations) {
-                RoadMetrics fallbackMetrics = calculateCircuityFallback(origin, dest);
-                results.put(dest, fallbackMetrics);
-                cacheMetrics(origin, dest, fallbackMetrics);
+                results.put(dest, calculateCircuityFallback(origin, dest));
             }
         }
 

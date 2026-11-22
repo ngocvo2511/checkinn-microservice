@@ -98,7 +98,27 @@ class RoadDistanceServiceTest {
         assertThat(metrics.getDistanceKm()).isGreaterThan(0.0);
         assertThat(metrics.getDurationMinutes()).isGreaterThanOrEqualTo(1);
 
-        verify(valueOperations).set(contains("distance:road:"), anyString(), eq(Duration.ofDays(7)));
+        verify(valueOperations, never()).set(anyString(), anyString(), any(Duration.class));
+    }
+
+    @Test
+    void getRoadMetrics_WhenCachedFallbackAndOsrmEnabled_RecomputesViaOsrm() {
+        Coordinate origin = new Coordinate(21.0285, 105.8542);
+        Coordinate dest = new Coordinate(21.0350, 105.8600);
+
+        when(valueOperations.get(anyString())).thenReturn("{\"distanceKm\":1.2,\"durationMinutes\":4,\"fallback\":true}");
+        when(osrmClient.isEnabled()).thenReturn(true);
+        OsrmTableResponse response = OsrmTableResponse.builder()
+                .code("Ok")
+                .distances(List.of(List.of(0.0, 3200.0)))
+                .durations(List.of(List.of(0.0, 480.0)))
+                .build();
+        when(osrmClient.computeTable(eq(origin), eq(List.of(dest)))).thenReturn(Optional.of(response));
+
+        RoadMetrics metrics = roadDistanceService.getRoadMetrics(origin, List.of(dest)).get(dest);
+
+        assertThat(metrics.isFallback()).isFalse();
+        assertThat(metrics.getDistanceKm()).isEqualTo(3.2);
     }
 
     @Test

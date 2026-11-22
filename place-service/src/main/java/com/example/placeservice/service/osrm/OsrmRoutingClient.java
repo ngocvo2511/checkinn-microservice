@@ -79,7 +79,7 @@ public class OsrmRoutingClient {
             List<Coordinate> subList = destinations.subList(i, end);
 
             Optional<OsrmTableResponse> batchResponse = executeBatch(origin, subList);
-            if (batchResponse.isEmpty() || batchResponse.get().getDistances() == null || batchResponse.get().getDistances().isEmpty()) {
+            if (batchResponse.isEmpty() || !hasCompleteFirstRows(batchResponse.get(), subList.size() + 1)) {
                 log.warn("[OSRM] Batch failed at index [{}, {}). Aborting batch table compute.", i, end);
                 return Optional.empty();
             }
@@ -110,6 +110,15 @@ public class OsrmRoutingClient {
                 .build();
 
         return Optional.of(combined);
+    }
+
+    private static boolean hasCompleteFirstRows(OsrmTableResponse response, int expectedSize) {
+        List<List<Double>> distances = response.getDistances();
+        List<List<Double>> durations = response.getDurations();
+        return distances != null && !distances.isEmpty() && distances.getFirst() != null
+                && distances.getFirst().size() == expectedSize
+                && durations != null && !durations.isEmpty() && durations.getFirst() != null
+                && durations.getFirst().size() == expectedSize;
     }
 
     private Optional<OsrmTableResponse> executeBatch(Coordinate origin, List<Coordinate> destinations) {

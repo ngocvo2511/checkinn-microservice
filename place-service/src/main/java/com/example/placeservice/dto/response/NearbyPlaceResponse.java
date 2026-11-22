@@ -22,6 +22,8 @@ public record NearbyPlaceResponse(
         String provinceName,
         Double distanceKm,
         Integer estimatedTravelTimeMinutes,
+        /** True when distance/time come from the straight-line circuity estimate instead of OSRM routing. */
+        Boolean distanceEstimated,
         List<PlacePhotoDto> photos,
         List<PlaceReviewDto> reviews
 ) implements Serializable {

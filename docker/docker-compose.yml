@@ -285,6 +285,8 @@ services:
       SPRING_DATASOURCE_URL: ${PLACE_DB_URL:-jdbc:postgresql://host.docker.internal:5432/checkinn_place}
       SPRING_DATASOURCE_USERNAME: ${PLACE_DB_USERNAME:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${PLACE_DB_PASSWORD:-}
+      OSRM_BASE_URL: ${OSRM_BASE_URL:-http://osrm-backend:5000}
+      OSRM_ENABLED: ${OSRM_ENABLED:-true}
     depends_on:
       eureka-server: {condition: service_healthy}
       redis: {condition: service_healthy}

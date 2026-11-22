@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import java.time.Duration;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,7 +59,7 @@ class PlaceServiceImplTest {
 
     @Test
     void getNearbyPlaces_WhenCacheHit_ReturnsCachedResultsWithoutQueryingDb() {
-        String cacheKey = String.format(Locale.US, "nearby:coords:%.4f:%.4f:%s:%.1f:%d",
+        String cacheKey = String.format(Locale.US, "nearby:v2:coords:%.4f:%.4f:%s:%.1f:%d",
                 16.0544, 108.2022, PlaceCategory.ALL.name(), 10.0, 10);
         String cachedJson = "[{\"id\":\"" + UUID.randomUUID() + "\",\"name\":\"Cầu Rồng\",\"distanceKm\":1.2}]";
         when(valueOperations.get(cacheKey)).thenReturn(cachedJson);
@@ -104,8 +105,34 @@ class PlaceServiceImplTest {
         assertThat(result.get(0).name()).isEqualTo("Bán đảo Sơn Trà");
         assertThat(result.get(0).distanceKm()).isEqualTo(6.2);
         assertThat(result.get(0).estimatedTravelTimeMinutes()).isEqualTo(14);
+        assertThat(result.get(0).distanceEstimated()).isFalse();
 
-        verify(valueOperations).set(anyString(), anyString(), any());
+        verify(valueOperations).set(anyString(), anyString(), eq(Duration.ofHours(24)));
+    }
+
+    @Test
+    void getNearbyPlaces_WhenRoadMetricsAreFallback_FlagsEstimateAndUsesShortCacheTtl() {
+        NearbyPlaceProjection mockProj = mock(NearbyPlaceProjection.class);
+        when(mockProj.getId()).thenReturn(UUID.randomUUID());
+        when(mockProj.getName()).thenReturn("Chợ Hàn");
+        when(mockProj.getCategory()).thenReturn("ATTRACTION");
+        when(mockProj.getLatitude()).thenReturn(16.0680);
+        when(mockProj.getLongitude()).thenReturn(108.2240);
+        when(mockProj.getDistanceKm()).thenReturn(1.6);
+
+        when(placeRepository.findNearbyPlaces(anyDouble(), anyDouble(), anyDouble(), anyString(), anyInt()))
+                .thenReturn(List.of(mockProj));
+        when(placePhotoRepository.findByPlace_IdInOrderByDisplayOrderAsc(any())).thenReturn(Collections.emptyList());
+        when(placeReviewRepository.findByPlace_IdInOrderByCreatedAtDesc(any())).thenReturn(Collections.emptyList());
+        when(roadDistanceService.getRoadMetrics(any(Coordinate.class), anyList()))
+                .thenReturn(Map.of(new Coordinate(16.0680, 108.2240),
+                        RoadMetrics.builder().distanceKm(2.2).durationMinutes(7).fallback(true).build()));
+
+        List<NearbyPlaceResponse> result = placeService.getNearbyPlaces(16.0544, 108.2022, PlaceCategory.ALL, 10.0, 10);
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).distanceEstimated()).isTrue();
+        verify(valueOperations).set(anyString(), anyString(), eq(Duration.ofMinutes(5)));
     }
 
     @Test
