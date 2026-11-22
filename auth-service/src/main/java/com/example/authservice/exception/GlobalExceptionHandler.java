@@ -8,7 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.Instant;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -25,13 +24,7 @@ public class GlobalExceptionHandler {
                 req.getMethod(), req.getRequestURI(), status.value());
         String message=status.is5xxServerError() || ex.getReason()==null || ex.getReason().isBlank()
                 ? status.getReasonPhrase() : ex.getReason();
-        return ResponseEntity.status(status).body(Map.of(
-                "timestamp", Instant.now().toString(),
-                "status", status.value(),
-                "error", status.getReasonPhrase(),
-                "message", message,
-                "path", req.getRequestURI()
-        ));
+        return com.example.authservice.api.ApiErrorSupport.response(status.value(), null, message);
     }
 
     @ExceptionHandler(Exception.class)
@@ -39,12 +32,6 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         log.error("[GLOBAL_EXCEPTION] Unhandled exception - method: {}, path: {}, errorType: {}",
             req.getMethod(), req.getRequestURI(), ex.getClass().getSimpleName());
-        return ResponseEntity.status(status).body(Map.of(
-                "timestamp", Instant.now().toString(),
-                "status", status.value(),
-                "error", status.getReasonPhrase(),
-                "message", status.getReasonPhrase(),
-                "path", req.getRequestURI()
-        ));
+        return com.example.authservice.api.ApiErrorSupport.response(status.value(), null, null);
     }
 }

@@ -40,6 +40,13 @@ public final class ApiErrorSupport {
         }
         return result;
     }
+    /** Error with the standard envelope, a fixed safe message and X-Request-ID (STD-026, Batch 9H). */
+    public static org.springframework.http.ResponseEntity<Map<String,Object>> respond(int status,String message) {
+        var attributes=org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+        String path=attributes instanceof org.springframework.web.context.request.ServletRequestAttributes servlet?servlet.getRequest().getRequestURI():"";
+        var body=body(status,path,Map.of("message",message));
+        return org.springframework.http.ResponseEntity.status(status).header("X-Request-ID",body.get("requestId").toString()).body(body);
+    }
     public static String json(Object value) {
         try { return JSON.writeValueAsString(value); }
         catch(com.fasterxml.jackson.core.JsonProcessingException ex) { throw new IllegalStateException("Cannot serialize API error"); }

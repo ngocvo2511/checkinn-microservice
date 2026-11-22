@@ -48,3 +48,20 @@ Earlier attempts in this rerun: Eureka-cache race (Gateway 503 before hotel-serv
 ## Batch 9D booking-limits rerun (18/11/2026)
 
 `results-9f.json`: fresh stack, **104 PASS / 0 FAIL**. Adds booking create with 31 nights, 41 adults and a past arrival → 400 with the expected `fieldErrors` key and unchanged room counters (no hold). `down`: 0 containers/networks/volumes.
+
+## Batch 9F rerun (20/11/2026)
+
+`results-9g.json`: fresh stack built from current source, **106 PASS / 0 FAIL**. Adds: with PostgreSQL stopped, `GET /api/user/profile` (CUSTOMER) and `GET /api/reports/owner/summary` (OWNER) return 503 within 15 s without exception text (user-service previously answered a dead pool with 401 and the raw message; revenue with 500). `down`: 0 containers/networks/volumes.
+
+## Batch 9G runs (21/11/2026)
+
+Stack now also runs Loki 2.9.8 + Promtail 2.9.8 with the project's `monitoring/` configs (tmpfs, port 58100 loopback) and mounts every service's file log into ignored `.local/canonical-smoke/logs`. `REFUND_INTERNAL_ENABLED=true` in this disposable stack only (Sandbox Internal accounting, never a provider refund); Eureka registers by IP.
+
+- `results-9h.json` — 1 replica, `CANONICAL_SMOKE_LIVE=1`: **135 PASS / 0 FAIL**. Adds: paid lifecycle (VNPay return signed locally with the stack's synthetic secret → CONFIRMED → cancel → refund request → ADMIN approve/execute → REFUNDED, Revenue 1 CREDIT + 1 DEBIT net 0, inventory released); Gateway access log trace id, Gateway-created trace reaching Booking; Loki holds the client trace from Gateway/Booking/Hotel files, no JWT-like lines; non-intercepted Playwright (search, detail, payment page) through the real Gateway; paused Hotel → 504 envelope at 20.1 s; stopped Regulations → 503 envelope.
+- `results-9h-multinode.json` — `CANONICAL_SMOKE_SCALE=2` (2 hotel + 2 booking replicas): **138 PASS / 0 FAIL**. Adds: Eureka 2 UP instances each; 6 concurrent distinct-key creates on a stock-2 room → two 201 + four 409, held ≤ 2; 4 concurrent same-key creates → one booking/one hold; both booking replicas served creates.
+
+Attempts before green: Loki tmpfs ownership (fixed: uid 10001); Booking→Hotel 503 right after startup because Booking's own discovery cache lagged (harness now waits); browser 2/3 because booking-service CORS rejects `127.0.0.1:3000` (finding F-9G-1, live run uses `localhost:3000`); two harness bugs. A warm-stack debug run (132/0) was not kept. Every run ended with `down`: 0 containers/networks/volumes.
+
+## Batch 9H run (21/11/2026)
+
+`results-9i.json`: fresh stack from current source, live browser on `http://127.0.0.1:3000`, **144 PASS / 0 FAIL**. Adds: one error per service through the Gateway (auth, user, revenue, regulations, booking, hotel) carries `timestamp,status,error,code,message,path,requestId` with `X-Request-ID` = `requestId`; Booking returns `Access-Control-Allow-Origin` for `localhost:3000` and `127.0.0.1:3000`, unknown origin 403; the non-intercepted browser suite passes from `127.0.0.1:3000` (failed 2/3 in 9G, F-9G-1). `down`: 0 containers/networks/volumes. Multi-node not rerun (no change to booking/hold paths).

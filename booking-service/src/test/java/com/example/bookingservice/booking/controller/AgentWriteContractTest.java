@@ -230,4 +230,16 @@ class AgentWriteContractTest {
                 .andExpect(jsonPath("$.requestId", not(emptyOrNullString())))
                 .andExpect(jsonPath("$.trace").doesNotExist());
     }
+
+    // F-9G-1 (Batch 9H): both Gateway-allowed browser origins pass Booking's CORS (was: 127.0.0.1:3000 -> 403).
+    @Test void gatewayBrowserOriginsPassCorsAndUnknownOriginsAreRejected() throws Exception {
+        for (String origin : List.of("http://localhost:3000", "http://127.0.0.1:3000")) {
+            mvc.perform(get("/api/bookings/cancellation-policy").header("Origin", origin))
+                    .andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin", origin));
+            mvc.perform(options("/api/bookings/" + wire("agent-booking")).header("Origin", origin)
+                            .header("Access-Control-Request-Method", "GET").header("Access-Control-Request-Headers", "authorization"))
+                    .andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin", origin));
+        }
+        mvc.perform(get("/api/bookings/cancellation-policy").header("Origin", "https://unknown.example.invalid")).andExpect(status().isForbidden());
+    }
 }

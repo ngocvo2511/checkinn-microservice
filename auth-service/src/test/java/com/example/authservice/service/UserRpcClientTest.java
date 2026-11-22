@@ -30,7 +30,9 @@ class UserRpcClientTest {
             @Override public void resetPassword(ResetPasswordRequest request,StreamObserver<com.google.protobuf.Empty> observer){observer.onNext(com.google.protobuf.Empty.getDefaultInstance());observer.onCompleted();}
         };
         Server server=ServerBuilder.forPort(0).addService(ServerInterceptors.intercept(service,authenticate)).build().start();
-        ManagedChannel channel=ManagedChannelBuilder.forAddress("127.0.0.1",server.getPort()).usePlaintext().build();
+        // Explicit dns:/// target: a Spring context started earlier in the same JVM (AuthServiceApplicationTests) can make
+        // grpc-spring-boot-starter's discovery resolver the default scheme, which would treat 127.0.0.1:port as a service name.
+        ManagedChannel channel=ManagedChannelBuilder.forTarget("dns:///127.0.0.1:"+server.getPort()).usePlaintext().build();
         try {
             var client=new UserGrpcClient(jwt);ReflectionTestUtils.setField(client,"userStub",UserServiceGrpc.newBlockingStub(channel));
             assertEquals(id,client.login("synthetic-user","synthetic-password").getId());

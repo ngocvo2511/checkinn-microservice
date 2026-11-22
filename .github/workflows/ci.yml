@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Maven verify (${{ matrix.project.name }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - name: backend
+            pom: pom.xml
+            options: '-pl !config-server,!eureka-server'
+          - name: eureka-server
+            pom: eureka-server/pom.xml
+            options: ''
+          - name: config-server
+            pom: config-server/pom.xml
+            options: ''
+          - name: supabase-runner
+            pom: tools/supabase-runner/pom.xml
+            options: ''
+    env:
+      TZ: UTC
+      # Isolate context construction from external configuration/discovery and consumers.
+      # Existing opt-in database/Redis suites remain gated by their own annotations.
+      SPRING_CLOUD_CONFIG_ENABLED: 'false'
+      EUREKA_CLIENT_ENABLED: 'false'
+      SPRING_BOOT_ADMIN_CLIENT_ENABLED: 'false'
+      SPRING_RABBITMQ_LISTENER_SIMPLE_AUTO_STARTUP: 'false'
+      SPRING_RABBITMQ_LISTENER_DIRECT_AUTO_STARTUP: 'false'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Set up Java 21 and Maven cache
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: |
+            **/pom.xml
+            auth-service/.mvn/wrapper/maven-wrapper.properties
+      - name: Show tool versions
+        run: |
+          java -version
+          bash auth-service/mvnw -version
+      - name: Compile, test and package
+        run: |
+          if [ '${{ matrix.project.name }}' = 'config-server' ]; then
+            export SPRING_PROFILES_ACTIVE=native
+          fi
+          if [ '${{ matrix.project.name }}' = 'eureka-server' ]; then
+            unset EUREKA_CLIENT_ENABLED
+          fi
+          bash auth-service/mvnw -B -ntp -f '${{ matrix.project.pom }}' ${{ matrix.project.options }} --fail-at-end clean verify

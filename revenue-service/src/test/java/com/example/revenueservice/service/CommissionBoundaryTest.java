@@ -20,7 +20,7 @@ class CommissionBoundaryTest {
             finally {exchange.close();}
         });server.start();
         try {
-            var client=new RegulationClient(new com.example.revenueservice.config.RestClientConfig().restTemplate(),
+            var client=new RegulationClient(new com.example.revenueservice.config.RestClientConfig().restTemplate(new org.springframework.boot.web.client.RestTemplateBuilder()),
                     "http://127.0.0.1:"+server.getAddress().getPort());
             long started=System.nanoTime();
             assertThatThrownBy(client::getCommissionRate).isInstanceOf(org.springframework.web.server.ResponseStatusException.class);

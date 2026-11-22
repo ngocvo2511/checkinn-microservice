@@ -70,4 +70,28 @@ class RegulationBoundaryTest {
                 .andExpect(status().isServiceUnavailable()).andExpect(jsonPath("$.code").value("DEPENDENCY_UNAVAILABLE"))
                 .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("synthetic-private-db-detail"))));
     }
+
+    // F-9G-1 (Batch 9H): the browser origins the Gateway allows also pass this service's CORS check.
+    @Test void gatewayBrowserOriginsPassCorsAndUnknownOriginsAreRejected() throws Exception {
+        when(service.getPointsConversionRatesDto()).thenReturn(new com.example.regulationsservice.dto.PointsConversionDto(
+                java.math.BigDecimal.TEN,java.math.BigDecimal.ONE));
+        for (String origin : java.util.List.of("http://localhost:3000","http://127.0.0.1:3000")) {
+            mvc.perform(get("/api/regulations/typed/points").header("Origin",origin))
+                    .andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin",origin));
+            mvc.perform(options("/api/regulations/typed/points").header("Origin",origin).header("Access-Control-Request-Method","GET"))
+                    .andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin",origin));
+        }
+        mvc.perform(get("/api/regulations/typed/points").header("Origin","https://unknown.example.invalid")).andExpect(status().isForbidden());
+    }
+
+    // STD-026 (Batch 9H): standard envelope with requestId echoed in X-Request-ID.
+    @Test void errorsUseTheStandardEnvelopeWithMatchingRequestId() throws Exception {
+        var result = mvc.perform(get("/api/regulations/synthetic/missing"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.timestamp").exists()).andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.path").value("/api/regulations/synthetic/missing"))
+                .andExpect(jsonPath("$.requestId").isNotEmpty()).andReturn();
+        String body = result.getResponse().getContentAsString();
+        org.assertj.core.api.Assertions.assertThat(body).contains("\"requestId\":\"" + result.getResponse().getHeader("X-Request-ID") + "\"");
+    }
 }

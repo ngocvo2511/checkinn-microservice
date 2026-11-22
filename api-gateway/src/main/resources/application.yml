@@ -129,6 +129,11 @@ eureka:
   instance:
     prefer-ip-address: true
 
+# Same file log as the other services, so Promtail/Loki can ingest Gateway access lines (STD-030).
+logging:
+  file:
+    name: logs/${spring.application.name}-${server.port}.log
+
 management:
   endpoints:
     web:

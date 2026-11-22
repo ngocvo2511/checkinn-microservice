@@ -73,16 +73,14 @@ public class UserController {
             String role = extractRoleFromToken(authHeader);
             
             if (!"ADMIN".equalsIgnoreCase(role)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(new ErrorResponse("Access denied", "Only admins can view users list"));
+                return fail(HttpStatus.FORBIDDEN, "Access denied", "Only admins can view users list");
             }
 
             PagedResponse<UserResponse> users = userService.getUsersPage(page, size);
             return ResponseEntity.ok(users);
-        } catch (Exception e) {
-            log.error("[USER_ADMIN_LIST_ERROR] Error in getAllUsers: {}", e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ErrorResponse("Unauthorized", e.getMessage()));
+        } catch (com.example.userservice.exception.UserBusinessException e) {
+            // Only deliberate business rejections are 401 with their message; outages/bugs reach the advice (503/500).
+            return fail(HttpStatus.UNAUTHORIZED, "Unauthorized", e.getMessage());
         }
     }
 
@@ -98,16 +96,13 @@ public class UserController {
             String role = extractRoleFromToken(authHeader);
             
             if (!"ADMIN".equalsIgnoreCase(role)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(new ErrorResponse("Access denied", "Only admins can view user details"));
+                return fail(HttpStatus.FORBIDDEN, "Access denied", "Only admins can view user details");
             }
 
             UserDetailResponse userDetail = userService.getUserDetail(userId);
             return ResponseEntity.ok(userDetail);
-        } catch (Exception e) {
-            log.error("[USER_ADMIN_DETAIL_ERROR] Error in getUserDetail: {}", e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponse("Not found", "User not found"));
+        } catch (com.example.userservice.exception.UserBusinessException e) {
+            return fail(HttpStatus.NOT_FOUND, "Not found", "User not found");
         }
     }
 
@@ -123,16 +118,14 @@ public class UserController {
             String role = extractRoleFromToken(authHeader);
             
             if (!"ADMIN".equalsIgnoreCase(role)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(new ErrorResponse("Access denied", "Only admins can lock accounts"));
+                return fail(HttpStatus.FORBIDDEN, "Access denied", "Only admins can lock accounts");
             }
 
             userService.lockAccount(userId);
             return ResponseEntity.ok(new SuccessResponse("Tài khoản đã được khóa thành công"));
-        } catch (Exception e) {
-            log.error("[USER_ACCOUNT_LOCK_ERROR] Error in lockAccount: {}", e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("Error", e.getMessage()));
+        } catch (com.example.userservice.exception.UserBusinessException e) {
+            log.warn("[USER_ACCOUNT_LOCK_REJECTED] lockAccount rejected");
+            return fail(HttpStatus.BAD_REQUEST, "Error", e.getMessage());
         }
     }
 
@@ -148,16 +141,14 @@ public class UserController {
             String role = extractRoleFromToken(authHeader);
             
             if (!"ADMIN".equalsIgnoreCase(role)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(new ErrorResponse("Access denied", "Only admins can unlock accounts"));
+                return fail(HttpStatus.FORBIDDEN, "Access denied", "Only admins can unlock accounts");
             }
 
             userService.unlockAccount(userId);
             return ResponseEntity.ok(new SuccessResponse("Tài khoản đã được mở khóa thành công"));
-        } catch (Exception e) {
-            log.error("[USER_ACCOUNT_UNLOCK_ERROR] Error in unlockAccount: {}", e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("Error", e.getMessage()));
+        } catch (com.example.userservice.exception.UserBusinessException e) {
+            log.warn("[USER_ACCOUNT_UNLOCK_REJECTED] unlockAccount rejected");
+            return fail(HttpStatus.BAD_REQUEST, "Error", e.getMessage());
         }
     }
 
@@ -165,7 +156,7 @@ public class UserController {
         log.debug("[USER_TOKEN_EXTRACT] Extracting userId from authorization header");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             log.warn("[USER_TOKEN_INVALID] Invalid authorization header format");
-            throw new RuntimeException("Header xác thực không hợp lệ");
+            throw new com.example.userservice.exception.UserBusinessException("Header xác thực không hợp lệ");
         }
 
         String token = authHeader.substring(7);
@@ -181,7 +172,7 @@ public class UserController {
 
     private String extractRoleFromToken(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Invalid authorization header");
+            throw new com.example.userservice.exception.UserBusinessException("Invalid authorization header");
         }
 
         String token = authHeader.substring(7);
@@ -192,19 +183,14 @@ public class UserController {
         }
     }
 
-    // Helper response DTOs
-    public static class ErrorResponse {
-        public String error;
-        public String message;
-
-        public ErrorResponse(String error, String message) {
-            this.error = error;
-            this.message = message;
-        }
-
-        public String getError() { return error; }
-        public String getMessage() { return message; }
+    /** Controller-level rejections use the standard envelope; the original error label and message are kept. */
+    private static ResponseEntity<java.util.Map<String, Object>> fail(HttpStatus status, String error, String message) {
+        var body = com.example.userservice.api.ApiErrorSupport.body(status.value(), null, message);
+        body.put("error", error);
+        return com.example.userservice.api.ApiErrorSupport.withHeader(status.value(), body);
     }
+
+    // Helper response DTOs
 
     public static class SuccessResponse {
         public String message;

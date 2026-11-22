@@ -69,7 +69,7 @@ public class AvailabilityController {
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_CONFIRM] Confirm hold not found - holdId: {}, reason: {}", holdId, ex.getMessage());
-            return ResponseEntity.notFound().build();
+            return com.example.hotelservice.api.ApiErrorSupport.respond(404, "Hold not found");
         } catch (IllegalStateException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_CONFIRM] Confirm hold conflict - holdId: {}, reason: {}", holdId, ex.getMessage());
             return ResponseEntity.status(409).body(ex.getMessage());
@@ -85,7 +85,7 @@ public class AvailabilityController {
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_RELEASE] Release hold not found - holdId: {}, reason: {}", holdId, ex.getMessage());
-            return ResponseEntity.notFound().build();
+            return com.example.hotelservice.api.ApiErrorSupport.respond(404, "Hold not found");
         } catch (IllegalStateException ex) {
             return ResponseEntity.status(409).body(ex.getMessage());
         }
@@ -96,7 +96,7 @@ public class AvailabilityController {
         try {
             return ResponseEntity.ok(availabilityService.cancelReservation(holdId));
         } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
+            return com.example.hotelservice.api.ApiErrorSupport.respond(404, "Hold not found");
         } catch (IllegalStateException ex) {
             return ResponseEntity.status(409).body(ex.getMessage());
         }
@@ -111,7 +111,7 @@ public class AvailabilityController {
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException ex) {
             log.warn("[AVAILABILITY_CONTROLLER_GET_HOLD] Get hold not found - holdId: {}, reason: {}", holdId, ex.getMessage());
-            return ResponseEntity.notFound().build();
+            return com.example.hotelservice.api.ApiErrorSupport.respond(404, "Hold not found");
         }
     }
 }
