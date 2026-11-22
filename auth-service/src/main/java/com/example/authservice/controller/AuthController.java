@@ -167,6 +167,9 @@ public class AuthController {
         String message=status.getReasonPhrase();
         if(status.is4xxClientError() && error instanceof ResponseStatusException typed && typed.getReason()!=null && !typed.getReason().isBlank())
             message=typed.getReason();
-        return ResponseEntity.status(status).body(Map.of("success",false,"message",message));
+        // Standard envelope (STD-026) plus the legacy success flag the frontend already reads.
+        var body=com.example.authservice.api.ApiErrorSupport.body(status.value(),null,message);
+        body.put("success",false);
+        return com.example.authservice.api.ApiErrorSupport.withHeader(status.value(),body);
     }
 }

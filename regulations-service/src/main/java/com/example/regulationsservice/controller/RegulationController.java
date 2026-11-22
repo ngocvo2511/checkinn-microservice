@@ -41,16 +41,16 @@ public class RegulationController {
     }
 
     @GetMapping("/{key}")
-    public ResponseEntity<RegulationDto> getRegulation(@PathVariable("key") String key) {
+    public ResponseEntity<?> getRegulation(@PathVariable("key") String key) {
         log.debug("[REGULATION_CONTROLLER_GET]");
         return regulationService.findRegulation(key)
-                .map(regulation -> {
+                .<ResponseEntity<?>>map(regulation -> {
                     log.debug("[REGULATION_CONTROLLER_FOUND]");
                     return ResponseEntity.ok(regulation);
                 })
                 .orElseGet(() -> {
                     log.debug("[REGULATION_CONTROLLER_MISSING]");
-                    return ResponseEntity.notFound().build();
+                    return com.example.regulationsservice.api.ApiErrorSupport.response(404, "NOT_FOUND", "Regulation not found");
                 });
     }
 

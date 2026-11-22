@@ -12,12 +12,14 @@ import java.time.Duration;
 @Component
 public class RegulationClient {
     private final RegulationLocalCache cache;
-    private final RestTemplate restTemplate = new RestTemplateBuilder().setConnectTimeout(Duration.ofSeconds(2))
-            .setReadTimeout(Duration.ofSeconds(2)).build();
+    private final RestTemplate restTemplate;
     private final String regulationsBaseUrl;
 
-    public RegulationClient(RegulationLocalCache cache, @Value("${regulations.service.url:http://localhost:8091}") String regulationsBaseUrl) {
+    /** Uses the Boot-managed builder so Regulations calls carry the current trace (STD-030). */
+    public RegulationClient(RegulationLocalCache cache, @Value("${regulations.service.url:http://localhost:8091}") String regulationsBaseUrl,
+                            RestTemplateBuilder builder) {
         this.cache = cache;
+        this.restTemplate = builder.setConnectTimeout(Duration.ofSeconds(2)).setReadTimeout(Duration.ofSeconds(2)).build();
         this.regulationsBaseUrl = regulationsBaseUrl;
     }
 

@@ -15,13 +15,15 @@ public class AuthServiceApplication {
         SpringApplication.run(AuthServiceApplication.class, args);
     }
 
+    /** Built from the Boot-managed builder so OTP calls carry the current trace (STD-030). */
     @Bean
-    public RestTemplate restTemplate(@org.springframework.beans.factory.annotation.Value("${clients.connect-timeout-ms:3000}") int connectTimeout,
+    public RestTemplate restTemplate(org.springframework.boot.web.client.RestTemplateBuilder builder,
+                                     @org.springframework.beans.factory.annotation.Value("${clients.connect-timeout-ms:3000}") int connectTimeout,
                                      @org.springframework.beans.factory.annotation.Value("${clients.read-timeout-ms:5000}") int readTimeout) {
         if(connectTimeout<=0 || readTimeout<=0)throw new IllegalArgumentException("Client timeouts must be positive");
         var factory=new org.springframework.http.client.SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(connectTimeout);factory.setReadTimeout(readTimeout);
-        return new RestTemplate(factory);
+        return builder.requestFactory(() -> factory).build();
     }
 
 }

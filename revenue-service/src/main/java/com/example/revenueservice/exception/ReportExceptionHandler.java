@@ -10,11 +10,17 @@ import java.util.Map;
 public class ReportExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ReportReconciliationRequiredException.class)
     public ResponseEntity<Object> reconciliation(ReportReconciliationRequiredException ex) {
-        return ResponseEntity.status(503).body(Map.of("status",503,"code","REPORT_RECONCILIATION_REQUIRED","message","Historical or conflicting cash transactions require reconciliation"));
+        var body=envelope(503,"REPORT_RECONCILIATION_REQUIRED","Historical or conflicting cash transactions require reconciliation");
+        return ResponseEntity.status(503).header("X-Request-ID",String.valueOf(body.get("requestId"))).body(body);
     }
     private ResponseEntity<Object> error(HttpStatusCode status) {
         String code=switch(status.value()) {case 400->"BAD_REQUEST";case 401->"UNAUTHORIZED";case 403->"FORBIDDEN";case 404->"NOT_FOUND";case 409->"CONFLICT";case 503->"DEPENDENCY_UNAVAILABLE";default->status.is5xxServerError()?"INTERNAL_ERROR":"REQUEST_FAILED";};
-        return ResponseEntity.status(status).body(Map.of("status",status.value(),"code",code,"message",code));
+        var body=envelope(status.value(),code,code);
+        return ResponseEntity.status(status).header("X-Request-ID",String.valueOf(body.get("requestId"))).body(body);
+    }
+    /** Standard envelope (STD-026, Batch 9H); existing status/code/message values are unchanged. */
+    private static Map<String,Object> envelope(int status,String code,String message) {
+        return com.example.revenueservice.api.ApiErrorSupport.body(status,code,message);
     }
     @Override protected ResponseEntity<Object> handleExceptionInternal(Exception ex,Object body,HttpHeaders headers,HttpStatusCode status,WebRequest request) { return error(status); }
     @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
@@ -23,7 +29,8 @@ public class ReportExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> invalid(Exception ex) { return error(HttpStatus.BAD_REQUEST); }
     @ExceptionHandler({SecurityException.class,org.springframework.security.access.AccessDeniedException.class})
     public ResponseEntity<Object> forbidden(Exception ex) { return error(HttpStatus.FORBIDDEN); }
-    @ExceptionHandler({org.springframework.dao.DataAccessException.class,org.springframework.web.client.RestClientException.class})
+    // CannotCreateTransactionException = no pool connection (not a DataAccessException); was 500 (STD-026, Batch 9F).
+    @ExceptionHandler({org.springframework.dao.DataAccessException.class,org.springframework.transaction.CannotCreateTransactionException.class,org.springframework.web.client.RestClientException.class})
     public ResponseEntity<Object> unavailable(Exception ex) {
         org.slf4j.LoggerFactory.getLogger(ReportExceptionHandler.class).warn("[REVENUE_REPORT_DEPENDENCY_UNAVAILABLE]");
         return error(HttpStatus.SERVICE_UNAVAILABLE);

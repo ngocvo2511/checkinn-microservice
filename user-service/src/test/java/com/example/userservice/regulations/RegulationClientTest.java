@@ -25,7 +25,7 @@ class RegulationClientTest {
         server.start();
         try {
             var cache=new RegulationLocalCache();cache.put("POINTS_EARN_CONVERSION_RATE","123");
-            var client=new RegulationClient(cache,"http://127.0.0.1:"+server.getAddress().getPort());
+            var client=new RegulationClient(cache,"http://127.0.0.1:"+server.getAddress().getPort(), new org.springframework.boot.web.client.RestTemplateBuilder());
             assertThat(client.getEarnConversionRate()).isEqualByComparingTo("10000");
             assertThat(client.getEarnConversionRate()).isEqualByComparingTo("8000");
             assertThatThrownBy(client::getEarnConversionRate).isInstanceOfSatisfying(ResponseStatusException.class,
@@ -36,7 +36,7 @@ class RegulationClientTest {
     @Test void stalePositiveCacheCannotOverrideTheAuthoritativeRateOrHideItsOutage() {
         var cache=mock(RegulationLocalCache.class);
         when(cache.get("POINTS_EARN_CONVERSION_RATE")).thenReturn("123");
-        var client=new RegulationClient(cache,"http://regulations");
+        var client=new RegulationClient(cache,"http://regulations", new org.springframework.boot.web.client.RestTemplateBuilder());
         var server=MockRestServiceServer.bindTo((RestTemplate)ReflectionTestUtils.getField(client,"restTemplate")).build();
         server.expect(requestTo("http://regulations/api/regulations/typed/points"))
                 .andRespond(withSuccess("{\"earnConversionRate\":10000,\"redemptionConversionRate\":700}",MediaType.APPLICATION_JSON));
@@ -47,7 +47,7 @@ class RegulationClientTest {
         server.verify();
     }
     @Test void missingRateNeverBecomesAHardcodedFallback() {
-        var client = new RegulationClient(mock(RegulationLocalCache.class), "http://regulations");
+        var client = new RegulationClient(mock(RegulationLocalCache.class), "http://regulations", new org.springframework.boot.web.client.RestTemplateBuilder());
         var server = MockRestServiceServer.bindTo((RestTemplate) ReflectionTestUtils.getField(client, "restTemplate")).build();
         server.expect(requestTo("http://regulations/api/regulations/typed/points")).andRespond(withServerError());
         assertThatThrownBy(client::getRedemptionConversionRate).isInstanceOfSatisfying(ResponseStatusException.class,
@@ -58,7 +58,7 @@ class RegulationClientTest {
     @Test void invalidCachedAndRemoteRatesAreRejected() {
         var cache = mock(RegulationLocalCache.class);
         when(cache.get("POINTS_EARN_CONVERSION_RATE")).thenReturn("0");
-        var client = new RegulationClient(cache, "http://regulations");
+        var client = new RegulationClient(cache, "http://regulations", new org.springframework.boot.web.client.RestTemplateBuilder());
         var server = MockRestServiceServer.bindTo((RestTemplate) ReflectionTestUtils.getField(client, "restTemplate")).build();
         server.expect(requestTo("http://regulations/api/regulations/typed/points"))
                 .andRespond(withSuccess("{\"earnConversionRate\":-1,\"redemptionConversionRate\":500}", MediaType.APPLICATION_JSON));
@@ -68,7 +68,7 @@ class RegulationClientTest {
 
     @Test void validRateComesFromRegulations() {
         var cache = mock(RegulationLocalCache.class);
-        var client = new RegulationClient(cache, "http://regulations");
+        var client = new RegulationClient(cache, "http://regulations", new org.springframework.boot.web.client.RestTemplateBuilder());
         var server = MockRestServiceServer.bindTo((RestTemplate) ReflectionTestUtils.getField(client, "restTemplate")).build();
         server.expect(requestTo("http://regulations/api/regulations/typed/points"))
                 .andRespond(withSuccess("{\"earnConversionRate\":10000,\"redemptionConversionRate\":700}", MediaType.APPLICATION_JSON));

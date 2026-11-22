@@ -76,7 +76,7 @@ public class BookingController {
 
     @GetMapping("/{id}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #id)")
-    public ResponseEntity<BookingResponse> getBooking(@PathVariable java.util.UUID id) {
+    public ResponseEntity<?> getBooking(@PathVariable java.util.UUID id) {
         try {
             log.info("[GET_BOOKING] Request received - bookingId: {}", id);
             BookingResponse booking = bookingService.getBooking(id);
@@ -84,7 +84,7 @@ public class BookingController {
             return ResponseEntity.ok(booking);
         } catch (IllegalArgumentException e) {
             log.warn("[GET_BOOKING] Booking not found - bookingId: {}", id);
-            return ResponseEntity.notFound().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(404, "Booking not found");
         }
     }
 
