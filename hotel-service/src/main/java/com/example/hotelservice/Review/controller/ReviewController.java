@@ -235,7 +235,7 @@ public class ReviewController {
      * GET /api/v1/reviews/check-booking/{bookingId}
      */
     @GetMapping("/check-booking/{bookingId}")
-    public ResponseEntity<HotelReviewResponse> checkBookingReviewed(
+    public ResponseEntity<?> checkBookingReviewed(
             @PathVariable UUID bookingId,
             @AuthenticationPrincipal Jwt actor
     ) {
@@ -247,7 +247,7 @@ public class ReviewController {
             return ResponseEntity.ok(review.get());
         }
         log.info("[REVIEW_CONTROLLER_CHECK_BOOKING] Booking not reviewed - bookingId: {}, userId: {}", bookingId, userId);
-        return ResponseEntity.notFound().build();
+        return com.example.hotelservice.api.ApiErrorSupport.respond(404, "Review not found");
     }
 
     /**

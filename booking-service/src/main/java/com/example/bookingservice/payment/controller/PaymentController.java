@@ -49,10 +49,10 @@ public class PaymentController {
     }
 
     @GetMapping("/vnpay/return")
-    public ResponseEntity<PaymentResponse> vnpayReturn(@RequestParam Map<String, String> queryParams) {
+    public ResponseEntity<?> vnpayReturn(@RequestParam Map<String, String> queryParams) {
         if (vnPayProperties.getHashSecret() == null || vnPayProperties.getHashSecret().isBlank()
                 || vnPayProperties.getTmnCode() == null || vnPayProperties.getTmnCode().isBlank()) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(503, "Payment provider is not configured");
         }
         // Verify secure hash
         String secureHash = queryParams.get("vnp_SecureHash");
@@ -62,7 +62,7 @@ public class PaymentController {
         String data = VnPayUtil.buildQuery(paramsForHash);
         String expected = VnPayUtil.hmacSHA512(vnPayProperties.getHashSecret(), data);
         if (secureHash == null || !secureHash.equalsIgnoreCase(expected)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(400, "Invalid payment callback");
         }
 
         String orderId = queryParams.get("vnp_TxnRef");
@@ -77,55 +77,55 @@ public class PaymentController {
                 || amount == null || !amount.matches("[0-9]{1,12}")
                 || transactionNo == null || !transactionNo.matches("[0-9]{1,15}")
                 || ("00".equals(responseCode) && (!"00".equals(transactionStatus) || "0".equals(transactionNo)))) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(400, "Invalid payment callback");
         }
         java.time.Instant transactionAt = null;
         String payDate = queryParams.get("vnp_PayDate");
         if (payDate != null) {
-            if (!payDate.matches("[0-9]{14}")) return ResponseEntity.badRequest().build();
+            if (!payDate.matches("[0-9]{14}")) return com.example.bookingservice.api.ApiErrorSupport.respond(400, "Invalid payment callback");
             try {
                 transactionAt = java.time.LocalDateTime.parse(payDate,
                         java.time.format.DateTimeFormatter.ofPattern("uuuuMMddHHmmss")
                                 .withResolverStyle(java.time.format.ResolverStyle.STRICT))
                         .toInstant(java.time.ZoneOffset.ofHours(7));
             } catch (java.time.DateTimeException invalidDate) {
-                return ResponseEntity.badRequest().build();
+                return com.example.bookingservice.api.ApiErrorSupport.respond(400, "Invalid payment callback");
             }
         }
         var payment = paymentRepository.findByVnpayOrderId(orderId).orElse(null);
-        if (payment == null) return ResponseEntity.notFound().build();
+        if (payment == null) return com.example.bookingservice.api.ApiErrorSupport.respond(404, "Payment not found");
         if (payment.getMethod() != PaymentMethod.VNPAY || payment.getAmount() == null
                 || payment.getAmount().signum() <= 0
                 || new BigDecimal(amount).compareTo(payment.getAmount().multiply(BigDecimal.valueOf(100))) != 0) {
-            return ResponseEntity.badRequest().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(400, "Invalid payment callback");
         }
         try {
             PaymentResponse result = paymentService.processVNPayCallback(orderId, responseCode, transactionNo, transactionAt);
             return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(404, "Payment not found");
         }
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@bookingAccess.canReadPayment(authentication, #id)")
-    public ResponseEntity<PaymentResponse> getPayment(@PathVariable java.util.UUID id) {
+    public ResponseEntity<?> getPayment(@PathVariable java.util.UUID id) {
         try {
             PaymentResponse payment = paymentService.getPayment(id);
             return ResponseEntity.ok(payment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(404, "Payment not found");
         }
     }
 
     @GetMapping("/booking/{bookingId}")
     @PreAuthorize("@bookingAccess.canRead(authentication, #bookingId)")
-    public ResponseEntity<PaymentResponse> getPaymentByBookingId(@PathVariable java.util.UUID bookingId) {
+    public ResponseEntity<?> getPaymentByBookingId(@PathVariable java.util.UUID bookingId) {
         try {
             PaymentResponse payment = paymentService.getPaymentByBookingId(bookingId);
             return ResponseEntity.ok(payment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return com.example.bookingservice.api.ApiErrorSupport.respond(404, "Payment not found");
         }
     }
 

@@ -44,12 +44,12 @@ public class UserService {
         try {
             if (userRepository.existsByUsername(request.getUsername())) {
             logger.warn("[REGISTER] Registration failed - username already exists");
-            throw new RuntimeException("Tên đăng nhập đã tồn tại");
+            throw new com.example.userservice.exception.UserBusinessException("Tên đăng nhập đã tồn tại");
             }
 
             if (userRepository.existsByEmail(request.getEmail())) {
             logger.warn("[REGISTER] Registration failed - email already exists");
-            throw new RuntimeException("Email đã tồn tại");
+            throw new com.example.userservice.exception.UserBusinessException("Email đã tồn tại");
             }
 
             validatePassword(request.getPassword());
@@ -90,7 +90,7 @@ public class UserService {
 
     public User getUserById(UUID id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+                .orElseThrow(() -> new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng"));
     }
 
     @Transactional
@@ -101,7 +101,7 @@ public class UserService {
                     .findIdentityForUpdate(usernameOrEmail)
                     .orElseThrow(() -> {
                         logger.warn("[LOGIN] User not found");
-                        return new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+                        return new com.example.userservice.exception.UserBusinessException("Tài khoản hoặc mật khẩu không đúng");
                     });
 
             MDC.put("userId", user.getId().toString());
@@ -109,16 +109,16 @@ public class UserService {
 
             if (!user.isEmailVerified()) {
                 logger.warn("[LOGIN] Email not verified - userId: {}", user.getId());
-                throw new RuntimeException("Email chưa được xác thực. Vui lòng xác thực email trước");
+                throw new com.example.userservice.exception.UserBusinessException("Email chưa được xác thực. Vui lòng xác thực email trước");
             }
             if(!user.getIsActive()) {
                 logger.warn("[LOGIN] Account locked - userId: {}", user.getId());
-                throw new RuntimeException("Account is locked. Please contact support");
+                throw new com.example.userservice.exception.UserBusinessException("Account is locked. Please contact support");
             }
 
             if (!passwordEncoder.matches(password, user.getPassword())) {
                 logger.warn("[LOGIN] Password mismatch - userId: {}", user.getId());
-                throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+                throw new com.example.userservice.exception.UserBusinessException("Tài khoản hoặc mật khẩu không đúng");
             }
 
             logger.info("[LOGIN] Password verified successfully - userId: {}", user.getId());
@@ -216,11 +216,11 @@ public class UserService {
     @Transactional
     public void changePassword(UUID userId, String currentPassword, String newPassword) {
         logger.info("[PASSWORD_CHANGE] Change password request received - userId: {}", userId);
-        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng"));
 
         // Verify current password
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            throw new RuntimeException("Mật khẩu hiện tại không đúng");
+            throw new com.example.userservice.exception.UserBusinessException("Mật khẩu hiện tại không đúng");
         }
 
         validatePassword(newPassword);
@@ -234,7 +234,7 @@ public class UserService {
     @Transactional
     public void verifyUserEmail(String email) {
         logger.info("[EMAIL_VERIFY] Verify user email request received");
-        if (userRepository.markEmailVerified(email)!=1) throw new RuntimeException("Không tìm thấy người dùng");
+        if (userRepository.markEmailVerified(email)!=1) throw new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng");
         // Do not merge a detached account here: concurrent reset must retain its new password.
         logger.info("[EMAIL_VERIFY] Verify user email success");
     }
@@ -243,7 +243,7 @@ public class UserService {
     public void resetPassword(String email, String newPassword) {
         logger.info("[PASSWORD_RESET] Password reset requested");
         User user = userRepository.findByEmailForUpdate(email)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+                .orElseThrow(() -> new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng"));
 
         validatePassword(newPassword);
 
@@ -278,7 +278,7 @@ public class UserService {
 
     private void validatePassword(String password) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
-            throw new RuntimeException("Mật khẩu phải có ít nhất " + MIN_PASSWORD_LENGTH + " ký tự");
+            throw new com.example.userservice.exception.UserBusinessException("Mật khẩu phải có ít nhất " + MIN_PASSWORD_LENGTH + " ký tự");
         }
     }
 
@@ -329,7 +329,7 @@ public class UserService {
      */
     @Transactional
     public void lockAccount(UUID userId) {
-        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng"));
         user.setIsActive(false);
         userRepository.save(user);
     }
@@ -339,7 +339,7 @@ public class UserService {
      */
     @Transactional
     public void unlockAccount(UUID userId) {
-        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(() -> new com.example.userservice.exception.UserBusinessException("Không tìm thấy người dùng"));
         user.setIsActive(true);
         userRepository.save(user);
     }

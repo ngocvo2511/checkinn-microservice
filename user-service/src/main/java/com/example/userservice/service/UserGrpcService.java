@@ -64,7 +64,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             logger.warn("[gRPC_REGISTER] Registration rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
-                    .withDescription(e.getMessage())
+                    .withDescription(com.example.userservice.exception.UserBusinessException.publicMessage(e, "Request rejected"))
                     .asRuntimeException()
             );
         }
@@ -101,7 +101,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             logger.warn("[gRPC_GET_USER_BY_ID_ERROR] Profile request rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.NOT_FOUND
-                    .withDescription(e.getMessage())
+                    .withDescription(com.example.userservice.exception.UserBusinessException.publicMessage(e, "Request rejected"))
                     .asRuntimeException()
             );
         }
@@ -148,7 +148,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
             logger.warn("[gRPC_LOGIN] Login rejected - errorType: {}", e.getClass().getSimpleName());
             responseObserver.onError(
                 Status.UNAUTHENTICATED
-                    .withDescription(e.getMessage())
+                    .withDescription(com.example.userservice.exception.UserBusinessException.publicMessage(e, "Request rejected"))
                     .asRuntimeException()
             );
         }

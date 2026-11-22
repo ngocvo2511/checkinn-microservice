@@ -8,12 +8,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class RegulationErrorAdvice {
+    /** Standard envelope + X-Request-ID (STD-026, Batch 9H); existing status/code/message values are unchanged. */
     private ResponseEntity<?> error(int status,String code,String message) {
-        return ResponseEntity.status(status).body(Map.of("status",status,"code",code,"message",message));
+        return ApiErrorSupport.response(status,code,message);
     }
     @ExceptionHandler({OptimisticLockingFailureException.class,DataIntegrityViolationException.class})
     ResponseEntity<?> conflict(Exception failure) { return error(409,"REGULATION_CONFLICT","Regulation has changed; reload before saving"); }
-    @ExceptionHandler(DataAccessException.class)
+    // CannotCreateTransactionException = no pool connection (not a DataAccessException); was 500 (STD-026, Batch 9F).
+    @ExceptionHandler({DataAccessException.class,org.springframework.transaction.CannotCreateTransactionException.class})
     ResponseEntity<?> unavailable(Exception failure) { return error(503,"DEPENDENCY_UNAVAILABLE","Regulation storage unavailable"); }
     @ExceptionHandler({org.springframework.web.bind.MethodArgumentNotValidException.class,
             org.springframework.http.converter.HttpMessageNotReadableException.class,
@@ -36,7 +38,7 @@ public class RegulationErrorAdvice {
             var response=error(status,code,"Regulation request rejected");
             if(failure instanceof org.springframework.web.HttpRequestMethodNotSupportedException method
                     && method.getSupportedHttpMethods()!=null) {
-                var headers=new HttpHeaders();headers.setAllow(method.getSupportedHttpMethods());
+                var headers=new HttpHeaders();headers.putAll(response.getHeaders());headers.setAllow(method.getSupportedHttpMethods());
                 return new ResponseEntity<>(response.getBody(),headers,response.getStatusCode());
             }
             return response;
