@@ -21,6 +21,28 @@ public interface PlaceRepository extends JpaRepository<Place, UUID> {
 
     List<Place> findByProvinceNameIgnoreCase(String provinceName);
 
+    /** First page of a keyword search. {@code pattern} must already have LIKE wildcards escaped with '!'. */
+    @Query(value = """
+        SELECT p.* FROM places p
+        WHERE p.name ILIKE :pattern ESCAPE '!'
+        ORDER BY p.name ASC, p.id ASC
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<Place> searchByName(@Param("pattern") String pattern, @Param("limit") int limit);
+
+    /** Keyset continuation of {@link #searchByName}: rows strictly after {@code (afterName, afterId)}. */
+    @Query(value = """
+        SELECT p.* FROM places p
+        WHERE p.name ILIKE :pattern ESCAPE '!'
+          AND (p.name, p.id) > (:afterName, :afterId)
+        ORDER BY p.name ASC, p.id ASC
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<Place> searchByNameAfter(@Param("pattern") String pattern,
+                                  @Param("afterName") String afterName,
+                                  @Param("afterId") UUID afterId,
+                                  @Param("limit") int limit);
+
     @Query(value = """
         SELECT p.*
         FROM places p

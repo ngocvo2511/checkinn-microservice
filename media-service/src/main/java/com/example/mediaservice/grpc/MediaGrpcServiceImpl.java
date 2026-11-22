@@ -1,6 +1,7 @@
 package com.example.mediaservice.grpc;
 
 import com.example.mediaservice.SupabaseStorageService;
+import com.example.mediaservice.security.MediaCaller;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -26,7 +27,9 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
         try {
             log.debug("[MEDIA_GRPC_UPLOAD]");
             String sanitizedFileName = sanitizeFileName(request.getFileName());
-            String objectName = UUID.randomUUID() + "_" + sanitizedFileName;
+            // The storage folder is chosen here from the verified caller, never by the request.
+            String folder = MediaCaller.current() == MediaCaller.TRAVEL_SOCIAL_SERVICE ? MediaCaller.SOCIAL_PREFIX : "";
+            String objectName = folder + UUID.randomUUID() + "_" + sanitizedFileName;
             String url = storageService.uploadMedia(
                     request.getFileData().toByteArray(),
                     objectName,
@@ -37,6 +40,7 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             responseObserver.onNext(
                     com.example.mediaservice.grpc.UploadMediaResponse.newBuilder()
                             .setUrl(url)
+                            .setObjectName(objectName)
                             .build()
             );
             responseObserver.onCompleted();
@@ -52,6 +56,13 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
             com.example.mediaservice.grpc.DeleteMediaRequest request,
             StreamObserver<com.example.mediaservice.grpc.DeleteMediaResponse> responseObserver
     ) {
+        if (MediaCaller.current() == MediaCaller.TRAVEL_SOCIAL_SERVICE && !isSocialObjectName(request.getFileName())) {
+            log.warn("[MEDIA_GRPC_DELETE] Rejected travel-social-service delete outside its folder - fileName: {}", request.getFileName());
+            responseObserver.onError(Status.PERMISSION_DENIED
+                    .withDescription("travel-social-service may only delete objects under " + MediaCaller.SOCIAL_PREFIX)
+                    .asRuntimeException());
+            return;
+        }
         try {
             log.debug("[MEDIA_GRPC_DELETE]");
             boolean deleted = storageService.deleteMedia(request.getFileName());
@@ -183,6 +194,16 @@ public class MediaGrpcServiceImpl extends com.example.mediaservice.grpc.MediaGrp
      * - Thay khoảng trắng và các ký tự đặc biệt bằng dấu gạch dưới '_'
      * - Giữ nguyên extension an toàn
      */
+    /** "social/{name}" with a single, non-empty, non-traversing name segment. */
+    static boolean isSocialObjectName(String objectName) {
+        if (objectName == null || !objectName.startsWith(MediaCaller.SOCIAL_PREFIX)) {
+            return false;
+        }
+        String name = objectName.substring(MediaCaller.SOCIAL_PREFIX.length());
+        return !name.isEmpty() && !name.contains("/") && !name.contains("\\")
+                && !name.equals(".") && !name.equals("..") && !name.contains("%");
+    }
+
     private String sanitizeFileName(String fileName) {
         if (fileName == null || fileName.isBlank()) {
             return "file";

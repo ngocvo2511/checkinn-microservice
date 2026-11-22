@@ -17,6 +17,9 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+          # travel-social-service is reachable only through the explicit /api/social/** routes below, which
+          # carry the rate limiters. An auto-created /travel-social-service/** route would bypass them.
+          include-expression: "!serviceId.equalsIgnoreCase('travel-social-service')"
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
@@ -71,6 +74,45 @@ spring:
             - Path=/places/**, /api/places/**
           filters:
             - RewritePath=/api/places/(?<segment>.*), /places/$\{segment}
+        - id: travel-social-create-post
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/posts, Method=POST]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 3600, redis-rate-limiter.requestedTokens: 360, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-comment            # 30 comments/hour
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/posts/*/comments, Method=POST]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 3600, redis-rate-limiter.requestedTokens: 120, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-like               # 120 like/unlike requests/hour
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/posts/*/like, "Method=PUT,DELETE"]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 3600, redis-rate-limiter.requestedTokens: 30, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-report             # 20 reports/day
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/reports, Method=POST]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 86400, redis-rate-limiter.requestedTokens: 4320, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-media-upload       # 30 uploads/hour
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/media, Method=POST]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 3600, redis-rate-limiter.requestedTokens: 120, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-other-mutations    # edits, deletes, moderation: 600/hour
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/**, "Method=POST,PUT,PATCH,DELETE"]
+          filters:
+            - name: RequestRateLimiter
+              args: {redis-rate-limiter.replenishRate: 1, redis-rate-limiter.burstCapacity: 3600, redis-rate-limiter.requestedTokens: 6, key-resolver: "#{@socialUserKeyResolver}"}
+        - id: travel-social-read
+          uri: lb://travel-social-service
+          predicates: [Path=/api/social/**]
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   boot:
@@ -103,3 +145,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}:${random.uuid}
+
+# Shared JWT secret, used only to key social rate limits by verified subject (see RateLimitKeyConfig).
+jwt:
+  secret: ${SECRET_KEY:}

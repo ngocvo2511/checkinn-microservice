@@ -55,16 +55,19 @@ if ($Action -in @('Validate', 'Up')) {
 }
 if ($Action -eq 'Up' -and $Scope -in @('App','Full','Platform')) {
     # Both daily modes use the same loopback app ports. Never switch implicitly.
-    $others = & docker ps --filter publish=8080 --format '{{.Label "com.docker.compose.project"}}'
+    # Label filters instead of a --format template: Windows PowerShell 5.1 strips embedded quotes from native arguments.
+    $onPort = @(& docker ps -q --filter publish=8080)
     if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect existing Docker application ports.' }
-    if ($others | Where-Object { $_ -ne 'checkinn-test' }) { throw 'Another application stack is using port 8080; stop it before starting Test.' }
+    $ownOnPort = @(& docker ps -q --filter publish=8080 --filter label=com.docker.compose.project=checkinn-test)
+    if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect existing Docker application ports.' }
+    if ($onPort.Count -gt $ownOnPort.Count) { throw 'Another application stack is using port 8080; stop it before starting Test.' }
 }
 if ($Action -eq 'Up' -and $Scope -in @('App', 'Full')) {
     $secret = $config.services.'auth-service'.environment.SECRET_KEY
     if ([string]::IsNullOrWhiteSpace($secret) -or $secret.Length -lt 32) {
         throw 'Set a separate SECRET_KEY of at least 32 ASCII characters in docker/.env.test.'
     }
-    foreach ($service in @('user-service', 'hotel-service', 'booking-service', 'revenue-service', 'regulations-service')) {
+    foreach ($service in @('user-service', 'hotel-service', 'booking-service', 'revenue-service', 'regulations-service', 'place-service', 'travel-social-service')) {
         $serviceEnv = $config.services.$service.environment
         if ([string]::IsNullOrWhiteSpace($serviceEnv.SPRING_DATASOURCE_PASSWORD)) {
             throw "Configure TEST_POSTGRES_PASSWORD in docker/.env.test for $service."

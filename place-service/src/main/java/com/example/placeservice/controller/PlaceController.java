@@ -1,7 +1,10 @@
 package com.example.placeservice.controller;
 
 import com.example.placeservice.dto.response.NearbyPlaceResponse;
+import com.example.placeservice.dto.response.PlaceSearchPage;
+import com.example.placeservice.dto.response.PlaceSummary;
 import com.example.placeservice.enums.PlaceCategory;
+import com.example.placeservice.service.PlaceCatalogService;
 import com.example.placeservice.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import java.util.UUID;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final PlaceCatalogService placeCatalogService;
 
     /**
      * Endpoint to retrieve tourist attractions and dining spots surrounding geographic coordinates.
@@ -35,6 +39,26 @@ public class PlaceController {
                 latitude, longitude, category, radiusKm, limit);
         List<NearbyPlaceResponse> result = placeService.getNearbyPlaces(latitude, longitude, category, radiusKm, limit);
         return ResponseEntity.ok(result);
+    }
+
+    /**
+     * Keyword search over place names, ordered by (name, id) with an opaque keyset cursor.
+     */
+    @GetMapping("/search")
+    public ResponseEntity<PlaceSearchPage> searchPlaces(
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String cursor,
+            @RequestParam(required = false) Integer limit
+    ) {
+        return ResponseEntity.ok(placeCatalogService.search(q, cursor, limit));
+    }
+
+    /**
+     * Public display data for up to 50 places. Unknown ids are omitted.
+     */
+    @GetMapping("/batch")
+    public ResponseEntity<List<PlaceSummary>> getPlacesBatch(@RequestParam(required = false) List<UUID> ids) {
+        return ResponseEntity.ok(placeCatalogService.batch(ids));
     }
 
     /**

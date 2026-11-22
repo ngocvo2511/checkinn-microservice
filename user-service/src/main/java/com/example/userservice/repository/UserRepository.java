@@ -2,7 +2,11 @@ package com.example.userservice.repository;
 
 import com.example.userservice.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
     @org.springframework.data.jpa.repository.Query("select u from User u where u.email=:identity or u.username=:identity")
     Optional<User> findIdentityForUpdate(@org.springframework.data.repository.query.Param("identity") String identity);
+    /** Active users with their profile, fetched in one query for public display lookups. */
+    @Query("select u from User u left join fetch u.profile where u.id in :ids and u.isActive = true")
+    List<User> findActiveWithProfileByIdIn(@Param("ids") Collection<UUID> ids);
 
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
