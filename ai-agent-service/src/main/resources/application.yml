@@ -1,0 +1,52 @@
+server:
+  address: 127.0.0.1
+  # 8091 belongs to regulations-service; 8092 is unused by the other services.
+  port: 8092
+  error:
+    include-message: never
+    include-stacktrace: never
+spring:
+  application:
+    name: ai-agent-service
+checkinn:
+  read-tools:
+    gateway-origin: ${AGENT_GATEWAY_ORIGIN:http://127.0.0.1:8080}
+    connect-timeout: ${AGENT_GATEWAY_CONNECT_TIMEOUT:PT3S}
+  agent:
+    enabled: ${AGENT_ENABLED:false}
+    provider: ${AGENT_PROVIDER:FAKE}
+    model-id: ${GEMINI_MODEL_ID:fake-v1}
+  gemini:
+    live-enabled: ${AGENT_GEMINI_LIVE_ENABLED:false}
+    synthetic-only: ${AGENT_GEMINI_SYNTHETIC_ONLY:false}
+    reviewed-model-id: ${AGENT_GEMINI_REVIEWED_MODEL_ID:}
+    model-verification: ${AGENT_GEMINI_MODEL_VERIFICATION:NOT_VERIFIED}
+    account-region-free-tier-verification: ${AGENT_GEMINI_ACCOUNT_REGION_FREE_TIER_VERIFICATION:NOT_VERIFIED}
+    data-terms-verification: ${AGENT_GEMINI_DATA_TERMS_VERIFICATION:NOT_VERIFIED}
+    quota-billing-verification: ${AGENT_GEMINI_QUOTA_BILLING_VERIFICATION:NOT_VERIFIED}
+    transport-acceptance: ${AGENT_GEMINI_TRANSPORT_ACCEPTANCE:NOT_VERIFIED}
+    max-input-tokens: ${AGENT_GEMINI_MAX_INPUT_TOKENS:0}
+    max-output-tokens: ${AGENT_GEMINI_MAX_OUTPUT_TOKENS:0}
+    max-run-requests: ${AGENT_GEMINI_MAX_RUN_REQUESTS:0}
+    max-process-requests: ${AGENT_GEMINI_MAX_PROCESS_REQUESTS:0}
+    max-concurrent-requests: ${AGENT_GEMINI_MAX_CONCURRENT_REQUESTS:0}
+    max-exposure-usd: ${AGENT_GEMINI_MAX_EXPOSURE_USD:0}
+    input-usd-per-million-upper-bound: ${AGENT_GEMINI_INPUT_USD_PER_MILLION_UPPER_BOUND:0}
+    output-usd-per-million-upper-bound: ${AGENT_GEMINI_OUTPUT_USD_PER_MILLION_UPPER_BOUND:0}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+  tracing:
+    propagation:
+      type: w3c
+logging:
+  level:
+    dev.langchain4j: OFF
+    org.apache.hc: OFF
