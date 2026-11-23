@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "empty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "hotel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hotelId"
+      ],
+      "properties": {
+        "hotelId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roomTypeId"
+      ],
+      "properties": {
+        "roomTypeId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    }
+  },
+  "tools": {
+    "search_hotels": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cityId": {
+          "$ref": "#/$defs/id"
+        },
+        "provinceId": {
+          "$ref": "#/$defs/id"
+        },
+        "cityName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "hotelName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "checkIn": {
+          "$ref": "#/$defs/date"
+        },
+        "checkOut": {
+          "$ref": "#/$defs/date"
+        },
+        "rooms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "adults": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 40
+        },
+        "children": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 40
+        },
+        "minPrice": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxPrice": {
+          "type": "number",
+          "minimum": 0
+        },
+        "accommodationTypes": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "amenityCodes": {
+          "type": "array",
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+          }
+        },
+        "starRatings": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "guestRatings": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          }
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "sort": {
+          "enum": [
+            "DEFAULT",
+            "PRICE_ASC",
+            "PRICE_DESC",
+            "RATING_DESC"
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "cityId"
+          ]
+        },
+        {
+          "required": [
+            "provinceId"
+          ]
+        },
+        {
+          "required": [
+            "cityName"
+          ]
+        },
+        {
+          "required": [
+            "hotelName"
+          ]
+        }
+      ],
+      "dependentRequired": {
+        "checkIn": [
+          "checkOut"
+        ],
+        "checkOut": [
+          "checkIn"
+        ]
+      }
+    },
+    "get_hotel": {
+      "$ref": "#/$defs/hotel"
+    },
+    "list_public_rooms": {
+      "$ref": "#/$defs/hotel"
+    },
+    "get_public_room": {
+      "$ref": "#/$defs/room"
+    },
+    "check_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roomTypeId",
+        "checkIn",
+        "checkOut",
+        "quantity"
+      ],
+      "properties": {
+        "roomTypeId": {
+          "$ref": "#/$defs/id"
+        },
+        "checkIn": {
+          "$ref": "#/$defs/date"
+        },
+        "checkOut": {
+          "$ref": "#/$defs/date"
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
+      }
+    },
+    "resolve_locations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      }
+    },
+    "list_accommodation_types": {
+      "$ref": "#/$defs/empty"
+    },
+    "list_amenity_catalog": {
+      "$ref": "#/$defs/empty"
+    },
+    "get_review_summaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hotelIds"
+      ],
+      "properties": {
+        "hotelIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "get_cancellation_policy": {
+      "$ref": "#/$defs/empty"
+    }
+  }
+}
