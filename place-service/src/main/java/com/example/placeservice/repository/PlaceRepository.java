@@ -90,6 +90,8 @@ public interface PlaceRepository extends JpaRepository<Place, UUID> {
             )) AS distanceKm
         FROM places p
         WHERE (:category IS NULL OR :category = 'ALL' OR p.category = :category)
+          AND p.latitude BETWEEN :minLat AND :maxLat
+          AND p.longitude BETWEEN :minLng AND :maxLng
           AND (6371 * acos(
                 LEAST(1.0, GREATEST(-1.0,
                     cos(radians(:centerLat)) * cos(radians(p.latitude)) * 
@@ -104,6 +106,10 @@ public interface PlaceRepository extends JpaRepository<Place, UUID> {
             @Param("centerLat") Double centerLat,
             @Param("centerLng") Double centerLng,
             @Param("radiusKm") Double radiusKm,
+            @Param("minLat") Double minLat,
+            @Param("maxLat") Double maxLat,
+            @Param("minLng") Double minLng,
+            @Param("maxLng") Double maxLng,
             @Param("category") String category,
             @Param("limit") int limit
     );

@@ -86,4 +86,22 @@ class OsrmRoutingClientTest {
         assertThat(response).isEmpty();
         verifyNoInteractions(restTemplate);
     }
+
+    @Test
+    void computeTable_WhenChunkedBatchLacksDurations_ReturnsEmptyOptional() {
+        Coordinate origin = new Coordinate(21.0285, 105.8542);
+        List<Coordinate> destinations = new java.util.ArrayList<>();
+        for (int i = 0; i < 60; i++) {
+            destinations.add(new Coordinate(21.03 + i * 0.001, 105.85));
+        }
+        List<Double> row = new java.util.ArrayList<>(java.util.Collections.nCopies(51, 1000.0));
+        OsrmTableResponse withoutDurations = OsrmTableResponse.builder()
+                .code("Ok")
+                .distances(List.of(row))
+                .build();
+        when(restTemplate.getForEntity(anyString(), eq(OsrmTableResponse.class)))
+                .thenReturn(new ResponseEntity<>(withoutDurations, HttpStatus.OK));
+
+        assertThat(client.computeTable(origin, destinations)).isEmpty();
+    }
 }

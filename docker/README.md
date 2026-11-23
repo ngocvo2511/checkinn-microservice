@@ -94,6 +94,19 @@ files have been removed. Canonical and historical SQL are retained.
 
 OSRM is optional via Compose's `routing` profile and requires separately
 provisioned map data. It is not started by a normal application/test command.
+The graph lives in the external Docker volume `checkinn-osrm-data`, which
+`scripts/osrm/setup_osrm.ps1` (or `.sh`) builds. Use `-ImportExisting` to copy a graph
+already prepared in `docker/osrm-data` and `-Refresh` to rebuild from the latest extract.
+Start it on the Test network with
+`docker compose -p checkinn-test --env-file .env.test -f docker-compose.yml -f docker-compose.test.yml --profile routing up -d --wait osrm-backend`.
+The Vietnam MLD graph needs about 3 GB of free page cache in the Docker VM; with less,
+cold and even repeated queries exceed place-service's 1.5 s timeout and fall back to estimates.
+The container reads the mapped files once at startup to fill that cache (about a minute).
+Every JVM service gets `JAVA_TOOL_OPTIONS` from `JVM_OPTS` (default `-Xmx256m`, SerialGC, C1 only);
+set `JVM_OPTS` in the env file to override it. On a default WSL2 VM (half of host RAM) the
+full App scope still leaves too little cache, so for routing tests stop the services routing
+does not use:
+`docker compose -p checkinn-test --env-file .env.test -f docker-compose.yml -f docker-compose.test.yml --profile app stop admin-server revenue-service regulations-service media-service travel-social-service booking-service notification-service`.
 Test Mailpit stays local; test external-provider values are placeholders.
 VNPay Sandbox NCB/OTP and real Storage upload/signing passed their provider
 follow-ups; see [VNPay acceptance](../Docs/BATCH6B_VNPAY_SANDBOX_ACCEPTANCE_2026-11-17.md).

@@ -19,86 +19,90 @@ import static org.mockito.Mockito.*;
 class RoadDistanceServiceTest {
 
     private OsrmRoutingClient osrmClient;
-    private StringRedisTemplate redisTemplate;
     private ValueOperations<String, String> valueOperations;
-    private ObjectMapper objectMapper;
+    private TravelEstimateModel estimateModel;
     private RoadDistanceService roadDistanceService;
+
+    private final Coordinate origin = new Coordinate(21.0285, 105.8542);
+    private final Coordinate dest = new Coordinate(21.0350, 105.8600);
 
     @BeforeEach
     @SuppressWarnings("unchecked")
     void setUp() {
         osrmClient = mock(OsrmRoutingClient.class);
-        redisTemplate = mock(StringRedisTemplate.class);
+        StringRedisTemplate redisTemplate = mock(StringRedisTemplate.class);
         valueOperations = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-        objectMapper = new ObjectMapper();
+        estimateModel = new TravelEstimateModel(new TravelEstimateProperties());
 
-        roadDistanceService = new RoadDistanceService(osrmClient, redisTemplate, objectMapper);
+        roadDistanceService = new RoadDistanceService(osrmClient, redisTemplate, new ObjectMapper(), estimateModel);
     }
 
     @Test
-    void getRoadMetrics_WhenCacheHit_ReturnsCachedMetricsWithoutCallingOsrm() {
-        Coordinate origin = new Coordinate(21.0285, 105.8542);
-        Coordinate dest = new Coordinate(21.0350, 105.8600);
+    void getRoadMetrics_WhenRawLegCached_CalibratesWithoutCallingOsrm() {
+        when(valueOperations.get(anyString())).thenReturn("{\"meters\":2300.0,\"seconds\":300.0}");
 
-        String cachedJson = "{\"distanceKm\":2.3,\"durationMinutes\":7,\"fallback\":false}";
-        when(valueOperations.get(anyString())).thenReturn(cachedJson);
+        RoadMetrics metrics = roadDistanceService.getRoadMetrics(origin, List.of(dest)).get(dest);
 
-        Map<Coordinate, RoadMetrics> result = roadDistanceService.getRoadMetrics(origin, List.of(dest));
-
-        assertThat(result).containsKey(dest);
-        RoadMetrics metrics = result.get(dest);
         assertThat(metrics.getDistanceKm()).isEqualTo(2.3);
-        assertThat(metrics.getDurationMinutes()).isEqualTo(7);
+        assertThat(metrics.getDurationMinutes()).isEqualTo(estimateModel.routedMinutes(300.0, 2.3));
         assertThat(metrics.isFallback()).isFalse();
-
         verifyNoInteractions(osrmClient);
     }
 
     @Test
-    void getRoadMetrics_WhenUncachedAndOsrmSuccess_ComputesMetricsAndCaches() {
-        Coordinate origin = new Coordinate(21.0285, 105.8542);
-        Coordinate dest = new Coordinate(21.0350, 105.8600);
-
+    void getRoadMetrics_WhenOsrmSucceeds_CachesRawLegAndCalibrates() {
         when(valueOperations.get(anyString())).thenReturn(null);
         when(osrmClient.isEnabled()).thenReturn(true);
-
         OsrmTableResponse response = OsrmTableResponse.builder()
                 .code("Ok")
-                .distances(List.of(List.of(0.0, 3200.0))) // 3.2 km
-                .durations(List.of(List.of(0.0, 480.0)))  // 8 minutes
+                .distances(List.of(List.of(0.0, 3200.0)))
+                .durations(List.of(List.of(0.0, 480.0)))
                 .build();
         when(osrmClient.computeTable(eq(origin), eq(List.of(dest)))).thenReturn(Optional.of(response));
 
-        Map<Coordinate, RoadMetrics> result = roadDistanceService.getRoadMetrics(origin, List.of(dest));
+        RoadMetrics metrics = roadDistanceService.getRoadMetrics(origin, List.of(dest)).get(dest);
 
-        assertThat(result).containsKey(dest);
-        RoadMetrics metrics = result.get(dest);
         assertThat(metrics.getDistanceKm()).isEqualTo(3.2);
-        assertThat(metrics.getDurationMinutes()).isEqualTo(15);
+        assertThat(metrics.getDurationMinutes()).isEqualTo(estimateModel.routedMinutes(480.0, 3.2));
         assertThat(metrics.isFallback()).isFalse();
-
-        verify(valueOperations).set(contains("distance:road:"), anyString(), eq(Duration.ofDays(7)));
+        verify(valueOperations).set(startsWith("distance:osrm:v1:"),
+                eq("{\"meters\":3200.0,\"seconds\":480.0}"), eq(Duration.ofDays(7)));
     }
 
     @Test
-    void getRoadMetrics_WhenOsrmFailsOrEmpty_FallsBackToCircuityFactor() {
-        Coordinate origin = new Coordinate(21.0285, 105.8542);
-        Coordinate dest = new Coordinate(21.0350, 105.8600);
-
+    void getRoadMetrics_WhenOsrmFails_FallsBackWithoutCaching() {
         when(valueOperations.get(anyString())).thenReturn(null);
         when(osrmClient.isEnabled()).thenReturn(true);
         when(osrmClient.computeTable(any(), any())).thenReturn(Optional.empty());
 
-        Map<Coordinate, RoadMetrics> result = roadDistanceService.getRoadMetrics(origin, List.of(dest));
+        RoadMetrics metrics = roadDistanceService.getRoadMetrics(origin, List.of(dest)).get(dest);
 
-        assertThat(result).containsKey(dest);
-        RoadMetrics metrics = result.get(dest);
         assertThat(metrics.isFallback()).isTrue();
         assertThat(metrics.getDistanceKm()).isGreaterThan(0.0);
         assertThat(metrics.getDurationMinutes()).isGreaterThanOrEqualTo(1);
+        verify(valueOperations, never()).set(anyString(), anyString(), any(Duration.class));
+    }
 
-        verify(valueOperations).set(contains("distance:road:"), anyString(), eq(Duration.ofDays(7)));
+    @Test
+    void getRoadMetrics_WhenDestinationRepeats_QueriesOsrmOncePerCoordinate() {
+        when(valueOperations.get(anyString())).thenReturn(null);
+        when(osrmClient.isEnabled()).thenReturn(true);
+        when(osrmClient.computeTable(any(), any())).thenReturn(Optional.empty());
+
+        roadDistanceService.getRoadMetrics(origin, List.of(dest, dest));
+
+        verify(osrmClient).computeTable(eq(origin), eq(List.of(dest)));
+    }
+
+    @Test
+    void calculateCircuityFallback_IsNeverShorterThanStraightLine() {
+        RoadMetrics metrics = roadDistanceService.calculateCircuityFallback(origin, dest);
+        double straightKm = RoadDistanceService.haversineKm(
+                origin.latitude(), origin.longitude(), dest.latitude(), dest.longitude());
+
+        assertThat(metrics.getDistanceKm()).isGreaterThanOrEqualTo(Math.floor(straightKm * 10) / 10);
+        assertThat(metrics.isFallback()).isTrue();
     }
 
     @Test
