@@ -2,6 +2,8 @@ package com.example.travelsocialservice.service;
 
 import com.example.travelsocialservice.client.AuthorClient;
 import com.example.travelsocialservice.client.AuthorClient.Author;
+import com.example.travelsocialservice.client.HotelClient;
+import com.example.travelsocialservice.client.HotelClient.HotelRef;
 import com.example.travelsocialservice.client.PlaceClient;
 import com.example.travelsocialservice.client.PlaceClient.PlaceRef;
 import com.example.travelsocialservice.domain.Post;
@@ -10,6 +12,7 @@ import com.example.travelsocialservice.repository.InteractionQueries;
 import com.example.travelsocialservice.repository.PostMediaRepository;
 import com.example.travelsocialservice.security.Actor;
 import com.example.travelsocialservice.web.dto.PostDtos.AuthorView;
+import com.example.travelsocialservice.web.dto.PostDtos.HotelView;
 import com.example.travelsocialservice.web.dto.PostDtos.MediaView;
 import com.example.travelsocialservice.web.dto.PostDtos.PlaceView;
 import com.example.travelsocialservice.web.dto.PostDtos.PostView;
@@ -34,13 +37,23 @@ public class PostAssembler {
     private final PostMediaRepository mediaRepository;
     private final InteractionQueries interactions;
     private final PlaceClient placeClient;
+    private final HotelClient hotelClient;
     private final AuthorClient authorClient;
 
     public PostView toView(Post post, Actor viewer) {
         return toViews(List.of(post), viewer).get(0);
     }
 
+    /** The author's own view, which also carries the private stay link so the composer can edit it. */
+    public PostView toOwnView(Post post, Actor author) {
+        return toViews(List.of(post), author, true).get(0);
+    }
+
     public List<PostView> toViews(List<Post> posts, Actor viewer) {
+        return toViews(posts, viewer, false);
+    }
+
+    public List<PostView> toViews(List<Post> posts, Actor viewer, boolean ownView) {
         if (posts.isEmpty()) {
             return List.of();
         }
@@ -52,6 +65,8 @@ public class PostAssembler {
         Set<UUID> likedByViewer = viewer == null ? null : interactions.likedBy(viewer.id(), postIds);
         Map<UUID, PlaceRef> places = placeClient.findAll(
                 posts.stream().map(Post::getPlaceId).filter(Objects::nonNull).collect(Collectors.toSet()));
+        Map<UUID, HotelRef> hotels = hotelClient.findAll(
+                posts.stream().map(Post::getHotelId).filter(Objects::nonNull).collect(Collectors.toSet()));
         Map<UUID, Author> authors = authorClient.findAll(
                 posts.stream().map(Post::getAuthorId).collect(Collectors.toSet()));
 
@@ -64,6 +79,10 @@ public class PostAssembler {
                 false,
                 post.getPlaceId(),
                 placeView(places.get(post.getPlaceId())),
+                post.getHotelId(),
+                hotelView(hotels.get(post.getHotelId())),
+                post.isVerifiedStay(),
+                ownView && viewer != null && viewer.is(post.getAuthorId()) ? post.getStayBookingId() : null,
                 mediaByPost.getOrDefault(post.getId(), List.of()).stream()
                         .map(media -> new MediaView(media.getId(), media.getUrl(), media.getDisplayOrder())).toList(),
                 likeCounts.getOrDefault(post.getId(), 0L),
@@ -84,6 +103,11 @@ public class PostAssembler {
         Author author = authors.get(authorId);
         return author == null ? new AuthorView(authorId, null, null)
                 : new AuthorView(authorId, author.displayName(), author.avatarUrl());
+    }
+
+    private static HotelView hotelView(HotelRef hotel) {
+        return hotel == null ? null : new HotelView(hotel.id(), hotel.name(), hotel.cityName(), hotel.provinceName(),
+                hotel.starRating(), hotel.coverImageUrl());
     }
 
     private static PlaceView placeView(PlaceRef place) {

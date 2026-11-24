@@ -16,6 +16,21 @@ spring:
     show-sql: false
   flyway:
     enabled: true
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    virtual-host: ${RABBIT_VHOST:checkinn}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASS:guest}
+    listener:
+      simple:
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-attempts: 5
+          initial-interval: 2000
+          multiplier: 2
+          max-interval: 30000
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -37,10 +52,14 @@ grpc:
     media-service:
       address: "discovery:///media-service"
       negotiation-type: plaintext
+    booking-service:
+      address: "discovery:///booking-service"
+      negotiation-type: plaintext
 
 social:
   place-service-url: ${PLACE_SERVICE_URL:http://localhost:8087}
   user-service-url: ${USER_SERVICE_URL:http://localhost:8082}
+  hotel-service-url: ${HOTEL_SERVICE_URL:http://localhost:8083}
   client:
     connect-timeout: 2s
     read-timeout: 3s
@@ -59,6 +78,9 @@ social:
     delay-ms: ${SOCIAL_CLEANUP_DELAY_MS:3600000}
     initial-delay-ms: ${SOCIAL_CLEANUP_INITIAL_DELAY_MS:120000}
     batch-size: 100
+  invitations:
+    ttl: ${SOCIAL_INVITATION_TTL:30d}
+    list-max: 20
 
 app:
   token-revocation:

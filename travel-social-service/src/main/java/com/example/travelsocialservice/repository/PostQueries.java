@@ -21,22 +21,26 @@ public class PostQueries {
      * @param status      only posts in this status; null means every status except DELETED
      * @param bodyPattern an ILIKE pattern whose wildcards in user input are already escaped with '!'
      */
-    public record Filter(ContentStatus status, UUID placeId, UUID authorId, String bodyPattern) {
+    public record Filter(ContentStatus status, UUID placeId, UUID hotelId, UUID authorId, String bodyPattern) {
 
         public static Filter published() {
-            return new Filter(ContentStatus.PUBLISHED, null, null, null);
+            return new Filter(ContentStatus.PUBLISHED, null, null, null, null);
         }
 
         public Filter atPlace(UUID placeId) {
-            return new Filter(status, placeId, authorId, bodyPattern);
+            return new Filter(status, placeId, hotelId, authorId, bodyPattern);
+        }
+
+        public Filter atHotel(UUID hotelId) {
+            return new Filter(status, placeId, hotelId, authorId, bodyPattern);
         }
 
         public Filter matchingBody(String bodyPattern) {
-            return new Filter(status, placeId, authorId, bodyPattern);
+            return new Filter(status, placeId, hotelId, authorId, bodyPattern);
         }
 
         public static Filter ownedBy(UUID authorId) {
-            return new Filter(null, null, authorId, null);
+            return new Filter(null, null, null, authorId, null);
         }
     }
 
@@ -56,6 +60,10 @@ public class PostQueries {
         if (filter.placeId() != null) {
             sql.append(" AND p.place_id = :placeId");
             params.put("placeId", filter.placeId());
+        }
+        if (filter.hotelId() != null) {
+            sql.append(" AND p.hotel_id = :hotelId");
+            params.put("hotelId", filter.hotelId());
         }
         if (filter.authorId() != null) {
             sql.append(" AND p.author_id = :authorId");

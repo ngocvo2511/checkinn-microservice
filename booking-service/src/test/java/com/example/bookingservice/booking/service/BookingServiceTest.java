@@ -161,6 +161,23 @@ class BookingServiceTest {
     }
 
     @Test
+    void completedStayIsReturnedOnlyForCheckedOutBookings() {
+        Booking booking = Booking.builder().id(id("booking")).userId(id("guest")).hotelId(id("hotel"))
+                .checkInDate(LocalDate.of(2026, 11, 1)).checkOutDate(LocalDate.of(2026, 11, 3))
+                .status(BookingStatus.CHECKED_OUT).build();
+        when(bookingRepository.findById(id("booking"))).thenReturn(Optional.of(booking));
+        assertThat(bookingService.findCompletedStay(id("booking"))).contains(new BookingService.CompletedStay(
+                id("guest"), id("hotel"), LocalDate.of(2026, 11, 1), LocalDate.of(2026, 11, 3)));
+        for (BookingStatus status : BookingStatus.values()) {
+            booking.setStatus(status);
+            assertThat(bookingService.findCompletedStay(id("booking")).isPresent())
+                    .as("status %s", status).isEqualTo(status == BookingStatus.CHECKED_OUT);
+        }
+        assertThat(bookingService.findCompletedStay(id("missing"))).isEmpty();
+        assertThat(bookingService.findCompletedStay(null)).isEmpty();
+    }
+
+    @Test
     void createBookingRejectsEmptyItemsBeforeHoldingRooms() {
         CreateBookingRequest request = CreateBookingRequest.builder()
                 .hotelId("11111111-1111-4111-8111-111111111111")

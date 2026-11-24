@@ -44,10 +44,11 @@ public class PostController {
 
     @GetMapping("/posts")
     public PageResponse<PostView> recent(@RequestParam(required = false) UUID placeId,
+                                         @RequestParam(required = false) UUID hotelId,
                                          @RequestParam(required = false) String cursor,
                                          @RequestParam(required = false) Integer limit,
                                          @AuthenticationPrincipal Jwt jwt) {
-        return feedService.recent(placeId, cursor, limit, Actor.optional(jwt));
+        return feedService.recent(placeId, hotelId, cursor, limit, Actor.optional(jwt));
     }
 
     @GetMapping("/posts/search")
@@ -62,7 +63,7 @@ public class PostController {
     @GetMapping("/me/posts/{postId}")
     public PostView minePost(@PathVariable UUID postId, @AuthenticationPrincipal Jwt jwt) {
         Actor author = Actor.require(jwt);
-        return assembler.toView(postService.requireOwn(author, postId), author);
+        return assembler.toOwnView(postService.requireOwn(author, postId), author);
     }
 
     @GetMapping("/me/posts")
@@ -87,14 +88,14 @@ public class PostController {
     public ResponseEntity<PostView> create(@RequestBody(required = false) PostRequest request, @AuthenticationPrincipal Jwt jwt) {
         Actor actor = Actor.require(jwt);
         Post post = postService.create(actor, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toView(post, actor));
+        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toOwnView(post, actor));
     }
 
     @PutMapping("/posts/{postId}")
     public PostView update(@PathVariable UUID postId, @RequestBody(required = false) PostRequest request,
                            @AuthenticationPrincipal Jwt jwt) {
         Actor actor = Actor.require(jwt);
-        return assembler.toView(postService.update(actor, postId, request), actor);
+        return assembler.toOwnView(postService.update(actor, postId, request), actor);
     }
 
     @DeleteMapping("/posts/{postId}")

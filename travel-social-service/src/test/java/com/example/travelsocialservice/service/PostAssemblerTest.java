@@ -42,7 +42,7 @@ class PostAssemblerTest {
         places = mock(PlaceClient.class);
         authors = mock(AuthorClient.class);
         when(authors.findAll(any())).thenReturn(Map.of(author.id(), new Author(author.id(), "An N.", null)));
-        assembler = new PostAssembler(media, interactions, places, authors);
+        assembler = new PostAssembler(media, interactions, places, mock(com.example.travelsocialservice.client.HotelClient.class), authors);
     }
 
     private Post review() {

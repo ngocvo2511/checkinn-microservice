@@ -208,6 +208,50 @@ frontend with the flag on. To roll back: rebuild the frontend with the flag off,
 `travel-social-*` routes from `api-gateway` and stop `travel-social-service`. Keep the
 `checkinn_social` database; its migrations are additive and nothing else reads it.
 
+## Social verified stays and stay invitations (23/11/2026)
+
+This section extends the travel-social-service section above (change `social-verified-stays`).
+
+- **New contracts, deployed in this order:**
+  1. `booking-service`: gRPC `GetCompletedStay`. It accepts only `sub=travel-social-service` with
+     role `TRAVEL_SOCIAL_SERVICE` and returns NOT_FOUND unless the booking is `CHECKED_OUT`. The
+     `booking.proto` copies in hotel-service and user-service gain the same additive RPC.
+  2. `hotel-service`: public `GET /hotels/batch?ids=`, with 1–50 IDs. It returns display fields
+     of active `APPROVED` hotels only.
+  3. `travel-social-service`: Flyway V3 adds `posts.hotel_id`, `stay_booking_id` and
+     `verified_stay`, plus the new `stay_invitations` table. It now needs RabbitMQ and reaches
+     hotel-service at `HOTEL_SERVICE_URL` (from `java-env`). It calls booking-service over gRPC
+     through Eureka (`discovery:///booking-service`).
+  4. Frontend.
+- **RabbitMQ.** `social.booking.queue` is bound to `hotel.events` with `booking.status.*` and
+  dead-letters to `social.dlx` → `social.events.dlq`. The queue and DLQ are declared both in
+  `rabbitmq/definitions.json` and by the service, with identical arguments: a mismatch makes the
+  broker refuse the declaration. The queue receives only events published after it exists. Stays
+  completed earlier get no invitation, but their owners can still link them to a post from the
+  composer.
+- **Failure behaviour.**
+  - An event that hits a booking-service or hotel-service outage is retried up to 5 times with
+    backoff, then dead-lettered.
+  - Inspect `social.events.dlq` in the management UI (port 15672). Re-publish messages from there
+    after the outage. Replays are safe because invitations are keyed by booking ID.
+  - Publishing a post with a linked stay returns 503 `BOOKING_SERVICE_UNAVAILABLE` while
+    booking-service is down. Posts without a stay are unaffected.
+
+```powershell
+./stack.ps1 -Test -Action Build -Scope App   # rebuilds booking, hotel and travel-social images
+./stack.ps1 -Test -Action Up -Scope App
+python docker/travel-social-smoke.py         # from the backend root; test overlay only
+```
+
+**Rollback.**
+- Rebuild the frontend with `NEXT_PUBLIC_COMMUNITY_ENABLED=false`, or deploy the previous
+  frontend.
+- Deploy the previous travel-social-service image, so nothing consumes the queue any more. Then
+  delete `social.booking.queue` in the management UI, so that `hotel.events` stops routing booking
+  events to it. revenue-service has its own queue and is not affected.
+- V3 data stays.
+- The booking RPC and the hotel batch endpoint can stay, because nothing else depends on them.
+
 ## Standardization regressions (29/10/2026)
 
 After rebuilding the changed booking/hotel images and starting **only the test
@@ -395,7 +439,7 @@ Không module nào có Dockerfile trước thay đổi này. Một Dockerfile d�
 | notification-service | Không có HTTP listener (YAML có port 8086) | — | AMQP worker, SMTP; không có Web/Eureka client dependency |
 | revenue-service | 8088 | — | PostgreSQL `checkinn_revenue`, RabbitMQ, hotel/regulations |
 | regulations-service | 8091 | — | PostgreSQL `checkinn_regulations`, Redis, RabbitMQ |
-| travel-social-service | 8089 | — | PostgreSQL `checkinn_social`, Redis, user-service REST, media gRPC, place-service REST (`PLACE_SERVICE_URL`) |
+| travel-social-service | 8089 | — | PostgreSQL `checkinn_social`, Redis, RabbitMQ, user-service REST, media and booking gRPC, place-service REST (`PLACE_SERVICE_URL`), hotel-service REST (`HOTEL_SERVICE_URL`) |
 | frontend (profile web) | 3000 | — | Next.js 16 / React 19, Gateway, NextAuth; Google OAuth tùy chọn |
 | redis / rabbitmq | 6379 / 5672 | — | Named volumes; RabbitMQ management 15672 |
 

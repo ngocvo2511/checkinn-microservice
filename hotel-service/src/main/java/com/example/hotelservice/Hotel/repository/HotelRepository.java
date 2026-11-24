@@ -24,6 +24,9 @@ public interface HotelRepository extends JpaRepository<Hotel, UUID> {
 
     List<Hotel> findByNameContainingIgnoreCaseAndIsActiveTrueAndApprovedStatus(String name, HotelApprovalStatus status);
 
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"city", "city.province"})
+    List<Hotel> findByIdInAndIsActiveTrueAndApprovedStatus(java.util.Collection<UUID> ids, HotelApprovalStatus status);
+
     // Lấy tất cả hotel của 1 owner
     List<Hotel> findByOwnerId(UUID ownerId);
 

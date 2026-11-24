@@ -13,6 +13,19 @@ service BookingGrpcService {
   rpc CheckReviewEligibility (ReviewEligibilityRequest) returns (ReviewEligibilityResponse);
   // Narrow user-service recovery lookup; never returns booking/contact/payment data.
   rpc GetLoyaltyBookingState (LoyaltyBookingStateRequest) returns (LoyaltyBookingStateResponse);
+  // Narrow travel-social-service lookup; NOT_FOUND unless the booking is CHECKED_OUT.
+  rpc GetCompletedStay (CompletedStayRequest) returns (CompletedStayResponse);
+}
+
+message CompletedStayRequest {
+  string bookingId = 1;
+}
+
+message CompletedStayResponse {
+  string userId = 1;
+  string hotelId = 2;
+  string checkInDate = 3; // ISO yyyy-MM-dd
+  string checkOutDate = 4;
 }
 
 message LoyaltyBookingStateRequest {

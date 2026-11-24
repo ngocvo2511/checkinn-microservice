@@ -33,8 +33,9 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 class HttpClientsTest {
 
     static final SocialProperties PROPERTIES = new SocialProperties("http://place.invalid", "http://user.invalid",
+            "http://hotel.invalid",
             new SocialProperties.Client(Duration.ofSeconds(2), Duration.ofSeconds(3), Duration.ofMinutes(5)),
-            null, null, null);
+            null, null, null, null);
 
     private MockRestServiceServer server;
     private RestClient.Builder builder;

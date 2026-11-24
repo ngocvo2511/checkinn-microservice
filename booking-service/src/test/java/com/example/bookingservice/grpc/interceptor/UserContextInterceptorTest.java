@@ -53,7 +53,10 @@ class UserContextInterceptorTest {
     @org.junit.jupiter.params.provider.CsvSource({"hotel-service,HOTEL_SERVICE,CheckReviewEligibility,true",
             "hotel-service,HOTEL_SERVICE,GetBooking,false", "hotel-service,HOTEL_SERVICE,CreateBooking,false",
             "user-service,USER_SERVICE,GetLoyaltyBookingState,true", "user-service,USER_SERVICE,GetBooking,false",
-            "user-service,USER_SERVICE,CreateBooking,false"})
+            "user-service,USER_SERVICE,CreateBooking,false",
+            "travel-social-service,TRAVEL_SOCIAL_SERVICE,GetCompletedStay,true",
+            "travel-social-service,TRAVEL_SOCIAL_SERVICE,GetBooking,false",
+            "travel-social-service,TRAVEL_SOCIAL_SERVICE,CreateBooking,false"})
     void signedMachineSubjectsAreRestrictedToNarrowRpcs(String subject, String role, String method, boolean allowed) {
         var descriptor = call.getMethodDescriptor().toBuilder()
                 .setFullMethodName("booking.BookingGrpcService/" + method).build();
