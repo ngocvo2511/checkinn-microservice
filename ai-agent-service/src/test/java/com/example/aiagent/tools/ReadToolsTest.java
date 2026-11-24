@@ -199,7 +199,7 @@ class ReadToolsTest {
                 "{\"cityName\":\"x\",\"sort\":\"UNKNOWN\"}", "{\"cityName\":\"x\",\"size\":6}",
                 "{\"cityName\":\"x\",\"page\":1.5}", "{\"cityName\":\"x\",\"checkIn\":\"2026-12-01\"}",
                 "{\"cityName\":\"x\",\"checkIn\":\"2026-12-01\",\"checkOut\":\"2026-12-03\"}",
-                "{\"cityName\":\"x\",\"minPrice\":1}", "{\"cityName\":\"x\",\"amenityCodes\":[\"EVIL\"]}",
+                "{\"cityName\":\"x\",\"minPrice\":-1}", "{\"cityName\":\"x\",\"amenityCodes\":[\"EVIL\"]}",
                 "{\"cityName\":\"x\",\"accommodationTypes\":[\"MADE_UP\"]}", "{\"cityName\":\"x\",\"amenityCodes\":[\"WIFI\",\"WIFI\"]}",
                 "{\"cityName\":\"x\",\"provinceId\":\"" + H + "\"}", "{\"cityName\":\"x\",\"headers\":{\"Authorization\":\"SECRET\"}}");
     }

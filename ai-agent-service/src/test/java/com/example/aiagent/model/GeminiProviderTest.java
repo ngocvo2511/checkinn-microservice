@@ -227,6 +227,17 @@ class GeminiProviderTest {
         error(() -> provider.fixture("text-v1", new LlmProviderAdapter.CallControl(Duration.ofNanos(1))), TIMEOUT);
         assertThat(fake.calls).hasValue(0);
     }
+    @Test void preflightSeparatesLocalChecksFromUnverifiedExternalEvidence() {
+        var summary = GeminiSyntheticSmoke.preflight(agent(), limits());
+        assertThat(summary).contains("reviewedModel=" + MODEL, "concurrencyCap=1", "fixedRequests=1",
+                "feature=PASS", "provider=PASS", "live=PASS", "synthetic=PASS", "reviewedModelMatch=PASS",
+                "budgets=PASS", "oneRequestExposure=PASS", "keyValidity=NOT_VERIFIED",
+                "accountEvidence=NOT_VERIFIED", "liveInference=NOT_RUN", "OPERATOR_ATTESTATIONS_ONLY");
+        assertThat(GeminiSyntheticSmoke.preflight(agent(), limits("max-exposure-usd=0.000001")))
+                .contains("budgets=PASS", "oneRequestExposure=FAIL");
+        assertThat(GeminiSyntheticSmoke.preflight(agent(), limits("reviewed-model-id=unsafe\nmodel")))
+                .contains("reviewedModel=INVALID", "reviewedModelMatch=FAIL").doesNotContain("unsafe\nmodel");
+    }
     @Test void lateResponseIsRejectedAndConcurrencyIsBounded() throws Exception {
         var entered = new CountDownLatch(1); var release = new CountDownLatch(1); var attempts = new AtomicInteger();
         var provider = provider((request, control, timeout) -> {

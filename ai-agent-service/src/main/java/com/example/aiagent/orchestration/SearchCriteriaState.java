@@ -15,12 +15,13 @@ public record SearchCriteriaState(Map<String, Slot> slots, long revision) {
         @Override public String toString() { return "Slot[origin=" + origin + "]"; }
     }
     private static final Set<String> FIELDS = Set.of("cityId", "provinceId", "cityName", "hotelName", "checkIn", "checkOut",
-            "rooms", "adults", "children", "minPrice", "maxPrice", "accommodationTypes", "amenityCodes", "starRatings", "guestRatings");
+            "rooms", "adults", "children", "minPrice", "maxPrice", "referencePriceExclusive", "accommodationTypes", "amenityCodes", "starRatings", "guestRatings");
     public SearchCriteriaState { slots = Map.copyOf(slots); if (revision < 0) throw new IllegalArgumentException("Invalid revision"); }
     @Override public String toString() { return "SearchCriteriaState[revision=" + revision + ", fields=" + slots.keySet() + "]"; }
     public static SearchCriteriaState empty() { return new SearchCriteriaState(Map.of(), 0); }
     public SearchCriteriaState update(Map<String, Slot> patch, Clock clock) {
         var next = new HashMap<>(slots);
+        if (patch.containsKey("maxPrice")) next.remove("referencePriceExclusive");
         if (!FIELDS.containsAll(patch.keySet())) throw new IllegalArgumentException("Unsupported criteria");
         // An occupancy edit replaces the whole group: no silent old adults/children/rooms.
         if (patch.keySet().stream().anyMatch(Set.of("rooms", "adults", "children")::contains))
@@ -41,7 +42,9 @@ public record SearchCriteriaState(Map<String, Slot> slots, long revision) {
         if (List.of("cityId", "provinceId", "cityName").stream().filter(schema::has).count() > 1) throw new IllegalArgumentException("Ambiguous location");
         for (var entry : slots.entrySet()) {
             String key = entry.getKey(); var value = entry.getValue().value();
-            if (Set.of("rooms", "adults", "children").contains(key)) {
+            if (key.equals("referencePriceExclusive")) {
+                if (!value.isBoolean() || !value.booleanValue() || !schema.has("maxPrice")) throw new IllegalArgumentException("Invalid price");
+            } else if (Set.of("rooms", "adults", "children").contains(key)) {
                 int min = key.equals("children") ? 0 : 1, max = key.equals("rooms") ? 20 : 40;
                 if (!value.isIntegralNumber() || !value.canConvertToInt() || value.intValue() < min || value.intValue() > max)
                     throw new IllegalArgumentException("Invalid occupancy");
@@ -82,6 +85,9 @@ public record SearchCriteriaState(Map<String, Slot> slots, long revision) {
         }
         if (schema.has("minPrice") && schema.has("maxPrice") && schema.get("minPrice").decimalValue().compareTo(schema.get("maxPrice").decimalValue()) > 0)
             throw new IllegalArgumentException("Invalid range");
+        if (schema.has("referencePriceExclusive") && schema.has("minPrice")
+                && schema.get("minPrice").decimalValue().compareTo(schema.get("maxPrice").decimalValue()) >= 0)
+            throw new IllegalArgumentException("Invalid range");
     }
     public JsonNode confirmed(String key) {
         var slot = slots.get(key);
@@ -97,5 +103,9 @@ public record SearchCriteriaState(Map<String, Slot> slots, long revision) {
     public JsonNode confirmedJson() {
         var result = new ObjectMapper().createObjectNode();
         slots.forEach((key, value) -> { if (confirmed(key) != null) result.set(key, confirmed(key)); }); return result;
+    }
+    /** Exact inclusive superset for A01; the exclusive reference-price predicate is applied to fresh cards locally. */
+    public com.fasterxml.jackson.databind.node.ObjectNode searchArguments() {
+        var result = (com.fasterxml.jackson.databind.node.ObjectNode) confirmedJson(); result.remove("referencePriceExclusive"); return result;
     }
 }

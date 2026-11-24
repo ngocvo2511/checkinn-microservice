@@ -93,6 +93,65 @@ class OrchestrationTest {
     AgentOrchestrator.Request request(String id, long revision, PolicyExecutor.Intent intent, Map<String, SearchCriteriaState.Slot> patch) {
         return new AgentOrchestrator.Request(id, revision, "synthetic-user-message", scope(intent), patch, new AtomicBoolean());
     }
+    @Test void vietnameseMultiTurnUsesExistingLeasePolicyAndGrounding() {
+        AtomicReference<String> oldEvidence = new AtomicReference<>();
+        var agent = agent(List.of(r -> {
+            assertThat(context(r).path("confirmedCriteria").path("cityName").asText()).isEqualTo("Đà Lạt");
+            return tools(proposal("search_hotels", searchArgs().replace("Synthetic", "Đà Lạt")));
+        }, r -> { oldEvidence.set(context(r).at("/untrustedEvidence/0/evidenceId").asText()); return grounded(r); },
+                r -> {
+                    assertThat(context(r).path("untrustedEvidence")).isEmpty();
+                    return text("{\"evidenceIds\":[\"" + oldEvidence.get() + "\"]}");
+                }));
+        var one = agent.turnVietnamese("vi", 0, "Tìm khách sạn ở Đà Lạt ngày 01/12/2026", new AtomicBoolean());
+        assertThat(one.answer().category()).isEqualTo("NEED_DATES");
+        var two = agent.turnVietnamese("vi", 1, "từ 01/12/2026 đến 03/12/2026", new AtomicBoolean());
+        assertThat(two.answer().category()).isEqualTo("NEED_OCCUPANCY");
+        assertThat(model).hasValue(0); assertThat(http).hasValue(0);
+        var three = agent.turnVietnamese("vi", 2, "2 người lớn 0 trẻ em 1 phòng", new AtomicBoolean());
+        assertThat(three.answer().category()).isEqualTo("GROUNDED");
+        assertThat(three.budget().modelRequests()).isEqualTo(2); assertThat(http).hasValue(1);
+        assertThat(store.findById("vi").orElseThrow().criteria().hasOccupancy()).isTrue();
+        var four = agent.turnVietnamese("vi", 3, "không phải Đà Lạt, đổi sang Nha Trang", new AtomicBoolean());
+        assertThat(four.answer().category()).isEqualTo("GROUNDING_REJECTED");
+        assertThat(four.answer().facts()).isEmpty();
+        assertThat(store.findById("vi").orElseThrow().criteria().confirmed("cityName").asText()).isEqualTo("Nha Trang");
+        assertThat(four.evidenceCount()).isZero();
+    }
+    @Test void vietnameseAmbiguityDoesNotInventOccupancyAndFailedExtractionPreservesState() {
+        var agent = agent(List.of());
+        agent.turnVietnamese("vi-invalid", 0, "Tìm khách sạn Đà Lạt ngày 01/12/2026", new AtomicBoolean());
+        var before = store.findById("vi-invalid").orElseThrow();
+        var invalid = agent.turnVietnamese("vi-invalid", 1, "31/02/2027", new AtomicBoolean());
+        assertThat(invalid.answer().category()).isEqualTo("INVALID_NLU");
+        assertThat(store.findById("vi-invalid").orElseThrow()).isEqualTo(before);
+        var ambiguous = agent.turnVietnamese("vi-invalid", 1, "Tìm phòng cho 2 người", new AtomicBoolean());
+        assertThat(ambiguous.answer().category()).isEqualTo("NLU_CLARIFICATION");
+        assertThat(store.findById("vi-invalid").orElseThrow().criteria().hasOccupancy()).isFalse();
+        assertThat(model).hasValue(0); assertThat(http).hasValue(0);
+    }
+    @Test void vietnameseRevisionLeaseCancellationAndUnsupportedStayOffline() {
+        var agent = agent(List.of());
+        agent.turnVietnamese("vi-lock", 0, "Đà Lạt", new AtomicBoolean());
+        assertThat(agent.turnVietnamese("vi-lock", 0, "Nha Trang", new AtomicBoolean()).answer().category()).isEqualTo("REVISION_CONFLICT");
+        try (var lease = store.begin("vi-lock", 1)) {
+            assertThat(agent.turnVietnamese("vi-lock", 1, "Nha Trang", new AtomicBoolean()).answer().category()).isEqualTo("SESSION_BUSY");
+        }
+        assertThat(agent.turnVietnamese("vi-lock", 1, "Đà Lạt", new AtomicBoolean(true)).answer().category()).isEqualTo("CANCELLED");
+        assertThat(agent.turnVietnamese("vi-lock", 1, "Đặt luôn phòng này", new AtomicBoolean()).answer().category()).isEqualTo("UNSUPPORTED");
+        assertThat(model).hasValue(0); assertThat(http).hasValue(0);
+    }
+    @Test void vietnameseOccupancyEditReplacesWholeConfirmedGroupAndClearRetainsOtherFacts() {
+        var agent = agent(List.of());
+        agent.turnVietnamese("vi-edit", 0, "Đà Lạt 2 người lớn 0 trẻ em 1 phòng giá tối đa 1 triệu một đêm", new AtomicBoolean());
+        agent.turnVietnamese("vi-edit", 1, "3 người lớn", new AtomicBoolean());
+        var state = store.findById("vi-edit").orElseThrow().criteria();
+        assertThat(state.occupancy("adults")).isEqualTo(3); assertThat(state.occupancy("rooms")).isNull();
+        agent.turnVietnamese("vi-edit", 2, "bỏ bộ lọc giá", new AtomicBoolean());
+        state = store.findById("vi-edit").orElseThrow().criteria();
+        assertThat(state.confirmed("maxPrice")).isNull(); assertThat(state.occupancy("adults")).isEqualTo(3);
+        assertThat(model).hasValue(0); assertThat(http).hasValue(0);
+    }
     @Test void searchRunsThroughPolicyHttpEvidenceAndGroundedFinal() {
         var agent = agent(List.of(r -> tools(proposal("search_hotels", searchArgs())), OrchestrationTest::grounded));
         var result = agent.turn(request("search", 0, PolicyExecutor.Intent.SEARCH, full()));

@@ -16,4 +16,5 @@ final class GeminiBudget {
     }
     synchronized void release() { active--; }
     synchronized void stop() { stopped = true; }
+    synchronized BigDecimal exposure() { return exposure; }
 }

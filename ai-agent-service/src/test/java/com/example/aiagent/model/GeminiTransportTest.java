@@ -149,4 +149,28 @@ class GeminiTransportTest {
             assertThat(result.aiMessage().text()).isEqualTo("{\"evidenceIds\":[]}"); assertThat(calls).hasValue(1);
         } finally { server.stop(0); meters.close(); }
     }
+    @Test void firstCallSendsAdaptedSdkWireThroughApacheOnceToSyntheticLoopback() throws Exception {
+        var calls = new AtomicInteger(); var body = new AtomicReference<String>(); var key = new AtomicReference<String>();
+        var server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        server.createContext("/", exchange -> {
+            calls.incrementAndGet(); body.set(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+            key.set(exchange.getRequestHeaders().getFirst("x-goog-api-key"));
+            var bytes = GeminiProviderTest.text().getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type", "application/json"); exchange.sendResponseHeaders(200, bytes.length);
+            try { exchange.getResponseBody().write(bytes); } finally { exchange.close(); }
+        }); server.start();
+        try {
+            var result = GeminiSyntheticSmoke.runFixed(GeminiFirstCallTest.agent(GeminiSmokeApproval.MODEL), GeminiFirstCallTest.limits(),
+                    GeminiFirstCallTest.approvals(), "synthetic-noncredential",
+                    new GeminiHttpTransport(URI.create("http://127.0.0.1:" + server.getAddress().getPort() + "/")),
+                    new GeminiBudget(), new GeminiSmokeDiagnostics());
+            assertThat(result.category()).isEqualTo("SUCCESS"); assertThat(calls).hasValue(1);
+            var sent = GeminiLlmProviderAdapter.JSON.readTree(body.get());
+            assertThat(sent.path("generationConfig").has("candidateCount")).isFalse();
+            assertThat(sent.path("generationConfig").path("maxOutputTokens").intValue()).isEqualTo(128);
+            assertThat(sent.path("generationConfig").path("responseJsonSchema").path("additionalProperties").booleanValue()).isFalse();
+            assertThat(sent.has("tools")).isFalse(); assertThat(body.get()).doesNotContain("synthetic-noncredential");
+            assertThat(key.get()).isEqualTo("synthetic-noncredential");
+        } finally { server.stop(0); }
+    }
 }

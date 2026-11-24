@@ -33,6 +33,12 @@ checkinn:
     max-exposure-usd: ${AGENT_GEMINI_MAX_EXPOSURE_USD:0}
     input-usd-per-million-upper-bound: ${AGENT_GEMINI_INPUT_USD_PER_MILLION_UPPER_BOUND:0}
     output-usd-per-million-upper-bound: ${AGENT_GEMINI_OUTPUT_USD_PER_MILLION_UPPER_BOUND:0}
+  # Only the standalone smoke configuration binds this section; normal application never obtains a permit.
+  gemini-smoke:
+    offline-transport-safety: ${AGENT_GEMINI_SMOKE_OFFLINE_TRANSPORT_SAFETY:NOT_VERIFIED}
+    first-call: ${AGENT_GEMINI_SMOKE_FIRST_CALL:NOT_VERIFIED}
+    no-paid-billing: ${AGENT_GEMINI_SMOKE_NO_PAID_BILLING:NOT_VERIFIED}
+    exclusive-quota: ${AGENT_GEMINI_SMOKE_EXCLUSIVE_QUOTA:NOT_VERIFIED}
 management:
   endpoints:
     web:

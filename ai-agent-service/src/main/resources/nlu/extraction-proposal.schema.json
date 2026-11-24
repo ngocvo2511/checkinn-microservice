@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Offline extraction proposal v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "intent",
+    "fields"
+  ],
+  "properties": {
+    "intent": {
+      "enum": [
+        "SEARCH",
+        "BROWSE",
+        "REFINE",
+        "CLARIFY",
+        "UNSUPPORTED",
+        "UNVERIFIABLE"
+      ]
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 11,
+      "properties": {
+        "cityName": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                }
+              }
+            }
+          ]
+        },
+        "hotelName": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              }
+            }
+          ]
+        },
+        "checkIn": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                }
+              }
+            }
+          ]
+        },
+        "checkOut": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                }
+              }
+            }
+          ]
+        },
+        "adults": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 40
+                }
+              }
+            }
+          ]
+        },
+        "children": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 40
+                }
+              }
+            }
+          ]
+        },
+        "rooms": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                }
+              }
+            }
+          ]
+        },
+        "minPrice": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "referencePriceExclusive": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "value"],
+          "properties": {"operation": {"const": "REPLACE"}, "value": {"const": true}}
+        },
+        "maxPrice": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "starRatings": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "CLEAR"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "value"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "REPLACE"
+                },
+                "value": {
+                  "type": "array",
+                  "maxItems": 5,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

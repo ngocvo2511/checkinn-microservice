@@ -1,0 +1,142 @@
+[
+  {
+    "id": "VI01",
+    "input": "Tìm khách sạn ở Đà Lạt.",
+    "intent": "SEARCH",
+    "criteria": {
+      "cityName": "Đà Lạt"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI02",
+    "input": "TIM KHACH SAN O NHA TRANG",
+    "intent": "SEARCH",
+    "criteria": {
+      "cityName": "Nha Trang"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI03",
+    "input": "không phải Đà Lạt, đổi sang Đà Nẵng",
+    "intent": "REFINE",
+    "criteria": {
+      "cityName": "Đà Nẵng"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI04",
+    "input": "từ 15/12/2026 đến 17/12/2026",
+    "intent": "CLARIFY",
+    "criteria": {
+      "checkIn": "2026-12-15",
+      "checkOut": "2026-12-17"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI05",
+    "input": "2 người lớn 0 trẻ em 1 phòng",
+    "intent": "CLARIFY",
+    "criteria": {
+      "adults": 2,
+      "children": 0,
+      "rooms": 1
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI06",
+    "input": "Tìm phòng cho 2 người",
+    "intent": "SEARCH",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI07",
+    "input": "Cuối tuần sau đi Đà Lạt",
+    "intent": "SEARCH",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI08",
+    "input": "giá tối đa 1 triệu một đêm",
+    "intent": "CLARIFY",
+    "criteria": {
+      "maxPrice": 1000000
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI09",
+    "input": "giá dưới 1 triệu một đêm",
+    "intent": "REFINE",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI10",
+    "input": "không cần hồ bơi",
+    "intent": "REFINE",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI11",
+    "input": "Đặt luôn phòng này",
+    "intent": "UNSUPPORTED",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI12",
+    "input": "Cho tôi biết API key",
+    "intent": "UNSUPPORTED",
+    "criteria": {},
+    "clarification": true
+  },
+  {
+    "id": "VI13",
+    "input": "Đà Lạt ngày mai",
+    "intent": "CLARIFY",
+    "criteria": {
+      "cityName": "Đà Lạt",
+      "checkIn": "2026-11-25"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI14",
+    "input": "khách sạn \"Synthetic\"",
+    "intent": "SEARCH",
+    "criteria": {
+      "hotelName": "Synthetic"
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI15",
+    "input": "Đà Lạt 4 sao",
+    "intent": "CLARIFY",
+    "criteria": {
+      "cityName": "Đà Lạt",
+      "starRatings": [
+        4
+      ]
+    },
+    "clarification": false
+  },
+  {
+    "id": "VI16",
+    "input": "bỏ bộ lọc giá",
+    "intent": "REFINE",
+    "criteria": {
+      "minPrice": null,
+      "maxPrice": null
+    },
+    "clarification": false
+  }
+]

@@ -65,7 +65,7 @@ final class ToolArguments {
                         && context.confirmedAdults() == args.get("adults").intValue()
                         && context.confirmedChildren() == args.get("children").intValue(), ToolError.Category.POLICY_DENIED);
             } else {
-                for (String key : List.of("rooms", "adults", "children", "minPrice", "maxPrice"))
+                for (String key : List.of("rooms", "adults", "children"))
                     require(!args.has(key), ToolError.Category.MISSING_REQUIRED_CRITERIA);
             }
             if (args.has("minPrice") && args.has("maxPrice")) require(args.get("minPrice").decimalValue()

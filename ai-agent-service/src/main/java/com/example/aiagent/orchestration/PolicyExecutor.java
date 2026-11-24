@@ -8,9 +8,11 @@ import java.util.*;
 
 /** Sole orchestration dispatch path. No tool rights originate in model or tool-output text. */
 public final class PolicyExecutor {
-    public enum Intent { SEARCH, BROWSE, DETAIL, ROOMS, AVAILABILITY, REVIEWS, LOCATIONS, CANCELLATION }
+    public enum Intent { SEARCH, BROWSE, DETAIL, ROOM_DETAIL, ROOMS, AVAILABILITY, REVIEWS, LOCATIONS, CANCELLATION }
     public record Scope(Intent intent, String hotelId, String roomTypeId) { public Scope { Objects.requireNonNull(intent); } }
-    public record Outcome(String category, String evidenceId, ToolResult.Status status) {}
+    public record Outcome(String category, String evidenceId, ToolResult.Status status, ResponseSemantics.ErrorCode error) {
+        public Outcome(String category, String evidenceId, ToolResult.Status status) { this(category, evidenceId, status, null); }
+    }
     private final ToolRegistry registry;
     private final io.micrometer.tracing.Tracer tracer;
     public PolicyExecutor(ToolRegistry registry) { this(registry, null); }
@@ -29,6 +31,7 @@ public final class PolicyExecutor {
                 }
             }
             case DETAIL -> { if (scope.hotelId() != null) ids.add(ToolId.A02); }
+            case ROOM_DETAIL -> { if (scope.roomTypeId() != null) ids.add(ToolId.A04); }
             case ROOMS -> { if (scope.hotelId() != null) ids.add(ToolId.A03); }
             case AVAILABILITY -> {
                 if (scope.roomTypeId() != null && criteria.hasDates() && criteria.hasOccupancy()) {
@@ -83,15 +86,29 @@ public final class PolicyExecutor {
         budget.checkHttpAdmission(); budget.attach(context);
         var result = registry.execute(id, args, context);
         budget.check();
+        if (result.error() != null) evidence.invalidate(id, normalized);
         var record = evidence.add(result, normalized);
-        return new Outcome(result.error() == null ? "VERIFIED" : result.error().category().name(), record.map(EvidenceLedger.Record::id).orElse(null), result.status());
+        return new Outcome(result.error() == null ? "VERIFIED" : result.error().category().name(), record.map(EvidenceLedger.Record::id).orElse(null), result.status(), result.error() == null ? null : ResponseSemantics.classify(result.error()));
+    }
+    /** Bounded server-resolved pair, same turn budget and admission path as model proposals. */
+    List<Outcome> refreshComparisonDetails(List<ResultSetReferences.Identity> identities, SearchCriteriaState criteria,
+                                           EvidenceLedger evidence, TurnBudget budget, Set<String> executed) {
+        if (identities.size() != 2) throw new IllegalArgumentException("Expected two identities");
+        budget.reserveProposals(2); budget.reserveRound();
+        var outcomes = new ArrayList<Outcome>();
+        for (var identity : identities) {
+            var args = new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("hotelId", identity.hotelId());
+            var proposal = ToolExecutionRequest.builder().id(UUID.randomUUID().toString()).name(ToolId.A02.toolName()).arguments(args.toString()).build();
+            outcomes.add(execute(proposal, Set.of(ToolId.A02), new Scope(Intent.DETAIL, identity.hotelId(), null), criteria, evidence, budget, executed));
+        }
+        return List.copyOf(outcomes);
     }
     private boolean matches(ToolId id, JsonNode args, Scope scope, SearchCriteriaState criteria, EvidenceLedger evidence) {
         if (id == ToolId.A01) {
-            var expected = (ObjectNode) criteria.confirmedJson();
+            var expected = criteria.searchArguments();
             if (scope.intent() == Intent.BROWSE) {
-                // Explicit browse only. Do not silently drop a supplied stay, occupancy or price filter.
-                if (List.of("checkIn", "checkOut", "rooms", "adults", "children", "minPrice", "maxPrice").stream().anyMatch(expected::has)) return false;
+                // D1: reference-price filters keep their exact inclusive VND semantics; never drop a stay/occupancy.
+                if (List.of("checkIn", "checkOut", "rooms", "adults", "children").stream().anyMatch(expected::has)) return false;
             }
             var actual = (ObjectNode) args.deepCopy();
             for (String key : List.of("page", "size", "sort")) actual.remove(key);

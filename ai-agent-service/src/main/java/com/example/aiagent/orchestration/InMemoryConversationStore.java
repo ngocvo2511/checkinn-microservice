@@ -37,7 +37,7 @@ public final class InMemoryConversationStore implements ConversationStore {
                             || next.recentMessages().size() > 8 || next.evidence().size() > 24)
                         throw new TurnBudget.Stop("REVISION_CONFLICT");
                     states.put(id, new ConversationState(id, next.revision(), next.totalMessages(), next.recentMessages(), next.criteria(),
-                            next.evidence(), clock.instant(), clock.instant().plus(ttl)));
+                            next.evidence(), clock.instant(), clock.instant().plus(ttl), next.selection(), next.resultSet(), next.confirmationEvents(), next.lastConfirmationAt()));
                     committed = true;
                 }
             }
