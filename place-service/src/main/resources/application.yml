@@ -57,3 +57,17 @@ osrm:
   base-url: ${OSRM_BASE_URL:http://localhost:5000}
   timeout-ms: ${OSRM_TIMEOUT_MS:1500}
   enabled: ${OSRM_ENABLED:true}
+
+# Starting coefficients; refit them from observed trip times (see TravelEstimateProperties).
+routing:
+  estimate:
+    congestion-base: 1.25
+    congestion-urban-extra: 0.55
+    congestion-decay-km: 6.0
+    departure-buffer-minutes: 2.0
+    circuity-base: 1.25
+    circuity-short-trip-extra: 0.25
+    circuity-decay-km: 3.0
+    fallback-urban-speed-kmh: 20.0
+    fallback-open-road-speed-kmh: 35.0
+    fallback-speed-ramp-km: 10.0

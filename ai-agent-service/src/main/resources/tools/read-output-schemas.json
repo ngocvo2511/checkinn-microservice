@@ -1,0 +1,832 @@
+{
+  "search_hotels": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hotelId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "cityName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "starRating": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "accommodationType": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "offer": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "roomTypeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "unitPrice": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "totalPerNight": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "availableRooms": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "checkIn": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "checkOut": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "checkedAt": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "roomTypeId",
+                "quantity",
+                "unitPrice",
+                "totalPerNight",
+                "availableRooms",
+                "checkIn",
+                "checkOut",
+                "checkedAt"
+              ]
+            },
+            "reviews": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "hotelId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "totalReviews": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "averageRating": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 10
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "hotelId",
+                "totalReviews",
+                "averageRating"
+              ]
+            }
+          },
+          "required": [
+            "hotelId",
+            "name",
+            "offer",
+            "reviews"
+          ]
+        },
+        "maxItems": 5
+      },
+      "page": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "size": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "totalElements": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "totalPages": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "sort": {
+        "enum": [
+          "DEFAULT",
+          "PRICE_ASC",
+          "PRICE_DESC",
+          "RATING_DESC"
+        ]
+      },
+      "occupancyBasis": {
+        "enum": [
+          "USER_CONFIRMED",
+          "BACKEND_DEFAULT_BROWSE"
+        ]
+      }
+    },
+    "required": [
+      "items",
+      "page",
+      "size",
+      "totalElements",
+      "totalPages",
+      "sort",
+      "occupancyBasis"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "get_hotel": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "hotelId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "address": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "street": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "city": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "country": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": []
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "starRating": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "accommodationTypeLabel": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "lowestBasePrice": {
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "policies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "category",
+            "content"
+          ]
+        },
+        "maxItems": 10
+      },
+      "faqs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "question": {
+              "type": "string"
+            },
+            "answer": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "question",
+            "answer"
+          ]
+        },
+        "maxItems": 10
+      },
+      "amenities": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "verifiedCodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "label"
+                ]
+              }
+            }
+          },
+          "required": [
+            "label",
+            "verifiedCodes"
+          ]
+        },
+        "maxItems": 10
+      }
+    },
+    "required": [
+      "hotelId",
+      "name",
+      "lowestBasePrice",
+      "policies",
+      "faqs",
+      "amenities"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "list_public_rooms": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "hotelId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "rooms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "roomTypeId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "hotelId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "basePrice": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "capacity": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "adults": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "children": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "adults",
+                "children"
+              ]
+            },
+            "amenities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "roomTypeId",
+            "hotelId",
+            "name",
+            "basePrice",
+            "capacity",
+            "amenities"
+          ],
+          "$schema": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "maxItems": 10
+      },
+      "hasMore": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "hotelId",
+      "rooms",
+      "hasMore"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "get_public_room": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "roomTypeId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "hotelId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "name": {
+        "type": "string"
+      },
+      "basePrice": {
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "capacity": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "adults": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "children": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "adults",
+          "children"
+        ]
+      },
+      "amenities": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "roomTypeId",
+      "hotelId",
+      "name",
+      "basePrice",
+      "capacity",
+      "amenities"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "check_availability": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "roomTypeId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "checkIn": {
+        "type": "string",
+        "format": "date"
+      },
+      "checkOut": {
+        "type": "string",
+        "format": "date"
+      },
+      "quantity": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20
+      },
+      "available": {
+        "type": "boolean"
+      },
+      "availableRooms": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "roomTypeId",
+      "checkIn",
+      "checkOut",
+      "quantity",
+      "available",
+      "availableRooms"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "resolve_locations": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "locations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "parentName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "enum": [
+                "CITY",
+                "PROVINCE"
+              ]
+            },
+            "parentId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "parentName",
+            "type",
+            "parentId"
+          ]
+        },
+        "maxItems": 10
+      },
+      "hasMore": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "locations",
+      "hasMore"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "list_accommodation_types": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "types": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "label"
+          ]
+        },
+        "maxItems": 50
+      }
+    },
+    "required": [
+      "types"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "list_amenity_catalog": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "amenities": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "label"
+          ]
+        },
+        "maxItems": 200
+      }
+    },
+    "required": [
+      "amenities"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "get_review_summaries": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "summaries": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hotelId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "totalReviews": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "averageRating": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "hotelId",
+            "totalReviews",
+            "averageRating"
+          ]
+        },
+        "maxItems": 3
+      },
+      "missingHotelIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "maxItems": 3
+      }
+    },
+    "required": [
+      "summaries",
+      "missingHotelIds"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "get_cancellation_policy": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "string"
+      },
+      "checkInTime": {
+        "type": "string"
+      },
+      "timeZone": {
+        "type": "string"
+      },
+      "freeCancellationHours": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "version",
+      "checkInTime",
+      "timeZone",
+      "freeCancellationHours"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
+  }
+}

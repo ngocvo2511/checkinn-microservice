@@ -22,16 +22,9 @@ public record NearbyPlaceResponse(
         String provinceName,
         Double distanceKm,
         Integer estimatedTravelTimeMinutes,
+        /** True when distance/time come from the straight-line circuity estimate instead of OSRM routing. */
+        Boolean distanceEstimated,
         List<PlacePhotoDto> photos,
         List<PlaceReviewDto> reviews
 ) implements Serializable {
-
-    public static Integer calculateTravelTimeMinutes(Double distanceKm) {
-        if (distanceKm == null || distanceKm <= 0) {
-            return 1;
-        }
-        // Assuming average urban transit velocity in Vietnam (~22 km/h) plus 1-minute departure buffer
-        int minutes = (int) Math.round((distanceKm / 22.0) * 60.0 + 1.0);
-        return Math.max(1, minutes);
-    }
 }
