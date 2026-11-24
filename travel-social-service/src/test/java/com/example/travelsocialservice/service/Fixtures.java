@@ -26,11 +26,12 @@ final class Fixtures {
     static final Clock CLOCK = Clock.fixed(NOW, ZoneOffset.UTC);
 
     static final SocialProperties PROPERTIES = new SocialProperties(
-            "http://place.invalid", "http://user.invalid",
+            "http://place.invalid", "http://user.invalid", "http://hotel.invalid",
             new SocialProperties.Client(Duration.ofSeconds(2), Duration.ofSeconds(3), Duration.ofMinutes(5)),
             new SocialProperties.Limits(5000, 1000, 500, 5, 5 * 1024 * 1024, 20),
             new SocialProperties.Retention(Duration.ofHours(24), Duration.ofDays(30)),
-            new SocialProperties.Cleanup(100));
+            new SocialProperties.Cleanup(100),
+            new SocialProperties.Invitations(Duration.ofDays(30), 20));
 
     private Fixtures() {
     }

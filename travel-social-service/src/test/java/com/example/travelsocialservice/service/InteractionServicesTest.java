@@ -73,7 +73,10 @@ class InteractionServicesTest {
         when(assembler.authorViews(any())).thenAnswer(call -> ((Collection<UUID>) call.getArgument(0)).stream().distinct()
                 .collect(Collectors.toMap(id -> id, id -> new AuthorView(id, "An N.", null))));
 
-        postService = new PostService(posts, mock(PostMediaRepository.class), audits, mock(PlaceClient.class), PROPERTIES, CLOCK);
+        postService = new PostService(posts, mock(PostMediaRepository.class), audits, mock(PlaceClient.class),
+                mock(com.example.travelsocialservice.client.HotelClient.class),
+                mock(com.example.travelsocialservice.client.CompletedStays.class),
+                mock(com.example.travelsocialservice.repository.StayInvitationRepository.class), metrics(), PROPERTIES, CLOCK);
         likeService = new LikeService(postService, interactions, CLOCK);
         commentService = new CommentService(comments, posts, audits, postService, assembler, PROPERTIES, CLOCK);
         reportService = new ReportService(reports, comments, postService, commentService, PROPERTIES, metrics(), CLOCK);

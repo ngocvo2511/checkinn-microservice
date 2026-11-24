@@ -105,4 +105,34 @@ class SocialRoutesConfigTest {
         });
         assertThat(socialRoutes).extracting(r -> r.get("id")).containsAll(expectedPerWindow.keySet());
     }
+
+    @Test
+    void stayInvitationRoutesUseTheMutationLimitForDismissAndTheReadRouteForListing() {
+        assertThat(firstMatchingRoute("POST", "/api/social/me/stay-invitations/" + UUID.randomUUID() + "/dismiss"))
+                .isEqualTo("travel-social-other-mutations");
+        assertThat(firstMatchingRoute("GET", "/api/social/me/stay-invitations")).isEqualTo("travel-social-read");
+        assertThat(firstMatchingRoute("GET", "/api/social/posts")).isEqualTo("travel-social-read");
+    }
+
+    /** Mirrors gateway matching: routes are tried in order; a route matches when its path and method predicates do. */
+    static String firstMatchingRoute(String method, String path) {
+        var parser = new org.springframework.web.util.pattern.PathPatternParser();
+        var container = org.springframework.http.server.PathContainer.parsePath(path);
+        for (Map<String, Object> route : socialRoutes) {
+            boolean pathMatches = false;
+            boolean methodMatches = true;
+            for (String predicate : predicates(route)) {
+                if (predicate.startsWith("Path=")) {
+                    pathMatches = Arrays.stream(predicate.substring(5).split(","))
+                            .anyMatch(pattern -> parser.parse(pattern.trim()).matches(container));
+                } else if (predicate.startsWith("Method=")) {
+                    methodMatches = Arrays.stream(predicate.substring(7).split(",")).map(String::trim).anyMatch(method::equals);
+                }
+            }
+            if (pathMatches && methodMatches) {
+                return route.get("id").toString();
+            }
+        }
+        return null;
+    }
 }

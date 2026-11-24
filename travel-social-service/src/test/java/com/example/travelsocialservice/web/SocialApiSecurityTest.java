@@ -47,7 +47,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {PostController.class, MediaReportController.class, AdminModerationController.class},
+@WebMvcTest(controllers = {PostController.class, MediaReportController.class, AdminModerationController.class,
+        StayInvitationController.class},
         properties = {"jwt.secret=" + SocialApiSecurityTest.SECRET, "spring.cloud.discovery.enabled=false",
                 "eureka.client.enabled=false", "spring.boot.admin.client.enabled=false"})
 @Import({SecurityConfig.class, ApiExceptionHandler.class})
@@ -68,6 +69,7 @@ class SocialApiSecurityTest {
     @MockBean MediaService mediaService;
     @MockBean ReportService reportService;
     @MockBean ModerationService moderationService;
+    @MockBean com.example.travelsocialservice.service.StayInvitationService invitationService;
 
     static String token(String secret, String subject, String role, long expiresInSeconds) throws Exception {
         SignedJWT jwt = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), new JWTClaimsSet.Builder()
@@ -91,7 +93,7 @@ class SocialApiSecurityTest {
 
     @BeforeEach
     void stubs() {
-        when(feedService.recent(any(), any(), any(), any())).thenReturn(new PageResponse<>(List.of(), null));
+        when(feedService.recent(any(), any(), any(), any(), any())).thenReturn(new PageResponse<>(List.of(), null));
         Post post = new Post();
         post.setId(POST);
         post.setAuthorId(USER);
@@ -106,7 +108,7 @@ class SocialApiSecurityTest {
         mvc.perform(get("/api/social/posts/" + POST + "/comments")).andExpect(status().isOk());
         mvc.perform(get("/api/social/posts/search").param("q", "beach")).andExpect(status().isOk());
         mvc.perform(get("/api/social/places/" + UUID.randomUUID() + "/rating")).andExpect(status().isOk());
-        verify(feedService).recent(isNull(), isNull(), isNull(), isNull());
+        verify(feedService).recent(isNull(), isNull(), isNull(), isNull(), isNull());
     }
 
     @Test
@@ -123,6 +125,8 @@ class SocialApiSecurityTest {
                 multipart("/api/social/media").file(new MockMultipartFile("file", new byte[]{1})),
                 get("/api/social/me/posts"),
                 get("/api/social/me/posts/" + POST),
+                get("/api/social/me/stay-invitations"),
+                post("/api/social/me/stay-invitations/" + UUID.randomUUID() + "/dismiss"),
                 get("/api/social/admin/reports"));
         for (MockHttpServletRequestBuilder mutation : mutations) {
             mvc.perform(mutation).andExpect(status().isUnauthorized())
@@ -215,7 +219,7 @@ class SocialApiSecurityTest {
     @Test
     void signedInReadsPassTheViewerForLikeState() throws Exception {
         mvc.perform(asUser(get("/api/social/posts"))).andExpect(status().isOk());
-        verify(feedService).recent(isNull(), isNull(), isNull(), eq(new Actor(USER, false)));
+        verify(feedService).recent(isNull(), isNull(), isNull(), isNull(), eq(new Actor(USER, false)));
     }
 
     @Test
@@ -234,6 +238,41 @@ class SocialApiSecurityTest {
         mvc.perform(asUser(post("/api/social/reports")).contentType("application/json")
                 .content("{\"targetType\":\"HOTEL\",\"targetId\":\"" + POST + "\",\"reason\":\"SPAM\"}"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void invitationsAreScopedToTheSignedInUser() throws Exception {
+        UUID invitation = UUID.randomUUID();
+        when(invitationService.openFor(any())).thenReturn(List.of());
+
+        mvc.perform(asUser(get("/api/social/me/stay-invitations"))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.items").isArray());
+        verify(invitationService).openFor(new Actor(USER, false));
+
+        mvc.perform(asUser(post("/api/social/me/stay-invitations/" + invitation + "/dismiss")))
+                .andExpect(status().isNoContent());
+        verify(invitationService).dismiss(new Actor(USER, false), invitation);
+
+        mvc.perform(as(get("/api/social/me/stay-invitations"), "travel-social-service", "TRAVEL_SOCIAL_SERVICE"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void theHotelFeedAndStayLinkReachTheServicesButAClientBadgeFlagDoesNot() throws Exception {
+        UUID hotel = UUID.randomUUID();
+        UUID booking = UUID.randomUUID();
+
+        mvc.perform(get("/api/social/posts").param("hotelId", hotel.toString())).andExpect(status().isOk());
+        verify(feedService).recent(isNull(), eq(hotel), isNull(), isNull(), isNull());
+
+        mvc.perform(asUser(post("/api/social/posts")).contentType("application/json")
+                        .content("{\"body\":\"Stayed here\",\"hotelId\":\"" + hotel + "\",\"stayBookingId\":\"" + booking
+                                + "\",\"verifiedStay\":true,\"userId\":\"" + ADMIN + "\"}"))
+                .andExpect(status().isCreated());
+        ArgumentCaptor<PostRequest> request = ArgumentCaptor.forClass(PostRequest.class);
+        verify(postService).create(eq(new Actor(USER, false)), request.capture());
+        assertThat(request.getValue().hotelId()).isEqualTo(hotel);
+        assertThat(request.getValue().stayBookingId()).isEqualTo(booking);
     }
 
     @Test

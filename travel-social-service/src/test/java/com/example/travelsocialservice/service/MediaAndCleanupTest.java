@@ -104,6 +104,7 @@ class MediaAndCleanupTest {
         TransactionTemplate transactions = mock(TransactionTemplate.class);
         when(transactions.execute(any())).thenReturn(0);
         return new CleanupJob(posts, mediaRepository, mock(CommentRepository.class), mock(ReportRepository.class),
+                mock(com.example.travelsocialservice.repository.StayInvitationRepository.class),
                 mediaService, PROPERTIES, metrics(), transactions, CLOCK);
     }
 
@@ -119,13 +120,20 @@ class MediaAndCleanupTest {
         when(transactions.execute(any())).thenAnswer(call -> call.<TransactionCallback<?>>getArgument(0).doInTransaction(null));
         SimpleMeterRegistry registry = new SimpleMeterRegistry();
 
-        new CleanupJob(posts, mediaRepository, comments, reports, mediaService, PROPERTIES,
+        com.example.travelsocialservice.repository.StayInvitationRepository invitations =
+                mock(com.example.travelsocialservice.repository.StayInvitationRepository.class);
+        when(invitations.expireOverdue(NOW)).thenReturn(4);
+        when(invitations.deleteClosedBefore(NOW.minus(PROPERTIES.retention().deletedContent()))).thenReturn(5);
+
+        new CleanupJob(posts, mediaRepository, comments, reports, invitations, mediaService, PROPERTIES,
                 new SocialMetrics(registry), transactions, CLOCK).run();
 
         verify(reports).deleteOrphaned();
         assertThat(registry.counter("social.cleanup.removed", "kind", "deleted_comments").count()).isEqualTo(3);
         assertThat(registry.counter("social.cleanup.removed", "kind", "closed_reports").count()).isEqualTo(1);
         assertThat(registry.counter("social.cleanup.removed", "kind", "orphaned_reports").count()).isEqualTo(2);
+        assertThat(registry.counter("social.cleanup.removed", "kind", "expired_invitations").count()).isEqualTo(4);
+        assertThat(registry.counter("social.cleanup.removed", "kind", "closed_invitations").count()).isEqualTo(5);
     }
 
     @Test

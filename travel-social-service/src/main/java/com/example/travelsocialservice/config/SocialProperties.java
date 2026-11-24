@@ -8,10 +8,12 @@ import java.time.Duration;
 public record SocialProperties(
         String placeServiceUrl,
         String userServiceUrl,
+        String hotelServiceUrl,
         Client client,
         Limits limits,
         Retention retention,
-        Cleanup cleanup
+        Cleanup cleanup,
+        Invitations invitations
 ) {
     public record Client(Duration connectTimeout, Duration readTimeout, Duration authorCacheTtl) {
     }
@@ -24,5 +26,8 @@ public record SocialProperties(
     }
 
     public record Cleanup(int batchSize) {
+    }
+
+    public record Invitations(Duration ttl, int listMax) {
     }
 }
