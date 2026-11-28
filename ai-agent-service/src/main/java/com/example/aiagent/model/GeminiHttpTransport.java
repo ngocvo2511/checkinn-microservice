@@ -23,13 +23,15 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
     private static final ScheduledExecutorService DEADLINES = Executors.newSingleThreadScheduledExecutor(
             Thread.ofPlatform().daemon().name("gemini-deadline").factory());
     private final URI testEndpoint;
-    GeminiHttpTransport() { testEndpoint = null; }
+    private final java.util.function.IntConsumer statusObserver;
+    GeminiHttpTransport() { this(status -> { }); }
+    GeminiHttpTransport(java.util.function.IntConsumer statusObserver) { testEndpoint = null; this.statusObserver = statusObserver; }
     /** Package-only loopback seam; production endpoint is never externally configurable. */
     GeminiHttpTransport(URI endpoint) {
         if (!"http".equals(endpoint.getScheme()) || !"127.0.0.1".equals(endpoint.getHost())
                 || endpoint.getRawQuery() != null || endpoint.getRawUserInfo() != null || endpoint.getRawFragment() != null)
             throw new IllegalArgumentException("Loopback test endpoint required");
-        testEndpoint = endpoint;
+        testEndpoint = endpoint; statusObserver = status -> { };
     }
     @Override public SuccessfulHttpResponse execute(HttpRequest source, LlmProviderAdapter.CallControl control, Duration timeout) {
         control.check();
@@ -56,6 +58,7 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
             control.check();
             var result = client.execute(post, response -> {
                 int status = response.getCode();
+                statusObserver.accept(status);
                 if (status == 429) { post.cancel(); throw new ProviderException(ProviderException.Category.QUOTA_EXCEEDED); }
                 if (status >= 300 && status < 400) { post.cancel(); throw new ProviderException(ProviderException.Category.UNAVAILABLE); }
                 var entity = response.getEntity();

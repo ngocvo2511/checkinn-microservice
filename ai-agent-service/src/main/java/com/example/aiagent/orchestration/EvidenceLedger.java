@@ -44,6 +44,11 @@ public final class EvidenceLedger {
     public List<Record> current() { return records.stream().filter(r -> validity(r) == Validity.CURRENT).toList(); }
     public Optional<Record> find(String id) { return current().stream().filter(r -> r.id().equals(id)).findFirst(); }
     public List<Record> snapshot() { return List.copyOf(records.subList(Math.max(0, records.size() - 24), records.size())); }
+    /** A failed fresh read must not silently fall back to an earlier success for the same tool/arguments. */
+    public void invalidate(ToolId tool, JsonNode args) {
+        String fingerprint = fingerprint(args);
+        records.removeIf(r -> r.toolId() == tool && r.fingerprint().equals(fingerprint));
+    }
     public Optional<Record> add(ToolResult result, JsonNode args) {
         if (result.status() == ToolResult.Status.ERROR || result.data() == null || result.criteriaRevision() == null
                 || result.criteriaRevision() != revision) return Optional.empty();

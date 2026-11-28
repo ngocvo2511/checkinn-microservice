@@ -84,6 +84,7 @@ class AgentFoundationTest {
         error(() -> provider.generate(REQUEST, control()), ProviderException.Category.DISABLED);
         assertThat(meters.find("agent.model.calls").counter()).isNull();
         assertThat(context.getBeansOfType(ChatModel.class)).isEmpty();
+        assertThat(context.getBeanDefinitionNames()).noneMatch(name -> name.contains("gemini-smoke"));
         for (String forbidden : new String[]{"javax.sql.DataSource", "jakarta.persistence.EntityManager",
                 "org.flywaydb.core.Flyway", "org.springframework.amqp.rabbit.core.RabbitTemplate",
                 "io.grpc.ManagedChannel", "dev.langchain4j.service.AiServices"}) {

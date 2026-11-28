@@ -24,7 +24,23 @@ public record GeminiProperties(
         @DefaultValue("0") BigDecimal maxExposureUsd,
         @DefaultValue("0") BigDecimal inputUsdPerMillionUpperBound,
         @DefaultValue("0") BigDecimal outputUsdPerMillionUpperBound) {
-    public enum Verification { NOT_VERIFIED, VERIFIED }
+    public enum Verification { NOT_VERIFIED, VERIFIED, OPERATOR_CONFIRMED }
+    void validateFirstCall(AgentProperties agent) {
+        if (!agent.enabled() || agent.provider() != AgentProperties.Provider.GEMINI || !agent.isWithinApprovedLimits()
+                || !GeminiSmokeApproval.MODEL.equals(agent.modelId()) || !agent.modelId().equals(reviewedModelId)
+                || !"GEMINI_API_KEY".equals(agent.apiKeyEnvironmentVariable())
+                || !liveEnabled || !syntheticOnly || modelVerification != Verification.VERIFIED
+                || accountRegionFreeTierVerification != Verification.OPERATOR_CONFIRMED
+                || dataTermsVerification != Verification.OPERATOR_CONFIRMED || quotaBillingVerification != Verification.OPERATOR_CONFIRMED
+                || transportAcceptance != Verification.NOT_VERIFIED || !validBudgets()
+                || maxInputTokens != 8192 || maxOutputTokens != 128 || maxRunRequests != 1 || maxProcessRequests != 1
+                || maxExposureUsd.compareTo(new BigDecimal("0.01")) != 0
+                || agent.modelTimeout().compareTo(java.time.Duration.ofSeconds(10)) > 0
+                || inputUsdPerMillionUpperBound.compareTo(BigDecimal.ONE) != 0
+                || outputUsdPerMillionUpperBound.compareTo(new BigDecimal("3")) != 0
+                || reservation().compareTo(maxExposureUsd) > 0)
+            throw new ProviderException(ProviderException.Category.CONFIGURATION);
+    }
     public void validate(AgentProperties agent) {
         if (!agent.enabled() || agent.provider() != AgentProperties.Provider.GEMINI || !agent.isWithinApprovedLimits()
                 || !liveEnabled || !syntheticOnly || !agent.modelId().equals(reviewedModelId)
