@@ -22,6 +22,16 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
     static final int MAX_RESPONSE_BYTES = 64 * 1024;
     private static final ScheduledExecutorService DEADLINES = Executors.newSingleThreadScheduledExecutor(
             Thread.ofPlatform().daemon().name("gemini-deadline").factory());
+    private volatile int observedStatus;
+    private volatile String errorBody, exceptionClass, retryAfter;
+    private volatile boolean terminated;
+    private boolean localDiagnostics;
+    GeminiHttpTransport localDiagnostics() { localDiagnostics = true; return this; }
+    String errorBody() { return errorBody; }
+    String exceptionClass() { return exceptionClass; }
+    String retryAfter() { return retryAfter; }
+    boolean terminated() { return terminated; }
+    int observedStatus() { return observedStatus; }
     private final URI testEndpoint;
     private final java.util.function.IntConsumer statusObserver;
     GeminiHttpTransport() { this(status -> { }); }
@@ -35,6 +45,8 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
     }
     @Override public SuccessfulHttpResponse execute(HttpRequest source, LlmProviderAdapter.CallControl control, Duration timeout) {
         control.check();
+        observedStatus = 0;
+        errorBody = null; exceptionClass = null; retryAfter = null; terminated = false;
         long nanos = Math.min(timeout.toNanos(), control.remaining().toNanos());
         long millis = Math.max(1, TimeUnit.NANOSECONDS.toMillis(nanos));
         var post = new HttpPost(testEndpoint == null ? URI.create(source.url()) : testEndpoint);
@@ -58,15 +70,31 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
             control.check();
             var result = client.execute(post, response -> {
                 int status = response.getCode();
+                observedStatus = status;
                 statusObserver.accept(status);
-                if (status == 429) { post.cancel(); throw new ProviderException(ProviderException.Category.QUOTA_EXCEEDED); }
+                if (status == 429 && !localDiagnostics) { post.cancel(); throw new ProviderException(ProviderException.Category.QUOTA_EXCEEDED); }
+                var retry = response.getFirstHeader("Retry-After");
+                if (retry != null && retry.getValue().length() <= 128) retryAfter = retry.getValue();
+                if (localDiagnostics && status != 200) {
+                    var entity = response.getEntity();
+                    if (entity != null) try (var stream = entity.getContent()) {
+                        byte[] bounded = stream.readNBytes(MAX_RESPONSE_BYTES + 1);
+                        errorBody = GeminiLocalEvaluation.sanitizeResponse(new String(bounded, 0,
+                                Math.min(bounded.length, MAX_RESPONSE_BYTES), java.nio.charset.StandardCharsets.UTF_8), key.getValue().getFirst());
+                    }
+                    boolean quota = status == 429;
+                    try { quota |= java.util.Set.of("RESOURCE_EXHAUSTED", "QUOTA_EXCEEDED").contains(
+                            GeminiLlmProviderAdapter.JSON.readTree(errorBody).path("error").path("status").asText()); }
+                    catch (Exception ignored) { /* Bounded sanitized body retained even for non-JSON errors. */ }
+                    throw new ProviderException(quota ? ProviderException.Category.QUOTA_EXCEEDED : ProviderException.Category.UNAVAILABLE);
+                }
                 if (status >= 300 && status < 400) { post.cancel(); throw new ProviderException(ProviderException.Category.UNAVAILABLE); }
                 var entity = response.getEntity();
                 if (entity == null || entity.getContentType() == null
                         || !entity.getContentType().split(";", 2)[0].trim().equalsIgnoreCase("application/json")
                         || entity.getContentEncoding() != null && !entity.getContentEncoding().equalsIgnoreCase("identity")
                         || entity.getContentLength() > MAX_RESPONSE_BYTES)
-                    { post.cancel(); throw new ProviderException(status == 200 ? ProviderException.Category.MALFORMED_RESPONSE : ProviderException.Category.UNAVAILABLE); }
+                    { post.cancel(); throw new ProviderException(status == 429 ? ProviderException.Category.QUOTA_EXCEEDED : status == 200 ? ProviderException.Category.MALFORMED_RESPONSE : ProviderException.Category.UNAVAILABLE); }
                 try (var body = entity.getContent(); var bytes = new ByteArrayOutputStream()) {
                     byte[] block = new byte[4096]; int count;
                     while ((count = body.read(block, 0, Math.min(block.length, MAX_RESPONSE_BYTES + 1 - bytes.size()))) != -1) {
@@ -75,10 +103,11 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
                     }
                     String payload = bytes.toString(java.nio.charset.StandardCharsets.UTF_8);
                     if (status != 200) {
-                        boolean quota = false;
+                        if (localDiagnostics) errorBody = GeminiLocalEvaluation.sanitizeResponse(payload, key.getValue().getFirst());
+                        boolean quota = status == 429;
                         try {
                             var error = GeminiLlmProviderAdapter.JSON.readTree(payload).path("error");
-                            quota = java.util.Set.of("RESOURCE_EXHAUSTED", "QUOTA_EXCEEDED").contains(error.path("status").asText())
+                            quota |= java.util.Set.of("RESOURCE_EXHAUSTED", "QUOTA_EXCEEDED").contains(error.path("status").asText())
                                     || error.path("code").asInt() == 429;
                         } catch (Exception ignored) { /* Never retain or expose arbitrary error bodies. */ }
                         post.cancel();
@@ -90,11 +119,12 @@ final class GeminiHttpTransport implements GeminiLlmProviderAdapter.Exchange {
             control.check();
             if (expired.get()) throw new ProviderException(ProviderException.Category.PROVIDER_TIMEOUT);
             return result;
-        } catch (ProviderException typed) { throw typed; }
+        } catch (ProviderException typed) { exceptionClass = typed.getClass().getName(); throw typed; }
         catch (Exception ignored) {
+            exceptionClass = ignored.getClass().getName();
             control.check();
             throw new ProviderException(expired.get() || ignored instanceof java.net.SocketTimeoutException
                     ? ProviderException.Category.PROVIDER_TIMEOUT : ProviderException.Category.UNAVAILABLE);
-        } finally { timer.cancel(false); post.cancel(); }
+        } finally { timer.cancel(false); post.cancel(); terminated = true; }
     }
 }

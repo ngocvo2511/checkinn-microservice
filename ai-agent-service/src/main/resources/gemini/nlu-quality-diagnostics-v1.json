@@ -1,0 +1,105 @@
+{
+  "version": "nlu-quality-diagnostics-v1",
+  "fixtures": [
+    {
+      "id": "DIAG4D-04",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "category": "PRICE_BOUNDARY",
+      "split": "TARGETED_DIAGNOSTIC",
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true
+    },
+    {
+      "id": "DIAG4D-05",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo không quá 2 triệu mỗi đêm",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "category": "PRICE_BOUNDARY",
+      "split": "TARGETED_DIAGNOSTIC",
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true
+    },
+    {
+      "id": "DIAG4D-06",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo tối đa 1 triệu mỗi đêm",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "category": "PRICE_BOUNDARY",
+      "split": "TARGETED_DIAGNOSTIC",
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true
+    },
+    {
+      "id": "DIAG4D-07",
+      "utterance": "Tìm khách sạn ở Huế",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "category": "PRICE_BOUNDARY",
+      "split": "TARGETED_DIAGNOSTIC",
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true
+    }
+  ]
+}

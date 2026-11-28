@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+            "thoughtSignature": "EpYBCpMBAWkUfRP4iXC5rSvMY0kaBvDLOV+2HQtH6vCK0ZCcgkP24IFwAKFIpxr06xDEk7fQvO8mYDgp/fi2rFMohM0wEirREXCFjbo/ZHTM0PUYBYgmTgWLyyi5w0mAXJ8zd0AwgqkF8GKMC5fR15ufr6ad9Hg8s8y62STwZxCriQurXeMcxjLwx/3FHLI/ZC5HvihYz0fF"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 221,
+    "candidatesTokenCount": 111,
+    "totalTokenCount": 332,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 221
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "lTsFa7yqNbvY9tMPgc7YmAM"
+}

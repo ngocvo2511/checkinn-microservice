@@ -91,7 +91,9 @@ class LlmVietnameseOfflineTest {
                 .allMatch(s -> s.origin() == SearchCriteriaState.Origin.MODEL_PROPOSED);
     }
     @Test void missingDestinationAndGroupRetainsOnlyLiteralDates() {
-        var result = turn(search(extraction("SEARCH", "{\"checkIn\":\"2026-12-15\",\"checkOut\":\"2026-12-17\"}")), "missing", 0,
+        var proposal = extraction("SEARCH", "{\"checkIn\":\"2026-12-15\",\"checkOut\":\"2026-12-17\"}")
+                .replace("\"missingSlots\":[]", "\"missingSlots\":[\"cityName\",\"adults\",\"children\",\"rooms\"]");
+        var result = turn(search(proposal), "missing", 0,
                 "Tìm chỗ nghỉ cho đoàn vào ngày 15 đến 17/12/2026");
         assertThat(result.answer().category()).isEqualTo("NEED_DESTINATION");
         assertThat(result.answer().message()).contains("địa điểm", "người lớn").doesNotContain("ngày nhận/trả");

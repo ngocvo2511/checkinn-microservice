@@ -1,0 +1,239 @@
+{
+  "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+  "observations": [
+    {
+      "sampleId": "DIAG-VNE1-003",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\",\n  \"hotel\": \"khách sạn\",\n  \"price\": {\n    \"kind\": \"STAY\",\n    \"operator\": \"GTE\",\n    \"unit\": \"VND_PER_ROOM_NIGHT\",\n    \"amount\": 0\n  }\n}",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "semanticPass": false,
+      "backendAccepted": false
+    },
+    {
+      "sampleId": "DIAG-VNE1-004",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"arrival\": \"2026-12-01\",\n  \"departure\": \"2026-12-03\",\n  \"reference\": \"Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng\"\n}",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "semanticPass": false,
+      "backendAccepted": false
+    },
+    {
+      "sampleId": "DIAG-VNE1-007",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"adults\": 2,\n  \"children\": 1,\n  \"rooms\": 1\n}",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": true
+    },
+    {
+      "sampleId": "DIAG-VNE1-009",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+      "actualExtractionText": "{\n  \"intent\": \"CLARIFY\",\n  \"issues\": [\n    \"DATE_INVALID\"\n  ]\n}",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": false
+    },
+    {
+      "sampleId": "DIAG-VNE1-010",
+      "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+      "actualExtractionText": "{\n  \"intent\": \"CLARIFY\",\n  \"issues\": [\n    \"PRICE_RANGE_INVALID\"\n  ]\n}",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": false
+    },
+    {
+      "sampleId": "DIAG-VNE1-013",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "actualExtractionText": "{\"intent\": \"SELECTED\", \"reference\": \"Kiểm tra phòng này còn phòng không\"}",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": true
+    },
+    {
+      "sampleId": "DIAG-VNE1-033",
+      "utterance": "Phòng đã chọn còn chỗ không",
+      "actualExtractionText": "{\n  \"intent\": \"SELECTED\",\n  \"reference\": \"Phòng đã chọn còn chỗ không\"\n}",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": true
+    },
+    {
+      "sampleId": "DIAG-VNE1-040",
+      "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+      "actualExtractionText": "{\n  \"intent\": \"CLARIFY\",\n  \"issues\": [\n    \"ROOMS_INVALID\",\n    \"ADULTS_INVALID\"\n  ]\n}",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": false
+    },
+    {
+      "sampleId": "DIAG-VNE1-043",
+      "utterance": "tim khach san o Da Lat",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\"\n}",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": true
+    },
+    {
+      "sampleId": "DIAG-VNE1-049",
+      "utterance": "kiếm giúp tui khách sạn ở huế nha",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Huế\"\n}",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "semanticPass": true,
+      "backendAccepted": true
+    }
+  ]
+}

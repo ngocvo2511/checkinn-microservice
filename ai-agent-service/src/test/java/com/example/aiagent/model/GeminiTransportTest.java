@@ -55,6 +55,7 @@ class GeminiTransportTest {
             Runnable call = () -> transport.execute(request(), new LlmProviderAdapter.CallControl(Duration.ofSeconds(2)), Duration.ofSeconds(1));
             if (status == 200) call.run(); else GeminiProviderTest.error(call, status == 429 ? QUOTA_EXCEEDED : UNAVAILABLE);
             assertThat(calls).hasValue(1);
+            assertThat(transport.observedStatus()).isEqualTo(status);
             assertThat(captured.get().getFirst("x-goog-api-key")).isEqualTo("synthetic-noncredential");
             for (String forbidden : List.of("Authorization", "Cookie", "X-User-Id", "traceparent")) assertThat(captured.get().getFirst(forbidden)).isNull();
         } finally { server.stop(0); }
@@ -62,6 +63,28 @@ class GeminiTransportTest {
     @ParameterizedTest @ValueSource(booleans = {false, true})
     void cancellationClosesUnderlyingSocketWhileWaitingForHeadersOrBody(boolean bodyStarted) throws Exception {
         socketAbort(bodyStarted, true);
+    }
+    @ParameterizedTest @ValueSource(ints = {400,401,403,429,500,502,503,504})
+    void localErrorsCaptureSanitizedEvidenceWithoutRetries(int status) throws Exception {
+        var calls = new AtomicInteger();
+        var server = HttpServer.create(new InetSocketAddress("127.0.0.1",0),0);
+        server.createContext("/", exchange -> {
+            calls.incrementAndGet(); exchange.getRequestBody().readAllBytes();
+            byte[] body = "{\"error\":{\"message\":\"synthetic-noncredential\",\"code\":503}}".getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type","application/json");
+            exchange.getResponseHeaders().set("Retry-After","17");
+            exchange.sendResponseHeaders(status,body.length);
+            try { exchange.getResponseBody().write(body); } finally { exchange.close(); }
+        }); server.start();
+        try {
+            var transport = new GeminiHttpTransport(URI.create("http://127.0.0.1:"+server.getAddress().getPort()+"/")).localDiagnostics();
+            assertThatThrownBy(() -> transport.execute(request(),new LlmProviderAdapter.CallControl(Duration.ofSeconds(2)),Duration.ofSeconds(1)))
+                    .isInstanceOf(ProviderException.class);
+            assertThat(transport.observedStatus()).isEqualTo(status);
+            assertThat(transport.errorBody()).contains("REDACTED","503").doesNotContain("synthetic-noncredential");
+            assertThat(transport.retryAfter()).isEqualTo("17"); assertThat(transport.terminated()).isTrue();
+            assertThat(calls).hasValue(1);
+        } finally { server.stop(0); }
     }
     @ParameterizedTest @ValueSource(booleans = {false, true})
     void providerTimeoutClosesUnderlyingSocketWhileWaitingForHeadersOrBody(boolean bodyStarted) throws Exception {

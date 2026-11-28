@@ -18,6 +18,22 @@ public final class DestinationLabels {
     public static DestinationLabels reviewedDefaults() {
         return new DestinationLabels(List.of("Đà Lạt", "Nha Trang", "Đà Nẵng", "Hà Nội", "Hồ Chí Minh", "Phú Quốc", "Huế", "Vũng Tàu"));
     }
+    /** Exact finite reviewed equivalence; never substring/fuzzy matching or catalog resolution. */
+    public String canonicalLabel(String label) {
+        if(label == null) return null;
+        String original=java.text.Normalizer.normalize(label,java.text.Normalizer.Form.NFC).strip().replaceAll("\\s+"," ").toLowerCase(Locale.ROOT);
+        String key=VietnameseParser.normalize(original), canonical=labels.get(key);
+        return canonical != null && (original.equals(key) || original.equals(canonical.toLowerCase(Locale.ROOT))) ? canonical : null;
+    }
+    /** Accentless aliases are reviewed; arbitrary alternative accented spellings are not. */
+    void validateReviewedMentions(String raw) {
+        String[] words=raw.split("[\\s,.!?;:]+");
+        for(int start=0;start<words.length;start++) for(int end=start+1;end<=Math.min(start+4,words.length);end++) {
+            String phrase=String.join(" ",Arrays.copyOfRange(words,start,end));
+            if(labels.containsKey(VietnameseParser.normalize(phrase)) && canonicalLabel(phrase)==null)
+                throw new IllegalArgumentException("Unreviewed destination spelling");
+        }
+    }
     static void validateQuery(String label) {
         if (label == null || label.isBlank() || label.length() > 120 || !label.matches("[\\p{L}][\\p{L} '\\-]{0,119}"))
             throw new IllegalArgumentException("Invalid destination query");
