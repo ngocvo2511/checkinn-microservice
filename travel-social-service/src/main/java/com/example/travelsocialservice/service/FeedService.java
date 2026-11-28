@@ -28,9 +28,17 @@ public class FeedService {
     private final PostAssembler assembler;
 
     @Transactional(readOnly = true)
-    public PageResponse<PostView> recent(UUID placeId, String cursor, Integer limit, Actor viewer) {
-        Filter filter = placeId == null ? Filter.published() : Filter.published().atPlace(placeId);
-        return page(filter, cursor, limit, viewer);
+    public PageResponse<PostView> recent(UUID placeId, UUID hotelId, String cursor, Integer limit, Actor viewer) {
+        if (placeId != null && hotelId != null) {
+            throw ApiException.badRequest("Filter by placeId or hotelId, not both");
+        }
+        Filter filter = Filter.published();
+        if (placeId != null) {
+            filter = filter.atPlace(placeId);
+        } else if (hotelId != null) {
+            filter = filter.atHotel(hotelId);
+        }
+        return page(filter, cursor, limit, viewer, false);
     }
 
     @Transactional(readOnly = true)
@@ -39,13 +47,13 @@ public class FeedService {
         if (term.isEmpty() || term.length() > MAX_QUERY_LENGTH) {
             throw ApiException.invalid("q", "q must be 1-" + MAX_QUERY_LENGTH + " characters");
         }
-        return page(Filter.published().matchingBody(Paging.likePattern(term)), cursor, limit, viewer);
+        return page(Filter.published().matchingBody(Paging.likePattern(term)), cursor, limit, viewer, false);
     }
 
     /** The author's own posts, including hidden ones, so they can see and edit moderated content. */
     @Transactional(readOnly = true)
     public PageResponse<PostView> ownedBy(Actor author, String cursor, Integer limit) {
-        return page(Filter.ownedBy(author.id()), cursor, limit, author);
+        return page(Filter.ownedBy(author.id()), cursor, limit, author, true);
     }
 
     @Transactional(readOnly = true)
@@ -54,10 +62,10 @@ public class FeedService {
         return new RatingView(placeId, summary.count(), summary.average());
     }
 
-    private PageResponse<PostView> page(Filter filter, String cursor, Integer limit, Actor viewer) {
+    private PageResponse<PostView> page(Filter filter, String cursor, Integer limit, Actor viewer, boolean ownView) {
         int pageSize = Paging.limit(limit);
         List<Post> rows = postQueries.page(filter, KeysetCursor.decode(cursor), pageSize + 1);
-        return Paging.page(rows, pageSize, posts -> assembler.toViews(posts, viewer),
+        return Paging.page(rows, pageSize, posts -> assembler.toViews(posts, viewer, ownView),
                 post -> new KeysetCursor(post.getCreatedAt(), post.getId()));
     }
 }

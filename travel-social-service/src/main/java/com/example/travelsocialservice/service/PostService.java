@@ -1,8 +1,13 @@
 package com.example.travelsocialservice.service;
 
+import com.example.travelsocialservice.client.CompletedStays;
+import com.example.travelsocialservice.client.CompletedStays.CompletedStay;
+import com.example.travelsocialservice.client.CompletedStays.StayLookupUnavailableException;
+import com.example.travelsocialservice.client.HotelClient;
 import com.example.travelsocialservice.client.PlaceClient;
 import com.example.travelsocialservice.config.SocialProperties;
 import com.example.travelsocialservice.domain.ContentStatus;
+import com.example.travelsocialservice.domain.InvitationStatus;
 import com.example.travelsocialservice.domain.MediaStatus;
 import com.example.travelsocialservice.domain.ModerationAction;
 import com.example.travelsocialservice.domain.ModerationAudit;
@@ -12,11 +17,13 @@ import com.example.travelsocialservice.domain.TargetType;
 import com.example.travelsocialservice.repository.ModerationAuditRepository;
 import com.example.travelsocialservice.repository.PostMediaRepository;
 import com.example.travelsocialservice.repository.PostRepository;
+import com.example.travelsocialservice.repository.StayInvitationRepository;
 import com.example.travelsocialservice.security.Actor;
 import com.example.travelsocialservice.web.ApiException;
 import com.example.travelsocialservice.web.dto.PostDtos.PostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +46,10 @@ public class PostService {
     private final PostMediaRepository mediaRepository;
     private final ModerationAuditRepository auditRepository;
     private final PlaceClient placeClient;
+    private final HotelClient hotelClient;
+    private final CompletedStays completedStays;
+    private final StayInvitationRepository invitationRepository;
+    private final SocialMetrics metrics;
     private final SocialProperties properties;
     private final Clock clock;
 
@@ -46,6 +57,10 @@ public class PostService {
     public Post create(Actor actor, PostRequest request) {
         Content content = validate(request);
         requireKnownPlace(content.placeId());
+        requirePublishedHotel(content.hotelId());
+        if (content.stayBookingId() != null) {
+            requireShareableStay(actor.id(), content.hotelId(), content.stayBookingId(), null);
+        }
 
         Instant now = Paging.now(clock);
         Post post = new Post();
@@ -54,11 +69,14 @@ public class PostService {
         post.setBody(content.body());
         post.setPlaceId(content.placeId());
         post.setRating(content.rating());
+        post.setHotelId(content.hotelId());
+        linkStay(post, content.stayBookingId());
         post.setStatus(ContentStatus.PUBLISHED);
         post.setCreatedAt(now);
         post.setUpdatedAt(now);
         post.setStatusChangedAt(now);
         postRepository.save(post);
+        claimStay(post, now);
 
         applyMedia(actor, post, content.mediaIds(), List.of());
         return post;
@@ -72,11 +90,25 @@ public class PostService {
         if (!Objects.equals(content.placeId(), post.getPlaceId())) {
             requireKnownPlace(content.placeId());
         }
+        if (!Objects.equals(content.hotelId(), post.getHotelId())) {
+            requirePublishedHotel(content.hotelId());
+        }
+        boolean stayChanged = !Objects.equals(content.stayBookingId(), post.getStayBookingId())
+                || !Objects.equals(content.hotelId(), post.getHotelId());
+        if (stayChanged && content.stayBookingId() != null) {
+            requireShareableStay(post.getAuthorId(), content.hotelId(), content.stayBookingId(), post.getId());
+        }
 
+        Instant now = Paging.now(clock);
         post.setBody(content.body());
         post.setPlaceId(content.placeId());
         post.setRating(content.rating());
-        post.setUpdatedAt(Paging.now(clock));
+        post.setHotelId(content.hotelId());
+        linkStay(post, content.stayBookingId());
+        post.setUpdatedAt(now);
+        if (stayChanged) {
+            claimStay(post, now);
+        }
         applyMedia(actor, post, content.mediaIds(), mediaRepository.findByPostIdOrderByDisplayOrderAsc(postId));
         return post;
     }
@@ -137,7 +169,8 @@ public class PostService {
         throw post.isPublished() ? ApiException.forbidden() : ApiException.notFound();
     }
 
-    private record Content(String body, UUID placeId, Integer rating, List<UUID> mediaIds) {
+    private record Content(String body, UUID placeId, Integer rating, List<UUID> mediaIds,
+                           UUID hotelId, UUID stayBookingId) {
     }
 
     private Content validate(PostRequest request) {
@@ -155,6 +188,12 @@ public class PostService {
         if (rating != null && request.placeId() == null) {
             throw ApiException.invalid("rating", "A rating needs a place");
         }
+        if (rating != null && request.hotelId() != null) {
+            throw ApiException.invalid("rating", "A post that tags a hotel cannot have a rating");
+        }
+        if (request.stayBookingId() != null && request.hotelId() == null) {
+            throw ApiException.invalid("stayBookingId", "A stay can only be linked together with its hotel");
+        }
         List<UUID> mediaIds = request.mediaIds() == null ? List.of() : request.mediaIds();
         if (mediaIds.stream().anyMatch(Objects::isNull) || new HashSet<>(mediaIds).size() != mediaIds.size()) {
             throw ApiException.invalid("mediaIds", "mediaIds must be distinct photo ids");
@@ -162,13 +201,71 @@ public class PostService {
         if (mediaIds.size() > properties.limits().maxMediaPerPost()) {
             throw ApiException.invalid("mediaIds", "A post can have at most " + properties.limits().maxMediaPerPost() + " photos");
         }
-        return new Content(body, request.placeId(), rating, mediaIds);
+        return new Content(body, request.placeId(), rating, mediaIds, request.hotelId(), request.stayBookingId());
     }
 
     private void requireKnownPlace(UUID placeId) {
         if (placeId != null && placeClient.require(placeId).isEmpty()) {
             throw ApiException.invalid("placeId", "The selected place does not exist");
         }
+    }
+
+    private void requirePublishedHotel(UUID hotelId) {
+        if (hotelId != null && hotelClient.require(hotelId).isEmpty()) {
+            throw ApiException.invalid("hotelId", "The selected hotel is not available");
+        }
+    }
+
+    /**
+     * Every mismatch gets the same answer, so a caller cannot probe whether another user's booking exists.
+     */
+    private void requireShareableStay(UUID authorId, UUID hotelId, UUID stayBookingId, UUID editedPostId) {
+        CompletedStay stay;
+        try {
+            stay = completedStays.find(stayBookingId).orElse(null);
+        } catch (StayLookupUnavailableException ex) {
+            metrics.verifiedPost("unavailable");
+            log.warn("[SOCIAL_STAY] Completed-stay lookup unavailable: {}", ex.getMessage());
+            throw ApiException.unavailable("BOOKING_SERVICE_UNAVAILABLE", "Your stay cannot be verified right now. Try again later.");
+        }
+        if (stay == null || !authorId.equals(stay.userId()) || !hotelId.equals(stay.hotelId())) {
+            metrics.verifiedPost("rejected");
+            throw ApiException.invalid("stayBookingId", "This stay cannot be linked to the post");
+        }
+        if (postRepository.isStaySharedElsewhere(stayBookingId, editedPostId)) {
+            throw stayAlreadyShared();
+        }
+        metrics.verifiedPost("verified");
+    }
+
+    private static void linkStay(Post post, UUID stayBookingId) {
+        post.setStayBookingId(stayBookingId);
+        post.setVerifiedStay(stayBookingId != null);
+    }
+
+    /**
+     * Flushes so that a concurrent post for the same stay hits the live-stay unique index here and becomes
+     * a 409, then closes the author's open invitation for that stay.
+     */
+    private void claimStay(Post post, Instant now) {
+        if (post.getStayBookingId() == null) {
+            return;
+        }
+        try {
+            postRepository.flush();
+        } catch (DataIntegrityViolationException ex) {
+            throw stayAlreadyShared();
+        }
+        invitationRepository.findByBookingIdAndUserId(post.getStayBookingId(), post.getAuthorId())
+                .filter(invitation -> invitation.getStatus() == InvitationStatus.OPEN)
+                .ifPresent(invitation -> {
+                    invitation.changeStatus(InvitationStatus.USED, now);
+                    invitation.setPostId(post.getId());
+                });
+    }
+
+    private static ApiException stayAlreadyShared() {
+        return ApiException.conflict("STAY_ALREADY_SHARED", "This stay is already shared in another post");
     }
 
     /**

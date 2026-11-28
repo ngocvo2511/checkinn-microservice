@@ -9,6 +9,7 @@ import com.example.travelsocialservice.repository.CommentRepository;
 import com.example.travelsocialservice.repository.PostMediaRepository;
 import com.example.travelsocialservice.repository.PostRepository;
 import com.example.travelsocialservice.repository.ReportRepository;
+import com.example.travelsocialservice.repository.StayInvitationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +35,7 @@ public class CleanupJob {
     private final PostMediaRepository mediaRepository;
     private final CommentRepository commentRepository;
     private final ReportRepository reportRepository;
+    private final StayInvitationRepository invitationRepository;
     private final MediaService mediaService;
     private final SocialProperties properties;
     private final SocialMetrics metrics;
@@ -51,14 +53,19 @@ public class CleanupJob {
             int reports = count(transactions.execute(tx -> reportRepository.deleteClosedBefore(retentionCutoff)));
             // Runs after the purges above, so reports on content purged in this run go too.
             int orphanedReports = count(transactions.execute(tx -> reportRepository.deleteOrphaned()));
+            int expiredInvitations = count(transactions.execute(tx -> invitationRepository.expireOverdue(now)));
+            int closedInvitations = count(transactions.execute(tx -> invitationRepository.deleteClosedBefore(retentionCutoff)));
             metrics.cleanupRemoved("unattached_media", media);
             metrics.cleanupRemoved("deleted_posts", posts);
             metrics.cleanupRemoved("deleted_comments", comments);
             metrics.cleanupRemoved("closed_reports", reports);
             metrics.cleanupRemoved("orphaned_reports", orphanedReports);
-            if (media + posts + comments + reports + orphanedReports > 0) {
-                log.info("[SOCIAL_CLEANUP] unattachedMedia={} purgedPosts={} purgedComments={} purgedReports={} orphanedReports={}",
-                        media, posts, comments, reports, orphanedReports);
+            metrics.cleanupRemoved("expired_invitations", expiredInvitations);
+            metrics.cleanupRemoved("closed_invitations", closedInvitations);
+            if (media + posts + comments + reports + orphanedReports + expiredInvitations + closedInvitations > 0) {
+                log.info("[SOCIAL_CLEANUP] unattachedMedia={} purgedPosts={} purgedComments={} purgedReports={} orphanedReports={}"
+                                + " expiredInvitations={} purgedInvitations={}",
+                        media, posts, comments, reports, orphanedReports, expiredInvitations, closedInvitations);
             }
         } catch (RuntimeException ex) {
             log.error("[SOCIAL_CLEANUP] Cleanup run failed: {}", ex.getMessage(), ex);

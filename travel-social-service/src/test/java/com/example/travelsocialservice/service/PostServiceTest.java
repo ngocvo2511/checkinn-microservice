@@ -49,7 +49,10 @@ class PostServiceTest {
         places = mock(PlaceClient.class);
         when(places.require(placeId)).thenReturn(Optional.of(new PlaceRef(placeId, "Cầu Rồng", "ATTRACTION", "Đà Nẵng")));
         when(media.findAllById(any())).thenReturn(List.of());
-        service = new PostService(posts, media, audits, places, PROPERTIES, CLOCK);
+        service = new PostService(posts, media, audits, places,
+                mock(com.example.travelsocialservice.client.HotelClient.class),
+                mock(com.example.travelsocialservice.client.CompletedStays.class),
+                mock(com.example.travelsocialservice.repository.StayInvitationRepository.class), metrics(), PROPERTIES, CLOCK);
     }
 
     private Post stored(Post post) {

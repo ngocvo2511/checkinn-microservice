@@ -74,6 +74,18 @@ public class BookingService {
                 .isPresent();
     }
 
+    public record CompletedStay(UUID userId, UUID hotelId, java.time.LocalDate checkInDate, java.time.LocalDate checkOutDate) {}
+
+    @Transactional(readOnly = true)
+    public java.util.Optional<CompletedStay> findCompletedStay(UUID bookingId) {
+        if (bookingId == null) return java.util.Optional.empty();
+        return bookingRepository.findById(bookingId)
+                .filter(booking -> booking.getStatus() == BookingStatus.CHECKED_OUT
+                        && booking.getUserId() != null && booking.getHotelId() != null)
+                .map(booking -> new CompletedStay(booking.getUserId(), booking.getHotelId(),
+                        booking.getCheckInDate(), booking.getCheckOutDate()));
+    }
+
     @Transactional
     public BookingResponse createBooking(CreateBookingRequest request) {
         com.example.bookingservice.validation.InputValidation.require(request);

@@ -97,6 +97,27 @@ public class BookingGrpcServer extends BookingGrpcServiceGrpc.BookingGrpcService
     }
 
     @Override
+    public void getCompletedStay(com.example.bookingservice.grpc.CompletedStayRequest request,
+            StreamObserver<com.example.bookingservice.grpc.CompletedStayResponse> observer) {
+        try {
+            var actor = GrpcAccess.actor();
+            GrpcAccess.require(actor.isAuthenticated() && "travel-social-service".equals(actor.getName())
+                    && actor.getAuthorities().stream().anyMatch(a -> "ROLE_TRAVEL_SOCIAL_SERVICE".equals(a.getAuthority())));
+            var stay = bookingService.findCompletedStay(required(request.getBookingId()))
+                    .orElseThrow(io.grpc.Status.NOT_FOUND::asRuntimeException);
+            observer.onNext(com.example.bookingservice.grpc.CompletedStayResponse.newBuilder()
+                    .setUserId(text(stay.userId()))
+                    .setHotelId(text(stay.hotelId()))
+                    .setCheckInDate(String.valueOf(stay.checkInDate()))
+                    .setCheckOutDate(String.valueOf(stay.checkOutDate()))
+                    .build());
+            observer.onCompleted();
+        } catch (Exception ex) {
+            observer.onError(GrpcAccess.error(ex));
+        }
+    }
+
+    @Override
     public void checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest request,
             StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> observer) {
         try {

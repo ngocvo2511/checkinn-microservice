@@ -43,6 +43,10 @@ public class ApiException extends RuntimeException {
         return new ApiException(HttpStatus.CONFLICT, "CONFLICT", message, null);
     }
 
+    public static ApiException conflict(String code, String message) {
+        return new ApiException(HttpStatus.CONFLICT, code, message, null);
+    }
+
     public static ApiException unavailable(String code, String message) {
         return new ApiException(HttpStatus.SERVICE_UNAVAILABLE, code, message, null);
     }

@@ -29,6 +29,16 @@ public class Post {
 
     private Integer rating;
 
+    @Column(name = "hotel_id")
+    private UUID hotelId;
+
+    /** Private: never returned in a public response. */
+    @Column(name = "stay_booking_id")
+    private UUID stayBookingId;
+
+    @Column(name = "verified_stay", nullable = false)
+    private boolean verifiedStay;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
     private ContentStatus status;

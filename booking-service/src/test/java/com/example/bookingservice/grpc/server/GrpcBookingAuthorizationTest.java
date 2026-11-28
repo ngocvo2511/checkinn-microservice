@@ -49,6 +49,67 @@ class GrpcBookingAuthorizationTest {
         }
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({"travel-social-service,TRAVEL_SOCIAL_SERVICE,true",
+            "travel-social-service,ADMIN,false", "other-service,TRAVEL_SOCIAL_SERVICE,false",
+            "hotel-service,HOTEL_SERVICE,false", "user-service,USER_SERVICE,false",
+            "administrator,ADMIN,false", "guest,CUSTOMER,false"})
+    void completedStayLookupRequiresExactSocialServiceIdentity(String subject, String role, boolean allowed) {
+        var actor = new UsernamePasswordAuthenticationToken(subject, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+        StreamObserver<com.example.bookingservice.grpc.CompletedStayResponse> response = mock(StreamObserver.class);
+        when(bookings.findCompletedStay(id("booking"))).thenReturn(java.util.Optional.of(new BookingService.CompletedStay(
+                id("guest"), id("hotel"), java.time.LocalDate.of(2026, 11, 1), java.time.LocalDate.of(2026, 11, 3))));
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
+                .getCompletedStay(com.example.bookingservice.grpc.CompletedStayRequest.newBuilder()
+                        .setBookingId(wire("booking")).build(), response));
+        if (allowed) {
+            verify(response).onNext(argThat(value -> value.getUserId().equals(wire("guest"))
+                    && value.getHotelId().equals(wire("hotel"))
+                    && value.getCheckInDate().equals("2026-11-01") && value.getCheckOutDate().equals("2026-11-03")));
+            verify(response).onCompleted();
+        } else {
+            verifyNoInteractions(bookings);
+            verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
+        }
+    }
+
+    @Test void completedStayLookupIsNotFoundWhenStayIsNotCompleted() {
+        var actor = new UsernamePasswordAuthenticationToken("travel-social-service", null,
+                List.of(new SimpleGrantedAuthority("ROLE_TRAVEL_SOCIAL_SERVICE")));
+        StreamObserver<com.example.bookingservice.grpc.CompletedStayResponse> response = mock(StreamObserver.class);
+        when(bookings.findCompletedStay(id("booking"))).thenReturn(java.util.Optional.empty());
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> new BookingGrpcServer(bookings, access)
+                .getCompletedStay(com.example.bookingservice.grpc.CompletedStayRequest.newBuilder()
+                        .setBookingId(wire("booking")).build(), response));
+        verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.NOT_FOUND));
+        verify(response, never()).onNext(any());
+    }
+
+    @Test void anonymousCannotLookUpCompletedStay() {
+        StreamObserver<com.example.bookingservice.grpc.CompletedStayResponse> response = mock(StreamObserver.class);
+        new BookingGrpcServer(bookings, access).getCompletedStay(
+                com.example.bookingservice.grpc.CompletedStayRequest.getDefaultInstance(), response);
+        verifyNoInteractions(bookings);
+        verify(response).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.UNAUTHENTICATED));
+    }
+
+    @Test void socialServiceCannotUseReviewEligibilityOrLoyaltyLookups() {
+        var actor = new UsernamePasswordAuthenticationToken("travel-social-service", null,
+                List.of(new SimpleGrantedAuthority("ROLE_TRAVEL_SOCIAL_SERVICE")));
+        StreamObserver<com.example.bookingservice.grpc.ReviewEligibilityResponse> eligibility = mock(StreamObserver.class);
+        StreamObserver<com.example.bookingservice.grpc.LoyaltyBookingStateResponse> loyalty = mock(StreamObserver.class);
+        Context.current().withValue(UserContextInterceptor.ACTOR, actor).run(() -> {
+            var server = new BookingGrpcServer(bookings, access);
+            server.checkReviewEligibility(com.example.bookingservice.grpc.ReviewEligibilityRequest.newBuilder()
+                    .setBookingId(wire("booking")).setGuestId(wire("guest")).setHotelId(wire("hotel")).build(), eligibility);
+            server.getLoyaltyBookingState(com.example.bookingservice.grpc.LoyaltyBookingStateRequest.newBuilder()
+                    .setBookingId(wire("booking")).setUserId(wire("guest")).build(), loyalty);
+        });
+        verifyNoInteractions(bookings);
+        verify(eligibility).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
+        verify(loyalty).onError(argThat(error -> Status.fromThrowable(error).getCode() == Status.Code.PERMISSION_DENIED));
+    }
+
     private final BookingService bookings = mock(BookingService.class);
     private final PaymentService payments = mock(PaymentService.class);
     private final BookingAccess access = mock(BookingAccess.class);
