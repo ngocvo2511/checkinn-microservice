@@ -1,0 +1,1088 @@
+{
+  "version": "vietnamese_nlu_oracle_review_draft_v1",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "reviewStatus": "DRAFT_NOT_INDEPENDENTLY_REVIEWED",
+  "reviewerReference": "INDEPENDENT_REVIEW_REQUIRED",
+  "fixtures": {
+    "VNE1-001": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-002": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-003": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-004": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-005": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-006": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-007": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-008": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-009": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-010": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-011": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-012": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-013": {
+      "response": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "REFERENCE_EXTRACTION_ONLY",
+      "remoteApproved": false
+    },
+    "VNE1-014": {
+      "response": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "REFERENCE_EXTRACTION_ONLY",
+      "remoteApproved": false
+    },
+    "VNE1-015": {
+      "response": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "REFERENCE_EXTRACTION_ONLY",
+      "remoteApproved": false
+    },
+    "VNE1-016": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-017": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-018": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-20"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-22"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-019": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-020": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-021": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-022": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-023": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-024": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-025": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-026": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults",
+          "children"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-027": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-028": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-029": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-030": {
+      "response": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-031": {
+      "response": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-032": {
+      "response": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "REFERENCE_EXTRACTION_ONLY",
+      "remoteApproved": false
+    },
+    "VNE1-033": {
+      "response": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-034": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-035": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-036": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-037": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-038": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-039": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-040": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-041": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-042": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-043": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-044": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-045": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-046": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-047": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-048": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-049": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-050": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "SUPPORTED",
+      "remoteApproved": false
+    },
+    "VNE1-051": {
+      "response": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": true,
+      "grammarCategory": "UNSUPPORTED_GRAMMAR",
+      "remoteApproved": false
+    },
+    "VNE1-052": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-053": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-054": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-055": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-056": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-057": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-058": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-059": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    },
+    "VNE1-060": {
+      "response": {
+        "action": "CLARIFY",
+        "intent": "UNVERIFIABLE",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendExpected": false,
+      "grammarCategory": "EXPECTED_CLARIFICATION",
+      "remoteApproved": false
+    }
+  }
+}

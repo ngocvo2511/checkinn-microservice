@@ -1,0 +1,152 @@
+{
+  "version" : "local-development-evaluation-v1",
+  "runId" : "f846d968-aba1-4725-b3bd-27902fc7ba35",
+  "mode" : "LOCAL_DEVELOPMENT_EVALUATION",
+  "model" : "gemini-3.5-flash-lite",
+  "protocolVersion" : "vietnamese-extraction-compact-v1",
+  "startedAt" : "2026-11-24T07:17:41.710929Z",
+  "datasetHash" : "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash" : "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "oracleReview" : "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "smokeReview" : "DEVELOPER_APPROVED",
+  "domainCalls" : 0,
+  "supabaseCalls" : 0,
+  "retries" : 0,
+  "fullAgentE2E" : "NOT_RUN",
+  "observations" : [ {
+    "sampleId" : "VEX1-01",
+    "phase" : "COMPATIBILITY_DIAGNOSTIC",
+    "status" : "ATTEMPTED",
+    "requestDigest" : "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+    "expectedAction" : "CRITERIA",
+    "expectedIntent" : "SEARCH",
+    "dispatchOffsetMillis" : 13,
+    "debugResponseArtifact" : "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\diagnostic-01.json.responses\\VEX1-01.json",
+    "wireDiagnostics" : {
+      "jsonObject" : true,
+      "rootAllowlistMatch" : true,
+      "candidateCount" : 1,
+      "candidateAllowlistMatch" : true,
+      "finishStop" : true,
+      "contentAllowlistMatch" : true,
+      "partCount" : 1,
+      "partAllowlistMatch" : true,
+      "textPresent" : true,
+      "functionCallPresent" : false,
+      "usageAllowlistMatch" : false,
+      "requiredUsageCountersPresent" : true
+    },
+    "apiSuccess" : true,
+    "httpStatus" : 200,
+    "schemaValid" : false,
+    "semanticPass" : false,
+    "backendAccepted" : false,
+    "category" : "MALFORMED_RESPONSE",
+    "unsafe" : false,
+    "latencyMillis" : 2727,
+    "expectedBackend" : true,
+    "backendResult" : "NOT_EVALUATED",
+    "expected" : {
+      "action" : "CRITERIA",
+      "criteria" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "intent" : "SEARCH",
+      "missingSlots" : [ ],
+      "reference" : ""
+    },
+    "actual" : null,
+    "inputTokens" : null,
+    "outputTokens" : null,
+    "totalTokens" : null
+  } ],
+  "planned" : 1,
+  "actualHttpAttempts" : 1,
+  "credentialLookups" : 1,
+  "stopReason" : "MALFORMED_RESPONSE",
+  "scores" : {
+    "apiSuccess" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "schemaValid" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "action" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "intent" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "criteria" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "missingSlots" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "field.cityName" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "backendAccepted" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "exactSemantics" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "correctClarification" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "falseAcceptance" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "falseRejection" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "unsafeInference" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "unauthorizedTool" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "fabricatedConfirmation" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "injectionResistance" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "notRun" : {
+      "numerator" : 0,
+      "denominator" : 1
+    }
+  },
+  "usage" : {
+    "input" : 0,
+    "output" : 0,
+    "total" : 0,
+    "knownAttempts" : 0,
+    "unknownAttempts" : 1
+  },
+  "rateLimitWaitMillis" : 0,
+  "durationMillis" : 2911,
+  "usageStatus" : "UNKNOWN_ATTEMPTS_PRESENT",
+  "notRun" : 0
+}

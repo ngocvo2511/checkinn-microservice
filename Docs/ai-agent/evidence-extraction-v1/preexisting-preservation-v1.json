@@ -1,0 +1,11 @@
+{
+  "snapshotNote": "Full source/evidence hash inventory taken after the first safe timeout-category patch; initial git-status precedes all implementation",
+  "checked": 338,
+  "intentionallyModifiedPreexisting": [
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalExtractionContract.java",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalFallbackEvaluation.java"
+  ],
+  "unexpectedChanges": [],
+  "readmeExactSuffixPreserved": true,
+  "noEditsToPreexistingIDE": "No agent write touched .idea; existing tracked IDE modifications retained in final status"
+}

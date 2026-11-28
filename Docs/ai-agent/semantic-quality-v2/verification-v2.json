@@ -1,0 +1,219 @@
+{
+  "baseline": {
+    "tests": 1080,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "buildSuccess": true,
+    "command": "mvn -o -B -ntp -pl ai-agent-service package",
+    "evidence": "Executed at start of this batch; tool transcript retained"
+  },
+  "final": {
+    "tests": 1134,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "command": "mvn -o -B -ntp -pl ai-agent-service package",
+    "buildSuccess": true,
+    "log": "ai-agent-service/.local/quality-final-package-v2.log"
+  },
+  "newTests": 54,
+  "developmentChecks": {
+    "quality-final-package-v2.log": {
+      "lastSummary": [
+        1134,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "1ca83a1de5472b74271d03920dfbbec5ad5276fdd5fea932fc41bd88a3a534a9"
+    },
+    "quality-final-package.log": {
+      "lastSummary": [
+        1134,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "899cf8fc0069c90870923551ff0debf1f2caca166ab6dadc8918dcde5849fa99"
+    },
+    "quality-focused-v1.log": {
+      "lastSummary": [
+        107,
+        2,
+        0,
+        0
+      ],
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "2968fdf548beb750c1fcaea9c822591415d4daf74675ae350c89243115e41fcc"
+    },
+    "quality-focused-v2.log": {
+      "lastSummary": [
+        107,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "b1ff4c7b777750c4a3dbbb77fe61e6d74363b618a0517a47ec054f5707549d9b"
+    },
+    "quality-focused-v3.log": {
+      "lastSummary": null,
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "a2df97d8a3a3dba4bd8bb2eb547a46b3a1f8917a372b7497eed71f0781edbdb6"
+    },
+    "quality-focused-v4.log": {
+      "lastSummary": [
+        113,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "39a4950a6245c979793448a0d0cf66e85400af03d952a060a4a0bbb9dd68a2bc"
+    },
+    "quality-focused-v5.log": {
+      "lastSummary": [
+        51,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "ab2a3b7b7b035330dfd7121dc3f2534dc3167fbdb5ca2e7d090b9f35696f44fc"
+    },
+    "quality-live-diagnostic-r2-v2.log": {
+      "lastSummary": null,
+      "buildSuccess": false,
+      "buildFailure": false,
+      "sha256": "b4a9cd860373d304a35888ff7f6090100318d8465bb63d7bee4a444869e2369c"
+    },
+    "quality-live-diagnostic-v2.log": {
+      "lastSummary": null,
+      "buildSuccess": false,
+      "buildFailure": false,
+      "sha256": "2a2d5468bf273bd1fef01224026a24c16797061e414d73f9e983b33bd7f80d7d"
+    },
+    "quality-offline-package-v1.log": {
+      "lastSummary": [
+        1124,
+        1,
+        0,
+        0
+      ],
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "65b0b83ad4e531185ab94012efeac93b7a9dc52fa42afeae788aa965ef2b72c5"
+    },
+    "quality-offline-package-v2.log": {
+      "lastSummary": [
+        1125,
+        0,
+        1,
+        0
+      ],
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "d4e10b752fdfb06fd3fd0eebddcfae03ab78fe6107d9f92112dc59624a1a6d0a"
+    },
+    "quality-offline-package-v3.log": {
+      "lastSummary": [
+        1125,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "b800c41c373f5f5fb155884e3085afb1caad992536617a5f417b63a8f6cc6b98"
+    },
+    "quality-offline-package-v4.log": {
+      "lastSummary": [
+        1131,
+        1,
+        0,
+        0
+      ],
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "6cf6cc3b92e0cdf3837799376669e01230670fe61ea53e8b07e38c2d4f86eab0"
+    },
+    "quality-offline-package-v5.log": {
+      "lastSummary": [
+        1132,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "c4792096093dfb8ab4a87329433f172dc6da9a3a6236798f7ac2fa7998ae877c"
+    },
+    "quality-post-stop-focused.log": {
+      "lastSummary": [
+        74,
+        0,
+        0,
+        0
+      ],
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "a0e7805cb8a60bc53eefa88d29444e9500976e9bce21b951ca6ffe0cdc66e3a8"
+    },
+    "quality-replay-package.log": {
+      "lastSummary": null,
+      "buildSuccess": false,
+      "buildFailure": true,
+      "sha256": "8d26a6a3e77c38b108a605893b4cb3f601cd033944f7393d698a9f576e63abb4"
+    },
+    "quality-replay-package2.log": {
+      "lastSummary": null,
+      "buildSuccess": true,
+      "buildFailure": false,
+      "sha256": "6bfc0875567629e66cd58f0c3267a5bfbb25cfdeed8942c4654c35a9882591b4"
+    }
+  },
+  "historical": {
+    "PASS": 23,
+    "FAIL": 16,
+    "NOT_APPLICABLE": 0,
+    "NOT_RUN": 1
+  },
+  "historicalPrintedInFinalLog": true,
+  "branch": "feat/ai-agent-vietnamese-nlu",
+  "head": "4c1908063e40194b989cfbe1d0db598064ec3e7b",
+  "scope": {
+    "domainCalls": 0,
+    "supabaseCalls": 0,
+    "writeTools": 0,
+    "ordinaryRuntime": "OFF/FAKE/liveOFF defaults unchanged; no ordinary app started",
+    "dependencies": "No pom/lockfile changes introduced",
+    "frontendStatus": ""
+  },
+  "credentialPatternScan": {
+    "matches": [],
+    "scannedScope": "ai-agent-service/src, this evidence directory, new local campaign; no credential lookup",
+    "activeKeyComparison": "separate boolean-only PowerShell scan"
+  },
+  "historicalArtifactsPreserved": 141,
+  "activeLiveProcesses": "separate process-check-v2.json",
+  "notRun": {
+    "frozen40": 40,
+    "fresh20": 20,
+    "remainingDiagnostics": 5,
+    "targetResolution": true,
+    "toolExecution": true,
+    "FULL_AGENT_E2E": true
+  },
+  "terminalReason": "UNKNOWN_IN_FLIGHT",
+  "status": "LIVE_TECHNICAL_BLOCKED"
+}

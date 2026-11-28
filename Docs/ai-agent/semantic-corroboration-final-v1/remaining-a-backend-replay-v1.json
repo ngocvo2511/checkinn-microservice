@@ -1,0 +1,339 @@
+{
+  "version" : "actual-historical-replay-v1",
+  "sourceSha256" : "cbc21625eb533e78dbb9e2c8ffcb57921bc431e308c93f48890f888a9353f2ed",
+  "evaluationClock" : "2026-11-24T10:08:35.333633900Z",
+  "model" : "gemini-3.5-flash-lite",
+  "contract" : "vietnamese-extraction-compact-v3",
+  "actualHttpAttempts" : 0,
+  "modelSemanticClassification" : "FROZEN_HISTORICAL",
+  "observations" : [ {
+    "sampleId" : "VNE1-031",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "a1b18da59d7c664f4138e49955e6b5807a44991ae4c9d214e8e48726a84227c7",
+    "expectedExtraction" : {
+      "action" : "SELECTED",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "Giá phòng thứ nhất bao nhiêu",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Giá phòng thứ nhất bao nhiêu",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-032",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "e3af3d39f4245548ddb659e08c96a050f63359f151aadcbc07eecece3bcae47e",
+    "expectedExtraction" : {
+      "action" : "COMPARISON",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "So sánh giá hai khách sạn đầu tiên",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "So sánh giá hai khách sạn đầu tiên",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-033",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "2be8b836eb116ac6fbc3dc65b4d2a18f1980209d3d4e27fb6642be1c0fd55a55",
+    "expectedExtraction" : {
+      "action" : "SELECTED",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "Phòng đã chọn còn chỗ không",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Phòng đã chọn còn chỗ không",
+    "schemaValid" : false,
+    "backendAccepted" : false,
+    "status" : "SCHEMA_REJECTED",
+    "reason" : "STRICT_TYPED_VALIDATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-037",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "cf2cf917f00354b28b723512ffc5385ece240e496f66bd1e30ddab13fda62157",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "cityName" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở thành phố đó",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-039",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "06990fd68a8890d651150075aa057b402e0c2148e69d1f10300d7df4fbac38d3",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế giá dưới âm 2 triệu",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-040",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "d556d43211b480313fde7285cb131596f1ce9ac28f53e9d9cb1bde1edcb2ec92",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "rooms", "adults" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-041",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "2f4cdc33b3aba4b51c64b12a2b0847fa35cae7dccc3b9f47dab1f0c3e996aed0",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Mình muốn kiếm một chỗ nghỉ tại Huế",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-042",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "b6428e63edf0391ff9badea57a8e060f5ea12e070e1a03c3643a78101216d8ae",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-043",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "daec5b2c17b6bd61f984f96414107c16391b0bc6cfc183a91f7325a42b77d44d",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "tim khach san o Da Lat",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-046",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "ba1b98f916a2ba943589ea3393adbd63ba9c9bb29c028815dd9bf4a5165bb695",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "checkIn" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế trả phòng 22/12/2026",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-047",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "2ce4883fa8e595a2f9bae2d2bce9dc1ae0f9bd4d93a590a9c27f2cef306d1e68",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+    "schemaValid" : false,
+    "backendAccepted" : false,
+    "status" : "SCHEMA_REJECTED",
+    "reason" : "STRICT_TYPED_VALIDATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-048",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "02d85d3d86de09d8e4b4cc5adb7a5e0ea94a63268d4c743f51060d177093ffe1",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Nha Trang"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Cho tôi xem nơi lưu trú tại Nha Trang",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-049",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "2f4cdc33b3aba4b51c64b12a2b0847fa35cae7dccc3b9f47dab1f0c3e996aed0",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "kiếm giúp tui khách sạn ở huế nha",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-050",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "ee1b9f54ba3989cb845c10fc2eacb79321e7640f87fece1080cd9e19ac57d1fd",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        },
+        "maxPrice" : {
+          "operation" : "REPLACE",
+          "value" : 500000
+        },
+        "referencePriceExclusive" : {
+          "operation" : "REPLACE",
+          "value" : true
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-051",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "status" : "REPLAY_NOT_AVAILABLE"
+  } ],
+  "matrix" : {
+    "correctAccepted" : 2,
+    "correctRejected" : 3,
+    "incorrectAccepted" : 0,
+    "incorrectRejected" : 7
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "diagnosticV2": {
+    "planned": 6,
+    "attempted": 6,
+    "notRun": 0,
+    "httpSuccess": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "envelopeValid": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "sdkParse": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "schemaValid": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "invalidSchema": 0,
+    "action": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "intent": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "criteria": {
+      "numerator": 3,
+      "denominator": 6,
+      "percent": 50.0
+    },
+    "missingSlots": {
+      "numerator": 5,
+      "denominator": 6,
+      "percent": 83.33
+    },
+    "reference": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "exactSemantics": {
+      "numerator": 3,
+      "denominator": 6,
+      "percent": 50.0
+    },
+    "backendAccepted": {
+      "numerator": 3,
+      "denominator": 6,
+      "percent": 50.0
+    },
+    "backendMatrix": {
+      "MODEL_CORRECT_BACKEND_ACCEPTED": 3,
+      "MODEL_CORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_REJECTED": 3,
+      "MODEL_INCORRECT_BACKEND_ACCEPTED": 0,
+      "BACKEND_NOT_EVALUATED": 0
+    },
+    "fieldAccuracy": {
+      "cityName": {
+        "numerator": 6,
+        "denominator": 6,
+        "percent": 100.0
+      },
+      "maxPrice": {
+        "numerator": 6,
+        "denominator": 6,
+        "percent": 100.0
+      },
+      "referencePriceExclusive": {
+        "numerator": 1,
+        "denominator": 4,
+        "percent": 25.0
+      }
+    },
+    "parserExceptions": 0,
+    "unsafeFlags": 0,
+    "inputTokens": 2114,
+    "outputTokens": 761,
+    "totalTokens": 2875,
+    "unknownUsage": 0,
+    "thinking": "NOT_REPORTED",
+    "latency": {
+      "mean": 1939.5,
+      "median": 1882.0,
+      "p95": 2489,
+      "max": 2489
+    },
+    "positiveReferenceExtraction": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "clarificationAccuracy": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "categoryCoverage": "PRICE_REFERENCE_INCLUSIVE_BROWSE_ONLY"
+  },
+  "diagnosticV3": {
+    "planned": 6,
+    "attempted": 6,
+    "notRun": 0,
+    "httpSuccess": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "envelopeValid": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "sdkParse": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "schemaValid": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "invalidSchema": 0,
+    "action": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "intent": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "criteria": {
+      "numerator": 2,
+      "denominator": 6,
+      "percent": 33.33
+    },
+    "missingSlots": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "reference": {
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100.0
+    },
+    "exactSemantics": {
+      "numerator": 2,
+      "denominator": 6,
+      "percent": 33.33
+    },
+    "backendAccepted": {
+      "numerator": 2,
+      "denominator": 6,
+      "percent": 33.33
+    },
+    "backendMatrix": {
+      "MODEL_CORRECT_BACKEND_ACCEPTED": 2,
+      "MODEL_CORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_REJECTED": 4,
+      "MODEL_INCORRECT_BACKEND_ACCEPTED": 0,
+      "BACKEND_NOT_EVALUATED": 0
+    },
+    "fieldAccuracy": {
+      "cityName": {
+        "numerator": 6,
+        "denominator": 6,
+        "percent": 100.0
+      },
+      "maxPrice": {
+        "numerator": 5,
+        "denominator": 5,
+        "percent": 100.0
+      },
+      "referencePriceExclusive": {
+        "numerator": 0,
+        "denominator": 4,
+        "percent": 0.0
+      }
+    },
+    "parserExceptions": 0,
+    "unsafeFlags": 0,
+    "inputTokens": 2464,
+    "outputTokens": 700,
+    "totalTokens": 3164,
+    "unknownUsage": 0,
+    "thinking": "NOT_REPORTED",
+    "latency": {
+      "mean": 2689.6666666666665,
+      "median": 1937.5,
+      "p95": 6229,
+      "max": 6229
+    },
+    "positiveReferenceExtraction": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "clarificationAccuracy": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "categoryCoverage": "PRICE_REFERENCE_INCLUSIVE_BROWSE_ONLY"
+  },
+  "smoke": {
+    "planned": 3,
+    "attempted": 2,
+    "notRun": 1,
+    "httpSuccess": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "envelopeValid": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "sdkParse": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "schemaValid": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "invalidSchema": 0,
+    "action": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "intent": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "criteria": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "missingSlots": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "reference": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "exactSemantics": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "backendAccepted": {
+      "numerator": 1,
+      "denominator": 2,
+      "percent": 50.0
+    },
+    "backendMatrix": {
+      "MODEL_CORRECT_BACKEND_ACCEPTED": 1,
+      "MODEL_CORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_ACCEPTED": 0,
+      "BACKEND_NOT_EVALUATED": 1
+    },
+    "fieldAccuracy": {
+      "cityName": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "maxPrice": {
+        "numerator": 0,
+        "denominator": 1,
+        "percent": 0.0
+      },
+      "referencePriceExclusive": {
+        "numerator": 0,
+        "denominator": 1,
+        "percent": 0.0
+      }
+    },
+    "parserExceptions": 0,
+    "unsafeFlags": 0,
+    "inputTokens": 405,
+    "outputTokens": 79,
+    "totalTokens": 484,
+    "unknownUsage": 1,
+    "thinking": "NOT_REPORTED",
+    "latency": {
+      "mean": 2520,
+      "median": 2520.0,
+      "p95": 3076,
+      "max": 3076
+    },
+    "positiveReferenceExtraction": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "clarificationAccuracy": {
+      "applicable": 0,
+      "status": "NOT_TESTED"
+    },
+    "categoryCoverage": "AUTOMATIC_BROWSE_AND_TECHNICAL_FAILURE"
+  },
+  "primary40": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40,
+    "httpSuccess": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "envelopeValid": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "sdkParse": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "schemaValid": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "invalidSchema": 0,
+    "action": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "intent": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "criteria": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "missingSlots": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "reference": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "exactSemantics": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "backendAccepted": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null
+    },
+    "backendMatrix": {
+      "MODEL_CORRECT_BACKEND_ACCEPTED": 0,
+      "MODEL_CORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_REJECTED": 0,
+      "MODEL_INCORRECT_BACKEND_ACCEPTED": 0,
+      "BACKEND_NOT_EVALUATED": 0
+    },
+    "fieldAccuracy": {},
+    "parserExceptions": 0,
+    "unsafeFlags": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "totalTokens": 0,
+    "unknownUsage": 0,
+    "thinking": "NOT_REPORTED",
+    "latency": {
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "max": null
+    },
+    "positiveReferenceExtraction": {
+      "applicable": 0,
+      "status": "NOT_RUN"
+    },
+    "clarificationAccuracy": {
+      "applicable": 0,
+      "status": "NOT_RUN"
+    },
+    "categoryCoverage": "NOT_RUN"
+  },
+  "improved40": "NOT_RUN",
+  "contextStateApplication": "NOT_RUN",
+  "selectedTargetResolution": "NOT_RUN",
+  "fullAgentE2E": "NOT_RUN",
+  "diagnosticAccuracyIsNotPrimaryAccuracy": true
+}

@@ -1,0 +1,34 @@
+{
+  "Docs/ai-agent/semantic-quality-v2/fresh-dataset-v2.json": {
+    "expected": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a",
+    "actual": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a"
+  },
+  "ai-agent-service/src/main/resources/gemini/local-development-oracle-v1.json": {
+    "expected": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+    "actual": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3"
+  },
+  "ai-agent-service/src/main/resources/gemini/semantic-quality-fresh-v2.json": {
+    "expected": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a",
+    "actual": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a"
+  },
+  "ai-agent-service/src/main/resources/gemini/vietnamese-nlu-evaluation-candidates-v1.json": {
+    "expected": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+    "actual": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950"
+  },
+  "ai-agent-service/src/test/resources/gemini/vietnamese-nlu-evaluation-candidates-v1.json": {
+    "expected": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+    "actual": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950"
+  },
+  "ai-agent-service/src/main/resources/gemini/extraction-candidates-v1.json": {
+    "expected": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3",
+    "actual": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3"
+  },
+  "ai-agent-service/src/test/resources/gemini/vietnamese-extraction-live-candidates.json": {
+    "expected": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3",
+    "actual": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3"
+  },
+  "ai-agent-service/src/test/resources/nlu/historical-10a.json": {
+    "expected": "5a1b70efcbf18f7dadb0391e0db2a8105180f87c3860eeb721bfd89e43fcd15f",
+    "actual": "5a1b70efcbf18f7dadb0391e0db2a8105180f87c3860eeb721bfd89e43fcd15f"
+  }
+}

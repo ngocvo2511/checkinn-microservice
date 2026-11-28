@@ -1,0 +1,702 @@
+[
+  {
+    "sampleId": "DIAG-VNE1-003",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "74674a22ac4b2b7384e1a82f2a3c497113da5cafeddf55f5ed4b1c454c69b33d",
+      "gemini-3.1-flash-lite": "74674a22ac4b2b7384e1a82f2a3c497113da5cafeddf55f5ed4b1c454c69b33d",
+      "gemini-2.5-flash-lite": "ae772be6c90da658504d3e15db6edc5fc2fb83486a3a602f73470bf35a95503d",
+      "gemini-2.5-flash": "ae772be6c90da658504d3e15db6edc5fc2fb83486a3a602f73470bf35a95503d"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-004",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "bdbb301303bb98cd5bc37265ff412a7ae506236a13e8a58a26469914fbfb3e9f",
+      "gemini-3.1-flash-lite": "bdbb301303bb98cd5bc37265ff412a7ae506236a13e8a58a26469914fbfb3e9f",
+      "gemini-2.5-flash-lite": "bc9fdc2843d12286a2358539a297e7f1a38bd6e2c8912a1fc638656aa7be37da",
+      "gemini-2.5-flash": "bc9fdc2843d12286a2358539a297e7f1a38bd6e2c8912a1fc638656aa7be37da"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-007",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "85e145123b3e39596be4992f4c85ed910d5f4940422e733a333124b7027d2514",
+      "gemini-3.1-flash-lite": "85e145123b3e39596be4992f4c85ed910d5f4940422e733a333124b7027d2514",
+      "gemini-2.5-flash-lite": "2e7b53a582dcdf1fba78cbdf100c303163c4dd778d33f1d187eca7f55fe42f79",
+      "gemini-2.5-flash": "2e7b53a582dcdf1fba78cbdf100c303163c4dd778d33f1d187eca7f55fe42f79"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-009",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c9227f7834803351cc9bf03629a24f6c6f571f9410a7df201ee86a275bbacb3f",
+      "gemini-3.1-flash-lite": "c9227f7834803351cc9bf03629a24f6c6f571f9410a7df201ee86a275bbacb3f",
+      "gemini-2.5-flash-lite": "3fed086387dcd113e0c0b5ac80ca0a6a62e2a5d3ce60cdadfb3aaf5deab528c9",
+      "gemini-2.5-flash": "3fed086387dcd113e0c0b5ac80ca0a6a62e2a5d3ce60cdadfb3aaf5deab528c9"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-010",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "73a2806f040a00e8dab256419ab4c051675526614253f84aede577e556921df4",
+      "gemini-3.1-flash-lite": "73a2806f040a00e8dab256419ab4c051675526614253f84aede577e556921df4",
+      "gemini-2.5-flash-lite": "504d2cc2fd40269761a231744c5078f4712156d676fe9b686fbe8c4b9926d60a",
+      "gemini-2.5-flash": "504d2cc2fd40269761a231744c5078f4712156d676fe9b686fbe8c4b9926d60a"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-013",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "b51ea5d175c10395271c26a23181c5d573b79ee00125ea92a854d9e08c37084c",
+      "gemini-3.1-flash-lite": "b51ea5d175c10395271c26a23181c5d573b79ee00125ea92a854d9e08c37084c",
+      "gemini-2.5-flash-lite": "56c9b084ed26039d4f1f2b8cf935a3296e0e07bd97ce3c73984e8149e354872d",
+      "gemini-2.5-flash": "56c9b084ed26039d4f1f2b8cf935a3296e0e07bd97ce3c73984e8149e354872d"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-033",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c061a5e7dcedc720e6f9fb9ca28baea27844ece7194a4cbd3aa76c3747e89b7c",
+      "gemini-3.1-flash-lite": "c061a5e7dcedc720e6f9fb9ca28baea27844ece7194a4cbd3aa76c3747e89b7c",
+      "gemini-2.5-flash-lite": "d29392cd91459386e70a339110d4a7cfcd937b1f576a3d36fb4db9c2df588fa8",
+      "gemini-2.5-flash": "d29392cd91459386e70a339110d4a7cfcd937b1f576a3d36fb4db9c2df588fa8"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-040",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "a0922999e1f513490d88310322d36f448b15a90ec1afd8a3b5509dff0f01b132",
+      "gemini-3.1-flash-lite": "a0922999e1f513490d88310322d36f448b15a90ec1afd8a3b5509dff0f01b132",
+      "gemini-2.5-flash-lite": "4191b67a78a703d010e9a4c5a0ce0a7c1bcd7b196cfcaaae851aafa2f53adc3f",
+      "gemini-2.5-flash": "4191b67a78a703d010e9a4c5a0ce0a7c1bcd7b196cfcaaae851aafa2f53adc3f"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-043",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c490a2b885fca3d9fd532b80057ce23d59f8bdb3e117300494819bf36b3428e6",
+      "gemini-3.1-flash-lite": "c490a2b885fca3d9fd532b80057ce23d59f8bdb3e117300494819bf36b3428e6",
+      "gemini-2.5-flash-lite": "b78be75d2dad2fb10747f6138e45f7a9fa8df02afd520afbd638d0c448309398",
+      "gemini-2.5-flash": "b78be75d2dad2fb10747f6138e45f7a9fa8df02afd520afbd638d0c448309398"
+    }
+  },
+  {
+    "sampleId": "DIAG-VNE1-049",
+    "phase": "DIAGNOSTIC",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "cf392e1a6a0bc34ee96aa22c06ec9dc05d7cc4e5ffe70f66e0b77f3f0af3edbb",
+      "gemini-3.1-flash-lite": "cf392e1a6a0bc34ee96aa22c06ec9dc05d7cc4e5ffe70f66e0b77f3f0af3edbb",
+      "gemini-2.5-flash-lite": "5b31c3f82bdb1faf2fada41e1e2553119103ef7c3d8372c1f7d174f072653f42",
+      "gemini-2.5-flash": "5b31c3f82bdb1faf2fada41e1e2553119103ef7c3d8372c1f7d174f072653f42"
+    }
+  },
+  {
+    "sampleId": "VNE1-001",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "2bf5c185409ea1d92325b9f2acc991ed34bbb37da7dc35728ed36d21c3ae3fb4",
+      "gemini-3.1-flash-lite": "2bf5c185409ea1d92325b9f2acc991ed34bbb37da7dc35728ed36d21c3ae3fb4",
+      "gemini-2.5-flash-lite": "976c4be7e4d0968763942e4483a83997db21586dde083f2b0824fd9ffceb5a28",
+      "gemini-2.5-flash": "976c4be7e4d0968763942e4483a83997db21586dde083f2b0824fd9ffceb5a28"
+    }
+  },
+  {
+    "sampleId": "VNE1-002",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "f938e5dce4df32c8a30e234415c32f0e8d8dfb28a7cdbd04baff5e6824308e71",
+      "gemini-3.1-flash-lite": "f938e5dce4df32c8a30e234415c32f0e8d8dfb28a7cdbd04baff5e6824308e71",
+      "gemini-2.5-flash-lite": "2183b7c78f28cb782b1b7343721ea49d97c83796a38fc73046e5af530f773c63",
+      "gemini-2.5-flash": "2183b7c78f28cb782b1b7343721ea49d97c83796a38fc73046e5af530f773c63"
+    }
+  },
+  {
+    "sampleId": "VNE1-003",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "74674a22ac4b2b7384e1a82f2a3c497113da5cafeddf55f5ed4b1c454c69b33d",
+      "gemini-3.1-flash-lite": "74674a22ac4b2b7384e1a82f2a3c497113da5cafeddf55f5ed4b1c454c69b33d",
+      "gemini-2.5-flash-lite": "ae772be6c90da658504d3e15db6edc5fc2fb83486a3a602f73470bf35a95503d",
+      "gemini-2.5-flash": "ae772be6c90da658504d3e15db6edc5fc2fb83486a3a602f73470bf35a95503d"
+    }
+  },
+  {
+    "sampleId": "VNE1-004",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "bdbb301303bb98cd5bc37265ff412a7ae506236a13e8a58a26469914fbfb3e9f",
+      "gemini-3.1-flash-lite": "bdbb301303bb98cd5bc37265ff412a7ae506236a13e8a58a26469914fbfb3e9f",
+      "gemini-2.5-flash-lite": "bc9fdc2843d12286a2358539a297e7f1a38bd6e2c8912a1fc638656aa7be37da",
+      "gemini-2.5-flash": "bc9fdc2843d12286a2358539a297e7f1a38bd6e2c8912a1fc638656aa7be37da"
+    }
+  },
+  {
+    "sampleId": "VNE1-005",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "1f26614cc136e34e298fa5a4e41964bcb35fd27e6d7af7340e64f7e73a00bdbc",
+      "gemini-3.1-flash-lite": "1f26614cc136e34e298fa5a4e41964bcb35fd27e6d7af7340e64f7e73a00bdbc",
+      "gemini-2.5-flash-lite": "e28a276460397b4b00c031c2411655b5b80bbb27bcdc029aebaaf9ca98e8c2e3",
+      "gemini-2.5-flash": "e28a276460397b4b00c031c2411655b5b80bbb27bcdc029aebaaf9ca98e8c2e3"
+    }
+  },
+  {
+    "sampleId": "VNE1-006",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "7b40f4c60d6e7157af69b9df1bfa316ce73ba479303831b481fb2f3764a904e5",
+      "gemini-3.1-flash-lite": "7b40f4c60d6e7157af69b9df1bfa316ce73ba479303831b481fb2f3764a904e5",
+      "gemini-2.5-flash-lite": "00c83c5d0b71483ef83d54559be011f386e1682b03b42b6edc96c0edb4cb018b",
+      "gemini-2.5-flash": "00c83c5d0b71483ef83d54559be011f386e1682b03b42b6edc96c0edb4cb018b"
+    }
+  },
+  {
+    "sampleId": "VNE1-007",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "85e145123b3e39596be4992f4c85ed910d5f4940422e733a333124b7027d2514",
+      "gemini-3.1-flash-lite": "85e145123b3e39596be4992f4c85ed910d5f4940422e733a333124b7027d2514",
+      "gemini-2.5-flash-lite": "2e7b53a582dcdf1fba78cbdf100c303163c4dd778d33f1d187eca7f55fe42f79",
+      "gemini-2.5-flash": "2e7b53a582dcdf1fba78cbdf100c303163c4dd778d33f1d187eca7f55fe42f79"
+    }
+  },
+  {
+    "sampleId": "VNE1-008",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "965f6431c216065a08f0dd17a08f783c167efbe6acc452071c3afb15f79d6fbe",
+      "gemini-3.1-flash-lite": "965f6431c216065a08f0dd17a08f783c167efbe6acc452071c3afb15f79d6fbe",
+      "gemini-2.5-flash-lite": "89e856ee2044879772c78730922f0ea97845a604520092479e87353e5ba3216d",
+      "gemini-2.5-flash": "89e856ee2044879772c78730922f0ea97845a604520092479e87353e5ba3216d"
+    }
+  },
+  {
+    "sampleId": "VNE1-009",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c9227f7834803351cc9bf03629a24f6c6f571f9410a7df201ee86a275bbacb3f",
+      "gemini-3.1-flash-lite": "c9227f7834803351cc9bf03629a24f6c6f571f9410a7df201ee86a275bbacb3f",
+      "gemini-2.5-flash-lite": "3fed086387dcd113e0c0b5ac80ca0a6a62e2a5d3ce60cdadfb3aaf5deab528c9",
+      "gemini-2.5-flash": "3fed086387dcd113e0c0b5ac80ca0a6a62e2a5d3ce60cdadfb3aaf5deab528c9"
+    }
+  },
+  {
+    "sampleId": "VNE1-010",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "73a2806f040a00e8dab256419ab4c051675526614253f84aede577e556921df4",
+      "gemini-3.1-flash-lite": "73a2806f040a00e8dab256419ab4c051675526614253f84aede577e556921df4",
+      "gemini-2.5-flash-lite": "504d2cc2fd40269761a231744c5078f4712156d676fe9b686fbe8c4b9926d60a",
+      "gemini-2.5-flash": "504d2cc2fd40269761a231744c5078f4712156d676fe9b686fbe8c4b9926d60a"
+    }
+  },
+  {
+    "sampleId": "VNE1-011",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "bf0d4a130bb2bd54d6c8446aac5421b156606d42006b60bf9761146a7348fff5",
+      "gemini-3.1-flash-lite": "bf0d4a130bb2bd54d6c8446aac5421b156606d42006b60bf9761146a7348fff5",
+      "gemini-2.5-flash-lite": "320a979a0c81ebdf1707e540ab833455f0fadff7b23d5da1185b7f5bcd2d407b",
+      "gemini-2.5-flash": "320a979a0c81ebdf1707e540ab833455f0fadff7b23d5da1185b7f5bcd2d407b"
+    }
+  },
+  {
+    "sampleId": "VNE1-012",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "3740d9cbf39d3e0b32474fc2601b6f518eb8a9bd54c42b1c60285456edd7899c",
+      "gemini-3.1-flash-lite": "3740d9cbf39d3e0b32474fc2601b6f518eb8a9bd54c42b1c60285456edd7899c",
+      "gemini-2.5-flash-lite": "2a963f2bd9df70cdf1065e7969cfddb80ba65153ab6e791438a7414c483220d9",
+      "gemini-2.5-flash": "2a963f2bd9df70cdf1065e7969cfddb80ba65153ab6e791438a7414c483220d9"
+    }
+  },
+  {
+    "sampleId": "VNE1-013",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "b51ea5d175c10395271c26a23181c5d573b79ee00125ea92a854d9e08c37084c",
+      "gemini-3.1-flash-lite": "b51ea5d175c10395271c26a23181c5d573b79ee00125ea92a854d9e08c37084c",
+      "gemini-2.5-flash-lite": "56c9b084ed26039d4f1f2b8cf935a3296e0e07bd97ce3c73984e8149e354872d",
+      "gemini-2.5-flash": "56c9b084ed26039d4f1f2b8cf935a3296e0e07bd97ce3c73984e8149e354872d"
+    }
+  },
+  {
+    "sampleId": "VNE1-014",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "989ba8b619d8c2c893d092132df839c0026b57922166c6a1e71ffca96f278534",
+      "gemini-3.1-flash-lite": "989ba8b619d8c2c893d092132df839c0026b57922166c6a1e71ffca96f278534",
+      "gemini-2.5-flash-lite": "99ee683094a001b51a9f1d23f984f8b488ce43c72a1980433076c3da9e749f5e",
+      "gemini-2.5-flash": "99ee683094a001b51a9f1d23f984f8b488ce43c72a1980433076c3da9e749f5e"
+    }
+  },
+  {
+    "sampleId": "VNE1-015",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "43f7b85f94a3d513b84deffbfc0b77cb4b4a25c5b909c0c398036c90fc6c0a4d",
+      "gemini-3.1-flash-lite": "43f7b85f94a3d513b84deffbfc0b77cb4b4a25c5b909c0c398036c90fc6c0a4d",
+      "gemini-2.5-flash-lite": "a42c57f7f22d3cb7ba00f41394ada6e0504c6545d5ba11ae40caaf21de7591ea",
+      "gemini-2.5-flash": "a42c57f7f22d3cb7ba00f41394ada6e0504c6545d5ba11ae40caaf21de7591ea"
+    }
+  },
+  {
+    "sampleId": "VNE1-016",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "2e8830808d474b7c078a71f2913e7de7670d1152962f7b860b009c1e7cc49538",
+      "gemini-3.1-flash-lite": "2e8830808d474b7c078a71f2913e7de7670d1152962f7b860b009c1e7cc49538",
+      "gemini-2.5-flash-lite": "6c6b2e003345084694542ae34a14d89415ea3b4499876b50520c71bc49395679",
+      "gemini-2.5-flash": "6c6b2e003345084694542ae34a14d89415ea3b4499876b50520c71bc49395679"
+    }
+  },
+  {
+    "sampleId": "VNE1-017",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "cf6b66876e38bfe91b9c293494c1e77a7f0b0c8c7a061e0e5fd79ba817c2bab4",
+      "gemini-3.1-flash-lite": "cf6b66876e38bfe91b9c293494c1e77a7f0b0c8c7a061e0e5fd79ba817c2bab4",
+      "gemini-2.5-flash-lite": "42f0813eefc33c6be19cdf887ccdabc4f32ca8db73cab52216ec2b74d56b3845",
+      "gemini-2.5-flash": "42f0813eefc33c6be19cdf887ccdabc4f32ca8db73cab52216ec2b74d56b3845"
+    }
+  },
+  {
+    "sampleId": "VNE1-020",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "4077c1cbc80e75ab76a7434af47bcecd16a2536d8f43486269d86e98ed10e004",
+      "gemini-3.1-flash-lite": "4077c1cbc80e75ab76a7434af47bcecd16a2536d8f43486269d86e98ed10e004",
+      "gemini-2.5-flash-lite": "810d98d44d4f6409c502de144315f744db0ecbb005d7195843cddc1be77d8590",
+      "gemini-2.5-flash": "810d98d44d4f6409c502de144315f744db0ecbb005d7195843cddc1be77d8590"
+    }
+  },
+  {
+    "sampleId": "VNE1-021",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "e52b7d0723565809e0a0f3407dfb42fab8d9a10273c1f25d8dabd53c62bba85f",
+      "gemini-3.1-flash-lite": "e52b7d0723565809e0a0f3407dfb42fab8d9a10273c1f25d8dabd53c62bba85f",
+      "gemini-2.5-flash-lite": "4cfb6b9e92fff6bd45213d58ee2e27d60d1bd114cb23e21f2e2cc7a252859f03",
+      "gemini-2.5-flash": "4cfb6b9e92fff6bd45213d58ee2e27d60d1bd114cb23e21f2e2cc7a252859f03"
+    }
+  },
+  {
+    "sampleId": "VNE1-023",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "64c104b804bf23a5a16cc0b523627d43d0a8e2fa778f8c950c0e4c37b310ae8d",
+      "gemini-3.1-flash-lite": "64c104b804bf23a5a16cc0b523627d43d0a8e2fa778f8c950c0e4c37b310ae8d",
+      "gemini-2.5-flash-lite": "82f4850a04923c697b8212b5f68eec40033629cc6e026d8b599a385c6e37ea28",
+      "gemini-2.5-flash": "82f4850a04923c697b8212b5f68eec40033629cc6e026d8b599a385c6e37ea28"
+    }
+  },
+  {
+    "sampleId": "VNE1-025",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "cad1fa56a2c40d500abf6486448caa414dacbf0787d2029820f697a387cbebb9",
+      "gemini-3.1-flash-lite": "cad1fa56a2c40d500abf6486448caa414dacbf0787d2029820f697a387cbebb9",
+      "gemini-2.5-flash-lite": "14ee96f9bbb6324078b086b16f956811964c66b39ad828f300a837585c31a068",
+      "gemini-2.5-flash": "14ee96f9bbb6324078b086b16f956811964c66b39ad828f300a837585c31a068"
+    }
+  },
+  {
+    "sampleId": "VNE1-027",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "f577582db58af2239fa522fe7650e9d6a4f5e98a118fee0014fa7c7259ebc91e",
+      "gemini-3.1-flash-lite": "f577582db58af2239fa522fe7650e9d6a4f5e98a118fee0014fa7c7259ebc91e",
+      "gemini-2.5-flash-lite": "f41fdc40f5801657964e927be2bbff8b39a072f6ac1764ce8ec5ac0dd0f5c17e",
+      "gemini-2.5-flash": "f41fdc40f5801657964e927be2bbff8b39a072f6ac1764ce8ec5ac0dd0f5c17e"
+    }
+  },
+  {
+    "sampleId": "VNE1-028",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "e6cc24416a4ce235278a32abd3153683892a122fe4f8dba94a3f513243122a43",
+      "gemini-3.1-flash-lite": "e6cc24416a4ce235278a32abd3153683892a122fe4f8dba94a3f513243122a43",
+      "gemini-2.5-flash-lite": "7e4dac8eb9d29624f80e3df4d16c82d5d2f5039a2e8c320341e29e7af3579199",
+      "gemini-2.5-flash": "7e4dac8eb9d29624f80e3df4d16c82d5d2f5039a2e8c320341e29e7af3579199"
+    }
+  },
+  {
+    "sampleId": "VNE1-029",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "4febe922fd6a4caa584fcdd7c67f82ab9101d20631b28a66fe4f39fa8bd5604a",
+      "gemini-3.1-flash-lite": "4febe922fd6a4caa584fcdd7c67f82ab9101d20631b28a66fe4f39fa8bd5604a",
+      "gemini-2.5-flash-lite": "a0cf1cc7e8fc2c83571429da76cb41bd4fe5cb36958f80269d2192afc59a7b88",
+      "gemini-2.5-flash": "a0cf1cc7e8fc2c83571429da76cb41bd4fe5cb36958f80269d2192afc59a7b88"
+    }
+  },
+  {
+    "sampleId": "VNE1-030",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "7b55ca37af14739c56fedee82a92000ff9a80b5f7d6a7a5b2a29ade0efe3831f",
+      "gemini-3.1-flash-lite": "7b55ca37af14739c56fedee82a92000ff9a80b5f7d6a7a5b2a29ade0efe3831f",
+      "gemini-2.5-flash-lite": "6c3ed2f76ba1bd38944eee715e0842a806977b0bc6a272aecdc6f273c4b43ed6",
+      "gemini-2.5-flash": "6c3ed2f76ba1bd38944eee715e0842a806977b0bc6a272aecdc6f273c4b43ed6"
+    }
+  },
+  {
+    "sampleId": "VNE1-031",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "3f34a6c85c99dae9a2391e8502e8c901f94a2ae49bb8514f04e92fc6d4e999a5",
+      "gemini-3.1-flash-lite": "3f34a6c85c99dae9a2391e8502e8c901f94a2ae49bb8514f04e92fc6d4e999a5",
+      "gemini-2.5-flash-lite": "02d23fcd9d73643fafa89ad418396b6546eb249353d4eac956e39b3cb2c2a84d",
+      "gemini-2.5-flash": "02d23fcd9d73643fafa89ad418396b6546eb249353d4eac956e39b3cb2c2a84d"
+    }
+  },
+  {
+    "sampleId": "VNE1-032",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "7e68953a7f329f343f7ce41263251be935decf5ec8f3bf960f09277c5daeb4a5",
+      "gemini-3.1-flash-lite": "7e68953a7f329f343f7ce41263251be935decf5ec8f3bf960f09277c5daeb4a5",
+      "gemini-2.5-flash-lite": "ff6f8787cd8e03ac200d66b1d56407d04aae5a8e33ce5724694780d023c4521a",
+      "gemini-2.5-flash": "ff6f8787cd8e03ac200d66b1d56407d04aae5a8e33ce5724694780d023c4521a"
+    }
+  },
+  {
+    "sampleId": "VNE1-033",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c061a5e7dcedc720e6f9fb9ca28baea27844ece7194a4cbd3aa76c3747e89b7c",
+      "gemini-3.1-flash-lite": "c061a5e7dcedc720e6f9fb9ca28baea27844ece7194a4cbd3aa76c3747e89b7c",
+      "gemini-2.5-flash-lite": "d29392cd91459386e70a339110d4a7cfcd937b1f576a3d36fb4db9c2df588fa8",
+      "gemini-2.5-flash": "d29392cd91459386e70a339110d4a7cfcd937b1f576a3d36fb4db9c2df588fa8"
+    }
+  },
+  {
+    "sampleId": "VNE1-037",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "d460d819a6f17f605756e2760b1b78ac56395f94a2e49f7f33c42e160dbd7787",
+      "gemini-3.1-flash-lite": "d460d819a6f17f605756e2760b1b78ac56395f94a2e49f7f33c42e160dbd7787",
+      "gemini-2.5-flash-lite": "c5733634edcc0704b9dbc5b1ff24f946e265d6c06a9d7e7b3f111cd42e623429",
+      "gemini-2.5-flash": "c5733634edcc0704b9dbc5b1ff24f946e265d6c06a9d7e7b3f111cd42e623429"
+    }
+  },
+  {
+    "sampleId": "VNE1-039",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "8aa040c26e800faecc533e4407a4f4f6bb6adbe672121d0b29d52f3f2c6a4aeb",
+      "gemini-3.1-flash-lite": "8aa040c26e800faecc533e4407a4f4f6bb6adbe672121d0b29d52f3f2c6a4aeb",
+      "gemini-2.5-flash-lite": "9a5c47e2383ab31dbeadcf7358b4750bfd5b7ebf2876f018ee92105cbec6485a",
+      "gemini-2.5-flash": "9a5c47e2383ab31dbeadcf7358b4750bfd5b7ebf2876f018ee92105cbec6485a"
+    }
+  },
+  {
+    "sampleId": "VNE1-040",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "a0922999e1f513490d88310322d36f448b15a90ec1afd8a3b5509dff0f01b132",
+      "gemini-3.1-flash-lite": "a0922999e1f513490d88310322d36f448b15a90ec1afd8a3b5509dff0f01b132",
+      "gemini-2.5-flash-lite": "4191b67a78a703d010e9a4c5a0ce0a7c1bcd7b196cfcaaae851aafa2f53adc3f",
+      "gemini-2.5-flash": "4191b67a78a703d010e9a4c5a0ce0a7c1bcd7b196cfcaaae851aafa2f53adc3f"
+    }
+  },
+  {
+    "sampleId": "VNE1-041",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "112f49633123b2202422d9dbc78f66d923fe0c273e64c7d4dd54ddc714166a1a",
+      "gemini-3.1-flash-lite": "112f49633123b2202422d9dbc78f66d923fe0c273e64c7d4dd54ddc714166a1a",
+      "gemini-2.5-flash-lite": "a1d1b37699d49bdc4936fc0a8f3ec5025cd7356a852fb0f9a6a5b5543912c40d",
+      "gemini-2.5-flash": "a1d1b37699d49bdc4936fc0a8f3ec5025cd7356a852fb0f9a6a5b5543912c40d"
+    }
+  },
+  {
+    "sampleId": "VNE1-042",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "6b9d0af766aba9d27e13ea2a564f11609f7bcd39d1faaa5098b2dec712b05c55",
+      "gemini-3.1-flash-lite": "6b9d0af766aba9d27e13ea2a564f11609f7bcd39d1faaa5098b2dec712b05c55",
+      "gemini-2.5-flash-lite": "c0d91ef99acd1dcce0f58d521534866b609ebff25dee73c8ba4fdbe62effb7f6",
+      "gemini-2.5-flash": "c0d91ef99acd1dcce0f58d521534866b609ebff25dee73c8ba4fdbe62effb7f6"
+    }
+  },
+  {
+    "sampleId": "VNE1-043",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c490a2b885fca3d9fd532b80057ce23d59f8bdb3e117300494819bf36b3428e6",
+      "gemini-3.1-flash-lite": "c490a2b885fca3d9fd532b80057ce23d59f8bdb3e117300494819bf36b3428e6",
+      "gemini-2.5-flash-lite": "b78be75d2dad2fb10747f6138e45f7a9fa8df02afd520afbd638d0c448309398",
+      "gemini-2.5-flash": "b78be75d2dad2fb10747f6138e45f7a9fa8df02afd520afbd638d0c448309398"
+    }
+  },
+  {
+    "sampleId": "VNE1-046",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "ebec27e0d1914ff4fd31ccb41d63f96f85d1dbecba2c2b2558bfa99d555c3222",
+      "gemini-3.1-flash-lite": "ebec27e0d1914ff4fd31ccb41d63f96f85d1dbecba2c2b2558bfa99d555c3222",
+      "gemini-2.5-flash-lite": "2b20a021a30196a8bdd385ae92d311cae35caf51df7e13310edb7bc992e632cf",
+      "gemini-2.5-flash": "2b20a021a30196a8bdd385ae92d311cae35caf51df7e13310edb7bc992e632cf"
+    }
+  },
+  {
+    "sampleId": "VNE1-047",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c83d9d23c0e5fcc4f7dd2d8de309c90dff365dcfa1230cf8f89f36d7822f83af",
+      "gemini-3.1-flash-lite": "c83d9d23c0e5fcc4f7dd2d8de309c90dff365dcfa1230cf8f89f36d7822f83af",
+      "gemini-2.5-flash-lite": "5418b81101e4a555d45cd0bb3051cf92c0cb45a1d82af573bdeabc16b972b0d9",
+      "gemini-2.5-flash": "5418b81101e4a555d45cd0bb3051cf92c0cb45a1d82af573bdeabc16b972b0d9"
+    }
+  },
+  {
+    "sampleId": "VNE1-048",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c18b8c1b14f5935fa17820bbaf94218ba47dd0b7a91fc46fb82774f5b6fee34d",
+      "gemini-3.1-flash-lite": "c18b8c1b14f5935fa17820bbaf94218ba47dd0b7a91fc46fb82774f5b6fee34d",
+      "gemini-2.5-flash-lite": "7864ec59d4ec6d9577ab84a84f41bcd3e2cfd0cf4ac990cf9d5f94b8b49524fb",
+      "gemini-2.5-flash": "7864ec59d4ec6d9577ab84a84f41bcd3e2cfd0cf4ac990cf9d5f94b8b49524fb"
+    }
+  },
+  {
+    "sampleId": "VNE1-049",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "cf392e1a6a0bc34ee96aa22c06ec9dc05d7cc4e5ffe70f66e0b77f3f0af3edbb",
+      "gemini-3.1-flash-lite": "cf392e1a6a0bc34ee96aa22c06ec9dc05d7cc4e5ffe70f66e0b77f3f0af3edbb",
+      "gemini-2.5-flash-lite": "5b31c3f82bdb1faf2fada41e1e2553119103ef7c3d8372c1f7d174f072653f42",
+      "gemini-2.5-flash": "5b31c3f82bdb1faf2fada41e1e2553119103ef7c3d8372c1f7d174f072653f42"
+    }
+  },
+  {
+    "sampleId": "VNE1-050",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "5cb0d80bc2bf40bcfa343b823bfa221a11fe4793727405f27461c5c3dcee418d",
+      "gemini-3.1-flash-lite": "5cb0d80bc2bf40bcfa343b823bfa221a11fe4793727405f27461c5c3dcee418d",
+      "gemini-2.5-flash-lite": "79a982f181075de6f344464da660b77ab0a9af5cd460762319b45d57fef970b6",
+      "gemini-2.5-flash": "79a982f181075de6f344464da660b77ab0a9af5cd460762319b45d57fef970b6"
+    }
+  },
+  {
+    "sampleId": "VNE1-051",
+    "phase": "FROZEN40",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "73ebe9f2ecc8e1b36f230db34e5e5adcffd81bf20c22d392bea501af85f66160",
+      "gemini-3.1-flash-lite": "73ebe9f2ecc8e1b36f230db34e5e5adcffd81bf20c22d392bea501af85f66160",
+      "gemini-2.5-flash-lite": "38f10355ea99703b256b1d72e2fd04bafafd41498e439ae8b512076e41c65f42",
+      "gemini-2.5-flash": "38f10355ea99703b256b1d72e2fd04bafafd41498e439ae8b512076e41c65f42"
+    }
+  },
+  {
+    "sampleId": "FRESH2-01",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "99c3503f5c128da10dbe54d8e3aa4b6af18431dec308d19d86f390b2531640ad",
+      "gemini-3.1-flash-lite": "99c3503f5c128da10dbe54d8e3aa4b6af18431dec308d19d86f390b2531640ad",
+      "gemini-2.5-flash-lite": "0097e81d328da15c1db341b1fc1f42ad6e0923d0601b429e1f8c1d2b31586138",
+      "gemini-2.5-flash": "0097e81d328da15c1db341b1fc1f42ad6e0923d0601b429e1f8c1d2b31586138"
+    }
+  },
+  {
+    "sampleId": "FRESH2-02",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "6e1fa8cea78595e834e6230d1cac529a01f229aca6389e8eb18dd641c2204a9e",
+      "gemini-3.1-flash-lite": "6e1fa8cea78595e834e6230d1cac529a01f229aca6389e8eb18dd641c2204a9e",
+      "gemini-2.5-flash-lite": "1e42e1a8f3e3bc8e797737b91cc42886d6bb7d10de6aa96113ecadd0f6aa40df",
+      "gemini-2.5-flash": "1e42e1a8f3e3bc8e797737b91cc42886d6bb7d10de6aa96113ecadd0f6aa40df"
+    }
+  },
+  {
+    "sampleId": "FRESH2-03",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "0666959968f293657c9e49614a1b24becc11096a6021da715156c4deeb78dee2",
+      "gemini-3.1-flash-lite": "0666959968f293657c9e49614a1b24becc11096a6021da715156c4deeb78dee2",
+      "gemini-2.5-flash-lite": "4bff03216762c07539842f89e38146720a080b3ff750880ca41abb137497628c",
+      "gemini-2.5-flash": "4bff03216762c07539842f89e38146720a080b3ff750880ca41abb137497628c"
+    }
+  },
+  {
+    "sampleId": "FRESH2-04",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "da4968543d7a75fc44a614bd05e6067e235df5072909c192db0459048abe040c",
+      "gemini-3.1-flash-lite": "da4968543d7a75fc44a614bd05e6067e235df5072909c192db0459048abe040c",
+      "gemini-2.5-flash-lite": "457031a2ac8bb0223e2ca0df2994b090508636e6f490863222edc37bab66387c",
+      "gemini-2.5-flash": "457031a2ac8bb0223e2ca0df2994b090508636e6f490863222edc37bab66387c"
+    }
+  },
+  {
+    "sampleId": "FRESH2-05",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "f97eb532bd275a6afbaf4862dcb51bed1ccfd3397533792d922f05bf95686786",
+      "gemini-3.1-flash-lite": "f97eb532bd275a6afbaf4862dcb51bed1ccfd3397533792d922f05bf95686786",
+      "gemini-2.5-flash-lite": "a1d1824a6c4d7a18587ae310ab0821e6c36e73736367508f3171172d2004a6ea",
+      "gemini-2.5-flash": "a1d1824a6c4d7a18587ae310ab0821e6c36e73736367508f3171172d2004a6ea"
+    }
+  },
+  {
+    "sampleId": "FRESH2-06",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "e13d3f3c81f70c0272deacca76a280c0db34d126ae601e1c3663bb6d52367fe2",
+      "gemini-3.1-flash-lite": "e13d3f3c81f70c0272deacca76a280c0db34d126ae601e1c3663bb6d52367fe2",
+      "gemini-2.5-flash-lite": "8fc409eae92da60613b02e460610ebc115260594d338a557ca8b2d79a255ac3c",
+      "gemini-2.5-flash": "8fc409eae92da60613b02e460610ebc115260594d338a557ca8b2d79a255ac3c"
+    }
+  },
+  {
+    "sampleId": "FRESH2-07",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "e75682a7272dddea1be22a0fdad434428b911dba2fbfa3cf8fdd4ee0a7faa745",
+      "gemini-3.1-flash-lite": "e75682a7272dddea1be22a0fdad434428b911dba2fbfa3cf8fdd4ee0a7faa745",
+      "gemini-2.5-flash-lite": "dbef64037804560349b0b4c4d5133ce180539ce346d76804f427753421151530",
+      "gemini-2.5-flash": "dbef64037804560349b0b4c4d5133ce180539ce346d76804f427753421151530"
+    }
+  },
+  {
+    "sampleId": "FRESH2-08",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "f0767b6f3ccf732167f77ebe01b186cc510ee9f7aa45f20e2fb4f964d827716a",
+      "gemini-3.1-flash-lite": "f0767b6f3ccf732167f77ebe01b186cc510ee9f7aa45f20e2fb4f964d827716a",
+      "gemini-2.5-flash-lite": "82dbc160439b6c82c9eb8b3e1db040e53bca35ca6ad3cc33fe522fabca8f053f",
+      "gemini-2.5-flash": "82dbc160439b6c82c9eb8b3e1db040e53bca35ca6ad3cc33fe522fabca8f053f"
+    }
+  },
+  {
+    "sampleId": "FRESH2-09",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "91c8ab04a592c125883410fda4931470e9ee51320776d0c9b691f8c66c122d9e",
+      "gemini-3.1-flash-lite": "91c8ab04a592c125883410fda4931470e9ee51320776d0c9b691f8c66c122d9e",
+      "gemini-2.5-flash-lite": "e3d3ca52fd64598792d41875164dd256e6045e6ccb4126898a788820877b8fdc",
+      "gemini-2.5-flash": "e3d3ca52fd64598792d41875164dd256e6045e6ccb4126898a788820877b8fdc"
+    }
+  },
+  {
+    "sampleId": "FRESH2-10",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "05f751da0c3da0f77652d600ce52d18cdfdf28c7ad8ff86c1f7bdad76dad4b57",
+      "gemini-3.1-flash-lite": "05f751da0c3da0f77652d600ce52d18cdfdf28c7ad8ff86c1f7bdad76dad4b57",
+      "gemini-2.5-flash-lite": "8264aff3347d22de18653d17a77c39ac3cc9c24ba193fe7f310d4bdcacd325b2",
+      "gemini-2.5-flash": "8264aff3347d22de18653d17a77c39ac3cc9c24ba193fe7f310d4bdcacd325b2"
+    }
+  },
+  {
+    "sampleId": "FRESH2-11",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "a47187f544de0978ace77a37653e30eff20bc05f5ab2c6eaa09769d0b918a953",
+      "gemini-3.1-flash-lite": "a47187f544de0978ace77a37653e30eff20bc05f5ab2c6eaa09769d0b918a953",
+      "gemini-2.5-flash-lite": "8088bb1a5f33369fe775d2c70fedb7b78701149a29095e21eabcce87c7b25b9a",
+      "gemini-2.5-flash": "8088bb1a5f33369fe775d2c70fedb7b78701149a29095e21eabcce87c7b25b9a"
+    }
+  },
+  {
+    "sampleId": "FRESH2-12",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "32eb0293cc51cf77ef7be7a601e896d2d00f8c98d4f1fcdfc5c0c2b517cfef03",
+      "gemini-3.1-flash-lite": "32eb0293cc51cf77ef7be7a601e896d2d00f8c98d4f1fcdfc5c0c2b517cfef03",
+      "gemini-2.5-flash-lite": "35a0ac9f8b1502acd0437e015e81c4a5298370d7d9e3080592c75935d7956ca9",
+      "gemini-2.5-flash": "35a0ac9f8b1502acd0437e015e81c4a5298370d7d9e3080592c75935d7956ca9"
+    }
+  },
+  {
+    "sampleId": "FRESH2-13",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "a0eb95c30df8472ee61b41bcf2cfac780da629ed09b7fe9d6fbab985865ef388",
+      "gemini-3.1-flash-lite": "a0eb95c30df8472ee61b41bcf2cfac780da629ed09b7fe9d6fbab985865ef388",
+      "gemini-2.5-flash-lite": "eff9f713d7eab916a74267b96340912e639aba5a4ccb76c4e77af5f6799bb5cf",
+      "gemini-2.5-flash": "eff9f713d7eab916a74267b96340912e639aba5a4ccb76c4e77af5f6799bb5cf"
+    }
+  },
+  {
+    "sampleId": "FRESH2-14",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "c3b53724f4c4e44f1a4689544982595be19e0d226f213c028520036dc93298be",
+      "gemini-3.1-flash-lite": "c3b53724f4c4e44f1a4689544982595be19e0d226f213c028520036dc93298be",
+      "gemini-2.5-flash-lite": "fd81a89c454511dac0e1dcce840ad726b7492fefd896e02ae8a223644af86eb0",
+      "gemini-2.5-flash": "fd81a89c454511dac0e1dcce840ad726b7492fefd896e02ae8a223644af86eb0"
+    }
+  },
+  {
+    "sampleId": "FRESH2-15",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "b44e0e5ba58c07367cdf9acd1b3a56d5824fffed51fb0db18d68e6424372473c",
+      "gemini-3.1-flash-lite": "b44e0e5ba58c07367cdf9acd1b3a56d5824fffed51fb0db18d68e6424372473c",
+      "gemini-2.5-flash-lite": "d11433434455b5636ec5a90d5cb223319e31e156549f3f208c4a0ddca6211231",
+      "gemini-2.5-flash": "d11433434455b5636ec5a90d5cb223319e31e156549f3f208c4a0ddca6211231"
+    }
+  },
+  {
+    "sampleId": "FRESH2-16",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "67ae47e5286d78e54abf133c445b21450de6e253afc16303f98a3d2947067817",
+      "gemini-3.1-flash-lite": "67ae47e5286d78e54abf133c445b21450de6e253afc16303f98a3d2947067817",
+      "gemini-2.5-flash-lite": "c22f19c21fe57793549356be73b28331512c3c32b515d800ed6ee63c34e59ac5",
+      "gemini-2.5-flash": "c22f19c21fe57793549356be73b28331512c3c32b515d800ed6ee63c34e59ac5"
+    }
+  },
+  {
+    "sampleId": "FRESH2-17",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "3bca0f738d0cea5e8f874325b771edd1625a1cb3e8bf6958d645ca36587dc2da",
+      "gemini-3.1-flash-lite": "3bca0f738d0cea5e8f874325b771edd1625a1cb3e8bf6958d645ca36587dc2da",
+      "gemini-2.5-flash-lite": "40cc80907b727609c2ed097e54e6ced883981a15325b092011ee6e8ceae37881",
+      "gemini-2.5-flash": "40cc80907b727609c2ed097e54e6ced883981a15325b092011ee6e8ceae37881"
+    }
+  },
+  {
+    "sampleId": "FRESH2-18",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "a9179dfcf1e61d708e2e7f27cb2bcea255c7b1b8e70fc8bf08b23fd5c1d8541a",
+      "gemini-3.1-flash-lite": "a9179dfcf1e61d708e2e7f27cb2bcea255c7b1b8e70fc8bf08b23fd5c1d8541a",
+      "gemini-2.5-flash-lite": "55dff93bc3bac4fecb337335274d83cd13b85984679eb47d2a792b73fef9db41",
+      "gemini-2.5-flash": "55dff93bc3bac4fecb337335274d83cd13b85984679eb47d2a792b73fef9db41"
+    }
+  },
+  {
+    "sampleId": "FRESH2-19",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "f8f1af9c11c3495d87459a65fc3518406d952d1fc552d2287170ae35bf6b382c",
+      "gemini-3.1-flash-lite": "f8f1af9c11c3495d87459a65fc3518406d952d1fc552d2287170ae35bf6b382c",
+      "gemini-2.5-flash-lite": "2100c6d2294c57ddd5cf96128d340b8808089f14130cff9ec0344ef236b95cf4",
+      "gemini-2.5-flash": "2100c6d2294c57ddd5cf96128d340b8808089f14130cff9ec0344ef236b95cf4"
+    }
+  },
+  {
+    "sampleId": "FRESH2-20",
+    "phase": "FRESH",
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "886c117daaac9c81eeba4255ec0ad8759c3cf509524367482e1b464df22351a7",
+      "gemini-3.1-flash-lite": "886c117daaac9c81eeba4255ec0ad8759c3cf509524367482e1b464df22351a7",
+      "gemini-2.5-flash-lite": "d46bc4ab721a64725de6020fc9a3a6e13a6d4082fdc4bb006b84c8a7976756de",
+      "gemini-2.5-flash": "d46bc4ab721a64725de6020fc9a3a6e13a6d4082fdc4bb006b84c8a7976756de"
+    }
+  }
+]

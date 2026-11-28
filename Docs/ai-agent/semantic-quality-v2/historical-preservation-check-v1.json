@@ -1,0 +1,566 @@
+{
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\actual-attempts-v1.json": {
+    "expected": "c7e17a3d84f20adb84f5f74958a91cd36ff2d153eb3db12ac1dc32198ad9bcf1",
+    "actual": "c7e17a3d84f20adb84f5f74958a91cd36ff2d153eb3db12ac1dc32198ad9bcf1"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\analyze.py": {
+    "expected": "223b26d24991a2b6872d60a6863febbbea9ec30d2a1492da2c09ade2037987dd",
+    "actual": "223b26d24991a2b6872d60a6863febbbea9ec30d2a1492da2c09ade2037987dd"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\artifact-hashes-v1.json": {
+    "expected": "ba36fa11329d81c9a46ea1eb8f835d883aebcba24de9a6e1612cac8c4f4a3578",
+    "actual": "ba36fa11329d81c9a46ea1eb8f835d883aebcba24de9a6e1612cac8c4f4a3578"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\availability-metrics-v1.json": {
+    "expected": "9465d7140e32725e279e5e8ac886cdbbbf45eb431b55f524ac6fb0bdc7f17739",
+    "actual": "9465d7140e32725e279e5e8ac886cdbbbf45eb431b55f524ac6fb0bdc7f17739"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\b-diagnostics-v1.json": {
+    "expected": "7fae5cb9d4f4911bba16394935c330787c744485797a3c4f5e5d67203515ca5c",
+    "actual": "7fae5cb9d4f4911bba16394935c330787c744485797a3c4f5e5d67203515ca5c"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\b40-v1.json": {
+    "expected": "bf9af2bbf6e4b02b2236a405da645695ad19827ead8fd9c41a9cc2f16ef3feca",
+    "actual": "bf9af2bbf6e4b02b2236a405da645695ad19827ead8fd9c41a9cc2f16ef3feca"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\backend-before-after-matrix-v1.json": {
+    "expected": "5e035868cf7b2594cbbb3181549137bcfb6dac18623a44ad1cc6000c6bc98fe2",
+    "actual": "5e035868cf7b2594cbbb3181549137bcfb6dac18623a44ad1cc6000c6bc98fe2"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\budget-accounting-v1.json": {
+    "expected": "09c69cb0948e4eb8efdd058b2f81a6e9e5022f62bd2a9ab0e86543f639013069",
+    "actual": "09c69cb0948e4eb8efdd058b2f81a6e9e5022f62bd2a9ab0e86543f639013069"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\campaign-observations-v1.json": {
+    "expected": "a1fb19d1292740c8b8217973dc0698cb45c9a69034f694b706e1d15cae353870",
+    "actual": "a1fb19d1292740c8b8217973dc0698cb45c9a69034f694b706e1d15cae353870"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\combined-a-original40-v1.json": {
+    "expected": "8f215125999a4903816b81f67bd6d529fca7f8de4493baa6c471316ccc4c8136",
+    "actual": "8f215125999a4903816b81f67bd6d529fca7f8de4493baa6c471316ccc4c8136"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\contract-snapshots-v1.json": {
+    "expected": "97505c82465a9940f6d051cc4198eaf7a9ed2807b8cfc1abb2eff6365a52b965",
+    "actual": "97505c82465a9940f6d051cc4198eaf7a9ed2807b8cfc1abb2eff6365a52b965"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\credential-scan-v1.json": {
+    "expected": "58c4fef877d40e935dac46ab3ef1d787d4f211e61a9c3280094292ad0c73f679",
+    "actual": "58c4fef877d40e935dac46ab3ef1d787d4f211e61a9c3280094292ad0c73f679"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\fallback-attempts-v1.json": {
+    "expected": "e0e94852d2fb3ce7a6a20f68f6210b490119765fe6048c39784f94e752a45622",
+    "actual": "e0e94852d2fb3ce7a6a20f68f6210b490119765fe6048c39784f94e752a45622"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\final-integrity-checks-v1.json": {
+    "expected": "d76e6194c0e6c904d87ccb69d165e503533acd9d64db8711293e8f19c532327f",
+    "actual": "d76e6194c0e6c904d87ccb69d165e503533acd9d64db8711293e8f19c532327f"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\frozen-source-snapshot-v1.json": {
+    "expected": "c34fa74b04e91189a20086b889556eac911c4c1941182cfa2a1284a8a5bdad9f",
+    "actual": "c34fa74b04e91189a20086b889556eac911c4c1941182cfa2a1284a8a5bdad9f"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\frozen-source-snapshot-v2.json": {
+    "expected": "e4f8939bde1ef5bf0accea0db4dd9f117e256e1f2ea711b8f1de51694cb85605",
+    "actual": "e4f8939bde1ef5bf0accea0db4dd9f117e256e1f2ea711b8f1de51694cb85605"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\frozen-source-snapshot-v3.json": {
+    "expected": "3621ad2faaa10bdd39f2f4996f11de9aa3bd25d6cafc275fbe5cd8f3d14cf405",
+    "actual": "3621ad2faaa10bdd39f2f4996f11de9aa3bd25d6cafc275fbe5cd8f3d14cf405"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\frozen-source-snapshot-v4.json": {
+    "expected": "d68ee4e50d3aa02d8960b0daeb827dd2f67876485f312625ef218781d6860606",
+    "actual": "d68ee4e50d3aa02d8960b0daeb827dd2f67876485f312625ef218781d6860606"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\frozen-source-snapshot-v5.json": {
+    "expected": "5efff38486f9b9e4ffc97699a2618164f7747c95fbb6607b9607c051e21a013e",
+    "actual": "5efff38486f9b9e4ffc97699a2618164f7747c95fbb6607b9607c051e21a013e"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\generalization-and-retests-v1.json": {
+    "expected": "95775e585892dee92545f95551c510d9fae2f526ad1a644fb65c2b6aada56283",
+    "actual": "95775e585892dee92545f95551c510d9fae2f526ad1a644fb65c2b6aada56283"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\historical-artifact-preservation-v1.json": {
+    "expected": "dec00bd01ad1dcdf5458c966c84d7acc378a63584825c1fca1747b77f70d209d",
+    "actual": "dec00bd01ad1dcdf5458c966c84d7acc378a63584825c1fca1747b77f70d209d"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\logical-sample-outcomes-v1.json": {
+    "expected": "2190cbb0f06a645a6bf8598f478d5e8773b98d205c0131d0eb2f284e6556ccf4",
+    "actual": "2190cbb0f06a645a6bf8598f478d5e8773b98d205c0131d0eb2f284e6556ccf4"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\model-profiles-v1.json": {
+    "expected": "74c3864a5c6afaeef395732329a0a157d3cb5211f8c3a648f4b45d5cbbb27913",
+    "actual": "74c3864a5c6afaeef395732329a0a157d3cb5211f8c3a648f4b45d5cbbb27913"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\model-specific-metrics-v1.json": {
+    "expected": "9c7a5e182e3d5efb240ff33dd552121297fbcbe50ccfb4b032eb3a365ba633cd",
+    "actual": "9c7a5e182e3d5efb240ff33dd552121297fbcbe50ccfb4b032eb3a365ba633cd"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\observations-v1.csv": {
+    "expected": "546ab8d016f8abc70d736dfbe309f3b700a7029b7f26139556da79fabf013831",
+    "actual": "546ab8d016f8abc70d736dfbe309f3b700a7029b7f26139556da79fabf013831"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\paired-comparisons-v1.json": {
+    "expected": "2da18635d70337601fd63adbe9ff059687b678a2c3800664942330aa1fa6e70b",
+    "actual": "2da18635d70337601fd63adbe9ff059687b678a2c3800664942330aa1fa6e70b"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\preserved-hashes-v1.json": {
+    "expected": "2c710e534708f4cb34f82a14b73b25bd9ad94b77e278ed3ed3ef200f6cc0e6b7",
+    "actual": "2c710e534708f4cb34f82a14b73b25bd9ad94b77e278ed3ed3ef200f6cc0e6b7"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\regression-evidence-v1.json": {
+    "expected": "70837e4232a60473e27ea062b834e2a7d6241e36325ac1337efc89c52ae9b453",
+    "actual": "70837e4232a60473e27ea062b834e2a7d6241e36325ac1337efc89c52ae9b453"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\remaining-a-backend-replay-v1.json": {
+    "expected": "81f3beebbead76c86ca4590d2ffdd70f7102e6597afb70c4e0b9295cf21a1067",
+    "actual": "81f3beebbead76c86ca4590d2ffdd70f7102e6597afb70c4e0b9295cf21a1067"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\remaining-a-replay-source-v1.json": {
+    "expected": "cbc21625eb533e78dbb9e2c8ffcb57921bc431e308c93f48890f888a9353f2ed",
+    "actual": "cbc21625eb533e78dbb9e2c8ffcb57921bc431e308c93f48890f888a9353f2ed"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\remaining-a-v1.json": {
+    "expected": "067f164a33215e1317f8fbd1b45674d247b083aa32adec8b174b20b489925970",
+    "actual": "067f164a33215e1317f8fbd1b45674d247b083aa32adec8b174b20b489925970"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\replay-after-final-v1.json": {
+    "expected": "35c60ea4a7236ecd27363aa50c3cc29cbaad5af49b59bb0ad861920f7085a91a",
+    "actual": "35c60ea4a7236ecd27363aa50c3cc29cbaad5af49b59bb0ad861920f7085a91a"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\replay-after-v1.json": {
+    "expected": "35c60ea4a7236ecd27363aa50c3cc29cbaad5af49b59bb0ad861920f7085a91a",
+    "actual": "35c60ea4a7236ecd27363aa50c3cc29cbaad5af49b59bb0ad861920f7085a91a"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\replay-before-v1.json": {
+    "expected": "faa7e81121c37250a0c3c041a3fc2d1448ad12db41a669bea7cd7aa1a2cd21e6",
+    "actual": "faa7e81121c37250a0c3c041a3fc2d1448ad12db41a669bea7cd7aa1a2cd21e6"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\technical-verification-v1.json": {
+    "expected": "9c218e990ea65fff7ebc50c0d3e53bba3d8251b078ff75485d243f53f43938b1",
+    "actual": "9c218e990ea65fff7ebc50c0d3e53bba3d8251b078ff75485d243f53f43938b1"
+  },
+  "Docs\\ai-agent\\semantic-corroboration-final-v1\\verification-v1.json": {
+    "expected": "5c95c2bf00a3975d3f0e00c39de5b59735b12faf30219f97c35b7664c527c097",
+    "actual": "5c95c2bf00a3975d3f0e00c39de5b59735b12faf30219f97c35b7664c527c097"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\campaign.json": {
+    "expected": "6c74062ae5ade2816398e3d8509ed33534b74209928488204db8907a1c9ca9ee",
+    "actual": "6c74062ae5ade2816398e3d8509ed33534b74209928488204db8907a1c9ca9ee"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\final-campaign.lock": {
+    "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\preflight.json": {
+    "expected": "8e35792e3b28a70b3f743af7b503e3a04f92a39256bfd63e31d4e360541eee30",
+    "actual": "8e35792e3b28a70b3f743af7b503e3a04f92a39256bfd63e31d4e360541eee30"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-01-model-verification.json": {
+    "expected": "090e34af9627cf936d2dc071951d642e85464122339fc18186553d6b62bb073b",
+    "actual": "090e34af9627cf936d2dc071951d642e85464122339fc18186553d6b62bb073b"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-02-b-diagnostics.json": {
+    "expected": "4a8384842b61b92182863f8ab8fc238e879f13ad26e2305beaffd534b7f1be42",
+    "actual": "4a8384842b61b92182863f8ab8fc238e879f13ad26e2305beaffd534b7f1be42"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-03-b40.json": {
+    "expected": "a766d8b622baa2c7b7b1462a76d0f5aca631b24165c1bee3c7ed801d5dfba64b",
+    "actual": "a766d8b622baa2c7b7b1462a76d0f5aca631b24165c1bee3c7ed801d5dfba64b"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-04-supplemental.json": {
+    "expected": "8acbc5dc9f8ef2b4534a486dc10506928a9713ab3f25bdd101d64ab14911d20f",
+    "actual": "8acbc5dc9f8ef2b4534a486dc10506928a9713ab3f25bdd101d64ab14911d20f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-05-lite-wire-verification.json": {
+    "expected": "25c55022de3277bb2d813dbe05fec30dda18f9a965c2c5badd3fd4211705086d",
+    "actual": "25c55022de3277bb2d813dbe05fec30dda18f9a965c2c5badd3fd4211705086d"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-06-flash-wire-verification.json": {
+    "expected": "8857af7f12f52fd542bff9daffe66037d0a3af4ecd1de0b596d059fbbc5f7fb0",
+    "actual": "8857af7f12f52fd542bff9daffe66037d0a3af4ecd1de0b596d059fbbc5f7fb0"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-07-a-lite-wire-verification.json": {
+    "expected": "30cac9eff9c87d2a927590d5a0a108b41fa4fbe5c27f39e873cd6f592caa8884",
+    "actual": "30cac9eff9c87d2a927590d5a0a108b41fa4fbe5c27f39e873cd6f592caa8884"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\segment-08-a-lite-enum-verification.json": {
+    "expected": "a36845308336db5e89244c82f860ef6c6b367fc4e6d5f6f5e2caab6b2340f258",
+    "actual": "a36845308336db5e89244c82f860ef6c6b367fc4e6d5f6f5e2caab6b2340f258"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-001.json": {
+    "expected": "57e6e89736d138c74676ff06dfcfcadba1641e367893365073990f245317695b",
+    "actual": "57e6e89736d138c74676ff06dfcfcadba1641e367893365073990f245317695b"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-002.json": {
+    "expected": "fbf7d123760b5c1daa5d729337ae5de06470abb4f05888b48a07739710838866",
+    "actual": "fbf7d123760b5c1daa5d729337ae5de06470abb4f05888b48a07739710838866"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-003.json": {
+    "expected": "d2b05dcdacbf75cea8b7cc4ad8f03509fd0a7076363aaa34d189c5021776f392",
+    "actual": "d2b05dcdacbf75cea8b7cc4ad8f03509fd0a7076363aaa34d189c5021776f392"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-004.json": {
+    "expected": "54d15272cc65a01431940d345f27b76e38c00c53f2b97d4417db68f945378dbe",
+    "actual": "54d15272cc65a01431940d345f27b76e38c00c53f2b97d4417db68f945378dbe"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-005.json": {
+    "expected": "13dfefb4f00b1f8f6826c9edf7007a33ca966e6a610fb3a9812134dbf01aa21c",
+    "actual": "13dfefb4f00b1f8f6826c9edf7007a33ca966e6a610fb3a9812134dbf01aa21c"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-006.json": {
+    "expected": "fa28d1573fbf02536a65ba3d361428bae08fb8a3ff4a073c24ae55c9a5ce766f",
+    "actual": "fa28d1573fbf02536a65ba3d361428bae08fb8a3ff4a073c24ae55c9a5ce766f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-007.json": {
+    "expected": "5d730837bced05ba7b8ff8b7b8ef8e5c91c09f5de25578fdc3d63416c324e68f",
+    "actual": "5d730837bced05ba7b8ff8b7b8ef8e5c91c09f5de25578fdc3d63416c324e68f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-008.json": {
+    "expected": "a435251be60ddf216c3826b7b5d0ffa08868be3cc34162f9ce1bc889e66b1bab",
+    "actual": "a435251be60ddf216c3826b7b5d0ffa08868be3cc34162f9ce1bc889e66b1bab"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-009.json": {
+    "expected": "18c8b722349a6268e41277a9a493850d20abfb4d75b790c5c2fef47062976122",
+    "actual": "18c8b722349a6268e41277a9a493850d20abfb4d75b790c5c2fef47062976122"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-010.json": {
+    "expected": "f815e9c6f7fbd0da559f0b8d3dd1fa8fbc66777b7c83ae2cdc25479249a80da1",
+    "actual": "f815e9c6f7fbd0da559f0b8d3dd1fa8fbc66777b7c83ae2cdc25479249a80da1"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-011.json": {
+    "expected": "0f8e64884b28a47f92d5154c7ec0fcd47e18078c135311d725e07fe52955e895",
+    "actual": "0f8e64884b28a47f92d5154c7ec0fcd47e18078c135311d725e07fe52955e895"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-012.json": {
+    "expected": "167bcce6193e4fa4dbe7c73b1c5eac7111ecadcb5ea0b3c6dfc67bf9ce4ae077",
+    "actual": "167bcce6193e4fa4dbe7c73b1c5eac7111ecadcb5ea0b3c6dfc67bf9ce4ae077"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-013.json": {
+    "expected": "b3d429b0f99db642f153188d0b238ff02c15e7643cbbe88e7e33ed5517700007",
+    "actual": "b3d429b0f99db642f153188d0b238ff02c15e7643cbbe88e7e33ed5517700007"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-014.json": {
+    "expected": "5c9706cfa3fa619f9107d55bae702d1422beabedc1839f477ca9fb27e56d1d27",
+    "actual": "5c9706cfa3fa619f9107d55bae702d1422beabedc1839f477ca9fb27e56d1d27"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-015.json": {
+    "expected": "d73c3bde89f844a6d50b1d6cf02c6a8175b40c3440257d1edbc4f5dbba56893f",
+    "actual": "d73c3bde89f844a6d50b1d6cf02c6a8175b40c3440257d1edbc4f5dbba56893f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-016.json": {
+    "expected": "f043fbde494de1527059a5d9280a54011bb945d6a77dd674eb5378435c029bc2",
+    "actual": "f043fbde494de1527059a5d9280a54011bb945d6a77dd674eb5378435c029bc2"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-017.json": {
+    "expected": "e560daf8750c70d3f51915cb040ed6be328b7a3d5d3d088e4b771c2d28c0afde",
+    "actual": "e560daf8750c70d3f51915cb040ed6be328b7a3d5d3d088e4b771c2d28c0afde"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-021.json": {
+    "expected": "c2a6a0a0a21529f4d615614567e9aff481f2f28ded12ed77a72f62ec3012098f",
+    "actual": "c2a6a0a0a21529f4d615614567e9aff481f2f28ded12ed77a72f62ec3012098f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-022.json": {
+    "expected": "bbc9cd69e74413652217c2057c77005267ec6f789899f18f63dfb2aa739fd85f",
+    "actual": "bbc9cd69e74413652217c2057c77005267ec6f789899f18f63dfb2aa739fd85f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-023.json": {
+    "expected": "3af8d090f047d1c9ca5993268cb5bee9e1d82bf4124e550787cc46ad1e7c63bc",
+    "actual": "3af8d090f047d1c9ca5993268cb5bee9e1d82bf4124e550787cc46ad1e7c63bc"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-024.json": {
+    "expected": "695b8f8eef5f4fa57086209b5b0bb4490b0cfc02779e236edcb728584558acd7",
+    "actual": "695b8f8eef5f4fa57086209b5b0bb4490b0cfc02779e236edcb728584558acd7"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-025.json": {
+    "expected": "244501bfcfb5f556ac731e7dfe75f1bbde6cd0a4080b73608855f397c1b8dcd9",
+    "actual": "244501bfcfb5f556ac731e7dfe75f1bbde6cd0a4080b73608855f397c1b8dcd9"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-026.json": {
+    "expected": "34fde4543f89a599c921b6ad94d7877e7ac6baf2bcfd2f6336bc98f932c3819c",
+    "actual": "34fde4543f89a599c921b6ad94d7877e7ac6baf2bcfd2f6336bc98f932c3819c"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-027.json": {
+    "expected": "423bc1f2e7469c05539658ddadc56d092c31ff0a6808d685156d0106d9413b21",
+    "actual": "423bc1f2e7469c05539658ddadc56d092c31ff0a6808d685156d0106d9413b21"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-028.json": {
+    "expected": "8d6cf20771a52b52c1ba15847f696dabf5df7163500d9ae5988524f2ceb569a7",
+    "actual": "8d6cf20771a52b52c1ba15847f696dabf5df7163500d9ae5988524f2ceb569a7"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-029.json": {
+    "expected": "0167c999fa008174ed0ff432836cdc07dc9fbaa84dae4a90a48594e39bde55a8",
+    "actual": "0167c999fa008174ed0ff432836cdc07dc9fbaa84dae4a90a48594e39bde55a8"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-030.json": {
+    "expected": "a929cda754e3e57d6e34cab2ee7791eccb4de5eaf812393e1d55840edc759339",
+    "actual": "a929cda754e3e57d6e34cab2ee7791eccb4de5eaf812393e1d55840edc759339"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-031.json": {
+    "expected": "d90484695b48371e8058eea59d645c268bbbe051bec138a108e2fd44511b2001",
+    "actual": "d90484695b48371e8058eea59d645c268bbbe051bec138a108e2fd44511b2001"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-032.json": {
+    "expected": "d8b8ad83544021f0bd2318577ed8830dd57bca87421a6807384379fe032f5fac",
+    "actual": "d8b8ad83544021f0bd2318577ed8830dd57bca87421a6807384379fe032f5fac"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-033.json": {
+    "expected": "ab17a70c9a4028878e6354362e184cad9030b014020ae0ef3e1e6028b7947389",
+    "actual": "ab17a70c9a4028878e6354362e184cad9030b014020ae0ef3e1e6028b7947389"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-034.json": {
+    "expected": "22c229b074662cdf1fed1534080096b19d372f7ebd4014d2376ace775e9bc9b9",
+    "actual": "22c229b074662cdf1fed1534080096b19d372f7ebd4014d2376ace775e9bc9b9"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-035.json": {
+    "expected": "ae5d3c30e50f535f7b6f110195beb44271343b92ea3e1a841993501bbffed007",
+    "actual": "ae5d3c30e50f535f7b6f110195beb44271343b92ea3e1a841993501bbffed007"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-036.json": {
+    "expected": "54c0fb8baf42817888594a35a36a4fd63f832d7ad2f41ceac9e8e71c1b37b90e",
+    "actual": "54c0fb8baf42817888594a35a36a4fd63f832d7ad2f41ceac9e8e71c1b37b90e"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-037.json": {
+    "expected": "05519b577b9eaf226164d92d9f0bd24b29c046587d7ee9c7b82db7265fa8bb12",
+    "actual": "05519b577b9eaf226164d92d9f0bd24b29c046587d7ee9c7b82db7265fa8bb12"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-038.json": {
+    "expected": "55594cac3b15276a3db05d658fc69c5c1a3e02d486920fe390b43567f0fd72ba",
+    "actual": "55594cac3b15276a3db05d658fc69c5c1a3e02d486920fe390b43567f0fd72ba"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-039.json": {
+    "expected": "e83957a3149ccf8cc85f659ec0a6b093243951d9463084bf9ed59cc7c58f1d69",
+    "actual": "e83957a3149ccf8cc85f659ec0a6b093243951d9463084bf9ed59cc7c58f1d69"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-040.json": {
+    "expected": "698a1cadc6a54aeea157a735f00b72414c9335d7c16563a695c86d082cb113b5",
+    "actual": "698a1cadc6a54aeea157a735f00b72414c9335d7c16563a695c86d082cb113b5"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-041.json": {
+    "expected": "334b421595c2257accd9c6ea3b59c3918aa6a7ca04b50e5154818b67a4d01d9d",
+    "actual": "334b421595c2257accd9c6ea3b59c3918aa6a7ca04b50e5154818b67a4d01d9d"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-042.json": {
+    "expected": "b0617c2245a5950eaaeeb81102a994bc7ddec5c35a96356e5f44aaff9f7411ed",
+    "actual": "b0617c2245a5950eaaeeb81102a994bc7ddec5c35a96356e5f44aaff9f7411ed"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-043.json": {
+    "expected": "6a64eeadcf6f5718e38a3050f9dda88b56332f242e330379954f66fdf78c81a3",
+    "actual": "6a64eeadcf6f5718e38a3050f9dda88b56332f242e330379954f66fdf78c81a3"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-044.json": {
+    "expected": "0e4355df1786b25974e6fc0b1d3aa2356f035c77e261fb5cb5350504b5e5fdbc",
+    "actual": "0e4355df1786b25974e6fc0b1d3aa2356f035c77e261fb5cb5350504b5e5fdbc"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-045.json": {
+    "expected": "81757cac40b285ea09c827f8214c5b5cc86ba777796d7132678fb9e8d41706ad",
+    "actual": "81757cac40b285ea09c827f8214c5b5cc86ba777796d7132678fb9e8d41706ad"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-046.json": {
+    "expected": "3720aec0dbe6b59c8b1b197b9ca201642e8c4f6b5dc89e5fa78cc9e6b30d637e",
+    "actual": "3720aec0dbe6b59c8b1b197b9ca201642e8c4f6b5dc89e5fa78cc9e6b30d637e"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-047.json": {
+    "expected": "d9900829b0fec8f26107b7c5546547734866f8b15896a6c86f84801292d10712",
+    "actual": "d9900829b0fec8f26107b7c5546547734866f8b15896a6c86f84801292d10712"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-048.json": {
+    "expected": "e9b6191ff66359b77a6145e20818e2eb97ee14935569f5e04d6970ea99adf570",
+    "actual": "e9b6191ff66359b77a6145e20818e2eb97ee14935569f5e04d6970ea99adf570"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-049.json": {
+    "expected": "cacb7345cbcc0ba2c477bed724a650056d6ae87e625f7fc33c533ca4a31ee5c5",
+    "actual": "cacb7345cbcc0ba2c477bed724a650056d6ae87e625f7fc33c533ca4a31ee5c5"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-050.json": {
+    "expected": "77454288777d8eee8c070396c9dc67beade6b6794c7911f9250a85ac811a1e75",
+    "actual": "77454288777d8eee8c070396c9dc67beade6b6794c7911f9250a85ac811a1e75"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-051.json": {
+    "expected": "5b1a6e502871458feb717b19c45b0c5527e13bfd88caa14ac4c4a20c12bc292d",
+    "actual": "5b1a6e502871458feb717b19c45b0c5527e13bfd88caa14ac4c4a20c12bc292d"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-052.json": {
+    "expected": "c8c071d9815e62231d9d7c615c041b8ae7ac3418cb8b8eba5a64da7c58476b40",
+    "actual": "c8c071d9815e62231d9d7c615c041b8ae7ac3418cb8b8eba5a64da7c58476b40"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-053.json": {
+    "expected": "e6c5be4ae4603a4a7babbf78a82ca1a415ab2843b87117985ac9803b884eb48d",
+    "actual": "e6c5be4ae4603a4a7babbf78a82ca1a415ab2843b87117985ac9803b884eb48d"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-054.json": {
+    "expected": "b1f0409a9cf66fbcd442dc2bb64a24bbc29c04e8b8d44762067aeebf8a55d6e1",
+    "actual": "b1f0409a9cf66fbcd442dc2bb64a24bbc29c04e8b8d44762067aeebf8a55d6e1"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-055.json": {
+    "expected": "f5891fe858a2f9c94332e2c5701ebad66e8098b19902d11edbd3f25df7c3aed6",
+    "actual": "f5891fe858a2f9c94332e2c5701ebad66e8098b19902d11edbd3f25df7c3aed6"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-056.json": {
+    "expected": "e685a632164a65f4370f1b6a517ca19552db9183cb213bfbcf2581bac93ffe10",
+    "actual": "e685a632164a65f4370f1b6a517ca19552db9183cb213bfbcf2581bac93ffe10"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-057.json": {
+    "expected": "8c246dc59746b3987663bc2c39567d2f5d35bcf9842722657b8cf3e8cc17de64",
+    "actual": "8c246dc59746b3987663bc2c39567d2f5d35bcf9842722657b8cf3e8cc17de64"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-058.json": {
+    "expected": "f698e98ea222e0e9253e1816e2ee059978ec3d4689bef819d44e76b9c011e1c6",
+    "actual": "f698e98ea222e0e9253e1816e2ee059978ec3d4689bef819d44e76b9c011e1c6"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-059.json": {
+    "expected": "1dce759ade44055885ada8ae50a193d58f0aa6147b1b69a071eb9afebfe1cc59",
+    "actual": "1dce759ade44055885ada8ae50a193d58f0aa6147b1b69a071eb9afebfe1cc59"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-060.json": {
+    "expected": "874f28e038631c396876f5f7a6e77297f61a96659fbaee925485fe91f47055d1",
+    "actual": "874f28e038631c396876f5f7a6e77297f61a96659fbaee925485fe91f47055d1"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-061.json": {
+    "expected": "597e58f202c4196096925506d3da0a32826d111a031b108dfdb84cbaf552a23a",
+    "actual": "597e58f202c4196096925506d3da0a32826d111a031b108dfdb84cbaf552a23a"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-062.json": {
+    "expected": "504a222b5a6d5ca8059e3055ed87725fa0539888ee8af7aa678224b7d57c35e1",
+    "actual": "504a222b5a6d5ca8059e3055ed87725fa0539888ee8af7aa678224b7d57c35e1"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-063.json": {
+    "expected": "f944d3a032477a18b9d9efc51d27f653d8b1a5311fed2d7de9fa94f7ec93557d",
+    "actual": "f944d3a032477a18b9d9efc51d27f653d8b1a5311fed2d7de9fa94f7ec93557d"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-064.json": {
+    "expected": "c4ff326be5de0ae4d56f53dfdc6df2211e5c28f069d8153392922a0a526d10a7",
+    "actual": "c4ff326be5de0ae4d56f53dfdc6df2211e5c28f069d8153392922a0a526d10a7"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-065.json": {
+    "expected": "bdc5d04fd77e7ef5db213438d2618e5310b3088bf8be018eaff229127ed898ed",
+    "actual": "bdc5d04fd77e7ef5db213438d2618e5310b3088bf8be018eaff229127ed898ed"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-066.json": {
+    "expected": "ec1426ca0d94b0053c515d7f04bb64dfc544c3281df784df1c2fb2ece11a642c",
+    "actual": "ec1426ca0d94b0053c515d7f04bb64dfc544c3281df784df1c2fb2ece11a642c"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-067.json": {
+    "expected": "9109e055d6c19260212e5b2c4332c6331536007c4117d0ae59b2f40df23642c0",
+    "actual": "9109e055d6c19260212e5b2c4332c6331536007c4117d0ae59b2f40df23642c0"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-068.json": {
+    "expected": "4de5e047016a679d7db5776018d38443ce929109f0e07e99d3876720d5f5121c",
+    "actual": "4de5e047016a679d7db5776018d38443ce929109f0e07e99d3876720d5f5121c"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-069.json": {
+    "expected": "b1f8bb0de318bd7ac8c0eee5d620337fb625f8c7a7f9717a6e2141a4862396cf",
+    "actual": "b1f8bb0de318bd7ac8c0eee5d620337fb625f8c7a7f9717a6e2141a4862396cf"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-070.json": {
+    "expected": "e9022c1eaa68626b7a3115aa065ef649cf1865f1baca0b77ebaa8302a5163ba3",
+    "actual": "e9022c1eaa68626b7a3115aa065ef649cf1865f1baca0b77ebaa8302a5163ba3"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-071.json": {
+    "expected": "ad9e96c8326dcf82f9a3bd896e2f3ccc77be95a3907853955ba8054515a3390f",
+    "actual": "ad9e96c8326dcf82f9a3bd896e2f3ccc77be95a3907853955ba8054515a3390f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-072.json": {
+    "expected": "2e08c0a72b22dc4ec685484e4ab6204db7170b2f43ce1ed650b3c16ede73051e",
+    "actual": "2e08c0a72b22dc4ec685484e4ab6204db7170b2f43ce1ed650b3c16ede73051e"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-073.json": {
+    "expected": "7c8b2fecda790ba3950f0e6129f4b7f96079c6182ee0bf8f1cd632991e354d7e",
+    "actual": "7c8b2fecda790ba3950f0e6129f4b7f96079c6182ee0bf8f1cd632991e354d7e"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-074.json": {
+    "expected": "38a6be1e3c806d808f3dd1c10dd911536947b9cf8a54f8f90981e52d97089835",
+    "actual": "38a6be1e3c806d808f3dd1c10dd911536947b9cf8a54f8f90981e52d97089835"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-075.json": {
+    "expected": "92acedcd395bcacf8380cc0d3cf687fe1cee3baa4587e33689fb53c4cf204ca7",
+    "actual": "92acedcd395bcacf8380cc0d3cf687fe1cee3baa4587e33689fb53c4cf204ca7"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-076.json": {
+    "expected": "4c6640d6fba44d822eea5e62d58c0d13a09245b4694878bade20a467d35cb808",
+    "actual": "4c6640d6fba44d822eea5e62d58c0d13a09245b4694878bade20a467d35cb808"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-077.json": {
+    "expected": "400af5dbf2dedbf309527cd768ec18fd088b011abf3b227210c0bd7c39595e99",
+    "actual": "400af5dbf2dedbf309527cd768ec18fd088b011abf3b227210c0bd7c39595e99"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-078.json": {
+    "expected": "ddb6f8de136a4a6e24d20aa8e1e7ff77c643fbed9a191dadec3078f5ac1e7f50",
+    "actual": "ddb6f8de136a4a6e24d20aa8e1e7ff77c643fbed9a191dadec3078f5ac1e7f50"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-079.json": {
+    "expected": "1895b28fc262abcae0f7233049c0f236297ae8aac5c6f8c8548d8c12448aa195",
+    "actual": "1895b28fc262abcae0f7233049c0f236297ae8aac5c6f8c8548d8c12448aa195"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-080.json": {
+    "expected": "84be71833cff174d151b92aced4a393207abc05cd601af75c408ce49540f130e",
+    "actual": "84be71833cff174d151b92aced4a393207abc05cd601af75c408ce49540f130e"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-081.json": {
+    "expected": "516f96c9bc2bf226930e20647c158ec9af1149155bada85db89fdb01115fc5a4",
+    "actual": "516f96c9bc2bf226930e20647c158ec9af1149155bada85db89fdb01115fc5a4"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-082.json": {
+    "expected": "7a495703182926e9a44f7791bb150b7b088b0d11d6b4879e845208acca54cd34",
+    "actual": "7a495703182926e9a44f7791bb150b7b088b0d11d6b4879e845208acca54cd34"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-083.json": {
+    "expected": "1e95df091ea08973bde9c79c15a7ef12cf44f437419dd952a158b92b53834004",
+    "actual": "1e95df091ea08973bde9c79c15a7ef12cf44f437419dd952a158b92b53834004"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-084.json": {
+    "expected": "cf7ce5ccf28a898e6662be999d796cf7ef9782db38c29e60d8fa3374c66c9378",
+    "actual": "cf7ce5ccf28a898e6662be999d796cf7ef9782db38c29e60d8fa3374c66c9378"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-085.json": {
+    "expected": "5c8c5c0d0a09d7971d4fd1bf24081661af67b36655704b647d969de45c2b42a9",
+    "actual": "5c8c5c0d0a09d7971d4fd1bf24081661af67b36655704b647d969de45c2b42a9"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-086.json": {
+    "expected": "1b07e26105711aa4967285054295b89a6f5bad798e1d073d3c0e14c1fb830452",
+    "actual": "1b07e26105711aa4967285054295b89a6f5bad798e1d073d3c0e14c1fb830452"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-087.json": {
+    "expected": "ea8df41d42159a2e3a8ac5ab2130f7da02dfd8ca3a3f630129a64d5d67be8d4f",
+    "actual": "ea8df41d42159a2e3a8ac5ab2130f7da02dfd8ca3a3f630129a64d5d67be8d4f"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-088.json": {
+    "expected": "a5ef402194b9cf9f69217d01e9eb8a58519b315198fb4843cfe0b1ab2c5076d6",
+    "actual": "a5ef402194b9cf9f69217d01e9eb8a58519b315198fb4843cfe0b1ab2c5076d6"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-089.json": {
+    "expected": "61e0cbeed8fc0160dde13722b48783dfe07074f937bb1f6f6a9de871424bc279",
+    "actual": "61e0cbeed8fc0160dde13722b48783dfe07074f937bb1f6f6a9de871424bc279"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-090.json": {
+    "expected": "cc355769e883e24bfc8527e3ea08c8ac19ce6c74dc842077907cd4eda89b7afa",
+    "actual": "cc355769e883e24bfc8527e3ea08c8ac19ce6c74dc842077907cd4eda89b7afa"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-091.json": {
+    "expected": "cf68680ec9091446ff3b3e22019bccd6041f6edbc701431295b7783f95ec6085",
+    "actual": "cf68680ec9091446ff3b3e22019bccd6041f6edbc701431295b7783f95ec6085"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-092.json": {
+    "expected": "6e750d76c9bab284eeee7635d5805149ccd7396d09761ab749f451a480a2afba",
+    "actual": "6e750d76c9bab284eeee7635d5805149ccd7396d09761ab749f451a480a2afba"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-094.json": {
+    "expected": "af8598198ecc14db64a24e5e0e59ba9f8fa556d03d27ab0fc64051f5cdf2a65c",
+    "actual": "af8598198ecc14db64a24e5e0e59ba9f8fa556d03d27ab0fc64051f5cdf2a65c"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-095.json": {
+    "expected": "755367c65f1ae9a8ed5a2a409f4731550eb1ade053f39cc0b39175c06f7262d4",
+    "actual": "755367c65f1ae9a8ed5a2a409f4731550eb1ade053f39cc0b39175c06f7262d4"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-096.json": {
+    "expected": "6bc60d9f1af9439aed98355d7ba0c22227ca7dee80818026af8bc02d2a52df58",
+    "actual": "6bc60d9f1af9439aed98355d7ba0c22227ca7dee80818026af8bc02d2a52df58"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-097.json": {
+    "expected": "d3485111d4a89800b4217d09ea3efaaea0a11e57d13b0b898af562da51a9c5ef",
+    "actual": "d3485111d4a89800b4217d09ea3efaaea0a11e57d13b0b898af562da51a9c5ef"
+  },
+  "ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-098.json": {
+    "expected": "c3e544fcd682427165be80183520e3876216f267f299dc005e8d8f28a773fe81",
+    "actual": "c3e544fcd682427165be80183520e3876216f267f299dc005e8d8f28a773fe81"
+  }
+}

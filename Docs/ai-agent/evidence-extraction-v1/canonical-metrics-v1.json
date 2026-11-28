@@ -1,0 +1,104 @@
+{
+  "TECHNICAL": {
+    "planned": 1,
+    "attempted": 1,
+    "notRun": 0,
+    "canonicalTypedValid": 1,
+    "exactBusinessSemantics": 1,
+    "compilerRejections": 0,
+    "actionCorrect": 1,
+    "intentCorrect": 1,
+    "criteriaCorrect": 1,
+    "missingSlotsCorrect": 1,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "DIAGNOSTIC": {
+    "planned": 8,
+    "attempted": 8,
+    "notRun": 0,
+    "canonicalTypedValid": 7,
+    "exactBusinessSemantics": 7,
+    "compilerRejections": 1,
+    "actionCorrect": 7,
+    "intentCorrect": 7,
+    "criteriaCorrect": 7,
+    "missingSlotsCorrect": 7,
+    "referencePriceCorrect": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    }
+  },
+  "DIAGNOSTIC_R2": {
+    "planned": 2,
+    "attempted": 2,
+    "notRun": 0,
+    "canonicalTypedValid": 2,
+    "exactBusinessSemantics": 2,
+    "compilerRejections": 0,
+    "actionCorrect": 2,
+    "intentCorrect": 2,
+    "criteriaCorrect": 2,
+    "missingSlotsCorrect": 2,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "COMPARISON": {
+    "planned": 32,
+    "attempted": 10,
+    "notRun": 22,
+    "canonicalTypedValid": 6,
+    "exactBusinessSemantics": 6,
+    "compilerRejections": 0,
+    "actionCorrect": 6,
+    "intentCorrect": 6,
+    "criteriaCorrect": 6,
+    "missingSlotsCorrect": 6,
+    "referencePriceCorrect": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+    }
+  },
+  "FROZEN40": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40,
+    "canonicalTypedValid": 0,
+    "exactBusinessSemantics": 0,
+    "compilerRejections": 0,
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "FRESH": {
+    "planned": 20,
+    "attempted": 0,
+    "notRun": 20,
+    "canonicalTypedValid": 0,
+    "exactBusinessSemantics": 0,
+    "compilerRejections": 0,
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  }
+}

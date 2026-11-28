@@ -1,0 +1,1255 @@
+{
+  "attribution": "Multi-label observed axes; not mutually exclusive causal counts",
+  "rows": [
+    {
+      "sampleId": "VNE1-001",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "BROWSE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Uncorroborated extraction"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H3_OBSERVED_REPRESENTATION_ERROR_H2_H3_CAUSAL_HYPOTHESIS"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Uncorroborated extraction"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "status": "ATTEMPTED",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-004",
+      "status": "ATTEMPTED",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-005",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H4_H5_ADMISSION_DOES_NOT_VALIDATE_FULL_ORACLE_SEMANTICS"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-006",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H4_H5_ADMISSION_DOES_NOT_VALIDATE_FULL_ORACLE_SEMANTICS"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-007",
+      "status": "ATTEMPTED",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-008",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H1_OBSERVED_EXPLICIT_FACT_OR_CONSTRAINT_ERROR"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H1_OBSERVED_EXPLICIT_FACT_OR_CONSTRAINT_ERROR"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-02-28"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-03-03"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-010",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H1_OBSERVED_EXPLICIT_FACT_OR_CONSTRAINT_ERROR",
+        "H3_OBSERVED_REPRESENTATION_ERROR_H2_H3_CAUSAL_HYPOTHESIS"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "minPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H1_OBSERVED_EXPLICIT_FACT_OR_CONSTRAINT_ERROR"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {},
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": "LITERAL_PARSER_CLARIFICATION"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "ROUTING_OR_PARSER_REJECTION"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "action": "COMPARISON",
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-015",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H4_H5_ADMISSION_DOES_NOT_VALIDATE_FULL_ORACLE_SEMANTICS"
+      ],
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "UNSUPPORTED",
+        "fields": {},
+        "action": "CLARIFY",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-016",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "BROWSE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "status": "ATTEMPTED",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-020",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H3_OBSERVED_REPRESENTATION_ERROR_H2_H3_CAUSAL_HYPOTHESIS"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Uncorroborated extraction"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "status": "ATTEMPTED",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-023",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "status": "ATTEMPTED",
+      "causes": [
+        "ACTION_INTENT_ENCODING_OR_UNDERSTANDING_CAUSE_NOT_IDENTIFIED",
+        "H1_OBSERVED_EXPLICIT_FACT_OR_CONSTRAINT_ERROR",
+        "H3_OBSERVED_REPRESENTATION_ERROR_H2_H3_CAUSAL_HYPOTHESIS"
+      ],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-20"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": false
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-027",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H4_CONFIRMED_CORROBORATION_LIMITATION"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H4_CONFIRMED_CORROBORATION_LIMITATION"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": {
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "backendReason": "Ambiguous criteria not admitted"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H7_PROVIDER_HTTP_503"
+      ],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-030",
+      "status": "ATTEMPTED",
+      "causes": [
+        "H7_PROVIDER_HTTP_503"
+      ],
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-031",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-032",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-033",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-037",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-039",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-040",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-041",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-042",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-043",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-046",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-047",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-048",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-049",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-050",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    },
+    {
+      "sampleId": "VNE1-051",
+      "status": "NOT_RUN",
+      "causes": [],
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actual": null,
+      "backendReason": null
+    }
+  ]
+}

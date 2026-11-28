@@ -1,0 +1,297 @@
+{
+  "campaign": {
+    "planned": 10,
+    "attempted": 10,
+    "notRun": 0,
+    "http200": 10,
+    "capacityFailures": 0,
+    "schemaValid": 9,
+    "exactBusinessSemantics": 8,
+    "correctAccepted": 5,
+    "correctRejected": 3,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 1,
+    "backendNotEvaluated": 1,
+    "backendAccepted": 5,
+    "compilerErrors": 1,
+    "rawSemanticSchemaValid": 10,
+    "rawModelMissingSlots": "NOT_APPLICABLE_FOR_B",
+    "rawSemanticCorrect": 8,
+    "rawSemanticIntentCorrect": 10,
+    "rawSemanticActionCorrect": 10,
+    "rawMeaningCriteriaCorrect": 8,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 7408,
+    "knownOutputTokens": 392,
+    "knownTotalTokens": 7800,
+    "knownUsageAttempts": 10,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": 780,
+    "medianLatencyMillis": 1271.0,
+    "meanLatencyMillis": 1542.5,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 9,
+    "intentCorrect": 9,
+    "criteriaCorrect": 8,
+    "missingSlotsCorrect": 9,
+    "referenceCorrect": 9,
+    "spuriousClearIds": [],
+    "referencePriceApplicable": 0,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": 0.0,
+    "falseRejectionRate": 0.375,
+    "backendClassificationAccuracy": {
+      "numerator": 6,
+      "denominator": 9,
+      "rate": 0.6666666666666666
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 5,
+      "denominator": 5,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 5,
+      "denominator": 10,
+      "rate": 0.5
+    },
+    "attemptLatencyMillis": {
+      "n": 10,
+      "mean": 1542.5,
+      "median": 1271.0,
+      "p95": 3421,
+      "maximum": 3421,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 10,
+      "mean": 4638.5,
+      "median": 4822.0,
+      "p95": 7285,
+      "maximum": 7285,
+      "percentileMethod": "nearest rank"
+    },
+    "providerOnlyLatencyMillis": "NOT_SEPARATELY_RECORDED; attempt latency includes SDK/validation",
+    "providerStatusCounts": {
+      "200": 10,
+      "400": 0,
+      "401": 0,
+      "403": 0,
+      "429": 0,
+      "503": 0
+    },
+    "timeouts": 0,
+    "providerFailures": 0,
+    "thinkingStatus": "NOT_REPORTED",
+    "dateRetention": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+    },
+    "occupancyRetention": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.3333333333333333
+    },
+    "destinationCorrectness": {
+      "numerator": 3,
+      "denominator": 3,
+      "rate": 1.0
+    },
+    "priceOperatorCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceValueCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "referenceRecognition": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "explicitRemovalCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsupportedConstraintRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeObserved": 0,
+    "unsafeAccepted": 0,
+    "confirmationObserved": 0,
+    "confirmationAccepted": 0,
+    "unauthorizedToolObserved": 0,
+    "unauthorizedToolAccepted": 0,
+    "unsafeInferenceExtraOrdinaryFacts": [
+      {
+        "sampleId": "DIAG-VNE1-003",
+        "fields": [
+          "hotel",
+          "price"
+        ],
+        "accepted": false
+      }
+    ],
+    "unsafeInferenceAcceptance": 0,
+    "unsafeInferenceDefinition": "Extra supported facts on ordinary criteria requests absent from the frozen explicit-fact oracle; omissions/substitutions remain separate semantic failures. Not a general inference detector.",
+    "compilerRejectionCategories": {
+      "com.example.aiagent.model.VietnameseSemanticCompiler.compile:154": 1
+    }
+  },
+  "segment-01-diagnostic-r2": {
+    "planned": 10,
+    "attempted": 5,
+    "notRun": 5,
+    "http200": 4,
+    "capacityFailures": 0,
+    "schemaValid": 2,
+    "exactBusinessSemantics": 2,
+    "correctAccepted": 2,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 0,
+    "backendNotEvaluated": 3,
+    "backendAccepted": 2,
+    "compilerErrors": 2,
+    "rawSemanticSchemaValid": 4,
+    "rawModelMissingSlots": "NOT_APPLICABLE_FOR_B",
+    "rawSemanticCorrect": 2,
+    "rawSemanticIntentCorrect": 4,
+    "rawSemanticActionCorrect": 4,
+    "rawMeaningCriteriaCorrect": 2,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 3584,
+    "knownOutputTokens": 210,
+    "knownTotalTokens": 3794,
+    "knownUsageAttempts": 4,
+    "unknownUsageAttempts": 1,
+    "meanKnownTotalTokens": 948.5,
+    "medianLatencyMillis": 3057,
+    "meanLatencyMillis": 5132.8,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 2,
+    "intentCorrect": 2,
+    "criteriaCorrect": 2,
+    "missingSlotsCorrect": 2,
+    "referenceCorrect": 2,
+    "spuriousClearIds": [],
+    "referencePriceApplicable": 0,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": null,
+    "falseRejectionRate": 0.0,
+    "backendClassificationAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 2,
+      "denominator": 5,
+      "rate": 0.4
+    },
+    "attemptLatencyMillis": {
+      "n": 5,
+      "mean": 5132.8,
+      "median": 3057,
+      "p95": 10021,
+      "maximum": 10021,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 5,
+      "mean": 6665.2,
+      "median": 6715,
+      "p95": 12056,
+      "maximum": 12056,
+      "percentileMethod": "nearest rank"
+    },
+    "providerOnlyLatencyMillis": "NOT_SEPARATELY_RECORDED; attempt latency includes SDK/validation",
+    "providerStatusCounts": {
+      "200": 4,
+      "400": 0,
+      "401": 0,
+      "403": 0,
+      "429": 0,
+      "503": 0
+    },
+    "timeouts": 1,
+    "providerFailures": 1,
+    "thinkingStatus": "NOT_REPORTED",
+    "dateRetention": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+    },
+    "occupancyRetention": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.3333333333333333
+    },
+    "destinationCorrectness": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "priceOperatorCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceValueCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "referenceRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "explicitRemovalCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsupportedConstraintRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeObserved": 0,
+    "unsafeAccepted": 0,
+    "confirmationObserved": 0,
+    "confirmationAccepted": 0,
+    "unauthorizedToolObserved": 0,
+    "unauthorizedToolAccepted": 0,
+    "unsafeInferenceExtraOrdinaryFacts": [
+      {
+        "sampleId": "DIAG-VNE1-004",
+        "fields": [
+          "destination",
+          "price"
+        ],
+        "accepted": false
+      }
+    ],
+    "unsafeInferenceAcceptance": 0,
+    "unsafeInferenceDefinition": "Extra supported facts on ordinary criteria requests absent from the frozen explicit-fact oracle; omissions/substitutions remain separate semantic failures. Not a general inference detector.",
+    "compilerRejectionCategories": {
+      "com.example.aiagent.model.VietnameseSemanticCompiler.compile:174": 1,
+      "com.example.aiagent.model.VietnameseSemanticCompiler.compile:162": 1
+    }
+  }
+}

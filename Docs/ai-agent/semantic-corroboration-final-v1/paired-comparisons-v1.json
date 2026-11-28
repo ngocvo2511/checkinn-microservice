@@ -1,0 +1,426 @@
+{
+  "primaryCounts": {
+    "FAIL->PASS": 11,
+    "PASS->FAIL": 4,
+    "FAIL->FAIL": 14,
+    "PASS->PASS": 8,
+    "NOT_COMPARABLE": 3
+  },
+  "primaryPairs": [
+    {
+      "sampleId": "VNE1-001",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": false,
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": false,
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": false,
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-015",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-016",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-020",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-023",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-027",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "NOT_COMPARABLE",
+      "reason": "PROVIDER_FAILURE_PAIR"
+    },
+    {
+      "sampleId": "VNE1-030",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "NOT_COMPARABLE",
+      "reason": "PROVIDER_FAILURE_PAIR"
+    },
+    {
+      "sampleId": "VNE1-031",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": true,
+      "outcome": "PASS->PASS"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": false,
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": true,
+      "bPass": false,
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "aPass": false,
+      "bPass": true,
+      "outcome": "NOT_COMPARABLE",
+      "reason": "PROVIDER_FAILURE_PAIR"
+    }
+  ],
+  "supplementalCounts": {
+    "FAIL->PASS": 4,
+    "PASS->FAIL": 2,
+    "FAIL->FAIL": 6
+  },
+  "supplementalPairs": [
+    {
+      "sampleId": "VNE1-001",
+      "supplementalA": "SUP-A-VNE1-001",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "supplementalA": "SUP-A-VNE1-002",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "supplementalA": "SUP-A-VNE1-003",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "supplementalA": "SUP-A-VNE1-004",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "PASS->FAIL"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "supplementalA": "SUP-A-VNE1-005",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "supplementalA": "SUP-A-VNE1-006",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "supplementalA": "SUP-A-VNE1-007",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "supplementalA": "SUP-A-VNE1-008",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->PASS"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "supplementalA": "SUP-A-VNE1-009",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "supplementalA": "SUP-A-VNE1-010",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "supplementalA": "SUP-A-VNE1-011",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->FAIL"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "supplementalA": "SUP-A-VNE1-012",
+      "actualModelA": "gemini-3.5-flash-lite",
+      "actualModelB": "gemini-3.5-flash-lite",
+      "outcome": "FAIL->PASS"
+    }
+  ],
+  "warning": "Supplemental repeats are not additional distinct primary identities; cross-model pairs are not causal contract evidence"
+}

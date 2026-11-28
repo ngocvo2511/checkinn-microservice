@@ -1,0 +1,237 @@
+{
+  "observations": [
+    {
+      "sampleId": "TECH-VNE1-001",
+      "attemptId": "ATT-001",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 8561,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-002",
+      "attemptId": "ATT-002",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 2127,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-003",
+      "attemptId": "ATT-003",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 2000,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-004",
+      "attemptId": "ATT-004",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 1484,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-005",
+      "attemptId": "ATT-005",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 1740,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-007",
+      "attemptId": "ATT-006",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 2149,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-011",
+      "attemptId": "ATT-007",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 4531,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-013",
+      "attemptId": "ATT-008",
+      "httpStatus": 200,
+      "category": "EXTRACTION_SCHEMA_INVALID",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 6992,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-VNE1-029",
+      "attemptId": "ATT-009",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 1404,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-R2-SELECTED-01",
+      "attemptId": "ATT-010",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 5466,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "DIAG-R2-SELECTED-02",
+      "attemptId": "ATT-011",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 2513,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-002",
+      "attemptId": "ATT-012",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 7411,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-003",
+      "attemptId": "ATT-013",
+      "httpStatus": 503,
+      "category": "UNAVAILABLE",
+      "callTerminated": true,
+      "localTerminationClassification": "TERMINATED_HTTP_FAILURE",
+      "actualUsageStatus": "UNKNOWN",
+      "latencyMillis": 1515,
+      "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-004",
+      "attemptId": "ATT-014",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 9009,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-007",
+      "attemptId": "ATT-015",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 1528,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-011",
+      "attemptId": "ATT-016",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 8915,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-013",
+      "attemptId": "ATT-017",
+      "httpStatus": 0,
+      "category": "TIMEOUT",
+      "callTerminated": true,
+      "localTerminationClassification": "LOCALLY_TERMINATED_TIMEOUT",
+      "actualUsageStatus": "UNKNOWN",
+      "latencyMillis": 10007,
+      "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-029",
+      "attemptId": "ATT-018",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 1546,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-041",
+      "attemptId": "ATT-019",
+      "httpStatus": 200,
+      "category": "SUCCESS",
+      "callTerminated": true,
+      "localTerminationClassification": "SUCCESSFUL_RESPONSE",
+      "actualUsageStatus": "KNOWN",
+      "latencyMillis": 2360,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-002",
+      "attemptId": "ATT-020",
+      "httpStatus": 0,
+      "category": "TIMEOUT",
+      "callTerminated": true,
+      "localTerminationClassification": "LOCALLY_TERMINATED_TIMEOUT",
+      "actualUsageStatus": "UNKNOWN",
+      "latencyMillis": 10006,
+      "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-003",
+      "attemptId": "ATT-021",
+      "httpStatus": 0,
+      "category": "TIMEOUT",
+      "callTerminated": true,
+      "localTerminationClassification": "LOCALLY_TERMINATED_TIMEOUT",
+      "actualUsageStatus": "UNKNOWN",
+      "latencyMillis": 10008,
+      "continuationReason": "TRANSIENT_FAILURE_THRESHOLD"
+    }
+  ],
+  "liveTimeoutPath": "OBSERVED",
+  "remoteTermination": "NOT_VERIFIABLE_BY_THIS_API"
+}

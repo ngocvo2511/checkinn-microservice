@@ -1,0 +1,41 @@
+{
+  "actualHttpAttempts": 98,
+  "aggregateCap": 120,
+  "phaseAttempts": {
+    "TECHNICAL": 3,
+    "REMAINING_A": 15,
+    "FALLBACK_RESERVE": 8,
+    "B_DIAGNOSTIC": 8,
+    "B40": 40,
+    "SUPPLEMENTAL": 24
+  },
+  "phaseCaps": {
+    "TECHNICAL": 3,
+    "REMAINING_A": 15,
+    "B_DIAGNOSTIC": 8,
+    "B40": 40,
+    "SUPPLEMENTAL": 24,
+    "FALLBACK_RESERVE": 30
+  },
+  "reservedInputTokens": 1605632,
+  "reservedOutputTokens": 100352,
+  "knownTotalTokens": 46321,
+  "unknownUsageAttempts": 4,
+  "minimumDispatchSpacingMillis": 5000.426000000003,
+  "maximumRollingRequests": 11,
+  "maximumRollingReservedTokens": 191488,
+  "modelMaximumRollingRequests": {
+    "gemini-3.5-flash-lite": 11,
+    "gemini-3.1-flash-lite": 1,
+    "gemini-2.5-flash-lite": 2,
+    "gemini-2.5-flash": 1
+  },
+  "sameModelAutomaticRetries": 0,
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "durationMillis": 1865306.281,
+  "stopReason": "COMPLETED",
+  "withinAggregateCap": true,
+  "withinPhaseCaps": true,
+  "withinRollingCaps": true
+}

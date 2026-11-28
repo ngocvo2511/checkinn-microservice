@@ -1,0 +1,93 @@
+{
+  "baseline": {
+    "branch": "feat/ai-agent-vietnamese-nlu",
+    "head": "4c1908063e40194b989cfbe1d0db598064ec3e7b",
+    "command": "mvn -o -B -ntp -pl ai-agent-service package",
+    "tests": 1134,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "result": "BUILD SUCCESS",
+    "historical": {
+      "PASS": 23,
+      "FAIL": 16,
+      "NOT_APPLICABLE": 0,
+      "NOT_RUN": 1
+    }
+  },
+  "final": {
+    "tests": 1235,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "buildSuccess": true,
+    "command": "mvn -o -B -ntp -pl ai-agent-service package"
+  },
+  "newTests": 101,
+  "historical": {
+    "PASS": 23,
+    "FAIL": 16,
+    "NOT_APPLICABLE": 0,
+    "NOT_RUN": 1
+  },
+  "finalStatus": "EVIDENCE_FIRST_EVALUATION_PARTIAL",
+  "architectureRecommendation": "MORE_EVIDENCE_REQUIRED",
+  "actualHttpAttempts": 21,
+  "perModel": {
+    "gemini-3.5-flash-lite": 19,
+    "gemini-3.1-flash-lite": 2
+  },
+  "unknownUsage": 4,
+  "stopReason": "TRANSIENT_FAILURE_THRESHOLD",
+  "consecutiveTransientFailures": 2,
+  "cumulativeTransientFailures": 4,
+  "sealedCampaignSha256": "f21bcc158030c94609d1f3c46d3730826493b970152e7a4dab5a16daff69d9de",
+  "previousCriticalCampaignSha256": "83a6c72fcb704af74297b7ad62e8de43530d8a6b2184f4491caf76d99dd70043",
+  "previousCriticalCampaignUnchanged": true,
+  "everyDispatchedCallLocallyTerminated": true,
+  "activeLocalLiveProcesses": 0,
+  "noDispatchAfterMandatoryStop": true,
+  "credentialsAfterMandatoryStop": "No further credential tool/CLI invocation; offline tests/analysis/scans do not call the key supplier",
+  "allFrozenCandidateSourcesUnchanged": true,
+  "allRecordedWireDigestsMatch": true,
+  "original60UtterancesAndBusinessOraclesUnchanged": true,
+  "allFrozenDatasetHashesPreserved": true,
+  "preexistingUnexpectedChanges": [],
+  "newFilesOutsideScope": [],
+  "globalRollingRPM": 8,
+  "globalRollingReservedTokens": 139264,
+  "minimumRecordedDispatchSpacingSeconds": 5.002857,
+  "deadlineBetweenDispatchesSeconds": 642.399641,
+  "deadlineCompliant": true,
+  "modelLimits": {
+    "gemini-3.5-flash-lite": {
+      "attempts": 19,
+      "maximumRollingMinute": 8
+    },
+    "gemini-3.1-flash-lite": {
+      "attempts": 2,
+      "maximumRollingMinute": 2
+    },
+    "gemini-2.5-flash-lite": {
+      "attempts": 0,
+      "maximumRollingMinute": 0
+    },
+    "gemini-2.5-flash": {
+      "attempts": 0,
+      "maximumRollingMinute": 0
+    }
+  },
+  "scope": {
+    "domainCalls": 0,
+    "gatewayCalls": 0,
+    "supabaseCalls": 0,
+    "paymentRefundCalls": 0,
+    "writeTools": 0,
+    "stateMutations": 0,
+    "dependencyUpgrades": 0,
+    "ordinaryRuntime": "OFF/FAKE/liveOFF"
+  },
+  "secretPatternFindings": [],
+  "readmePreservedExactSuffix": true,
+  "reportLinkFailures": []
+}

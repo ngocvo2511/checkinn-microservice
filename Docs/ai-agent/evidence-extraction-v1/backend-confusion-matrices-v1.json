@@ -1,0 +1,224 @@
+{
+  "TECHNICAL": {
+    "planned": 1,
+    "attempted": 1,
+    "notRun": 0,
+    "backendConfusion": {
+      "correctAccepted": 1,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    }
+  },
+  "DIAGNOSTIC": {
+    "planned": 8,
+    "attempted": 8,
+    "notRun": 0,
+    "backendConfusion": {
+      "correctAccepted": 7,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 1
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 7,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 7,
+      "denominator": 8,
+      "rate": 0.875
+    }
+  },
+  "DIAGNOSTIC_R2": {
+    "planned": 2,
+    "attempted": 2,
+    "notRun": 0,
+    "backendConfusion": {
+      "correctAccepted": 2,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    }
+  },
+  "COMPARISON": {
+    "planned": 32,
+    "attempted": 10,
+    "notRun": 22,
+    "backendConfusion": {
+      "correctAccepted": 6,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 4
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 6,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 6,
+      "denominator": 10,
+      "rate": 0.6
+    }
+  },
+  "FROZEN40": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40,
+    "backendConfusion": {
+      "correctAccepted": 0,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "admissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "FRESH": {
+    "planned": 20,
+    "attempted": 0,
+    "notRun": 20,
+    "backendConfusion": {
+      "correctAccepted": 0,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "admissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  }
+}

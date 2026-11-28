@@ -1,0 +1,789 @@
+{
+  "planned": 40,
+  "attempted": 0,
+  "notRun": 40,
+  "observations": [
+    {
+      "sampleId": "VNE1-001",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn cho 2 người",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở nơi nào đó",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "So sánh giá của hai khách sạn đầu tiên",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-015",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Phòng này giá bao nhiêu và còn phòng không?",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-016",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Chỉ xem danh sách khách sạn tại Đà Lạt",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Cho mình tìm khách sạn tại Huế",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-020",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở Đà Lạt 4 sao",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-023",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Đà Lạt cho 3 người",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-027",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Chỉ giữ khách sạn 4 sao",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Đổi điểm đến sang Huế",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Bỏ giới hạn giá đi",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-030",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Xem khách sạn thứ hai",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-031",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Giá phòng thứ nhất bao nhiêu",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "So sánh giá hai khách sạn đầu tiên",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Phòng đã chọn còn chỗ không",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn ở thành phố đó",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "tim khach san o Da Lat",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Cho tôi xem nơi lưu trú tại Nha Trang",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "kiếm giúp tui khách sạn ở huế nha",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "status": "NOT_RUN",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "utterance": "Không cần giới hạn số sao nữa",
+      "reason": "CAMPAIGN_SEALED_AFTER_TWO_CONSECUTIVE_HTTP_503"
+    }
+  ]
+}

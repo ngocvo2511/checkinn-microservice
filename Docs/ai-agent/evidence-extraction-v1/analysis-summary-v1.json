@@ -1,0 +1,124 @@
+{
+  "phases": {
+    "TECHNICAL": {
+      "planned": 1,
+      "attempted": 1,
+      "notRun": 0,
+      "rawSchemaValid": 1,
+      "rawExact": 1,
+      "exactBusinessSemantics": 1
+    },
+    "DIAGNOSTIC": {
+      "planned": 8,
+      "attempted": 8,
+      "notRun": 0,
+      "rawSchemaValid": 8,
+      "rawExact": 7,
+      "exactBusinessSemantics": 7
+    },
+    "DIAGNOSTIC_R2": {
+      "planned": 2,
+      "attempted": 2,
+      "notRun": 0,
+      "rawSchemaValid": 2,
+      "rawExact": 2,
+      "exactBusinessSemantics": 2
+    },
+    "COMPARISON": {
+      "planned": 32,
+      "attempted": 10,
+      "notRun": 22,
+      "rawSchemaValid": 6,
+      "rawExact": 6,
+      "exactBusinessSemantics": 6
+    },
+    "FROZEN40": {
+      "planned": 40,
+      "attempted": 0,
+      "notRun": 40,
+      "rawSchemaValid": 0,
+      "rawExact": 0,
+      "exactBusinessSemantics": 0
+    },
+    "FRESH": {
+      "planned": 20,
+      "attempted": 0,
+      "notRun": 20,
+      "rawSchemaValid": 0,
+      "rawExact": 0,
+      "exactBusinessSemantics": 0
+    }
+  },
+  "budget": {
+    "actualHttpAttempts": 21,
+    "hardCap": 120,
+    "phaseAttempts": {
+      "TECHNICAL": 1,
+      "DIAGNOSTIC": 10,
+      "COMPARISON": 10
+    },
+    "perModel": {
+      "gemini-3.5-flash-lite": 19,
+      "gemini-3.1-flash-lite": 2
+    },
+    "knownInputTokens": 6787,
+    "knownCandidateOutputTokens": 1222,
+    "knownTotalTokens": 8009,
+    "unknownUsage": 4,
+    "reportedThinkingTokens": "NOT_REPORTED",
+    "thinkingMetadataReportedAttempts": 0,
+    "thinkingNotReportedAttempts": 21,
+    "reservedInputTokens": 344064,
+    "reservedOutputTokens": 21504,
+    "fullConservativeReservations": 365568,
+    "firstDispatch": "2026-11-24T12:24:01.083586+00:00",
+    "lastDispatch": "2026-11-24T12:34:43.483227+00:00",
+    "elapsedBetweenDispatchesSeconds": 642.399641,
+    "maximumRollingRequests": 8,
+    "maximumRollingReservedTokens": 139264,
+    "minimumJournaledDispatchSpacingSeconds": 5.002857,
+    "modelLimits": {
+      "gemini-3.5-flash-lite": {
+        "attempts": 19,
+        "maximumRollingMinute": 8
+      },
+      "gemini-3.1-flash-lite": {
+        "attempts": 2,
+        "maximumRollingMinute": 2
+      },
+      "gemini-2.5-flash-lite": {
+        "attempts": 0,
+        "maximumRollingMinute": 0
+      },
+      "gemini-2.5-flash": {
+        "attempts": 0,
+        "maximumRollingMinute": 0
+      }
+    },
+    "globalLimiterWaitingMillis": 23537,
+    "modelSpecificLimiterWait": "NOT_SEPARATELY_RECORDED",
+    "providerOnlyLatency": "NOT_SEPARATELY_RECORDED",
+    "attemptLatencyMillis": {
+      "n": 21,
+      "mean": 4822.476190476191,
+      "median": 2513,
+      "p95": 10007,
+      "maximum": 10008,
+      "percentileMethod": "nearest rank"
+    },
+    "fallbackCooldownSeconds": 0,
+    "allRecordedCooldownSeconds": 45,
+    "automaticRetries": 0,
+    "localConcurrency": "1 synchronous dispatch/exchange",
+    "remoteInferenceConcurrency": "NOT_VERIFIED",
+    "costGuarantee": "NONE"
+  },
+  "paired": {
+    "FAIL -> PASS": 0,
+    "PASS -> FAIL": 0,
+    "PASS -> PASS": 0,
+    "FAIL -> FAIL": 0,
+    "NOT_COMPARABLE": 40
+  },
+  "failures": 5
+}

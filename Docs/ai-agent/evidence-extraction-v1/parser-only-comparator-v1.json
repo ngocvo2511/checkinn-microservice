@@ -1,0 +1,2079 @@
+{
+  "actualHttpAttempts": 0,
+  "credentialReads": 0,
+  "cohorts": {
+    "FROZEN40": {
+      "planned": 40,
+      "exact": 40,
+      "observations": [
+        {
+          "sampleId": "VNE1-001",
+          "utterance": "Tìm khách sạn ở Đà Lạt",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-002",
+          "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-003",
+          "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-004",
+          "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [
+              "cityName"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "cityName"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-005",
+          "utterance": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkOut"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-006",
+          "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              }
+            },
+            "reference": "",
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-007",
+          "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [
+              "cityName",
+              "checkIn",
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn",
+              "checkOut",
+              "cityName"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-008",
+          "utterance": "Tìm khách sạn cho 2 người",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-009",
+          "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkIn",
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn",
+              "checkOut"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-010",
+          "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "minPrice",
+              "maxPrice"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "maxPrice",
+              "minPrice"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-011",
+          "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-012",
+          "utterance": "Tìm khách sạn ở nơi nào đó",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "cityName"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "cityName"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-013",
+          "utterance": "Kiểm tra phòng này còn phòng không",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Kiểm tra phòng này còn phòng không",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Kiểm tra phòng này còn phòng không",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-014",
+          "utterance": "So sánh giá của hai khách sạn đầu tiên",
+          "expectedExtraction": {
+            "action": "COMPARISON",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "So sánh giá của hai khách sạn đầu tiên",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "COMPARISON",
+            "intent": "CLARIFY",
+            "reference": "So sánh giá của hai khách sạn đầu tiên",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-015",
+          "utterance": "Phòng này giá bao nhiêu và còn phòng không?",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-016",
+          "utterance": "Chỉ xem danh sách khách sạn tại Đà Lạt",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-017",
+          "utterance": "Cho mình tìm khách sạn tại Huế",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-020",
+          "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1000000
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1000000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-021",
+          "utterance": "Tìm khách sạn ở Đà Lạt 4 sao",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-023",
+          "utterance": "Tìm khách sạn Đà Lạt cho 3 người",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-025",
+          "utterance": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkOut"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-027",
+          "utterance": "Chỉ giữ khách sạn 4 sao",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-028",
+          "utterance": "Đổi điểm đến sang Huế",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-029",
+          "utterance": "Bỏ giới hạn giá đi",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "maxPrice": {
+                "operation": "CLEAR"
+              },
+              "minPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "minPrice": {
+                "operation": "CLEAR"
+              },
+              "maxPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-030",
+          "utterance": "Xem khách sạn thứ hai",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Xem khách sạn thứ hai",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Xem khách sạn thứ hai",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-031",
+          "utterance": "Giá phòng thứ nhất bao nhiêu",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Giá phòng thứ nhất bao nhiêu",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Giá phòng thứ nhất bao nhiêu",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-032",
+          "utterance": "So sánh giá hai khách sạn đầu tiên",
+          "expectedExtraction": {
+            "action": "COMPARISON",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "So sánh giá hai khách sạn đầu tiên",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "COMPARISON",
+            "intent": "CLARIFY",
+            "reference": "So sánh giá hai khách sạn đầu tiên",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-033",
+          "utterance": "Phòng đã chọn còn chỗ không",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Phòng đã chọn còn chỗ không",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Phòng đã chọn còn chỗ không",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-037",
+          "utterance": "Tìm khách sạn ở thành phố đó",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "cityName"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "cityName"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-039",
+          "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-040",
+          "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "rooms",
+              "adults"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "adults",
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-041",
+          "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-042",
+          "utterance": "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-043",
+          "utterance": "tim khach san o Da Lat",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-046",
+          "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkIn"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-047",
+          "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-048",
+          "utterance": "Cho tôi xem nơi lưu trú tại Nha Trang",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-049",
+          "utterance": "kiếm giúp tui khách sạn ở huế nha",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-050",
+          "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 500000
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 500000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "VNE1-051",
+          "utterance": "Không cần giới hạn số sao nữa",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "starRatings": {
+                "operation": "CLEAR"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "starRatings": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        }
+      ]
+    },
+    "FRESH": {
+      "planned": 20,
+      "exact": 20,
+      "observations": [
+        {
+          "sampleId": "FRESH2-01",
+          "utterance": "Mình muốn tìm một nơi lưu trú tại Vũng Tàu nhé",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Vũng Tàu"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Vũng Tàu"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-02",
+          "utterance": "Có chỗ nào nghỉ tại Phú Quốc hông bạn?",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-03",
+          "utterance": "kiem giup tui khach san o Nha Trang nha",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-04",
+          "utterance": "Khám phá khách sạn tại Hà Nội",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "BROWSE",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Hà Nội"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "BROWSE",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Hà Nội"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-05",
+          "utterance": "Tìm khách sạn tại Đà Nẵng từ 08/12/2026 đến 11/12/2026 cho 3 người lớn, 2 trẻ em, 2 phòng, 4 sao, giá không quá 2 triệu mỗi đêm",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Nẵng"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-08"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-11"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 3
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "children": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-08"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 3
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-11"
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Nẵng"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000.0
+              },
+              "starRatings": {
+                "operation": "REPLACE",
+                "value": [
+                  4
+                ]
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-06",
+          "utterance": "Tìm khách sạn Huế từ 10/12/2026 đến 12/12/2026, 2 người lớn, không có trẻ em, 1 phòng",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-10"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-12"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-12"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-10"
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-07",
+          "utterance": "Tìm khách sạn Vũng Tàu từ 15/12/2026 đến 17/12/2026 cho 2 người lớn, 1 phòng",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Vũng Tàu"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-15"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-17"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [
+              "children"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-15"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-17"
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Vũng Tàu"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "children"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-08",
+          "utterance": "Tìm khách sạn Phú Quốc từ 09/12/2026 đến 13/12/2026, 2 người lớn và 1 trẻ em",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-09"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-13"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "reference": "",
+            "missingSlots": [
+              "rooms"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-09"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-13"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-09",
+          "utterance": "Tìm khách sạn nhận phòng 14/12/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkOut"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-10",
+          "utterance": "Tìm khách sạn Nha Trang trả phòng 18/12/2026",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkIn"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-11",
+          "utterance": "Tìm khách sạn cho 4 người ở Hà Nội",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "adults",
+              "children",
+              "rooms"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-12",
+          "utterance": "Tìm khách sạn Đà Nẵng giá tham khảo dưới 1,5 triệu",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Nẵng"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1500000
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Nẵng"
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1500000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-13",
+          "utterance": "Tìm khách sạn Huế giá từ 700 nghìn đến 1,2 triệu mỗi đêm",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "minPrice": {
+                "operation": "REPLACE",
+                "value": 700000
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1200000
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              },
+              "minPrice": {
+                "operation": "REPLACE",
+                "value": 700000.0
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 1200000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-14",
+          "utterance": "Xóa giới hạn giá đi",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "minPrice": {
+                "operation": "CLEAR"
+              },
+              "maxPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "minPrice": {
+                "operation": "CLEAR"
+              },
+              "maxPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-15",
+          "utterance": "Chuyển điểm đến sang Phú Quốc",
+          "expectedExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              }
+            },
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Phú Quốc"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-16",
+          "utterance": "Phòng đó giá bao nhiêu?",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Phòng đó giá bao nhiêu?",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Phòng đó giá bao nhiêu?",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-17",
+          "utterance": "Xem khách sạn đầu tiên",
+          "expectedExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "Xem khách sạn đầu tiên",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Xem khách sạn đầu tiên",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-18",
+          "utterance": "Tìm khách sạn tại Vũng Tàu có hồ bơi",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-19",
+          "utterance": "Tìm khách sạn Huế từ 31/04/2027 đến 02/05/2027",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "checkIn",
+              "checkOut"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn",
+              "checkOut"
+            ]
+          },
+          "deterministicExact": true
+        },
+        {
+          "sampleId": "FRESH2-20",
+          "utterance": "Tìm khách sạn Đà Nẵng giá từ 3 triệu đến 800 nghìn mỗi đêm",
+          "expectedExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "fields": {},
+            "reference": "",
+            "missingSlots": [
+              "maxPrice",
+              "minPrice"
+            ],
+            "inferredFields": []
+          },
+          "deterministicExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": [
+              "maxPrice",
+              "minPrice"
+            ]
+          },
+          "deterministicExact": true
+        }
+      ]
+    }
+  },
+  "classification": "OFFLINE_DETERMINISTIC_ONLY_NOT_MODEL_ACCURACY"
+}

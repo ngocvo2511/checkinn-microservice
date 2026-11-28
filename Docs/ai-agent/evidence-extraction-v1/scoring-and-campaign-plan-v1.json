@@ -1,0 +1,42 @@
+{
+  "version": "evidence-extraction-scoring-v1",
+  "frozenBeforeFirstDispatch": true,
+  "authorization": "User task: at most 120 new synthetic Gemini HTTP attempts; separate from the sealed previous batch",
+  "planned": {"TECHNICAL": 1, "DIAGNOSTIC": 8, "COMPARISON": 32, "FROZEN40": 40, "FRESH": 20},
+  "phaseCaps": {"TECHNICAL": 4, "DIAGNOSTIC": 12, "COMPARISON": 32, "FROZEN40": 40, "FRESH": 20, "FALLBACK_RESERVE": 12},
+  "aggregateAttemptCap": 120,
+  "aggregateDeadlineMinutesFromFirstDispatch": 60,
+  "primaryDevelopmentModel": "gemini-3.5-flash-lite",
+  "comparison": {
+    "ids": ["VNE1-002", "VNE1-003", "VNE1-004", "VNE1-007", "VNE1-011", "VNE1-013", "VNE1-029", "VNE1-041"],
+    "models": ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash-lite", "gemini-2.5-flash"],
+    "fallback": false,
+    "selectionReason": "Full stay, missing city, occupancy, unsupported amenity, selected reference, strict reference price, explicit removal and natural discovery; no fresh20 selection data",
+    "statisticalSuperiorityClaimPermitted": false
+  },
+  "diagnostics": {
+    "ids": ["VNE1-002", "VNE1-003", "VNE1-004", "VNE1-005", "VNE1-007", "VNE1-011", "VNE1-013", "VNE1-029"],
+    "selectionReason": "Critical retention failures003/004/007, partial dates, strict price, unsupported constraint, selected recognition and removal; bounded to8 rather than consuming the entire12 allowance"
+  },
+  "evidenceMatching": {
+    "membership": "Exact original substring, not normalized membership",
+    "meaning": "Independent typed lexical witnesses; date role, operator, unit and negation must remain in complete evidence",
+    "precision": "Correctly typed, noninvented, nonoverlapping proposed facts / all proposed facts; grouping same-type witnesses does not multiply proposed-fact precision credit",
+    "recall": "Distinct independently expected witness units retained with correct type and complete meaning / all expected witness units",
+    "complete": "No expected meaningful witness omitted; completeness is separate from precision/request correctness",
+    "rawExact": "Strict raw schema plus request correctness plus complete evidence plus no invented/wrong-type/duplicate/overlapping facts",
+    "canonical": "Exact unchanged business oracle comparison after deterministic normalization; Java-derived fields are not raw model credit"
+  },
+  "denominators": {
+    "overall": "All attempted primary logical samples, including provider/evidence/compiler failures; NOT_RUN separately over planned identities",
+    "backendConfusion": "Canonical typed-valid proposals; upstream provider/evidence/compiler failures remain NOT_EVALUATED, also retained in overall attempted denominator",
+    "correctRejected": "Semantically correct canonical proposal rejected by backend (false rejection), matching prior reports",
+    "incorrectRejected": "Semantically incorrect canonical proposal rejected by backend",
+    "paired": "Same identity, actual reported model, unchanged business oracle, comparable successful provider observation; provider failures/fallback model changes NOT_COMPARABLE",
+    "fallback": "Every failed primary and additional HTTP attempt retained; never substitute fallback success into primary model quality"
+  },
+  "performance": {"p95": "nearest rank", "providerOnlyLatency": "NOT_SEPARATELY_RECORDED", "unreportedThinking": "NOT_REPORTED", "unknownUsage": "retain full16384+1024 reservation; no refund"},
+  "safety": {"concurrency": "One local synchronous dispatch/exchange; remote inference concurrency unverified", "perCallSeconds": 10, "automaticSameModelRetries": 0, "globalRPM": 12, "minimumDispatchSpacingSeconds": 5, "reservedTokensPerRollingMinute": 200000},
+  "continuation": "Ordinary semantic failures continue. Locally terminated timeout retains UNKNOWN usage/full reservation, no same-sample retry or timeout fallback, cooldown>=15s. Unknown local termination, quota/access/safety/usage/schema protocol failures stop and cannot reopen. Two consecutive logical transient failures or five cumulative actual transient failures stop; recovered capacity failures count cumulatively.",
+  "promotion": "None; ordinary Agent OFF/FAKE/liveOFF; selected context/tool execution and FULL_AGENT_E2E NOT_RUN"
+}

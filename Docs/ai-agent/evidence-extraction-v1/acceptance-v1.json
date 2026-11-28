@@ -1,0 +1,26 @@
+{
+  "finalStatus": "EVIDENCE_FIRST_EVALUATION_PARTIAL",
+  "architectureRecommendation": "MORE_EVIDENCE_REQUIRED",
+  "reason": "Two consecutive locally terminated timeouts sealed the fixed-model comparison; no further dispatch allowed",
+  "frozen40": {
+    "planned": 40,
+    "attempted": 0,
+    "status": "NOT_RUN"
+  },
+  "fresh20": {
+    "planned": 20,
+    "attempted": 0,
+    "status": "NOT_RUN"
+  },
+  "qualityTargets": "NOT_ASSESSED",
+  "modelComparison": {
+    "planned": 32,
+    "attempted": 10,
+    "status": "PARTIAL_NO_WINNER"
+  },
+  "D07": "NOT_ACCEPTED",
+  "D08": "NOT_ACCEPTED",
+  "E30": "NOT_RUN",
+  "FULL_AGENT_E2E": "NOT_RUN",
+  "productionReadiness": "NOT_CLAIMED"
+}

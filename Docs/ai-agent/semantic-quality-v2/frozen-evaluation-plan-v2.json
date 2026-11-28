@@ -1,0 +1,319 @@
+{
+  "status": "NOT_RUN_AFTER_UNKNOWN_IN_FLIGHT",
+  "candidate": "vietnamese-semantic-v2",
+  "sdk": "LangChain4j 1.17.0",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "freshDatasetHash": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a",
+  "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+  "plannedOrder": [
+    {
+      "sampleId": "DIAG-VNE1-003",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-004",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-007",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-009",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-010",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-013",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-033",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-040",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-043",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "DIAG-VNE1-049",
+      "phase": "DIAGNOSTIC"
+    },
+    {
+      "sampleId": "VNE1-001",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-015",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-016",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-020",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-023",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-027",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-030",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-031",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "phase": "FROZEN40"
+    },
+    {
+      "sampleId": "FRESH2-01",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-02",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-03",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-04",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-05",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-06",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-07",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-08",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-09",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-10",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-11",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-12",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-13",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-14",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-15",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-16",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-17",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-18",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-19",
+      "phase": "FRESH"
+    },
+    {
+      "sampleId": "FRESH2-20",
+      "phase": "FRESH"
+    }
+  ],
+  "contractSnapshots": "contract-snapshots-v2.json",
+  "sourceSnapshot": "source-frozen-final-v3.json",
+  "sourceSnapshotHash": "f796f27bf17e76ae15cf73229ea2273192f11040b7cbbc5779f1e0a9c9410ec2",
+  "phaseCaps": {
+    "DIAGNOSTIC": 20,
+    "FROZEN40": 40,
+    "FRESH": 20,
+    "RETEST": 20,
+    "FALLBACK_RESERVE": 20
+  },
+  "aggregateHttpCap": 120,
+  "concurrency": 1,
+  "minimumSpacingSeconds": 5,
+  "rollingRequestsPer60Seconds": 12,
+  "rollingReservedTokensPer60Seconds": 200000,
+  "reservedInputPerAttempt": 16384,
+  "reservedOutputPerAttempt": 1024,
+  "configuredCallDeadlineSeconds": 10,
+  "campaignDeadlineSeconds": 3600,
+  "automaticSameModelRetries": 0,
+  "fallbackOrder": [
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-flash"
+  ],
+  "scoring": "Unchanged frozen business oracle and direct raw-meaning scorer; no best-of-attempt substitution",
+  "freshClassification": "FRESH_DEVELOPMENT_GENERALIZATION"
+}

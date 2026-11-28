@@ -1,0 +1,34 @@
+{
+  "logicalPlanned": 95,
+  "logicalAttempted": 95,
+  "logicalRequiringFallback": 2,
+  "actualFallbackAttempts": 3,
+  "successfulTechnicalRecoveries": 1,
+  "failedRecoveries": 1,
+  "recoveryRate": 0.5,
+  "allModelsUnavailableCount": 0,
+  "transitions": [
+    {
+      "attemptId": "ATT-019",
+      "previousAttemptId": "ATT-018",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "attemptId": "ATT-020",
+      "previousAttemptId": "ATT-019",
+      "model": "gemini-2.5-flash-lite"
+    },
+    {
+      "attemptId": "ATT-094",
+      "previousAttemptId": "ATT-093",
+      "model": "gemini-2.5-flash-lite"
+    }
+  ],
+  "attemptsPerLogicalSample": 1.0315789473684212,
+  "fallbackReservedTokenOverhead": 52224,
+  "fallbackLogicalLatenciesMillis": [
+    42853,
+    20377
+  ],
+  "liveFallbackStatus": "LIVE_FALLBACK_VERIFIED"
+}

@@ -1,0 +1,129 @@
+{
+  "before": {
+    "rawSchemaValid": 40,
+    "canonicalTypedValid": 26,
+    "exactBusinessSemantics": 22,
+    "correctAccepted": 18,
+    "correctRejected": 4,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 4,
+    "compilerRejections": 14,
+    "actionCorrect": 24,
+    "intentCorrect": 24,
+    "criteriaCorrect": 24,
+    "missingSlotsCorrect": 26,
+    "referenceCorrect": 24,
+    "backendNotEvaluated": 14,
+    "http200": 40,
+    "rawSemanticCorrect": 22,
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+    },
+    "falseRejectionRate": {
+      "numerator": 4,
+      "denominator": 22,
+      "rate": 0.18181818181818182
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 22,
+      "denominator": 26,
+      "rate": 0.8461538461538461
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 18,
+      "denominator": 18,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 18,
+      "denominator": 40,
+      "rate": 0.45
+    }
+  },
+  "after": {
+    "rawSchemaValid": 40,
+    "canonicalTypedValid": 26,
+    "exactBusinessSemantics": 22,
+    "correctAccepted": 22,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 4,
+    "compilerRejections": 14,
+    "actionCorrect": 24,
+    "intentCorrect": 24,
+    "criteriaCorrect": 24,
+    "missingSlotsCorrect": 26,
+    "referenceCorrect": 24,
+    "backendNotEvaluated": 14,
+    "http200": 40,
+    "rawSemanticCorrect": 22,
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 22,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 26,
+      "denominator": 26,
+      "rate": 1.0
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 22,
+      "denominator": 22,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 22,
+      "denominator": 40,
+      "rate": 0.55
+    }
+  },
+  "rawModelBefore": {
+    "rawSchemaValid": 40,
+    "rawActionCorrect": 32,
+    "rawIntentCorrect": 32,
+    "rawCriteriaMeaningCorrect": 25,
+    "rawExactMeaning": 22
+  },
+  "rawModelAfter": {
+    "rawSchemaValid": 40,
+    "rawActionCorrect": 32,
+    "rawIntentCorrect": 32,
+    "rawCriteriaMeaningCorrect": 25,
+    "rawExactMeaning": 22
+  },
+  "changedDecisions": [
+    {
+      "sampleId": "VNE1-016",
+      "before": false,
+      "after": true,
+      "cause": "H5 generalized independent discovery grammar"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "before": false,
+      "after": true,
+      "cause": "H5 generalized independent discovery grammar"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "before": false,
+      "after": true,
+      "cause": "H5 generalized independent discovery grammar"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "before": false,
+      "after": true,
+      "cause": "H5 generalized independent discovery grammar"
+    }
+  ],
+  "actualNewHttpAttempts": 0
+}

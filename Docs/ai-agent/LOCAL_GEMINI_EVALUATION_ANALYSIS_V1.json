@@ -1,0 +1,83 @@
+{
+  "version": "local-gemini-evaluation-analysis-v1",
+  "runId": "c1ca9634-4f9c-47a5-8fae-2c9f64180473",
+  "sourceSha256": "0b8fa752e8a0c0f8f59711710fee2fb4e77eb12948f9b6038a35f99268531a46",
+  "batchStatus": "SIMPLIFY_DONE_LIVE_BLOCKED",
+  "phases": [
+    {
+      "phase": "INITIAL_SMOKE",
+      "planned": 3,
+      "attempted": 1,
+      "apiSuccess": 1,
+      "validatedExtraction": 0,
+      "validatedSemanticSuccess": 0,
+      "backendAcceptance": 0,
+      "notRun": 2
+    },
+    {
+      "phase": "VIETNAMESE_NLU",
+      "planned": 40,
+      "attempted": 0,
+      "apiSuccess": 0,
+      "validatedExtraction": 0,
+      "validatedSemanticSuccess": 0,
+      "backendAcceptance": 0,
+      "notRun": 40
+    },
+    {
+      "phase": "SUPPLEMENTAL",
+      "planned": 0,
+      "attempted": 0,
+      "notRun": 0
+    }
+  ],
+  "actualHttpAttempts": 1,
+  "credentialLookups": 1,
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "retries": 0,
+  "model": "gemini-3.5-flash-lite",
+  "oracleVersion": "local-development-oracle-v1",
+  "oracleReview": "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "schemaValidSemanticDenominator": 0,
+  "linguisticAccuracy": "NOT_ASSESSABLE",
+  "semanticBackendFalseAcceptance": "NOT_ASSESSABLE",
+  "semanticBackendFalseRejection": "NOT_ASSESSABLE",
+  "backendMatrix": {
+    "modelCorrectAccepted": 0,
+    "modelCorrectRejected": 0,
+    "modelIncorrectAccepted": 0,
+    "modelIncorrectRejected": 0,
+    "notEvaluated": 1
+  },
+  "tokens": {
+    "input": null,
+    "output": null,
+    "total": null,
+    "thinking": null,
+    "unknownAttempts": 1
+  },
+  "latencyMillis": {
+    "n": 1,
+    "mean": 2725,
+    "median": 2725,
+    "p95DescriptiveOnly": 2725,
+    "maximum": 2725
+  },
+  "durationMillis": 2798,
+  "rateWaitMillis": 0,
+  "fullAgentE2E": "NOT_RUN",
+  "injectionResistance": "NOT_TESTED",
+  "batchAttemptCap": 70,
+  "selectedPlanCap": 43,
+  "reservedTokensForAttempt": 17408,
+  "accountWideQuotaGuarantee": false,
+  "zeroCostGuarantee": false,
+  "limitations": [
+    "Original notRun score 0/1 describes visited rows only; planned NOT_RUN is42/43. Final CLI corrects denominator offline.",
+    "Original falseRejection1/1 compares expected backend acceptance with a failed response; no semantically correct model rejection has been demonstrated.",
+    "Original token aggregate zeros sum over0 known attempts; actual usage UNKNOWN, never observed zero.",
+    "Exact MALFORMED_RESPONSE source (envelope, SDK or extraction parser) is unavailable; no raw response retained. Shape diagnostics added afterward, offline only.",
+    "Primary all-attempt validated action/intent/criteria/semantics0/1(0%); linguistic accuracy cannot be assessed."
+  ]
+}

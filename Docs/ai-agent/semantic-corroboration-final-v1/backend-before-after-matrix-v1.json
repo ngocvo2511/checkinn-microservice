@@ -1,0 +1,43 @@
+{
+  "before": {
+    "correctAccepted": 5,
+    "correctRejected": 2,
+    "incorrectAccepted": 3,
+    "incorrectRejected": 10
+  },
+  "after": {
+    "correctAccepted": 7,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 13
+  },
+  "changedDecisions": [
+    {
+      "sampleId": "VNE1-005",
+      "oldAccepted": true,
+      "newAccepted": false
+    },
+    {
+      "sampleId": "VNE1-006",
+      "oldAccepted": true,
+      "newAccepted": false
+    },
+    {
+      "sampleId": "VNE1-015",
+      "oldAccepted": true,
+      "newAccepted": false
+    },
+    {
+      "sampleId": "VNE1-027",
+      "oldAccepted": false,
+      "newAccepted": true
+    },
+    {
+      "sampleId": "VNE1-028",
+      "oldAccepted": false,
+      "newAccepted": true
+    }
+  ],
+  "modelClassifications": "UNCHANGED",
+  "actualHttpAttempts": 0
+}

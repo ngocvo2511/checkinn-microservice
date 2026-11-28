@@ -1,0 +1,410 @@
+{
+  "A3Frozen": {
+    "planned": 40,
+    "attempted": 40,
+    "notRun": 0,
+    "http200": 37,
+    "capacityFailures": 1,
+    "schemaValid": 32,
+    "exactBusinessSemantics": 12,
+    "correctAccepted": 9,
+    "correctRejected": 3,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 20,
+    "backendNotEvaluated": 8,
+    "backendAccepted": 9,
+    "compilerErrors": 0,
+    "rawSemanticSchemaValid": 0,
+    "rawModelMissingSlots": "APPLICABLE_FOR_A",
+    "rawSemanticCorrect": 0,
+    "rawSemanticIntentCorrect": 0,
+    "rawSemanticActionCorrect": 0,
+    "rawMeaningCriteriaCorrect": 0,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 15272,
+    "knownOutputTokens": 3831,
+    "knownTotalTokens": 19103,
+    "knownUsageAttempts": 37,
+    "unknownUsageAttempts": 3,
+    "meanKnownTotalTokens": 516.2972972972973,
+    "medianLatencyMillis": 1809.5,
+    "meanLatencyMillis": 1863.55,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 20,
+    "intentCorrect": 16,
+    "criteriaCorrect": 20,
+    "missingSlotsCorrect": 27,
+    "referenceCorrect": 30,
+    "spuriousClearIds": [
+      "VNE1-002",
+      "VNE1-010",
+      "VNE1-020",
+      "VNE1-039",
+      "VNE1-040",
+      "VNE1-050"
+    ],
+    "referencePriceApplicable": 3,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": 0.0,
+    "falseRejectionRate": 0.25
+  },
+  "B1Frozen": {
+    "planned": 40,
+    "attempted": 40,
+    "notRun": 0,
+    "http200": 40,
+    "capacityFailures": 0,
+    "schemaValid": 26,
+    "exactBusinessSemantics": 22,
+    "correctAccepted": 18,
+    "correctRejected": 4,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 4,
+    "backendNotEvaluated": 14,
+    "backendAccepted": 18,
+    "compilerErrors": 14,
+    "rawSemanticSchemaValid": 40,
+    "rawModelMissingSlots": "NOT_APPLICABLE_FOR_B",
+    "rawSemanticCorrect": 22,
+    "rawSemanticIntentCorrect": 32,
+    "rawSemanticActionCorrect": 32,
+    "rawMeaningCriteriaCorrect": 25,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 17927,
+    "knownOutputTokens": 1207,
+    "knownTotalTokens": 19134,
+    "knownUsageAttempts": 40,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": 478.35,
+    "medianLatencyMillis": 1175.5,
+    "meanLatencyMillis": 1191.575,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 24,
+    "intentCorrect": 24,
+    "criteriaCorrect": 24,
+    "missingSlotsCorrect": 26,
+    "referenceCorrect": 24,
+    "spuriousClearIds": [],
+    "referencePriceApplicable": 3,
+    "referencePriceCorrect": 3,
+    "falseAcceptanceRate": 0.0,
+    "falseRejectionRate": 0.18181818181818182
+  },
+  "B1BackendReplay": {
+    "rawSchemaValid": 40,
+    "canonicalTypedValid": 26,
+    "exactBusinessSemantics": 22,
+    "correctAccepted": 22,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 4,
+    "compilerRejections": 14,
+    "actionCorrect": 24,
+    "intentCorrect": 24,
+    "criteriaCorrect": 24,
+    "missingSlotsCorrect": 26,
+    "referenceCorrect": 24,
+    "backendNotEvaluated": 14,
+    "http200": 40,
+    "rawSemanticCorrect": 22,
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 22,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 26,
+      "denominator": 26,
+      "rate": 1.0
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 22,
+      "denominator": 22,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 22,
+      "denominator": 40,
+      "rate": 0.55
+    }
+  },
+  "B2Frozen40": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40,
+    "http200": 0,
+    "capacityFailures": 0,
+    "schemaValid": 0,
+    "exactBusinessSemantics": 0,
+    "correctAccepted": 0,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 0,
+    "backendNotEvaluated": 0,
+    "backendAccepted": 0,
+    "compilerErrors": 0,
+    "rawSemanticSchemaValid": 0,
+    "rawModelMissingSlots": "NOT_APPLICABLE_FOR_B",
+    "rawSemanticCorrect": 0,
+    "rawSemanticIntentCorrect": 0,
+    "rawSemanticActionCorrect": 0,
+    "rawMeaningCriteriaCorrect": 0,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 0,
+    "knownOutputTokens": 0,
+    "knownTotalTokens": 0,
+    "knownUsageAttempts": 0,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": null,
+    "medianLatencyMillis": null,
+    "meanLatencyMillis": null,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referenceCorrect": 0,
+    "spuriousClearIds": [],
+    "referencePriceApplicable": 0,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": null,
+    "falseRejectionRate": null,
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "attemptLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "providerOnlyLatencyMillis": "NOT_SEPARATELY_RECORDED; attempt latency includes SDK/validation",
+    "providerStatusCounts": {
+      "200": 0,
+      "400": 0,
+      "401": 0,
+      "403": 0,
+      "429": 0,
+      "503": 0
+    },
+    "timeouts": 0,
+    "providerFailures": 0,
+    "thinkingStatus": "NOT_REPORTED",
+    "dateRetention": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "occupancyRetention": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "destinationCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceOperatorCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceValueCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "referenceRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "explicitRemovalCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsupportedConstraintRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeObserved": 0,
+    "unsafeAccepted": 0,
+    "confirmationObserved": 0,
+    "confirmationAccepted": 0,
+    "unauthorizedToolObserved": 0,
+    "unauthorizedToolAccepted": 0,
+    "unsafeInferenceExtraOrdinaryFacts": [],
+    "unsafeInferenceAcceptance": 0,
+    "unsafeInferenceDefinition": "Extra supported facts on ordinary criteria requests absent from the frozen explicit-fact oracle; omissions/substitutions remain separate semantic failures. Not a general inference detector.",
+    "compilerRejectionCategories": {}
+  },
+  "B2Fresh": {
+    "planned": 20,
+    "attempted": 0,
+    "notRun": 20,
+    "http200": 0,
+    "capacityFailures": 0,
+    "schemaValid": 0,
+    "exactBusinessSemantics": 0,
+    "correctAccepted": 0,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 0,
+    "backendNotEvaluated": 0,
+    "backendAccepted": 0,
+    "compilerErrors": 0,
+    "rawSemanticSchemaValid": 0,
+    "rawModelMissingSlots": "NOT_APPLICABLE_FOR_B",
+    "rawSemanticCorrect": 0,
+    "rawSemanticIntentCorrect": 0,
+    "rawSemanticActionCorrect": 0,
+    "rawMeaningCriteriaCorrect": 0,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 0,
+    "knownOutputTokens": 0,
+    "knownTotalTokens": 0,
+    "knownUsageAttempts": 0,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": null,
+    "medianLatencyMillis": null,
+    "meanLatencyMillis": null,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referenceCorrect": 0,
+    "spuriousClearIds": [],
+    "referencePriceApplicable": 0,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": null,
+    "falseRejectionRate": null,
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "correctAdmissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "attemptLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "providerOnlyLatencyMillis": "NOT_SEPARATELY_RECORDED; attempt latency includes SDK/validation",
+    "providerStatusCounts": {
+      "200": 0,
+      "400": 0,
+      "401": 0,
+      "403": 0,
+      "429": 0,
+      "503": 0
+    },
+    "timeouts": 0,
+    "providerFailures": 0,
+    "thinkingStatus": "NOT_REPORTED",
+    "dateRetention": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "occupancyRetention": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "destinationCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceOperatorCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "priceValueCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "referenceRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "explicitRemovalCorrectness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsupportedConstraintRecognition": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeObserved": 0,
+    "unsafeAccepted": 0,
+    "confirmationObserved": 0,
+    "confirmationAccepted": 0,
+    "unauthorizedToolObserved": 0,
+    "unauthorizedToolAccepted": 0,
+    "unsafeInferenceExtraOrdinaryFacts": [],
+    "unsafeInferenceAcceptance": 0,
+    "unsafeInferenceDefinition": "Extra supported facts on ordinary criteria requests absent from the frozen explicit-fact oracle; omissions/substitutions remain separate semantic failures. Not a general inference detector.",
+    "compilerRejectionCategories": {}
+  }
+}

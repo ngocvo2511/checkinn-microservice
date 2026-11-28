@@ -1,0 +1,1302 @@
+{
+  "version": "evidence-extraction-observations-v1",
+  "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+  "metrics": {
+    "planned": 20,
+    "attempted": 0,
+    "notRun": 20,
+    "primaryHttp200": 0,
+    "rawSchemaValid": 0,
+    "completeEvidence": 0,
+    "requestMeaningCorrect": 0,
+    "rawExact": 0,
+    "canonicalTypedValid": 0,
+    "exactBusinessSemantics": 0,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceRecall": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceMembership": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "retentionByType": {},
+    "backendConfusion": {
+      "correctAccepted": 0,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "admissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 0,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 0,
+    "knownCandidateOutputTokens": 0,
+    "knownTotalTokens": 0,
+    "actualReportedModelIdentities": [],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 0
+  },
+  "observations": [
+    {
+      "sampleId": "FRESH2-01",
+      "sourceId": "FRESH2-01",
+      "phase": "FRESH",
+      "utterance": "Mình muốn tìm một nơi lưu trú tại Vũng Tàu nhé",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "vung tau"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "310706fc4e3fdc959233a7d9f97cda020f4e6dbad68ae7f80496f45e00ccc85b",
+        "gemini-3.1-flash-lite": "310706fc4e3fdc959233a7d9f97cda020f4e6dbad68ae7f80496f45e00ccc85b",
+        "gemini-2.5-flash-lite": "4852cc8ba59365014888629de949a7b1e2ac3053d3ab25bb7fa8337c29cccb0e",
+        "gemini-2.5-flash": "4852cc8ba59365014888629de949a7b1e2ac3053d3ab25bb7fa8337c29cccb0e"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-02",
+      "sourceId": "FRESH2-02",
+      "phase": "FRESH",
+      "utterance": "Có chỗ nào nghỉ tại Phú Quốc hông bạn?",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "phu quoc"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "a7e4ed3f53d6f29db55f39fd4a189ef063224a182bba942b56d14e558b6be3c6",
+        "gemini-3.1-flash-lite": "a7e4ed3f53d6f29db55f39fd4a189ef063224a182bba942b56d14e558b6be3c6",
+        "gemini-2.5-flash-lite": "8ae5dba6140655f896fbbfeafa07b89140b16becab330771331224dfeb420585",
+        "gemini-2.5-flash": "8ae5dba6140655f896fbbfeafa07b89140b16becab330771331224dfeb420585"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-03",
+      "sourceId": "FRESH2-03",
+      "phase": "FRESH",
+      "utterance": "kiem giup tui khach san o Nha Trang nha",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "d8908a1867aee7b090f338e4a8294f7d530ff46822c9b2996e1dac7c86fee952",
+        "gemini-3.1-flash-lite": "d8908a1867aee7b090f338e4a8294f7d530ff46822c9b2996e1dac7c86fee952",
+        "gemini-2.5-flash-lite": "cfbf8fbc3ea47024db18fc62e647ff5b2c8e187531e6b78a605e6fb00eaafc3e",
+        "gemini-2.5-flash": "cfbf8fbc3ea47024db18fc62e647ff5b2c8e187531e6b78a605e6fb00eaafc3e"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-04",
+      "sourceId": "FRESH2-04",
+      "phase": "FRESH",
+      "utterance": "Khám phá khách sạn tại Hà Nội",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "EXPLORE_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "BROWSE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Hà Nội"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "ha noi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "e5e99c3bd60a5862594a14c618b9cd83d65256f6a854d5688c4d7b5409005fd5",
+        "gemini-3.1-flash-lite": "e5e99c3bd60a5862594a14c618b9cd83d65256f6a854d5688c4d7b5409005fd5",
+        "gemini-2.5-flash-lite": "3e23ee5204fa73b5645513bd070bbc52da98261787504ebe515eb0f1cf1af774",
+        "gemini-2.5-flash": "3e23ee5204fa73b5645513bd070bbc52da98261787504ebe515eb0f1cf1af774"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "BROWSE",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Hà Nội"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-05",
+      "sourceId": "FRESH2-05",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn tại Đà Nẵng từ 08/12/2026 đến 11/12/2026 cho 3 người lớn, 2 trẻ em, 2 phòng, 4 sao, giá không quá 2 triệu mỗi đêm",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-08"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-11"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 3
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da nang"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "08/12/2026 den 11/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "3 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "2 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "2 phong"
+        },
+        {
+          "type": "STARS",
+          "text": "4 sao"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia khong qua 2 trieu moi dem"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "c89a7f86c11640da5e17d34946578b49b9f374ec1174307afe2b538802cfe62d",
+        "gemini-3.1-flash-lite": "c89a7f86c11640da5e17d34946578b49b9f374ec1174307afe2b538802cfe62d",
+        "gemini-2.5-flash-lite": "7171b4d86e271b15ca9c1b5a3558a530672c8c9a6b7e1fecf7693735b1ed5635",
+        "gemini-2.5-flash": "7171b4d86e271b15ca9c1b5a3558a530672c8c9a6b7e1fecf7693735b1ed5635"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "children": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-08"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 3
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-11"
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-06",
+      "sourceId": "FRESH2-06",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Huế từ 10/12/2026 đến 12/12/2026, 2 người lớn, không có trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-10"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-12"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "10/12/2026 den 12/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "khong co tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "55e7ecf7f8648869bbd6c3137eca4e6458e8093d5dabc4cfb379182d2e7bfc3d",
+        "gemini-3.1-flash-lite": "55e7ecf7f8648869bbd6c3137eca4e6458e8093d5dabc4cfb379182d2e7bfc3d",
+        "gemini-2.5-flash-lite": "d76ca047a46c895356d1546caa4d67a191569f3f02c7b98507800072cb49c3e0",
+        "gemini-2.5-flash": "d76ca047a46c895356d1546caa4d67a191569f3f02c7b98507800072cb49c3e0"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-12"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-10"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-07",
+      "sourceId": "FRESH2-07",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Vũng Tàu từ 15/12/2026 đến 17/12/2026 cho 2 người lớn, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-15"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-17"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "children"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "vung tau"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "15/12/2026 den 17/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "8011e6721e7e42c9ce5586d3a96ce85891800a8de5e2c7f7935337e23f74cecd",
+        "gemini-3.1-flash-lite": "8011e6721e7e42c9ce5586d3a96ce85891800a8de5e2c7f7935337e23f74cecd",
+        "gemini-2.5-flash-lite": "29765af7d4fe0e89d479dc806d84fa3d8bd06d747d04764c211f849b953962aa",
+        "gemini-2.5-flash": "29765af7d4fe0e89d479dc806d84fa3d8bd06d747d04764c211f849b953962aa"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-15"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-17"
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "children"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-08",
+      "sourceId": "FRESH2-08",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Phú Quốc từ 09/12/2026 đến 13/12/2026, 2 người lớn và 1 trẻ em",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-09"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-13"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "phu quoc"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "09/12/2026 den 13/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "1 tre em"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "acc225c5efe9a6c3ce48522fbb13e8d4fef554e6e9850e670f182fd2d11a8bda",
+        "gemini-3.1-flash-lite": "acc225c5efe9a6c3ce48522fbb13e8d4fef554e6e9850e670f182fd2d11a8bda",
+        "gemini-2.5-flash-lite": "e77c16c014ce17898be021b93ec4eebaa02e76056e73276daa0d2945e0a7cff9",
+        "gemini-2.5-flash": "e77c16c014ce17898be021b93ec4eebaa02e76056e73276daa0d2945e0a7cff9"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-09"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-13"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "rooms"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-09",
+      "sourceId": "FRESH2-09",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn nhận phòng 14/12/2026",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "STAY_DATES",
+          "text": "nhan phong 14/12/2026"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "379da0df3bc71ab4e846fce0262c10830e1aeab52ec3909f44b0950aefa6c870",
+        "gemini-3.1-flash-lite": "379da0df3bc71ab4e846fce0262c10830e1aeab52ec3909f44b0950aefa6c870",
+        "gemini-2.5-flash-lite": "62618825f53920806bc42d2f057384bb795fd4393251fef7b994482bccbe5a21",
+        "gemini-2.5-flash": "62618825f53920806bc42d2f057384bb795fd4393251fef7b994482bccbe5a21"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": [
+          "checkOut"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-10",
+      "sourceId": "FRESH2-10",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Nha Trang trả phòng 18/12/2026",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "tra phong 18/12/2026"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "76735d06c7b21b4276f46c2025093cf697f0eb38c918a199e422064274b1b30e",
+        "gemini-3.1-flash-lite": "76735d06c7b21b4276f46c2025093cf697f0eb38c918a199e422064274b1b30e",
+        "gemini-2.5-flash-lite": "5354e70bf5fb8a8b4c1f3022a4265f4f7709b0069b8cb29c10f64f68ad364e13",
+        "gemini-2.5-flash": "5354e70bf5fb8a8b4c1f3022a4265f4f7709b0069b8cb29c10f64f68ad364e13"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-11",
+      "sourceId": "FRESH2-11",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn cho 4 người ở Hà Nội",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "ha noi"
+        },
+        {
+          "type": "AMBIGUOUS",
+          "text": "4 nguoi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2554d89ac0d73f9b0ae2e67bdd2523fd60723cdeb49cb44a9ffe5708c5ff1e50",
+        "gemini-3.1-flash-lite": "2554d89ac0d73f9b0ae2e67bdd2523fd60723cdeb49cb44a9ffe5708c5ff1e50",
+        "gemini-2.5-flash-lite": "21d5001cce137335ab548c0bf01e23b9113edd799f9e8d6b17fdad9dc1233aea",
+        "gemini-2.5-flash": "21d5001cce137335ab548c0bf01e23b9113edd799f9e8d6b17fdad9dc1233aea"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-12",
+      "sourceId": "FRESH2-12",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Đà Nẵng giá tham khảo dưới 1,5 triệu",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da nang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tham khao duoi 1,5 trieu"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1523459d80a29cf53ddd36edc66645ad77001f25be3861e7927a6ff7c547e031",
+        "gemini-3.1-flash-lite": "1523459d80a29cf53ddd36edc66645ad77001f25be3861e7927a6ff7c547e031",
+        "gemini-2.5-flash-lite": "74d61847c627b6334e78b8086153a31d095121bc4a803010c44f5ee4973575f2",
+        "gemini-2.5-flash": "74d61847c627b6334e78b8086153a31d095121bc4a803010c44f5ee4973575f2"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-13",
+      "sourceId": "FRESH2-13",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Huế giá từ 700 nghìn đến 1,2 triệu mỗi đêm",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "minPrice": {
+            "operation": "REPLACE",
+            "value": 700000
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1200000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tu 700 nghin den 1,2 trieu moi dem"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "ee609e38319b44a732ec735726d063b55c98c77a9192f368ce5f5df5d3521f13",
+        "gemini-3.1-flash-lite": "ee609e38319b44a732ec735726d063b55c98c77a9192f368ce5f5df5d3521f13",
+        "gemini-2.5-flash-lite": "9349dae3813632588eaf827abf9c6e9bdbb77e7a2b8260977bc96617f04ab930",
+        "gemini-2.5-flash": "9349dae3813632588eaf827abf9c6e9bdbb77e7a2b8260977bc96617f04ab930"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "minPrice": {
+            "operation": "REPLACE",
+            "value": 700000.0
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1200000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-14",
+      "sourceId": "FRESH2-14",
+      "phase": "FRESH",
+      "utterance": "Xóa giới hạn giá đi",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REMOVAL",
+          "text": "xoa gioi han gia di"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "fa997b5f317a21cbd24d95faaae007f17ad7903bed39e76f086e1e551bcc5142",
+        "gemini-3.1-flash-lite": "fa997b5f317a21cbd24d95faaae007f17ad7903bed39e76f086e1e551bcc5142",
+        "gemini-2.5-flash-lite": "00dfeaec647ecc62cc06e93f0b8a979347b21ab52e472d183b7b6a0a2f88bb00",
+        "gemini-2.5-flash": "00dfeaec647ecc62cc06e93f0b8a979347b21ab52e472d183b7b6a0a2f88bb00"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-15",
+      "sourceId": "FRESH2-15",
+      "phase": "FRESH",
+      "utterance": "Chuyển điểm đến sang Phú Quốc",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "phu quoc"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "47c281c460529046902962fb95562a707d71e97f5bf44e3bd3daecdb2db7a1c6",
+        "gemini-3.1-flash-lite": "47c281c460529046902962fb95562a707d71e97f5bf44e3bd3daecdb2db7a1c6",
+        "gemini-2.5-flash-lite": "66d2a7f9a956f52f0512d0e44278fdfd4c2caa8d109a9aa6c1d35ac3e94269eb",
+        "gemini-2.5-flash": "66d2a7f9a956f52f0512d0e44278fdfd4c2caa8d109a9aa6c1d35ac3e94269eb"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-16",
+      "sourceId": "FRESH2-16",
+      "phase": "FRESH",
+      "utterance": "Phòng đó giá bao nhiêu?",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đó giá bao nhiêu?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong do"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "fbb5603faf9986505bf497f8c6d8e3840ccb4e323132a84f8d11707dd1253112",
+        "gemini-3.1-flash-lite": "fbb5603faf9986505bf497f8c6d8e3840ccb4e323132a84f8d11707dd1253112",
+        "gemini-2.5-flash-lite": "8291f5defba0488648a3a341beed17b583821daa8a2e6739e198029075e5afed",
+        "gemini-2.5-flash": "8291f5defba0488648a3a341beed17b583821daa8a2e6739e198029075e5afed"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Phòng đó giá bao nhiêu?",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-17",
+      "sourceId": "FRESH2-17",
+      "phase": "FRESH",
+      "utterance": "Xem khách sạn đầu tiên",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "khach san dau tien"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "3c0b1c31bdbfc953dc693a1c582dae60f8cf74e39e284b7fe71f253da57befd2",
+        "gemini-3.1-flash-lite": "3c0b1c31bdbfc953dc693a1c582dae60f8cf74e39e284b7fe71f253da57befd2",
+        "gemini-2.5-flash-lite": "e4eaf318bb0e52be25b67cf616dd4cb97845a60051e1b019ed98f2ee14878be2",
+        "gemini-2.5-flash": "e4eaf318bb0e52be25b67cf616dd4cb97845a60051e1b019ed98f2ee14878be2"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Xem khách sạn đầu tiên",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-18",
+      "sourceId": "FRESH2-18",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn tại Vũng Tàu có hồ bơi",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "vung tau"
+        },
+        {
+          "type": "UNSUPPORTED",
+          "text": "ho boi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "0b553ed90f188d716cd814dc525cf70f65386518122663575be995773eb82379",
+        "gemini-3.1-flash-lite": "0b553ed90f188d716cd814dc525cf70f65386518122663575be995773eb82379",
+        "gemini-2.5-flash-lite": "8286fd77bdf9b10b632f9c39444f387eec60586d80f264bd551de1e467ad74db",
+        "gemini-2.5-flash": "8286fd77bdf9b10b632f9c39444f387eec60586d80f264bd551de1e467ad74db"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-19",
+      "sourceId": "FRESH2-19",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Huế từ 31/04/2027 đến 02/05/2027",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "31/04/2027 den 02/05/2027"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "d9a95bc535d630ba95c37867fa5c697f963583b55d8ec091f2808d4928dc1b87",
+        "gemini-3.1-flash-lite": "d9a95bc535d630ba95c37867fa5c697f963583b55d8ec091f2808d4928dc1b87",
+        "gemini-2.5-flash-lite": "eca7ed42b5c4f9e4848d226722bd02a1dd24dcbdde3574fea1f1016205c8aed0",
+        "gemini-2.5-flash": "eca7ed42b5c4f9e4848d226722bd02a1dd24dcbdde3574fea1f1016205c8aed0"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ]
+      },
+      "deterministicExact": true
+    },
+    {
+      "sampleId": "FRESH2-20",
+      "sourceId": "FRESH2-20",
+      "phase": "FRESH",
+      "utterance": "Tìm khách sạn Đà Nẵng giá từ 3 triệu đến 800 nghìn mỗi đêm",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "maxPrice",
+          "minPrice"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da nang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tu 3 trieu den 800 nghin moi dem"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "f8748a139276815c443cab604012c6752b9446c48f66e9b72fe59379676bee34",
+        "gemini-3.1-flash-lite": "f8748a139276815c443cab604012c6752b9446c48f66e9b72fe59379676bee34",
+        "gemini-2.5-flash-lite": "f582df488af67d18175b5a83515d4cd68c1bb64683b245f81174668d9eadb6db",
+        "gemini-2.5-flash": "f582df488af67d18175b5a83515d4cd68c1bb64683b245f81174668d9eadb6db"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": [
+          "maxPrice",
+          "minPrice"
+        ]
+      },
+      "deterministicExact": true
+    }
+  ]
+}

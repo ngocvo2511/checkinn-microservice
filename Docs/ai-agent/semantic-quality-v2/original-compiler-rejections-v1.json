@@ -1,0 +1,756 @@
+[
+  {
+    "sampleId": "VNE1-003",
+    "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Đà Lạt"
+        },
+        "checkIn": {
+          "operation": "REPLACE",
+          "value": "2026-12-01"
+        },
+        "checkOut": {
+          "operation": "REPLACE",
+          "value": "2026-12-03"
+        },
+        "adults": {
+          "operation": "REPLACE",
+          "value": 2
+        },
+        "children": {
+          "operation": "REPLACE",
+          "value": 0
+        },
+        "rooms": {
+          "operation": "REPLACE",
+          "value": 1
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRaw": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\",\n  \"reference\": \"Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng\"\n}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Đà Lạt",
+      "reference": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng"
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [],
+    "reference": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "compilerRule": "Unexpected reference on ordinary/clarification request",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:126"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-004",
+    "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "checkIn": {
+          "operation": "REPLACE",
+          "value": "2026-12-01"
+        },
+        "checkOut": {
+          "operation": "REPLACE",
+          "value": "2026-12-03"
+        },
+        "adults": {
+          "operation": "REPLACE",
+          "value": 2
+        },
+        "children": {
+          "operation": "REPLACE",
+          "value": 0
+        },
+        "rooms": {
+          "operation": "REPLACE",
+          "value": 1
+        }
+      },
+      "reference": "",
+      "missingSlots": [
+        "cityName"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"SEARCH\",\"arrival\":\"2026-12-01\",\"departure\":\"2026-12-03\",\"rooms\":1,\"price\":{\"kind\":\"STAY\",\"operator\":\"GTE\",\"unit\":\"VND\",\"amount\":0}}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "arrival": "2026-12-01",
+      "departure": "2026-12-03",
+      "rooms": 1,
+      "price": {
+        "kind": "STAY",
+        "operator": "GTE",
+        "unit": "VND",
+        "amount": 0
+      }
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "arrival": "2026-12-01",
+      "departure": "2026-12-03",
+      "rooms": 1,
+      "price": {
+        "kind": "STAY",
+        "operator": "GTE",
+        "unit": "VND",
+        "amount": 0
+      }
+    },
+    "issues": [],
+    "reference": null,
+    "compilerRule": "Unsupported price unit/operator",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:114"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-005",
+    "utterance": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "checkOut"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\",\n  \"issues\": [\n    \"DEPARTURE_MISSING\"\n  ],\n  \"reference\": \"Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026\"\n}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Đà Lạt",
+      "issues": [
+        "DEPARTURE_MISSING"
+      ],
+      "reference": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026"
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [
+      "DEPARTURE_MISSING"
+    ],
+    "reference": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+    "compilerRule": "Unexpected reference on ordinary/clarification request",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:124"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-006",
+    "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Đà Lạt"
+        },
+        "checkIn": {
+          "operation": "REPLACE",
+          "value": "2026-12-01"
+        },
+        "checkOut": {
+          "operation": "REPLACE",
+          "value": "2026-12-03"
+        }
+      },
+      "reference": "",
+      "missingSlots": [
+        "adults",
+        "children",
+        "rooms"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\",\n  \"reference\": \"Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026\"\n}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Đà Lạt",
+      "reference": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026"
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [],
+    "reference": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+    "compilerRule": "Unexpected reference on ordinary/clarification request",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:126"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-007",
+    "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "adults": {
+          "operation": "REPLACE",
+          "value": 2
+        },
+        "children": {
+          "operation": "REPLACE",
+          "value": 1
+        },
+        "rooms": {
+          "operation": "REPLACE",
+          "value": 1
+        }
+      },
+      "reference": "",
+      "missingSlots": [
+        "cityName",
+        "checkIn",
+        "checkOut"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"CLARIFY\",\"adults\":2,\"children\":1,\"rooms\":1,\"issues\":[\"DESTINATION_UNRESOLVED\"]}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "adults": 2,
+      "children": 1,
+      "rooms": 1,
+      "issues": [
+        "DESTINATION_UNRESOLVED"
+      ]
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "adults": 2,
+      "children": 1,
+      "rooms": 1
+    },
+    "issues": [
+      "DESTINATION_UNRESOLVED"
+    ],
+    "reference": null,
+    "compilerRule": "Clarification cannot mutate criteria",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:127"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-009",
+    "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "checkIn",
+        "checkOut"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\": \"CLARIFY\", \"destination\": \"Đà Lạt\", \"issues\": [\"DATE_INVALID\"]}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "destination": "Đà Lạt",
+      "issues": [
+        "DATE_INVALID"
+      ]
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [
+      "DATE_INVALID"
+    ],
+    "reference": null,
+    "compilerRule": "Clarification cannot mutate criteria",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:127"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-010",
+    "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "minPrice",
+        "maxPrice"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\": \"SEARCH\", \"destination\": \"Đà Lạt\", \"price\": {\"kind\": \"STAY\", \"operator\": \"RANGE\", \"unit\": \"VND_PER_ROOM_NIGHT\", \"amount\": 2000000, \"upper\": 1000000}, \"issues\": [\"PRICE_RANGE_INVALID\"]}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Đà Lạt",
+      "price": {
+        "kind": "STAY",
+        "operator": "RANGE",
+        "unit": "VND_PER_ROOM_NIGHT",
+        "amount": 2000000,
+        "upper": 1000000
+      },
+      "issues": [
+        "PRICE_RANGE_INVALID"
+      ]
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Đà Lạt",
+      "price": {
+        "kind": "STAY",
+        "operator": "RANGE",
+        "unit": "VND_PER_ROOM_NIGHT",
+        "amount": 2000000,
+        "upper": 1000000
+      }
+    },
+    "issues": [
+      "PRICE_RANGE_INVALID"
+    ],
+    "reference": null,
+    "compilerRule": "Issues incompatible with criteria mutation",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:124"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-011",
+    "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\": \"SEARCH\", \"destination\": \"Đà Lạt\", \"issues\": [\"UNSUPPORTED_FILTER\"]}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Đà Lạt",
+      "issues": [
+        "UNSUPPORTED_FILTER"
+      ]
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [
+      "UNSUPPORTED_FILTER"
+    ],
+    "reference": null,
+    "compilerRule": "Issues incompatible with criteria mutation",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:124"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-023",
+    "utterance": "Tìm khách sạn Đà Lạt cho 3 người",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "adults",
+        "children",
+        "rooms"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\n  \"intent\": \"CLARIFY\",\n  \"destination\": \"Đà Lạt\",\n  \"issues\": [\n    \"GUESTS_AMBIGUOUS\"\n  ]\n}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "destination": "Đà Lạt",
+      "issues": [
+        "GUESTS_AMBIGUOUS"
+      ]
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "destination": "Đà Lạt"
+    },
+    "issues": [
+      "GUESTS_AMBIGUOUS"
+    ],
+    "reference": null,
+    "compilerRule": "Clarification cannot mutate criteria",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:127"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-025",
+    "utterance": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "checkOut"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"SEARCH\",\"destination\":\"Huế\",\"rooms\":1,\"reference\":\"Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn\"}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Huế",
+      "rooms": 1,
+      "reference": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn"
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Huế",
+      "rooms": 1
+    },
+    "issues": [],
+    "reference": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+    "compilerRule": "Unexpected reference on ordinary/clarification request",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:126"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-039",
+    "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"CLARIFY\",\"destination\":\"Huế\",\"issues\":[\"PRICE_INVALID\"]}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "destination": "Huế",
+      "issues": [
+        "PRICE_INVALID"
+      ]
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "destination": "Huế"
+    },
+    "issues": [
+      "PRICE_INVALID"
+    ],
+    "reference": null,
+    "compilerRule": "Clarification cannot mutate criteria",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:127"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-040",
+    "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "rooms",
+        "adults"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"CLARIFY\",\"destination\":\"Huế\",\"issues\":[\"ROOMS_INVALID\",\"ADULTS_INVALID\"]}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "destination": "Huế",
+      "issues": [
+        "ROOMS_INVALID",
+        "ADULTS_INVALID"
+      ]
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "destination": "Huế"
+    },
+    "issues": [
+      "ROOMS_INVALID",
+      "ADULTS_INVALID"
+    ],
+    "reference": null,
+    "compilerRule": "Clarification cannot mutate criteria",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:127"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-046",
+    "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [
+        "checkIn"
+      ],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\": \"CLARIFY\", \"destination\": \"Hu\\u1EBF\", \"issues\": [\"ARRIVAL_MISSING\"], \"reference\": \"T\\u00ECm kh\\u00E1ch s\\u1EA1n Hu\\u1EBF tr\\u1EA3 ph\\u00F2ng 22/12/2026\"}",
+    "actualProposal": {
+      "intent": "CLARIFY",
+      "destination": "Huế",
+      "issues": [
+        "ARRIVAL_MISSING"
+      ],
+      "reference": "Tìm khách sạn Huế trả phòng 22/12/2026"
+    },
+    "action": "CLARIFY",
+    "intent": "CLARIFY",
+    "criteria": {
+      "destination": "Huế"
+    },
+    "issues": [
+      "ARRIVAL_MISSING"
+    ],
+    "reference": "Tìm khách sạn Huế trả phòng 22/12/2026",
+    "compilerRule": "Unexpected reference on ordinary/clarification request",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:126"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  },
+  {
+    "sampleId": "VNE1-047",
+    "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+    "expected": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRaw": "{\"intent\":\"SEARCH\",\"destination\":\"Huế\",\"issues\":[\"DATE_ORDER_INVALID\"]}",
+    "actualProposal": {
+      "intent": "SEARCH",
+      "destination": "Huế",
+      "issues": [
+        "DATE_ORDER_INVALID"
+      ]
+    },
+    "action": "CRITERIA",
+    "intent": "SEARCH",
+    "criteria": {
+      "destination": "Huế"
+    },
+    "issues": [
+      "DATE_ORDER_INVALID"
+    ],
+    "reference": null,
+    "compilerRule": "Issues incompatible with criteria mutation",
+    "exactRejectionStage": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:124"
+    },
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "confirmedCompilerDefect": false,
+    "proposedFix": "Action-specific instruction matrix; preserve strict rejection; retain all supported explicit facts on valid criteria requests",
+    "regressionRisk": "Over-clarifying missing business prerequisites, losing explicit facts or accepting contradictory proposals"
+  }
+]

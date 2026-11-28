@@ -1,0 +1,76 @@
+[
+  {
+    "sampleId": "DIAG-R2-SELECTED-01",
+    "sourceId": "VNE1-013",
+    "phase": "DIAGNOSTIC_R2",
+    "utterance": "Kiểm tra phòng này còn phòng không",
+    "status": "NOT_RUN",
+    "expectedRequestMeaning": "ASK_SELECTED",
+    "expectedExtraction": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "Kiểm tra phòng này còn phòng không",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "expectedEvidenceWitnesses": [
+      {
+        "type": "REFERENCE",
+        "text": "phong nay"
+      }
+    ],
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+      "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+      "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+      "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+    },
+    "deterministicExtraction": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "reference": "Kiểm tra phòng này còn phòng không",
+      "fields": {},
+      "inferredFields": [],
+      "missingSlots": []
+    },
+    "deterministicExact": true
+  },
+  {
+    "sampleId": "DIAG-R2-SELECTED-02",
+    "sourceId": "GENERALIZED-SELECTED-R2",
+    "phase": "DIAGNOSTIC_R2",
+    "utterance": "Hỏi giá của phòng đã chọn",
+    "status": "NOT_RUN",
+    "expectedRequestMeaning": "ASK_SELECTED",
+    "expectedExtraction": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "Hỏi giá của phòng đã chọn",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "expectedEvidenceWitnesses": [
+      {
+        "type": "REFERENCE",
+        "text": "phong da chon"
+      }
+    ],
+    "wireDigests": {
+      "gemini-3.5-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+      "gemini-3.1-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+      "gemini-2.5-flash-lite": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520",
+      "gemini-2.5-flash": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520"
+    },
+    "deterministicExtraction": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "reference": "Hỏi giá của phòng đã chọn",
+      "fields": {},
+      "inferredFields": [],
+      "missingSlots": []
+    },
+    "deterministicExact": true
+  }
+]

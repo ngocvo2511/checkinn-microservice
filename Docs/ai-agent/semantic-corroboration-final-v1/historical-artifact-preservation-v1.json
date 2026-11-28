@@ -1,0 +1,227 @@
+{
+  "Docs/ai-agent/semantic-extraction-fix-v1/aggregate-metrics-v1.json": {
+    "expected": "0938494e02ab3f8cfd9aaa83da39f818e966a9c8ec2378565d68795c2cf5e1dc",
+    "actual": "0938494e02ab3f8cfd9aaa83da39f818e966a9c8ec2378565d68795c2cf5e1dc",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/all-attempted-performance-v1.json": {
+    "expected": "ba6ec4ce9fff08e6ddfd448a54de390b9d5993396b99429fdb864a377867ad29",
+    "actual": "ba6ec4ce9fff08e6ddfd448a54de390b9d5993396b99429fdb864a377867ad29",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/analyze.py": {
+    "expected": "8b8d1eda577e30cb17abc1301c511334ba247f26a13691f987f1fabf0b49409b",
+    "actual": "8b8d1eda577e30cb17abc1301c511334ba247f26a13691f987f1fabf0b49409b",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/baseline40-observations-v1.json": {
+    "expected": "eae2a1454e7eed92a8f1f1dd1c1c945194be832f47d3c8b059d3674976035d34",
+    "actual": "eae2a1454e7eed92a8f1f1dd1c1c945194be832f47d3c8b059d3674976035d34",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/budget-accounting-v1.json": {
+    "expected": "4d1303fca75dba57637a0711060354cbcaf9687842d03008e607101adec6cf44",
+    "actual": "4d1303fca75dba57637a0711060354cbcaf9687842d03008e607101adec6cf44",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/compiler-verification-v1.json": {
+    "expected": "bcb8e5e96b4dad79a1e3a0ecef5ff739b9af5d0d1a1169e6f0b72a445463e0a9",
+    "actual": "bcb8e5e96b4dad79a1e3a0ecef5ff739b9af5d0d1a1169e6f0b72a445463e0a9",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/contract-snapshots-v1.json": {
+    "expected": "a971b6a8fac61111c2913e91e6900c47a5399afb4286fb73bb0e543c6c100777",
+    "actual": "a971b6a8fac61111c2913e91e6900c47a5399afb4286fb73bb0e543c6c100777",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/failure-matrix-v1.json": {
+    "expected": "3e13afad395808386be5d648901290c05b3df5112d12911401bd0e086126216f",
+    "actual": "3e13afad395808386be5d648901290c05b3df5112d12911401bd0e086126216f",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/generalization-v1.json": {
+    "expected": "050c62f18e569f57c3c317b9b40bcbc4b8ebe33d7cafa4d8333ab5e7231be52c",
+    "actual": "050c62f18e569f57c3c317b9b40bcbc4b8ebe33d7cafa4d8333ab5e7231be52c",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/observations-v1.csv": {
+    "expected": "4167918f1a59318873309d86ee491f8ef717faeb49effee2a795c2fa2fb78bb8",
+    "actual": "4167918f1a59318873309d86ee491f8ef717faeb49effee2a795c2fa2fb78bb8",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/paired-comparison-v1.json": {
+    "expected": "08c03e3d8336d477ab820c497999ff40b7cade2dbb87ba4550cdfb5e0b1827e1",
+    "actual": "08c03e3d8336d477ab820c497999ff40b7cade2dbb87ba4550cdfb5e0b1827e1",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/preserved-hashes-v1.json": {
+    "expected": "5c62b5aab8000ef0e2d233bee47542454fc06527001802283e62b5674f00f3b1",
+    "actual": "5c62b5aab8000ef0e2d233bee47542454fc06527001802283e62b5674f00f3b1",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/simplified-diagnostics-v1.json": {
+    "expected": "d85352429ddb9a14044cdf883e1a6abc6a893f8c93921e976e485cfd8da821e0",
+    "actual": "d85352429ddb9a14044cdf883e1a6abc6a893f8c93921e976e485cfd8da821e0",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/simplified-request-plan-v1.json": {
+    "expected": "cf22a4a7260b590e555cdff7b92a71a646af9e320a3c687ad45e5d1f0c06ef29",
+    "actual": "cf22a4a7260b590e555cdff7b92a71a646af9e320a3c687ad45e5d1f0c06ef29",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/simplified40-observations-v1.json": {
+    "expected": "cf2e01d52db237825d667a72797b10f9c5501d78009e68c78cb0a94b15b431b0",
+    "actual": "cf2e01d52db237825d667a72797b10f9c5501d78009e68c78cb0a94b15b431b0",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/technical-verification-v1.json": {
+    "expected": "decf3266f425c797721fac0448d145b299e8afca48b55b4926c2a90cc8cf5339",
+    "actual": "decf3266f425c797721fac0448d145b299e8afca48b55b4926c2a90cc8cf5339",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json": {
+    "expected": "c5140fdc1497f69f86be0232b7ca5ce9ffb80ab25e1abd564813b974d58f15ec",
+    "actual": "c5140fdc1497f69f86be0232b7ca5ce9ffb80ab25e1abd564813b974d58f15ec",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/technical-v1.json": {
+    "expected": "808bdcb4a1c551c0196337ba360c71640d728fad1cd2473f5b07e1b7355eb000",
+    "actual": "808bdcb4a1c551c0196337ba360c71640d728fad1cd2473f5b07e1b7355eb000",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-001.json": {
+    "expected": "b90ed5042ea1ea4e219927f4a4da6b039a25a0ccf1c4a691bde6d3964e5b667a",
+    "actual": "b90ed5042ea1ea4e219927f4a4da6b039a25a0ccf1c4a691bde6d3964e5b667a",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-002.json": {
+    "expected": "83ccc6d9d0650e1c1b42bb0e7e28baf2645864c142e7d842511f18b138d10b65",
+    "actual": "83ccc6d9d0650e1c1b42bb0e7e28baf2645864c142e7d842511f18b138d10b65",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-003.json": {
+    "expected": "2f8dfcdcee90b5e4fc50a675725d036efe7fdd0dfd6888f83f5ef4978fbf1e10",
+    "actual": "2f8dfcdcee90b5e4fc50a675725d036efe7fdd0dfd6888f83f5ef4978fbf1e10",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-004.json": {
+    "expected": "93e7ea7f577ed9d1991543320b937f9a7c2ab93490f67818d748c82aafc768ce",
+    "actual": "93e7ea7f577ed9d1991543320b937f9a7c2ab93490f67818d748c82aafc768ce",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-005.json": {
+    "expected": "e54555fd6c84c6b2f80511da2b5866325ff7d9b620913b97f8deac585165f483",
+    "actual": "e54555fd6c84c6b2f80511da2b5866325ff7d9b620913b97f8deac585165f483",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-006.json": {
+    "expected": "735f0c293202e1481a110d4c0cd6f894838045df66868e30168d64febe3e6923",
+    "actual": "735f0c293202e1481a110d4c0cd6f894838045df66868e30168d64febe3e6923",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-007.json": {
+    "expected": "c2fbdb3a2088cb77bc66ce957ddd565c8c456c865c5cd916985a31302b5f7595",
+    "actual": "c2fbdb3a2088cb77bc66ce957ddd565c8c456c865c5cd916985a31302b5f7595",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-008.json": {
+    "expected": "23c8ebf684df8019b84eb0cd5b10ece1e0dd8239e618a0157761db8623567a19",
+    "actual": "23c8ebf684df8019b84eb0cd5b10ece1e0dd8239e618a0157761db8623567a19",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-009.json": {
+    "expected": "0dd95d55f6a64db24079e536102f02d6260c54e6d292755142e763fd47760a83",
+    "actual": "0dd95d55f6a64db24079e536102f02d6260c54e6d292755142e763fd47760a83",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-010.json": {
+    "expected": "adef5a8e31ae25fed59ba2fa34a237b023df423ee68766add37d552fc69b5af7",
+    "actual": "adef5a8e31ae25fed59ba2fa34a237b023df423ee68766add37d552fc69b5af7",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-011.json": {
+    "expected": "657e129c4a5b4dfce037bc910d3688d02abefd64107663c061d034d3d3947cc0",
+    "actual": "657e129c4a5b4dfce037bc910d3688d02abefd64107663c061d034d3d3947cc0",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-012.json": {
+    "expected": "8eb98ecc0e07ea7ba27876e8593f739e89bd01620407052792a61d91fb464113",
+    "actual": "8eb98ecc0e07ea7ba27876e8593f739e89bd01620407052792a61d91fb464113",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-013.json": {
+    "expected": "04273b437884174b57768f2c830d650189bb11eedeaaab01ef5c2376af75d5dd",
+    "actual": "04273b437884174b57768f2c830d650189bb11eedeaaab01ef5c2376af75d5dd",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-014.json": {
+    "expected": "2180a58d9100209e10249166030463c4ad4e1298e475c323ce867799d21a9d27",
+    "actual": "2180a58d9100209e10249166030463c4ad4e1298e475c323ce867799d21a9d27",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-015.json": {
+    "expected": "21a006af3110676c24892d4efd47c85d990e4ae926fd4fd660bf6467372c9915",
+    "actual": "21a006af3110676c24892d4efd47c85d990e4ae926fd4fd660bf6467372c9915",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-016.json": {
+    "expected": "9db3252996410920e3b2f37568af6ca7abb4d137ee7cbde810fe678aba946402",
+    "actual": "9db3252996410920e3b2f37568af6ca7abb4d137ee7cbde810fe678aba946402",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-017.json": {
+    "expected": "0e318fc363e49aa1b79e1b1439b5e10679a2ca7dd6ec42be8859f71a7cae8290",
+    "actual": "0e318fc363e49aa1b79e1b1439b5e10679a2ca7dd6ec42be8859f71a7cae8290",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-020.json": {
+    "expected": "b9cf370ffdaa84ea5a328da06bce3cfe23bbc91ec478f74efc92433625904040",
+    "actual": "b9cf370ffdaa84ea5a328da06bce3cfe23bbc91ec478f74efc92433625904040",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-021.json": {
+    "expected": "6b92eb3c3e263a361b97801da682109b58b7753b78930ab62faa2c401390032a",
+    "actual": "6b92eb3c3e263a361b97801da682109b58b7753b78930ab62faa2c401390032a",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-023.json": {
+    "expected": "a3201b7721294e74942e387d4ec9d7ab17a08df6632a6acadccdf86543a3f640",
+    "actual": "a3201b7721294e74942e387d4ec9d7ab17a08df6632a6acadccdf86543a3f640",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-025.json": {
+    "expected": "6f3f1b550864a911766d2bcb84e90bab19153969eeec86f7cd35d3cd8313e4db",
+    "actual": "6f3f1b550864a911766d2bcb84e90bab19153969eeec86f7cd35d3cd8313e4db",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-027.json": {
+    "expected": "d99639b060271e365d5de823e906e07ef3c38759a73dc04dcd1b2cd48bfb1f03",
+    "actual": "d99639b060271e365d5de823e906e07ef3c38759a73dc04dcd1b2cd48bfb1f03",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/baseline40-v1.json.responses/VNE1-028.json": {
+    "expected": "7f42275320a564179b56b168e2a6da88afe6906e3ee42a91d7d10c6d08d4e6ca",
+    "actual": "7f42275320a564179b56b168e2a6da88afe6906e3ee42a91d7d10c6d08d4e6ca",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/technical-v1.json.responses/VEX1-01.json": {
+    "expected": "d3a0d52f1fc0abca9bf4f867aaee5db4744a74802a85f2e916b80cb21631c6fa",
+    "actual": "d3a0d52f1fc0abca9bf4f867aaee5db4744a74802a85f2e916b80cb21631c6fa",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/technical-v1.json.responses/VEX1-02.json": {
+    "expected": "bef6cc00bbfbcf035d3fcf3a4201a0eb7764216de8fb5bc1b0aeac786a0b3320",
+    "actual": "bef6cc00bbfbcf035d3fcf3a4201a0eb7764216de8fb5bc1b0aeac786a0b3320",
+    "preserved": true
+  },
+  "ai-agent-service/.local/batch10b4d-fix/technical-v1.json.responses/VEX1-03.json": {
+    "expected": "dcf74ce5242d42dbc1b58844bd13ca8a3899e45291ea940e6ff6dd427159243e",
+    "actual": "dcf74ce5242d42dbc1b58844bd13ca8a3899e45291ea940e6ff6dd427159243e",
+    "preserved": true
+  },
+  "Docs/ai-agent/semantic-extraction-fix-v1/verification-v1.json": {
+    "expected": "6698a07d56004f4566e52d6cb317203aa81b0451d7dfce788919f4eb587bbcf8",
+    "actual": "6698a07d56004f4566e52d6cb317203aa81b0451d7dfce788919f4eb587bbcf8",
+    "preserved": true
+  }
+}

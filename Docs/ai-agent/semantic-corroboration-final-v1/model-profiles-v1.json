@@ -1,0 +1,74 @@
+{
+  "verifiedDate": "2026-11-24",
+  "quotaEvidence": "Developer conversation snapshot; fallback usage 0 at snapshot. Primary quota previous developer snapshot. No billing change.",
+  "models": [
+    {
+      "model": "gemini-3.5-flash-lite",
+      "rpm": 15,
+      "tpm": 250000,
+      "rpd": 500,
+      "freeTier": "PUBLIC_PRICING_AND_DEVELOPER_ATTESTED",
+      "structuredOutput": true,
+      "apiIdVerified": true,
+      "quotaSource": "DEVELOPER_SNAPSHOT",
+      "sdk": "LangChain4j 1.17.0",
+      "thinkingConfiguration": "OMITTED_PROVIDER_DEFAULT; returnThinking(false) does not set thinking budget",
+      "status": "ELIGIBLE_LOCAL_EVALUATION",
+      "documentation": "https://aistudio.google.com/docs/models/gemini-3.5-flash-lite"
+    },
+    {
+      "model": "gemini-3.1-flash-lite",
+      "rpm": 15,
+      "tpm": 250000,
+      "rpd": 500,
+      "freeTier": "PUBLIC_PRICING_AND_DEVELOPER_ATTESTED",
+      "structuredOutput": true,
+      "apiIdVerified": true,
+      "quotaSource": "DEVELOPER_SNAPSHOT",
+      "sdk": "LangChain4j 1.17.0",
+      "thinkingConfiguration": "OMITTED_PROVIDER_DEFAULT; returnThinking(false) does not set thinking budget",
+      "status": "ELIGIBLE_LOCAL_EVALUATION",
+      "documentation": "https://aistudio.google.com/docs/models/gemini-3.1-flash-lite"
+    },
+    {
+      "model": "gemini-2.5-flash-lite",
+      "rpm": 10,
+      "tpm": 250000,
+      "rpd": 20,
+      "freeTier": "PUBLIC_PRICING_AND_DEVELOPER_ATTESTED",
+      "structuredOutput": true,
+      "apiIdVerified": true,
+      "quotaSource": "DEVELOPER_SNAPSHOT",
+      "sdk": "LangChain4j 1.17.0",
+      "thinkingConfiguration": "OMITTED_PROVIDER_DEFAULT; returnThinking(false) does not set thinking budget",
+      "status": "ELIGIBLE_LOCAL_EVALUATION",
+      "documentation": "https://aistudio.google.com/docs/models/gemini-2.5-flash-lite"
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "rpm": 5,
+      "tpm": 250000,
+      "rpd": 20,
+      "freeTier": "PUBLIC_PRICING_AND_DEVELOPER_ATTESTED",
+      "structuredOutput": true,
+      "apiIdVerified": true,
+      "quotaSource": "DEVELOPER_SNAPSHOT",
+      "sdk": "LangChain4j 1.17.0",
+      "thinkingConfiguration": "OMITTED_PROVIDER_DEFAULT; returnThinking(false) does not set thinking budget",
+      "status": "ELIGIBLE_LOCAL_EVALUATION",
+      "documentation": "https://aistudio.google.com/docs/models/gemini-2.5-flash"
+    }
+  ],
+  "sources": [
+    "https://aistudio.google.com/docs/pricing",
+    "https://aistudio.google.com/docs/rate-limits",
+    "https://aistudio.google.com/docs/structured-output",
+    "https://aistudio.google.com/docs/thinking"
+  ],
+  "limitations": [
+    "Public quota page redirects active project limits to AI Studio; numeric limits come from developer snapshot, not inferred from other model.",
+    "2.5 access limited to existing users; developer provided active Free Tier quota.",
+    "2.5 Flash deprecated; automatic routing to 3.5 Flash-Lite effective 2026-12-01. Exact provider modelVersion must match requested profile.",
+    "Schema subset and provider unenforced keywords do not replace strict local validators."
+  ]
+}

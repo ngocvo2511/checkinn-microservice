@@ -1,0 +1,2893 @@
+{
+  "version": "live-compatibility-observations-v1",
+  "observations": [
+    {
+      "sampleId": "VEX1-01",
+      "phase": "COMPATIBILITY_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "requestDigest": "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 13,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\diagnostic-01.json.responses\\VEX1-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": false,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "MALFORMED_RESPONSE",
+      "unsafe": false,
+      "latencyMillis": 2727,
+      "expectedBackend": true,
+      "backendResult": "NOT_EVALUATED",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": null,
+      "inputTokens": null,
+      "outputTokens": null,
+      "totalTokens": null,
+      "runId": "f846d968-aba1-4725-b3bd-27902fc7ba35",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VEX1-01",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "legacy-closed-usage-allowlist-v1",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:17:41.723929+00:00",
+      "rawResponseSha256": "fd403579d3e70543cb78b392acf638ee33ffface732e83c01c142fb937dadc5f",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 214,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 293,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 214
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "PROVIDER_METADATA_COMPATIBILITY"
+    },
+    {
+      "sampleId": "VEX1-01",
+      "phase": "COMPATIBILITY_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 20,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\diagnostic-02.json.responses\\VEX1-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 2787,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 214,
+      "outputTokens": 79,
+      "totalTokens": 293,
+      "runId": "1c9ef0cb-61e6-4a83-91d2-1b264f6676cd",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VEX1-01",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:22:51.159549+00:00",
+      "rawResponseSha256": "92a33dec046286515785e3e0903caf5c96749f45cc52ee60a3eafce65a7ac411",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 214,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 293,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 214
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "NONE"
+    },
+    {
+      "sampleId": "VEX1-01",
+      "phase": "INITIAL_SMOKE",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 46,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\primary-01.json.responses\\VEX1-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 3270,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 214,
+      "outputTokens": 79,
+      "totalTokens": 293,
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VEX1-01",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:24:03.082359+00:00",
+      "rawResponseSha256": "c5785ef0cd5ebfaa6a21573b7250028e2b3730424f5b19e38db8de2c9b0195e4",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 214,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 293,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 214
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "NONE"
+    },
+    {
+      "sampleId": "VEX1-02",
+      "phase": "INITIAL_SMOKE",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "f6e56958121e8721ab7f5edf959133e176c501901e16b42f8f1dedd23cb83b96",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 5054,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\primary-01.json.responses\\VEX1-02.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1816,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 221,
+      "outputTokens": 111,
+      "totalTokens": 332,
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VEX1-02",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:24:08.090359+00:00",
+      "rawResponseSha256": "5a7abf772fac9ef5fd239ab6679b60ecc1da9ed33d3a8d658677646306a369b5",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 221,
+        "candidatesTokenCount": 111,
+        "totalTokenCount": 332,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 221
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "REFERENCE_PRICE_EXCLUSIVE_OMISSION"
+    },
+    {
+      "sampleId": "VEX1-03",
+      "phase": "INITIAL_SMOKE",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "complete-search",
+      "requestDigest": "9819a108e93dd7395d76c0f1408908bd6ab5eba368e1a314e4011c6bdcb80898",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VEX1-03",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-001",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-001",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "f6e56958121e8721ab7f5edf959133e176c501901e16b42f8f1dedd23cb83b96",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-002",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "complete-search",
+      "requestDigest": "9819a108e93dd7395d76c0f1408908bd6ab5eba368e1a314e4011c6bdcb80898",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-003",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "missing-destination",
+      "requestDigest": "6e33274d0c27a7e2721a0625be7537c79b293ce1cc41b33ed9f3a90405893b23",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-004",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": [],
+        "criteria": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+      "categoryLabel": "missing-checkout",
+      "requestDigest": "dc8debb64980cad128f24ca78388be3c6776fa513508d5f7e6d8693319ecc178",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-005",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+      "categoryLabel": "missing-occupancy",
+      "requestDigest": "b6f85a288f32be9019957eb943f914d9cb3e5d5ea535c46f3afcfa6507600055",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-006",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "categoryLabel": "explicit-occupancy",
+      "requestDigest": "971a13db4369e2afe39ce1c9d219ad437f417f6074af689649ebe90e607c541a",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-007",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "inferredFields": [],
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn cho 2 người",
+      "categoryLabel": "ambiguous-people",
+      "requestDigest": "afcc830b69125984015fa057ef59e4778b8587e7bf33cf6ef1c296a37848e844",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-008",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+      "categoryLabel": "invalid-date",
+      "requestDigest": "b695e9afb27a3969fe5f7b0810790cb686646eed82a093fb271949b12686341f",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-009",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+      "categoryLabel": "invalid-price",
+      "requestDigest": "9807fbc5db0a5d01f9f6e2fa5e371b9380d8d273150e49c4d087bf5399c7ce8a",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-010",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "maxPrice",
+          "minPrice"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "categoryLabel": "unsupported-amenity",
+      "requestDigest": "8d37ee6fac568ec0904ac4f59eab69721b4506034d32e13ca1432aab8d7bc197",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-011",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở nơi nào đó",
+      "categoryLabel": "ambiguous-destination",
+      "requestDigest": "3b6d35e9ab506a95881f0866c38c9d1780e03b791eb1a0d99d7d966647669809",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-012",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "categoryLabel": "selected-room",
+      "requestDigest": "f5ec66df8460c73f7f36e4e5a7541441439e0d844d37caf142d1d14161ec6ee3",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-013",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "So sánh giá của hai khách sạn đầu tiên",
+      "categoryLabel": "comparison",
+      "requestDigest": "764304a5baa00cda205bbe100b35ea9f766d0426cc538ac1f7e166ddbc6de482",
+      "expectedAction": "COMPARISON",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-014",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-015",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Phòng này giá bao nhiêu và còn phòng không?",
+      "categoryLabel": "price-availability",
+      "requestDigest": "1dc2899f788e584dc5c1484ebfeb9343f1e53e1d3ffba12adb09cc4f7a5e59a0",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-015",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-016",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Chỉ xem danh sách khách sạn tại Đà Lạt",
+      "categoryLabel": "explicit-browse",
+      "requestDigest": "a387ac345cc370a77044b0620c8b851458a15fd94e778d9d127039398af85a05",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-016",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Cho mình tìm khách sạn tại Huế",
+      "categoryLabel": "destination",
+      "requestDigest": "5f64eac14e86efdb4bcba25b4c69e93f1a275e499db6f6794cb0ba9191d41fb2",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-017",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-020",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "16712dbe1c8154e5fd0fc13403307b1d66945de6df6578ef43d7cb6930ebc653",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-020",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt 4 sao",
+      "categoryLabel": "star-rating",
+      "requestDigest": "574886bffefb7e2fdcc0379851315e32de97f068c1e47ef1a75a9d5023769231",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-021",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-023",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Đà Lạt cho 3 người",
+      "categoryLabel": "ambiguous-occupancy",
+      "requestDigest": "8261e355ef394b4b09746ef9c7330a4746f0efee7a8a0df3a75379dff907a807",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-023",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+      "categoryLabel": "missing-check-out",
+      "requestDigest": "33afa185efbd3edc0e0a8846a1b7875ab48cf370677cd54f182e22b1ae19308e",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-025",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-027",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Chỉ giữ khách sạn 4 sao",
+      "categoryLabel": "refinement",
+      "requestDigest": "0e12aeeab59908b9408c03d8167cef7836e8eb9b5f79042458b5940f830d61ad",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-027",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Đổi điểm đến sang Huế",
+      "categoryLabel": "criteria-replacement",
+      "requestDigest": "5d64dbfb013876a15efe6efc62e2694911347e645e983f05436c0e3547a731c5",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-028",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Bỏ giới hạn giá đi",
+      "categoryLabel": "criteria-clearing",
+      "requestDigest": "ecef6c925bb96da2081d370806b7e9825657eceec5969335089d28372d60bb2d",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-029",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-030",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Xem khách sạn thứ hai",
+      "categoryLabel": "hotel-reference",
+      "requestDigest": "46bd196216bae5d9a917754376ad57e56800a1e8160e5bd3d703c51cb5bb96a7",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-030",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-031",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Giá phòng thứ nhất bao nhiêu",
+      "categoryLabel": "room-reference",
+      "requestDigest": "580ff1a3911b00056e38cb77f04ab017b9091e5f006d4cc49d5a8921910c81d7",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-031",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "So sánh giá hai khách sạn đầu tiên",
+      "categoryLabel": "comparison",
+      "requestDigest": "5cf2901a4b9a141d93ccaebc3e432f6e803ddebd892c204e32a30e6337db8ab9",
+      "expectedAction": "COMPARISON",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-032",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Phòng đã chọn còn chỗ không",
+      "categoryLabel": "availability",
+      "requestDigest": "dc9b6700786eca1c122a4745a5b59fba684078af465e197a503ec9ec92924ad1",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-033",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở thành phố đó",
+      "categoryLabel": "ambiguous-destination",
+      "requestDigest": "44d2cb533f0ca6003fa3e7d2822e2571c526958c2a304e2b3049b50d82ac344e",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-037",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+      "categoryLabel": "invalid-price",
+      "requestDigest": "34d7af8c21ade55543ae29719e2e59bde918c4623813f6e1de5621b4e2ca2bd6",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-039",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+      "categoryLabel": "invalid-count",
+      "requestDigest": "54392df4a2e0dbfd7470645d37f90107df309214dfcc244da3ff321253d5d194",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-040",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "rooms"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "categoryLabel": "natural-paraphrase",
+      "requestDigest": "97b3153a8c198aa710d754cdf019252e37cb1502fdba2729811b7694ab303e9b",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-041",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+      "categoryLabel": "informal",
+      "requestDigest": "9dcec4ddaf9ab218bde0ac56cfe90e1832a8403089c72da16938d072ebf897c7",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-042",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "tim khach san o Da Lat",
+      "categoryLabel": "no-accents",
+      "requestDigest": "9082d83395233e061cfaa4e39476ef109f2e713ac03e0b5bd81a5c4de9be758e",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-043",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+      "categoryLabel": "missing-check-in",
+      "requestDigest": "5d1b11e45f794d30026402ec01cf91ad5ea5294600d07bf9f358328e4b0a38ff",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-046",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+      "categoryLabel": "date-inversion",
+      "requestDigest": "c84fee916180d3422068dfa83e5b5b01dba1125a376cf207c8bc633093f8750c",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-047",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {}
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Cho tôi xem nơi lưu trú tại Nha Trang",
+      "categoryLabel": "natural-paraphrase",
+      "requestDigest": "990fc845136a3f021ed1c777bed6602900224081ed106c108945c17626b90f0f",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-048",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "kiếm giúp tui khách sạn ở huế nha",
+      "categoryLabel": "informal",
+      "requestDigest": "71bb2c6cd19d92e583af8a2bfb1bc620c1bc02907ced0dea4588209e48206c78",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-049",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "categoryLabel": "number-price",
+      "requestDigest": "362274c04df9e45215153643f98644d78a3ca7ccc9fc1f99ef5994a09cbbc068",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-050",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Không cần giới hạn số sao nữa",
+      "categoryLabel": "refinement-clear-stars",
+      "requestDigest": "88634803b2147e617cf94f268f4f1d9739a8c648cbdbfcf512e8532d24fee168",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "runId": "99aea0ce-3307-41bf-b735-166d56eceb30",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-051",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": [],
+        "criteria": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        }
+      },
+      "backendResult": "NOT_RUN",
+      "dispatchUtc": null,
+      "failureCategory": "NOT_RUN"
+    },
+    {
+      "sampleId": "SUP1-REF-01",
+      "phase": "SUPPLEMENTAL",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "f6e56958121e8721ab7f5edf959133e176c501901e16b42f8f1dedd23cb83b96",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 35,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\supplemental-01.json.responses\\SUP1-REF-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 3560,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 221,
+      "outputTokens": 111,
+      "totalTokens": 332,
+      "runId": "af4b0c2f-4a89-448f-9499-93b89ec7e58d",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-002",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:27:36.855931+00:00",
+      "rawResponseSha256": "93cf98fc432e64d4e6fdfd53c8498139e5dce0670df045b1634c677366504b73",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 221,
+        "candidatesTokenCount": 111,
+        "totalTokenCount": 332,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 221
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "REFERENCE_PRICE_EXCLUSIVE_OMISSION"
+    },
+    {
+      "sampleId": "SUP1-REF-02",
+      "phase": "SUPPLEMENTAL",
+      "status": "ATTEMPTED",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "16712dbe1c8154e5fd0fc13403307b1d66945de6df6578ef43d7cb6930ebc653",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 5044,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\supplemental-01.json.responses\\SUP1-REF-02.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1889,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 219,
+      "outputTokens": 110,
+      "totalTokens": 329,
+      "runId": "af4b0c2f-4a89-448f-9499-93b89ec7e58d",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-020",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:27:41.864931+00:00",
+      "rawResponseSha256": "ce0918ed09feb02bea9cd74f8bc2dfce62d0576f6d0c1c98f04f33664a16fce3",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 1000000\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 219,
+        "candidatesTokenCount": 110,
+        "totalTokenCount": 329,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 219
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "REFERENCE_PRICE_EXCLUSIVE_OMISSION"
+    },
+    {
+      "sampleId": "SUP1-REF-03",
+      "phase": "SUPPLEMENTAL",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "categoryLabel": "number-price",
+      "requestDigest": "362274c04df9e45215153643f98644d78a3ca7ccc9fc1f99ef5994a09cbbc068",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "dispatchOffsetMillis": 10052,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\supplemental-01.json.responses\\SUP1-REF-03.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1782,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 220,
+      "outputTokens": 109,
+      "totalTokens": 329,
+      "runId": "af4b0c2f-4a89-448f-9499-93b89ec7e58d",
+      "model": "gemini-3.5-flash-lite",
+      "protocolVersion": "vietnamese-extraction-compact-v1",
+      "sourceFixtureId": "VNE1-050",
+      "promptVersion": "SOURCE_INSTRUCTION_PINNED_BY_SHA256",
+      "schemaVersion": "Vietnamese READ extraction v1",
+      "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+      "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+      "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchUtc": "2026-11-24T07:27:46.872931+00:00",
+      "rawResponseSha256": "5d2faf211f1cd24850e8dddcc0026959fc6de0e20654f0825be90aaa9fd1045f",
+      "rawProviderExtraction": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 500000\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerFinishReason": "STOP",
+      "rawUsageMetadata": {
+        "promptTokenCount": 220,
+        "candidatesTokenCount": 109,
+        "totalTokenCount": 329,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 220
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "failureCategory": "REFERENCE_PRICE_EXCLUSIVE_OMISSION"
+    }
+  ]
+}

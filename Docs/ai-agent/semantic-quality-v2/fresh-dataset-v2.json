@@ -1,0 +1,506 @@
+{
+  "version": "semantic-quality-fresh-v2",
+  "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+  "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+  "notBlindedHoldout": true,
+  "fixtures": [
+    {
+      "id": "FRESH2-01",
+      "utterance": "Mình muốn tìm một nơi lưu trú tại Vũng Tàu nhé",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "natural-discovery",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-02",
+      "utterance": "Có chỗ nào nghỉ tại Phú Quốc hông bạn?",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "colloquial-discovery",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-03",
+      "utterance": "kiem giup tui khach san o Nha Trang nha",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "no-accent",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-04",
+      "utterance": "Khám phá khách sạn tại Hà Nội",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "browse",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "BROWSE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Hà Nội"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-05",
+      "utterance": "Tìm khách sạn tại Đà Nẵng từ 08/12/2026 đến 11/12/2026 cho 3 người lớn, 2 trẻ em, 2 phòng, 4 sao, giá không quá 2 triệu mỗi đêm",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "complete-multiple",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-08"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-11"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 3
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-06",
+      "utterance": "Tìm khách sạn Huế từ 10/12/2026 đến 12/12/2026, 2 người lớn, không có trẻ em, 1 phòng",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "explicit-zero",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-10"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-12"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-07",
+      "utterance": "Tìm khách sạn Vũng Tàu từ 15/12/2026 đến 17/12/2026 cho 2 người lớn, 1 phòng",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "missing-children",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Vũng Tàu"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-15"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-17"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "children"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-08",
+      "utterance": "Tìm khách sạn Phú Quốc từ 09/12/2026 đến 13/12/2026, 2 người lớn và 1 trẻ em",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "missing-rooms",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-09"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-13"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-09",
+      "utterance": "Tìm khách sạn nhận phòng 14/12/2026",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "missing-departure",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-10",
+      "utterance": "Tìm khách sạn Nha Trang trả phòng 18/12/2026",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "missing-arrival",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-11",
+      "utterance": "Tìm khách sạn cho 4 người ở Hà Nội",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "generic-guests",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-12",
+      "utterance": "Tìm khách sạn Đà Nẵng giá tham khảo dưới 1,5 triệu",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "strict-reference",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Nẵng"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-13",
+      "utterance": "Tìm khách sạn Huế giá từ 700 nghìn đến 1,2 triệu mỗi đêm",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "price-range",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "minPrice": {
+            "operation": "REPLACE",
+            "value": 700000
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1200000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-14",
+      "utterance": "Xóa giới hạn giá đi",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "explicit-removal",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-15",
+      "utterance": "Chuyển điểm đến sang Phú Quốc",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "destination-replacement",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Phú Quốc"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-16",
+      "utterance": "Phòng đó giá bao nhiêu?",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "selected-reference",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đó giá bao nhiêu?",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-17",
+      "utterance": "Xem khách sạn đầu tiên",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "selected-reference",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-18",
+      "utterance": "Tìm khách sạn tại Vũng Tàu có hồ bơi",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "unsupported-amenity",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-19",
+      "utterance": "Tìm khách sạn Huế từ 31/04/2027 đến 02/05/2027",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "invalid-calendar",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    },
+    {
+      "id": "FRESH2-20",
+      "utterance": "Tìm khách sạn Đà Nẵng giá từ 3 triệu đến 800 nghìn mỗi đêm",
+      "privacyClassification": "SYNTHETIC_ONLY",
+      "classification": "FRESH_DEVELOPMENT_GENERALIZATION",
+      "category": "reversed-price",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "maxPrice",
+          "minPrice"
+        ],
+        "inferredFields": []
+      },
+      "productDecisionRequired": false
+    }
+  ]
+}

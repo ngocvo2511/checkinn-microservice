@@ -1,0 +1,4257 @@
+{
+  "version": "evidence-extraction-observations-v1",
+  "classification": "COMPARISON",
+  "metrics": {
+    "planned": 32,
+    "attempted": 10,
+    "notRun": 22,
+    "primaryHttp200": 6,
+    "rawSchemaValid": 6,
+    "completeEvidence": 6,
+    "requestMeaningCorrect": 6,
+    "rawExact": 6,
+    "canonicalTypedValid": 6,
+    "exactBusinessSemantics": 6,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 13,
+      "denominator": 26,
+      "rate": 0.5
+    },
+    "evidenceMembership": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 3,
+        "denominator": 6,
+        "rate": 0.5
+      },
+      "PRICE": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      },
+      "STAY_DATES": {
+        "numerator": 1,
+        "denominator": 3,
+        "rate": 0.3333333333333333
+      },
+      "ADULTS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "CHILDREN": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "ROOMS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "UNSUPPORTED": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "REFERENCE": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0.0
+      },
+      "REMOVAL": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 6,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 4
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 6,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 6,
+      "denominator": 10,
+      "rate": 0.6
+    },
+    "actionCorrect": 6,
+    "intentCorrect": 6,
+    "criteriaCorrect": 6,
+    "missingSlotsCorrect": 6,
+    "referencePriceCorrect": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 10,
+      "mean": 6230.5,
+      "median": 8163.0,
+      "p95": 10008,
+      "maximum": 10008,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 10,
+      "mean": 7189.8,
+      "median": 8219.0,
+      "p95": 12645,
+      "maximum": 12645,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 10,
+    "providerFailures": 4,
+    "timeouts": 3,
+    "unknownUsage": 4,
+    "knownInputTokens": 2597,
+    "knownCandidateOutputTokens": 417,
+    "knownTotalTokens": 3014,
+    "actualReportedModelIdentities": [
+      "NOT_REPORTED",
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 10
+  },
+  "observations": [
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-002",
+      "sourceId": "VNE1-002",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tham khao duoi 2 trieu"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-012",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:32:56.579156400Z",
+          "dispatchOffsetMillis": 70,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-012.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"request\": \"FIND_HOTEL\",\n  \"facts\": [\n    {\n      \"type\": \"DESTINATION\",\n      \"text\": \"Nha Trang\"\n    },\n    {\n      \"type\": \"PRICE\",\n      \"text\": \"giá tham khảo dưới 2 triệu\"\n    }\n  ]\n}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "FIND_HOTEL",
+            "facts": [
+              {
+                "type": "DESTINATION",
+                "text": "Nha Trang"
+              },
+              {
+                "type": "PRICE",
+                "text": "giá tham khảo dưới 2 triệu"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 2,
+            "proposed": 2,
+            "matched": 2,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000.0
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 7411,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000.0
+              },
+              "referencePriceExclusive": {
+                "operation": "REPLACE",
+                "value": true
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 430,
+          "outputTokens": 77,
+          "totalTokens": 507,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-012",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 7427,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-003",
+      "sourceId": "VNE1-003",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "UNAVAILABLE",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-013",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 503,
+          "actualUsageStatus": "UNKNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:33:03.990133700Z",
+          "dispatchOffsetMillis": 7480,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+          "callTerminated": true,
+          "providerErrorBody": "{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+          "apiSuccess": false,
+          "schemaValid": false,
+          "semanticPass": false,
+          "backendAccepted": false,
+          "category": "UNAVAILABLE",
+          "latencyMillis": 1515,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": null,
+          "pipeline": {
+            "stage": "ADMISSION",
+            "envelope": "NOT_RUN",
+            "sdk": "NOT_RUN",
+            "extraction": "NOT_RUN",
+            "failureClass": "com.example.aiagent.model.ProviderException",
+            "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+          },
+          "inputTokens": null,
+          "outputTokens": null,
+          "totalTokens": null,
+          "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 15
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-013",
+      "semanticPass": false,
+      "backendAccepted": false,
+      "schemaValid": false,
+      "apiSuccess": false,
+      "logicalLatencyMillis": 1517,
+      "actual": null,
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-004",
+      "sourceId": "VNE1-004",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-014",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:33:20.517924400Z",
+          "dispatchOffsetMillis": 24004,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-014.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"request\": \"FIND_HOTEL\",\n  \"facts\": [\n    {\n      \"type\": \"STAY_DATES\",\n      \"text\": \"từ 01/12/2026 đến 03/12/2026\"\n    },\n    {\n      \"type\": \"ADULTS\",\n      \"text\": \"2 người lớn\"\n    },\n    {\n      \"type\": \"CHILDREN\",\n      \"text\": \"0 trẻ em\"\n    },\n    {\n      \"type\": \"ROOMS\",\n      \"text\": \"1 phòng\"\n    }\n  ]\n}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "FIND_HOTEL",
+            "facts": [
+              {
+                "type": "STAY_DATES",
+                "text": "từ 01/12/2026 đến 03/12/2026"
+              },
+              {
+                "type": "ADULTS",
+                "text": "2 người lớn"
+              },
+              {
+                "type": "CHILDREN",
+                "text": "0 trẻ em"
+              },
+              {
+                "type": "ROOMS",
+                "text": "1 phòng"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 4,
+            "proposed": 4,
+            "matched": 4,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "cityName"
+            ]
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 9009,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [
+              "cityName"
+            ],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 458,
+          "outputTokens": 147,
+          "totalTokens": 605,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-014",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 9011,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-007",
+      "sourceId": "VNE1-007",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "1 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-015",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:33:29.529257600Z",
+          "dispatchOffsetMillis": 33016,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-015.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\"request\":\"FIND_HOTEL\",\"facts\":[{\"type\":\"ADULTS\",\"text\":\"2 người lớn\"},{\"type\":\"CHILDREN\",\"text\":\"1 trẻ em\"},{\"type\":\"ROOMS\",\"text\":\"1 phòng\"}]}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "FIND_HOTEL",
+            "facts": [
+              {
+                "type": "ADULTS",
+                "text": "2 người lớn"
+              },
+              {
+                "type": "CHILDREN",
+                "text": "1 trẻ em"
+              },
+              {
+                "type": "ROOMS",
+                "text": "1 phòng"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 3,
+            "proposed": 3,
+            "matched": 3,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": [
+              "checkIn",
+              "checkOut",
+              "cityName"
+            ]
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 1528,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 1
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [
+              "checkIn",
+              "checkOut",
+              "cityName"
+            ],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 434,
+          "outputTokens": 43,
+          "totalTokens": 477,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-015",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 1530,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-011",
+      "sourceId": "VNE1-011",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "UNSUPPORTED",
+          "text": "ho boi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CLARIFY",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-016",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:33:34.533569400Z",
+          "dispatchOffsetMillis": 38020,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-016.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"request\": \"FIND_HOTEL\",\n  \"facts\": [\n    {\n      \"type\": \"DESTINATION\",\n      \"text\": \"Đà Lạt\"\n    },\n    {\n      \"type\": \"UNSUPPORTED\",\n      \"text\": \"có hồ bơi\"\n    }\n  ]\n}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "FIND_HOTEL",
+            "facts": [
+              {
+                "type": "DESTINATION",
+                "text": "Đà Lạt"
+              },
+              {
+                "type": "UNSUPPORTED",
+                "text": "có hồ bơi"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 2,
+            "proposed": 2,
+            "matched": 2,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CLARIFY",
+            "intent": "CLARIFY",
+            "reference": "",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 8915,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CLARIFY",
+            "criteria": {},
+            "inferredFields": [],
+            "intent": "CLARIFY",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 427,
+          "outputTokens": 75,
+          "totalTokens": 502,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-016",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 12387,
+      "actual": {
+        "action": "CLARIFY",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-013",
+      "sourceId": "VNE1-013",
+      "phase": "COMPARISON",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong nay"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "TIMEOUT",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-017",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 0,
+          "actualUsageStatus": "UNKNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:33:43.450577700Z",
+          "dispatchOffsetMillis": 46938,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+          "callTerminated": true,
+          "apiSuccess": false,
+          "schemaValid": false,
+          "semanticPass": false,
+          "backendAccepted": false,
+          "category": "TIMEOUT",
+          "latencyMillis": 10007,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": null,
+          "pipeline": {
+            "stage": "ADMISSION",
+            "envelope": "NOT_RUN",
+            "sdk": "NOT_RUN",
+            "extraction": "NOT_RUN",
+            "failureClass": "com.example.aiagent.model.ProviderException",
+            "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+          },
+          "inputTokens": null,
+          "outputTokens": null,
+          "totalTokens": null,
+          "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 15
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-017",
+      "semanticPass": false,
+      "backendAccepted": false,
+      "schemaValid": false,
+      "apiSuccess": false,
+      "logicalLatencyMillis": 10008,
+      "actual": null,
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-029",
+      "sourceId": "VNE1-029",
+      "phase": "COMPARISON",
+      "utterance": "Bỏ giới hạn giá đi",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REMOVAL",
+          "text": "bo gioi han gia di"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "REFINE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-018",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:34:08.466383Z",
+          "dispatchOffsetMillis": 71953,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-018.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\"request\":\"CHANGE_CRITERIA\",\"facts\":[{\"type\":\"REMOVAL\",\"text\":\"Bỏ giới hạn giá đi\"}]}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "CHANGE_CRITERIA",
+            "facts": [
+              {
+                "type": "REMOVAL",
+                "text": "Bỏ giới hạn giá đi"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 1,
+            "proposed": 1,
+            "matched": 1,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CRITERIA",
+            "intent": "REFINE",
+            "reference": "",
+            "fields": {
+              "minPrice": {
+                "operation": "CLEAR"
+              },
+              "maxPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 1546,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "maxPrice": {
+                "operation": "CLEAR"
+              },
+              "minPrice": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "intent": "REFINE",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 423,
+          "outputTokens": 27,
+          "totalTokens": 450,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-018",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 1548,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "REFINE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_35_LITE-VNE1-041",
+      "sourceId": "VNE1-041",
+      "phase": "COMPARISON",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-019",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:34:13.469240800Z",
+          "dispatchOffsetMillis": 76956,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-019.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"request\": \"FIND_HOTEL\",\n  \"facts\": [\n    {\n      \"type\": \"DESTINATION\",\n      \"text\": \"Huế\"\n    }\n  ]\n}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "FIND_HOTEL",
+            "facts": [
+              {
+                "type": "DESTINATION",
+                "text": "Huế"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 1,
+            "proposed": 1,
+            "matched": 1,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "CRITERIA",
+            "intent": "SEARCH",
+            "reference": "",
+            "fields": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 2360,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Huế"
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 425,
+          "outputTokens": 48,
+          "totalTokens": 473,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-019",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 5815,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-002",
+      "sourceId": "VNE1-002",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tham khao duoi 2 trieu"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "TIMEOUT",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-020",
+          "requestedPrimaryModel": "gemini-3.1-flash-lite",
+          "actualModel": "gemini-3.1-flash-lite",
+          "fallbackIndex": 1,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 0,
+          "actualUsageStatus": "UNKNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:34:18.472453700Z",
+          "dispatchOffsetMillis": 81959,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+          "callTerminated": true,
+          "apiSuccess": false,
+          "schemaValid": false,
+          "semanticPass": false,
+          "backendAccepted": false,
+          "category": "TIMEOUT",
+          "latencyMillis": 10006,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": null,
+          "pipeline": {
+            "stage": "ADMISSION",
+            "envelope": "NOT_RUN",
+            "sdk": "NOT_RUN",
+            "extraction": "NOT_RUN",
+            "failureClass": "com.example.aiagent.model.ProviderException",
+            "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+          },
+          "inputTokens": null,
+          "outputTokens": null,
+          "totalTokens": null,
+          "continuationReason": "TRANSIENT_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 15
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "actualModel": "gemini-3.1-flash-lite",
+      "terminalAttemptId": "ATT-020",
+      "semanticPass": false,
+      "backendAccepted": false,
+      "schemaValid": false,
+      "apiSuccess": false,
+      "logicalLatencyMillis": 12645,
+      "actual": null,
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-003",
+      "sourceId": "VNE1-003",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "TIMEOUT",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-021",
+          "requestedPrimaryModel": "gemini-3.1-flash-lite",
+          "actualModel": "gemini-3.1-flash-lite",
+          "fallbackIndex": 1,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 0,
+          "actualUsageStatus": "UNKNOWN",
+          "budgetPhase": "COMPARISON",
+          "dispatchAt": "2026-11-24T12:34:43.483227500Z",
+          "dispatchOffsetMillis": 106971,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+          "callTerminated": true,
+          "apiSuccess": false,
+          "schemaValid": false,
+          "semanticPass": false,
+          "backendAccepted": false,
+          "category": "TIMEOUT",
+          "latencyMillis": 10008,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": null,
+          "pipeline": {
+            "stage": "ADMISSION",
+            "envelope": "NOT_RUN",
+            "sdk": "NOT_RUN",
+            "extraction": "NOT_RUN",
+            "failureClass": "com.example.aiagent.model.ProviderException",
+            "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+          },
+          "inputTokens": null,
+          "outputTokens": null,
+          "totalTokens": null,
+          "continuationReason": "TRANSIENT_FAILURE_THRESHOLD",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "actualModel": "gemini-3.1-flash-lite",
+      "terminalAttemptId": "ATT-021",
+      "semanticPass": false,
+      "backendAccepted": false,
+      "schemaValid": false,
+      "apiSuccess": false,
+      "logicalLatencyMillis": 10010,
+      "actual": null,
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-004",
+      "sourceId": "VNE1-004",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-007",
+      "sourceId": "VNE1-007",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "1 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-011",
+      "sourceId": "VNE1-011",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "UNSUPPORTED",
+          "text": "ho boi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CLARIFY",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-013",
+      "sourceId": "VNE1-013",
+      "phase": "COMPARISON",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong nay"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-029",
+      "sourceId": "VNE1-029",
+      "phase": "COMPARISON",
+      "utterance": "Bỏ giới hạn giá đi",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REMOVAL",
+          "text": "bo gioi han gia di"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "REFINE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_31_LITE-VNE1-041",
+      "sourceId": "VNE1-041",
+      "phase": "COMPARISON",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-3.1-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-002",
+      "sourceId": "VNE1-002",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tham khao duoi 2 trieu"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-003",
+      "sourceId": "VNE1-003",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-004",
+      "sourceId": "VNE1-004",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-007",
+      "sourceId": "VNE1-007",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "1 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-011",
+      "sourceId": "VNE1-011",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "UNSUPPORTED",
+          "text": "ho boi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CLARIFY",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-013",
+      "sourceId": "VNE1-013",
+      "phase": "COMPARISON",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong nay"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-029",
+      "sourceId": "VNE1-029",
+      "phase": "COMPARISON",
+      "utterance": "Bỏ giới hạn giá đi",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REMOVAL",
+          "text": "bo gioi han gia di"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "REFINE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25_LITE-VNE1-041",
+      "sourceId": "VNE1-041",
+      "phase": "COMPARISON",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash-lite",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-002",
+      "sourceId": "VNE1-002",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "nha trang"
+        },
+        {
+          "type": "PRICE",
+          "text": "gia tham khao duoi 2 trieu"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-3.1-flash-lite": "f5685183ac758cc007d50f6458b8fece3456cb0889e58ffe5a47118b3e801d6a",
+        "gemini-2.5-flash-lite": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc",
+        "gemini-2.5-flash": "05d80d6e8f12b5fec33cb6f37e56423fd0f2e88ce2ceb95c2d80abc7fcb873cc"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-003",
+      "sourceId": "VNE1-003",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-3.1-flash-lite": "30aded3fcd8c6d639b85895f655520c46424252f500c33ed355750c2fa254d62",
+        "gemini-2.5-flash-lite": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42",
+        "gemini-2.5-flash": "62bb3a3002eb574879442ea168224ef05079fec21e3eb74d9741f1e84c8bfd42"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-004",
+      "sourceId": "VNE1-004",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "STAY_DATES",
+          "text": "01/12/2026 den 03/12/2026"
+        },
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "0 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-3.1-flash-lite": "3b19af9cd1a6bbec52bd2dcdf82991b1fd85460c7c778c36bfcdf7221e8fd0b4",
+        "gemini-2.5-flash-lite": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867",
+        "gemini-2.5-flash": "34398d04663cca9dd15df2200d355f2a8f9cf3342793eace296e8ec72f2b6867"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-007",
+      "sourceId": "VNE1-007",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "ADULTS",
+          "text": "2 nguoi lon"
+        },
+        {
+          "type": "CHILDREN",
+          "text": "1 tre em"
+        },
+        {
+          "type": "ROOMS",
+          "text": "1 phong"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ]
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "checkIn",
+          "checkOut",
+          "cityName"
+        ],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-3.1-flash-lite": "2aefe6ab58a81441743d8f2d79ba430fbc7e835f99701e56a8ea1c3160e9c230",
+        "gemini-2.5-flash-lite": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4",
+        "gemini-2.5-flash": "e338f7dda0bd3c070f54fbf056387b395d002a930574cc065332ce335994c9c4"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-011",
+      "sourceId": "VNE1-011",
+      "phase": "COMPARISON",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "da lat"
+        },
+        {
+          "type": "UNSUPPORTED",
+          "text": "ho boi"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "deterministicExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "reference": "",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CLARIFY",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-3.1-flash-lite": "07b3b038e793f6eff2bb964ec17c0763730d508e9f2b6bb90ff96c2b5e35a975",
+        "gemini-2.5-flash-lite": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f",
+        "gemini-2.5-flash": "a26e27d45ccf15850471ff629c4ac9369ec3795241b0693f2c7eb5bf26d6142f"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-013",
+      "sourceId": "VNE1-013",
+      "phase": "COMPARISON",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong nay"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-029",
+      "sourceId": "VNE1-029",
+      "phase": "COMPARISON",
+      "utterance": "Bỏ giới hạn giá đi",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "CHANGE_CRITERIA",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REMOVAL",
+          "text": "bo gioi han gia di"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "reference": "",
+        "fields": {
+          "minPrice": {
+            "operation": "CLEAR"
+          },
+          "maxPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "REFINE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-3.1-flash-lite": "75e6c890e8409f4ed25457d9c6d9b52b265e275232f834e9766ef821fa2b9648",
+        "gemini-2.5-flash-lite": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9",
+        "gemini-2.5-flash": "bbed1ae8406bb2b7484e060b6a6966b39311df2bdb180524649b160906a0bbc9"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "CMP-FLASH_25-VNE1-041",
+      "sourceId": "VNE1-041",
+      "phase": "COMPARISON",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "status": "NOT_RUN",
+      "expectedRequestMeaning": "FIND_HOTEL",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "DESTINATION",
+          "text": "hue"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "deterministicExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "NOT_RUN",
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "gemini-2.5-flash",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-3.1-flash-lite": "2f307eaaff9041d32d1137db2879388a9200c5a25239b62b5adba3584ccedd90",
+        "gemini-2.5-flash-lite": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66",
+        "gemini-2.5-flash": "656965cd6d488bf80f0a2ec9aae2c10b78b7ccf637d8463e5ca352bd3ebd9b66"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    }
+  ]
+}

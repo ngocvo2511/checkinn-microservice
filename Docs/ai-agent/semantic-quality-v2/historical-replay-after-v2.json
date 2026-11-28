@@ -1,0 +1,615 @@
+{
+  "version" : "actual-historical-replay-v1",
+  "sourceSha256" : "eae2a1454e7eed92a8f1f1dd1c1c945194be832f47d3c8b059d3674976035d34",
+  "evaluationClock" : "2026-11-24T08:20:13.585702100Z",
+  "model" : "gemini-3.5-flash-lite",
+  "contract" : "vietnamese-extraction-compact-v3",
+  "actualHttpAttempts" : 0,
+  "modelSemanticClassification" : "FROZEN_HISTORICAL",
+  "observations" : [ {
+    "sampleId" : "VNE1-001",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "9691528e8e2483fd4176e7e634abe1a9b6802eef230617f88efbb1e96c3f55aa",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-002",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "d7c8576bb8f13ba8cfb9b7646a450f288cbbd1a0dc3a8f8b8c95638a2758f726",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Nha Trang"
+        },
+        "maxPrice" : {
+          "operation" : "REPLACE",
+          "value" : 2000000
+        },
+        "referencePriceExclusive" : {
+          "operation" : "REPLACE",
+          "value" : true
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-003",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "d25181683bc2a14fcc84ce1601f94385fe44efe2e9cb6ed5257efcba72eb32e9",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        },
+        "checkIn" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-01"
+        },
+        "checkOut" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-03"
+        },
+        "adults" : {
+          "operation" : "REPLACE",
+          "value" : 2
+        },
+        "children" : {
+          "operation" : "REPLACE",
+          "value" : 0
+        },
+        "rooms" : {
+          "operation" : "REPLACE",
+          "value" : 1
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-004",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "9d81d7f0bfeb9564fb1d7ea42efd22cf631edf6c871d41fe7b42ef103c1e984f",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "checkIn" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-01"
+        },
+        "checkOut" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-03"
+        },
+        "adults" : {
+          "operation" : "REPLACE",
+          "value" : 2
+        },
+        "children" : {
+          "operation" : "REPLACE",
+          "value" : 0
+        },
+        "rooms" : {
+          "operation" : "REPLACE",
+          "value" : 1
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ "cityName" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-005",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "38cf74860090e6a63ff40d4e5976e14c1b5a68e088d5d3bfa60222fe106a11bc",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "checkOut" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-006",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "4424b17b122fa1bcf7854d8094029cc76ab0f6ad16107a78b7cfa793ad603a2b",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        },
+        "checkIn" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-01"
+        },
+        "checkOut" : {
+          "operation" : "REPLACE",
+          "value" : "2026-12-03"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ "adults", "children", "rooms" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-007",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "7ed5e3ae41e47e1aae92698ef0ba902aff8ed03bf0828ebd1103e04930c0c057",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "adults" : {
+          "operation" : "REPLACE",
+          "value" : 2
+        },
+        "children" : {
+          "operation" : "REPLACE",
+          "value" : 1
+        },
+        "rooms" : {
+          "operation" : "REPLACE",
+          "value" : 1
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ "cityName", "checkIn", "checkOut" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-008",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "de92f9a0b783513364e882786a33d70fa083d55843d80add95290144b9627328",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "adults", "children", "rooms" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn cho 2 người",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-009",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "f0a9d15288c6028ce98b1363f8355a1c2754774f566951c70a50371923f7ee37",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "checkIn", "checkOut" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+    "schemaValid" : false,
+    "backendAccepted" : false,
+    "status" : "SCHEMA_REJECTED",
+    "reason" : "STRICT_TYPED_VALIDATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-010",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "ae783d7351baadc9cb72db0ec1eb51c72d68fc14f6240576206523f70f503806",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "minPrice", "maxPrice" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-011",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "b6428e63edf0391ff9badea57a8e060f5ea12e070e1a03c3643a78101216d8ae",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn có hồ bơi ở Đà Lạt",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-012",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "cf2cf917f00354b28b723512ffc5385ece240e496f66bd1e30ddab13fda62157",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "cityName" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở nơi nào đó",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-013",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "d7492cddf4704af2ef846d5cf6e9cfb5600bc9ea85d04a51cf0eb925c6c6e533",
+    "expectedExtraction" : {
+      "action" : "SELECTED",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "Kiểm tra phòng này còn phòng không",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Kiểm tra phòng này còn phòng không",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-014",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "40f48c14b4ab96c2c0cefe23edb8f2a6df2cf8c9da8b1a3574c99ae0c8ca5b00",
+    "expectedExtraction" : {
+      "action" : "COMPARISON",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "So sánh giá của hai khách sạn đầu tiên",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "So sánh giá của hai khách sạn đầu tiên",
+    "schemaValid" : false,
+    "backendAccepted" : false,
+    "status" : "SCHEMA_REJECTED",
+    "reason" : "STRICT_TYPED_VALIDATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-015",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "138c203fd7a0fdb5cd660c9c882666e5e45ff539df4d862649cb6489c560417d",
+    "expectedExtraction" : {
+      "action" : "SELECTED",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "Phòng này giá bao nhiêu và còn phòng không?",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Phòng này giá bao nhiêu và còn phòng không?",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-016",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "9691528e8e2483fd4176e7e634abe1a9b6802eef230617f88efbb1e96c3f55aa",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Chỉ xem danh sách khách sạn tại Đà Lạt",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-017",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "2f4cdc33b3aba4b51c64b12a2b0847fa35cae7dccc3b9f47dab1f0c3e996aed0",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Cho mình tìm khách sạn tại Huế",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-020",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "7584657c22846fcd3811a6a621c9c13a4bf097b60ad30456c94eb7a0c7908b6a",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        },
+        "maxPrice" : {
+          "operation" : "REPLACE",
+          "value" : 1000000
+        },
+        "referencePriceExclusive" : {
+          "operation" : "REPLACE",
+          "value" : true
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Khách sạn ở Huế giá tham khảo dưới một triệu",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-021",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : true,
+    "responseSha256" : "3629cb69a497f5ad782445aba221c40e32e1442ade69354f51f13bc746b8a575",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        },
+        "starRatings" : {
+          "operation" : "REPLACE",
+          "value" : [ 4 ]
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn ở Đà Lạt 4 sao",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-023",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "f1bf4cea1370516aee42f1226689849d59774e1d3c8893053702f4f8c1ca0572",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "adults", "children", "rooms" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Đà Lạt cho 3 người",
+    "schemaValid" : true,
+    "backendAccepted" : false,
+    "status" : "REPLAYED",
+    "reason" : "INDEPENDENT_CORROBORATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-025",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "040ac6af05e6836fb8decda88ac897b66da6b08f4f7847a8cafa98b0f3b94cba",
+    "expectedExtraction" : {
+      "action" : "CLARIFY",
+      "intent" : "CLARIFY",
+      "fields" : { },
+      "reference" : "",
+      "missingSlots" : [ "checkOut" ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+    "schemaValid" : false,
+    "backendAccepted" : false,
+    "status" : "SCHEMA_REJECTED",
+    "reason" : "STRICT_TYPED_VALIDATION_REJECTED"
+  }, {
+    "sampleId" : "VNE1-027",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "9c28d60dc096ced6f7a8f3115422aaf5411b7f849cc3724174262ea6eec11b14",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "REFINE",
+      "fields" : {
+        "starRatings" : {
+          "operation" : "REPLACE",
+          "value" : [ 4 ]
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Chỉ giữ khách sạn 4 sao",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-028",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : true,
+    "semanticPass" : true,
+    "historicalBackendAccepted" : false,
+    "responseSha256" : "49ce34618ea4230a9ef3919681c609dc476d5b362db3e7f8955d20f95ffd6fe8",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "REFINE",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Huế"
+        }
+      },
+      "reference" : "",
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "utterance" : "Đổi điểm đến sang Huế",
+    "schemaValid" : true,
+    "backendAccepted" : true,
+    "status" : "REPLAYED"
+  }, {
+    "sampleId" : "VNE1-029",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "status" : "REPLAY_NOT_AVAILABLE"
+  }, {
+    "sampleId" : "VNE1-030",
+    "evidence" : "ACTUAL_RESPONSE_TEXT_REPLAY",
+    "historicalSchemaValid" : false,
+    "semanticPass" : false,
+    "historicalBackendAccepted" : false,
+    "status" : "REPLAY_NOT_AVAILABLE"
+  } ],
+  "matrix" : {
+    "correctAccepted" : 7,
+    "correctRejected" : 0,
+    "incorrectAccepted" : 0,
+    "incorrectRejected" : 13
+  }
+}

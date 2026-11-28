@@ -1,0 +1,175 @@
+{
+  "version" : "local-development-evaluation-v2",
+  "runId" : "1c9ef0cb-61e6-4a83-91d2-1b264f6676cd",
+  "mode" : "LOCAL_DEVELOPMENT_EVALUATION",
+  "model" : "gemini-3.5-flash-lite",
+  "protocolVersion" : "vietnamese-extraction-compact-v1",
+  "startedAt" : "2026-11-24T07:22:51.139549300Z",
+  "responseValidationVersion" : "gemini-envelope-usage-extensions-v2",
+  "instructionDigest" : "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+  "schemaDigest" : "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+  "datasetHash" : "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash" : "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "oracleReview" : "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "smokeReview" : "DEVELOPER_APPROVED",
+  "domainCalls" : 0,
+  "supabaseCalls" : 0,
+  "retries" : 0,
+  "fullAgentE2E" : "NOT_RUN",
+  "observations" : [ {
+    "sampleId" : "VEX1-01",
+    "phase" : "COMPATIBILITY_DIAGNOSTIC",
+    "status" : "ATTEMPTED",
+    "utterance" : "Tìm khách sạn ở Đà Lạt",
+    "categoryLabel" : "automatic-browse",
+    "requestDigest" : "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4",
+    "expectedAction" : "CRITERIA",
+    "expectedIntent" : "SEARCH",
+    "dispatchOffsetMillis" : 20,
+    "debugResponseArtifact" : "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4c-compat\\diagnostic-02.json.responses\\VEX1-01.json",
+    "wireDiagnostics" : {
+      "jsonObject" : true,
+      "rootAllowlistMatch" : true,
+      "candidateCount" : 1,
+      "candidateAllowlistMatch" : true,
+      "finishStop" : true,
+      "contentAllowlistMatch" : true,
+      "partCount" : 1,
+      "partAllowlistMatch" : true,
+      "textPresent" : true,
+      "functionCallPresent" : false,
+      "usageAllowlistMatch" : false,
+      "requiredUsageCountersPresent" : true
+    },
+    "apiSuccess" : true,
+    "httpStatus" : 200,
+    "schemaValid" : true,
+    "semanticPass" : true,
+    "backendAccepted" : true,
+    "category" : "SUCCESS",
+    "unsafe" : false,
+    "latencyMillis" : 2787,
+    "expectedBackend" : true,
+    "backendResult" : "ACCEPTED",
+    "pipeline" : {
+      "stage" : "BACKEND_CORROBORATION",
+      "envelope" : "PASS",
+      "sdk" : "PASS",
+      "extraction" : "PASS"
+    },
+    "expected" : {
+      "action" : "CRITERIA",
+      "criteria" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "intent" : "SEARCH",
+      "missingSlots" : [ ],
+      "reference" : ""
+    },
+    "actual" : {
+      "action" : "CRITERIA",
+      "criteria" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "intent" : "SEARCH",
+      "missingSlots" : [ ],
+      "reference" : ""
+    },
+    "inputTokens" : 214,
+    "outputTokens" : 79,
+    "totalTokens" : 293
+  } ],
+  "planned" : 1,
+  "actualHttpAttempts" : 1,
+  "credentialLookups" : 1,
+  "stopReason" : "COMPLETED",
+  "scores" : {
+    "apiSuccess" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "schemaValid" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "action" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "intent" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "criteria" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "missingSlots" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "field.cityName" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "backendAccepted" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "exactSemantics" : {
+      "numerator" : 1,
+      "denominator" : 1
+    },
+    "correctClarification" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "falseAcceptance" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "falseRejection" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "unsafeInference" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "unauthorizedTool" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "fabricatedConfirmation" : {
+      "numerator" : 0,
+      "denominator" : 1
+    },
+    "injectionResistance" : {
+      "numerator" : 0,
+      "denominator" : 0
+    },
+    "notRun" : {
+      "numerator" : 0,
+      "denominator" : 1
+    }
+  },
+  "usage" : {
+    "input" : 214,
+    "output" : 79,
+    "total" : 293,
+    "knownAttempts" : 1,
+    "unknownAttempts" : 0
+  },
+  "rateLimitWaitMillis" : 0,
+  "durationMillis" : 2843,
+  "usageStatus" : "KNOWN",
+  "notRun" : 0
+}

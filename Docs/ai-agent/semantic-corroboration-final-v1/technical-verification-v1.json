@@ -1,0 +1,611 @@
+{
+  "metrics": {
+    "planned": 3,
+    "attempted": 3,
+    "notRun": 0,
+    "http200": 3,
+    "capacityFailures": 0,
+    "schemaValid": 3,
+    "exactBusinessSemantics": 2,
+    "correctAccepted": 2,
+    "correctRejected": 0,
+    "incorrectAccepted": 0,
+    "incorrectRejected": 1,
+    "backendNotEvaluated": 0,
+    "backendAccepted": 2,
+    "compilerErrors": 0,
+    "rawSemanticSchemaValid": 0,
+    "rawModelMissingSlots": "APPLICABLE_FOR_A",
+    "rawSemanticCorrect": 0,
+    "rawSemanticIntentCorrect": 0,
+    "rawSemanticActionCorrect": 0,
+    "rawMeaningCriteriaCorrect": 0,
+    "rawSemanticScoring": "DIRECT_RAW_MEANING_VS_ORACLE_TRANSLATION; downstream missing slots not scored as model predictions",
+    "knownInputTokens": 1260,
+    "knownOutputTokens": 436,
+    "knownTotalTokens": 1696,
+    "knownUsageAttempts": 3,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": 565.3333333333334,
+    "medianLatencyMillis": 2549,
+    "meanLatencyMillis": 2735.6666666666665,
+    "reportedThinkingTokens": null,
+    "thinkingReportingAttempts": 0,
+    "actionCorrect": 3,
+    "intentCorrect": 2,
+    "criteriaCorrect": 2,
+    "missingSlotsCorrect": 3,
+    "referenceCorrect": 3,
+    "spuriousClearIds": [
+      "VEX1-02"
+    ],
+    "referencePriceApplicable": 1,
+    "referencePriceCorrect": 0,
+    "falseAcceptanceRate": 0.0,
+    "falseRejectionRate": 0.0
+  },
+  "observations": [
+    {
+      "sampleId": "VEX1-01",
+      "sourceId": "VEX1-01",
+      "phase": "TECHNICAL",
+      "protocolVersion": "vietnamese-extraction-compact-v3",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "status": "ATTEMPTED",
+      "logicalOutcome": "SUCCESS",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-001",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "TECHNICAL",
+          "dispatchAt": "2026-11-24T10:08:35.742081700Z",
+          "dispatchOffsetMillis": 39,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-001.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 2549,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 405,
+          "outputTokens": 79,
+          "totalTokens": 484,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+        "gemini-3.1-flash-lite": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+        "gemini-2.5-flash-lite": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+        "gemini-2.5-flash": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-001",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 2564,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attemptId": "ATT-001",
+      "requestedPrimaryModel": "gemini-3.5-flash-lite",
+      "fallbackIndex": 0,
+      "previousAttemptId": "",
+      "trigger": "FIXED_AVAILABILITY_SEGMENT",
+      "httpStatus": 200,
+      "actualUsageStatus": "KNOWN",
+      "budgetPhase": "TECHNICAL",
+      "dispatchAt": "2026-11-24T10:08:35.742081700Z",
+      "dispatchOffsetMillis": 39,
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "requestDigest": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+      "callTerminated": true,
+      "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-001.json",
+      "providerModelVersion": "gemini-3.5-flash-lite",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "category": "SUCCESS",
+      "latencyMillis": 2549,
+      "unsafe": false,
+      "unauthorizedTool": false,
+      "confirmation": false,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "inputTokens": 405,
+      "outputTokens": 79,
+      "totalTokens": 484,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "cooldownSeconds": 0
+    },
+    {
+      "sampleId": "VEX1-02",
+      "sourceId": "VEX1-02",
+      "phase": "TECHNICAL",
+      "protocolVersion": "vietnamese-extraction-compact-v3",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "status": "ATTEMPTED",
+      "logicalOutcome": "BACKEND_REJECTED",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-002",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "TECHNICAL",
+          "dispatchAt": "2026-11-24T10:08:40.752716800Z",
+          "dispatchOffsetMillis": 5049,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-002.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"intent\": \"BROWSE\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    },\n    \"starRatings\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": false,
+          "backendAccepted": false,
+          "category": "BACKEND_REJECTED",
+          "latencyMillis": 4020,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Nha Trang"
+              },
+              "maxPrice": {
+                "operation": "REPLACE",
+                "value": 2000000.0
+              },
+              "starRatings": {
+                "operation": "CLEAR"
+              }
+            },
+            "inferredFields": [],
+            "intent": "BROWSE",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS",
+            "backendReason": "ROUTING_OR_PARSER_REJECTION"
+          },
+          "inputTokens": 412,
+          "outputTokens": 130,
+          "totalTokens": 542,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+        "gemini-3.1-flash-lite": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+        "gemini-2.5-flash-lite": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+        "gemini-2.5-flash": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-002",
+      "semanticPass": false,
+      "backendAccepted": false,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 6482,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "BROWSE",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attemptId": "ATT-002",
+      "requestedPrimaryModel": "gemini-3.5-flash-lite",
+      "fallbackIndex": 0,
+      "previousAttemptId": "",
+      "trigger": "FIXED_AVAILABILITY_SEGMENT",
+      "httpStatus": 200,
+      "actualUsageStatus": "KNOWN",
+      "budgetPhase": "TECHNICAL",
+      "dispatchAt": "2026-11-24T10:08:40.752716800Z",
+      "dispatchOffsetMillis": 5049,
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "requestDigest": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+      "callTerminated": true,
+      "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-002.json",
+      "providerModelVersion": "gemini-3.5-flash-lite",
+      "actualExtractionText": "{\n  \"intent\": \"BROWSE\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    },\n    \"starRatings\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "category": "BACKEND_REJECTED",
+      "latencyMillis": 4020,
+      "unsafe": false,
+      "unauthorizedTool": false,
+      "confirmation": false,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "ROUTING_OR_PARSER_REJECTION"
+      },
+      "inputTokens": 412,
+      "outputTokens": 130,
+      "totalTokens": 542,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "cooldownSeconds": 0
+    },
+    {
+      "sampleId": "VEX1-03",
+      "sourceId": "VEX1-03",
+      "phase": "TECHNICAL",
+      "protocolVersion": "vietnamese-extraction-compact-v3",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "status": "ATTEMPTED",
+      "logicalOutcome": "SUCCESS",
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-003",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "TECHNICAL",
+          "dispatchAt": "2026-11-24T10:08:45.758665300Z",
+          "dispatchOffsetMillis": 10055,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-003.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    },\n    \"checkIn\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-01\"\n    },\n    \"checkOut\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-03\"\n    },\n    \"adults\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2\n    },\n    \"children\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 0\n    },\n    \"rooms\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 1\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 1638,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "CRITERIA",
+            "criteria": {
+              "adults": {
+                "operation": "REPLACE",
+                "value": 2
+              },
+              "checkIn": {
+                "operation": "REPLACE",
+                "value": "2026-12-01"
+              },
+              "checkOut": {
+                "operation": "REPLACE",
+                "value": "2026-12-03"
+              },
+              "children": {
+                "operation": "REPLACE",
+                "value": 0
+              },
+              "cityName": {
+                "operation": "REPLACE",
+                "value": "Đà Lạt"
+              },
+              "rooms": {
+                "operation": "REPLACE",
+                "value": 1
+              }
+            },
+            "inferredFields": [],
+            "intent": "SEARCH",
+            "missingSlots": [],
+            "reference": ""
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 443,
+          "outputTokens": 227,
+          "totalTokens": 670,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+        "gemini-3.1-flash-lite": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+        "gemini-2.5-flash-lite": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+        "gemini-2.5-flash": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-003",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 2621,
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "attemptId": "ATT-003",
+      "requestedPrimaryModel": "gemini-3.5-flash-lite",
+      "fallbackIndex": 0,
+      "previousAttemptId": "",
+      "trigger": "FIXED_AVAILABILITY_SEGMENT",
+      "httpStatus": 200,
+      "actualUsageStatus": "KNOWN",
+      "budgetPhase": "TECHNICAL",
+      "dispatchAt": "2026-11-24T10:08:45.758665300Z",
+      "dispatchOffsetMillis": 10055,
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "requestDigest": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+      "callTerminated": true,
+      "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-003.json",
+      "providerModelVersion": "gemini-3.5-flash-lite",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    },\n    \"checkIn\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-01\"\n    },\n    \"checkOut\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-03\"\n    },\n    \"adults\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2\n    },\n    \"children\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 0\n    },\n    \"rooms\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 1\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "category": "SUCCESS",
+      "latencyMillis": 1638,
+      "unsafe": false,
+      "unauthorizedTool": false,
+      "confirmation": false,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "inputTokens": 443,
+      "outputTokens": 227,
+      "totalTokens": 670,
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "cooldownSeconds": 0
+    }
+  ]
+}

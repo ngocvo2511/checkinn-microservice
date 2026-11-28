@@ -1,0 +1,74 @@
+[
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/candidate-freeze-package.log",
+    "sha256": "31dd69fbb5503747f02d05bc544aeda2d44943a117633fb0315d7d3682f6f512",
+    "lastSummary": [
+      1235,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  },
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/final-package.log",
+    "sha256": "fdbc37099e2cbda1bb475c251bc29d0692c0cb76ac82883be86e6c61e0bb5f9d",
+    "lastSummary": [
+      1235,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  },
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/offline-package-final.log",
+    "sha256": "4d5634a3f6efe663d0ba5340f4c534e343d1d5fc4fe3401c0609e834a1eb30c9",
+    "lastSummary": [
+      1234,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  },
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/offline-package-r2.log",
+    "sha256": "e4b44717ecc5c65ac516a62c3d1c04b2d0a9c6dd21e658ab2f5a4ac1486fd69c",
+    "lastSummary": [
+      1235,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  },
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/offline-package-v1.log",
+    "sha256": "e696fba0da2e81f6913ef086317cd9d7cacaca2898b2f578c1fb50f3e605436f",
+    "lastSummary": [
+      1224,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  },
+  {
+    "path": "Docs/ai-agent/evidence-extraction-v1/offline-package-v2.log",
+    "sha256": "84ae900000313bd2c6deb1f05d7e4d6b2b816e0aaebbf95ceaa6c7d334780b43",
+    "lastSummary": [
+      1234,
+      0,
+      0,
+      0
+    ],
+    "buildSuccess": true,
+    "buildFailure": false
+  }
+]

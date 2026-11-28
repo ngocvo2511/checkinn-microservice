@@ -1,0 +1,44 @@
+{
+  "batchId": "BATCH10B4C-LIVE-COMPATIBILITY-FIX-AND-EVALUATION-20261124",
+  "firstLiveStartedAt": "2026-11-24T07:17:41.710929Z",
+  "deadlineUtc": "2026-11-24T07:47:41.710929Z",
+  "hardCap": 60,
+  "phaseCaps": {
+    "COMPATIBILITY_DIAGNOSTIC": 5,
+    "INITIAL_SMOKE": 3,
+    "VIETNAMESE_NLU": 40,
+    "SUPPLEMENTAL": 12
+  },
+  "actualHttpAttempts": 7,
+  "runs": [
+    {
+      "path": "diagnostic-01.json",
+      "attempts": 1,
+      "phase": "COMPATIBILITY_DIAGNOSTIC",
+      "stopReason": "MALFORMED_RESPONSE"
+    },
+    {
+      "path": "diagnostic-02.json",
+      "attempts": 1,
+      "phase": "COMPATIBILITY_DIAGNOSTIC",
+      "stopReason": "COMPLETED"
+    },
+    {
+      "path": "primary-01.json",
+      "attempts": 2,
+      "phase": "INITIAL_SMOKE_AND_VIETNAMESE_NLU",
+      "stopReason": "SMOKE_MISMATCH"
+    },
+    {
+      "path": "supplemental-01.json",
+      "attempts": 3,
+      "phase": "SUPPLEMENTAL",
+      "stopReason": "COMPLETED"
+    }
+  ],
+  "automaticRetries": 0,
+  "note": "Bounded local records; aggregate count never reset across process restarts. Historical prior batch attempt excluded.",
+  "primaryReservedRequests": 43,
+  "primaryOutput": "primary-01.json",
+  "supplementalReservedRequests": 3
+}
