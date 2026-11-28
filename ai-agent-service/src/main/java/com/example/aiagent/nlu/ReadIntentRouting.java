@@ -5,6 +5,14 @@ import com.example.aiagent.orchestration.PolicyExecutor.Intent;
 /** Complete literal READ clauses only. An intent never supplies target identity or authorization. */
 public final class ReadIntentRouting {
     private ReadIntentRouting() {}
+    /** Extraction evidence only; does not resolve an ordinal or issue a selected-target capability. */
+    public static boolean selectedReferenceCandidate(String raw) {
+        if (selectedIntent(raw) != null) return true;
+        String text = VietnameseParser.normalize(raw).replaceAll("[.?!]+$", "");
+        return text.matches("xem khach san thu (?:nhat|hai|ba|[1-9][0-9]?)")
+                || text.matches("gia phong thu (?:nhat|hai|ba|[1-9][0-9]?) bao nhieu")
+                || text.matches("(?:kiem tra |hoi gia cua |xem )?(?:phong|khach san) (?:nay|do|vua chon|da chon|dau tien|thu (?:nhat|hai|ba|[1-9][0-9]?))(?: (?:con cho khong|con phong khong|gia bao nhieu(?: va con phong khong)?|con khong))?");
+    }
     /** Only a parsed hotel discovery request may use D1; never a target/availability/WRITE question. */
     public static boolean automaticBrowseCandidate(String raw) {
         String text = VietnameseParser.normalize(raw);

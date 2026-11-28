@@ -1,0 +1,15 @@
+runId,protocolVersion,sampleId,phase,utterance,status,httpStatus,schemaValid,semanticPass,backendResult,inputTokens,outputTokens,totalTokens,latencyMillis
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-01,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu,ATTEMPTED,200,True,False,REJECTED,352,150,502,2489
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-02,PROMPT_DIAGNOSTIC,Khách sạn ở Huế giá tham khảo dưới một triệu,ATTEMPTED,200,True,True,ACCEPTED,350,136,486,1912
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-03,PROMPT_DIAGNOSTIC,Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn,ATTEMPTED,200,True,False,REJECTED,351,127,478,1893
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-04,PROMPT_DIAGNOSTIC,"Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",ATTEMPTED,200,True,False,REJECTED,353,128,481,1860
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-05,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Huế giá tham khảo không quá 2 triệu mỗi đêm,ATTEMPTED,200,True,True,ACCEPTED,354,110,464,1871
+14e82051-47b8-469c-a4a1-b2f28d12745d,vietnamese-extraction-compact-v2,DIAG4D-06,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Huế giá tham khảo tối đa 1 triệu mỗi đêm,ATTEMPTED,200,True,True,ACCEPTED,354,110,464,1612
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-01,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu,ATTEMPTED,200,True,False,REJECTED,412,129,541,2804
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-02,PROMPT_DIAGNOSTIC,Khách sạn ở Huế giá tham khảo dưới một triệu,ATTEMPTED,200,True,False,REJECTED,410,128,538,6229
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-03,PROMPT_DIAGNOSTIC,Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn,ATTEMPTED,200,True,False,REJECTED,411,127,538,1553
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-04,PROMPT_DIAGNOSTIC,"Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",ATTEMPTED,200,True,False,REJECTED,413,128,541,1865
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-05,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Huế giá tham khảo không quá 2 triệu mỗi đêm,ATTEMPTED,200,True,True,ACCEPTED,414,110,524,2010
+1195a651-e607-4a92-b33c-797fdbc6f171,vietnamese-extraction-compact-v3,DIAG4D-07,PROMPT_DIAGNOSTIC,Tìm khách sạn ở Huế,ATTEMPTED,200,True,True,ACCEPTED,404,78,482,1677
+7ff9f44a-af5f-4ba1-8eeb-c5a6bec825f7,vietnamese-extraction-compact-v3,VEX1-01,INITIAL_SMOKE,Tìm khách sạn ở Đà Lạt,ATTEMPTED,200,True,True,ACCEPTED,405,79,484,3076
+7ff9f44a-af5f-4ba1-8eeb-c5a6bec825f7,vietnamese-extraction-compact-v3,VEX1-02,INITIAL_SMOKE,Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu,ATTEMPTED,0,False,False,NOT_EVALUATED,,,,1964

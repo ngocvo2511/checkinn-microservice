@@ -1,0 +1,1901 @@
+{
+  "version": "local-development-evaluation-v2",
+  "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+  "mode": "LOCAL_DEVELOPMENT_EVALUATION",
+  "model": "gemini-3.5-flash-lite",
+  "protocolVersion": "vietnamese-extraction-compact-v2",
+  "startedAt": "2026-11-24T07:54:18.141036700Z",
+  "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+  "instructionDigest": "0a5f3cbb08fb79652c8f1852bf267770f86ff5c718d43fd101524a0b30f4d63f",
+  "schemaDigest": "0ce096d3d69e162dcc1400bd3985cc9c06d26cd6c62b2bc055d166a702c296f9",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "oracleReview": "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "smokeReview": "DEVELOPER_APPROVED",
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "retries": 0,
+  "fullAgentE2E": "NOT_RUN",
+  "observations": [
+    {
+      "sampleId": "DIAG4D-01",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "38270fdae187b19f6769927f9b816c1627effb066fcfbad498103c39b220ff5c",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 25,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 2489,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [
+          "adults",
+          "checkIn",
+          "checkOut"
+        ],
+        "reference": ""
+      },
+      "inputTokens": 352,
+      "outputTokens": 150,
+      "totalTokens": 502
+    },
+    {
+      "sampleId": "DIAG4D-02",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "201c750db821792f0958259cc5674c64b46ae75c8cd2a1fe0dae8ee3280ff0d0",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7239,
+      "conservativeInputBound": 15502,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 5026,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-02.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 1912,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 350,
+      "outputTokens": 136,
+      "totalTokens": 486
+    },
+    {
+      "sampleId": "DIAG4D-03",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "categoryLabel": "number-price",
+      "requestDigest": "b56a97160388e616d9d3a4e71261ebf92c1d864455990399ccdf30a09d5b5535",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 10026,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-03.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1893,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 351,
+      "outputTokens": 127,
+      "totalTokens": 478
+    },
+    {
+      "sampleId": "DIAG4D-04",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "2a83a90846dcf2e67b3e295848bec554d2f872a0461cba9c3ae8382664b1e268",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7242,
+      "conservativeInputBound": 15508,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 15026,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-04.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1860,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 353,
+      "outputTokens": 128,
+      "totalTokens": 481
+    },
+    {
+      "sampleId": "DIAG4D-05",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo không quá 2 triệu mỗi đêm",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "c3d5ef6e3f19fa06e58a15bad3dfe934a5ec60ddc1797aa8763468865651e369",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7256,
+      "conservativeInputBound": 15536,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 20028,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-05.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 1871,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 354,
+      "outputTokens": 110,
+      "totalTokens": 464
+    },
+    {
+      "sampleId": "DIAG4D-06",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo tối đa 1 triệu mỗi đêm",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "6d48b3cb9ffe380d6b8738fe4c8fac0b9bae33880117c8557910fb1edd4075a4",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7254,
+      "conservativeInputBound": 15532,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 25029,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\baseline-v2.json.responses\\DIAG4D-06.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 1612,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 354,
+      "outputTokens": 110,
+      "totalTokens": 464
+    },
+    {
+      "sampleId": "DIAG4D-07",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Huế",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "3d95d4c5e4e20bff72edf8a16c7e2c76cd333445e0005629e38011705b83aa61",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7205,
+      "conservativeInputBound": 15434,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VEX1-01",
+      "phase": "INITIAL_SMOKE",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "59249afed08dbe43db4ce8c5adc10de5e14528e2e19e7e683dfc25987fbdcf61",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7210,
+      "conservativeInputBound": 15444,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VEX1-02",
+      "phase": "INITIAL_SMOKE",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "38270fdae187b19f6769927f9b816c1627effb066fcfbad498103c39b220ff5c",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VEX1-03",
+      "phase": "INITIAL_SMOKE",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "complete-search",
+      "requestDigest": "10b18cdd4ff36e9fcb201d2928796d4b5b0858f438daa2204fdba368a9765eb8",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7284,
+      "conservativeInputBound": 15592,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-001",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "59249afed08dbe43db4ce8c5adc10de5e14528e2e19e7e683dfc25987fbdcf61",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7210,
+      "conservativeInputBound": 15444,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-002",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "38270fdae187b19f6769927f9b816c1627effb066fcfbad498103c39b220ff5c",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-003",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "complete-search",
+      "requestDigest": "10b18cdd4ff36e9fcb201d2928796d4b5b0858f438daa2204fdba368a9765eb8",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7284,
+      "conservativeInputBound": 15592,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-004",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "missing-destination",
+      "requestDigest": "59ab6e44ae6bd206eb687ad535e7c91f94395ac54873a005b6f1de537642c30c",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7269,
+      "conservativeInputBound": 15562,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-005",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt nhận phòng 01/12/2026",
+      "categoryLabel": "missing-checkout",
+      "requestDigest": "f7e94a4359bc2e1ace92980b679540915ebb12a273d080adaf15970be7d8b0d0",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7235,
+      "conservativeInputBound": 15494,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-006",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026",
+      "categoryLabel": "missing-occupancy",
+      "requestDigest": "bd842f46d7f3eb09056237ce14a6fdfb611289a7abcb91c11adb651f02f50d3b",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-007",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn cho 2 người lớn, 1 trẻ em, 1 phòng",
+      "categoryLabel": "explicit-occupancy",
+      "requestDigest": "e40ef2d477be28ffe90adf1ef8700c85b7fca66ff9855a44a7998b6e923e22a5",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7238,
+      "conservativeInputBound": 15500,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 1
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [
+          "cityName",
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-008",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn cho 2 người",
+      "categoryLabel": "ambiguous-people",
+      "requestDigest": "fee7aab1e0a6888eb041e75ec9b22bcc1942f9ad642fde77edf9ec05e973b91c",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7210,
+      "conservativeInputBound": 15444,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-009",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 31/02/2026 đến 03/03/2026",
+      "categoryLabel": "invalid-date",
+      "requestDigest": "1058813ae4e304552bfae8ea345e17269ca4ed60a8865f7100a344d4d670bddb",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn",
+          "checkOut"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-010",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt giá từ 2 triệu đến 1 triệu VND mỗi phòng mỗi đêm",
+      "categoryLabel": "invalid-price",
+      "requestDigest": "0b620a6bc7e507a8f6ed0ceea9ba9c62cb0df6716d1c99eab0368bf842a66d17",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7276,
+      "conservativeInputBound": 15576,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "minPrice",
+          "maxPrice"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-011",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn có hồ bơi ở Đà Lạt",
+      "categoryLabel": "unsupported-amenity",
+      "requestDigest": "3c2a9c10d3f4f8e5bb25bf2328ec0177143d8b6bb04ae7d4b8769732b65dffc9",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7224,
+      "conservativeInputBound": 15472,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-012",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở nơi nào đó",
+      "categoryLabel": "ambiguous-destination",
+      "requestDigest": "8c9295750036abebcbee01ce8583e6c57ddbcbadd8dd1f077b8d195fb3dca2c6",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7214,
+      "conservativeInputBound": 15452,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-013",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "categoryLabel": "selected-room",
+      "requestDigest": "a13ad8edf0358b71886c170c33482aec0951ef9e5b91594ad8577bd626fb8a8f",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7219,
+      "conservativeInputBound": 15462,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-014",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "So sánh giá của hai khách sạn đầu tiên",
+      "categoryLabel": "comparison",
+      "requestDigest": "cdc6be1cef8dcb6810a23ea340f40ad096ae07186e88002603daa809f3b6fb9e",
+      "expectedAction": "COMPARISON",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7227,
+      "conservativeInputBound": 15478,
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-015",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Phòng này giá bao nhiêu và còn phòng không?",
+      "categoryLabel": "price-availability",
+      "requestDigest": "de0811be291dc4a49072934efb29f61081d6b3cc2a1ad8e3658126c74be763f7",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7229,
+      "conservativeInputBound": 15482,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-016",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Chỉ xem danh sách khách sạn tại Đà Lạt",
+      "categoryLabel": "explicit-browse",
+      "requestDigest": "a203e0a687c6e0d09133f00a55b7c91442e1b3db7df11390b22bdd7ccd5695e3",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7228,
+      "conservativeInputBound": 15480,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-017",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Cho mình tìm khách sạn tại Huế",
+      "categoryLabel": "destination",
+      "requestDigest": "e4466810fbb784b3c6f987430b5a85bce57a19ee65e07487ccba14fa53db5cbf",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7217,
+      "conservativeInputBound": 15458,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-020",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "201c750db821792f0958259cc5674c64b46ae75c8cd2a1fe0dae8ee3280ff0d0",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7239,
+      "conservativeInputBound": 15502,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-021",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở Đà Lạt 4 sao",
+      "categoryLabel": "star-rating",
+      "requestDigest": "45ae5f4aa315e13b27d4c4a842aa956fd2f7cfaeff56b39b4f972e8e2727603e",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7216,
+      "conservativeInputBound": 15456,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-023",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Đà Lạt cho 3 người",
+      "categoryLabel": "ambiguous-occupancy",
+      "requestDigest": "933a334d83644e53cae119794a5ce7bb72d8fb2eb20d79430d35f182c171f8af",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7221,
+      "conservativeInputBound": 15466,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-025",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế ngày 20/12/2026 cho 1 phòng 2 người lớn",
+      "categoryLabel": "missing-check-out",
+      "requestDigest": "c788a485c7ca126116f5cbdaa7c2ae2f327b7305686dc466dbb8be9d0cca4052",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7248,
+      "conservativeInputBound": 15520,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkOut"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-027",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Chỉ giữ khách sạn 4 sao",
+      "categoryLabel": "refinement",
+      "requestDigest": "ab4b7ccf5843a0adf6f30ef49d12dee162e5a202bf175be5b01a2dbf538819eb",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "requestBytes": 7208,
+      "conservativeInputBound": 15440,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "REPLACE",
+            "value": [
+              4
+            ]
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-028",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Đổi điểm đến sang Huế",
+      "categoryLabel": "criteria-replacement",
+      "requestDigest": "8daaf0454dd2e67d21d02da36d6b7051a60e2e8e383cf24d1862cde56f107a0c",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "requestBytes": 7210,
+      "conservativeInputBound": 15444,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-029",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Bỏ giới hạn giá đi",
+      "categoryLabel": "criteria-clearing",
+      "requestDigest": "b3f84a5dd1ffb8aaae8affe65faf12fed681db73f9b950a9202feebd52ecadc1",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "requestBytes": 7204,
+      "conservativeInputBound": 15432,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-030",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Xem khách sạn thứ hai",
+      "categoryLabel": "hotel-reference",
+      "requestDigest": "f89fca94968fefcdba7615fa0f3f1d7b17b44083d8f8eb9b71a9ebfea84be8fd",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7204,
+      "conservativeInputBound": 15432,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Xem khách sạn thứ hai",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-031",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Giá phòng thứ nhất bao nhiêu",
+      "categoryLabel": "room-reference",
+      "requestDigest": "ebaec771d5decdde1da1b15c98d435fe80a22fdd403bfa54dc9c8a86211f9243",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7213,
+      "conservativeInputBound": 15450,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-032",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "So sánh giá hai khách sạn đầu tiên",
+      "categoryLabel": "comparison",
+      "requestDigest": "791b71ceaacc72b7a775dc0cb5a6797ca7fc4b0db51d6a8a2aab975dfa6bff4f",
+      "expectedAction": "COMPARISON",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7221,
+      "conservativeInputBound": 15466,
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-033",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Phòng đã chọn còn chỗ không",
+      "categoryLabel": "availability",
+      "requestDigest": "2da4736489a80303c1111bc5ff4cdc0424ce30ad799b5c799ff4dd0bb75b2a0a",
+      "expectedAction": "SELECTED",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7214,
+      "conservativeInputBound": 15452,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-037",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn ở thành phố đó",
+      "categoryLabel": "ambiguous-destination",
+      "requestDigest": "487ea32bb10cc3515501a58e8c221331e629a9614d69158d29c34e230372112c",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7217,
+      "conservativeInputBound": 15458,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-039",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+      "categoryLabel": "invalid-price",
+      "requestDigest": "0f8fbfa55efa48653759f188dd69478d279ba926ea4f6dfc554842f798550c9a",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7228,
+      "conservativeInputBound": 15480,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-040",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+      "categoryLabel": "invalid-count",
+      "requestDigest": "91fbe87ea93d3712cbab27f407595e4b3fdbef8aa92145f201dc7f2ec7fbb130",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7235,
+      "conservativeInputBound": 15494,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-041",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "categoryLabel": "natural-paraphrase",
+      "requestDigest": "8061163d2f0e822011dfc3724e7f46a953d5b9f530b95febd22f9a6eec8d112a",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7228,
+      "conservativeInputBound": 15480,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-042",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+      "categoryLabel": "informal",
+      "requestDigest": "ab9741be9b907a649b85636e14baaf504a8ed46d1aaffbe1b65b537b71d61a45",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7225,
+      "conservativeInputBound": 15474,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-043",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "tim khach san o Da Lat",
+      "categoryLabel": "no-accents",
+      "requestDigest": "d1d320f523523c9190df7d97e2c791b94a99e4c756ec87d973b4dd697554e19f",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7200,
+      "conservativeInputBound": 15424,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-046",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+      "categoryLabel": "missing-check-in",
+      "requestDigest": "7cc48f9f49f37c59be28496ac5fc751f4c7f08e7729bbdeab194ac1afcd1917d",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7225,
+      "conservativeInputBound": 15474,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-047",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+      "categoryLabel": "date-inversion",
+      "requestDigest": "1f9f1ff16260a9549051bdb0680cb2b5aa936b6ce03f97d1d95dad0a2052e6aa",
+      "expectedAction": "CLARIFY",
+      "expectedIntent": "CLARIFY",
+      "requestBytes": 7235,
+      "conservativeInputBound": 15494,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-048",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Cho tôi xem nơi lưu trú tại Nha Trang",
+      "categoryLabel": "natural-paraphrase",
+      "requestDigest": "6468e2d1f43ec745fe75a818c15b3d3686dd56961af87b6d70495e7e311b141d",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7221,
+      "conservativeInputBound": 15466,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-049",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "kiếm giúp tui khách sạn ở huế nha",
+      "categoryLabel": "informal",
+      "requestDigest": "aeac53129c14c9be3235adee66a5c5f9b9bb0afd8bf02e27bdcda7f35df38026",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7221,
+      "conservativeInputBound": 15466,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-050",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "categoryLabel": "number-price",
+      "requestDigest": "b56a97160388e616d9d3a4e71261ebf92c1d864455990399ccdf30a09d5b5535",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7244,
+      "conservativeInputBound": 15512,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "VNE1-051",
+      "phase": "VIETNAMESE_NLU",
+      "status": "NOT_RUN",
+      "utterance": "Không cần giới hạn số sao nữa",
+      "categoryLabel": "refinement-clear-stars",
+      "requestDigest": "f5af2ac2b63d96e919011963821ce2be022c3e8567ae9c679d48feb69dd39c98",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "REFINE",
+      "requestBytes": 7218,
+      "conservativeInputBound": 15460,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    }
+  ],
+  "planned": 50,
+  "actualHttpAttempts": 6,
+  "credentialLookups": 6,
+  "stopReason": "COMPLETED",
+  "scores": {
+    "apiSuccess": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "schemaValid": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "action": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "intent": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "criteria": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "missingSlots": {
+      "numerator": 5,
+      "denominator": 6
+    },
+    "field.cityName": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "field.maxPrice": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "field.referencePriceExclusive": {
+      "numerator": 1,
+      "denominator": 4
+    },
+    "backendAccepted": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "exactSemantics": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "correctClarification": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseAcceptance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseRejection": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "unsafeInference": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "unauthorizedTool": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "fabricatedConfirmation": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "injectionResistance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "notRun": {
+      "numerator": 0,
+      "denominator": 6
+    }
+  },
+  "usage": {
+    "input": 2114,
+    "output": 761,
+    "total": 2875,
+    "knownAttempts": 6,
+    "unknownAttempts": 0
+  },
+  "rateLimitWaitMillis": 13435
+}

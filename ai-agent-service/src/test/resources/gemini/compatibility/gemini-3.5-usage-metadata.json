@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+            "thoughtSignature": "EpYBCpMBAWkUfRPmDtjHmQzNs4YhPdpcK9CwdxBtbPO3UQrOrrhLJZav0ZOT5WCiP1dpzdBz3pQII7Kc8c9FSPn0+LK8UxZd+Z78Ys4vOtgzLK47HdkFx+wl/Wa9V/5hA8yAyfdZ7GVri22I860yUDFmnZanDJ0hYai+vJZxl4X7eBJ1IcSyvqhV0GX0KRUavjrbFNq4aF+3"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 214,
+    "candidatesTokenCount": 79,
+    "totalTokenCount": 293,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 214
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "FDoFa-zaFNbi2roPzM6_wAE"
+}

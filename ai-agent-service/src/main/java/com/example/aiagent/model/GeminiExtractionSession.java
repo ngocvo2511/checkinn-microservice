@@ -58,13 +58,17 @@ final class GeminiExtractionSession implements AutoCloseable {
         try {
             if (artifact == null || artifact.length == 0 || artifact.length > 65536 || verifier == null) throw denied();
             Reviewed reviewed = verifier.verify(artifact.clone());
-            validate(reviewed, clock);
-            if (reviewed.journalDirectory() == null || !reviewed.journalDirectory().isAbsolute()
-                    || !reviewed.journalDirectory().normalize().equals(directory.toAbsolutePath().normalize())) throw denied();
-            return new GeminiExtractionSession(reviewed, directory, clock);
+            return openReviewed(reviewed, directory, clock);
         } catch (Exception failure) { throw denied(); }
     }
-    private static void validate(Reviewed r, Clock clock) {
+    /** Only internal signed runners call this after concrete verification; no JSON/API capability constructor. */
+    static GeminiExtractionSession openReviewed(Reviewed reviewed, Path directory, Clock clock) {
+        validate(reviewed, clock);
+        if (reviewed.journalDirectory() == null || !reviewed.journalDirectory().isAbsolute()
+                || !reviewed.journalDirectory().normalize().equals(directory.toAbsolutePath().normalize())) throw denied();
+        return new GeminiExtractionSession(reviewed, directory, clock);
+    }
+    static void validate(Reviewed r, Clock clock) {
         if (r == null || r.state() != State.APPROVED_FOR_SEPARATE_LIVE_BATCH || !PURPOSE.equals(r.purpose())
                 || !MANIFEST.equals(r.manifest()) || !MODEL.equals(r.model()) || !VERSION.equals(r.protocol())
                 || !"SYNTHETIC_ONLY".equals(r.classification()) || r.sessionId() == null || !r.sessionId().matches("[a-zA-Z0-9-]{1,100}")

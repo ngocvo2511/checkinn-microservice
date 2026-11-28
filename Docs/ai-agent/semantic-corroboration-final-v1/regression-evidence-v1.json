@@ -1,0 +1,60 @@
+{
+  "suites": {
+    "VietnameseCorroborationFixTest": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "starRemovalAndUnknownRemovalSuffixRemainDistinct",
+        "observedRemovalDiagnosticKeepsFullOperationValidation(String)[1]",
+        "observedRemovalDiagnosticKeepsFullOperationValidation(String)[2]",
+        "observedRemovalDiagnosticKeepsFullOperationValidation(String)[3]",
+        "partialDateClarificationAndIndependentMissingSlotsWithoutState",
+        "actualHistoricalResponsesKeepModelClassificationAndFixFiveBackendDecisions",
+        "selectedQuestionCannotBecomeUnsupportedAndOrdinaryClarificationStillWorks",
+        "destinationReplacementParaphrases(String)[1]",
+        "destinationReplacementParaphrases(String)[2]",
+        "destinationReplacementParaphrases(String)[3]",
+        "destinationReplacementParaphrases(String)[4]",
+        "keepFilterParaphrases(String)[1]",
+        "keepFilterParaphrases(String)[2]",
+        "keepFilterParaphrases(String)[3]",
+        "referenceEvidenceDoesNotResolveTargets(String)[1]",
+        "referenceEvidenceDoesNotResolveTargets(String)[2]",
+        "referenceEvidenceDoesNotResolveTargets(String)[3]"
+      ]
+    },
+    "GeminiLocalModelFallbackTest": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "schemaSafetyUsageAndUncertainCallsCannotTriggerModelFallback(String)[1]",
+        "schemaSafetyUsageAndUncertainCallsCannotTriggerModelFallback(String)[2]",
+        "schemaSafetyUsageAndUncertainCallsCannotTriggerModelFallback(String)[3]",
+        "schemaSafetyUsageAndUncertainCallsCannotTriggerModelFallback(String)[4]",
+        "fixedAProtocolVerificationUsesAdaptedProviderSchemaAndOriginalLocalValidator",
+        "explicitModelVerificationUsesOnlyTypedSelectedModelAndAdaptedWireAfterKnown400",
+        "servingSchemaSimplificationPreservesCanonicalValidation",
+        "typedProfilesSerializeSdkWithoutChangingBusinessSchemaAndRejectUntrustedEndpoint",
+        "modelSpecificRollingLimitsAndDailyCapShareMonotonicTime",
+        "offlinePreflightFreezesAllNinetyLogicalSamplesWithoutReadingKey",
+        "distinctCompletedSegmentsShareBudgetReservationsAndCannotReopenPriorRecord",
+        "capacityMustBeActualTerminated503ProviderEnvelopeAndRetryAfterIsBounded",
+        "exhaustedChainAndIneligibleProfilesStopWithoutSameModelRetry",
+        "hardHttpStopsNeverFallback(String)[1]",
+        "hardHttpStopsNeverFallback(String)[2]",
+        "hardHttpStopsNeverFallback(String)[3]",
+        "hardHttpStopsNeverFallback(String)[4]",
+        "boundedChainAndRunLocalSegmentKeepIdentityAndFullReservations(int)[1]",
+        "boundedChainAndRunLocalSegmentKeepIdentityAndFullReservations(int)[2]",
+        "boundedChainAndRunLocalSegmentKeepIdentityAndFullReservations(int)[3]",
+        "boundedChainAndRunLocalSegmentKeepIdentityAndFullReservations(int)[4]"
+      ]
+    }
+  },
+  "externalCalls": 0,
+  "actualResponseReplayResourceSha256": "25a55e733fad3bd13cd5a432c6cc4ec2cdb6382d65f35860ffef4c68db3183d9"
+}

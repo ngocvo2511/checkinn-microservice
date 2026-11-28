@@ -54,9 +54,16 @@ final class GeminiExtractionProtocol {
         catch (Exception failure) { throw denied(); }
     }
     static ChatRequest request(String id) {
-        return ChatRequest.builder().messages(SystemMessage.from(instruction()), UserMessage.from(utterance(id)))
+        return syntheticRequest(utterance(id));
+    }
+    /** Package-only serializer; only a verified pinned sample capability may dispatch its result. */
+    static ChatRequest syntheticRequest(String syntheticUtterance) {
+        return syntheticRequest(syntheticUtterance, instruction(), schema());
+    }
+    static ChatRequest syntheticRequest(String syntheticUtterance, String instruction, String schema) {
+        return ChatRequest.builder().messages(SystemMessage.from(instruction), UserMessage.from(syntheticUtterance))
                 .responseFormat(ResponseFormat.builder().type(ResponseFormatType.JSON).jsonSchema(JsonSchema.builder()
-                        .name("vietnamese_read_extraction").rootElement(JsonRawSchema.from(schema())).build()).build()).build();
+                        .name("vietnamese_read_extraction").rootElement(JsonRawSchema.from(schema)).build()).build()).build();
     }
     record Binding(String fixtureDigest, String instructionDigest, String schemaDigest, String requestDigest) { }
     static Binding binding(String id) {
@@ -64,19 +71,35 @@ final class GeminiExtractionProtocol {
     }
     /** Actual pinned SDK serialization, in-memory SPI; sentinel is not an environment credential. */
     static String body(String id) {
-        var capture = new Capture(); model("synthetic-noncredential", capture, Duration.ofSeconds(10)).chat(request(id));
+        return syntheticBody(utterance(id));
+    }
+    static String syntheticBody(String syntheticUtterance) {
+        return syntheticBody(syntheticRequest(syntheticUtterance));
+    }
+    static String syntheticBody(ChatRequest request) {
+        var capture = new Capture(); model("synthetic-noncredential", capture, Duration.ofSeconds(10)).chat(request);
         return normalize(capture.request).body();
     }
+    static String syntheticBody(ChatRequest request, GeminiLocalModelProfile profile) {
+        var capture = new Capture(); model("synthetic-noncredential", capture, Duration.ofSeconds(10), profile).chat(request);
+        return normalize(capture.request, profile).body();
+    }
     static GoogleAiGeminiChatModel model(String key, HttpClientBuilder transport, Duration timeout) {
-        return GoogleAiGeminiChatModel.builder().apiKey(key).modelName(MODEL).maxRetries(0).maxOutputTokens(OUTPUT_CAP)
+        return model(key, transport, timeout, GeminiLocalModelProfile.FLASH_35_LITE);
+    }
+    static GoogleAiGeminiChatModel model(String key, HttpClientBuilder transport, Duration timeout, GeminiLocalModelProfile profile) {
+        return GoogleAiGeminiChatModel.builder().apiKey(key).modelName(profile.id).maxRetries(0).maxOutputTokens(OUTPUT_CAP)
                 .timeout(timeout).returnThinking(false).logRequests(false).logResponses(false)
                 .allowCodeExecution(false).allowGoogleSearch(false).allowGoogleMaps(false).allowUrlContext(false)
                 .httpClientBuilder(transport).build();
     }
     /** Dedicated dispatch, never calls GeminiSmokeWire. Only removes the pinned SDK candidateCount=1. */
     static HttpRequest normalize(HttpRequest source) {
+        return normalize(source, GeminiLocalModelProfile.FLASH_35_LITE);
+    }
+    static HttpRequest normalize(HttpRequest source, GeminiLocalModelProfile profile) {
         try {
-            if (!ENDPOINT.equals(source.url()) || source.method() != HttpMethod.POST || source.body() == null
+            if (!profile.endpoint().equals(source.url()) || source.method() != HttpMethod.POST || source.body() == null
                     || bytes(source.body()) > BYTE_CAP) throw denied();
             var tree = GeminiLlmProviderAdapter.JSON.readTree(source.body());
             if (!fields(tree).equals(Set.of("contents", "systemInstruction", "generationConfig"))) throw denied();
@@ -85,11 +108,14 @@ final class GeminiExtractionProtocol {
                     "responseLogprobs", "enableEnhancedCivicAnswers")) || !config.path("candidateCount").equals(
                     GeminiLlmProviderAdapter.JSON.getNodeFactory().numberNode(1))) throw denied();
             ((ObjectNode) config).remove("candidateCount");
-            return HttpRequest.builder().url(ENDPOINT).method(HttpMethod.POST).body(tree.toString()).build();
+            return HttpRequest.builder().url(profile.endpoint()).method(HttpMethod.POST).body(tree.toString()).build();
         } catch (Exception failure) { throw denied(); }
     }
     static HttpRequest admit(HttpRequest source, String reservedBody) {
-        var normalized = normalize(source);
+        return admit(source, reservedBody, GeminiLocalModelProfile.FLASH_35_LITE);
+    }
+    static HttpRequest admit(HttpRequest source, String reservedBody, GeminiLocalModelProfile profile) {
+        var normalized = normalize(source, profile);
         if (!normalized.body().equals(reservedBody)) throw denied();
         for (var header : source.headers().keySet()) if (!Set.of("content-type", "accept", "x-goog-api-key", "user-agent")
                 .contains(header.toLowerCase(Locale.ROOT))) throw denied();

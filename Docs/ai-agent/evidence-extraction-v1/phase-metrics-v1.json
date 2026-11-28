@@ -1,0 +1,763 @@
+{
+  "TECHNICAL": {
+    "planned": 1,
+    "attempted": 1,
+    "notRun": 0,
+    "primaryHttp200": 1,
+    "rawSchemaValid": 1,
+    "completeEvidence": 1,
+    "requestMeaningCorrect": 1,
+    "rawExact": 1,
+    "canonicalTypedValid": 1,
+    "exactBusinessSemantics": 1,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceMembership": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 1,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "actionCorrect": 1,
+    "intentCorrect": 1,
+    "criteriaCorrect": 1,
+    "missingSlotsCorrect": 1,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 1,
+      "mean": 8561,
+      "median": 8561,
+      "p95": 8561,
+      "maximum": 8561,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 1,
+      "mean": 8574,
+      "median": 8574,
+      "p95": 8574,
+      "maximum": 8574,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 1,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 359,
+    "knownCandidateOutputTokens": 48,
+    "knownTotalTokens": 407,
+    "actualReportedModelIdentities": [
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 1
+  },
+  "DIAGNOSTIC": {
+    "planned": 8,
+    "attempted": 8,
+    "notRun": 0,
+    "primaryHttp200": 8,
+    "rawSchemaValid": 8,
+    "completeEvidence": 7,
+    "requestMeaningCorrect": 8,
+    "rawExact": 7,
+    "canonicalTypedValid": 7,
+    "exactBusinessSemantics": 7,
+    "compilerRejections": 1,
+    "evidenceValidationRejections": 1,
+    "completenessRejections": 1,
+    "missingEvidence": 1,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 2,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 19,
+      "denominator": 21,
+      "rate": 0.9047619047619048
+    },
+    "evidenceRecall": {
+      "numerator": 19,
+      "denominator": 20,
+      "rate": 0.95
+    },
+    "evidenceMembership": {
+      "numerator": 21,
+      "denominator": 21,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 19,
+      "denominator": 21,
+      "rate": 0.9047619047619048
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1.0
+      },
+      "PRICE": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "STAY_DATES": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "ADULTS": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "CHILDREN": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "ROOMS": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "UNSUPPORTED": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "REFERENCE": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0.0
+      },
+      "REMOVAL": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 7,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 1
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 7,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 7,
+      "denominator": 7,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 7,
+      "denominator": 8,
+      "rate": 0.875
+    },
+    "actionCorrect": 7,
+    "intentCorrect": 7,
+    "criteriaCorrect": 7,
+    "missingSlotsCorrect": 7,
+    "referencePriceCorrect": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 8,
+      "mean": 2803.375,
+      "median": 2063.5,
+      "p95": 6992,
+      "maximum": 6992,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 8,
+      "mean": 4806,
+      "median": 5069.0,
+      "p95": 7467,
+      "maximum": 7467,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 8,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 2982,
+    "knownCandidateOutputTokens": 683,
+    "knownTotalTokens": 3665,
+    "actualReportedModelIdentities": [
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 8
+  },
+  "DIAGNOSTIC_R2": {
+    "planned": 2,
+    "attempted": 2,
+    "notRun": 0,
+    "primaryHttp200": 2,
+    "rawSchemaValid": 2,
+    "completeEvidence": 2,
+    "requestMeaningCorrect": 2,
+    "rawExact": 2,
+    "canonicalTypedValid": 2,
+    "exactBusinessSemantics": 2,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceMembership": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "REFERENCE": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 2,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "actionCorrect": 2,
+    "intentCorrect": 2,
+    "criteriaCorrect": 2,
+    "missingSlotsCorrect": 2,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 2,
+      "mean": 3989.5,
+      "median": 3989.5,
+      "p95": 5466,
+      "maximum": 5466,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 2,
+      "mean": 4001.5,
+      "median": 4001.5,
+      "p95": 5485,
+      "maximum": 5485,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 2,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 849,
+    "knownCandidateOutputTokens": 74,
+    "knownTotalTokens": 923,
+    "actualReportedModelIdentities": [
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 2
+  },
+  "COMPARISON": {
+    "planned": 32,
+    "attempted": 10,
+    "notRun": 22,
+    "primaryHttp200": 6,
+    "rawSchemaValid": 6,
+    "completeEvidence": 6,
+    "requestMeaningCorrect": 6,
+    "rawExact": 6,
+    "canonicalTypedValid": 6,
+    "exactBusinessSemantics": 6,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 13,
+      "denominator": 26,
+      "rate": 0.5
+    },
+    "evidenceMembership": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 3,
+        "denominator": 6,
+        "rate": 0.5
+      },
+      "PRICE": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      },
+      "STAY_DATES": {
+        "numerator": 1,
+        "denominator": 3,
+        "rate": 0.3333333333333333
+      },
+      "ADULTS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "CHILDREN": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "ROOMS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "UNSUPPORTED": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "REFERENCE": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0.0
+      },
+      "REMOVAL": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 6,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 4
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 6,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 6,
+      "denominator": 10,
+      "rate": 0.6
+    },
+    "actionCorrect": 6,
+    "intentCorrect": 6,
+    "criteriaCorrect": 6,
+    "missingSlotsCorrect": 6,
+    "referencePriceCorrect": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 10,
+      "mean": 6230.5,
+      "median": 8163.0,
+      "p95": 10008,
+      "maximum": 10008,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 10,
+      "mean": 7189.8,
+      "median": 8219.0,
+      "p95": 12645,
+      "maximum": 12645,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 10,
+    "providerFailures": 4,
+    "timeouts": 3,
+    "unknownUsage": 4,
+    "knownInputTokens": 2597,
+    "knownCandidateOutputTokens": 417,
+    "knownTotalTokens": 3014,
+    "actualReportedModelIdentities": [
+      "NOT_REPORTED",
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 10
+  },
+  "FROZEN40": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40,
+    "primaryHttp200": 0,
+    "rawSchemaValid": 0,
+    "completeEvidence": 0,
+    "requestMeaningCorrect": 0,
+    "rawExact": 0,
+    "canonicalTypedValid": 0,
+    "exactBusinessSemantics": 0,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceRecall": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceMembership": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "retentionByType": {},
+    "backendConfusion": {
+      "correctAccepted": 0,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "admissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 0,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 0,
+    "knownCandidateOutputTokens": 0,
+    "knownTotalTokens": 0,
+    "actualReportedModelIdentities": [],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 0
+  },
+  "FRESH": {
+    "planned": 20,
+    "attempted": 0,
+    "notRun": 20,
+    "primaryHttp200": 0,
+    "rawSchemaValid": 0,
+    "completeEvidence": 0,
+    "requestMeaningCorrect": 0,
+    "rawExact": 0,
+    "canonicalTypedValid": 0,
+    "exactBusinessSemantics": 0,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceRecall": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceMembership": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "retentionByType": {},
+    "backendConfusion": {
+      "correctAccepted": 0,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "admissionPrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "actionCorrect": 0,
+    "intentCorrect": 0,
+    "criteriaCorrect": 0,
+    "missingSlotsCorrect": 0,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 0,
+      "mean": null,
+      "median": null,
+      "p95": null,
+      "maximum": null,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 0,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 0,
+    "knownCandidateOutputTokens": 0,
+    "knownTotalTokens": 0,
+    "actualReportedModelIdentities": [],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 0
+  }
+}

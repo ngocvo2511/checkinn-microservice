@@ -1,0 +1,765 @@
+{
+  "version": "live-compatibility-analysis-v1",
+  "batchStatus": "COMPATIBILITY_FIXED_SMOKE_FAILED",
+  "compatibilityStatus": "COMPATIBILITY_FIX_DONE",
+  "initialSmokeStatus": "FAILED",
+  "mainStatus": "NOT_RUN_SMOKE_GATE_FAILED",
+  "review": "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "model": "gemini-3.5-flash-lite",
+  "protocolVersion": "vietnamese-extraction-compact-v1",
+  "promptChanged": false,
+  "schemaChanged": false,
+  "phases": {
+    "COMPATIBILITY_DIAGNOSTIC": {
+      "planned": 2,
+      "attempted": 2,
+      "notRun": 0,
+      "httpSuccess": 2,
+      "httpFailure": 0,
+      "envelopeValid": 1,
+      "sdkParseSuccess": 1,
+      "schemaValid": 1,
+      "schemaInvalid": 0,
+      "preExtractionFailures": 1,
+      "actionAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "intentAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "criteriaAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "missingSlotsAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "referenceAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "exactSemanticAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "schemaValidOnlySemanticAccuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "percent": 100.0
+      },
+      "fieldAccuracy": {
+        "cityName": {
+          "numerator": 1,
+          "denominator": 2,
+          "percent": 50.0
+        }
+      },
+      "clarificationAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "referenceExtractionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "backendAccepted": 1,
+      "backendNotEvaluated": 1,
+      "modelBackendMatrix": {
+        "correctAccepted": 1,
+        "correctRejected": 0,
+        "incorrectAccepted": 0,
+        "incorrectRejected": 0
+      },
+      "semanticFalseAcceptance": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "semanticFalseRejection": {
+        "numerator": 0,
+        "denominator": 1,
+        "percent": 0.0
+      },
+      "categories": {
+        "automatic-browse": {
+          "planned": 2,
+          "attempted": 2,
+          "exactSemantics": 1
+        }
+      },
+      "latencyMillis": {
+        "n": 2,
+        "mean": 2757,
+        "median": 2757.0,
+        "p95NearestRank": 2787,
+        "max": 2787
+      },
+      "usage": {
+        "inputTokens": 214,
+        "outputTokens": 79,
+        "totalTokens": 293,
+        "unknownAttempts": 1,
+        "knownAttempts": 1,
+        "thinkingTokens": null,
+        "thinkingAvailability": "NOT_REPORTED"
+      }
+    },
+    "INITIAL_SMOKE": {
+      "planned": 3,
+      "attempted": 2,
+      "notRun": 1,
+      "httpSuccess": 2,
+      "httpFailure": 0,
+      "envelopeValid": 2,
+      "sdkParseSuccess": 2,
+      "schemaValid": 2,
+      "schemaInvalid": 0,
+      "preExtractionFailures": 0,
+      "actionAccuracy": {
+        "numerator": 2,
+        "denominator": 2,
+        "percent": 100.0
+      },
+      "intentAccuracy": {
+        "numerator": 2,
+        "denominator": 2,
+        "percent": 100.0
+      },
+      "criteriaAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "missingSlotsAccuracy": {
+        "numerator": 2,
+        "denominator": 2,
+        "percent": 100.0
+      },
+      "referenceAccuracy": {
+        "numerator": 2,
+        "denominator": 2,
+        "percent": 100.0
+      },
+      "exactSemanticAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "schemaValidOnlySemanticAccuracy": {
+        "numerator": 1,
+        "denominator": 2,
+        "percent": 50.0
+      },
+      "fieldAccuracy": {
+        "adults": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "checkIn": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "checkOut": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "children": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "cityName": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0
+        },
+        "maxPrice": {
+          "numerator": 1,
+          "denominator": 1,
+          "percent": 100.0
+        },
+        "referencePriceExclusive": {
+          "numerator": 0,
+          "denominator": 1,
+          "percent": 0.0
+        },
+        "rooms": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        }
+      },
+      "clarificationAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "referenceExtractionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "backendAccepted": 1,
+      "backendNotEvaluated": 0,
+      "modelBackendMatrix": {
+        "correctAccepted": 1,
+        "correctRejected": 0,
+        "incorrectAccepted": 0,
+        "incorrectRejected": 1
+      },
+      "semanticFalseAcceptance": {
+        "numerator": 0,
+        "denominator": 1,
+        "percent": 0.0
+      },
+      "semanticFalseRejection": {
+        "numerator": 0,
+        "denominator": 1,
+        "percent": 0.0
+      },
+      "categories": {
+        "automatic-browse": {
+          "planned": 1,
+          "attempted": 1,
+          "exactSemantics": 1
+        },
+        "complete-search": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "reference-price": {
+          "planned": 1,
+          "attempted": 1,
+          "exactSemantics": 0
+        }
+      },
+      "latencyMillis": {
+        "n": 2,
+        "mean": 2543,
+        "median": 2543.0,
+        "p95NearestRank": 3270,
+        "max": 3270
+      },
+      "usage": {
+        "inputTokens": 435,
+        "outputTokens": 190,
+        "totalTokens": 625,
+        "unknownAttempts": 0,
+        "knownAttempts": 2,
+        "thinkingTokens": null,
+        "thinkingAvailability": "NOT_REPORTED"
+      }
+    },
+    "VIETNAMESE_NLU": {
+      "planned": 40,
+      "attempted": 0,
+      "notRun": 40,
+      "httpSuccess": 0,
+      "httpFailure": 0,
+      "envelopeValid": 0,
+      "sdkParseSuccess": 0,
+      "schemaValid": 0,
+      "schemaInvalid": 0,
+      "preExtractionFailures": 0,
+      "actionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "intentAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "criteriaAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "missingSlotsAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "referenceAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "exactSemanticAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "schemaValidOnlySemanticAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "fieldAccuracy": {
+        "adults": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "checkIn": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "checkOut": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "children": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "cityName": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "maxPrice": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "minPrice": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "referencePriceExclusive": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "rooms": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "starRatings": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        }
+      },
+      "clarificationAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "referenceExtractionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "backendAccepted": 0,
+      "backendNotEvaluated": 0,
+      "modelBackendMatrix": {
+        "correctAccepted": 0,
+        "correctRejected": 0,
+        "incorrectAccepted": 0,
+        "incorrectRejected": 0
+      },
+      "semanticFalseAcceptance": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "semanticFalseRejection": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "categories": {
+        "ambiguous-destination": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "ambiguous-occupancy": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "ambiguous-people": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "automatic-browse": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "availability": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "comparison": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "complete-search": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "criteria-clearing": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "criteria-replacement": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "date-inversion": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "destination": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "explicit-browse": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "explicit-occupancy": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "hotel-reference": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "informal": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "invalid-count": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "invalid-date": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "invalid-price": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "missing-check-in": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "missing-check-out": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "missing-checkout": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "missing-destination": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "missing-occupancy": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "natural-paraphrase": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "no-accents": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "number-price": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "price-availability": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "reference-price": {
+          "planned": 2,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "refinement": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "refinement-clear-stars": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "room-reference": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "selected-room": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "star-rating": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        },
+        "unsupported-amenity": {
+          "planned": 1,
+          "attempted": 0,
+          "exactSemantics": 0
+        }
+      },
+      "latencyMillis": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p95NearestRank": null,
+        "max": null
+      },
+      "usage": {
+        "inputTokens": null,
+        "outputTokens": null,
+        "totalTokens": null,
+        "unknownAttempts": 0,
+        "knownAttempts": 0,
+        "thinkingTokens": null,
+        "thinkingAvailability": "NOT_RUN"
+      }
+    },
+    "SUPPLEMENTAL": {
+      "planned": 3,
+      "attempted": 3,
+      "notRun": 0,
+      "httpSuccess": 3,
+      "httpFailure": 0,
+      "envelopeValid": 3,
+      "sdkParseSuccess": 3,
+      "schemaValid": 3,
+      "schemaInvalid": 0,
+      "preExtractionFailures": 0,
+      "actionAccuracy": {
+        "numerator": 3,
+        "denominator": 3,
+        "percent": 100.0
+      },
+      "intentAccuracy": {
+        "numerator": 3,
+        "denominator": 3,
+        "percent": 100.0
+      },
+      "criteriaAccuracy": {
+        "numerator": 0,
+        "denominator": 3,
+        "percent": 0.0
+      },
+      "missingSlotsAccuracy": {
+        "numerator": 3,
+        "denominator": 3,
+        "percent": 100.0
+      },
+      "referenceAccuracy": {
+        "numerator": 3,
+        "denominator": 3,
+        "percent": 100.0
+      },
+      "exactSemanticAccuracy": {
+        "numerator": 0,
+        "denominator": 3,
+        "percent": 0.0
+      },
+      "schemaValidOnlySemanticAccuracy": {
+        "numerator": 0,
+        "denominator": 3,
+        "percent": 0.0
+      },
+      "fieldAccuracy": {
+        "cityName": {
+          "numerator": 3,
+          "denominator": 3,
+          "percent": 100.0
+        },
+        "maxPrice": {
+          "numerator": 3,
+          "denominator": 3,
+          "percent": 100.0
+        },
+        "referencePriceExclusive": {
+          "numerator": 0,
+          "denominator": 3,
+          "percent": 0.0
+        }
+      },
+      "clarificationAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "referenceExtractionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "backendAccepted": 0,
+      "backendNotEvaluated": 0,
+      "modelBackendMatrix": {
+        "correctAccepted": 0,
+        "correctRejected": 0,
+        "incorrectAccepted": 0,
+        "incorrectRejected": 3
+      },
+      "semanticFalseAcceptance": {
+        "numerator": 0,
+        "denominator": 3,
+        "percent": 0.0
+      },
+      "semanticFalseRejection": {
+        "numerator": 0,
+        "denominator": 0,
+        "percent": null
+      },
+      "categories": {
+        "number-price": {
+          "planned": 1,
+          "attempted": 1,
+          "exactSemantics": 0
+        },
+        "reference-price": {
+          "planned": 2,
+          "attempted": 2,
+          "exactSemantics": 0
+        }
+      },
+      "latencyMillis": {
+        "n": 3,
+        "mean": 2410.33,
+        "median": 1889,
+        "p95NearestRank": 3560,
+        "max": 3560
+      },
+      "usage": {
+        "inputTokens": 660,
+        "outputTokens": 330,
+        "totalTokens": 990,
+        "unknownAttempts": 0,
+        "knownAttempts": 3,
+        "thinkingTokens": null,
+        "thinkingAvailability": "NOT_REPORTED"
+      }
+    }
+  },
+  "budget": {
+    "hardCap": 60,
+    "actualAttempts": 7,
+    "automaticRetries": 0,
+    "phaseCounts": {
+      "COMPATIBILITY_DIAGNOSTIC": 2,
+      "INITIAL_SMOKE": 2,
+      "VIETNAMESE_NLU": 0,
+      "SUPPLEMENTAL": 3
+    },
+    "minDispatchSpacingSeconds": 5.008,
+    "maxRequestsRolling60s": 3,
+    "maxReservedTokensRolling60s": 52224,
+    "firstDispatch": "2026-11-24T07:17:41.723929+00:00",
+    "lastDispatch": "2026-11-24T07:27:46.872931+00:00",
+    "liveWallMillis": 606931,
+    "rateLimitWaitMillis": 5701,
+    "runLoopDurationMillis": 24422
+  },
+  "allAttemptLatencyMillis": {
+    "n": 7,
+    "mean": 2547.29,
+    "median": 2727,
+    "p95NearestRank": 3560,
+    "max": 3560
+  },
+  "usageAsOriginallyRecorded": {
+    "inputTokens": 1309,
+    "outputTokens": 599,
+    "totalTokens": 1908,
+    "unknownAttempts": 1,
+    "knownAttempts": 6,
+    "thinkingTokens": null,
+    "thinkingAvailability": "NOT_REPORTED"
+  },
+  "usageIncludingOfflineRecoveredDiagnostic01": {
+    "promptTokenCount": 1523,
+    "candidatesTokenCount": 678,
+    "totalTokenCount": 2201
+  },
+  "usageRecoveryNote": "Diagnostic01 immutable row remains UNKNOWN. Its recorded raw counters were subsequently accepted in offline regression by the fixed shared validator: input214/candidate79/total293. Recovery is not another HTTP attempt. Detail counts overlap and are not added. Thinking counters absent, not observed zero.",
+  "safety": {
+    "domainCalls": 0,
+    "supabaseCalls": 0,
+    "unauthorizedReads": 0,
+    "unauthorizedWrites": 0,
+    "toolExecutions": 0,
+    "unsafeFlagsObserved": 0,
+    "fabricatedProvenanceObserved": 0,
+    "unsupportedConfirmationsObserved": 0,
+    "realDataTransmitted": 0,
+    "injectionResistance": "NOT_TESTED",
+    "denyFixturesSent": 0
+  },
+  "limitations": [
+    "40 primary samples NOT_RUN; broad Vietnamese quality and category accuracy not assessable.",
+    "Single-utterance extraction/corroboration only; full conversation, selected identity resolution and FULL_AGENT_E2E NOT_RUN.",
+    "Visible technical review, not independent human review or blinded holdout.",
+    "D07/D08 unaccepted; no production readiness claim.",
+    "Historical first failed raw response unavailable; current reproduced defect does not prove historical exact cause."
+  ]
+}

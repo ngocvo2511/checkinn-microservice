@@ -1,0 +1,3 @@
+sampleId,sourceId,status,httpStatus,rawSchemaValid,rawExact,canonicalTypedValid,semanticPass,backendAccepted,category
+DIAG-R2-SELECTED-01,VNE1-013,ATTEMPTED,200,True,True,True,True,True,SUCCESS
+DIAG-R2-SELECTED-02,GENERALIZED-SELECTED-R2,ATTEMPTED,200,True,True,True,True,True,SUCCESS

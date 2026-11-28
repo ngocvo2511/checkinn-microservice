@@ -1,0 +1,30 @@
+{
+  "version": "vietnamese-evidence-v1",
+  "revision": "candidate-r2-reference-phrase",
+  "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+  "primaryDevelopmentModel": "gemini-3.5-flash-lite",
+  "ordinaryRuntime": "OFF/FAKE/liveOFF",
+  "promptHash": "a1f3fdb23e515205835f8d484ea1072ac7199deef6ac736259a7b18adb380c7f",
+  "schemaHash": "924ca6a59dfa8b9df0080b620a939b7cfa218cfc24fb9991cd5672a2deabac9e",
+  "freshHash": "6cf41670b74d44f52d27beb8be5519e5911d11fe0ab445801308e59edcf3e42a",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "sources": {
+    "ai-agent-service/src/main/java/com/example/aiagent/model/VietnameseEvidenceCompiler.java": "67d9af12b6be81eb2deb153b0fd6f7722d8c88ca8b86d375ce4114f3e9b9cb8f",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiEvidenceEvaluation.java": "2fd540ce1717bbb196d35ce0ff056610ac8b548f74d0493261b9eb727496aca5",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalFallbackEvaluation.java": "455fc92881c642823ab21a7a5235df9a4dd564ccd1a1fa942a49157052eb1d15",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiHttpTransport.java": "670c9fdb175813fea9e97a41786d68ba244db695169334b9aba9a4dc43b8125e",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionSmoke.java": "14f8608004288b5cfaa4375686526ba91921b1d00342196bed6a04699044c3ac",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionProtocol.java": "e93852d99c70ff0faa24e9fd4e67a21930536f6029788a0818873d76975afe19",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalExtractionContract.java": "225b991159860d989f67da01927943fde5d338c0efe20dd1c4217b2ff03f7f81",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalFailurePolicy.java": "275c5df162f500c16892769df81908ed7674c8ace9628406582cb704cf712b29",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalModelFallback.java": "ecaa9a73d07ddf5d2ab6d0049d5a80628f9eaf9281df82d6bc832a27d15095b6",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalModelProfile.java": "4ff8c1af42c3794519b592e92e4514838d58b3c9f2ec46214754a08936ae89d4",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseParser.java": "000ae1477b664dd4705e173f44774bcb0c6c253dd6aece43fe460c5f82b20f56",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseExtraction.java": "515a46903679df06f7601d161e69b925bc20db4e08140ad8d5539825df967231",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/DestinationLabels.java": "63c9acfe90de5e617686f8b6f17475eda157ad528605d2da448ad3350753cc1b",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseNumbers.java": "96f2f9fea951c76c4b28a8efd6828f0fd2221c69b64efb5a35ad686c3a84efc4",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/ReadIntentRouting.java": "c8a793ddcab0ee2c7f31dc599e7d0533b7e3c7bcdf5485287eb2c58e290ade25",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/ComparisonRouting.java": "45ab0eabba3c89e5e639e2f64b07525e0a2e138fbc3795318dcc5d57c78cc5f7"
+  }
+}

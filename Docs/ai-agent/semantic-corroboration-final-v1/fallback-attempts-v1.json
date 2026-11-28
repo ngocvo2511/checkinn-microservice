@@ -1,0 +1,371 @@
+[
+  {
+    "sampleId": "VNE1-051",
+    "sourceId": "VNE1-051",
+    "phase": "REMAINING_A",
+    "protocolVersion": "vietnamese-extraction-compact-v3",
+    "utterance": "Không cần giới hạn số sao nữa",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "REFINE",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "expectedExtraction": {
+      "action": "CRITERIA",
+      "intent": "REFINE",
+      "fields": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "attemptId": "ATT-018",
+    "requestedPrimaryModel": "gemini-3.5-flash-lite",
+    "actualModel": "gemini-3.5-flash-lite",
+    "fallbackIndex": 0,
+    "previousAttemptId": "",
+    "trigger": "FIXED_AVAILABILITY_SEGMENT",
+    "status": "ATTEMPTED",
+    "httpStatus": 503,
+    "actualUsageStatus": "UNKNOWN",
+    "budgetPhase": "REMAINING_A",
+    "dispatchAt": "2026-11-24T10:10:05.805248Z",
+    "dispatchOffsetMillis": 90102,
+    "reservedInputTokens": 16384,
+    "reservedOutputTokens": 1024,
+    "requestDigest": "70190dadc34c182da51e3f80f60bcb43678348d42f734483dc63c082367e6a40",
+    "callTerminated": true,
+    "providerErrorBody": "{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+    "apiSuccess": false,
+    "schemaValid": false,
+    "semanticPass": false,
+    "backendAccepted": false,
+    "category": "UNAVAILABLE",
+    "latencyMillis": 2094,
+    "unsafe": false,
+    "unauthorizedTool": false,
+    "confirmation": false,
+    "actual": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$12:150"
+    },
+    "inputTokens": null,
+    "outputTokens": null,
+    "totalTokens": null,
+    "continuationReason": "PROVIDER_CAPACITY_FALLBACK",
+    "cooldownSeconds": 15
+  },
+  {
+    "sampleId": "VNE1-051",
+    "sourceId": "VNE1-051",
+    "phase": "REMAINING_A",
+    "protocolVersion": "vietnamese-extraction-compact-v3",
+    "utterance": "Không cần giới hạn số sao nữa",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "REFINE",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "expectedExtraction": {
+      "action": "CRITERIA",
+      "intent": "REFINE",
+      "fields": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "attemptId": "ATT-019",
+    "requestedPrimaryModel": "gemini-3.5-flash-lite",
+    "actualModel": "gemini-3.1-flash-lite",
+    "fallbackIndex": 1,
+    "previousAttemptId": "ATT-018",
+    "trigger": "PROVIDER_CAPACITY_FALLBACK",
+    "status": "ATTEMPTED",
+    "httpStatus": 503,
+    "actualUsageStatus": "UNKNOWN",
+    "budgetPhase": "FALLBACK_RESERVE",
+    "dispatchAt": "2026-11-24T10:10:22.908618600Z",
+    "dispatchOffsetMillis": 107205,
+    "reservedInputTokens": 16384,
+    "reservedOutputTokens": 1024,
+    "requestDigest": "70190dadc34c182da51e3f80f60bcb43678348d42f734483dc63c082367e6a40",
+    "callTerminated": true,
+    "providerErrorBody": "{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+    "apiSuccess": false,
+    "schemaValid": false,
+    "semanticPass": false,
+    "backendAccepted": false,
+    "category": "UNAVAILABLE",
+    "latencyMillis": 6582,
+    "unsafe": false,
+    "unauthorizedTool": false,
+    "confirmation": false,
+    "actual": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$12:150"
+    },
+    "inputTokens": null,
+    "outputTokens": null,
+    "totalTokens": null,
+    "continuationReason": "PROVIDER_CAPACITY_FALLBACK",
+    "cooldownSeconds": 15
+  },
+  {
+    "sampleId": "VNE1-051",
+    "sourceId": "VNE1-051",
+    "phase": "REMAINING_A",
+    "protocolVersion": "vietnamese-extraction-compact-v3",
+    "utterance": "Không cần giới hạn số sao nữa",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "REFINE",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "expectedExtraction": {
+      "action": "CRITERIA",
+      "intent": "REFINE",
+      "fields": {
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "attemptId": "ATT-020",
+    "requestedPrimaryModel": "gemini-3.5-flash-lite",
+    "actualModel": "gemini-2.5-flash-lite",
+    "fallbackIndex": 2,
+    "previousAttemptId": "ATT-019",
+    "trigger": "PROVIDER_CAPACITY_FALLBACK",
+    "status": "ATTEMPTED",
+    "httpStatus": 400,
+    "actualUsageStatus": "UNKNOWN",
+    "budgetPhase": "FALLBACK_RESERVE",
+    "dispatchAt": "2026-11-24T10:10:44.518305800Z",
+    "dispatchOffsetMillis": 128817,
+    "reservedInputTokens": 16384,
+    "reservedOutputTokens": 1024,
+    "requestDigest": "70190dadc34c182da51e3f80f60bcb43678348d42f734483dc63c082367e6a40",
+    "callTerminated": true,
+    "providerErrorBody": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"The specified schema produces a constraint that has too many states for serving. Typical causes of this error are schemas with lots of text (for example, very long property or enum names), schemas with long array length limits (especially when nested), or schemas using complex value matchers (for example, integers or numbers with minimum/maximum bounds or strings with complex formats like date-time)\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n",
+    "apiSuccess": false,
+    "schemaValid": false,
+    "semanticPass": false,
+    "backendAccepted": false,
+    "category": "UNAVAILABLE",
+    "latencyMillis": 1027,
+    "unsafe": false,
+    "unauthorizedTool": false,
+    "confirmation": false,
+    "actual": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$12:150"
+    },
+    "inputTokens": null,
+    "outputTokens": null,
+    "totalTokens": null,
+    "continuationReason": "HTTP_400_STOP",
+    "cooldownSeconds": 0
+  },
+  {
+    "sampleId": "GEN-10",
+    "sourceId": "VNE1-011",
+    "phase": "SUPPLEMENTAL",
+    "protocolVersion": "vietnamese-semantic-v1",
+    "utterance": "Tìm khách sạn có hồ bơi ở Huế",
+    "expected": {
+      "action": "CLARIFY",
+      "criteria": {},
+      "inferredFields": [],
+      "intent": "CLARIFY",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "expectedExtraction": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "attemptId": "ATT-093",
+    "requestedPrimaryModel": "gemini-3.5-flash-lite",
+    "actualModel": "gemini-3.5-flash-lite",
+    "fallbackIndex": 0,
+    "previousAttemptId": "",
+    "trigger": "FIXED_AVAILABILITY_SEGMENT",
+    "wireVersion": "original-sdk-wire-v1",
+    "status": "ATTEMPTED",
+    "httpStatus": 503,
+    "actualUsageStatus": "UNKNOWN",
+    "budgetPhase": "SUPPLEMENTAL",
+    "dispatchAt": "2026-11-24T10:25:14.834057100Z",
+    "dispatchOffsetMillis": 125120,
+    "reservedInputTokens": 16384,
+    "reservedOutputTokens": 1024,
+    "requestDigest": "d588676ed16b301cf0781d51b3622944e50c6c4d282f629eb01b3ada08de2c0a",
+    "callTerminated": true,
+    "providerErrorBody": "{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
+    "apiSuccess": false,
+    "schemaValid": false,
+    "semanticPass": false,
+    "backendAccepted": false,
+    "category": "UNAVAILABLE",
+    "latencyMillis": 895,
+    "unsafe": false,
+    "unauthorizedTool": false,
+    "confirmation": false,
+    "actual": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$16:197"
+    },
+    "inputTokens": null,
+    "outputTokens": null,
+    "totalTokens": null,
+    "continuationReason": "PROVIDER_CAPACITY_FALLBACK",
+    "cooldownSeconds": 15,
+    "rawSemanticExpected": {
+      "intent": "CLARIFY",
+      "issues": [
+        "UNSUPPORTED_FILTER"
+      ]
+    },
+    "rawSemanticPass": false
+  },
+  {
+    "sampleId": "GEN-10",
+    "sourceId": "VNE1-011",
+    "phase": "SUPPLEMENTAL",
+    "protocolVersion": "vietnamese-semantic-v1",
+    "utterance": "Tìm khách sạn có hồ bơi ở Huế",
+    "expected": {
+      "action": "CLARIFY",
+      "criteria": {},
+      "inferredFields": [],
+      "intent": "CLARIFY",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "expectedExtraction": {
+      "action": "CLARIFY",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "attemptId": "ATT-094",
+    "requestedPrimaryModel": "gemini-3.5-flash-lite",
+    "actualModel": "gemini-2.5-flash-lite",
+    "fallbackIndex": 2,
+    "previousAttemptId": "ATT-093",
+    "trigger": "PROVIDER_CAPACITY_FALLBACK",
+    "wireVersion": "gemini-25-bounded-wire-v1",
+    "status": "ATTEMPTED",
+    "httpStatus": 200,
+    "actualUsageStatus": "KNOWN",
+    "budgetPhase": "FALLBACK_RESERVE",
+    "dispatchAt": "2026-11-24T10:25:30.744506400Z",
+    "dispatchOffsetMillis": 141030,
+    "reservedInputTokens": 16384,
+    "reservedOutputTokens": 1024,
+    "requestDigest": "f436534e3c9ff9a2d68e427903f683c0ead299aef6d08bf2fdfdfe7e7870ba04",
+    "callTerminated": true,
+    "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-094.json",
+    "providerModelVersion": "gemini-2.5-flash-lite",
+    "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Huế\",\n  \"issues\": [\n    \"UNSUPPORTED_FILTER\"\n  ]\n}",
+    "semanticSchemaValid": true,
+    "compilerResult": "FAIL",
+    "semanticProposal": {
+      "intent": "SEARCH",
+      "destination": "Huế",
+      "issues": [
+        "UNSUPPORTED_FILTER"
+      ]
+    },
+    "apiSuccess": true,
+    "schemaValid": false,
+    "semanticPass": false,
+    "backendAccepted": false,
+    "category": "EXTRACTION_SCHEMA_INVALID",
+    "latencyMillis": 973,
+    "unsafe": false,
+    "unauthorizedTool": false,
+    "confirmation": false,
+    "actual": null,
+    "pipeline": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseSemanticCompiler.compile:124"
+    },
+    "inputTokens": 444,
+    "outputTokens": 38,
+    "totalTokens": 482,
+    "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+    "cooldownSeconds": 0,
+    "rawSemanticExpected": {
+      "intent": "CLARIFY",
+      "issues": [
+        "UNSUPPORTED_FILTER"
+      ]
+    },
+    "rawSemanticPass": false,
+    "rawSemanticIntentPass": false,
+    "rawSemanticActionPass": false,
+    "rawMeaningCriteriaPass": false
+  }
+]

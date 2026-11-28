@@ -1,0 +1,35 @@
+{
+  "label": "TARGETED_DIAGNOSTIC_ONLY_NOT_PRIMARY40",
+  "sameInputs": 5,
+  "FAIL_TO_PASS": 0,
+  "PASS_TO_FAIL": 1,
+  "PASS_TO_PASS": 1,
+  "FAIL_TO_FAIL": 3,
+  "pairs": [
+    {
+      "sampleId": "DIAG4D-01",
+      "baselinePass": false,
+      "improvedPass": false
+    },
+    {
+      "sampleId": "DIAG4D-02",
+      "baselinePass": true,
+      "improvedPass": false
+    },
+    {
+      "sampleId": "DIAG4D-03",
+      "baselinePass": false,
+      "improvedPass": false
+    },
+    {
+      "sampleId": "DIAG4D-04",
+      "baselinePass": false,
+      "improvedPass": false
+    },
+    {
+      "sampleId": "DIAG4D-05",
+      "baselinePass": true,
+      "improvedPass": true
+    }
+  ]
+}

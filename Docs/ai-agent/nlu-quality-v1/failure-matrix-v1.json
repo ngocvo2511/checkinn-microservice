@@ -1,0 +1,403 @@
+[
+  {
+    "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+    "version": "vietnamese-extraction-compact-v2",
+    "sampleId": "DIAG4D-01",
+    "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [
+        "adults",
+        "checkIn",
+        "checkOut"
+      ],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+    "version": "vietnamese-extraction-compact-v2",
+    "sampleId": "DIAG4D-03",
+    "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 500000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 500000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+    "version": "vietnamese-extraction-compact-v2",
+    "sampleId": "DIAG4D-04",
+    "utterance": "Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1500000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1500000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+    "version": "vietnamese-extraction-compact-v3",
+    "sampleId": "DIAG4D-01",
+    "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+    "version": "vietnamese-extraction-compact-v3",
+    "sampleId": "DIAG4D-02",
+    "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1000000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1000000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+    "version": "vietnamese-extraction-compact-v3",
+    "sampleId": "DIAG4D-03",
+    "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 500000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 500000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+    "version": "vietnamese-extraction-compact-v3",
+    "sampleId": "DIAG4D-04",
+    "utterance": "Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1500000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Huế"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 1500000.0
+        },
+        "starRatings": {
+          "operation": "CLEAR"
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "model": "INCORRECT",
+    "backend": "REJECTED",
+    "rootCause": "H2_H3_HYPOTHESIS_MISSING_EXCLUSIVE_AND_SPURIOUS_CLEAR",
+    "severity": "QUALITY",
+    "proposedFix": "Investigate provider schema conditioning of exclusive versus starRatings; retain strict backend checks"
+  },
+  {
+    "runId": "7ff9f44a-af5f-4ba1-8eeb-c5a6bec825f7",
+    "version": "vietnamese-extraction-compact-v3",
+    "sampleId": "VEX1-02",
+    "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "criteria": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000.0
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "inferredFields": [],
+      "intent": "SEARCH",
+      "missingSlots": [],
+      "reference": ""
+    },
+    "actual": null,
+    "model": "NOT_EVALUATED",
+    "backend": "NOT_EVALUATED",
+    "rootCause": "H7_PROVIDER_NON_200_STATUS_NOT_RETAINED",
+    "severity": "BLOCKER",
+    "proposedFix": "Retain scalar HTTP status; no retry during unknown-usage stop"
+  }
+]

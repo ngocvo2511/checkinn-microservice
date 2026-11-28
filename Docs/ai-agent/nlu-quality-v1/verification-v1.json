@@ -1,0 +1,94 @@
+{
+  "status": "LIVE_TECHNICAL_BLOCKED",
+  "branch": "feat/ai-agent-vietnamese-nlu",
+  "HEAD": "4c1908063e40194b989cfbe1d0db598064ec3e7b",
+  "baseline": {
+    "tests": 987,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "final": {
+    "tests": 991,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "result": "BUILD SUCCESS",
+    "seconds": 55.976
+  },
+  "command": "mvn -o -B -ntp -pl ai-agent-service package",
+  "newTests": 4,
+  "modifiedTests": [
+    "GeminiLocalEvaluationTest",
+    "GeminiCompatibilityTest",
+    "GeminiTransportTest"
+  ],
+  "historical": {
+    "PASS": 23,
+    "FAIL": 16,
+    "NOT_APPLICABLE": 0,
+    "NOT_RUN": 1
+  },
+  "ordinaryDefaults": "OFF/FAKE/liveOFF",
+  "D07": "UNACCEPTED",
+  "D08": "UNACCEPTED",
+  "FULL_AGENT_E2E": "NOT_RUN",
+  "mavenOutboundGemini": "NONE",
+  "gitOperations": "NO_STAGE_COMMIT_PUSH_STASH_RESET_CLEAN",
+  "batchEditedFiles": [
+    "ai-agent-service/README.md",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionProtocol.java",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionSmoke.java",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalEvaluation.java",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalExtractionContract.java",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiHttpTransport.java",
+    "ai-agent-service/src/main/resources/gemini/nlu-quality-diagnostics-v1.json",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiNluQualityTest.java",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiLocalEvaluationTest.java",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiCompatibilityTest.java",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiTransportTest.java",
+    "Docs/ai-agent/BATCH10B4D_VIETNAMESE_NLU_QUALITY_IMPROVEMENT_REPORT.md",
+    "Docs/ai-agent/VIETNAMESE_NLU_LIVE_FAILURE_ANALYSIS_V2.md",
+    "Docs/ai-agent/VIETNAMESE_NLU_QUALITY_COMPARISON_V1.md"
+  ],
+  "evidenceFiles": [
+    "Docs/ai-agent/nlu-quality-v1/aggregate-metrics-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/all-attempted-performance-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/baseline40-observations-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/budget-accounting-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/contract-versions-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/diagnostic-observations-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/diagnostic-paired-comparison-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/diagnostic-partial-v2.json",
+    "Docs/ai-agent/nlu-quality-v1/diagnostics-v3.json",
+    "Docs/ai-agent/nlu-quality-v1/failure-matrix-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/improved40-observations-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/observations-v1.csv",
+    "Docs/ai-agent/nlu-quality-v1/offline-replay-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/paired-comparison-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/preserved-hashes-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/smoke-and-primary-v3.json",
+    "Docs/ai-agent/nlu-quality-v1/smoke-observations-v1.json",
+    "Docs/ai-agent/nlu-quality-v1/supplemental-observations-v1.json"
+  ],
+  "sourceSHA256": {
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionProtocol.java": "340ef3c3fbce674c175565eaf961ecd8a3cbb188807426bf93af1ec593cf0ae3",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionSmoke.java": "6704b22b8b4d7b214adc457838fc8863cae83a11131f0ee983510343796817fc",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalEvaluation.java": "3d1a031980925a8eae6c7035faa2a825d8f52b2987d0e629bee55eaef9355d4c",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalExtractionContract.java": "69689d496dae8e995afd178782f132e63c9e9db1f7423769fe74f7a13ddfba02",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiHttpTransport.java": "78253303d10244f615ba567e22b1d854da3973fbd9788d971a1d6aeecaf88dd1",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiNluQualityTest.java": "d3cd09b26d476e45aeea62dea3f5f1ca5b6046b46bd4b225bf2f3a6a09bc8245",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiLocalEvaluationTest.java": "93d9d20807d26edbd2e633a5540903ff0dab210f932f90793c7fbe1d73e8d999",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiCompatibilityTest.java": "1145204f0c7e187cb3d6702204309c855197ccf72f40381bffcbb8dac4409ed1",
+    "ai-agent-service/src/test/java/com/example/aiagent/model/GeminiTransportTest.java": "27bfc646f502049caedd1fda8c790edeb9f4afb2f34f0f4df4a82ea3b64f8f16"
+  },
+  "preservedHashesVerified": true,
+  "credentialScan": {
+    "exactActiveKeyHits": 0,
+    "keyPatternHits": 0,
+    "scope": "Batch new reports/evidence/local debug/new local source",
+    "result": "PASS"
+  },
+  "diffCheck": "PASS (pre-existing LF/CRLF warning in GeminiExtractionSession)",
+  "liveProcessesRemaining": 0
+}

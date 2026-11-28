@@ -1,0 +1,32 @@
+{
+  "ai-agent-service\\src\\main\\resources\\gemini\\extraction-candidates-v1.json": {
+    "expected": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3",
+    "actual": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3",
+    "preserved": true
+  },
+  "ai-agent-service\\src\\main\\resources\\gemini\\vietnamese-nlu-evaluation-candidates-v1.json": {
+    "expected": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+    "actual": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+    "preserved": true
+  },
+  "ai-agent-service\\src\\main\\resources\\gemini\\local-development-oracle-v1.json": {
+    "expected": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+    "actual": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+    "preserved": true
+  },
+  "ai-agent-service\\src\\test\\resources\\nlu\\historical-10a.json": {
+    "expected": "5a1b70efcbf18f7dadb0391e0db2a8105180f87c3860eeb721bfd89e43fcd15f",
+    "actual": "5a1b70efcbf18f7dadb0391e0db2a8105180f87c3860eeb721bfd89e43fcd15f",
+    "preserved": true
+  },
+  "Docs\\ai-agent\\LOCAL_GEMINI_EVALUATION_RUN_V1.json": {
+    "expected": "0b8fa752e8a0c0f8f59711710fee2fb4e77eb12948f9b6038a35f99268531a46",
+    "actual": "0b8fa752e8a0c0f8f59711710fee2fb4e77eb12948f9b6038a35f99268531a46",
+    "preserved": true
+  },
+  "Docs\\ai-agent\\LOCAL_GEMINI_EVALUATION_ANALYSIS_V1.json": {
+    "expected": "a939aca2815e32f86f97a9d2cf8eeb9efa4b213f0920f8cda2b329829f271d02",
+    "actual": "a939aca2815e32f86f97a9d2cf8eeb9efa4b213f0920f8cda2b329829f271d02",
+    "preserved": true
+  }
+}

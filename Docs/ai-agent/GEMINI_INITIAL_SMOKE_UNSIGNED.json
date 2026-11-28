@@ -1,0 +1,94 @@
+{
+  "algorithm": "Ed25519",
+  "signature": "UNSIGNED_NOT_APPROVED_NOT_EXECUTABLE",
+  "payload": {
+    "version": "operator-extraction-sequence-v2",
+    "issuer": "REPLACE_ISSUER",
+    "keyId": "REPLACE_KEY_ID",
+    "allocation": {
+      "id": "allocation-70049e97-1ad1-40e0-b5a5-80308ff450cd",
+      "project": "REPLACE_PROJECT",
+      "notBefore": "REPLACE_UTC_TIMESTAMP",
+      "expires": "REPLACE_UTC_TIMESTAMP",
+      "requests": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "exposure": 0,
+      "concurrency": 1,
+      "campaigns": []
+    },
+    "continuation": "STOP_ON_ANY_FAILURE",
+    "fixtureOrder": [
+      "VEX1-01",
+      "VEX1-02",
+      "VEX1-03"
+    ],
+    "approval": {
+      "version": "operator-extraction-approval-v1",
+      "issuer": "REPLACE_ISSUER",
+      "keyId": "REPLACE_KEY_ID",
+      "evaluationMode": "INITIAL_SMOKE",
+      "revocationPolicy": "DENY_ON_REVOCATION_OR_UNCERTAINTY",
+      "evidence": {
+        "projectReference": "UNVERIFIED_REPLACE",
+        "pricingReference": "UNVERIFIED_REPLACE",
+        "quotaReference": "UNVERIFIED_REPLACE",
+        "privacyReference": "UNVERIFIED_REPLACE",
+        "allocationReference": "UNVERIFIED_REPLACE",
+        "coordinatedWindowReference": "UNVERIFIED_REPLACE",
+        "verifiedAt": "UNVERIFIED_REPLACE",
+        "expires": "UNVERIFIED_REPLACE"
+      },
+      "review": {
+        "sessionId": "smoke-900b0ef3-a84f-4372-b37e-d64f1a381cf7",
+        "state": "DRAFT",
+        "purpose": "VIETNAMESE_EXTRACTION_SYNTHETIC",
+        "manifest": "7188532021d1c2151ccf0cc611cc49a437bb2dd53a26306bf66eba60cfcc75a3",
+        "model": "gemini-3.5-flash-lite",
+        "protocol": "vietnamese-extraction-compact-v1",
+        "classification": "SYNTHETIC_ONLY",
+        "operatorIdentity": "REPLACE_OPERATOR",
+        "approvalReference": "approval_a5671358-c154-40dc-b8de-7b4b024361d6",
+        "notBefore": "REPLACE_UTC_TIMESTAMP",
+        "expires": "REPLACE_UTC_TIMESTAMP",
+        "journalDirectory": "REPLACE_ABSOLUTE_TRUSTED_DIRECTORY",
+        "fixtures": {
+          "VEX1-01": {
+            "fixtureDigest": "5279d4cdca5b8e83934b4c3801774c4b6f2d745169fe2e7b10676bc2f5fd6847",
+            "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+            "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+            "requestDigest": "660335d24ae98c2bdd6280e8d8c34e10f8c523bb1b0fea2e5cf6bd61500c66b4"
+          },
+          "VEX1-02": {
+            "fixtureDigest": "49abf319fd49800e089d0140154a6283568108baa5a5971c2893cfdc690ffea9",
+            "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+            "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+            "requestDigest": "f6e56958121e8721ab7f5edf959133e176c501901e16b42f8f1dedd23cb83b96"
+          },
+          "VEX1-03": {
+            "fixtureDigest": "1daf2b48609ab18f7031a2a50fed4bd6bd7227c9d4da18e0e5f6d42435ac3a81",
+            "instructionDigest": "48b6b4eb7d57cbf1d13ce6a561bc0f82ff72a94de8c38a99ad9670754f64f8eb",
+            "schemaDigest": "d8617d8e373927d539535d5d4f3ac826b92f28bed14ae34d02cfa8350c554aa9",
+            "requestDigest": "9819a108e93dd7395d76c0f1408908bd6ab5eba368e1a314e4011c6bdcb80898"
+          }
+        },
+        "caps": {
+          "requests": 3,
+          "inputPerCall": 16384,
+          "outputPerCall": 1024,
+          "inputTotal": 49152,
+          "outputTotal": 3072,
+          "total": 52224,
+          "concurrency": 1,
+          "retries": 0,
+          "callTimeout": 10.0,
+          "processRequests": 9,
+          "exposureUsd": 0,
+          "inputRateUpperBound": 0,
+          "outputRateUpperBound": 0
+        }
+      }
+    }
+  }
+}

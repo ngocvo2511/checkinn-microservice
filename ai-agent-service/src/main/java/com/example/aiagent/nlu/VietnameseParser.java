@@ -31,13 +31,31 @@ public final class VietnameseParser {
         if (raw == null || raw.isBlank() || raw.getBytes(StandardCharsets.UTF_8).length > 4096
                 || raw.codePoints().anyMatch(c -> Character.getType(c) == Character.FORMAT || Character.getType(c) == Character.SURROGATE || Character.isISOControl(c) && !Character.isWhitespace(c)))
             throw new IllegalArgumentException("Invalid Vietnamese input");
+        destinations.validateReviewedMentions(raw);
         String text = normalize(raw);
+        // Bounded discovery clauses and edge politeness; unknown suffixes/constraints remain consumed below.
+        text = text.replaceFirst("^(?:minh|toi|tui) muon (?:kiem|tim) (?:mot )?", "tim ")
+                .replaceFirst("^(?:kiem|tim) giup (?:minh|toi|tui) ", "tim ")
+                .replaceFirst("^chi xem danh sach ", "tim ")
+                .replaceFirst("^cho (?:toi|minh|tui) xem (?:noi luu tru|cho nghi)", "tim khach san")
+                .replaceFirst("^co cho nao (?:ngu|nghi) ", "tim khach san ")
+                .replaceAll("\\b(?:cho nghi|noi luu tru)\\b", "khach san")
+                .replaceFirst(" (?:hong ban|khong ban|nha|nhe ban)[.!?]?$", "");
+        // Complete explicit removal clauses only; never strip a suffix containing another constraint.
+        text = text.replaceFirst("^(bo|xoa|khong can) gioi han (gia|so sao)(?: di| nua)?[.!?]?$", "$1 $2");
         if (match("dat (?:phong|luon|khach san|cho)|huy (?:booking|dat|phong)|booking|giu (?:cho|phong)|thanh toan|hoan tien|api|system prompt|developer|system:|huong dan|tu xac nhan|gia su|https?://|[{}<>`]", text).find())
             return ask(Intent.UNSUPPORTED, "Mình chỉ hỗ trợ tìm kiếm và xem thông tin khách sạn đã được xác minh. Bạn thực hiện đặt, hủy hoặc cập nhật thông tin qua luồng phù hợp trên website.");
         if (match("thoi tiet|khuyen mai|cach bien|cu bia|du api khong co", text).find())
             return ask(Intent.UNVERIFIABLE, "Không có dữ liệu được xác minh cho khẳng định này; mình không thể bịa giá, đánh giá, khoảng cách, thời tiết hoặc chính sách.");
         text = text.replaceFirst("^chua biet ngay, gia tham khao cua (.+) the nao[?]?$", "kham pha $1");
-        Intent intent = match("doi sang|doi tu|doi thanh|doi ngay|khong phai|them |bo |xoa |khong can|gia duoi", text).find() ? Intent.REFINE
+        boolean destinationReplacement = match("^(?:doi|chuyen) diem den sang ", text).find();
+        if (text.matches("^tim o .+ thay vi .+$")) {
+            String previous = text.substring(text.indexOf(" thay vi ") + " thay vi ".length());
+            destinationReplacement = previous.equals("diem den truoc")
+                    || destinations.matches(previous).values().stream().anyMatch(label -> normalize(label).equals(previous));
+        }
+        boolean keepFilter = match("^(?:chi )?(?:giu|loc)(?: lai)? (?:khach san )?[0-9]+ sao(?: nhe)?[.!?]?$", text).find();
+        Intent intent = destinationReplacement || keepFilter || match("doi sang|doi tu|doi thanh|doi ngay|khong phai|them |bo |xoa |khong can|gia duoi", text).find() ? Intent.REFINE
                 : match("kham pha|cho minh xem", text).find() ? Intent.BROWSE
                 : match("tim |khach san|di da lat", text).find() ? Intent.SEARCH : Intent.CLARIFY;
         var fields = new HashMap<String, Change>();
@@ -52,6 +70,13 @@ public final class VietnameseParser {
         if (match("khong (?:can|muon)", text).find() && !match("khong can (?:bo loc )?(?:dia diem|ten khach san|gia|so sao)", text).find())
             return ask(intent, "Bạn muốn xóa hoặc thay đổi tiêu chí nào?");
         text = VietnameseNumbers.normalizeGrammar(text);
+        text = text.replace("moi phong moi dem", "/phong/dem")
+                .replaceAll("([0-9]+(?:[.,][0-9]+)? (?:trieu|tr|nghin|ngan|k)) vnd\\b", "$1");
+        if (destinationReplacement) {
+            text = text.replaceFirst("^(?:doi|chuyen) diem den sang ", "doi sang ");
+            if (text.matches("^tim o .+ thay vi .+$")) text = "doi sang " + text.substring(6, text.indexOf(" thay vi "));
+        }
+        if (keepFilter) text = text.replaceFirst("^(?:chi )?(?:giu|loc)(?: lai)? ", "");
         String locationText = text;
         int correction = text.lastIndexOf("doi sang ");
         if (correction >= 0) locationText = text.substring(correction + 9);

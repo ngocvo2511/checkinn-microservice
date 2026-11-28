@@ -1,0 +1,193 @@
+{
+  "status": "NOT_RUN",
+  "planned": 8,
+  "attempted": 0,
+  "reason": "CAMPAIGN_SEALED",
+  "maxAllowed": 15,
+  "planSource": "OFFLINE_PLAN_NOT_DISPATCHED",
+  "observations": [
+    {
+      "sampleId": "SEM-DIAG-VNE1-002",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "requestDigest": "4a9e5fbc6456cb8e9f45379c4977c01628d42722ffd8bbc2d6b0c43e4e74953e",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-001",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "requestDigest": "0279393bd7fa341943aec74db12c89117a550bbc9bf0429cd89e9df7cfb19f4f",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-003",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "requestDigest": "ad5d03861f524f119688e776ec91e57e911c75bcc8a34957bd13b5aa904283c6",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-051",
+      "utterance": "Không cần giới hạn số sao nữa",
+      "requestDigest": "d1583165d182cc6570956c299d199b617910d2e59ee983fb9cf52feb2a81ac30",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-029",
+      "utterance": "Bỏ giới hạn giá đi",
+      "requestDigest": "11567c9592354a70d3b368e34ff582d59e9ddeb822d6bd4a4d46e93e84cb8524",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "maxPrice": {
+            "operation": "CLEAR"
+          },
+          "minPrice": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-014",
+      "utterance": "So sánh giá của hai khách sạn đầu tiên",
+      "requestDigest": "8c55abe26853323a98d4e3fc5e9d7064dc752e34d8fb6a82a9d1980b4f3abe8f",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá của hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-008",
+      "utterance": "Tìm khách sạn cho 2 người",
+      "requestDigest": "dd98b3dd44bdcc9cf3162aebce9de739b709d06a3dce92d7548b2833fc22d790",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "adults",
+          "children",
+          "rooms"
+        ],
+        "inferredFields": []
+      }
+    },
+    {
+      "sampleId": "SEM-DIAG-VNE1-020",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "requestDigest": "5365349a75ba531f6b32c8fb0541598c689b853d276d8e362a90a69eb5cbed0f",
+      "status": "NOT_RUN",
+      "expectedBusinessExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    }
+  ]
+}

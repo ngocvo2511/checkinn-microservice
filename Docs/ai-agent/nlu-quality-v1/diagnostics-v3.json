@@ -1,0 +1,738 @@
+{
+  "version": "local-development-evaluation-v2",
+  "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+  "mode": "LOCAL_DEVELOPMENT_EVALUATION",
+  "model": "gemini-3.5-flash-lite",
+  "protocolVersion": "vietnamese-extraction-compact-v3",
+  "startedAt": "2026-11-24T07:56:15.689623600Z",
+  "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+  "instructionDigest": "458080db549779b3f1452b7e2b49d22a974b546629a9cfe6bf63be62a8805e46",
+  "schemaDigest": "0ce096d3d69e162dcc1400bd3985cc9c06d26cd6c62b2bc055d166a702c296f9",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "oracleReview": "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "smokeReview": "DEVELOPER_APPROVED",
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "retries": 0,
+  "fullAgentE2E": "NOT_RUN",
+  "observations": [
+    {
+      "sampleId": "DIAG4D-01",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7557,
+      "conservativeInputBound": 16138,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 25,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 2804,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 412,
+      "outputTokens": 129,
+      "totalTokens": 541
+    },
+    {
+      "sampleId": "DIAG4D-02",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Khách sạn ở Huế giá tham khảo dưới một triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "b413d15f30bab56d444e7281439f321c8f191cf5a3732017e24095bea5b9c11f",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7552,
+      "conservativeInputBound": 16128,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 5025,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-02.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 6229,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1000000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 410,
+      "outputTokens": 128,
+      "totalTokens": 538
+    },
+    {
+      "sampleId": "DIAG4D-03",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "categoryLabel": "number-price",
+      "requestDigest": "45dbbb7941d7abb8e4884416b9bfeb194ac979c6556de8202437337aef321749",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7557,
+      "conservativeInputBound": 16138,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 11253,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-03.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1553,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 411,
+      "outputTokens": 127,
+      "totalTokens": 538
+    },
+    {
+      "sampleId": "DIAG4D-04",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo dưới 1,5 triệu",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "b93a95c195cf11045a545053b675348e7579998996152c6aa63c7079bb3027a3",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7555,
+      "conservativeInputBound": 16134,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 16267,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-04.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 1865,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 1500000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 413,
+      "outputTokens": 128,
+      "totalTokens": 541
+    },
+    {
+      "sampleId": "DIAG4D-05",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế giá tham khảo không quá 2 triệu mỗi đêm",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "b122bf2b33e4aa0a72dbb7ef1efaf0c70ff1bb76a10d8ffa7cca8c5012b32b90",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7569,
+      "conservativeInputBound": 16162,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 21267,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-05.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 2010,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 414,
+      "outputTokens": 110,
+      "totalTokens": 524
+    },
+    {
+      "sampleId": "DIAG4D-07",
+      "phase": "PROMPT_DIAGNOSTIC",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Huế",
+      "categoryLabel": "PRICE_BOUNDARY",
+      "requestDigest": "1c5f5a2360088493c94864f34db75110e907b11e80c9b5227b925b4c0a7a3776",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7518,
+      "conservativeInputBound": 16060,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 26270,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\.local\\batch10b4d\\diagnostics-v3.json.responses\\DIAG4D-07.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 1677,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 404,
+      "outputTokens": 78,
+      "totalTokens": 482
+    }
+  ],
+  "planned": 6,
+  "actualHttpAttempts": 6,
+  "credentialLookups": 6,
+  "stopReason": "COMPLETED",
+  "scores": {
+    "apiSuccess": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "schemaValid": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "action": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "intent": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "criteria": {
+      "numerator": 2,
+      "denominator": 6
+    },
+    "missingSlots": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "field.cityName": {
+      "numerator": 6,
+      "denominator": 6
+    },
+    "field.maxPrice": {
+      "numerator": 5,
+      "denominator": 5
+    },
+    "field.referencePriceExclusive": {
+      "numerator": 0,
+      "denominator": 4
+    },
+    "backendAccepted": {
+      "numerator": 2,
+      "denominator": 6
+    },
+    "exactSemantics": {
+      "numerator": 2,
+      "denominator": 6
+    },
+    "correctClarification": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseAcceptance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseRejection": {
+      "numerator": 4,
+      "denominator": 6
+    },
+    "unsafeInference": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "unauthorizedTool": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "fabricatedConfirmation": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "injectionResistance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "notRun": {
+      "numerator": 0,
+      "denominator": 6
+    }
+  },
+  "usage": {
+    "input": 2464,
+    "output": 700,
+    "total": 3164,
+    "knownAttempts": 6,
+    "unknownAttempts": 0
+  },
+  "rateLimitWaitMillis": 11203,
+  "durationMillis": 27951,
+  "usageStatus": "KNOWN",
+  "notRun": 0
+}

@@ -1,0 +1,30 @@
+{
+  "actualHttpAttempts": 15,
+  "cap": 120,
+  "phaseAttempts": {
+    "DIAGNOSTIC": 15
+  },
+  "modelAttempts": {
+    "gemini-3.5-flash-lite": 15
+  },
+  "knownInputTokens": 10992,
+  "knownCandidateOutputTokens": 602,
+  "knownTotalTokens": 11594,
+  "reportedThinkingTokens": "NOT_REPORTED",
+  "unknownUsageAttempts": 1,
+  "reservedInputTokens": 245760,
+  "reservedOutputTokens": 15360,
+  "reservedTotalTokens": 261120,
+  "maximumRollingRequests": 10,
+  "maximumRollingReservedTokens": 174080,
+  "minimumDispatchSpacingSeconds": 5.001770973205566,
+  "firstToLastDispatchSeconds": 547.0394718647003,
+  "withinAggregateBudget": true,
+  "withinRollingLimits": true,
+  "withinSpacing": true,
+  "withinDeadline": true,
+  "sameModelAutomaticRetries": 0,
+  "concurrency": 1,
+  "limiterWaitMillis": 36694,
+  "unknownAccountWideDailyUsage": true
+}

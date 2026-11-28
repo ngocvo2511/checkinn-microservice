@@ -87,6 +87,25 @@ public final class VietnameseExtraction {
     /** Independent literal corroboration; model provenance is never copied or promoted. No partial application. */
     public static ExtractionProposal corroborate(Proposal proposed, ExtractionProposal literal, String utterance) {
         if (!proposed.inferredFields().isEmpty()) throw new IllegalArgumentException("Inferred criteria not admitted");
+        String canonical = literalUtterance(utterance);
+        boolean comparison = ComparisonRouting.candidate(canonical);
+        boolean selected = ReadIntentRouting.selectedReferenceCandidate(canonical);
+        if (comparison || selected) {
+            if (proposed.action() != (comparison ? Action.COMPARISON : Action.SELECTED)
+                    || !proposed.missingSlots().isEmpty()) throw new IllegalArgumentException("Uncorroborated reference action");
+        } else if (proposed.action() == Action.SELECTED || proposed.action() == Action.COMPARISON)
+            throw new IllegalArgumentException("Uncorroborated reference action");
+        var requiredMissing = missingSlots(literal, canonical);
+        boolean partialDates = literal.fields().containsKey("checkIn") != literal.fields().containsKey("checkOut");
+        if (!comparison && !selected) {
+            boolean clarification = literal.clarification() != null || partialDates;
+            if (proposed.action() != (clarification ? Action.CLARIFY : Action.CRITERIA)
+                    || !new HashSet<>(proposed.missingSlots()).equals(requiredMissing))
+                throw new IllegalArgumentException("Uncorroborated action or missing slots");
+            var intent = clarification && !Set.of(ExtractionProposal.Intent.UNSUPPORTED, ExtractionProposal.Intent.UNVERIFIABLE).contains(literal.intent())
+                    ? ExtractionProposal.Intent.CLARIFY : literal.intent();
+            if (proposed.criteria().intent() != intent) throw new IllegalArgumentException("Uncorroborated intent");
+        }
         if (literal.clarification() != null && !proposed.criteria().fields().isEmpty())
             throw new IllegalArgumentException("Ambiguous criteria not admitted");
         if (proposed.action() == Action.SELECTED || proposed.action() == Action.COMPARISON) {
@@ -119,6 +138,24 @@ public final class VietnameseExtraction {
                     .containsValue(value.value().asText())) throw new IllegalArgumentException("Unmapped destination");
         });
         return literal;
+    }
+    /** Single-utterance evidence only: no trusted state is assumed, and no model field is consulted. */
+    private static Set<String> missingSlots(ExtractionProposal literal, String utterance) {
+        var fields = literal.fields(); var missing = new HashSet<String>();
+        String text = VietnameseNumbers.normalizeGrammar(VietnameseParser.normalize(utterance));
+        if (literal.clarification() != null) {
+            if (text.matches(".*[0-9]+ nguoi(?! lon).*")) return Set.of("adults", "children", "rooms");
+            if (!fields.containsKey("cityName") && text.matches(".*(?:noi nao do|thanh pho do).*")) return Set.of("cityName");
+            return Set.of(); // Unmapped constraints remain clarification; never fabricate a missing value.
+        }
+        boolean arrival = fields.containsKey("checkIn"), departure = fields.containsKey("checkOut");
+        if (arrival != departure) return Set.of(arrival ? "checkOut" : "checkIn");
+        if (literal.intent() == ExtractionProposal.Intent.REFINE) return Set.of();
+        if (arrival || departure || fields.keySet().stream().anyMatch(Set.of("adults", "children", "rooms")::contains)) {
+            if (!fields.containsKey("cityName") && !fields.containsKey("hotelName")) missing.add("cityName");
+            for (String slot : List.of("checkIn", "checkOut", "adults", "children", "rooms")) if (!fields.containsKey(slot)) missing.add(slot);
+        }
+        return Set.copyOf(missing);
     }
     /** Only finite equivalences, never model-written rewrites of the original sentence. */
     public static String literalUtterance(String raw) {

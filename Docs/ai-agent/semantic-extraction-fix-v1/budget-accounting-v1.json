@@ -1,0 +1,26 @@
+{
+  "hardCap": 120,
+  "actualHttpAttempts": 28,
+  "phaseAttempts": {
+    "technical": 3,
+    "existing": 25,
+    "diagnostics": 0,
+    "simplified": 0,
+    "generalization": 0
+  },
+  "sealed": true,
+  "reason": "TWO_CONSECUTIVE_HTTP_503",
+  "automaticRetries": 0,
+  "concurrency": 1,
+  "reservedInputTokens": 458752,
+  "reservedOutputTokens": 28672,
+  "unknownUsageAttempts": 2,
+  "observedMaxRequestsRolling60s": 11,
+  "observedMaxReservedTokensRolling60s": 191488,
+  "observedMinDispatchSpacingSeconds": 5.0,
+  "timestampResolutionCaveat": "Pre-dispatch timestamps, millisecond offsets; not provider arrival timestamps",
+  "liveElapsedSeconds": 173.951,
+  "cooldownSeconds": 15,
+  "domainCalls": 0,
+  "supabaseCalls": 0
+}

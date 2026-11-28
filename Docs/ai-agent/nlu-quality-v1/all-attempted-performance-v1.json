@@ -1,0 +1,35 @@
+{
+  "attempted": 14,
+  "httpSuccess": {
+    "numerator": 13,
+    "denominator": 14,
+    "percent": 92.86
+  },
+  "envelopeValid": {
+    "numerator": 13,
+    "denominator": 14,
+    "percent": 92.86
+  },
+  "sdkParse": {
+    "numerator": 13,
+    "denominator": 14,
+    "percent": 92.86
+  },
+  "schemaValid": {
+    "numerator": 13,
+    "denominator": 14,
+    "percent": 92.86
+  },
+  "invalidSchema": 0,
+  "inputTokens": 4983,
+  "outputTokens": 1540,
+  "totalTokens": 6523,
+  "unknownUsage": 1,
+  "thinking": "NOT_REPORTED",
+  "latency": {
+    "mean": 2343.9285714285716,
+    "median": 1902.5,
+    "p95": 6229,
+    "max": 6229
+  }
+}

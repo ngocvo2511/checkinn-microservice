@@ -1,0 +1,18 @@
+{
+  "logicalSamplesRequiringFallback": 0,
+  "additionalAttempts": 0,
+  "transitions": {},
+  "technicalRecovery": {
+    "numerator": 0,
+    "denominator": 0,
+    "rate": null
+  },
+  "semanticRecovery": {
+    "numerator": 0,
+    "denominator": 0,
+    "rate": null
+  },
+  "allModelsUnavailable": 0,
+  "cooldownSeconds": 0,
+  "attemptsPerLogicalSample": 1.0
+}

@@ -1,0 +1,432 @@
+{
+  "source": "OFFLINE_TEST_SYNTHETIC_EQUIVALENT_PROPOSALS_NOT_GEMINI",
+  "rows": [
+    {
+      "sampleId": "VNE1-001",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt"
+      }
+    },
+    {
+      "sampleId": "VNE1-002",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Nha Trang",
+        "price": {
+          "kind": "REFERENCE",
+          "operator": "LT",
+          "unit": "VND",
+          "amount": 2000000
+        }
+      }
+    },
+    {
+      "sampleId": "VNE1-003",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt",
+        "arrival": "2026-12-01",
+        "departure": "2026-12-03",
+        "adults": 2,
+        "children": 0,
+        "rooms": 1
+      }
+    },
+    {
+      "sampleId": "VNE1-004",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "arrival": "2026-12-01",
+        "departure": "2026-12-03",
+        "adults": 2,
+        "children": 0,
+        "rooms": 1
+      }
+    },
+    {
+      "sampleId": "VNE1-005",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "DEPARTURE_MISSING"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-006",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt",
+        "arrival": "2026-12-01",
+        "departure": "2026-12-03"
+      }
+    },
+    {
+      "sampleId": "VNE1-007",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "adults": 2,
+        "children": 1,
+        "rooms": 1
+      }
+    },
+    {
+      "sampleId": "VNE1-008",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "GUESTS_AMBIGUOUS"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-009",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "DATE_INVALID"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-010",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "PRICE_RANGE_INVALID"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-011",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "OTHER"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-012",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "DESTINATION_UNRESOLVED"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-013",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SELECTED",
+        "reference": "Kiểm tra phòng này còn phòng không"
+      }
+    },
+    {
+      "sampleId": "VNE1-014",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "COMPARISON",
+        "reference": "So sánh giá của hai khách sạn đầu tiên"
+      }
+    },
+    {
+      "sampleId": "VNE1-015",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SELECTED",
+        "reference": "Phòng này giá bao nhiêu và còn phòng không?"
+      }
+    },
+    {
+      "sampleId": "VNE1-016",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt"
+      }
+    },
+    {
+      "sampleId": "VNE1-017",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Huế"
+      }
+    },
+    {
+      "sampleId": "VNE1-020",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Huế",
+        "price": {
+          "kind": "REFERENCE",
+          "operator": "LT",
+          "unit": "VND",
+          "amount": 1000000
+        }
+      }
+    },
+    {
+      "sampleId": "VNE1-021",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt",
+        "stars": [
+          4
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-023",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "GUESTS_AMBIGUOUS"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-025",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "DEPARTURE_MISSING"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-027",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "REFINE",
+        "stars": [
+          4
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-028",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "REFINE",
+        "destination": "Huế"
+      }
+    },
+    {
+      "sampleId": "VNE1-029",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "REFINE",
+        "remove": [
+          "PRICE"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-030",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SELECTED",
+        "reference": "Xem khách sạn thứ hai"
+      }
+    },
+    {
+      "sampleId": "VNE1-031",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SELECTED",
+        "reference": "Giá phòng thứ nhất bao nhiêu"
+      }
+    },
+    {
+      "sampleId": "VNE1-032",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "COMPARISON",
+        "reference": "So sánh giá hai khách sạn đầu tiên"
+      }
+    },
+    {
+      "sampleId": "VNE1-033",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SELECTED",
+        "reference": "Phòng đã chọn còn chỗ không"
+      }
+    },
+    {
+      "sampleId": "VNE1-037",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "DESTINATION_UNRESOLVED"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-039",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "OTHER"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-040",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "ROOMS_INVALID",
+          "ADULTS_INVALID"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-041",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Huế"
+      }
+    },
+    {
+      "sampleId": "VNE1-042",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt"
+      }
+    },
+    {
+      "sampleId": "VNE1-043",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Đà Lạt"
+      }
+    },
+    {
+      "sampleId": "VNE1-046",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "ARRIVAL_MISSING"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-047",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "CLARIFY",
+        "issues": [
+          "OTHER"
+        ]
+      }
+    },
+    {
+      "sampleId": "VNE1-048",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Nha Trang"
+      }
+    },
+    {
+      "sampleId": "VNE1-049",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Huế"
+      }
+    },
+    {
+      "sampleId": "VNE1-050",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "SEARCH",
+        "destination": "Huế",
+        "price": {
+          "kind": "REFERENCE",
+          "operator": "LT",
+          "unit": "VND",
+          "amount": 500000
+        }
+      }
+    },
+    {
+      "sampleId": "VNE1-051",
+      "source": "OFFLINE_EQUIVALENT_PROPOSAL_NOT_MODEL_OUTPUT",
+      "canonicalMatch": true,
+      "semanticProposal": {
+        "intent": "REFINE",
+        "remove": [
+          "STARS"
+        ]
+      }
+    }
+  ]
+}

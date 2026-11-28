@@ -1,0 +1,16 @@
+{
+  "branch": "feat/ai-agent-vietnamese-nlu",
+  "head": "4c1908063e40194b989cfbe1d0db598064ec3e7b",
+  "command": "mvn -o -B -ntp -pl ai-agent-service package",
+  "tests": 1134,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "result": "BUILD SUCCESS",
+  "historical": {
+    "PASS": 23,
+    "FAIL": 16,
+    "NOT_APPLICABLE": 0,
+    "NOT_RUN": 1
+  }
+}

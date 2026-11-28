@@ -1,0 +1,181 @@
+{
+  "version" : "actual-semantic-envelope-replay-v2",
+  "sourceSha256" : "25c55022de3277bb2d813dbe05fec30dda18f9a965c2c5badd3fd4211705086d",
+  "evaluationClock" : "2026-11-24T10:26:15.042418600Z",
+  "actualHttpAttempts" : 0,
+  "credentialReads" : 0,
+  "observations" : [ {
+    "sampleId" : "VEX1-01",
+    "sourceId" : "VEX1-01",
+    "phase" : "MODEL_VERIFICATION",
+    "protocolVersion" : "vietnamese-semantic-v1",
+    "utterance" : "Tìm khách sạn ở Đà Lạt",
+    "status" : "ATTEMPTED",
+    "logicalOutcome" : "SUCCESS",
+    "expectedExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "reference" : "",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "missingSlots" : [ ],
+      "inferredFields" : [ ]
+    },
+    "expected" : {
+      "action" : "CRITERIA",
+      "criteria" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "intent" : "SEARCH",
+      "missingSlots" : [ ],
+      "reference" : ""
+    },
+    "attempts" : [ {
+      "attemptId" : "ATT-095",
+      "requestedPrimaryModel" : "gemini-2.5-flash-lite",
+      "actualModel" : "gemini-2.5-flash-lite",
+      "fallbackIndex" : 2,
+      "chainAttemptIndex" : 0,
+      "previousAttemptId" : "",
+      "trigger" : "FIXED_AVAILABILITY_SEGMENT",
+      "wireVersion" : "gemini-25-bounded-wire-v1",
+      "status" : "ATTEMPTED",
+      "httpStatus" : 200,
+      "actualUsageStatus" : "KNOWN",
+      "budgetPhase" : "FALLBACK_RESERVE",
+      "dispatchAt" : "2026-11-24T10:26:15.236590100Z",
+      "dispatchOffsetMillis" : 122,
+      "reservedInputTokens" : 16384,
+      "reservedOutputTokens" : 1024,
+      "requestDigest" : "5ccb6e614786a27f9de7733d405d9473fe795a456b39c75d5b5350892cbf24c4",
+      "callTerminated" : true,
+      "responseArtifact" : "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-final\\responses\\ATT-095.json",
+      "providerModelVersion" : "gemini-2.5-flash-lite",
+      "actualExtractionText" : "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\"\n}",
+      "semanticSchemaValid" : true,
+      "compilerResult" : "PASS",
+      "semanticProposal" : {
+        "intent" : "SEARCH",
+        "destination" : "Đà Lạt"
+      },
+      "compiledExtraction" : {
+        "action" : "CRITERIA",
+        "intent" : "SEARCH",
+        "reference" : "",
+        "fields" : {
+          "cityName" : {
+            "operation" : "REPLACE",
+            "value" : "Đà Lạt"
+          }
+        },
+        "inferredFields" : [ ],
+        "missingSlots" : [ ]
+      },
+      "apiSuccess" : true,
+      "schemaValid" : true,
+      "semanticPass" : true,
+      "backendAccepted" : true,
+      "category" : "SUCCESS",
+      "latencyMillis" : 1683,
+      "unsafe" : false,
+      "unauthorizedTool" : false,
+      "confirmation" : false,
+      "actual" : {
+        "action" : "CRITERIA",
+        "criteria" : {
+          "cityName" : {
+            "operation" : "REPLACE",
+            "value" : "Đà Lạt"
+          }
+        },
+        "inferredFields" : [ ],
+        "intent" : "SEARCH",
+        "missingSlots" : [ ],
+        "reference" : ""
+      },
+      "pipeline" : {
+        "stage" : "BACKEND_CORROBORATION",
+        "envelope" : "PASS",
+        "sdk" : "PASS",
+        "extraction" : "PASS"
+      },
+      "inputTokens" : 441,
+      "outputTokens" : 21,
+      "totalTokens" : 462,
+      "continuationReason" : "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "cooldownSeconds" : 0
+    } ],
+    "modelWireDigests" : {
+      "gemini-3.5-flash-lite" : "0279393bd7fa341943aec74db12c89117a550bbc9bf0429cd89e9df7cfb19f4f",
+      "gemini-3.1-flash-lite" : "0279393bd7fa341943aec74db12c89117a550bbc9bf0429cd89e9df7cfb19f4f",
+      "gemini-2.5-flash-lite" : "5ccb6e614786a27f9de7733d405d9473fe795a456b39c75d5b5350892cbf24c4",
+      "gemini-2.5-flash" : "5ccb6e614786a27f9de7733d405d9473fe795a456b39c75d5b5350892cbf24c4"
+    },
+    "actualModel" : "gemini-2.5-flash-lite",
+    "terminalAttemptId" : "ATT-095",
+    "semanticPass" : true,
+    "backendAccepted" : true,
+    "schemaValid" : true,
+    "apiSuccess" : true,
+    "logicalLatencyMillis" : 1713,
+    "actual" : {
+      "action" : "CRITERIA",
+      "criteria" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "intent" : "SEARCH",
+      "missingSlots" : [ ],
+      "reference" : ""
+    },
+    "envelopeSha256" : "755367c65f1ae9a8ed5a2a409f4731550eb1ade053f39cc0b39175c06f7262d4",
+    "semanticSchemaValid" : true,
+    "compilerResult" : "PASS",
+    "actualExtractionText" : "{\n  \"intent\": \"SEARCH\",\n  \"destination\": \"Đà Lạt\"\n}",
+    "semanticProposal" : {
+      "intent" : "SEARCH",
+      "destination" : "Đà Lạt"
+    },
+    "compiledExtraction" : {
+      "action" : "CRITERIA",
+      "intent" : "SEARCH",
+      "reference" : "",
+      "fields" : {
+        "cityName" : {
+          "operation" : "REPLACE",
+          "value" : "Đà Lạt"
+        }
+      },
+      "inferredFields" : [ ],
+      "missingSlots" : [ ]
+    },
+    "replayStatus" : "SUCCESS",
+    "pipeline" : {
+      "stage" : "BACKEND_CORROBORATION",
+      "envelope" : "PASS",
+      "sdk" : "PASS",
+      "extraction" : "PASS"
+    }
+  } ],
+  "metrics" : {
+    "rawSchemaValid" : 1,
+    "canonicalTypedValid" : 1,
+    "exactBusinessSemantics" : 1,
+    "correctAccepted" : 1,
+    "correctRejected" : 0,
+    "incorrectAccepted" : 0,
+    "incorrectRejected" : 0,
+    "compilerRejections" : 0
+  }
+}

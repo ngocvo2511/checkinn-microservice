@@ -1,0 +1,290 @@
+{
+  "status": "PARTIAL",
+  "comparablePairs": 0,
+  "notComparablePairs": 40,
+  "improved": null,
+  "regressed": null,
+  "decision": "MORE_TARGETED_EVIDENCE_REQUIRED",
+  "pairs": [
+    {
+      "sampleId": "VNE1-001",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-002",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-003",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-004",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-005",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-006",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-007",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-008",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-009",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-010",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-011",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-012",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-013",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-014",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-015",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-016",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-017",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-020",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-021",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-023",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-025",
+      "A": "FAIL",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-027",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-028",
+      "A": "PASS",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-029",
+      "A": "FAIL",
+      "AProviderFailure": true,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-030",
+      "A": "FAIL",
+      "AProviderFailure": true,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-031",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "A": "NOT_RUN",
+      "AProviderFailure": false,
+      "B": "NOT_RUN",
+      "pairedOutcome": "NOT_COMPARABLE"
+    }
+  ]
+}

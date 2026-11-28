@@ -1,0 +1,430 @@
+{
+  "version": "evidence-extraction-observations-v1",
+  "classification": "DIAGNOSTIC_R2",
+  "metrics": {
+    "planned": 2,
+    "attempted": 2,
+    "notRun": 0,
+    "primaryHttp200": 2,
+    "rawSchemaValid": 2,
+    "completeEvidence": 2,
+    "requestMeaningCorrect": 2,
+    "rawExact": 2,
+    "canonicalTypedValid": 2,
+    "exactBusinessSemantics": 2,
+    "compilerRejections": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceMembership": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "REFERENCE": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    },
+    "backendConfusion": {
+      "correctAccepted": 2,
+      "correctRejected": 0,
+      "incorrectAccepted": 0,
+      "incorrectRejected": 0,
+      "NOT_EVALUATED": 0
+    },
+    "falseAcceptanceRate": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falseRejectionRate": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+    },
+    "backendClassificationAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "admissionPrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "endToEndCorrectAdmission": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "actionCorrect": 2,
+    "intentCorrect": 2,
+    "criteriaCorrect": 2,
+    "missingSlotsCorrect": 2,
+    "referencePriceCorrect": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "unsafeAccepted": 0,
+    "primaryAttemptLatencyMillis": {
+      "n": 2,
+      "mean": 3989.5,
+      "median": 3989.5,
+      "p95": 5466,
+      "maximum": 5466,
+      "percentileMethod": "nearest rank"
+    },
+    "logicalLatencyMillis": {
+      "n": 2,
+      "mean": 4001.5,
+      "median": 4001.5,
+      "p95": 5485,
+      "maximum": 5485,
+      "percentileMethod": "nearest rank"
+    },
+    "actualHttpAttempts": 2,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "unknownUsage": 0,
+    "knownInputTokens": 849,
+    "knownCandidateOutputTokens": 74,
+    "knownTotalTokens": 923,
+    "actualReportedModelIdentities": [
+      "gemini-3.5-flash-lite"
+    ],
+    "observedInventedEvidenceAccepted": 0,
+    "overallAttemptedDenominator": 2
+  },
+  "observations": [
+    {
+      "sampleId": "DIAG-R2-SELECTED-01",
+      "sourceId": "VNE1-013",
+      "phase": "DIAGNOSTIC_R2",
+      "utterance": "Kiểm tra phòng này còn phòng không",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong nay"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Kiểm tra phòng này còn phòng không",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-010",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "DIAGNOSTIC",
+          "dispatchAt": "2026-11-24T12:30:21.688219700Z",
+          "dispatchOffsetMillis": 55,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-010.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\"request\": \"ASK_SELECTED\", \"facts\": [{\"type\": \"REFERENCE\", \"text\": \"phòng này\"}]}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "ASK_SELECTED",
+            "facts": [
+              {
+                "type": "REFERENCE",
+                "text": "phòng này"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 1,
+            "proposed": 1,
+            "matched": 1,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Kiểm tra phòng này còn phòng không",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 5466,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "SELECTED",
+            "criteria": {},
+            "inferredFields": [],
+            "intent": "CLARIFY",
+            "missingSlots": [],
+            "reference": "Kiểm tra phòng này còn phòng không"
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 425,
+          "outputTokens": 26,
+          "totalTokens": 451,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "PRIMARY_WITH_CAPACITY_ONLY_FALLBACK",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-3.1-flash-lite": "1a08fd2ce9f3e0ab90b07907cec2f7d734d31c1765ea745109e6b60cc739a1d0",
+        "gemini-2.5-flash-lite": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491",
+        "gemini-2.5-flash": "e5bceec4e2e8ab05f208ec2ff77d1920d89d9bfbacc3ed98ed21afba4884b491"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-010",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 5485,
+      "actual": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Kiểm tra phòng này còn phòng không"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    },
+    {
+      "sampleId": "DIAG-R2-SELECTED-02",
+      "sourceId": "GENERALIZED-SELECTED-R2",
+      "phase": "DIAGNOSTIC_R2",
+      "utterance": "Hỏi giá của phòng đã chọn",
+      "status": "ATTEMPTED",
+      "expectedRequestMeaning": "ASK_SELECTED",
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Hỏi giá của phòng đã chọn",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "expectedEvidenceWitnesses": [
+        {
+          "type": "REFERENCE",
+          "text": "phong da chon"
+        }
+      ],
+      "wireDigests": {
+        "gemini-3.5-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+        "gemini-3.1-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+        "gemini-2.5-flash-lite": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520",
+        "gemini-2.5-flash": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520"
+      },
+      "deterministicExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "reference": "Hỏi giá của phòng đã chọn",
+        "fields": {},
+        "inferredFields": [],
+        "missingSlots": []
+      },
+      "deterministicExact": true,
+      "protocolVersion": "vietnamese-evidence-v1",
+      "logicalOutcome": "SUCCESS",
+      "expected": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Hỏi giá của phòng đã chọn"
+      },
+      "attempts": [
+        {
+          "attemptId": "ATT-011",
+          "requestedPrimaryModel": "gemini-3.5-flash-lite",
+          "actualModel": "gemini-3.5-flash-lite",
+          "fallbackIndex": 0,
+          "chainAttemptIndex": 0,
+          "previousAttemptId": "",
+          "trigger": "FIXED_AVAILABILITY_SEGMENT",
+          "wireVersion": "original-sdk-wire-v1",
+          "status": "ATTEMPTED",
+          "httpStatus": 200,
+          "actualUsageStatus": "KNOWN",
+          "budgetPhase": "DIAGNOSTIC",
+          "dispatchAt": "2026-11-24T12:30:27.152909200Z",
+          "dispatchOffsetMillis": 5522,
+          "reservedInputTokens": 16384,
+          "reservedOutputTokens": 1024,
+          "requestDigest": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+          "callTerminated": true,
+          "responseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\evidence-extraction-v1\\responses\\ATT-011.json",
+          "providerModelVersion": "gemini-3.5-flash-lite",
+          "actualExtractionText": "{\n  \"request\": \"ASK_SELECTED\",\n  \"facts\": [\n    {\n      \"type\": \"REFERENCE\",\n      \"text\": \"phòng đã chọn\"\n    }\n  ]\n}",
+          "evidenceSchemaValid": true,
+          "compilerResult": "PASS",
+          "evidenceProposal": {
+            "request": "ASK_SELECTED",
+            "facts": [
+              {
+                "type": "REFERENCE",
+                "text": "phòng đã chọn"
+              }
+            ]
+          },
+          "evidenceMetrics": {
+            "expected": 1,
+            "proposed": 1,
+            "matched": 1,
+            "missing": 0,
+            "invented": 0,
+            "wrongType": 0,
+            "duplicates": 0,
+            "requestCorrect": true
+          },
+          "rawEvidenceExact": true,
+          "compiledExtraction": {
+            "action": "SELECTED",
+            "intent": "CLARIFY",
+            "reference": "Hỏi giá của phòng đã chọn",
+            "fields": {},
+            "inferredFields": [],
+            "missingSlots": []
+          },
+          "apiSuccess": true,
+          "schemaValid": true,
+          "semanticPass": true,
+          "backendAccepted": true,
+          "category": "SUCCESS",
+          "latencyMillis": 2513,
+          "unsafe": false,
+          "unauthorizedTool": false,
+          "confirmation": false,
+          "actual": {
+            "action": "SELECTED",
+            "criteria": {},
+            "inferredFields": [],
+            "intent": "CLARIFY",
+            "missingSlots": [],
+            "reference": "Hỏi giá của phòng đã chọn"
+          },
+          "pipeline": {
+            "stage": "BACKEND_CORROBORATION",
+            "envelope": "PASS",
+            "sdk": "PASS",
+            "extraction": "PASS"
+          },
+          "inputTokens": 424,
+          "outputTokens": 48,
+          "totalTokens": 472,
+          "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+          "cooldownSeconds": 0
+        }
+      ],
+      "evaluationClock": "2026-11-24T10:18:48.242851600Z",
+      "fixedModel": "PRIMARY_WITH_CAPACITY_ONLY_FALLBACK",
+      "modelWireDigests": {
+        "gemini-3.5-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+        "gemini-3.1-flash-lite": "5a529926564713b35c2968b8dd3e7f65d47394a5083b49202dca17823b776db4",
+        "gemini-2.5-flash-lite": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520",
+        "gemini-2.5-flash": "8a769a5eeede6181b83029f185870b2ec020775ceaf288f564670f1559485520"
+      },
+      "actualModel": "gemini-3.5-flash-lite",
+      "terminalAttemptId": "ATT-011",
+      "semanticPass": true,
+      "backendAccepted": true,
+      "schemaValid": true,
+      "apiSuccess": true,
+      "logicalLatencyMillis": 2518,
+      "actual": {
+        "action": "SELECTED",
+        "criteria": {},
+        "inferredFields": [],
+        "intent": "CLARIFY",
+        "missingSlots": [],
+        "reference": "Hỏi giá của phòng đã chọn"
+      },
+      "candidateRevision": "candidate-r2-reference-phrase"
+    }
+  ]
+}

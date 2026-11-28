@@ -1,0 +1,25 @@
+{
+  "jarSha256": "0b765a66e9e1e8b5364ad2625af8b8ccc3e6b07dfecff793e2ae2605ee2f3b0a",
+  "sources": {
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalEvaluation.java": "0146d723567afda9b389f6eb9109bba06fdf581609d2a97cbadc799f90a1a77a",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalExtractionContract.java": "0912a60e6ffd41325b110a4e8d062cec316c45d2bc941f1c9b529ea96f2a6be0",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalFailurePolicy.java": "275c5df162f500c16892769df81908ed7674c8ace9628406582cb704cf712b29",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalFallbackEvaluation.java": "559efcca2081c83a8ceb20e3c3b2abedd9ec2f875269704fd20561bebe394399",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalModelFallback.java": "ecaa9a73d07ddf5d2ab6d0049d5a80628f9eaf9281df82d6bc832a27d15095b6",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiLocalModelProfile.java": "175ccf0985487c6e3775dcb09379557957cd72517c25a26dd7216b2979268b13",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionProtocol.java": "e93852d99c70ff0faa24e9fd4e67a21930536f6029788a0818873d76975afe19",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/GeminiExtractionSmoke.java": "59cce444aed71e71e5e56cfade5d4d8d52fe553c6399177d88cbce7a066db7bf",
+    "ai-agent-service/src/main/java/com/example/aiagent/model/VietnameseSemanticCompiler.java": "e14d762185afdba0c393b8d545c81c0a016587da79612bdfeb5575fffcb6aa39",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseExtraction.java": "515a46903679df06f7601d161e69b925bc20db4e08140ad8d5539825df967231",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseNumbers.java": "96f2f9fea951c76c4b28a8efd6828f0fd2221c69b64efb5a35ad686c3a84efc4",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseParser.java": "802e5979d34d0fdf8eefdac99388890298b1325c302787fa80168d964654bb9c",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/VietnameseSecurityPreflight.java": "38b19ad35144ccd08bd74b59c68f6a346894ec314923a2863119fc31dbc5402c",
+    "ai-agent-service/src/main/java/com/example/aiagent/nlu/ReadIntentRouting.java": "69380b2fdea1b1702b74e11b6f97a93f426d5d3764dd02c2e4700eb67e180b71"
+  },
+  "stage": "FROZEN_BEFORE_LIVE",
+  "baselineTests": 1042,
+  "preliveTests": 1072,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+}

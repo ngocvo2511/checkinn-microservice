@@ -1,0 +1,310 @@
+{
+  "TECHNICAL": {
+    "rawSchemaValid": 1,
+    "completeEvidence": 1,
+    "requestMeaningCorrect": 1,
+    "rawExact": 1,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceMembership": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "observedInventedEvidenceAccepted": 0
+  },
+  "DIAGNOSTIC": {
+    "rawSchemaValid": 8,
+    "completeEvidence": 7,
+    "requestMeaningCorrect": 8,
+    "rawExact": 7,
+    "evidenceValidationRejections": 1,
+    "completenessRejections": 1,
+    "missingEvidence": 1,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 2,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 19,
+      "denominator": 21,
+      "rate": 0.9047619047619048
+    },
+    "evidenceRecall": {
+      "numerator": 19,
+      "denominator": 20,
+      "rate": 0.95
+    },
+    "evidenceMembership": {
+      "numerator": 21,
+      "denominator": 21,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 19,
+      "denominator": 21,
+      "rate": 0.9047619047619048
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1.0
+      },
+      "PRICE": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "STAY_DATES": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "ADULTS": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "CHILDREN": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "ROOMS": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1.0
+      },
+      "UNSUPPORTED": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "REFERENCE": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0.0
+      },
+      "REMOVAL": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "observedInventedEvidenceAccepted": 0
+  },
+  "DIAGNOSTIC_R2": {
+    "rawSchemaValid": 2,
+    "completeEvidence": 2,
+    "requestMeaningCorrect": 2,
+    "rawExact": 2,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceMembership": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "REFERENCE": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    },
+    "observedInventedEvidenceAccepted": 0
+  },
+  "COMPARISON": {
+    "rawSchemaValid": 6,
+    "completeEvidence": 6,
+    "requestMeaningCorrect": 6,
+    "rawExact": 6,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceRecall": {
+      "numerator": 13,
+      "denominator": 26,
+      "rate": 0.5
+    },
+    "evidenceMembership": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 13,
+      "denominator": 13,
+      "rate": 1.0
+    },
+    "retentionByType": {
+      "DESTINATION": {
+        "numerator": 3,
+        "denominator": 6,
+        "rate": 0.5
+      },
+      "PRICE": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      },
+      "STAY_DATES": {
+        "numerator": 1,
+        "denominator": 3,
+        "rate": 0.3333333333333333
+      },
+      "ADULTS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "CHILDREN": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "ROOMS": {
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5
+      },
+      "UNSUPPORTED": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "REFERENCE": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0.0
+      },
+      "REMOVAL": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "observedInventedEvidenceAccepted": 0
+  },
+  "FROZEN40": {
+    "rawSchemaValid": 0,
+    "completeEvidence": 0,
+    "requestMeaningCorrect": 0,
+    "rawExact": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceRecall": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceMembership": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "retentionByType": {},
+    "observedInventedEvidenceAccepted": 0
+  },
+  "FRESH": {
+    "rawSchemaValid": 0,
+    "completeEvidence": 0,
+    "requestMeaningCorrect": 0,
+    "rawExact": 0,
+    "evidenceValidationRejections": 0,
+    "completenessRejections": 0,
+    "missingEvidence": 0,
+    "inventedEvidence": 0,
+    "wrongTypeEvidence": 0,
+    "duplicateOrOverlappingEvidence": 0,
+    "evidencePrecision": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceRecall": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceMembership": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "evidenceTypeAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "retentionByType": {},
+    "observedInventedEvidenceAccepted": 0
+  }
+}

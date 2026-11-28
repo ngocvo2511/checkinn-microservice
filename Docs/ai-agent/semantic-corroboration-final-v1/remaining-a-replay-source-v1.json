@@ -1,0 +1,311 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "protocolVersion": "vietnamese-extraction-compact-v3",
+  "startedAt": "2026-11-24T10:08:35.333633900Z",
+  "sourceSegmentSha256": "6c74062ae5ade2816398e3d8509ed33534b74209928488204db8907a1c9ca9ee",
+  "observations": [
+    {
+      "sampleId": "VNE1-031",
+      "utterance": "Giá phòng thứ nhất bao nhiêu",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Giá phòng thứ nhất bao nhiêu",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"CLARIFY\",\n  \"fields\": {},\n  \"action\": \"SELECTED\",\n  \"reference\": \"Giá phòng thứ nhất bao nhiêu\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-032",
+      "utterance": "So sánh giá hai khách sạn đầu tiên",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "expectedExtraction": {
+        "action": "COMPARISON",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "So sánh giá hai khách sạn đầu tiên",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"CLARIFY\",\n  \"fields\": {},\n  \"action\": \"COMPARISON\",\n  \"reference\": \"So sánh giá hai khách sạn đầu tiên\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-033",
+      "utterance": "Phòng đã chọn còn chỗ không",
+      "status": "ATTEMPTED",
+      "schemaValid": false,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "SELECTED",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "Phòng đã chọn còn chỗ không",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\"intent\": \"UNSUPPORTED\", \"fields\": {}, \"action\": \"CLARIFY\", \"reference\": \"Phòng đã chọn còn chỗ không\", \"missingSlots\": [], \"inferredFields\": []}"
+    },
+    {
+      "sampleId": "VNE1-037",
+      "utterance": "Tìm khách sạn ở thành phố đó",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "cityName"
+        ],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {},\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [\n    \"cityName\"\n  ],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-039",
+      "utterance": "Tìm khách sạn Huế giá dưới âm 2 triệu",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    },\n    \"starRatings\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-040",
+      "utterance": "Tìm khách sạn Huế cho 0 phòng và 0 người lớn",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "rooms",
+          "adults"
+        ],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"rooms\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 1\n    },\n    \"maxPrice\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [\n    \"rooms\",\n    \"adults\"\n  ],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-041",
+      "utterance": "Mình muốn kiếm một chỗ nghỉ tại Huế",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-042",
+      "utterance": "Có chỗ nào ngủ ở Đà Lạt hông bạn",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-043",
+      "utterance": "tim khach san o Da Lat",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Da Lat\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-046",
+      "utterance": "Tìm khách sạn Huế trả phòng 22/12/2026",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [
+          "checkIn"
+        ],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"checkOut\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-22\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [\n    \"checkIn\"\n  ],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-047",
+      "utterance": "Tìm khách sạn Huế từ 22/12/2026 đến 20/12/2026",
+      "status": "ATTEMPTED",
+      "schemaValid": false,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CLARIFY",
+        "intent": "CLARIFY",
+        "fields": {},
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"checkIn\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-22\"\n    },\n    \"checkOut\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-20\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-048",
+      "utterance": "Cho tôi xem nơi lưu trú tại Nha Trang",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"BROWSE\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-049",
+      "utterance": "kiếm giúp tui khách sạn ở huế nha",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-050",
+      "utterance": "Tìm khách sạn Huế giá tham khảo dưới năm trăm nghìn",
+      "status": "ATTEMPTED",
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Huế"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 500000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "actualExtractionText": "{\n  \"intent\": \"BROWSE\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Huế\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 500000\n    },\n    \"starRatings\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}"
+    },
+    {
+      "sampleId": "VNE1-051",
+      "utterance": "Không cần giới hạn số sao nữa",
+      "status": "ATTEMPTED",
+      "schemaValid": false,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "REFINE",
+        "fields": {
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      }
+    }
+  ]
+}

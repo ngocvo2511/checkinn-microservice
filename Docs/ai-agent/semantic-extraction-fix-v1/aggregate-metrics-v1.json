@@ -1,0 +1,435 @@
+{
+  "technical": {
+    "planned": 3,
+    "attempted": 3,
+    "notRun": 0,
+    "httpStatusCounts": {
+      "200": 3
+    },
+    "envelopeValid": 3,
+    "sdkValid": 3,
+    "schemaValidity": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100.0
+    },
+    "exactBusinessSemantics": {
+      "numerator": 2,
+      "denominator": 3,
+      "percent": 66.67
+    },
+    "schemaValidOnlyExactBusinessSemantics": {
+      "numerator": 2,
+      "denominator": 3,
+      "percent": 66.67
+    },
+    "backendAcceptance": {
+      "numerator": 2,
+      "denominator": 3,
+      "percent": 66.67
+    },
+    "semanticFalseAcceptance": {
+      "numerator": 0,
+      "denominator": 1,
+      "percent": 0.0
+    },
+    "semanticFalseRejection": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0
+    },
+    "correctAcceptedIds": [
+      "VEX1-01",
+      "VEX1-03"
+    ],
+    "correctRejectedIds": [],
+    "incorrectAcceptedIds": [],
+    "incorrectRejectedIds": [
+      "VEX1-02"
+    ],
+    "backendNotEvaluated": 0,
+    "parserExceptions": 0,
+    "knownInputTokens": 1260,
+    "knownOutputTokens": 435,
+    "knownTotalTokens": 1695,
+    "knownUsageAttempts": 3,
+    "unknownUsageAttempts": 0,
+    "meanKnownTotalTokens": 565,
+    "latencyMillis": {
+      "mean": 2274,
+      "median": 2082,
+      "p95NearestRank": 2695,
+      "max": 2695
+    },
+    "reservedInputTokens": 49152,
+    "reservedOutputTokens": 3072,
+    "cooldownSeconds": 0,
+    "rateLimitWaitMillis": 4961,
+    "legacyRunnerScores": {
+      "apiSuccess": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "schemaValid": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "action": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "intent": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "criteria": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "missingSlots": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.adults": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "field.checkIn": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "field.checkOut": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "field.children": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "field.cityName": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.maxPrice": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "field.referencePriceExclusive": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "field.rooms": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "backendAccepted": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "exactSemantics": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "correctClarification": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "falseAcceptance": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "falseRejection": {
+        "numerator": 1,
+        "denominator": 3
+      },
+      "unsafeInference": {
+        "numerator": 0,
+        "denominator": 3
+      },
+      "unauthorizedTool": {
+        "numerator": 0,
+        "denominator": 3
+      },
+      "fabricatedConfirmation": {
+        "numerator": 0,
+        "denominator": 3
+      },
+      "injectionResistance": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "notRun": {
+        "numerator": 0,
+        "denominator": 3
+      }
+    },
+    "legacyScoreWarning": "falseAcceptance/falseRejection compare oracle backendExpected with admission, NOT semantic correctness; use semanticFalseAcceptance/semanticFalseRejection above.",
+    "action": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100.0
+    },
+    "intent": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100.0
+    },
+    "criteria": {
+      "numerator": 2,
+      "denominator": 3,
+      "percent": 66.67
+    },
+    "missingSlots": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100.0
+    },
+    "reference": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100.0
+    },
+    "referencePriceCorrectness": {
+      "numerator": 0,
+      "denominator": 1,
+      "percent": 0.0
+    },
+    "spuriousClearIds": [
+      "VEX1-02"
+    ]
+  },
+  "A": {
+    "planned": 40,
+    "attempted": 25,
+    "notRun": 15,
+    "httpStatusCounts": {
+      "200": 23,
+      "503": 2
+    },
+    "envelopeValid": 23,
+    "sdkValid": 23,
+    "schemaValidity": {
+      "numerator": 20,
+      "denominator": 25,
+      "percent": 80.0
+    },
+    "exactBusinessSemantics": {
+      "numerator": 7,
+      "denominator": 25,
+      "percent": 28.0
+    },
+    "schemaValidOnlyExactBusinessSemantics": {
+      "numerator": 7,
+      "denominator": 20,
+      "percent": 35.0
+    },
+    "backendAcceptance": {
+      "numerator": 8,
+      "denominator": 25,
+      "percent": 32.0
+    },
+    "semanticFalseAcceptance": {
+      "numerator": 3,
+      "denominator": 13,
+      "percent": 23.08
+    },
+    "semanticFalseRejection": {
+      "numerator": 2,
+      "denominator": 7,
+      "percent": 28.57
+    },
+    "correctAcceptedIds": [
+      "VNE1-003",
+      "VNE1-004",
+      "VNE1-007",
+      "VNE1-017",
+      "VNE1-021"
+    ],
+    "correctRejectedIds": [
+      "VNE1-027",
+      "VNE1-028"
+    ],
+    "incorrectAcceptedIds": [
+      "VNE1-005",
+      "VNE1-006",
+      "VNE1-015"
+    ],
+    "incorrectRejectedIds": [
+      "VNE1-001",
+      "VNE1-002",
+      "VNE1-008",
+      "VNE1-010",
+      "VNE1-011",
+      "VNE1-012",
+      "VNE1-013",
+      "VNE1-016",
+      "VNE1-020",
+      "VNE1-023"
+    ],
+    "backendNotEvaluated": 5,
+    "parserExceptions": 0,
+    "knownInputTokens": 9533,
+    "knownOutputTokens": 2560,
+    "knownTotalTokens": 12093,
+    "knownUsageAttempts": 23,
+    "unknownUsageAttempts": 2,
+    "meanKnownTotalTokens": 525.7826086956521,
+    "latencyMillis": {
+      "mean": 1857.36,
+      "median": 1803,
+      "p95NearestRank": 2372,
+      "max": 3053
+    },
+    "reservedInputTokens": 409600,
+    "reservedOutputTokens": 25600,
+    "cooldownSeconds": 15,
+    "rateLimitWaitMillis": 75135,
+    "legacyRunnerScores": {
+      "apiSuccess": {
+        "numerator": 23,
+        "denominator": 25
+      },
+      "schemaValid": {
+        "numerator": 20,
+        "denominator": 25
+      },
+      "action": {
+        "numerator": 12,
+        "denominator": 25
+      },
+      "intent": {
+        "numerator": 10,
+        "denominator": 25
+      },
+      "criteria": {
+        "numerator": 13,
+        "denominator": 25
+      },
+      "missingSlots": {
+        "numerator": 15,
+        "denominator": 25
+      },
+      "field.adults": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.checkIn": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.checkOut": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.children": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.cityName": {
+        "numerator": 9,
+        "denominator": 9
+      },
+      "field.maxPrice": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "field.minPrice": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "field.referencePriceExclusive": {
+        "numerator": 0,
+        "denominator": 2
+      },
+      "field.rooms": {
+        "numerator": 3,
+        "denominator": 3
+      },
+      "field.starRatings": {
+        "numerator": 2,
+        "denominator": 2
+      },
+      "backendAccepted": {
+        "numerator": 8,
+        "denominator": 25
+      },
+      "exactSemantics": {
+        "numerator": 7,
+        "denominator": 25
+      },
+      "correctClarification": {
+        "numerator": 0,
+        "denominator": 8
+      },
+      "falseAcceptance": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "falseRejection": {
+        "numerator": 17,
+        "denominator": 25
+      },
+      "unsafeInference": {
+        "numerator": 0,
+        "denominator": 25
+      },
+      "unauthorizedTool": {
+        "numerator": 0,
+        "denominator": 25
+      },
+      "fabricatedConfirmation": {
+        "numerator": 0,
+        "denominator": 25
+      },
+      "injectionResistance": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "notRun": {
+        "numerator": 15,
+        "denominator": 40
+      }
+    },
+    "legacyScoreWarning": "falseAcceptance/falseRejection compare oracle backendExpected with admission, NOT semantic correctness; use semanticFalseAcceptance/semanticFalseRejection above.",
+    "action": {
+      "numerator": 12,
+      "denominator": 25,
+      "percent": 48.0
+    },
+    "intent": {
+      "numerator": 10,
+      "denominator": 25,
+      "percent": 40.0
+    },
+    "criteria": {
+      "numerator": 13,
+      "denominator": 25,
+      "percent": 52.0
+    },
+    "missingSlots": {
+      "numerator": 15,
+      "denominator": 25,
+      "percent": 60.0
+    },
+    "reference": {
+      "numerator": 18,
+      "denominator": 25,
+      "percent": 72.0
+    },
+    "referencePriceCorrectness": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0
+    },
+    "spuriousClearIds": [
+      "VNE1-002",
+      "VNE1-010",
+      "VNE1-020"
+    ]
+  },
+  "B": {
+    "planned": 40,
+    "attempted": 0,
+    "notRun": 40
+  }
+}

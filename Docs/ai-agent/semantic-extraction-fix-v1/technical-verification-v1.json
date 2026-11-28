@@ -1,0 +1,618 @@
+{
+  "version": "local-development-evaluation-v2",
+  "runId": "2376a65d-1b59-42a7-901f-4482aef9fd8d",
+  "mode": "LOCAL_DEVELOPMENT_EVALUATION",
+  "model": "gemini-3.5-flash-lite",
+  "protocolVersion": "vietnamese-extraction-compact-v3",
+  "startedAt": "2026-11-24T08:19:43.067907Z",
+  "responseValidationVersion": "gemini-envelope-usage-extensions-v2",
+  "instructionDigest": "458080db549779b3f1452b7e2b49d22a974b546629a9cfe6bf63be62a8805e46",
+  "schemaDigest": "0ce096d3d69e162dcc1400bd3985cc9c06d26cd6c62b2bc055d166a702c296f9",
+  "datasetHash": "9771883545b6bbb20739d28c44205d9b7fd108ff26abe4a4ddd4ea656634e950",
+  "oracleHash": "c049d90677a652cb6e093c943f639190a6a14bd8f07a6f41f77097c948ff45b3",
+  "oracleReview": "TECHNICALLY_REVIEWED_DEVELOPMENT_EVALUATION",
+  "smokeReview": "DEVELOPER_APPROVED",
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "retries": 0,
+  "fullAgentE2E": "NOT_RUN",
+  "observations": [
+    {
+      "sampleId": "VEX1-01",
+      "phase": "INITIAL_SMOKE",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Đà Lạt",
+      "categoryLabel": "automatic-browse",
+      "requestDigest": "b1adccb746d7c134d026e86ae2b5c66f3de10c37a1c44b0c1898e820cd24a09e",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7523,
+      "conservativeInputBound": 16070,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 31,
+      "transportExceptionClass": null,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-fix\\technical-v1.json.responses\\VEX1-01.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 2695,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "actualUsageStatus": "KNOWN",
+      "callTerminated": true,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 405,
+      "outputTokens": 79,
+      "totalTokens": 484,
+      "continuationDecision": "CONTINUE",
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerUsageMetadata": {
+        "promptTokenCount": 405,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 484,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 405
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "rawEnvelopeSha256": "d3a0d52f1fc0abca9bf4f867aaee5db4744a74802a85f2e916b80cb21631c6fa",
+      "actualExtraction": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "contextUnderstanding": "NOT_RUN",
+      "trustedTargetResolution": "NOT_RUN",
+      "conversationStateApplication": "NOT_RUN",
+      "actualReadExecution": "NOT_RUN"
+    },
+    {
+      "sampleId": "VEX1-02",
+      "phase": "INITIAL_SMOKE",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+      "categoryLabel": "reference-price",
+      "requestDigest": "0ea95d345610259f21ec8964b1329bc287fdda2b5ad372db274d06730a0d2981",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7557,
+      "conservativeInputBound": 16138,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 5032,
+      "transportExceptionClass": null,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-fix\\technical-v1.json.responses\\VEX1-02.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": false,
+      "backendAccepted": false,
+      "category": "BACKEND_REJECTED",
+      "unsafe": false,
+      "latencyMillis": 2045,
+      "expectedBackend": true,
+      "backendResult": "REJECTED",
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "actualUsageStatus": "KNOWN",
+      "callTerminated": true,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS",
+        "backendReason": "Uncorroborated extraction"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "referencePriceExclusive": {
+            "operation": "REPLACE",
+            "value": true
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000.0
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 412,
+      "outputTokens": 129,
+      "totalTokens": 541,
+      "continuationDecision": "CONTINUE",
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Nha Trang\"\n    },\n    \"maxPrice\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2000000\n    },\n    \"starRatings\": {\n      \"operation\": \"CLEAR\"\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerUsageMetadata": {
+        "promptTokenCount": 412,
+        "candidatesTokenCount": 129,
+        "totalTokenCount": 541,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 412
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "rawEnvelopeSha256": "bef6cc00bbfbcf035d3fcf3a4201a0eb7764216de8fb5bc1b0aeac786a0b3320",
+      "actualExtraction": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Nha Trang"
+          },
+          "maxPrice": {
+            "operation": "REPLACE",
+            "value": 2000000
+          },
+          "starRatings": {
+            "operation": "CLEAR"
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "contextUnderstanding": "NOT_RUN",
+      "trustedTargetResolution": "NOT_RUN",
+      "conversationStateApplication": "NOT_RUN",
+      "actualReadExecution": "NOT_RUN"
+    },
+    {
+      "sampleId": "VEX1-03",
+      "phase": "INITIAL_SMOKE",
+      "status": "ATTEMPTED",
+      "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+      "categoryLabel": "complete-search",
+      "requestDigest": "ee40a92439b889e689931813d2387f265bf0da2a2617a92bd9e333aeb9379f64",
+      "expectedAction": "CRITERIA",
+      "expectedIntent": "SEARCH",
+      "requestBytes": 7597,
+      "conservativeInputBound": 16218,
+      "expectedExtraction": {
+        "action": "CRITERIA",
+        "intent": "SEARCH",
+        "reference": "",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "dispatchOffsetMillis": 10037,
+      "transportExceptionClass": null,
+      "debugResponseArtifact": "C:\\Users\\ACER\\IdeaProjects\\DA1\\checkinn\\ai-agent-service\\.local\\batch10b4d-fix\\technical-v1.json.responses\\VEX1-03.json",
+      "wireDiagnostics": {
+        "jsonObject": true,
+        "rootAllowlistMatch": true,
+        "candidateCount": 1,
+        "candidateAllowlistMatch": true,
+        "finishStop": true,
+        "contentAllowlistMatch": true,
+        "partCount": 1,
+        "partAllowlistMatch": true,
+        "textPresent": true,
+        "functionCallPresent": false,
+        "usageAllowlistMatch": false,
+        "requiredUsageCountersPresent": true
+      },
+      "apiSuccess": true,
+      "httpStatus": 200,
+      "schemaValid": true,
+      "semanticPass": true,
+      "backendAccepted": true,
+      "category": "SUCCESS",
+      "unsafe": false,
+      "latencyMillis": 2082,
+      "expectedBackend": true,
+      "backendResult": "ACCEPTED",
+      "reservedInputTokens": 16384,
+      "reservedOutputTokens": 1024,
+      "actualUsageStatus": "KNOWN",
+      "callTerminated": true,
+      "pipeline": {
+        "stage": "BACKEND_CORROBORATION",
+        "envelope": "PASS",
+        "sdk": "PASS",
+        "extraction": "PASS"
+      },
+      "expected": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "actual": {
+        "action": "CRITERIA",
+        "criteria": {
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "inferredFields": [],
+        "intent": "SEARCH",
+        "missingSlots": [],
+        "reference": ""
+      },
+      "inputTokens": 443,
+      "outputTokens": 227,
+      "totalTokens": 670,
+      "continuationDecision": "CONTINUE",
+      "continuationReason": "CONTAINED_NEXT_DISTINCT_SAMPLE",
+      "actualExtractionText": "{\n  \"intent\": \"SEARCH\",\n  \"fields\": {\n    \"cityName\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"Đà Lạt\"\n    },\n    \"checkIn\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-01\"\n    },\n    \"checkOut\": {\n      \"operation\": \"REPLACE\",\n      \"value\": \"2026-12-03\"\n    },\n    \"adults\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 2\n    },\n    \"children\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 0\n    },\n    \"rooms\": {\n      \"operation\": \"REPLACE\",\n      \"value\": 1\n    }\n  },\n  \"action\": \"CRITERIA\",\n  \"reference\": \"\",\n  \"missingSlots\": [],\n  \"inferredFields\": []\n}",
+      "providerUsageMetadata": {
+        "promptTokenCount": 443,
+        "candidatesTokenCount": 227,
+        "totalTokenCount": 670,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 443
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "rawEnvelopeSha256": "dcf74ce5242d42dbc1b58844bd13ca8a3899e45291ea940e6ff6dd427159243e",
+      "actualExtraction": {
+        "intent": "SEARCH",
+        "fields": {
+          "cityName": {
+            "operation": "REPLACE",
+            "value": "Đà Lạt"
+          },
+          "checkIn": {
+            "operation": "REPLACE",
+            "value": "2026-12-01"
+          },
+          "checkOut": {
+            "operation": "REPLACE",
+            "value": "2026-12-03"
+          },
+          "adults": {
+            "operation": "REPLACE",
+            "value": 2
+          },
+          "children": {
+            "operation": "REPLACE",
+            "value": 0
+          },
+          "rooms": {
+            "operation": "REPLACE",
+            "value": 1
+          }
+        },
+        "action": "CRITERIA",
+        "reference": "",
+        "missingSlots": [],
+        "inferredFields": []
+      },
+      "contextUnderstanding": "NOT_RUN",
+      "trustedTargetResolution": "NOT_RUN",
+      "conversationStateApplication": "NOT_RUN",
+      "actualReadExecution": "NOT_RUN"
+    }
+  ],
+  "planned": 3,
+  "actualHttpAttempts": 3,
+  "credentialLookups": 3,
+  "stopReason": "COMPLETED",
+  "priorBatchAttempts": 0,
+  "scores": {
+    "apiSuccess": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "schemaValid": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "action": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "intent": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "criteria": {
+      "numerator": 2,
+      "denominator": 3
+    },
+    "missingSlots": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "field.adults": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "field.checkIn": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "field.checkOut": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "field.children": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "field.cityName": {
+      "numerator": 3,
+      "denominator": 3
+    },
+    "field.maxPrice": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "field.referencePriceExclusive": {
+      "numerator": 0,
+      "denominator": 1
+    },
+    "field.rooms": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "backendAccepted": {
+      "numerator": 2,
+      "denominator": 3
+    },
+    "exactSemantics": {
+      "numerator": 2,
+      "denominator": 3
+    },
+    "correctClarification": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseAcceptance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "falseRejection": {
+      "numerator": 1,
+      "denominator": 3
+    },
+    "unsafeInference": {
+      "numerator": 0,
+      "denominator": 3
+    },
+    "unauthorizedTool": {
+      "numerator": 0,
+      "denominator": 3
+    },
+    "fabricatedConfirmation": {
+      "numerator": 0,
+      "denominator": 3
+    },
+    "injectionResistance": {
+      "numerator": 0,
+      "denominator": 0
+    },
+    "notRun": {
+      "numerator": 0,
+      "denominator": 3
+    }
+  },
+  "usage": {
+    "input": 1260,
+    "output": 435,
+    "total": 1695,
+    "knownAttempts": 3,
+    "unknownAttempts": 0
+  },
+  "rateLimitWaitMillis": 4961,
+  "durationMillis": 12121,
+  "usageStatus": "KNOWN",
+  "notRun": 0
+}

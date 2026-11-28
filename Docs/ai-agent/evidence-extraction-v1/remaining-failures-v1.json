@@ -1,0 +1,257 @@
+[
+  {
+    "sampleId": "DIAG-VNE1-013",
+    "sourceId": "VNE1-013",
+    "phase": "DIAGNOSTIC",
+    "utterance": "Kiểm tra phòng này còn phòng không",
+    "expected": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "Kiểm tra phòng này còn phòng không",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRawEvidence": {
+      "request": "ASK_SELECTED",
+      "facts": [
+        {
+          "type": "REFERENCE",
+          "text": "này"
+        },
+        {
+          "type": "ROOMS",
+          "text": "phòng"
+        }
+      ]
+    },
+    "rawText": "{\n  \"request\": \"ASK_SELECTED\",\n  \"facts\": [\n    {\n      \"type\": \"REFERENCE\",\n      \"text\": \"này\"\n    },\n    {\n      \"type\": \"ROOMS\",\n      \"text\": \"phòng\"\n    }\n  ]\n}",
+    "evidenceMetrics": {
+      "expected": 1,
+      "proposed": 2,
+      "matched": 0,
+      "missing": 1,
+      "invented": 0,
+      "wrongType": 2,
+      "duplicates": 0,
+      "requestCorrect": true
+    },
+    "canonical": null,
+    "pipeline": {
+      "stage": "EXTRACTION_JSON",
+      "envelope": "PASS",
+      "sdk": "PASS",
+      "extraction": "FAIL",
+      "failureClass": "java.lang.IllegalArgumentException",
+      "failureLocation": "com.example.aiagent.model.VietnameseEvidenceCompiler.compile:152"
+    },
+    "category": "EXTRACTION_SCHEMA_INVALID",
+    "backendAccepted": false,
+    "rootCause": [
+      "H1",
+      "H2"
+    ],
+    "semanticEvaluation": "EVALUATED",
+    "safetyImplication": "No state or tool authority granted",
+    "recommendedNextAction": "Review meaning/span completeness; do not weaken validation or alter frozen oracle"
+  },
+  {
+    "sampleId": "CMP-FLASH_35_LITE-VNE1-003",
+    "sourceId": "VNE1-003",
+    "phase": "COMPARISON",
+    "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Đà Lạt"
+        },
+        "checkIn": {
+          "operation": "REPLACE",
+          "value": "2026-12-01"
+        },
+        "checkOut": {
+          "operation": "REPLACE",
+          "value": "2026-12-03"
+        },
+        "adults": {
+          "operation": "REPLACE",
+          "value": 2
+        },
+        "children": {
+          "operation": "REPLACE",
+          "value": 0
+        },
+        "rooms": {
+          "operation": "REPLACE",
+          "value": 1
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRawEvidence": null,
+    "rawText": null,
+    "evidenceMetrics": {},
+    "canonical": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+    },
+    "category": "UNAVAILABLE",
+    "backendAccepted": false,
+    "rootCause": [
+      "H8"
+    ],
+    "semanticEvaluation": "NOT_EVALUATED",
+    "safetyImplication": "No state or tool authority granted",
+    "recommendedNextAction": "Retain failure; inspect provider/transport evidence without same-sample retry"
+  },
+  {
+    "sampleId": "CMP-FLASH_35_LITE-VNE1-013",
+    "sourceId": "VNE1-013",
+    "phase": "COMPARISON",
+    "utterance": "Kiểm tra phòng này còn phòng không",
+    "expected": {
+      "action": "SELECTED",
+      "intent": "CLARIFY",
+      "fields": {},
+      "reference": "Kiểm tra phòng này còn phòng không",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRawEvidence": null,
+    "rawText": null,
+    "evidenceMetrics": {},
+    "canonical": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+    },
+    "category": "TIMEOUT",
+    "backendAccepted": false,
+    "rootCause": [
+      "H8"
+    ],
+    "semanticEvaluation": "NOT_EVALUATED",
+    "safetyImplication": "No state or tool authority granted",
+    "recommendedNextAction": "Retain failure; inspect provider/transport evidence without same-sample retry"
+  },
+  {
+    "sampleId": "CMP-FLASH_31_LITE-VNE1-002",
+    "sourceId": "VNE1-002",
+    "phase": "COMPARISON",
+    "utterance": "Tìm khách sạn ở Nha Trang giá tham khảo dưới 2 triệu",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Nha Trang"
+        },
+        "maxPrice": {
+          "operation": "REPLACE",
+          "value": 2000000
+        },
+        "referencePriceExclusive": {
+          "operation": "REPLACE",
+          "value": true
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRawEvidence": null,
+    "rawText": null,
+    "evidenceMetrics": {},
+    "canonical": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+    },
+    "category": "TIMEOUT",
+    "backendAccepted": false,
+    "rootCause": [
+      "H8"
+    ],
+    "semanticEvaluation": "NOT_EVALUATED",
+    "safetyImplication": "No state or tool authority granted",
+    "recommendedNextAction": "Retain failure; inspect provider/transport evidence without same-sample retry"
+  },
+  {
+    "sampleId": "CMP-FLASH_31_LITE-VNE1-003",
+    "sourceId": "VNE1-003",
+    "phase": "COMPARISON",
+    "utterance": "Tìm khách sạn ở Đà Lạt từ 01/12/2026 đến 03/12/2026, 2 người lớn, 0 trẻ em, 1 phòng",
+    "expected": {
+      "action": "CRITERIA",
+      "intent": "SEARCH",
+      "fields": {
+        "cityName": {
+          "operation": "REPLACE",
+          "value": "Đà Lạt"
+        },
+        "checkIn": {
+          "operation": "REPLACE",
+          "value": "2026-12-01"
+        },
+        "checkOut": {
+          "operation": "REPLACE",
+          "value": "2026-12-03"
+        },
+        "adults": {
+          "operation": "REPLACE",
+          "value": 2
+        },
+        "children": {
+          "operation": "REPLACE",
+          "value": 0
+        },
+        "rooms": {
+          "operation": "REPLACE",
+          "value": 1
+        }
+      },
+      "reference": "",
+      "missingSlots": [],
+      "inferredFields": []
+    },
+    "actualRawEvidence": null,
+    "rawText": null,
+    "evidenceMetrics": {},
+    "canonical": null,
+    "pipeline": {
+      "stage": "ADMISSION",
+      "envelope": "NOT_RUN",
+      "sdk": "NOT_RUN",
+      "extraction": "NOT_RUN",
+      "failureClass": "com.example.aiagent.model.ProviderException",
+      "failureLocation": "com.example.aiagent.model.GeminiLocalFallbackEvaluation.lambda$run$21:266"
+    },
+    "category": "TIMEOUT",
+    "backendAccepted": false,
+    "rootCause": [
+      "H8"
+    ],
+    "semanticEvaluation": "NOT_EVALUATED",
+    "safetyImplication": "No state or tool authority granted",
+    "recommendedNextAction": "Retain failure; inspect provider/transport evidence without same-sample retry"
+  }
+]

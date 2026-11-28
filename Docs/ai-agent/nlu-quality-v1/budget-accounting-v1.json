@@ -1,0 +1,102 @@
+{
+  "status": "SEALED_TECHNICAL_STOP",
+  "actualHttpAttempts": 14,
+  "hardCap": 120,
+  "byPhase": {
+    "promptSchemaDiagnostics": 12,
+    "initialSmoke": 2,
+    "primary": 0,
+    "improved": 0,
+    "supplemental": 0
+  },
+  "automaticRetries": 0,
+  "concurrency": 1,
+  "dispatches": [
+    {
+      "epochMillis": 1795506858166.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-01"
+    },
+    {
+      "epochMillis": 1795506863167.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-02"
+    },
+    {
+      "epochMillis": 1795506868167.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-03"
+    },
+    {
+      "epochMillis": 1795506873167.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-04"
+    },
+    {
+      "epochMillis": 1795506878169.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-05"
+    },
+    {
+      "epochMillis": 1795506883170.0361,
+      "runId": "14e82051-47b8-469c-a4a1-b2f28d12745d",
+      "sampleId": "DIAG4D-06"
+    },
+    {
+      "epochMillis": 1795506975714.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-01"
+    },
+    {
+      "epochMillis": 1795506980714.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-02"
+    },
+    {
+      "epochMillis": 1795506986942.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-03"
+    },
+    {
+      "epochMillis": 1795506991956.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-04"
+    },
+    {
+      "epochMillis": 1795506996956.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-05"
+    },
+    {
+      "epochMillis": 1795507001959.623,
+      "runId": "1195a651-e607-4a92-b33c-797fdbc6f171",
+      "sampleId": "DIAG4D-07"
+    },
+    {
+      "epochMillis": 1795507042867.52,
+      "runId": "7ff9f44a-af5f-4ba1-8eeb-c5a6bec825f7",
+      "sampleId": "VEX1-01"
+    },
+    {
+      "epochMillis": 1795507047867.52,
+      "runId": "7ff9f44a-af5f-4ba1-8eeb-c5a6bec825f7",
+      "sampleId": "VEX1-02"
+    }
+  ],
+  "minimumDispatchSpacingSeconds": 5.0,
+  "maxRequestsRolling60Seconds": 6,
+  "maxReservedTokensRolling60Seconds": 104448,
+  "inputCap": 16384,
+  "outputCap": 1024,
+  "callTimeoutSeconds": 10,
+  "aggregateDeadlineMinutes": 60,
+  "firstDispatchEpochMillis": 1795506858166.0361,
+  "lastAttemptResponseEpochMillis": 1795507049831.52,
+  "rateLimitWaitMillis": 26441,
+  "unknownUsageCount": 1,
+  "technicalFailure": "UNAVAILABLE; non-200 path GeminiHttpTransport.java:85; original exact status not retained",
+  "abortedFirstRun": "Developer diagnostic pause after six completed requests, before smoke/main; original interim stopReason COMPLETED is not a completed campaign.",
+  "domainCalls": 0,
+  "supabaseCalls": 0,
+  "wallMillisFirstDispatchToLastResponse": 191665.48388671875
+}
